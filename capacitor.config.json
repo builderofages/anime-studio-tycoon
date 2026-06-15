@@ -1,0 +1,8 @@
+{
+  "appId": "com.trainyouragent.animestudiotycoon",
+  "appName": "Anime Studio Tycoon",
+  "webDir": "www",
+  "backgroundColor": "#1a1426ff",
+  "ios": { "contentInset": "always", "backgroundColor": "#1a1426ff", "limitsNavigationsToAppBoundDomains": false },
+  "server": { "iosScheme": "app" }
+}
