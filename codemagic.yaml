@@ -2,9 +2,9 @@
 # with NO local Mac. Connect this repo in Codemagic, add the integrations referenced below,
 # then run the workflow. Produces a signed .ipa (App Store) and .aab (Play) and can auto-submit.
 #
-# One-time secrets you create in your own accounts (Codemagic UI → env groups):
-#   - app_store_connect  : App Store Connect API key (Apple → Users & Access → Integrations → App Store Connect API)
-#   - google_play        : Play service account JSON (Play Console → Setup → API access)
+# One-time secrets you create in your own accounts (Codemagic UI -> env groups):
+#   - app_store_connect  : App Store Connect API key
+#   - google_play        : Play service account JSON
 #   - ios signing        : Codemagic "Automatic" iOS code signing (uses the App Store Connect API key)
 #
 workflows:
@@ -21,17 +21,15 @@ workflows:
       xcode: latest
       cocoapods: default
     integrations:
-      app_store_connect: AppStoreConnectKey   # name of the API key you add in Codemagic
+      app_store_connect: AppStoreConnectKey
     scripts:
       - name: Install deps
         script: npm ci || npm install
       - name: Assemble web (www)
         script: |
           mkdir -p www
-          # Pull the full, latest game build from the deployed artifact (server-side, no CORS limit)
           curl -fsSL "https://d2ol7oe51mr4n9.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/049d3e57-4991-46cf-a63d-35b3bc7a915a.zip" -o /tmp/game.zip
           unzip -o /tmp/game.zip -d www
-          # ensure the native StoreKit/Play bridge is loaded
           cp iap.js www/ 2>/dev/null || true
           grep -q 'iap.js' www/index.html || sed -i.bak 's#</body>#<script src="iap.js"></script></body>#' www/index.html
           rm -f www/index.html.bak
@@ -41,16 +39,19 @@ workflows:
       - name: Sync
         script: npx cap sync ios
       - name: Set up signing
-        script: xcode-project use-profiles
+        script: |
+          keychain initialize
+          app-store-connect fetch-signing-files "$BUNDLE_ID" --type IOS_APP_STORE --create
+          keychain add-certificates
+          xcode-project use-profiles
       - name: Build IPA
         script: |
-          xcode-project build-ipa \
-            --workspace "$XCODE_WORKSPACE" --scheme "$XCODE_SCHEME"
+          xcode-project build-ipa --workspace "$XCODE_WORKSPACE" --scheme "$XCODE_SCHEME"
     artifacts: [build/ios/ipa/*.ipa]
     publishing:
       app_store_connect:
         auth: integration
-        submit_to_testflight: true   # set submit_to_app_store: true when ready for review
+        submit_to_testflight: true
 
   android-release:
     name: Anime Studio Tycoon — Android
@@ -84,4 +85,4 @@ workflows:
     publishing:
       google_play:
         credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
-        track: internal   # internal testing first; change to production when ready
+        track: internal
