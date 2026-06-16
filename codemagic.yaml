@@ -32,7 +32,7 @@ workflows:
       - name: Set up signing
         script: |
           keychain initialize
-          openssl genrsa -out /tmp/cert_key.pem 2048
+          openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:2048 -out /tmp/cert_key.pem
           app-store-connect certificates create --type IOS_DISTRIBUTION --certificate-key=@file:/tmp/cert_key.pem --save
           app-store-connect fetch-signing-files "$BUNDLE_ID" --type IOS_APP_STORE --certificate-key=@file:/tmp/cert_key.pem --create
           keychain add-certificates
