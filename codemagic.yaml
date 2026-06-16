@@ -1,0 +1,77 @@
+# Cloud build pipeline (Codemagic) — builds iOS + Android from the Capacitor project
+# with NO local Mac. Connect this repo in Codemagic, add the integrations referenced below,
+# then run the workflow. Produces a signed .ipa (App Store) and .aab (Play) and can auto-submit.
+#
+# One-time secrets you create in your own accounts (Codemagic UI → env groups):
+#   - app_store_connect  : App Store Connect API key (Apple → Users & Access → Integrations → App Store Connect API)
+#   - google_play        : Play service account JSON (Play Console → Setup → API access)
+#   - ios signing        : Codemagic "Automatic" iOS code signing (uses the App Store Connect API key)
+#
+workflows:
+  ios-release:
+    name: Anime Studio Tycoon — iOS
+    instance_type: mac_mini_m2
+    environment:
+      groups: [app_store_connect]
+      vars:
+        BUNDLE_ID: "com.trainyouragent.animestudiotycoon"
+        XCODE_WORKSPACE: "ios/App/App.xcworkspace"
+        XCODE_SCHEME: "App"
+      node: 20
+      xcode: latest
+      cocoapods: default
+    integrations:
+      app_store_connect: AppStoreConnectKey   # name of the API key you add in Codemagic
+    scripts:
+      - name: Install deps
+        script: npm ci || npm install
+      - name: Assemble web (www)
+        script: |
+          mkdir -p www
+          cp index.html iap.js logic.js strings.js privacy.html terms.html www/ 2>/dev/null || true
+          ls -la www
+      - name: Add iOS platform
+        script: npx cap add ios || true
+      - name: Sync
+        script: npx cap sync ios
+      - name: Set up signing
+        script: xcode-project use-profiles
+      - name: Build IPA
+        script: |
+          xcode-project build-ipa \
+            --workspace "$XCODE_WORKSPACE" --scheme "$XCODE_SCHEME"
+    artifacts: [build/ios/ipa/*.ipa]
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true   # set submit_to_app_store: true when ready for review
+
+  android-release:
+    name: Anime Studio Tycoon — Android
+    instance_type: linux_x2
+    environment:
+      groups: [google_play, keystore_credentials]
+      vars:
+        PACKAGE_NAME: "com.trainyouragent.animestudiotycoon"
+      node: 20
+    scripts:
+      - name: Install deps
+        script: npm ci || npm install
+      - name: Assemble web (www)
+        script: |
+          mkdir -p www
+          cp index.html iap.js logic.js strings.js privacy.html terms.html www/ 2>/dev/null || true
+          ls -la www
+      - name: Add Android platform
+        script: npx cap add android || true
+      - name: Sync
+        script: npx cap sync android
+      - name: Build AAB
+        script: |
+          cd android
+          ./gradlew bundleRelease
+    artifacts: [android/app/build/outputs/**/*.aab]
+    publishing:
+      google_play:
+        credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
+        track: internal   # internal testing first; change to production when ready
