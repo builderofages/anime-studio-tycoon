@@ -4,6 +4,9 @@ workflows:
     name: Anime Studio Tycoon — iOS
     instance_type: mac_mini_m2
     environment:
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: "com.trainyouragent.animestudiotycoon"
       groups: [app_store_connect]
       vars:
         BUNDLE_ID: "com.trainyouragent.animestudiotycoon"
@@ -31,11 +34,6 @@ workflows:
         script: npx cap sync ios
       - name: Set up signing
         script: |
-          keychain initialize
-          openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:2048 -out /tmp/cert_key.pem
-          app-store-connect certificates create --type IOS_DISTRIBUTION --certificate-key=@file:/tmp/cert_key.pem --save
-          app-store-connect fetch-signing-files "$BUNDLE_ID" --type IOS_APP_STORE --certificate-key=@file:/tmp/cert_key.pem --create
-          keychain add-certificates
           xcode-project use-profiles
       - name: Build IPA
         script: |
