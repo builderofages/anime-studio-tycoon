@@ -28,7 +28,13 @@ workflows:
       - name: Assemble web (www)
         script: |
           mkdir -p www
-          cp index.html iap.js logic.js strings.js privacy.html terms.html www/ 2>/dev/null || true
+          # Pull the full, latest game build from the deployed artifact (server-side, no CORS limit)
+          curl -fsSL "https://d2ol7oe51mr4n9.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/049d3e57-4991-46cf-a63d-35b3bc7a915a.zip" -o /tmp/game.zip
+          unzip -o /tmp/game.zip -d www
+          # ensure the native StoreKit/Play bridge is loaded
+          cp iap.js www/ 2>/dev/null || true
+          grep -q 'iap.js' www/index.html || sed -i.bak 's#</body>#<script src="iap.js"></script></body>#' www/index.html
+          rm -f www/index.html.bak
           ls -la www
       - name: Add iOS platform
         script: npx cap add ios || true
@@ -60,7 +66,11 @@ workflows:
       - name: Assemble web (www)
         script: |
           mkdir -p www
-          cp index.html iap.js logic.js strings.js privacy.html terms.html www/ 2>/dev/null || true
+          curl -fsSL "https://d2ol7oe51mr4n9.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/049d3e57-4991-46cf-a63d-35b3bc7a915a.zip" -o /tmp/game.zip
+          unzip -o /tmp/game.zip -d www
+          cp iap.js www/ 2>/dev/null || true
+          grep -q 'iap.js' www/index.html || sed -i.bak 's#</body>#<script src="iap.js"></script></body>#' www/index.html
+          rm -f www/index.html.bak
           ls -la www
       - name: Add Android platform
         script: npx cap add android || true
