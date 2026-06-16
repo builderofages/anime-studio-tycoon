@@ -1,0 +1,1896 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Anime Studio Tycoon — Build Your Anime Empire</title>
+<meta name="description" content="Run your own anime studio! Name your own shows, scout a cast of star talent, grow millions of fans, and become the #1 studio in the world. A free, easy-to-play idle tycoon game for everyone.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Anime Studio Tycoon">
+<meta property="og:title" content="Anime Studio Tycoon — Build Your Anime Empire">
+<meta property="og:description" content="Greenlight hit shows, scout legendary stars, and grow millions of fans. Can you build the #1 anime studio? Play free.">
+<meta property="og:image" content="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_062706_8cb8f42c-84b2-45b0-8c27-96e8ffc01bb7.jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Anime Studio Tycoon — Build Your Anime Empire">
+<meta name="twitter:description" content="Name your own anime, scout a cast of stars, and grow millions of fans. Easy, cozy, and fun for all ages. Can you build the #1 studio? Play free.">
+<meta name="twitter:image" content="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_062706_8cb8f42c-84b2-45b0-8c27-96e8ffc01bb7.jpeg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%233a2b4d'/%3E%3Ccircle cx='32' cy='32' r='30' fill='none' stroke='%23ffc845' stroke-width='3'/%3E%3Cg fill='%23ff9bc4'%3E%3Cellipse cx='32' cy='15' rx='5' ry='8'/%3E%3Cellipse cx='32' cy='49' rx='5' ry='8'/%3E%3Cellipse cx='15' cy='32' rx='8' ry='5'/%3E%3Cellipse cx='49' cy='32' rx='8' ry='5'/%3E%3C/g%3E%3Ccircle cx='32' cy='32' r='7' fill='%23ffc845'/%3E%3C/svg%3E">
+<style>
+:root{
+  --cream:#fbf3e6; --cream2:#f3e6d0; --ink:#2c2536; --plum:#3a2b4d;
+  --sakura:#ff9bc4; --sakura2:#ffd6e7; --slate:#46506b; --slate2:#2f3650;
+  --gold:#ffc845; --gold2:#ffe39a; --cyan:#22e0ff; --cyan2:#bff6ff;
+  --good:#5fd38a; --bad:#ff6b8a;
+  --panel:rgba(251,243,230,.94); --panelblur:saturate(1.1) blur(6px);
+  --shadow:0 10px 30px rgba(28,20,40,.35);
+  --r:18px;
+  font-family:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:#1a1426;color:var(--ink);overflow:hidden}
+body{
+  background:linear-gradient(rgba(26,20,38,.55),rgba(26,20,38,.78)), url(https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_062706_8cb8f42c-84b2-45b0-8c27-96e8ffc01bb7.jpeg) center/cover no-repeat fixed;
+}
+#app{height:100%;display:flex;flex-direction:column;max-width:920px;margin:0 auto;position:relative}
+button{font-family:inherit;cursor:pointer;border:none;border-radius:12px;font-weight:700;transition:transform .07s ease, filter .12s ease}
+button:active{transform:translateY(1px) scale(.99)}
+button:disabled{filter:grayscale(.6) brightness(.85);cursor:not-allowed;opacity:.7}
+.btn-primary{background:linear-gradient(180deg,var(--sakura),#ff6fa8);color:#fff;padding:12px 16px;box-shadow:0 4px 0 #d64f88}
+.btn-primary:active{box-shadow:0 1px 0 #d64f88}
+.btn-gold{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#5a3d00;box-shadow:0 4px 0 #d49a14}
+.btn-gold:active{box-shadow:0 1px 0 #d49a14}
+.btn-cyan{background:linear-gradient(180deg,var(--cyan2),var(--cyan));color:#063743;box-shadow:0 4px 0 #16a9c4}
+.btn-ghost{background:rgba(70,80,107,.14);color:var(--plum)}
+
+/* TOP BAR */
+#top{display:flex;gap:8px;padding:10px 12px;align-items:center;flex-wrap:wrap}
+.res{display:flex;align-items:center;gap:7px;background:var(--panel);backdrop-filter:var(--panelblur);
+  padding:7px 12px;border-radius:14px;box-shadow:var(--shadow);font-weight:800;min-width:0}
+.res img{width:24px;height:24px;object-fit:contain;filter:drop-shadow(0 1px 1px rgba(0,0,0,.2))}
+.res .v{font-variant-numeric:tabular-nums;white-space:nowrap}
+.res small{font-weight:700;opacity:.6;font-size:11px}
+.res.yen .v{color:#9a6b00}.res.fans .v{color:#d4528a}.res.hype .v{color:#0c93b3}.res.gems .v{color:#6a3fb5}
+#trendbar{margin-left:auto;background:linear-gradient(180deg,#fff,var(--cyan2));color:#063743;
+  padding:7px 12px;border-radius:14px;box-shadow:var(--shadow);font-weight:800;font-size:13px;display:flex;gap:6px;align-items:center}
+#trendbar b{color:#c0356f}
+.spark{animation:pulse 1.6s infinite}@keyframes pulse{50%{opacity:.5}}
+
+/* GOAL */
+#goal{margin:0 12px 6px;background:linear-gradient(90deg,rgba(58,43,77,.92),rgba(70,80,107,.92));color:#fff;
+  border-radius:14px;padding:8px 14px;font-size:13px;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow)}
+#goal .bar{flex:1;height:8px;background:rgba(255,255,255,.18);border-radius:6px;overflow:hidden}
+#goal .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--sakura));width:0%}
+
+/* MAIN */
+#main{flex:1;overflow-y:auto;padding:4px 12px 14px;-webkit-overflow-scrolling:touch}
+.panel{background:var(--panel);backdrop-filter:var(--panelblur);border-radius:var(--r);box-shadow:var(--shadow);
+  padding:14px;margin-bottom:12px}
+.panel h2{margin:0 0 10px;font-size:17px;color:var(--plum);display:flex;align-items:center;gap:8px}
+.muted{opacity:.66;font-size:12.5px}
+.row{display:flex;gap:10px;align-items:center}
+.grid{display:grid;gap:10px}
+
+/* PRODUCTION */
+#prod .card{display:flex;gap:14px}
+.poster{width:120px;height:120px;border-radius:14px;background:#2b2440 center/cover;flex:none;
+  box-shadow:inset 0 0 0 3px rgba(255,255,255,.5), var(--shadow);position:relative;overflow:hidden}
+.poster .gtag{position:absolute;left:0;right:0;bottom:0;background:rgba(28,20,40,.7);color:#fff;font-size:11px;
+  font-weight:800;text-align:center;padding:3px}
+.pinfo{flex:1;min-width:0}
+.pinfo h3{margin:0 0 2px;font-size:18px;color:var(--plum)}
+.progress{height:16px;background:rgba(70,80,107,.18);border-radius:10px;overflow:hidden;margin:8px 0 4px}
+.progress i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--sakura),var(--gold));transition:width .2s}
+.dims{display:grid;grid-template-columns:1fr 1fr;gap:5px 14px;margin-top:8px}
+.dim{font-size:11.5px;font-weight:700;color:var(--slate)}
+.dim .db{height:6px;background:rgba(70,80,107,.16);border-radius:4px;overflow:hidden;margin-top:2px}
+.dim .db i{display:block;height:100%;background:var(--slate);width:0%}
+.stars{color:var(--gold);font-size:18px;letter-spacing:2px;text-shadow:0 1px 1px rgba(0,0,0,.15)}
+.pickgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.pick{background:linear-gradient(180deg,#fff,var(--cream2));border-radius:14px;padding:10px;box-shadow:var(--shadow);border:2px solid transparent}
+.pick.lock{filter:grayscale(.5);opacity:.65}
+.pick h4{margin:0 0 4px;color:var(--plum);font-size:15px}
+.pick .stat{font-size:11.5px;color:var(--slate);font-weight:700}
+.genrepick{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.chip{padding:6px 10px;border-radius:20px;font-size:12px;font-weight:800;background:rgba(70,80,107,.14);color:var(--plum)}
+.chip.sel{background:linear-gradient(180deg,var(--sakura2),var(--sakura));color:#fff;box-shadow:0 3px 0 #d64f88}
+.chip.trend{outline:2px dashed var(--cyan)}
+
+/* STAFF / LISTS */
+.staffrow,.uprow{display:flex;align-items:center;gap:12px;background:linear-gradient(180deg,#fff,var(--cream2));
+  border-radius:14px;padding:10px;box-shadow:var(--shadow);margin-bottom:9px}
+.staffrow img{width:58px;height:58px;object-fit:cover;flex:none;border-radius:14px;box-shadow:inset 0 0 0 2px rgba(255,255,255,.6),0 2px 6px rgba(28,20,40,.25)}
+.staffrow .meta,.uprow .meta{flex:1;min-width:0}
+.staffrow .meta h4,.uprow .meta h4{margin:0;color:var(--plum);font-size:15px}
+.pill{display:inline-block;background:rgba(34,224,255,.16);color:#0c7d96;border-radius:10px;padding:1px 8px;font-size:11px;font-weight:800;margin-left:6px}
+.hirebtn{padding:10px 12px;border-radius:12px;text-align:center;min-width:104px}
+.hirebtn small{display:block;font-weight:700;opacity:.85;font-size:11px}
+
+/* START / MODAL */
+.overlay{position:absolute;inset:0;z-index:30;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(rgba(26,20,38,.55),rgba(26,20,38,.85));backdrop-filter:blur(3px);padding:20px}
+.card-modal{background:var(--panel);border-radius:24px;box-shadow:var(--shadow);padding:26px;max-width:380px;text-align:center}
+.card-modal img.logo{width:120px;height:120px;object-fit:contain;filter:drop-shadow(0 6px 12px rgba(0,0,0,.3))}
+.card-modal h1{margin:8px 0 2px;color:var(--plum);font-size:26px;letter-spacing:.5px}
+.card-modal p{color:var(--slate);font-size:13.5px;margin:6px 0 18px}
+.offlist{text-align:left;font-size:13px;margin:10px 0}
+.offlist div{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px dashed rgba(70,80,107,.25)}
+
+/* TABS */
+#tabs{display:flex;gap:6px;padding:8px 10px;background:linear-gradient(180deg,rgba(28,20,40,0),rgba(28,20,40,.35))}
+.tab{flex:1;background:var(--panel);color:var(--plum);padding:10px 4px;border-radius:14px;font-size:12px;
+  box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;gap:2px;font-weight:800}
+.tab.active{background:linear-gradient(180deg,var(--sakura2),var(--sakura));color:#fff}
+.tab .ic{font-size:18px;line-height:1}
+
+/* TOAST */
+#toasts{position:absolute;left:0;right:0;bottom:84px;display:flex;flex-direction:column;align-items:center;gap:6px;z-index:25;pointer-events:none}
+.toast{background:rgba(44,37,54,.94);color:#fff;padding:9px 16px;border-radius:20px;font-weight:700;font-size:13px;
+  box-shadow:var(--shadow);animation:rise .4s ease}
+.toast.gold{background:linear-gradient(180deg,var(--gold),#e9a91a);color:#4a3200}
+@keyframes rise{from{transform:translateY(14px);opacity:0}}
+.floatgain{position:absolute;left:50%;top:46%;transform:translateX(-50%);z-index:26;pointer-events:none;
+  font-weight:900;font-size:24px;color:#ffd24a;text-shadow:0 2px 8px rgba(0,0,0,.55);animation:floatup 1.15s ease-out forwards}
+@keyframes floatup{0%{opacity:0;transform:translate(-50%,14px) scale(.8)}20%{opacity:1}100%{opacity:0;transform:translate(-50%,-66px) scale(1.12)}}
+@media (prefers-reduced-motion: reduce){ .floatgain,.spark{animation:none} .progress i{transition:none} }
+.foot{display:flex;gap:8px;justify-content:center;padding:0 12px 10px;flex-wrap:wrap}
+.foot button{padding:7px 12px;font-size:12px}
+@media(max-width:560px){
+  .poster{width:92px;height:92px}
+  #prod .card{gap:10px}
+  .res{padding:6px 9px;font-size:14px}.res img{width:20px;height:20px}
+  #tabs{gap:3px;padding:6px 5px}
+  .tab{font-size:9.5px;padding:7px 1px;border-radius:11px}
+  .tab .ic{font-size:16px}
+  .hirebtn{min-width:92px}
+}
+
+/* ===== v6 UI polish: dashboard, rewards, timers ===== */
+.qhead{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.qhead h2{margin:0}
+.qtimer{background:rgba(58,43,77,.10);color:var(--plum);border-radius:20px;padding:3px 10px;font-size:11.5px;font-weight:800;white-space:nowrap}
+.hero-card{background:linear-gradient(120deg,rgba(255,155,196,.22),rgba(34,224,255,.18));border:1px solid rgba(255,255,255,.5)}
+/* KPI dashboard cards */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:8px;margin-top:4px}
+.kpi{background:linear-gradient(180deg,#fff,var(--cream2));border-radius:14px;padding:9px 10px;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.6)}
+.kpi .kl{font-size:10.5px;font-weight:800;letter-spacing:.3px;text-transform:uppercase;color:var(--slate);opacity:.8}
+.kpi .kv{font-size:17px;font-weight:900;color:var(--plum);font-variant-numeric:tabular-nums;margin-top:2px}
+.kpi.accent{background:linear-gradient(180deg,var(--gold2),var(--gold));}
+.kpi.accent .kl,.kpi.accent .kv{color:#5a3d00}
+/* login calendar */
+.logingrid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-top:4px}
+.loginday{position:relative;background:linear-gradient(180deg,#fff,var(--cream2));border-radius:11px;padding:7px 2px;text-align:center;box-shadow:var(--shadow);border:2px solid transparent;min-height:50px;display:flex;flex-direction:column;justify-content:center;gap:1px}
+.loginday .ld-day{font-size:10px;font-weight:800;color:var(--slate);opacity:.8}
+.loginday .ld-rew{font-size:12px;font-weight:900;color:var(--plum)}
+.loginday.big{background:linear-gradient(180deg,#fff,#ffe9bf);border-color:rgba(255,200,69,.6)}
+.loginday.done{opacity:.5}
+.loginday.done .ld-check{position:absolute;top:2px;right:4px;color:#2bb673;font-weight:900;font-size:11px}
+.loginday.next{border-color:var(--sakura);box-shadow:0 0 0 3px rgba(255,155,196,.25),var(--shadow);animation:pulse 1.6s infinite}
+@media(max-width:560px){ .logingrid{grid-template-columns:repeat(5,1fr)} }
+/* polish: active tab lift + panel header accent */
+.tab.active{box-shadow:0 4px 0 #d64f88,var(--shadow);transform:translateY(-1px)}
+.panel h2{position:relative}
+/* live event banner */
+.eventbar{display:flex;align-items:center;gap:10px;margin-bottom:12px;padding:10px 12px;border-radius:var(--r);
+  background:linear-gradient(120deg,rgba(255,200,69,.28),rgba(255,155,196,.28));border:1px solid rgba(255,255,255,.55);box-shadow:var(--shadow)}
+.eventbar .ev-ic{font-size:26px;line-height:1}
+.eventbar .ev-meta{flex:1;min-width:0}
+.eventbar .ev-meta b{color:var(--plum);font-size:14.5px}
+/* premiere reveal modal */
+.premiere-card{max-width:420px;padding:0;overflow:hidden}
+.starter-card{border:3px solid var(--gold);position:relative;overflow:hidden}
+.starter-ribbon{background:linear-gradient(90deg,#f6b73c,#ff7eb3);color:#fff;font-weight:900;font-size:12px;letter-spacing:.5px;text-align:center;padding:7px;margin:-2px -2px 6px;border-radius:10px 10px 0 0}
+.starter-rows{display:flex;flex-direction:column;gap:7px;margin-top:8px}
+.starter-row{background:rgba(0,0,0,.04);border-radius:10px;padding:9px 11px;font-size:13.5px;line-height:1.35}
+.flash-deal{border:2px solid #ff7a18;border-radius:14px;padding:10px 12px;margin:6px 0 4px;background:linear-gradient(135deg,#fff6ec,#ffe9d4);box-shadow:0 4px 14px rgba(255,122,24,.18)}
+.flash-row{display:flex;justify-content:space-between;align-items:center}
+.flash-tag{font-weight:900;color:#e2560a;font-size:13px;letter-spacing:.5px}
+.flash-cd{font-weight:900;font-variant-numeric:tabular-nums;color:#b23b00;background:rgba(255,122,24,.16);padding:3px 9px;border-radius:8px;font-size:13px}
+.flash-body{font-size:12.5px;color:#7a4a1e;margin-top:5px;line-height:1.35}
+#combo-meter{position:fixed;right:12px;bottom:84px;z-index:40;background:linear-gradient(135deg,#ff5a8a,#ff9b3d);color:#fff;border-radius:12px;padding:7px 11px 8px;box-shadow:0 6px 18px rgba(255,90,138,.4);min-width:150px;animation:cmpop .3s ease backwards;pointer-events:none}
+#combo-meter .cm-top{font-weight:900;font-size:13px;letter-spacing:.4px;text-shadow:0 1px 2px rgba(0,0,0,.18)}
+#combo-meter .cm-bar{height:6px;border-radius:5px;background:rgba(255,255,255,.35);margin-top:5px;overflow:hidden}
+#combo-meter .cm-bar i{display:block;height:100%;background:#fff;transition:width .9s linear}
+@keyframes cmpop{from{opacity:0;transform:translateY(8px) scale(.9)}to{opacity:1;transform:none}}
+.prem-banner{position:relative;height:200px;background:#2b2440 center/cover;display:flex;flex-direction:column;justify-content:flex-end;padding:14px}
+.prem-grad{position:absolute;inset:0;background:linear-gradient(rgba(26,20,38,0) 30%, rgba(26,20,38,.86))}
+.prem-tag{position:absolute;top:12px;left:12px;background:var(--gold);color:#4a3200;font-weight:900;font-size:11px;letter-spacing:1px;padding:3px 10px;border-radius:20px;z-index:2}
+.prem-stars{position:relative;z-index:2;color:var(--gold);font-size:22px;letter-spacing:3px;text-shadow:0 2px 6px rgba(0,0,0,.6)}
+.prem-title{position:relative;z-index:2;color:#fff;font-size:24px;font-weight:900;line-height:1.1;text-shadow:0 2px 10px rgba(0,0,0,.7);margin-top:4px;animation:popin .5s ease}
+.prem-sub{position:relative;z-index:2;color:#ffe39a;font-size:12px;font-weight:700;margin-top:4px}
+@keyframes popin{from{transform:scale(.85);opacity:0}}
+.prem-review{text-align:center;font-style:italic;color:var(--slate);font-size:14px;padding:12px 16px 4px}
+.prem-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;padding:6px 14px 0}
+.prem-scene{height:46px;border-radius:8px;background:#2b2440 center/cover;box-shadow:inset 0 0 0 2px rgba(255,255,255,.5);animation:scenein .55s cubic-bezier(.2,.9,.25,1) backwards;position:relative;overflow:hidden}
+.prem-scene::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%);transform:translateX(-120%);animation:sceneshine 2.4s ease-in-out infinite}
+.prem-scene:nth-child(1){animation-delay:.05s}.prem-scene:nth-child(2){animation-delay:.13s}.prem-scene:nth-child(3){animation-delay:.21s}.prem-scene:nth-child(4){animation-delay:.29s}.prem-scene:nth-child(5){animation-delay:.37s}.prem-scene:nth-child(6){animation-delay:.45s}.prem-scene:nth-child(7){animation-delay:.53s}.prem-scene:nth-child(8){animation-delay:.61s}
+.prem-scene:nth-child(odd)::after{animation-delay:.5s}.prem-scene:nth-child(3n)::after{animation-delay:1s}
+@keyframes scenein{from{opacity:0;transform:translateY(10px) scale(.86)}to{opacity:1;transform:none}}
+@keyframes sceneshine{0%,55%{transform:translateX(-120%)}80%,100%{transform:translateX(120%)}}
+.prem-banner{animation:kenburns 14s ease-out both}
+@keyframes kenburns{from{background-size:108%}to{background-size:124%}}
+.prem-shine{position:absolute;inset:0;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.45) 50%,transparent 60%);transform:translateX(-130%);animation:bannerShine 1.4s ease-out .2s 1 forwards;pointer-events:none;z-index:3}
+@keyframes bannerShine{to{transform:translateX(130%)}}
+.prem-title{animation:titleIn .7s cubic-bezier(.2,.9,.2,1) both}
+@keyframes titleIn{from{opacity:0;transform:translateY(14px) scale(.9);letter-spacing:4px}to{opacity:1;transform:none}}
+.prem-now{display:flex;align-items:center;gap:7px;justify-content:center;font-weight:800;font-size:11px;letter-spacing:1.5px;color:#ff5a8a;padding:8px 0 0;text-transform:uppercase}
+.prem-now i{width:8px;height:8px;border-radius:50%;background:#ff3b6b;box-shadow:0 0 0 0 rgba(255,59,107,.6);animation:recpulse 1.1s infinite}
+@keyframes recpulse{0%{box-shadow:0 0 0 0 rgba(255,59,107,.6)}100%{box-shadow:0 0 0 9px rgba(255,59,107,0)}}
+.prem-stats{display:flex;gap:10px;padding:12px 14px 0}
+
+/* ast18 footer cleanup */
+.foot{gap:6px;padding:2px 12px 12px;align-items:center}
+.foot button,.foot a,.foot select{font-size:11px;padding:5px 9px}
+#btn-save{display:none}
+.foot #btn-mute,.foot #btn-reset,.foot a,.foot #lang-sel{background:transparent;color:var(--plum);opacity:.55;border:none}
+.foot #btn-mute:hover,.foot #btn-reset:hover,.foot a:hover{opacity:.95}
+.foot [data-act="share"]{background:linear-gradient(90deg,#ff7eb6,#ffc845);color:#2a1838;font-weight:700;border-radius:999px;padding:6px 14px;box-shadow:0 2px 8px rgba(255,126,182,.35)}
+.foot [data-act="share"] #share-bonus{color:#2a1838;font-weight:800}
+
+/* ast19 HUD polish */
+#top{gap:7px;padding:10px 12px 8px;align-items:stretch}
+.res{gap:7px;padding:6px 12px;border-radius:13px;box-shadow:0 3px 10px rgba(28,20,40,.16);min-height:42px}
+.res img{width:22px;height:22px;border-radius:50%;object-fit:cover;flex:none}
+.res>span{display:flex;align-items:center;gap:5px;line-height:1}
+.res .v{font-size:15px;font-weight:800}
+.res small{display:none}
+.res::after{font:800 9px/1 'Segoe UI',system-ui;letter-spacing:.08em;text-transform:uppercase;opacity:.5;align-self:center}
+.res.yen::after{content:'Yen'}
+.res.fans::after{content:'Fans'}
+.res.hype::after{content:'Hype'}
+.res.gems::after{content:'Gems'}
+.res.yen{border-left:3px solid var(--gold)}
+.res.fans{border-left:3px solid var(--sakura)}
+.res.hype{border-left:3px solid var(--cyan)}
+.res.gems{border-left:3px solid #8a6bff}
+#trendbar{margin-left:auto;background:var(--panel);backdrop-filter:var(--panelblur);padding:0 13px;border-radius:13px;box-shadow:0 3px 10px rgba(28,20,40,.16);font-size:13px;display:flex;align-items:center;gap:5px}
+@media(max-width:600px){
+ #top{gap:6px;padding:8px 8px 6px}
+ .res{padding:5px 9px;min-height:36px;gap:5px}
+ .res img{width:18px;height:18px}
+ .res .v{font-size:13px}
+ .res::after{font-size:8px}
+ #trendbar{font-size:11px;padding:0 9px;margin-left:0;order:9}
+}
+</style>
+<script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script></head>
+<body>
+<div id="app">
+  <div id="top">
+    <div class="res yen"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063653_0cab503b-2e31-4345-99ff-ae5e7feaf8cf.jpeg" alt=""><span><span class="v" id="r-yen">3.69K</span> <small>¥</small></span></div>
+    <div class="res fans"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063657_ea737528-07a1-4505-8b28-4d3a333429a0.png" alt=""><span class="v" id="r-fans">42</span></div>
+    <div class="res hype"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063700_a7e9a3b2-0ce9-4893-9280-ac8532498a22.png" alt=""><span class="v" id="r-hype">10</span></div>
+    <div class="res gems"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260615_090332_3e1dbb67-bab0-488a-abd4-5c9b12bc2740.png" alt=""><span class="v" id="r-gems">25</span></div>
+    <div id="trendbar"><span class="spark">📈</span> Trending: <b id="trend">Slice of Life</b></div>
+  </div>
+  <div id="goal"><span id="goal-txt">🎯 Reach 120 Fans for your own TV Series</span><div class="bar"><i id="goal-bar" style="width: 22%;"></i></div></div>
+  <div id="main"><div class="eventbar"><span class="ev-ic">☕</span><div class="ev-meta"><b>Cozy Weekend</b><div class="muted">+20% Fans &amp; +20% Yen</div></div><span class="qtimer">⏳ 20h 42m</span></div><div class="panel"><div class="qhead"><h2>📋 Daily Quests</h2><span class="qtimer">⏳ resets in 20h 42m</span></div><div class="uprow"><div class="meta"><h4 style="font-size:14px">Spend 15 Hype</h4>
+      <div class="progress" style="height:8px;margin:5px 0"><i style="width:0%"></i></div>
+      <div class="muted">0/15 · reward +3 💎</div></div>
+      <button class="btn-gold hirebtn" data-quest="0" disabled="">…</button></div><div class="uprow"><div class="meta"><h4 style="font-size:14px">Premiere 3 anime</h4>
+      <div class="progress" style="height:8px;margin:5px 0"><i style="width:100%"></i></div>
+      <div class="muted">3/3 · reward +4 💎</div></div>
+      <button class="btn-gold hirebtn" data-quest="1" disabled="">✓</button></div><div class="uprow"><div class="meta"><h4 style="font-size:14px">Run 2 ad campaigns</h4>
+      <div class="progress" style="height:8px;margin:5px 0"><i style="width:0%"></i></div>
+      <div class="muted">0/2 · reward +3 💎</div></div>
+      <button class="btn-gold hirebtn" data-quest="2" disabled="">…</button></div><div class="uprow"><div class="meta"><h4 style="font-size:14px">Greenlight 2 projects</h4>
+      <div class="progress" style="height:8px;margin:5px 0"><i style="width:100%"></i></div>
+      <div class="muted">2/2 · reward +3 💎</div></div>
+      <button class="btn-gold hirebtn" data-quest="3" disabled="">✓</button></div></div><div class="panel"><h2 style="font-size:15px">🎬 Studio 1</h2><div class="card">
+      <div class="poster" data-act="tapboost" data-slot="0" style="background-image:url(https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260615_183521_3cb85d44-f9b7-4ed3-9b3e-e0938ab19da3.png);cursor:pointer" title="Tap to boost!"><div class="gtag">Action · 👆</div></div>
+      <div class="pinfo">
+        <h3>“Arena of the Crimson: Second Star”</h3>
+        <div class="muted" style="margin-bottom:2px">Web Series · Action</div>
+        <div class="muted">ETA ~3s · projected ★★☆☆☆</div>
+        <div class="progress"><i style="width:81.19999999999999%"></i></div>
+        <div class="dims">
+          <div class="dim">Story <div class="db"><i style="width:47.61904761904762%"></i></div></div><div class="dim">Animation <div class="db"><i style="width:85.71428571428572%"></i></div></div><div class="dim">Direction <div class="db"><i style="width:0%"></i></div></div><div class="dim">Voice <div class="db"><i style="width:0%"></i></div></div>
+        </div>
+        <div class="row" style="margin-top:10px;flex-wrap:wrap;gap:8px">
+          <button class="btn-cyan" data-rush="0">⚡ Rush (Hype) · 5</button><button class="btn-gold" data-act="instant" data-slot="0">⏩ Premiere Now · 💎2</button>
+        </div>
+      </div></div></div><div class="panel" style="background-image:linear-gradient(rgba(251,243,230,.84),rgba(251,243,230,.93)),url(https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260615_090333_353ef636-ad49-44bb-9447-8653a12f9eae.png);background-size:cover;background-position:center"><h2>📊 Studio Dashboard</h2>
+     <div class="kpis">
+       <div class="kpi accent"><div class="kl">🎖️ Studio Lv.</div><div class="kv">1 <small style="font-size:11px;opacity:.7">+2%</small></div></div>
+       <div class="kpi accent"><div class="kl">Studio Value</div><div class="kv">140</div></div>
+       <div class="kpi"><div class="kl">Income ×</div><div class="kv">1.02</div></div>
+       <div class="kpi"><div class="kl">Output/s</div><div class="kv">16</div></div>
+       <div class="kpi"><div class="kl">Premieres</div><div class="kv">7</div></div>
+       <div class="kpi"><div class="kl">⭐ Stars</div><div class="kv">1</div></div>
+       <div class="kpi"><div class="kl">Slots</div><div class="kv">1/1</div></div>
+       <div class="kpi"><div class="kl">Legacy</div><div class="kv">0 <small style="font-size:11px;opacity:.7">+0%</small></div></div>
+       <div class="kpi"><div class="kl">Best Value</div><div class="kv">140</div></div>
+     </div>
+     <div style="margin-top:10px"><div class="muted" style="display:flex;justify-content:space-between;font-weight:700;font-size:12px"><span>🎖️ Studio Lv. 1 → 2</span><span>219 fans to go</span></div><div style="height:9px;border-radius:6px;background:rgba(0,0,0,.12);overflow:hidden;margin-top:3px"><div style="height:100%;width:0.9%;background:linear-gradient(90deg,#f6b73c,#ff7eb3)"></div></div></div>
+     
+     <button class="btn-cyan" id="a-over" style="margin-top:10px;width:100%">🚀 Overdrive (Hype) · 15 Hype (all lines, 2× speed 30s)</button>
+     <div class="muted" style="margin-top:6px">Reach 25K fans to unlock Studio Reboot (prestige).</div>
+   </div></div>
+  <div id="tabs"><button class="tab active" data-tab="produce"><span class="ic">🎬</span>Produce</button><button class="tab " data-tab="quests"><span class="ic">📋</span>Quests</button><button class="tab " data-tab="staff"><span class="ic">👥</span>Staff</button><button class="tab " data-tab="stars"><span class="ic">⭐</span>Stars</button><button class="tab " data-tab="research"><span class="ic">🔬</span>Research</button><button class="tab " data-tab="studio"><span class="ic">🏢</span>Studio</button><button class="tab " data-tab="market"><span class="ic">📣</span>Marketing</button><button class="tab " data-tab="store"><span class="ic">💎</span>Store</button></div>
+  <div class="foot">
+    <button class="btn-ghost" data-act="share">📣 Share <small id="share-bonus">+25💎</small></button>
+    <button class="btn-ghost" id="btn-mute">🔊 Sound: On</button>
+    <button class="btn-ghost" id="btn-save">💾 Save</button>
+    <button class="btn-ghost" id="btn-reset">↺ Reset</button>
+    <a class="btn-ghost" href="privacy.html" target="_blank" rel="noopener" style="text-decoration:none">Privacy</a>
+    <a class="btn-ghost" href="terms.html" target="_blank" rel="noopener" style="text-decoration:none">Terms</a>
+  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select></div>
+  <div id="toasts"></div>
+</div>
+
+<div class="overlay" id="start" style="display: none;">
+  <div class="card-modal">
+    <svg class="logo" viewBox="0 0 120 120" width="120" height="120" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 6px 12px rgba(0,0,0,.3))" aria-label="Anime Studio Tycoon">
+      <circle cx="60" cy="60" r="56" fill="#3a2b4d"></circle>
+      <circle cx="60" cy="60" r="56" fill="none" stroke="#ffc845" stroke-width="5"></circle>
+      <g fill="#ffe39a">
+        <circle cx="60" cy="20" r="6"></circle><circle cx="100" cy="60" r="6"></circle><circle cx="60" cy="100" r="6"></circle><circle cx="20" cy="60" r="6"></circle>
+        <circle cx="88" cy="32" r="5"></circle><circle cx="88" cy="88" r="5"></circle><circle cx="32" cy="88" r="5"></circle><circle cx="32" cy="32" r="5"></circle>
+      </g>
+      <g transform="translate(60 60)" fill="#ff9bc4">
+        <ellipse cx="0" cy="-22" rx="9" ry="15"></ellipse>
+        <g transform="rotate(72)"><ellipse cx="0" cy="-22" rx="9" ry="15"></ellipse></g>
+        <g transform="rotate(144)"><ellipse cx="0" cy="-22" rx="9" ry="15"></ellipse></g>
+        <g transform="rotate(216)"><ellipse cx="0" cy="-22" rx="9" ry="15"></ellipse></g>
+        <g transform="rotate(288)"><ellipse cx="0" cy="-22" rx="9" ry="15"></ellipse></g>
+      </g>
+      <circle cx="60" cy="60" r="9" fill="#ffc845"></circle>
+    </svg>
+    <h1>Anime Studio Tycoon</h1>
+    <p id="start-tagline">From a one-room studio to a global anime empire</p>
+    <label id="start-lang-label" style="display:block;font-size:12px;font-weight:800;color:var(--plum);margin:4px 0 4px">🌐 Language</label>
+    <select id="start-lang" style="width:100%;padding:11px;border-radius:12px;border:2px solid rgba(70,80,107,.25);font-weight:700;font-size:14px;margin-bottom:12px;background:#fff">
+      <option value="en">English</option>
+      <option value="es">Español</option>
+      <option value="pt">Português</option>
+      <option value="fr">Français</option>
+      <option value="de">Deutsch</option>
+      <option value="ja">日本語</option>
+    </select>
+    <button class="btn-primary" id="btn-start" style="font-size:17px;width:100%">▶ Enter the Studio</button>
+    <p id="start-legal" style="font-size:11px;opacity:.72;margin:12px 0 0;line-height:1.5">By entering, you agree to our <a href="terms.html" target="_blank" rel="noopener">Terms &amp; EULA</a> and <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</p>
+  </div>
+</div>
+
+<div class="overlay" id="offline" style="display:none">
+  <div class="card-modal">
+    <h1 style="font-size:20px">While you were away…</h1>
+    <div class="offlist" id="offlist"></div>
+    <button class="btn-gold" id="btn-offclose" style="width:100%">Collect &amp; Continue</button>
+  </div>
+</div>
+
+<div class="overlay" id="daily" style="display:none">
+  <div class="card-modal">
+    <h1 style="font-size:22px">🎁 Daily Reward</h1>
+    <div id="daily-body"></div>
+    <button class="btn-gold" data-act="daily-close" style="width:100%;margin-top:8px">Claim &amp; Play</button>
+  </div>
+</div>
+
+<div class="overlay" id="reveal" style="display:none">
+  <div class="card-modal">
+    <div id="reveal-body"></div>
+    <button class="btn-primary" data-act="reveal-close" style="width:100%;margin-top:8px">✨ Awesome!</button>
+  </div>
+</div>
+
+<div class="overlay" id="premiere" style="display:none">
+  <div class="card-modal premiere-card">
+    <div id="premiere-body"></div>
+    <button class="btn-gold" data-act="premiere-close" style="margin:14px;width:calc(100% - 28px);font-size:16px">🎬 To the red carpet!</button>
+  </div>
+</div>
+
+<div class="overlay" id="decision" style="display:none">
+  <div class="card-modal">
+    <div id="decision-body"></div>
+  </div>
+</div>
+
+<div class="overlay" id="howto" style="display:none">
+  <div class="card-modal">
+    <h1 style="font-size:22px">🎬 How to Play</h1>
+    <div class="offlist" style="margin:10px 0">
+      <div><span>1 · 👥 Hire staff</span><b>build output</b></div>
+      <div><span>2 · 🎬 Greenlight</span><b>genre + project</b></div>
+      <div><span>3 · 🎉 Release</span><b>earn ¥ &amp; Fans</b></div>
+      <div><span>4 · 🔁 Reinvest</span><b>upgrades · ⭐stars · slots</b></div>
+    </div>
+    <div class="muted" style="text-align:center;margin-bottom:14px">Match the 🔥 trending genre for a bonus. Fans unlock bigger projects, all the way to mythic franchises.</div>
+    <button class="btn-primary" data-act="howto-close" style="width:100%;font-size:16px">Let's go! ▶</button>
+  </div>
+</div>
+
+<script type="module">
+import { STR, LANGS, LANG_NAMES, setLang, initialLang } from "./strings.js";
+setLang(initialLang());
+
+/* robustness: never show a broken-image icon — failed images get a clean on-brand tile */
+addEventListener("error", e=>{
+  const t=e.target;
+  if(t && t.tagName==="IMG" && !t.dataset.fb){
+    t.dataset.fb="1"; t.removeAttribute("src");
+    t.style.background="linear-gradient(135deg,#ffd6e7,#ff9bc4)";
+  }
+}, true);
+
+/* platform: native iOS/Android builds hide external-link purchases (App Store rule 3.1.1).
+   The Capacitor wrapper sets window.NATIVE_IOS=true; web keeps the Gumroad store. */
+const NATIVE = !!(window.NATIVE_IOS || (window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform()));
+const STORE_PAYMENTS = true; // store always visible; buyReal routes web→checkout, native→StoreKit IAP
+
+/* ========================= CONFIG (balance data) ========================= */
+const SAVE_KEY = "anime_studio_tycoon_v1";
+const OFFLINE_CAP = 8*3600; // seconds
+
+const GENRES = ["Action","Romance","Fantasy","Sci-Fi","Comedy","Slice of Life"];
+
+/* ---- Creative anime title generator (broad appeal, all ages) ---- */
+const TITLE_BANK = {
+  "Action":      { a:["Blazing","Iron","Crimson","Thunder","Final","Rising","Shattered","Phantom"], n:["Brigade","Blade","Fist","Champion","Vanguard","Onslaught","Arena","Protocol"] },
+  "Romance":     { a:["Sweet","Tender","Cherry","Moonlit","First","Golden","Whispered","Eternal"], n:["Hearts","Confession","Spring","Letter","Promise","Daydream","Serenade","Bloom"] },
+  "Fantasy":     { a:["Ancient","Starbound","Hidden","Crystal","Forgotten","Emerald","Sky","Wandering"], n:["Kingdom","Spell","Familiar","Academy","Saga","Realm","Grimoire","Wings"] },
+  "Sci-Fi":      { a:["Neon","Quantum","Zero","Orbital","Synthetic","Stellar","Hyper","Last"], n:["Frontier","Circuit","Genesis","Drift","Protocol","Horizon","Reactor","Signal"] },
+  "Comedy":      { a:["Totally","Super","Wacky","Lucky","Clumsy","Goofy","Snack","Maximum"], n:["Club","Chaos","Squad","Mishap","Cafe","Holiday","Panic","Friends"] },
+  "Slice of Life":{ a:["Quiet","Cozy","Sunny","Little","Everyday","Gentle","Seaside","Warm"], n:["Mornings","Diary","Cafe","Days","Garden","Lantern","Footsteps","Season"] },
+};
+const TITLE_TAILS = ["","","",": Reignited",": Encore",": After the Rain",": Second Star","X","∞"," — Origins"];
+function makeTitle(genre){
+  const b=TITLE_BANK[genre]||TITLE_BANK["Action"];
+  const a=b.a[Math.floor(Math.random()*b.a.length)];
+  const n=b.n[Math.floor(Math.random()*b.n.length)];
+  const tail=TITLE_TAILS[Math.floor(Math.random()*TITLE_TAILS.length)];
+  const forms=[`${a} ${n}`, `${n} of the ${b.a[Math.floor(Math.random()*b.a.length)]}`, `${a} ${n}`];
+  return forms[Math.floor(Math.random()*forms.length)]+tail;
+}
+/* Per-genre poster art (on-style generated key visuals) */
+const _PCDN="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/";
+/* Big per-genre poster pool — every production pulls a distinct, on-theme key visual. */
+const POSTER_POOL={
+  "Action":[
+    "hf_20260615_183520_5f614e0c-17ed-4762-9e20-dd33a0ee5546.png","hf_20260615_183521_3cb85d44-f9b7-4ed3-9b3e-e0938ab19da3.png","hf_20260615_183520_276d2ba2-6ce8-4ba0-acf2-0cb366b31670.png",
+    "hf_20260615_183522_5a6b858a-25a2-4ef7-b6e3-17bb0d523634.png","hf_20260615_183522_05e2ef2a-72d7-4fd0-93ad-398efc0550da.png","hf_20260615_183522_afa52e1f-3afb-4324-88e7-9240093b9544.png",
+    "hf_20260615_183556_a9b8c0f1-0aba-4f05-b1b9-eb889227c5b1.png","hf_20260615_183556_d788aad2-3669-4aae-9166-72f1e4ef60c4.png","hf_20260615_183556_43aa7bb7-79a2-4a69-8835-699d015689ba.png",
+    "hf_20260615_183559_fcff0c90-4b90-45fe-987b-49ea69143146.png","hf_20260615_183559_5326d05f-f2ec-44bc-988a-7a19676c241d.png","hf_20260615_090335_47fc2a36-b9f6-4166-ade0-b8d78434ef32.png"],
+  "Romance":[
+    "hf_20260615_183524_167f57e4-ed36-4fa1-b2a6-39f99e9c494e.png","hf_20260615_183524_9e981456-8584-46a8-bbbf-e1e19d1f55bd.png","hf_20260615_183524_ecf9e163-6ada-4a7a-91bd-b3554647fbbf.png",
+    "hf_20260615_090338_3fa6e462-d4cf-4c39-bbfe-50006fefa603.png"],
+  "Fantasy":[
+    "hf_20260615_183525_94afb377-e0cd-49f5-8556-1242820acb8b.png","hf_20260615_183525_524c0813-83e2-4f6e-9838-3a992acaadbe.png","hf_20260615_183525_4157ae8d-2db5-4407-80d0-f964b2597a68.png",
+    "hf_20260615_183555_a77871cf-941b-4a6a-b315-ea91f47238eb.png","hf_20260615_183555_0b86fd9f-155a-47a7-9144-628c0ba7e36b.png","hf_20260615_183555_5c29721c-6ac2-4c7e-b024-fa3998fec8e8.png",
+    "hf_20260615_090346_4be94cca-e6a8-4bbe-964e-85903036a32f.png"],
+  "Sci-Fi":[
+    "hf_20260615_183536_53d33e4f-f832-4560-bc65-e99e9571f01c.png","hf_20260615_183536_9e05cfea-df51-4b8e-8d8c-5d9c0c68008b.png","hf_20260615_183536_8076a42e-5fae-44c3-a8f3-c5d36c5574d6.png",
+    "hf_20260615_183538_728795ea-34b0-471f-8768-ea5bff12874b.png","hf_20260615_090349_8daf2954-c8c1-4452-82e8-8b0d5ebaf39e.png"],
+  "Comedy":[
+    "hf_20260615_183540_fd181bbe-3f44-431f-80c9-1f2876977f1f.png","hf_20260615_090351_62f5bf3e-ede7-4135-9d86-244a000e6dbf.png"],
+  "Slice of Life":[
+    "hf_20260615_183542_beb43610-a908-47de-90cc-a93532faf0ec.png","hf_20260615_090353_14e1b911-71c7-4416-863d-26e463a4563b.png"],
+};
+for(const g in POSTER_POOL) POSTER_POOL[g]=POSTER_POOL[g].map(f=>_PCDN+f);
+function pickPoster(genre){ const a=POSTER_POOL[genre]; return (a&&a.length)?a[Math.floor(Math.random()*a.length)]:DEFAULT_POSTER; }
+const GENRE_POSTER=Object.fromEntries(Object.keys(POSTER_POOL).map(g=>[g,POSTER_POOL[g][0]]));
+const DEFAULT_POSTER="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_062729_7bbe33da-ecf7-41a5-ac40-4b8270468fd8.jpeg";
+const DASHBOARD_BG=_PCDN+"hf_20260615_090333_353ef636-ad49-44bb-9447-8653a12f9eae.png";
+const GEMS_ICON=_PCDN+"hf_20260615_090332_3e1dbb67-bab0-488a-abd4-5c9b12bc2740.png";
+
+const ROLES = {
+  animator:{ name:"Animator",     img:"https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063641_548ffa02-f73f-497b-8207-eebf6795bd1b.jpeg",   dim:"anim",      dimName:"Animation", base:200, growth:1.17, power:3.0, salary:1.5 },
+  writer:  { name:"Writer",       img:"https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063647_02e8cae8-6ded-4196-a7b2-7898f2d68d3e.jpeg",     dim:"story",     dimName:"Story",     base:280, growth:1.17, power:2.6, salary:1.5 },
+  director:{ name:"Director",     img:"https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg",   dim:"direction", dimName:"Direction", base:520, growth:1.19, power:2.6, salary:2.6 },
+  voice:   { name:"Voice Actor",  img:"https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063650_01c844e6-d869-46ac-826d-ad45842583db.jpeg", dim:"voice",     dimName:"Voice",     base:380, growth:1.17, power:2.6, salary:2.0 },
+  producer:{ name:"Producer",     img:"https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063653_0cab503b-2e31-4345-99ff-ae5e7feaf8cf.jpeg", dim:"produce",   dimName:"Throughput", base:900, growth:1.20, power:4.2, salary:3.0, note:"Raw output — speeds every production. Doesn't change star rating." },
+};
+const DIMS = ["story","anim","direction","voice"];
+const DIM_OF_ROLE = Object.fromEntries(Object.entries(ROLES).map(([k,v])=>[v.dim,k]));
+
+const PROJECTS = [
+  { id:0, name:"Short Film",      unlock:0,    cost:100,    work:50,    talent:3,   base:700,     fans:6,    tier:0 },
+  { id:1, name:"Web Series",      unlock:20,   cost:400,    work:180,   talent:7,   base:2800,    fans:22,   tier:1 },
+  { id:2, name:"TV Series",       unlock:120,  cost:1500,   work:550,   talent:16,  base:11000,   fans:75,   tier:2 },
+  { id:3, name:"OVA",            unlock:500,  cost:6000,   work:1600,  talent:34,  base:48000,   fans:280,  tier:3 },
+  { id:4, name:"Feature Film",    unlock:2200, cost:26000,  work:4800,  talent:70,  base:210000,  fans:1100, tier:4 },
+  { id:5, name:"Blockbuster",     unlock:9000, cost:120000, work:13000, talent:140, base:1050000, fans:4800, tier:5 },
+];
+/* endless scaling: extend tiers beyond Blockbuster procedurally */
+(function(){
+  const names=["Movie Trilogy","Streaming Original","Cinematic Universe","Global Franchise","Legendary Saga","Mythic Epic","Eternal Masterwork"];
+  let prev=PROJECTS[PROJECTS.length-1];
+  for(let k=0;k<names.length;k++){
+    const p={ id:PROJECTS.length, name:names[k],
+      unlock:Math.round(prev.unlock*4.2), cost:Math.round(prev.cost*4.6),
+      work:Math.round(prev.work*3.4), talent:Math.round(prev.talent*2.0),
+      base:Math.round(prev.base*5.0), fans:Math.round(prev.fans*4.2), tier:prev.tier+1 };
+    PROJECTS.push(p); prev=p;
+  }
+})();
+
+/* ---- Star Talent (gacha) ---- */
+const STAR_RARITY={
+  Common:   {power:5,   w:58, color:"#8b93ad"},
+  Rare:     {power:15,  w:29, color:"#3fa9ff"},
+  Epic:     {power:42,  w:11, color:"#b06bff"},
+  Legendary:{power:130, w:2,  color:"#ffba38"}
+};
+const CDN="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/";
+const STAR_IMG={
+  animator:CDN+"hf_20260614_085036_f8c84bae-b16c-4ca6-9119-b786f60fc171.png",
+  writer:  CDN+"hf_20260614_085037_9a47c691-c39a-4e17-8f58-9e93a69e48d9.png",
+  voice:   CDN+"hf_20260614_085038_1418c8db-fb1b-4740-bc20-a0e0ab125912.png",
+  director:CDN+"hf_20260614_085039_c08d593f-2c52-4e0d-9a3e-3054652a9b43.png",
+};
+const STAR_POOL=[
+  {id:"aki",name:"Aki Mizuno",role:"animator",rarity:"Common",img:STAR_IMG.animator},
+  {id:"ren",name:"Ren Sato",role:"writer",rarity:"Common",img:STAR_IMG.writer},
+  {id:"yui",name:"Yui Tanaka",role:"voice",rarity:"Common",img:STAR_IMG.voice},
+  {id:"sho",name:"Sho Endo",role:"director",rarity:"Common",img:STAR_IMG.director},
+  {id:"mei",name:"Mei Kato",role:"animator",rarity:"Rare",img:STAR_IMG.animator},
+  {id:"haru",name:"Haru Ito",role:"writer",rarity:"Rare",img:STAR_IMG.writer},
+  {id:"nao",name:"Nao Hayashi",role:"voice",rarity:"Rare",img:STAR_IMG.voice},
+  {id:"kai",name:"Kai Mori",role:"director",rarity:"Rare",img:STAR_IMG.director},
+  {id:"rin",name:"Rin Akiyama",role:"animator",rarity:"Epic",img:CDN+"hf_20260614_085031_5c0eb707-9184-4040-9588-960c51a3e8df.png"},
+  {id:"sora",name:"Sora Fujimoto",role:"writer",rarity:"Epic",img:CDN+"hf_20260614_085032_737be893-f6fb-4e5e-b62d-ae8b04387324.png"},
+  {id:"hana",name:"Hana Kurosawa",role:"voice",rarity:"Epic",img:CDN+"hf_20260614_085034_154bd69f-e2de-4992-b94a-200ac970ad01.png"},
+  {id:"taki",name:"Takeshi Ono",role:"director",rarity:"Epic",img:CDN+"hf_20260614_085035_7e7e31d5-d075-42b0-ad34-03754136650e.png"},
+  {id:"miyo",name:"Miyo Hoshino ☆",role:"animator",rarity:"Legendary",img:CDN+"hf_20260614_085026_bd55ef0f-9a74-450b-80a8-3e8df889df7b.png"},
+  {id:"kenji",name:"Kenji Arata ☆",role:"director",rarity:"Legendary",img:CDN+"hf_20260614_085028_185cda31-4216-4bf4-bdc1-f04348552630.png"},
+  {id:"luna",name:"Luna Sakaki ☆",role:"voice",rarity:"Legendary",img:CDN+"hf_20260614_085029_5c50c5ca-19d0-4290-b000-516a1c3fb676.png"},
+  {id:"yuki",name:"Yuki Amano ☆",role:"writer",rarity:"Legendary",img:CDN+"hf_20260614_085030_3a53863b-061f-46a6-a648-261f4e73c746.png"},
+  {id:"emi",name:"Emi Nakano",role:"animator",rarity:"Common",img:STAR_IMG.animator},
+  {id:"leo",name:"Leo Park",role:"writer",rarity:"Common",img:STAR_IMG.writer},
+  {id:"mai",name:"Mai Suzuki",role:"voice",rarity:"Common",img:STAR_IMG.voice},
+  {id:"dan",name:"Dan Reyes",role:"director",rarity:"Common",img:STAR_IMG.director},
+  {id:"ava",name:"Ava Lindqvist",role:"voice",rarity:"Rare",img:STAR_IMG.voice},
+  {id:"jun",name:"Jun Watanabe",role:"animator",rarity:"Rare",img:STAR_IMG.animator},
+  {id:"omar",name:"Omar Haddad",role:"director",rarity:"Rare",img:STAR_IMG.director},
+  {id:"isa",name:"Isabella Romano",role:"writer",rarity:"Epic",img:CDN+"hf_20260614_085032_737be893-f6fb-4e5e-b62d-ae8b04387324.png"},
+  {id:"kira",name:"Kira Volkova",role:"voice",rarity:"Epic",img:CDN+"hf_20260614_085034_154bd69f-e2de-4992-b94a-200ac970ad01.png"},
+  {id:"theo",name:"Theo Bennett",role:"animator",rarity:"Epic",img:CDN+"hf_20260614_085031_5c0eb707-9184-4040-9588-960c51a3e8df.png"},
+];
+const SCOUT_GEMS=8;                 // premium scout (full odds)
+function castingCost(){ return Math.ceil(2000*Math.pow(1.25, (S.stars?S.stars.length:0))); } // yen casting (common/rare)
+
+/* ---- Daily Quests ---- */
+const QUEST_POOL=[
+  {id:"rel",  metric:"releases",  goals:[3,5,8],          reward:4, desc:g=>`Premiere ${g} anime`},
+  {id:"yen",  metric:"yen",       goals:[8000,30000,120000], reward:4, desc:g=>`Earn ¥${fmt(g)}`},
+  {id:"camp", metric:"campaigns", goals:[2,3],            reward:3, desc:g=>`Run ${g} ad campaigns`},
+  {id:"hire", metric:"hires",     goals:[3,5],            reward:3, desc:g=>`Hire ${g} staff`},
+  {id:"hype", metric:"hypeSpent", goals:[15,30],          reward:3, desc:g=>`Spend ${g} Hype`},
+  {id:"scout",metric:"scouts",    goals:[1,2],            reward:4, desc:g=>`Scout ${g} talent`},
+  {id:"green",metric:"greenlit",  goals:[2,4,6],          reward:3, desc:g=>`Greenlight ${g} projects`},
+  {id:"tap",  metric:"taps",      goals:[30,75,150],      reward:3, desc:g=>`Tap-boost ${g} times`},
+  {id:"big",  metric:"yen",       goals:[400000,1000000], reward:6, desc:g=>`Earn a huge ¥${fmt(g)}`},
+];
+
+const UPGRADES = {
+  tablets:  { name:"Drawing Tablets",  desc:"+8% production speed / level",  base:800,   growth:1.6,  ic:"🖊️" },
+  render:   { name:"Render Farm",      desc:"+15% production speed / level", base:4500,  growth:1.7,  ic:"🖥️" },
+  sound:    { name:"Sound Studio",     desc:"+6% quality output / level",    base:2600,  growth:1.6,  ic:"🎙️" },
+  marketing:{ name:"Marketing Dept.",  desc:"+10% Yen per release / level",  base:3200,  growth:1.65, ic:"📣" },
+  agency:   { name:"Talent Agency",    desc:"-5% hiring cost / level (max 60%)", base:5200, growth:1.8, ic:"🤝" },
+};
+
+const CAMPAIGNS = [
+  { name:"Flyer Drop",     cost:200,    fans:5,     ic:"📄" },
+  { name:"Online Ads",     cost:2000,   fans:60,    ic:"💻" },
+  { name:"TV Spot",        cost:25000,  fans:900,   ic:"📺" },
+  { name:"Viral Campaign", cost:300000, fans:12000, ic:"🌐" },
+];
+
+/* ---- Weekly Quests (bigger goals, bigger rewards, reset every week) ---- */
+const WEEKLY_POOL=[
+  {id:"w_rel",  metric:"releases",  goals:[20,35],            reward:14, desc:g=>`Premiere ${g} anime this week`},
+  {id:"w_yen",  metric:"yen",       goals:[1500000,5000000],  reward:16, desc:g=>`Earn ¥${fmt(g)} this week`},
+  {id:"w_scout",metric:"scouts",    goals:[6,10],             reward:14, desc:g=>`Scout ${g} talent this week`},
+  {id:"w_green",metric:"greenlit",  goals:[15,25],            reward:12, desc:g=>`Greenlight ${g} projects this week`},
+  {id:"w_camp", metric:"campaigns", goals:[8,14],             reward:12, desc:g=>`Run ${g} ad campaigns this week`},
+  {id:"w_hire", metric:"hires",     goals:[15,25],            reward:12, desc:g=>`Hire ${g} staff this week`},
+];
+/* ---- 30-Day Login Calendar (rotates every month) ---- */
+const LOGIN_REWARDS=(function(){
+  const a=[];
+  for(let d=1; d<=30; d++){
+    const milestone = (d%7===0) || d===30;
+    const gems = d===30 ? 100 : (milestone ? 18+d : 3+Math.floor(d/3));
+    const yen  = Math.floor(600*Math.pow(1.14, d));
+    a.push({day:d, gems, yen, big:milestone});
+  }
+  return a;
+})();
+
+const MILESTONES = [
+  { fans:20,    label:"Earn 20 Fans to unlock Web Series" },
+  { fans:120,   label:"Reach 120 Fans for your own TV Series" },
+  { fans:500,   label:"Hit 500 Fans to produce an OVA" },
+  { fans:2200,  label:"2,200 Fans unlocks Feature Films" },
+  { fans:9000,  label:"9,000 Fans unlocks Blockbusters" },
+  { fans:25000, label:"25,000 Fans — Legendary Studio status" },
+  { fans:100000,label:"100,000 Fans — Global Anime Empire" },
+];
+
+const PRESTIGE_FANS = 25000;
+
+/* ========================= MONETIZATION =========================
+   This game is fully playable free (Gems are also earned in-game).
+   To enable REAL purchases: set the checkout URLs below to your own
+   Gumroad / Stripe / Lemon Squeezy links. On a successful purchase,
+   redirect the buyer back to:
+       <yourGameURL>?grant=pass            (grants Producer Pass)
+       <yourGameURL>?grant=gems&amt=350    (grants 350 Gems)
+   …and the entitlement is applied automatically on return.            */
+const MONETIZATION = {
+  currency:"$",
+  checkout:{
+    pass:"https://trainagent.gumroad.com/l/xmwvvi?wanted=true",
+    bundle:"https://trainagent.gumroad.com/l/xjpwv?wanted=true",
+    gems_s:"https://trainagent.gumroad.com/l/jbclqp?wanted=true",
+    gems_m:"https://trainagent.gumroad.com/l/legvhu?wanted=true",
+    gems_l:"https://trainagent.gumroad.com/l/gtdyn?wanted=true",
+    gems_mega:"https://trainagent.gumroad.com/l/kttuab?wanted=true"
+  },
+  prices:{ pass:"$4.99", gems_s:"$0.99", gems_m:"$1.99", gems_l:"$4.99", gems_mega:"$9.99", bundle:"$2.99" },
+  adProvider:null,                          // optional: async fn that resolves when a rewarded ad finishes
+  analytics:null,                           // optional: function(eventName, props){} — auto-detects plausible/gtag/dataLayer too
+  leaderboardUrl:"",                        // optional: POST endpoint {name,score} to record studio value on a global board
+  supportUrl:"", // (no footer credit link)
+  codes:{ "ANIME50":{gems:50}, "WELCOME":{gems:25} } // redeemable codes you can hand out
+};
+const GEM_PACKS={ gems_s:120, gems_m:350, gems_l:800, gems_mega:2000 };
+const MAX_SLOTS=4;
+const EXPANSION_COST=[0, 15000, 90000, 500000]; // cost to reach slot 2,3,4 (index = current slots)
+/* lightweight analytics: routes to your provider or any of plausible / gtag / dataLayer */
+function track(ev, props){
+  try{
+    if(typeof MONETIZATION.analytics==="function"){ MONETIZATION.analytics(ev,props||{}); }
+    if(window.plausible) window.plausible(ev,{props:props||{}});
+    else if(window.gtag) window.gtag('event',ev,props||{});
+    else if(window.dataLayer) window.dataLayer.push(Object.assign({event:ev},props||{}));
+  }catch(e){}
+}
+
+/* ========================= STATE ========================= */
+let S;
+function freshState(){
+  return {
+    yen:1500, fans:0, hype:0, totalFansEver:0, legacy:0,
+    gems:0, producerPass:false, bundleBought:false, goldenUntil:0, rewardedUntil:0, rewardedCdUntil:0,
+    milestonesClaimed:[],
+    slots:1, projects:[null],   // each slot: {pid, genre, progress} or null
+    staff:{ animator:0, writer:0, director:0, voice:0, producer:0 },
+    stars:[],                   // owned: {sid, level}
+    upgrades:{ tablets:0, render:0, sound:0, marketing:0, agency:0 },
+    mastery:Object.fromEntries(GENRES.map(g=>[g,0])),
+    overdriveUntil:0,
+    trendIdx:0, trendUntil:0,
+    releases:0,
+    quests:[], questProg:{releases:0,yen:0,campaigns:0,hires:0,hypeSpent:0,scouts:0,greenlit:0,taps:0},
+    weekKey:"", weeklyQuests:[], weekProg:{releases:0,yen:0,campaigns:0,hires:0,hypeSpent:0,scouts:0,greenlit:0,taps:0},
+    loginMonth:"", loginClaimedCount:0, loginLastClaimDate:"", lastDecision:0, studioLevel:1, starterSeen:false, combo:0, comboBest:0, lastReleaseAt:0, flashDealDay:"", flashSeen:false,
+    lastDailyDate:"", dailyStreak:0, bestValue:0, freeGemsDate:"", taps:0, sharedOnce:false,
+    tutorialSeen:false, achievements:[],
+    lastSave:Date.now(),
+    muted:false,
+    tab:"produce",
+  };
+}
+
+/* ========================= HELPERS ========================= */
+const $ = s=>document.querySelector(s);
+const main = $("#main");
+const fmt = n=>{
+  n = Math.floor(n);
+  if(!isFinite(n)) return "∞";
+  if(n<1000) return ""+n;
+  const u=["","K","M","B","T","Qa","Qi","Sx","Sp","Oc","No","Dc","UDc","DDc","TDc"]; let i=0; let x=n;
+  while(x>=1000 && i<u.length-1){ x/=1000; i++; }
+  return (x>=100? x.toFixed(0): x.toFixed(2).replace(/\.?0+$/,"")) + u[i];
+};
+/* monetization / boost helpers */
+let OFFLINE=false;            // true while simulating offline progress (suppresses toasts/audio/render)
+let pendingToasts=[];
+function toastSafe(m,g){ if(OFFLINE){return;} toast(m,g); }
+function toastLater(m,g){ pendingToasts.push([m,g]); }
+function passMult(){ return S.producerPass?1.5:1; }
+function goldenActive(){ return Date.now()<S.goldenUntil; }
+function rewardedActive(){ return Date.now()<S.rewardedUntil; }
+/* Studio Level — endless progression off total fans ever; +2% income per level, forever. */
+function studioLevel(){ return Math.max(1, Math.floor(Math.pow(Math.max(0,S.totalFansEver)/40, 0.37))); }
+function fansForLevel(L){ return Math.ceil(40*Math.pow(L,1/0.37)); }
+function levelMult(){ return 1 + studioLevel()*0.02; }
+function checkStudioLevel(){
+  const L=studioLevel();
+  if(L>(S.studioLevel||1)){
+    const gained=L-(S.studioLevel||1); S.studioLevel=L; S.gems+=gained*2;
+    toastSafe("🎖️ Studio Level "+L+"! +"+(gained*2)+" 💎 · income +"+((L*2))+"%",true); play("reward");
+  }
+}
+function globalIncomeMult(){ return passMult() * (goldenActive()?3:1) * (rewardedActive()?2:1) * levelMult(); }
+function awardMilestoneGems(){
+  for(const m of MILESTONES){
+    if(S.fans>=m.fans && !S.milestonesClaimed.includes(m.fans)){
+      S.milestonesClaimed.push(m.fans); S.gems+=5; toastSafe("💎 +5 Gems — milestone reached!",true);
+    }
+  }
+}
+/* multi-slot helpers */
+function activeCount(){ let n=0; for(const p of S.projects) if(p) n++; return n; }
+function firstEmptySlot(){ for(let i=0;i<S.slots;i++){ if(!S.projects[i]) return i; } return -1; }
+function expandCost(){ return EXPANSION_COST[S.slots]||0; }
+function hireCost(role){
+  const r=ROLES[role]; const n=S.staff[role];
+  const disc=Math.max(0.4, 1 - S.upgrades.agency*0.05);
+  return Math.ceil(r.base * Math.pow(r.growth,n) * disc);
+}
+function upCost(key){ const u=UPGRADES[key]; return Math.ceil(u.base*Math.pow(u.growth,S.upgrades[key])); }
+function equipMult(){ return (1+S.upgrades.tablets*0.08)*(1+S.upgrades.render*0.15); }
+function qualityMult(){ return (1+S.upgrades.sound*0.06); }
+function marketingMult(){ return (1+S.upgrades.marketing*0.10); }
+function legacyMult(){ return 1 + S.legacy*0.05; }
+const STAR_BY_ID=Object.fromEntries(STAR_POOL.map(s=>[s.id,s]));
+function starPowerForRole(role){
+  let p=0; for(const st of (S.stars||[])){ const t=STAR_BY_ID[st.sid]; if(t&&t.role===role){ p += STAR_RARITY[t.rarity].power * st.level; } }
+  return p;
+}
+function rolePower(role){ return S.staff[role]*ROLES[role].power + starPowerForRole(role); }
+function studioValue(){ return Math.floor(S.totalFansEver + S.fans + S.releases*8 + S.legacy*3000); }
+/* quests */
+function questAdd(metric, amt){
+  if(S.questProg) S.questProg[metric]=(S.questProg[metric]||0)+amt;
+  if(S.weekProg)  S.weekProg[metric]=(S.weekProg[metric]||0)+amt;
+}
+/* ---- weekly quest rotation ---- */
+function weekKeyStr(d){ d=d||new Date(); const dt=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())); const day=dt.getUTCDay()||7; dt.setUTCDate(dt.getUTCDate()+4-day); const ys=new Date(Date.UTC(dt.getUTCFullYear(),0,1)); const wk=Math.ceil((((dt-ys)/86400000)+1)/7); return dt.getUTCFullYear()+"-W"+wk; }
+function rollWeekly(){
+  const pool=[...WEEKLY_POOL], out=[];
+  while(out.length<3 && pool.length){ const t=pool.splice(Math.floor(Math.random()*pool.length),1)[0]; out.push({id:t.id, goal:t.goals[Math.floor(Math.random()*t.goals.length)], reward:t.reward, claimed:false}); }
+  S.weeklyQuests=out; S.weekProg={releases:0,yen:0,campaigns:0,hires:0,hypeSpent:0,scouts:0,greenlit:0,taps:0}; S.weekKey=weekKeyStr();
+}
+function checkWeekly(){ if(S.weekKey!==weekKeyStr() || !(S.weeklyQuests&&S.weeklyQuests.length)) rollWeekly(); }
+function weeklyMetric(id){ const t=WEEKLY_POOL.find(q=>q.id===id); return t?t.metric:null; }
+function claimWeekly(i){
+  const q=S.weeklyQuests[i]; if(!q||q.claimed) return;
+  const prog=S.weekProg[weeklyMetric(q.id)]||0; if(prog<q.goal){ toast("Weekly goal not complete yet"); return; }
+  q.claimed=true; S.gems+=q.reward; play("reward"); toast("🏆 Weekly quest complete! +"+q.reward+" 💎",true); track("weekly_claim",{id:q.id}); render(); save();
+}
+/* ---- 30-day login calendar (rotates monthly) ---- */
+function monthKeyStr(){ const d=new Date(); return d.getFullYear()+"-"+(d.getMonth()+1); }
+function loginRefresh(){ if(S.loginMonth!==monthKeyStr()){ S.loginMonth=monthKeyStr(); S.loginClaimedCount=0; S.loginLastClaimDate=""; } }
+function canClaimLogin(){ loginRefresh(); return (S.loginLastClaimDate!==todayStr()) && (S.loginClaimedCount<LOGIN_REWARDS.length); }
+function claimLoginDay(){
+  if(!canClaimLogin()){ toast("Come back tomorrow for your next day!"); return; }
+  const r=LOGIN_REWARDS[S.loginClaimedCount];
+  S.gems+=r.gems; S.yen+=Math.floor(r.yen*legacyMult());
+  S.loginClaimedCount++; S.loginLastClaimDate=todayStr();
+  play("reward"); toast(`📅 Day ${r.day} reward: +${r.gems}💎 +¥${fmt(r.yen)}`,true); track("login_claim",{day:r.day}); render(); save();
+}
+/* ---- reset countdown helpers ---- */
+function msToMidnight(){ const n=new Date(); const m=new Date(n); m.setHours(24,0,0,0); return m-n; }
+function msToWeekReset(){ const n=new Date(); const day=n.getDay()||7; const m=new Date(n); m.setHours(24,0,0,0); m.setDate(m.getDate()+(7-day)); return m-n; }
+function fmtDur(ms){ if(ms<0)ms=0; const s=Math.floor(ms/1000); const h=Math.floor(s/3600), mi=Math.floor((s%3600)/60); const d=Math.floor(h/24); if(d>0) return d+"d "+(h%24)+"h"; if(h>0) return h+"h "+mi+"m"; return mi+"m"; }
+function questMetric(id){ const t=QUEST_POOL.find(q=>q.id===id); return t?t.metric:null; }
+function rollQuests(){
+  const pool=[...QUEST_POOL], out=[];
+  while(out.length<4 && pool.length){
+    const tmpl=pool.splice(Math.floor(Math.random()*pool.length),1)[0];
+    out.push({id:tmpl.id, goal:tmpl.goals[Math.floor(Math.random()*tmpl.goals.length)], reward:tmpl.reward, claimed:false});
+  }
+  S.quests=out; S.questProg={releases:0,yen:0,campaigns:0,hires:0,hypeSpent:0,scouts:0,greenlit:0,taps:0};
+}
+function claimQuest(i){
+  const q=S.quests[i]; if(!q||q.claimed) return;
+  const prog=S.questProg[questMetric(q.id)]||0;
+  if(prog<q.goal){ toast("Quest not complete yet"); return; }
+  q.claimed=true; S.gems+=q.reward; track("quest_claim",{id:q.id});
+  play("reward"); toast("✅ Quest complete! +"+q.reward+" 💎",true); render(); save();
+}
+/* star scouting (gacha) */
+function pullStar(allowAll){
+  const pool = allowAll ? Object.keys(STAR_RARITY) : ["Common","Rare"];
+  let total=0; for(const r of pool) total+=STAR_RARITY[r].w;
+  let roll=Math.random()*total, rar=pool[0];
+  for(const r of pool){ roll-=STAR_RARITY[r].w; if(roll<=0){ rar=r; break; } }
+  const cands=STAR_POOL.filter(s=>s.rarity===rar);
+  const t=cands[Math.floor(Math.random()*cands.length)];
+  const owned=S.stars.find(x=>x.sid===t.id); let leveled=false;
+  if(owned){ owned.level++; leveled=true; } else { S.stars.push({sid:t.id, level:1}); }
+  return {t, rar, leveled};
+}
+function scout(kind){
+  let r;
+  if(kind==="gems"){
+    if(S.gems<SCOUT_GEMS){ toast("Need "+SCOUT_GEMS+" 💎 to scout — earn or buy more"); return; }
+    S.gems-=SCOUT_GEMS; r=pullStar(true);
+  } else {
+    const c=castingCost();
+    if(S.yen<c){ toast("Not enough Yen for an open casting"); return; }
+    S.yen-=c; r=pullStar(false);
+  }
+  questAdd("scouts",1); track("scout",{kind,rarity:r.rar}); checkAchievements();
+  play("reward");
+  showReveal(r.t, r.rar, r.leveled);
+  render(); save();
+}
+function showReveal(t, rar, leveled){
+  const R=STAR_RARITY[rar];
+  const el=document.getElementById('reveal-body'); if(!el) return;
+  el.innerHTML=`<div style="font-size:13px;font-weight:800;color:${R.color};letter-spacing:1.5px">${rar.toUpperCase()}${rar==='Legendary'?' 🌟':(rar==='Epic'?' ✨':'')}</div>
+    <img src="${t.img}" alt="" style="width:168px;height:168px;object-fit:cover;border-radius:50%;box-shadow:0 0 26px ${R.color}cc, inset 0 0 0 3px ${R.color};margin:10px auto;display:block">
+    <h1 style="font-size:23px;margin:2px 0">${t.name}</h1>
+    <div class="muted" style="margin-bottom:4px">${ROLES[t.role].name} · ${leveled?'⬆ Leveled up!':'✨ New talent!'} · +${fmt(R.power)}/level</div>`;
+  document.getElementById('reveal').style.display='flex';
+}
+function submitScore(){
+  if(!MONETIZATION.leaderboardUrl) return;
+  try{ fetch(MONETIZATION.leaderboardUrl,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({score:studioValue(),ts:Date.now()})}).catch(()=>{}); }catch(e){}
+}
+/* ---- achievements (extra goals + gem rewards) ---- */
+const ACHIEVEMENTS=[
+  {id:"first",   name:"Lights, Camera!", desc:"Release your first anime",        gems:3,  test:()=>S.releases>=1},
+  {id:"rel25",   name:"Studio Machine",  desc:"Release 25 anime",                gems:5,  test:()=>S.releases>=25},
+  {id:"rel100",  name:"Hit Factory",     desc:"Release 100 anime",               gems:10, test:()=>S.releases>=100},
+  {id:"fans1k",  name:"Fan Favorite",    desc:"Reach 1,000 fans",                gems:5,  test:()=>S.fans>=1000},
+  {id:"fans100k",name:"Household Name",  desc:"Reach 100,000 total fans",        gems:15, test:()=>S.totalFansEver>=100000},
+  {id:"slots4",  name:"Mega Studio",     desc:"Unlock all 4 production lines",   gems:10, test:()=>S.slots>=4},
+  {id:"legend",  name:"Star Power",      desc:"Scout a Legendary talent",        gems:15, test:()=>(S.stars||[]).some(st=>{const t=STAR_BY_ID[st.sid];return t&&t.rarity==='Legendary';})},
+  {id:"prestige1",name:"New Beginnings", desc:"Reboot your studio once",         gems:20, test:()=>S.legacy>=1},
+  {id:"tap100",  name:"Hands On",        desc:"Tap-boost 100 times",             gems:5,  test:()=>(S.taps||0)>=100},
+  {id:"rel500",  name:"Anime Mogul",     desc:"Premiere 500 anime",              gems:20, test:()=>S.releases>=500},
+  {id:"fans1m",  name:"Cultural Icon",   desc:"Reach 1,000,000 total fans",      gems:30, test:()=>S.totalFansEver>=1000000},
+  {id:"val100k", name:"Rising Studio",   desc:"Studio value over 100K",          gems:8,  test:()=>studioValue()>=100000},
+  {id:"val10m",  name:"Industry Titan",  desc:"Studio value over 10M",           gems:25, test:()=>studioValue()>=10000000},
+  {id:"stars5",  name:"Casting Couch",   desc:"Sign 5 star talents",             gems:8,  test:()=>(S.stars||[]).length>=5},
+  {id:"stars15", name:"All-Star Roster", desc:"Sign 15 star talents",            gems:18, test:()=>(S.stars||[]).length>=15},
+  {id:"epic",    name:"Big League",      desc:"Scout an Epic talent",            gems:8,  test:()=>(S.stars||[]).some(st=>{const t=STAR_BY_ID[st.sid];return t&&t.rarity==='Epic';})},
+  {id:"allgenre",name:"Range",           desc:"Level up every genre at least once", gems:12, test:()=>GENRES.every(g=>(S.mastery[g]||0)>0)},
+  {id:"streak7", name:"Regular",         desc:"Reach a 7-day login streak",      gems:10, test:()=>(S.dailyStreak||0)>=7},
+  {id:"streak30",name:"Devoted",         desc:"Reach a 30-day login streak",     gems:30, test:()=>(S.dailyStreak||0)>=30},
+  {id:"prestige5",name:"Phoenix",        desc:"Reboot your studio 5 times",      gems:30, test:()=>S.legacy>=5},
+  {id:"tap1000", name:"Tap Master",      desc:"Tap-boost 1,000 times",           gems:12, test:()=>(S.taps||0)>=1000},
+  {id:"pass",    name:"Producer",        desc:"Own the Producer Pass",           gems:5,  test:()=>!!S.producerPass},
+];
+function checkAchievements(){
+  for(const a of ACHIEVEMENTS){
+    if(!S.achievements.includes(a.id) && a.test()){ S.achievements.push(a.id); S.gems+=a.gems; toastSafe("🏆 "+a.name+" — +"+a.gems+" 💎",true); }
+  }
+}
+/* ---- Seasons / Live Events (rotates daily, always a positive bonus) ---- */
+const EVENTS=[
+  {id:"sakura", ic:"🌸", name:"Sakura Festival",  desc:"+25% Fans on every premiere",        fanMult:1.25, yenMult:1.00},
+  {id:"golden", ic:"🏆", name:"Golden Premiere",  desc:"+25% Yen on every premiere",         fanMult:1.00, yenMult:1.25},
+  {id:"frenzy", ic:"💖", name:"Fan Frenzy",       desc:"+40% Fans on every premiere",        fanMult:1.40, yenMult:1.00},
+  {id:"boxoff", ic:"💰", name:"Box Office Boom",  desc:"+40% Yen on every premiere",         fanMult:1.00, yenMult:1.40},
+  {id:"creators",ic:"🎨", name:"Creators' Day",   desc:"+15% Fans & +15% Yen",               fanMult:1.15, yenMult:1.15},
+  {id:"awards", ic:"🌟", name:"Awards Season",    desc:"+30% Yen & +10% Fans",               fanMult:1.10, yenMult:1.30},
+  {id:"cozy",   ic:"☕", name:"Cozy Weekend",     desc:"+20% Fans & +20% Yen",               fanMult:1.20, yenMult:1.20},
+];
+function dayOfYear(){ const n=new Date(); const s=new Date(n.getFullYear(),0,0); return Math.floor((n-s)/86400000); }
+function currentEvent(){ return EVENTS[dayOfYear()%EVENTS.length]; }
+function eventFanMult(){ return currentEvent().fanMult||1; }
+function eventYenMult(){ return currentEvent().yenMult||1; }
+/* ---- Studio Events: interactive accept/decline decisions ---- */
+let _pendingDecision=null;
+function bigYen(){ return Math.max(800, Math.floor(studioValue()*0.04)); }
+function bigFans(){ return Math.max(8, Math.floor((S.fans||0)*0.06)+5); }
+const DECISIONS=[
+  {id:"stream", ic:"📺", title:"Streaming Deal",
+   text:"A streaming giant wants exclusive rights to your latest hit. Big money now — but some fans dislike paywalls.",
+   yes:["Take the deal", ()=>{const y=bigYen()*3; S.yen+=y; const f=Math.floor(bigFans()*0.5); S.fans=Math.max(0,S.fans-f); return `+¥${fmt(y)}, −${fmt(f)} fans`;}],
+   no:["Stay free", ()=>{const f=Math.floor(bigFans()*0.4); S.fans+=f; S.totalFansEver+=f; return `Goodwill: +${fmt(f)} fans`;}]},
+  {id:"viral", ic:"🔥", title:"Viral Moment",
+   text:"A clip is blowing up online! Spend on ads to ride the wave?",
+   yes:["Boost it (pay)", ()=>{const c=bigYen(); if(S.yen<c) return "Not enough yen — the moment passed."; S.yen-=c; const f=bigFans()*2; S.fans+=f; S.totalFansEver+=f; return `−¥${fmt(c)}, +${fmt(f)} fans`;}],
+   no:["Let it ride", ()=>{const f=Math.floor(bigFans()*0.6); S.fans+=f; S.totalFansEver+=f; return `+${fmt(f)} fans`;}]},
+  {id:"cameo", ic:"🌟", title:"Surprise Cameo",
+   text:"A legendary voice actor offers a surprise cameo — for a fee.",
+   yes:["Hire them", ()=>{const c=bigYen()*2; if(S.yen<c) return "Can't afford it right now."; S.yen-=c; S.hype+=20; return `−¥${fmt(c)}, +20 Hype`;}],
+   no:["Maybe later", ()=>"Politely declined."]},
+  {id:"crunch", ic:"⏰", title:"Deadline Crunch",
+   text:"A tight deadline looms. Push the team into overdrive?",
+   yes:["Crunch (overdrive)", ()=>{S.overdriveUntil=Date.now()+30000; const f=Math.floor(bigFans()*0.3); S.fans=Math.max(0,S.fans-f); return `🚀 2× speed 30s, −${fmt(f)} fans`;}],
+   no:["Protect the team", ()=>{const f=Math.floor(bigFans()*0.3); S.fans+=f; S.totalFansEver+=f; return `Happy team: +${fmt(f)} fans`;}]},
+  {id:"merch", ic:"🧸", title:"Merch Drop",
+   text:"Fans are begging for merchandise. Launch a limited run?",
+   yes:["Launch merch", ()=>{const y=bigYen()*2; S.yen+=y; return `+¥${fmt(y)}`;}],
+   no:["Skip it", ()=>"No merch this time."]},
+  {id:"sponsor", ic:"🤝", title:"Sponsor Offer",
+   text:"A friendly brand wants to sponsor your next show.",
+   yes:["Accept sponsor", ()=>{const y=bigYen()*2; S.yen+=y; S.hype+=8; return `+¥${fmt(y)}, +8 Hype`;}],
+   no:["Decline", ()=>"Kept it sponsor-free."]},
+  {id:"festival", ic:"🎪", title:"Festival Invite",
+   text:"Your studio is invited to a film festival. Pay the entry fee?",
+   yes:["Enter (pay)", ()=>{const c=bigYen(); if(S.yen<c) return "Can't afford the entry fee."; S.yen-=c; const f=bigFans()*3; S.fans+=f; S.totalFansEver+=f; S.hype+=12; return `−¥${fmt(c)}, +${fmt(f)} fans, +12 Hype`;}],
+   no:["Skip festival", ()=>"Stayed in the studio."]},
+  {id:"goldenhr", ic:"✨", title:"Golden Hour",
+   text:"The stars align — momentum is surging. Seize the moment?",
+   yes:["Seize it", ()=>{S.goldenUntil=Date.now()+180000; return `🌟 3× income for 3 minutes!`;}],
+   no:["Play it safe", ()=>{S.gems+=2; return `+2 💎`;}]},
+];
+function maybeDecision(){
+  if(maybeStarterOffer()) return;
+  if(Date.now()-(S.lastDecision||0) < 90000) return;
+  if((S.releases||0)<3) return;
+  if(Math.random()>0.4) return;
+  showDecision();
+}
+function showDecision(){
+  _pendingDecision=DECISIONS[Math.floor(Math.random()*DECISIONS.length)];
+  S.lastDecision=Date.now();
+  const d=_pendingDecision, body=document.getElementById("decision-body");
+  if(!body){ _pendingDecision=null; return; }
+  body.innerHTML=`<div style="font-size:42px">${d.ic}</div><h2 style="margin:6px 0;color:var(--plum)">${d.title}</h2>
+    <p style="color:var(--slate);font-size:14px;margin:6px 0 0">${d.text}</p>
+    <div class="row" style="gap:10px;margin-top:16px">
+      <button class="btn-primary" data-act="dec-yes" style="flex:1">${d.yes[0]}</button>
+      <button class="btn-ghost" data-act="dec-no" style="flex:1">${d.no[0]}</button>
+    </div>`;
+  const m=document.getElementById("decision"); if(m) m.style.display="flex";
+}
+function resolveDecision(yes){
+  const d=_pendingDecision; _pendingDecision=null;
+  const m=document.getElementById("decision"); if(m) m.style.display="none";
+  if(!d) return;
+  const msg=(yes?d.yes[1]:d.no[1])();
+  track("decision",{id:d.id,yes}); play("reward");
+  if(msg) toast("📣 "+msg, true);
+  checkAchievements(); render(); save();
+}
+/* ---- active tap-to-boost (more fun + works with zero staff for the first film) ---- */
+function tapBoost(slot){
+  const pr=S.projects[slot]; if(!pr) return; const p=PROJECTS[pr.pid];
+  if(pr.progress>=p.work){ return; }
+  // Tap power scales with your studio's output (a small flat floor so the very first film can be tapped out).
+  // No longer a flat % of the project, so big productions can't be tap-finished in a few clicks.
+  const amt=Math.min(p.work-pr.progress, Math.max(2, powerPerTick()*0.5));
+  pr.progress=Math.min(p.work, pr.progress+amt);
+  S.taps=(S.taps||0)+1; questAdd("taps",1); if(S.taps%20===0) checkAchievements();
+  play("click"); floatGain("+"+fmt(amt));
+  if(S.tab==="produce") render();
+}
+/* ---- daily free Gems (engagement + ad slot; no payment account needed) ---- */
+function claimFreeGems(){
+  const t=todayStr();
+  if(S.freeGemsDate===t){ toast("Come back tomorrow for more free Gems!"); return; }
+  const grant=()=>{ S.freeGemsDate=t; S.gems+=10; track("free_gems",{}); play("reward"); toast("🎁 +10 Gems!",true); render(); save(); };
+  if(typeof MONETIZATION.adProvider==="function"){ Promise.resolve(MONETIZATION.adProvider()).then(grant).catch(()=>toast("Ad not available right now")); }
+  else grant();
+}
+function powerPerTick(){
+  let p=0; for(const r in ROLES) p+=rolePower(r);
+  p *= equipMult();
+  if(Date.now()<S.overdriveUntil) p*=2;
+  return p;
+}
+function salaryPerTick(){ let s=0; for(const r in ROLES) s+=S.staff[r]*ROLES[r].salary; return s; }
+function trendGenre(){ return GENRES[S.trendIdx]; }
+function dimPowerForQuality(){
+  // per-dim effective talent used to rate a finished project
+  const o={};
+  for(const d of DIMS){ const role=DIM_OF_ROLE[d]; o[d]=rolePower(role)*qualityMult(); }
+  return o;
+}
+function projectStars(p, genre){
+  const dp=dimPowerForQuality();
+  let sum=0;
+  for(const d of DIMS){ sum += Math.min(dp[d]/p.talent, 1.5); }
+  let q = sum/DIMS.length;                       // 0..1.5
+  q *= (1 + (S.mastery[genre]||0)*0.06);
+  const stars = Math.max(1, Math.min(5, Math.round(q*3.4)));
+  return stars;
+}
+function unlockedProjects(){ return PROJECTS.filter(p=>S.fans>=p.unlock); }
+
+/* ========================= AUDIO ========================= */
+let bgm=null; const sfx={};
+function initAudio(){
+  bgm=new Audio("https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_062744_f564f7ba-ec29-4a6e-a28b-023ff2c2f867.m4a"); bgm.loop=true; bgm.volume=0.35;
+  sfx.click=new Audio("https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_062745_f345d8e7-d3ee-47c5-b9c5-2474f060ee3d.mp3"); sfx.click.volume=0.5;
+  sfx.reward=new Audio("https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_062746_9941319d-2b65-406d-a9d3-bb1010fb5616.mp3"); sfx.reward.volume=0.6;
+}
+function play(n){ if(S.muted||!sfx[n])return; try{ const a=sfx[n].cloneNode(); a.volume=sfx[n].volume; a.play().catch(()=>{}); }catch(e){} }
+function updateMute(){
+  $("#btn-mute").textContent = (S.muted?("🔇 "+STR.muteOff):("🔊 "+STR.muteOn));
+  if(bgm){ if(S.muted) bgm.pause(); else bgm.play().catch(()=>{}); }
+}
+/* localize the static chrome (footer, start screen) + build the language picker */
+function updateChrome(){
+  try{
+    updateMute();
+    const sv=document.getElementById("btn-save"); if(sv) sv.textContent="💾 "+STR.save;
+    const rs=document.getElementById("btn-reset"); if(rs) rs.textContent="↺ "+STR.reset;
+    const pv=document.querySelector('.foot a[href="privacy.html"]'); if(pv) pv.textContent=STR.privacy;
+    const tm=document.querySelector('.foot a[href="terms.html"]'); if(tm) tm.textContent=STR.terms;
+    const sh=document.querySelector('.foot [data-act="share"]'); if(sh) sh.innerHTML=`📣 ${STR.share} <small id="share-bonus"${S.sharedOnce?' style="display:none"':''}>+25💎</small>`;
+    const st=document.getElementById("btn-start"); if(st) st.textContent="▶ "+STR.start;
+    const tg=document.getElementById("start-tagline"); if(tg) tg.textContent=STR.tagline;
+    const ll=document.getElementById("start-lang-label"); if(ll) ll.textContent="🌐 "+STR.language;
+    const sl=document.getElementById("start-lang"); if(sl) sl.value=STR.__code||"en";
+    // language picker
+    let sel=document.getElementById("lang-sel");
+    if(!sel){
+      sel=document.createElement("select"); sel.id="lang-sel"; sel.className="btn-ghost";
+      sel.style.cssText="padding:7px 10px;font-size:12px;border:none;border-radius:12px;font-weight:700";
+      for(const c in LANG_NAMES){ const o=document.createElement("option"); o.value=c; o.textContent="🌐 "+LANG_NAMES[c]; sel.appendChild(o); }
+      sel.onchange=()=>{ setLang(sel.value); updateChrome(); render(); };
+      const foot=document.querySelector(".foot"); if(foot) foot.appendChild(sel);
+    }
+    sel.value=STR.__code||"en";
+  }catch(e){}
+}
+
+/* ========================= SAVE / LOAD ========================= */
+function save(){ S.lastSave=Date.now(); try{ localStorage.setItem(SAVE_KEY, JSON.stringify(S)); }catch(e){} }
+function load(){
+  try{ const raw=localStorage.getItem(SAVE_KEY); if(!raw) return false;
+    const d=JSON.parse(raw); S=Object.assign(freshState(), d);
+    S.staff=Object.assign({animator:0,writer:0,director:0,voice:0,producer:0}, d.staff||{});
+    S.upgrades=Object.assign({tablets:0,render:0,sound:0,marketing:0,agency:0}, d.upgrades||{});
+    S.mastery=Object.assign(Object.fromEntries(GENRES.map(g=>[g,0])), d.mastery||{});
+    S.milestonesClaimed=Array.isArray(d.milestonesClaimed)?d.milestonesClaimed:[];
+    S.gems=+d.gems||0; S.producerPass=!!d.producerPass; S.bundleBought=!!d.bundleBought;
+    // multi-slot migration (older saves used d.project)
+    S.slots=Math.max(1,Math.min(MAX_SLOTS, d.slots||1));
+    let projs = Array.isArray(d.projects) ? d.projects.slice() : (d.project?[d.project]:[]);
+    S.projects = Array.from({length:S.slots}, (_,i)=> projs[i]||null);
+    S.lastDailyDate=d.lastDailyDate||""; S.dailyStreak=+d.dailyStreak||0;
+    S.stars=Array.isArray(d.stars)?d.stars:[];
+    S.quests=Array.isArray(d.quests)?d.quests:[];
+    S.questProg=Object.assign({releases:0,yen:0,campaigns:0,hires:0,hypeSpent:0,scouts:0}, d.questProg||{});
+    S.bestValue=+d.bestValue||0; S.freeGemsDate=d.freeGemsDate||""; S.taps=+d.taps||0;
+    S.achievements=Array.isArray(d.achievements)?d.achievements:[];
+    return true;
+  }catch(e){ return false; }
+}
+
+/* ========================= TOASTS ========================= */
+function toast(msg, gold){
+  const t=document.createElement("div"); t.className="toast"+(gold?" gold":""); t.textContent=msg;
+  $("#toasts").appendChild(t); setTimeout(()=>t.remove(), 2600);
+}
+function floatGain(txt){
+  try{ if(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return; }catch(e){}
+  const el=document.createElement("div"); el.className="floatgain"; el.textContent=txt;
+  const app=document.getElementById("app"); if(!app) return;
+  app.appendChild(el); setTimeout(()=>el.remove(), 1150);
+}
+
+/* ========================= ACTIONS ========================= */
+function greenlight(pid, genre){
+  const p=PROJECTS[pid];
+  const slot=firstEmptySlot();
+  if(slot<0){ toast("All production slots are busy — expand your studio"); return; }
+  if(S.yen < p.cost){ toast("Not enough Yen to greenlight"); return; }
+  if(S.fans < p.unlock) return;
+  S.yen -= p.cost;
+  S.projects[slot]={ pid, genre, progress:0, title:makeTitle(genre), poster:pickPoster(genre) };
+  questAdd("greenlit",1);
+  track("greenlight",{tier:p.tier,genre}); play("click"); render(); save();
+}
+/* ---- Premiere reveal: the "real flick" moment when a show releases ---- */
+const REVIEWS={
+  5:["A modern masterpiece — the anime event of the year!","Instantly iconic. Pure magic.","Breathtaking from the very first frame. 10/10.","Your studio just made history."],
+  4:["Beautifully crafted and full of heart.","A standout hit fans will adore.","Polished, fun, unforgettable.","Critics are raving — and so are the fans."],
+  3:["A solid, crowd-pleasing watch.","Charming and well made.","Hits all the right notes.","Good fun for the whole family."],
+  2:["Rough around the edges, but it has soul.","A decent effort with real moments.","The studio is finding its voice.","Promising — keep building."],
+  1:["A brave little experiment.","Not for everyone… yet.","Early days. Onward and upward!","Every legend starts somewhere."]
+};
+let _premiereOpen=false;
+function animateCount(el,to,prefix){
+  const dur=1000, t0=performance.now();
+  function step(t){ let k=Math.min(1,(t-t0)/dur); const e=1-Math.pow(1-k,3); el.textContent=(prefix||"")+fmt(Math.floor(to*e)); if(k<1) requestAnimationFrame(step); else el.textContent=(prefix||"")+fmt(to); }
+  requestAnimationFrame(step);
+}
+function showPremiere(pr,p,stars,yenGain,fansGain){
+  if(_premiereOpen) return;
+  const body=document.getElementById("premiere-body"); if(!body) return;
+  const src=(POSTER_POOL[pr.genre]||[]).slice(); const base=src.length?src:[pr.poster||DEFAULT_POSTER];
+  const scenes=[]; for(let i=0;i<8;i++) scenes.push(base[Math.floor(Math.random()*base.length)]);
+  const rv=REVIEWS[stars]||REVIEWS[3]; const review=rv[Math.floor(Math.random()*rv.length)];
+  const ev=currentEvent();
+  body.innerHTML=`
+    <div class="prem-banner" style="background-image:url(${pr.poster||GENRE_POSTER[pr.genre]||DEFAULT_POSTER})">
+      <div class="prem-grad"></div>
+      <div class="prem-shine"></div>
+      <div class="prem-tag">🎬 WORLD PREMIERE</div>
+      <div class="prem-stars">${"★".repeat(stars)}${"☆".repeat(5-stars)}</div>
+      <div class="prem-title">“${pr.title||p.name}”</div>
+      <div class="prem-sub">${p.name} · ${pr.genre} · ${ev.ic} ${ev.name}</div>
+    </div>
+    <div class="prem-now"><i></i> Now Showing · ${scenes.length} scenes</div>
+    <div class="prem-review">“${review}”</div>
+    <div class="prem-strip">${scenes.map(s=>`<div class="prem-scene" style="background-image:url(${s})"></div>`).join("")}</div>
+    <div class="prem-stats">
+      <div class="kpi accent" style="flex:1"><div class="kl">Box office</div><div class="kv" id="prem-yen">¥0</div></div>
+      <div class="kpi" style="flex:1"><div class="kl">New fans</div><div class="kv" id="prem-fans">0</div></div>
+    </div>`;
+  const m=document.getElementById("premiere"); if(m) m.style.display="flex"; _premiereOpen=true; play("reward");
+  setTimeout(()=>{ const y=document.getElementById("prem-yen"); const f=document.getElementById("prem-fans"); if(y) animateCount(y,yenGain,"¥"); if(f) animateCount(f,fansGain,""); },140);
+}
+function closePremiere(){ const m=document.getElementById("premiere"); if(m) m.style.display="none"; _premiereOpen=false; maybeDecision(); }
+function releaseProject(slot){
+  const pr=S.projects[slot]; if(!pr) return; const p=PROJECTS[pr.pid];
+  if(pr.progress < p.work) return;
+  const stars=projectStars(p, pr.genre);
+  const mult = stars/3;
+  const trendBonus = (pr.genre===trendGenre()) ? 1.5 : 1.0;
+  // Hype Combo — rapid back-to-back premieres build a streak multiplier (rewards active play).
+  const now=Date.now(); if(!OFFLINE){ if(now-(S.lastReleaseAt||0) < 60000){ S.combo=(S.combo||0)+1; } else { S.combo=1; } S.lastReleaseAt=now; if((S.combo||0)>(S.comboBest||0)) S.comboBest=S.combo;
+    if(S.combo===5){ S.gems+=3; toastSafe("🔥 5-Combo! +3 💎 — keep the streak alive!",true); }
+    else if(S.combo===10){ S.gems+=8; toastSafe("⚡ 10-COMBO MASTER! +8 💎",true); }
+  }
+  const comboMult = 1 + Math.min(Math.max(0,(S.combo||1)-1), 9)*0.05;
+  const yenGain = Math.floor(p.base * mult * (1 + S.fans*0.00004) * marketingMult() * legacyMult() * trendBonus * globalIncomeMult() * eventYenMult() * comboMult);
+  const fansGain = Math.max(1, Math.floor(p.fans * mult * trendBonus * eventFanMult() * comboMult));
+  const hypeGain = Math.max(1, Math.floor((p.tier+1)*mult*2));
+  S.yen+=yenGain; S.fans+=fansGain; S.totalFansEver+=fansGain; S.hype+=hypeGain;
+  S.releases++; S.projects[slot]=null;
+  questAdd("releases",1); questAdd("yen",yenGain);
+  if(studioValue()>S.bestValue) S.bestValue=studioValue();
+  awardMilestoneGems(); checkAchievements(); checkStudioLevel();
+  if(S.releases % 25 === 0){ S.gems+=3; toastSafe("💎 +3 Gems — 25 releases!",true); }
+  track("release",{tier:p.tier,stars});
+  if(!OFFLINE){
+    play("reward"); floatGain("+¥"+fmt(yenGain));
+    toast(`${"★".repeat(stars)} “${pr.title||p.name}” premieres! +¥${fmt(yenGain)}  +${fmt(fansGain)} fans`+(trendBonus>1?"  🔥TREND":"")+((S.combo||0)>=2?`  🔗COMBO x${S.combo} (+${Math.round((comboMult-1)*100)}%)`:"")+(globalIncomeMult()>1?"  ⚡BOOST":"")+"  "+currentEvent().ic, true);
+    if(stars===5 && p.tier>=3 && !S.sharedOnce){ setTimeout(()=>toast("🎉 Masterpiece! Tap 📣 Share to brag — and grab +25💎",true), 1600); }
+    render(); save();
+    const bigPremiere = (p.tier>=2 || stars>=5);
+    if(bigPremiere && !_premiereOpen){ showPremiere(pr, p, stars, yenGain, fansGain); }
+    else { maybeDecision(); }
+  }
+}
+function releaseFirstFinished(){
+  for(let i=0;i<S.projects.length;i++){ const pr=S.projects[i]; if(pr && pr.progress>=PROJECTS[pr.pid].work){ releaseProject(i); return true; } }
+  return false;
+}
+/* Instant Premiere — a premium gem sink: finish a production immediately. */
+function instantCost(p,pr){ const frac=Math.max(0,(p.work-pr.progress)/p.work); return Math.max(2, Math.ceil(frac*(4+p.tier*3))); }
+function instantPremiere(slot){
+  const pr=S.projects[slot]; if(!pr) return; const p=PROJECTS[pr.pid];
+  if(pr.progress>=p.work){ releaseProject(slot); return; }
+  const cost=instantCost(p,pr);
+  if(S.gems<cost){ toast("💎 Not enough Gems — grab more in the Store!"); S.tab="store"; render(); return; }
+  S.gems-=cost; track("instant",{tier:p.tier,cost}); play("reward");
+  pr.progress=p.work; releaseProject(slot);
+}
+function expandStudio(){
+  if(S.slots>=MAX_SLOTS){ toast("Studio is at maximum slots"); return; }
+  const c=expandCost();
+  if(S.yen<c){ toast("Not enough Yen to expand"); return; }
+  S.yen-=c; S.slots++; S.projects.push(null);
+  checkAchievements(); track("expand",{slots:S.slots}); play("reward"); toast("🏗️ New production slot unlocked! ("+S.slots+" slots)",true); render(); save();
+}
+function hire(role){
+  const c=hireCost(role);
+  if(S.yen<c){ toast("Not enough Yen to hire"); return; }
+  S.yen-=c; S.staff[role]++; questAdd("hires",1); play("click"); render(); save();
+}
+function buyUpgrade(key){
+  const c=upCost(key);
+  if(S.yen<c){ toast("Not enough Yen"); return; }
+  S.yen-=c; S.upgrades[key]++; play("click"); render(); save();
+}
+function research(genre){
+  const lvl=S.mastery[genre]||0;
+  const cost=Math.ceil(1200*Math.pow(1.9,lvl));
+  const hypeCost=2+lvl;
+  if(S.yen<cost){ toast("Not enough Yen to research"); return; }
+  if(S.hype<hypeCost){ toast("Need "+hypeCost+" Hype to research"); return; }
+  S.yen-=cost; S.hype-=hypeCost; questAdd("hypeSpent",hypeCost); S.mastery[genre]=lvl+1; play("click"); render(); save();
+}
+function campaign(i){
+  const c=CAMPAIGNS[i];
+  if(S.yen<c.cost){ toast("Not enough Yen"); return; }
+  S.yen-=c.cost; S.fans+=c.fans; S.totalFansEver+=c.fans; questAdd("campaigns",1); awardMilestoneGems(); play("reward"); toast("+"+fmt(c.fans)+" fans!",true); render(); save();
+}
+/* ---- anti-softlock: free freelance gig when broke & idle ---- */
+function freelance(){
+  if(activeCount()>0 || S.yen>=PROJECTS[0].cost) return;
+  S.yen+=150; play("click"); toast("🖌️ Freelance gig: +¥150"); render(); save();
+}
+/* ---- premium: spend Gems ---- */
+function gemCashAmount(){ const o=unlockedProjects(); const best=o[o.length-1]||PROJECTS[0]; return Math.floor(best.base*1.5*legacyMult()*passMult()); }
+function spendGem(act){
+  const costs={hype:5,cash:8,skip:4,golden:12};
+  const c=costs[act]; if(c==null) return;
+  if(S.gems<c){ toast("Need "+c+" 💎 Gems — earn or buy more in the Store"); return; }
+  if(act==="skip" && activeCount()===0){ toast("No project in production to skip"); return; }
+  S.gems-=c; track("gem_spend",{act});
+  if(act==="hype"){ S.hype+=50; toast("⚡ +50 Hype!",true); }
+  else if(act==="cash"){ const a=gemCashAmount(); S.yen+=a; toast("💰 Cash injection +¥"+fmt(a),true); }
+  else if(act==="skip"){ S.projects.forEach(pr=>{ if(pr) pr.progress=PROJECTS[pr.pid].work; }); toast("⏭️ All productions finished!",true); }
+  else if(act==="golden"){ S.goldenUntil=Date.now()+600000; toast("🌟 Golden Hour: 3× income for 10 min!",true); }
+  play("reward"); render(); save();
+}
+/* ---- real-money purchases (configurable) ---- */
+function buyReal(sku){
+  track("purchase_click",{sku});
+  if(NATIVE){
+    if(typeof window.IAPBuy==="function"){ window.IAPBuy(sku); toast("Opening App Store purchase…"); }
+    else toast("Purchases are still loading — try again in a moment.");
+    return;
+  }
+  const url=(MONETIZATION.checkout||{})[sku];
+  if(url){ try{ window.open(url,"_blank","noopener"); }catch(e){} toast("Opening checkout — your reward unlocks automatically when you return."); }
+  else { toast("💳 Payments aren't set up yet. Add your checkout link to enable this."); }
+}
+/* entitlement bridge — called by the native StoreKit layer (iap.js) on a verified purchase,
+   and reused by the web ?grant= redirect. Keeps grant logic in one place. */
+function grantEntitlement(kind, amount){
+  if(kind==="pass"){ S.producerPass=true; toast("🎬 Producer Pass unlocked — thank you!",true); }
+  else if(kind==="bundle"){ S.producerPass=true; S.gems+=200; S.bundleBought=true; toast("🌟 Starter Bundle unlocked: Pass + 200 💎!",true); }
+  else if(kind==="gems"){ const n=+amount||0; if(n>0){ S.gems+=n; toast("💎 +"+n+" Gems — thank you!",true);
+      if(flashAvailable()){ const bonus=Math.ceil(n*0.20); S.gems+=bonus; S.flashDealDay=todayStr(); toast("⚡ Daily Deal bonus: +"+bonus+" Gems!",true); } } }
+  track("purchase_grant",{kind,amount}); play("reward"); save(); render();
+}
+/* One-time Starter Bundle offer — shows once after the player has felt the loop (3 releases). */
+function maybeStarterOffer(){
+  if(OFFLINE) return false;
+  if(!STORE_PAYMENTS) return false;
+  if(S.starterSeen||S.producerPass||S.bundleBought) return false;
+  if((S.releases||0) < 3) return false;
+  if(_premiereOpen) return false;
+  S.starterSeen=true; save();
+  showStarterOffer();
+  return true;
+}
+function showStarterOffer(){
+  let m=document.getElementById("starter");
+  if(!m){
+    m=document.createElement("div"); m.id="starter"; m.className="overlay"; m.style.display="none";
+    m.innerHTML=`<div class="card-modal starter-card" style="max-width:380px">
+      <div class="starter-ribbon">⭐ ONE-TIME LAUNCH OFFER</div>
+      <h2 style="margin:6px 0 2px;text-align:center">🌟 Starter Bundle</h2>
+      <div class="muted" style="text-align:center;margin-bottom:10px">The best way to launch your studio</div>
+      <div class="starter-rows">
+        <div class="starter-row">🎬 <b>Producer Pass</b> — +50% Yen forever, auto-release, 2× offline</div>
+        <div class="starter-row">💎 <b>200 Gems</b> — instant boost stash</div>
+        <div class="starter-row">🚀 Best value — Pass alone is ${MONETIZATION.prices.pass}</div>
+      </div>
+      <button class="btn-gold" data-act="starter-buy" style="width:100%;margin-top:12px;font-size:17px">Get the Bundle · ${MONETIZATION.prices.bundle}</button>
+      <button class="btn-ghost" data-act="starter-close" style="width:100%;margin-top:8px">Maybe later</button>
+    </div>`;
+    document.body.appendChild(m);
+  }
+  m.style.display="flex"; track("starter_offer_shown",{});
+}
+function closeStarterOffer(){ const m=document.getElementById("starter"); if(m) m.style.display="none"; }
+/* daily login reward + streak */
+function todayStr(){ return new Date().toISOString().slice(0,10); }
+/* Daily Flash Deal — +20% bonus gems on any pack, once per day, with a real countdown to midnight. */
+function flashAvailable(){ return S.flashDealDay!==todayStr(); }
+function flashCountdown(){ let s=Math.max(0,Math.floor(msToMidnight()/1000)); const h=Math.floor(s/3600); s%=3600; const mm=Math.floor(s/60); const ss=s%60; const z=x=>String(x).padStart(2,"0"); return z(h)+":"+z(mm)+":"+z(ss); }
+function checkDaily(){
+  const t=todayStr(); if(S.lastDailyDate===t) return null;
+  const y=new Date(Date.now()-86400000).toISOString().slice(0,10);
+  S.dailyStreak = (S.lastDailyDate===y) ? (S.dailyStreak+1) : 1;
+  S.lastDailyDate=t;
+  const gems=Math.min(2+S.dailyStreak,12);
+  const yenBonus=Math.floor(500*Math.pow(1.6,Math.min(S.dailyStreak,8))*legacyMult());
+  S.gems+=gems; S.yen+=yenBonus;
+  rollQuests(); submitScore();
+  track("daily_claim",{streak:S.dailyStreak});
+  save();
+  return {gems,yenBonus,streak:S.dailyStreak};
+}
+/* share — viral brag with live stats + first-share gem reward */
+function shareUrl(){
+  let url="https://higgsfield.gg";
+  try{ url=window.top.location.href.split("?")[0]; }catch(e){ try{ url=location.href.split("?")[0]; }catch(_){} }
+  return url;
+}
+function shareText(){
+  const fans=fmt(S.totalFansEver||S.fans||0), rel=S.releases||0;
+  const lines=[
+    `My anime studio just hit ${fans} fans in Anime Studio Tycoon 🎬🔥 Think you can out-produce me?`,
+    `I've shipped ${rel} anime ${rel===1?'hit':'hits'} and built ${fans} fans in Anime Studio Tycoon — your move 👀`,
+    `Building the #1 anime studio in the world rn 🌸 ${fans} fans and counting. Beat my run:`
+  ];
+  return lines[Math.floor(Math.random()*lines.length)];
+}
+function rewardShare(){
+  if(!S.sharedOnce){ S.sharedOnce=true; S.gems+=25; toast("🔗 Shared! +25 gems — thanks for spreading the word!",true); play("reward"); render(); save(); }
+  else toast("🔗 Thanks for sharing!");
+}
+function shareGame(){
+  const url=shareUrl(), text=shareText();
+  track("share",{});
+  if(navigator.share){ navigator.share({title:"Anime Studio Tycoon", text, url}).then(rewardShare).catch(()=>{}); return; }
+  // desktop fallback: copy + offer X/Twitter post
+  if(navigator.clipboard){ navigator.clipboard.writeText(text+" "+url).catch(()=>{}); }
+  rewardShare();
+  try{ window.open("https://twitter.com/intent/tweet?text="+encodeURIComponent(text)+"&url="+encodeURIComponent(url),"_blank","noopener"); }catch(_){ toast(url); }
+}
+/* ---- free rewarded boost (ad slot) ---- */
+function rewardedBoost(){
+  if(Date.now()<S.rewardedCdUntil){ toast("Boost recharging — try again soon"); return; }
+  const grant=()=>{ S.rewardedUntil=Date.now()+300000; S.rewardedCdUntil=Date.now()+360000; track("rewarded",{}); toast("⚡ 2× income for 5 minutes!",true); play("reward"); render(); save(); };
+  if(typeof MONETIZATION.adProvider==="function"){ Promise.resolve(MONETIZATION.adProvider()).then(grant).catch(()=>toast("Ad not available right now")); }
+  else grant();
+}
+/* ---- redeem code ---- */
+function redeem(code){
+  code=(code||"").trim().toUpperCase();
+  if(!code) return;
+  const r=(MONETIZATION.codes||{})[code];
+  if(!r){ toast("Invalid code"); return; }
+  if(r.gems){ S.gems+=r.gems; }
+  if(r.pass){ S.producerPass=true; }
+  toast("✅ Code redeemed!"+(r.gems?(" +"+r.gems+" 💎"):"")+(r.pass?" Producer Pass!":""),true);
+  play("reward"); render(); save();
+}
+function rush(slot){
+  const pr=S.projects[slot]; if(!pr) return; const p=PROJECTS[pr.pid];
+  if(S.hype<5){ toast("Need 5 Hype to Rush"); return; }
+  S.hype-=5; questAdd("hypeSpent",5); pr.progress=Math.min(p.work, pr.progress + p.work*0.25);
+  play("click"); render(); save();
+}
+function overdrive(){
+  if(S.hype<15){ toast("Need 15 Hype for Overdrive"); return; }
+  S.hype-=15; questAdd("hypeSpent",15); S.overdriveUntil=Date.now()+30000; play("reward"); toast("⚡ Overdrive! 2× speed for 30s"); render(); save();
+}
+function prestige(){
+  if(S.fans<PRESTIGE_FANS) return;
+  const gain=Math.floor(Math.sqrt(S.totalFansEver/1000));
+  if(!confirm(`Reboot the studio?\nReset money, fans, staff & upgrades, but gain ${gain} Legacy Points (permanent +${gain*5}% income forever). Genre mastery is kept.`)) return;
+  const keep={legacy:S.legacy+gain, mastery:S.mastery, total:S.totalFansEver, mute:S.muted,
+              gems:S.gems, pass:S.producerPass, ms:S.milestonesClaimed, bundle:S.bundleBought,
+              daily:S.lastDailyDate, streak:S.dailyStreak, stars:S.stars, tut:S.tutorialSeen,
+              best:S.bestValue, ach:S.achievements, fg:S.freeGemsDate, taps:S.taps};
+  S=freshState();
+  S.legacy=keep.legacy; S.mastery=keep.mastery; S.totalFansEver=keep.total; S.muted=keep.mute;
+  S.gems=keep.gems; S.producerPass=keep.pass; S.milestonesClaimed=keep.ms; S.bundleBought=keep.bundle;
+  S.lastDailyDate=keep.daily; S.dailyStreak=keep.streak; S.stars=keep.stars; S.tutorialSeen=keep.tut;
+  S.bestValue=keep.best; S.achievements=keep.ach; S.freeGemsDate=keep.fg; S.taps=keep.taps;
+  checkAchievements(); track("prestige",{gain});
+  toast("🌸 Studio rebooted! +"+gain+" Legacy",true); render(); save();
+}
+
+/* ========================= TICK ========================= */
+function tick(seconds){
+  // trend rotation
+  if(Date.now()>S.trendUntil){ S.trendIdx=Math.floor(Math.random()*GENRES.length); S.trendUntil=Date.now()+90000; }
+  const ppt=powerPerTick();
+  let anyActive=false;
+  for(let i=0;i<S.projects.length;i++){
+    const pr=S.projects[i]; if(!pr) continue;
+    const p=PROJECTS[pr.pid];
+    if(pr.progress<p.work){ pr.progress=Math.min(p.work, pr.progress + ppt*seconds); anyActive=true; }
+    if(S.producerPass && pr.progress>=p.work){ releaseProject(i); }
+  }
+  if(anyActive) S.yen=Math.max(0, S.yen - salaryPerTick()*seconds); // staff paid while any line is filming
+}
+
+/* offline simulation: advance time, auto-release & auto re-greenlight same project */
+function simulateOffline(sec){
+  let yen0=S.yen, fans0=S.fans, rel0=S.releases;
+  let guard=0; OFFLINE=true;
+  while(sec>0 && guard++<40000){
+    // fill empty slots with best affordable unlocked project
+    let s;
+    while((s=firstEmptySlot())>=0){
+      const opts=unlockedProjects().filter(p=>S.yen>=p.cost);
+      if(!opts.length) break;
+      const best=opts[opts.length-1]; const g=trendGenre();
+      S.projects[s]={ pid:best.id, genre:g, progress:0, title:makeTitle(g), poster:pickPoster(g) }; S.yen-=best.cost;
+    }
+    const power=powerPerTick(); if(power<=0) break;
+    if(activeCount()===0) break;
+    // advance to the soonest finishing line (or remaining time)
+    let dt=sec;
+    for(const pr of S.projects){ if(!pr) continue; const need=(PROJECTS[pr.pid].work-pr.progress)/power; if(need<dt) dt=need; }
+    if(dt<=0) dt=Math.min(sec,0.001);
+    for(const pr of S.projects){ if(pr) pr.progress=Math.min(PROJECTS[pr.pid].work, pr.progress+power*dt); }
+    S.yen=Math.max(0, S.yen - salaryPerTick()*dt);
+    sec-=dt;
+    for(let i=0;i<S.projects.length;i++){ const pr=S.projects[i]; if(pr && pr.progress>=PROJECTS[pr.pid].work) releaseProject(i); }
+  }
+  OFFLINE=false;
+  return { yen:S.yen-yen0, fans:S.fans-fans0, releases:S.releases-rel0 };
+}
+
+/* ========================= RENDER ========================= */
+function setTab(t){ S.tab=t; play("click"); render(); }
+
+function render(){
+  // top bar
+  $("#r-yen").textContent=fmt(S.yen);
+  $("#r-fans").textContent=fmt(S.fans);
+  $("#r-hype").textContent=fmt(S.hype);
+  $("#r-gems").textContent=fmt(S.gems);
+  $("#trend").textContent=trendGenre();
+  { const sb=document.getElementById("share-bonus"); if(sb) sb.style.display=S.sharedOnce?"none":""; }
+
+  // goal
+  let nextM=MILESTONES.find(m=>S.fans<m.fans);
+  if(nextM){
+    const prev=[...MILESTONES].reverse().find(m=>m.fans<=nextM.fans && m.fans<=S.fans);
+    const lo=prev?prev.fans:0; const pct=Math.max(0,Math.min(100,(S.fans-lo)/(nextM.fans-lo)*100));
+    $("#goal-txt").textContent="🎯 "+nextM.label;
+    $("#goal-bar").style.width=pct+"%";
+  } else { $("#goal-txt").textContent="👑 Global Anime Empire achieved!"; $("#goal-bar").style.width="100%"; }
+
+  // tabs
+  const tabs=[["produce","🎬",STR.tab_produce],["quests","📋",STR.tab_quests],["staff","👥",STR.tab_staff],["stars","⭐",STR.tab_stars],["research","🔬",STR.tab_research],["studio","🏢",STR.tab_studio],["market","📣",STR.tab_market],["store","💎",STR.tab_store]];
+  $("#tabs").innerHTML=tabs.map(([k,ic,l])=>`<button class="tab ${S.tab===k?'active':''}" data-tab="${k}"><span class="ic">${ic}</span>${l}</button>`).join("");
+
+  if(S.tab==="produce") renderProduce();
+  else if(S.tab==="quests") renderQuests();
+  else if(S.tab==="staff") renderStaff();
+  else if(S.tab==="stars") renderStars();
+  else if(S.tab==="research") renderResearch();
+  else if(S.tab==="studio") renderStudio();
+  else if(S.tab==="market") renderMarket();
+  else if(S.tab==="store") renderStore();
+}
+
+function dailyQuestHTML(){
+  if(!(S.quests && S.quests.length)) return "";
+  let h=`<div class="panel"><div class="qhead"><h2>📋 ${STR.h_daily}</h2><span class="qtimer">⏳ ${STR.resetsIn} ${fmtDur(msToMidnight())}</span></div>`;
+  S.quests.forEach((q,i)=>{
+    const t=QUEST_POOL.find(x=>x.id===q.id);
+    const prog=Math.min(q.goal, S.questProg[questMetric(q.id)]||0);
+    const done=prog>=q.goal;
+    h+=`<div class="uprow"><div class="meta"><h4 style="font-size:14px">${t?t.desc(q.goal):q.id}</h4>
+      <div class="progress" style="height:8px;margin:5px 0"><i style="width:${Math.min(100,prog/q.goal*100)}%"></i></div>
+      <div class="muted">${fmt(prog)}/${fmt(q.goal)} · reward +${q.reward} 💎</div></div>
+      <button class="btn-gold hirebtn" data-quest="${i}" ${(done&&!q.claimed)?"":"disabled"}>${q.claimed?"✓":(done?STR.claim:"…")}</button></div>`;
+  });
+  return h+`</div>`;
+}
+function weeklyQuestHTML(){
+  checkWeekly();
+  let h=`<div class="panel"><div class="qhead"><h2>🏆 ${STR.h_weekly}</h2><span class="qtimer">⏳ ${STR.resetsIn} ${fmtDur(msToWeekReset())}</span></div>`;
+  (S.weeklyQuests||[]).forEach((q,i)=>{
+    const t=WEEKLY_POOL.find(x=>x.id===q.id);
+    const prog=Math.min(q.goal, S.weekProg[weeklyMetric(q.id)]||0);
+    const done=prog>=q.goal;
+    h+=`<div class="uprow"><div class="meta"><h4 style="font-size:14px">${t?t.desc(q.goal):q.id}</h4>
+      <div class="progress" style="height:8px;margin:5px 0"><i style="width:${Math.min(100,prog/q.goal*100)}%"></i></div>
+      <div class="muted">${fmt(prog)}/${fmt(q.goal)} · reward +${q.reward} 💎</div></div>
+      <button class="btn-gold hirebtn" data-week="${i}" ${(done&&!q.claimed)?"":"disabled"}>${q.claimed?"✓":(done?STR.claim:"…")}</button></div>`;
+  });
+  return h+`</div>`;
+}
+function loginCalendarHTML(){
+  loginRefresh();
+  const canClaim=canClaimLogin();
+  const next=S.loginClaimedCount;
+  let h=`<div class="panel"><div class="qhead"><h2>📅 ${STR.h_login}</h2><span class="qtimer">${monthKeyStr().replace("-","/")}</span></div>
+    <div class="muted" style="margin-bottom:8px">Log in every day for bigger rewards. Resets at the start of each month.</div>`;
+  if(canClaim){
+    const r=LOGIN_REWARDS[next];
+    h+=`<button class="btn-gold" data-act="login-claim" style="width:100%;margin-bottom:10px">🎁 Claim Day ${r.day}: +${r.gems}💎 +¥${fmt(r.yen)}</button>`;
+  } else {
+    h+=`<div class="muted" style="margin-bottom:10px">✅ Claimed today — come back tomorrow for Day ${Math.min(next+1,30)}.</div>`;
+  }
+  h+=`<div class="logingrid">`;
+  LOGIN_REWARDS.forEach((r,idx)=>{
+    const claimed=idx<S.loginClaimedCount;
+    const isNext=idx===S.loginClaimedCount && canClaim;
+    h+=`<div class="loginday ${claimed?'done':''} ${isNext?'next':''} ${r.big?'big':''}">
+      <div class="ld-day">D${r.day}</div>
+      <div class="ld-rew">${r.big?'🎁':'💎'}${r.gems}</div>
+      ${claimed?'<div class="ld-check">✓</div>':''}</div>`;
+  });
+  h+=`</div></div>`;
+  return h;
+}
+function renderQuests(){
+  let h=`<div class="panel hero-card"><h2 style="font-size:17px">🎯 ${STR.h_rewards}</h2><div class="muted">Complete quests and log in daily to earn Gems and Yen. Everything rotates on a timer — keep coming back!</div></div>`;
+  h+=loginCalendarHTML();
+  h+=dailyQuestHTML();
+  h+=weeklyQuestHTML();
+  main.innerHTML=h;
+}
+function renderProduce(){
+  let h="";
+  const dp=dimPowerForQuality();
+  // live event banner
+  const ev=currentEvent();
+  h+=`<div class="eventbar"><span class="ev-ic">${ev.ic}</span><div class="ev-meta"><b>${ev.name}</b><div class="muted">${ev.desc}</div></div><span class="qtimer">⏳ ${fmtDur(msToMidnight())}</span></div>`;
+  // daily quests (shared with the Quests tab)
+  h+=dailyQuestHTML();
+  // active production lines
+  S.projects.forEach((pr,i)=>{
+    if(!pr) return;
+    const p=PROJECTS[pr.pid];
+    const pct=Math.min(100, pr.progress/p.work*100);
+    const done=pr.progress>=p.work;
+    const stars=projectStars(p, pr.genre);
+    const eta = done?0:Math.ceil((p.work-pr.progress)/Math.max(0.0001,powerPerTick()));
+    h+=`<div class="panel"><h2 style="font-size:15px">🎬 Studio ${i+1}${done?" — ✅ Ready":""}</h2><div class="card">
+      <div class="poster" ${done?'':`data-act="tapboost" data-slot="${i}"`} style="background-image:url(${pr.poster||GENRE_POSTER[pr.genre]||DEFAULT_POSTER});${done?'':'cursor:pointer'}" title="${done?'':'Tap to boost!'}"><div class="gtag">${pr.genre}${pr.genre===trendGenre()?" 🔥":""}${done?'':' · 👆'}</div></div>
+      <div class="pinfo">
+        <h3>${pr.title?`“${pr.title}”`:p.name}</h3>
+        <div class="muted" style="margin-bottom:2px">${p.name} · ${pr.genre}</div>
+        <div class="muted">${done?"Ready to release":("ETA ~"+eta+"s")} · projected ${"★".repeat(stars)}${"☆".repeat(5-stars)}</div>
+        <div class="progress"><i style="width:${pct}%"></i></div>
+        <div class="dims">
+          ${DIMS.map(d=>{const role=DIM_OF_ROLE[d];const fillP=Math.min(100,dp[d]/p.talent*100/1.5);
+            return `<div class="dim">${ROLES[role].dimName} <div class="db"><i style="width:${fillP}%"></i></div></div>`}).join("")}
+        </div>
+        <div class="row" style="margin-top:10px;flex-wrap:wrap;gap:8px">
+          ${done?`<button class="btn-gold" data-rel="${i}" style="font-size:16px;flex:1">🎉 ${STR.release}</button>`
+                :`<button class="btn-cyan" data-rush="${i}">⚡ ${STR.rush} · 5</button><button class="btn-gold" data-act="instant" data-slot="${i}">⏩ Premiere Now · 💎${instantCost(p,pr)}</button>`}
+        </div>
+      </div></div></div>`;
+  });
+  // greenlight picker when a slot is free
+  const empties=S.slots-activeCount();
+  if(empties>0){
+    h+=`<div class="panel"><h2>🎬 Greenlight a Project <span class="pill">${empties}/${S.slots} slots free</span></h2><div class="muted" style="margin-bottom:8px">Pick a genre, then choose what to produce. Match the trending genre for a 1.5× bonus.</div>`;
+    h+=`<div class="genrepick" id="genres">`+GENRES.map((g,i)=>`<span class="chip ${i===_selGenre?'sel':''} ${g===trendGenre()?'trend':''}" data-g="${i}">${g}${g===trendGenre()?" 🔥":""}${S.mastery[g]?` <span class="pill">L${S.mastery[g]}</span>`:""}</span>`).join("")+`</div>`;
+    h+=`<div class="pickgrid">`+PROJECTS.map(p=>{
+      const locked=S.fans<p.unlock; const afford=S.yen>=p.cost;
+      return `<div class="pick ${locked?'lock':''}">
+        <h4>${p.name}</h4>
+        <div class="stat">Cost: ¥${fmt(p.cost)}</div>
+        <div class="stat">Reward: ¥${fmt(p.base)} · +${fmt(p.fans)} fans</div>
+        <div class="stat">Workload: ${fmt(p.work)}</div>
+        ${locked?`<div class="stat" style="color:var(--bad)">🔒 ${fmt(p.unlock)} fans</div>`
+          :`<button class="btn-primary" data-gl="${p.id}" ${afford?"":"disabled"} style="width:100%;margin-top:8px">${STR.greenlight}</button>`}
+      </div>`;
+    }).join("")+`</div></div>`;
+  }
+  // anti-softlock freelance
+  if(activeCount()===0 && S.yen<PROJECTS[0].cost){
+    h+=`<div class="panel" style="border:2px solid var(--sakura)"><h2>🆘 Out of cash?</h2>
+      <div class="muted" style="margin-bottom:8px">Take a quick freelance job to get back on your feet.</div>
+      <button class="btn-primary" data-act="freelance" style="width:100%">🖌️ Freelance commission · +¥150</button></div>`;
+  }
+  // boost / pass status
+  const boosts=[];
+  if(S.producerPass) boosts.push("🎬 Producer Pass (+50%, auto-release)");
+  if(goldenActive()) boosts.push("🌟 Golden Hour 3× ("+Math.ceil((S.goldenUntil-Date.now())/1000)+"s)");
+  if(rewardedActive()) boosts.push("⚡ 2× Boost ("+Math.ceil((S.rewardedUntil-Date.now())/1000)+"s)");
+  if(Date.now()<S.overdriveUntil) boosts.push("🚀 Overdrive 2× speed ("+Math.ceil((S.overdriveUntil-Date.now())/1000)+"s)");
+  // legacy / prestige / overdrive
+  h+=`<div class="panel" style="background-image:linear-gradient(rgba(251,243,230,.84),rgba(251,243,230,.93)),url(${DASHBOARD_BG});background-size:cover;background-position:center"><h2>📊 ${STR.h_dashboard}</h2>
+     <div class="kpis">
+       <div class="kpi accent"><div class="kl">🎖️ Studio Lv.</div><div class="kv">${studioLevel()} <small style="font-size:11px;opacity:.7">+${studioLevel()*2}%</small></div></div>
+       <div class="kpi accent"><div class="kl">Studio Value</div><div class="kv">${fmt(studioValue())}</div></div>
+       <div class="kpi"><div class="kl">Income ×</div><div class="kv">${(globalIncomeMult()).toFixed(2)}</div></div>
+       <div class="kpi"><div class="kl">Output/s</div><div class="kv">${fmt(powerPerTick())}</div></div>
+       <div class="kpi"><div class="kl">Premieres</div><div class="kv">${fmt(S.releases)}</div></div>
+       <div class="kpi"><div class="kl">⭐ Stars</div><div class="kv">${(S.stars||[]).length}</div></div>
+       <div class="kpi"><div class="kl">Slots</div><div class="kv">${activeCount()}/${S.slots}</div></div>
+       <div class="kpi"><div class="kl">Legacy</div><div class="kv">${S.legacy} <small style="font-size:11px;opacity:.7">+${S.legacy*5}%</small></div></div>
+       <div class="kpi"><div class="kl">Best Value</div><div class="kv">${fmt(Math.max(S.bestValue,studioValue()))}</div></div>
+     </div>
+     ${(()=>{const L=studioLevel(),lo=fansForLevel(L),hi=fansForLevel(L+1),f=Math.max(0,Math.min(1,(S.totalFansEver-lo)/(hi-lo)));return `<div style="margin-top:10px"><div class="muted" style="display:flex;justify-content:space-between;font-weight:700;font-size:12px"><span>🎖️ Studio Lv. ${L} → ${L+1}</span><span>${fmt(Math.max(0,hi-S.totalFansEver))} fans to go</span></div><div style="height:9px;border-radius:6px;background:rgba(0,0,0,.12);overflow:hidden;margin-top:3px"><div style="height:100%;width:${(f*100).toFixed(1)}%;background:linear-gradient(90deg,#f6b73c,#ff7eb3)"></div></div></div>`;})()}
+     ${boosts.length?`<div class="muted" style="margin-top:8px;color:#0c7d96;font-weight:700">⚡ Active: ${boosts.join(" · ")}</div>`:""}
+     ${activeCount()>0?`<button class="btn-cyan" id="a-over" style="margin-top:10px;width:100%">🚀 ${STR.overdrive} · 15 Hype (all lines, 2× speed 30s)</button>`:""}
+     ${S.fans>=PRESTIGE_FANS?`<button class="btn-cyan" id="a-prestige" style="margin-top:8px;width:100%">🌸 Reboot Studio for +${Math.floor(Math.sqrt(S.totalFansEver/1000))} Legacy</button>`:`<div class="muted" style="margin-top:6px">Reach ${fmt(PRESTIGE_FANS)} fans to unlock Studio Reboot (prestige).</div>`}
+   </div>`;
+  main.innerHTML=h;
+}
+let _selGenre=0;
+
+function renderStaff(){
+  let h=`<div class="panel"><h2>👥 Hire Your Team</h2><div class="muted" style="margin-bottom:10px">Each role boosts one quality dimension. Balanced teams make higher-rated anime. Salaries are paid from release revenue.</div>`;
+  for(const key in ROLES){ const r=ROLES[key]; const c=hireCost(key);
+    h+=`<div class="staffrow">
+      <img src="${r.img}" alt="">
+      <div class="meta"><h4>${r.name} <span class="pill">×${S.staff[key]}</span></h4>
+        <div class="muted">Boosts ${r.dimName} · +${r.power}/s output · ¥${r.salary}/s salary</div></div>
+      <button class="btn-primary hirebtn" data-hire="${key}" ${S.yen>=c?"":"disabled"}>${STR.hire}<small>¥${fmt(c)}</small></button>
+    </div>`;
+  }
+  h+=`</div>`; main.innerHTML=h;
+}
+
+function renderStars(){
+  let h=`<div class="panel"><h2>⭐ Star Talent</h2><div class="muted" style="margin-bottom:10px">Scout famous creators — Stars add big permanent output to their role and boost anime quality. Duplicates level up. Rarer = stronger.</div>
+    <div class="row" style="gap:8px;flex-wrap:wrap">
+      <button class="btn-primary hirebtn" data-scout="yen" ${S.yen>=castingCost()?"":"disabled"}>🎬 Open Casting<small>¥${fmt(castingCost())}</small></button>
+      <button class="btn-gold hirebtn" data-scout="gems" ${S.gems>=SCOUT_GEMS?"":"disabled"}>🌟 Premium Scout<small>${SCOUT_GEMS} 💎</small></button>
+    </div>
+    <div class="muted" style="margin-top:6px">Open Casting → Common/Rare. Premium Scout → full odds incl. Epic &amp; Legendary.</div></div>`;
+  h+=`<div class="panel"><h2>🎭 Your Stars <span class="pill">${(S.stars||[]).length}</span></h2>`;
+  if(!S.stars||!S.stars.length){ h+=`<div class="muted">No stars yet — scout your first talent above!</div>`; }
+  else{
+    const order=["Legendary","Epic","Rare","Common"];
+    [...S.stars].map(st=>({st,t:STAR_BY_ID[st.sid]})).filter(x=>x.t)
+      .sort((a,b)=>order.indexOf(a.t.rarity)-order.indexOf(b.t.rarity))
+      .forEach(({st,t})=>{ const R=STAR_RARITY[t.rarity];
+        h+=`<div class="staffrow" style="border-left:5px solid ${R.color}">
+          <img src="${t.img}" alt="" style="box-shadow:inset 0 0 0 2px ${R.color}">
+          <div class="meta"><h4>${t.name} <span class="pill" style="background:${R.color}22;color:${R.color}">${t.rarity}</span> <span class="pill">Lv ${st.level}</span></h4>
+          <div class="muted">${ROLES[t.role].name} · +${fmt(R.power*st.level)} ${ROLES[t.role].dimName} output</div></div></div>`;
+      });
+  }
+  h+=`</div>`;
+  h+=`<div class="panel"><h2>📈 Star Bonus by Role</h2><div class="muted">`+Object.keys(ROLES).map(r=>`${ROLES[r].name}: <b>+${fmt(starPowerForRole(r))}</b>`).join(" · ")+`</div></div>`;
+  main.innerHTML=h;
+}
+
+function renderResearch(){
+  let h=`<div class="panel"><h2>🔬 Genre Mastery</h2><div class="muted" style="margin-bottom:10px">Research genres to permanently boost the quality of projects in that genre (+6% per level). Costs Yen + Hype.</div>`;
+  for(const g of GENRES){ const lvl=S.mastery[g]||0; const cost=Math.ceil(1200*Math.pow(1.9,lvl)); const hc=2+lvl;
+    h+=`<div class="uprow"><div class="meta"><h4>${g} <span class="pill">L${lvl}</span></h4>
+      <div class="muted">+${(lvl*6)}% quality now → +${((lvl+1)*6)}% next</div></div>
+      <button class="btn-cyan hirebtn" data-res="${g}" ${(S.yen>=cost&&S.hype>=hc)?"":"disabled"}>Research<small>¥${fmt(cost)} · ${hc}⚡</small></button></div>`;
+  }
+  h+=`</div>`; main.innerHTML=h;
+}
+
+function renderStudio(){
+  let h=`<div class="panel"><h2>🏢 Studio Upgrades</h2><div class="muted" style="margin-bottom:10px">Permanent multipliers. Reinvest your profits to scale output.</div>`;
+  // production slot expansion (parallel lines)
+  if(S.slots<MAX_SLOTS){
+    const c=expandCost();
+    h+=`<div class="uprow" style="border:2px solid var(--sakura)"><div class="meta"><h4>🏗️ Studio Expansion <span class="pill">${S.slots}/${MAX_SLOTS} slots</span></h4>
+      <div class="muted">Unlock another production line to make ${S.slots+1} anime at once.</div></div>
+      <button class="btn-primary hirebtn" data-act="expand" ${S.yen>=c?"":"disabled"}>Expand<small>¥${fmt(c)}</small></button></div>`;
+  } else {
+    h+=`<div class="uprow" style="border:2px solid var(--gold)"><div class="meta"><h4>🏗️ Studio Expansion <span class="pill">MAX</span></h4><div class="muted">All ${MAX_SLOTS} production lines unlocked.</div></div></div>`;
+  }
+  for(const key in UPGRADES){ const u=UPGRADES[key]; const c=upCost(key);
+    h+=`<div class="uprow"><div class="meta"><h4>${u.ic} ${u.name} <span class="pill">L${S.upgrades[key]}</span></h4>
+      <div class="muted">${u.desc}</div></div>
+      <button class="btn-gold hirebtn" data-up="${key}" ${S.yen>=c?"":"disabled"}>Upgrade<small>¥${fmt(c)}</small></button></div>`;
+  }
+  h+=`</div>`; main.innerHTML=h;
+}
+
+function renderMarket(){
+  let h=`<div class="panel"><h2>📣 Marketing</h2><div class="muted" style="margin-bottom:10px">Convert Yen into Fans instantly. Fans unlock bigger projects and multiply your revenue.</div>`;
+  CAMPAIGNS.forEach((c,i)=>{
+    h+=`<div class="uprow"><div class="meta"><h4>${c.ic} ${c.name}</h4><div class="muted">+${fmt(c.fans)} fans</div></div>
+      <button class="btn-primary hirebtn" data-camp="${i}" ${S.yen>=c.cost?"":"disabled"}>Run<small>¥${fmt(c.cost)}</small></button></div>`;
+  });
+  h+=`</div>`; main.innerHTML=h;
+}
+
+function renderStore(){
+  const P=MONETIZATION.prices, packCfg=[["gems_s","Starter Pack"],["gems_m","Studio Pack"],["gems_l","Producer Pack"],["gems_mega","Mogul Pack"]];
+  let h=`<div class="panel"><h2>💎 Studio Store</h2>
+    <div class="muted" style="margin-bottom:10px">You have <b>${fmt(S.gems)}</b> 💎 Gems. Gems are earned free from milestones &amp; every 25 releases — or topped up below.</div>`;
+  // Producer Pass (owned state always shown)
+  if(S.producerPass){
+    h+=`<div class="uprow" style="border:2px solid var(--gold)"><div class="meta"><h4>🎬 Producer Pass <span class="pill">OWNED</span></h4><div class="muted">+50% Yen on every release · auto-releases finished projects · 2× offline earnings cap</div></div></div>`;
+  }
+  // Real-money purchases — only when a payment rail is available (hidden in native builds w/o StoreKit, per App Store rules)
+  if(STORE_PAYMENTS){
+    if(!S.producerPass && !S.bundleBought){
+      h+=`<div class="uprow" style="border:2px solid var(--sakura);background:linear-gradient(180deg,#fff,var(--sakura2))"><div class="meta"><h4>🌟 Starter Bundle <span class="pill">BEST VALUE</span></h4><div class="muted">Producer Pass + 200 Gems · one-time launch offer</div></div>
+        <button class="btn-gold hirebtn" data-buy="bundle">Get<small>${P.bundle}</small></button></div>`;
+    }
+    if(!S.producerPass){
+      h+=`<div class="uprow" style="border:2px solid var(--gold)"><div class="meta"><h4>🎬 Producer Pass</h4><div class="muted">+50% Yen forever · auto-release · 2× offline cap. One-time.</div></div>
+        <button class="btn-gold hirebtn" data-buy="pass">Unlock<small>${P.pass}</small></button></div>`;
+    }
+    if(flashAvailable()){
+      h+=`<div class="flash-deal"><div class="flash-row"><span class="flash-tag">⚡ DAILY DEAL</span><span class="flash-cd" id="flash-cd">${flashCountdown()}</span></div>
+        <div class="flash-body">+20% bonus Gems on <b>any</b> pack today — added automatically on purchase.</div></div>`;
+    }
+    h+=`<div class="muted" style="margin:12px 0 6px;font-weight:800;color:var(--plum)">Top up Gems</div>`;
+    packCfg.forEach(([sku,label])=>{
+      h+=`<div class="uprow"><div class="meta"><h4>💎 ${label}</h4><div class="muted">${fmt(GEM_PACKS[sku])} Gems</div></div>
+        <button class="btn-primary hirebtn" data-buy="${sku}">Buy<small>${P[sku]}</small></button></div>`;
+    });
+  } else if(!S.producerPass){
+    h+=`<div class="muted" style="margin:8px 0">💎 Earn Gems free through milestones, daily rewards, quests &amp; every 25 releases — then spend them below.</div>`;
+  }
+  // Spend gems
+  h+=`<div class="muted" style="margin:12px 0 6px;font-weight:800;color:var(--plum)">Spend Gems</div>
+    <div class="uprow"><div class="meta"><h4>⚡ Hype Boost</h4><div class="muted">+50 Hype instantly</div></div><button class="btn-cyan hirebtn" data-gem="hype">Spend<small>5 💎</small></button></div>
+    <div class="uprow"><div class="meta"><h4>💰 Cash Injection</h4><div class="muted">+¥${fmt(gemCashAmount())} now</div></div><button class="btn-cyan hirebtn" data-gem="cash">Spend<small>8 💎</small></button></div>
+    <div class="uprow"><div class="meta"><h4>⏭️ Skip Production</h4><div class="muted">Instantly finish all active projects</div></div><button class="btn-cyan hirebtn" data-gem="skip" ${activeCount()>0?"":"disabled"}>Spend<small>4 💎</small></button></div>
+    <div class="uprow"><div class="meta"><h4>🌟 Golden Hour</h4><div class="muted">3× income for 10 minutes</div></div><button class="btn-cyan hirebtn" data-gem="golden">Spend<small>12 💎</small></button></div>`;
+  // Free rewarded boost + daily free gems
+  const cd=Math.max(0,Math.ceil((S.rewardedCdUntil-Date.now())/1000));
+  const fgClaimed = S.freeGemsDate===todayStr();
+  h+=`<div class="muted" style="margin:12px 0 6px;font-weight:800;color:var(--plum)">Free Rewards</div>
+    <div class="uprow"><div class="meta"><h4>🎁 Daily Free Gems</h4><div class="muted">${fgClaimed?"Claimed — back tomorrow!":"Watch a short ad and collect +10 💎"}</div></div>
+      <button class="btn-gold hirebtn" data-act="freegems" ${fgClaimed?"disabled":""}>Claim<small>+10 💎</small></button></div>
+    <div class="uprow"><div class="meta"><h4>⚡ Free 2× Income</h4><div class="muted">${rewardedActive()?"Active now!":(cd>0?("Recharges in "+cd+"s"):"Watch &amp; earn 2× income for 5 min")}</div></div>
+      <button class="btn-gold hirebtn" data-act="rewarded" ${cd>0?"disabled":""}>Boost<small>FREE</small></button></div>`;
+  // Achievements
+  const got=S.achievements.length, tot=ACHIEVEMENTS.length;
+  h+=`<div class="muted" style="margin:12px 0 6px;font-weight:800;color:var(--plum)">🏆 Achievements (${got}/${tot})</div>`;
+  ACHIEVEMENTS.forEach(a=>{ const done=S.achievements.includes(a.id);
+    h+=`<div class="uprow" style="${done?'border-left:5px solid var(--gold)':'opacity:.7'}"><div class="meta"><h4>${done?'✅':'🔒'} ${a.name}</h4><div class="muted">${a.desc}</div></div><span class="pill">+${a.gems}💎</span></div>`;
+  });
+  // Redeem
+  h+=`<div class="muted" style="margin:12px 0 6px;font-weight:800;color:var(--plum)">Redeem a Code</div>
+    <div class="row" style="gap:8px"><input id="redeemcode" placeholder="ENTER CODE" style="flex:1;padding:10px;border-radius:12px;border:2px solid rgba(70,80,107,.25);font-weight:700;text-transform:uppercase"><button class="btn-ghost hirebtn" data-act="redeem">Redeem</button></div>`;
+  if(NATIVE){
+    h+=`<button class="btn-ghost" data-act="restore" style="width:100%;margin-top:10px">↺ Restore Purchases</button>`;
+  }
+  h+=`<div class="muted" style="margin-top:12px;font-size:12px;line-height:1.5">Gems and the Producer Pass are virtual items with no real-world value. Purchases are final and non-refundable. By buying you agree to our <a href="terms.html" target="_blank" rel="noopener">Terms</a> &amp; <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</div>`;
+  h+=`</div>`;
+  main.innerHTML=h;
+}
+
+/* ========================= EVENTS (delegated) ========================= */
+document.addEventListener("click", e=>{
+  const t=e.target.closest("[data-tab],[data-gl],[data-hire],[data-up],[data-res],[data-camp],[data-g],[data-buy],[data-gem],[data-act],[data-rel],[data-rush],[data-scout],[data-quest],[data-week],#a-over,#a-prestige");
+  if(!t) return;
+  if(t.dataset.tab) return setTab(t.dataset.tab);
+  if(t.dataset.scout) return scout(t.dataset.scout);
+  if(t.dataset.quest!=null) return claimQuest(+t.dataset.quest);
+  if(t.dataset.week!=null) return claimWeekly(+t.dataset.week);
+  if(t.dataset.act==="login-claim") return claimLoginDay();
+  if(t.dataset.g!=null){ _selGenre=+t.dataset.g; play("click"); return render(); }
+  if(t.dataset.gl!=null) return greenlight(+t.dataset.gl, GENRES[_selGenre]);
+  if(t.dataset.rel!=null) return releaseProject(+t.dataset.rel);
+  if(t.dataset.rush!=null) return rush(+t.dataset.rush);
+  if(t.dataset.hire) return hire(t.dataset.hire);
+  if(t.dataset.up) return buyUpgrade(t.dataset.up);
+  if(t.dataset.res) return research(t.dataset.res);
+  if(t.dataset.camp!=null) return campaign(+t.dataset.camp);
+  if(t.dataset.act==="starter-close") return closeStarterOffer();
+  if(t.dataset.act==="starter-buy"){ closeStarterOffer(); return buyReal("bundle"); }
+  if(t.dataset.buy) return buyReal(t.dataset.buy);
+  if(t.dataset.gem) return spendGem(t.dataset.gem);
+  if(t.dataset.act==="freelance") return freelance();
+  if(t.dataset.act==="rewarded") return rewardedBoost();
+  if(t.dataset.act==="tapboost") return tapBoost(+t.dataset.slot);
+  if(t.dataset.act==="freegems") return claimFreeGems();
+  if(t.dataset.act==="expand") return expandStudio();
+  if(t.dataset.act==="share") return shareGame();
+  if(t.dataset.act==="daily-close"){ const m=document.getElementById("daily"); if(m) m.style.display="none"; return; }
+  if(t.dataset.act==="reveal-close"){ const m=document.getElementById("reveal"); if(m) m.style.display="none"; return; }
+  if(t.dataset.act==="dec-yes") return resolveDecision(true);
+  if(t.dataset.act==="dec-no") return resolveDecision(false);
+  if(t.dataset.act==="premiere-close") return closePremiere();
+  if(t.dataset.act==="instant") return instantPremiere(+t.dataset.slot);
+  if(t.dataset.act==="howto-close"){ S.tutorialSeen=true; save(); const m=document.getElementById("howto"); if(m) m.style.display="none"; return; }
+  if(t.dataset.act==="restore"){ if(typeof window.IAPRestore==="function"){ window.IAPRestore(); toast("Restoring purchases…"); } else toast("Nothing to restore here."); return; }
+  if(t.dataset.act==="redeem"){ const el=document.getElementById("redeemcode"); return redeem(el?el.value:""); }
+  if(t.id==="a-over") return overdrive();
+  if(t.id==="a-prestige") return prestige();
+});
+$("#btn-mute").onclick=()=>{ S.muted=!S.muted; updateMute(); save(); };
+$("#btn-save").onclick=()=>{ save(); toast("Game saved 💾"); };
+$("#btn-reset").onclick=()=>{ if(confirm("Reset ALL progress? This cannot be undone.")){ S=freshState(); save(); render(); toast("Progress reset"); } };
+
+/* keyboard shortcuts (physical key codes) */
+const KEYTAB={ Digit1:"produce",Digit2:"staff",Digit3:"stars",Digit4:"research",Digit5:"studio",Digit6:"market",Digit7:"store" };
+addEventListener("keydown", e=>{
+  if(KEYTAB[e.code]){ setTab(KEYTAB[e.code]); e.preventDefault(); }
+  else if(e.code==="Space"){
+    releaseFirstFinished();
+    e.preventDefault();
+  }
+});
+/* gamepad: A=primary action / release, bumpers cycle tabs */
+let padPrev={};
+function pollPad(){
+  const pads=navigator.getGamepads?navigator.getGamepads():[];
+  for(const gp of pads){ if(!gp) continue;
+    const order=["produce","staff","stars","research","studio","market","store"];
+    const press=(i)=>gp.buttons[i]&&gp.buttons[i].pressed;
+    const edge=(i)=>{ const p=press(i); const was=padPrev[i]; padPrev[i]=p; return p&&!was; };
+    if(edge(0)){ releaseFirstFinished(); } // A
+    if(edge(5)){ let idx=order.indexOf(S.tab); setTab(order[(idx+1)%order.length]); }
+    if(edge(4)){ let idx=order.indexOf(S.tab); setTab(order[(idx+order.length-1)%order.length]); }
+    break;
+  }
+}
+
+/* ========================= LOOP ========================= */
+let acc=0, last=performance.now(), paused=false;
+const STEP=1000; // 1 tick = 1 second
+function frame(now){
+  requestAnimationFrame(frame);
+  pollPad();
+  if(paused){ last=now; return; }
+  acc+=now-last; last=now;
+  let ticked=false;
+  while(acc>=STEP){ tick(1); acc-=STEP; ticked=true; }
+  if(ticked && started){ // light refresh of dynamic bits
+    if(S.tab==="produce") render();
+  }
+}
+addEventListener("blur", ()=>paused=true);
+addEventListener("focus", ()=>{ paused=false; last=performance.now(); });
+document.addEventListener("visibilitychange", ()=>{
+  if(document.hidden){ save(); return; }
+  if(!started) return;
+  // credit time spent away/backgrounded
+  const cap=OFFLINE_CAP*(S.producerPass?2:1);
+  const sec=Math.min(cap,(Date.now()-S.lastSave)/1000);
+  if(sec>60){ const r=simulateOffline(sec); if(r.yen>0||r.fans>0){ toast(`👋 Welcome back: +¥${fmt(r.yen)} · +${fmt(r.fans)} fans`,true); } save(); render(); }
+  last=performance.now();
+});
+setInterval(()=>{ if(started) save(); }, 8000);
+setInterval(()=>{ const el=document.getElementById("flash-cd"); if(el) el.textContent=flashCountdown(); updateComboMeter(); }, 1000);
+function updateComboMeter(){
+  let el=document.getElementById("combo-meter");
+  const left=60000-(Date.now()-(S.lastReleaseAt||0));
+  const active=(S.combo||0)>=2 && left>0 && started;
+  if(!active){ if(el) el.style.display="none"; return; }
+  if(!el){ el=document.createElement("div"); el.id="combo-meter"; el.innerHTML='<div class="cm-top"></div><div class="cm-bar"><i></i></div>'; document.body.appendChild(el); }
+  el.style.display="block";
+  const bonus=Math.round((Math.min(Math.max(0,(S.combo||1)-1),9)*0.05)*100);
+  el.querySelector(".cm-top").textContent="🔗 COMBO ×"+S.combo+"  +"+bonus+"%";
+  el.querySelector(".cm-bar i").style.width=Math.max(0,Math.min(100,(left/60000)*100))+"%";
+}
+
+/* ========================= BOOT ========================= */
+let started=false;
+function begin(){
+  if(started) return; started=true;
+  initAudio(); updateMute();
+  $("#start").style.display="none";
+  // flush any grant/redeem messages queued before start
+  pendingToasts.forEach(([m,g])=>toast(m,g)); pendingToasts=[];
+  // offline progress
+  const had = S.lastSave && (Date.now()-S.lastSave>60000);
+  if(had){
+    const sec=Math.min(OFFLINE_CAP*(S.producerPass?2:1), (Date.now()-S.lastSave)/1000);
+    const r=simulateOffline(sec);
+    if(r.yen>0||r.fans>0||r.releases>0){
+      $("#offlist").innerHTML=
+        `<div><span>Time away</span><b>${Math.floor(sec/60)} min</b></div>
+         <div><span>Anime released</span><b>${r.releases}</b></div>
+         <div><span>Yen earned</span><b>¥${fmt(r.yen)}</b></div>
+         <div><span>Fans gained</span><b>${fmt(r.fans)}</b></div>`;
+      $("#offline").style.display="flex";
+    }
+  }
+  // daily reward + ensure quests exist
+  const dr=checkDaily();
+  if(!S.quests || !S.quests.length) rollQuests();
+  checkWeekly(); loginRefresh();
+  if(dr){
+    $("#daily-body").innerHTML=
+      `<div class="offlist">
+         <div><span>Login streak</span><b>Day ${dr.streak} 🔥</b></div>
+         <div><span>Gems</span><b>+${dr.gems} 💎</b></div>
+         <div><span>Cash bonus</span><b>+¥${fmt(dr.yenBonus)}</b></div>
+       </div>
+       <div class="muted">Come back tomorrow to grow your streak — bigger rewards every day!</div>`;
+    $("#daily").style.display="flex";
+  }
+  // first-time onboarding (shown on top of everything for new players)
+  if(!S.tutorialSeen){ $("#howto").style.display="flex"; }
+  track("game_start",{slots:S.slots,fans:S.fans});
+  render(); save();
+  requestAnimationFrame(frame);
+}
+const loaded=load(); if(!loaded) S=freshState();
+// grant entitlements from a checkout success redirect (?grant=pass / ?grant=gems&amt=N)
+function readGrant(){
+  try{
+    // The game may run inside the platform iframe; the purchase param can land on the parent URL.
+    let search=location.search;
+    try{ if(window.top!==window && window.top.location && window.top.location.search){ search += (search?"&":"?") + window.top.location.search.replace(/^\?/,""); } }catch(_){}
+    const q=new URLSearchParams(search); let changed=false; const g=q.get("grant");
+    if(g==="pass" && !S.producerPass){ S.producerPass=true; changed=true; toastLater("🎬 Producer Pass activated — thank you!",true); }
+    if(g==="gems"){ const a=parseInt(q.get("amt")||"0",10); if(a>0){ S.gems+=a; changed=true; toastLater("💎 +"+a+" Gems added — thank you!",true);} }
+    if(g==="bundle"){ S.producerPass=true; S.gems+=200; S.bundleBought=true; changed=true; toastLater("🌟 Starter Bundle unlocked: Producer Pass + 200 💎!",true); }
+    // Gumroad post-purchase links: ?unlock=pass | bundle | gems120 / gems350 / gems800 / gems2000
+    const u=q.get("unlock");
+    if(u==="pass" && !S.producerPass){ S.producerPass=true; changed=true; toastLater("🎬 Producer Pass activated — thank you!",true); }
+    else if(u==="bundle"){ S.producerPass=true; S.gems+=200; S.bundleBought=true; changed=true; toastLater("🌟 Starter Bundle unlocked: Producer Pass + 200 💎!",true); }
+    else if(u && /^gems\d+$/.test(u)){ const a=parseInt(u.replace("gems",""),10)||0; if(a>0){ S.gems+=a; changed=true; toastLater("💎 +"+a+" Gems added — thank you!",true);} }
+    if(changed){ track("purchase_grant",{grant:g||u}); save(); try{ history.replaceState(null,"",location.pathname); }catch(_){}
+      try{ if(window.top!==window && window.top.history){ window.top.history.replaceState(null,"",window.top.location.pathname); } }catch(_){} }
+  }catch(e){}
+}
+readGrant();
+// expose the entitlement bridge for the native StoreKit layer (iap.js, a non-module script)
+window.AST_GRANT = grantEntitlement;
+// creator / cross-promo link
+if(MONETIZATION.supportUrl){
+  const a=document.createElement("a");
+  a.href=MONETIZATION.supportUrl; a.target="_blank"; a.rel="noopener";
+  a.textContent="Made with TrainYourAgent ↗"; a.style.cssText="color:#fff;opacity:.7;font-size:11px;text-decoration:none;font-weight:700;align-self:center;padding:2px 8px";
+  document.querySelector(".foot").appendChild(a);
+}
+$("#btn-start").onclick=begin;
+$("#btn-offclose").onclick=()=>{ $("#offline").style.display="none"; };
+{ const sl=document.getElementById("start-lang"); if(sl) sl.onchange=()=>{ setLang(sl.value); updateChrome(); render(); }; }
+// localize static chrome + build language picker, then render
+updateChrome();
+render();
+</script>
+
+
+<div id="combo-meter" style="display: none;"><div class="cm-top">🔗 COMBO ×4  +15%</div><div class="cm-bar"><i style="width: 0.493333%;"></i></div></div><script>(function(){var d;function f(){try{var b=document.getElementById('btn-save');if(b)b.click();}catch(e){}if(!d){d=document.createElement('div');d.style.cssText='position:fixed;bottom:10px;left:50%;transform:translateX(-50%);background:rgba(40,30,55,.92);color:#9be29b;font:600 12px system-ui;padding:5px 12px;border-radius:999px;z-index:99999;opacity:0;transition:opacity .25s;pointer-events:none';d.textContent='\u2713 Saved';document.body.appendChild(d);}d.style.opacity='1';clearTimeout(d._t);d._t=setTimeout(function(){d.style.opacity='0';},1100);}document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden')f();});window.addEventListener('pagehide',f);})();</script>
+</body></html>
