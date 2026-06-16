@@ -32,8 +32,8 @@ workflows:
       - name: Set up signing
         script: |
           keychain initialize
-          app-store-connect create-certificate --type IOS_DISTRIBUTION --save || echo "cert may already exist"
-          app-store-connect fetch-signing-files "$BUNDLE_ID" --type IOS_APP_STORE --create
+          openssl genrsa -out /tmp/dist_key.pem 2048
+          app-store-connect fetch-signing-files "$BUNDLE_ID" --type IOS_APP_STORE --certificate-key=@file:/tmp/dist_key.pem --create
           keychain add-certificates
           xcode-project use-profiles
       - name: Build IPA
