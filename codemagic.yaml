@@ -1,12 +1,4 @@
-# Cloud build pipeline (Codemagic) — builds iOS + Android from the Capacitor project
-# with NO local Mac. Connect this repo in Codemagic, add the integrations referenced below,
-# then run the workflow. Produces a signed .ipa (App Store) and .aab (Play) and can auto-submit.
-#
-# One-time secrets you create in your own accounts (Codemagic UI -> env groups):
-#   - app_store_connect  : App Store Connect API key
-#   - google_play        : Play service account JSON
-#   - ios signing        : Codemagic "Automatic" iOS code signing (uses the App Store Connect API key)
-#
+# Codemagic build pipeline — iOS + Android from the Capacitor project
 workflows:
   ios-release:
     name: Anime Studio Tycoon — iOS
@@ -33,7 +25,6 @@ workflows:
           cp iap.js www/ 2>/dev/null || true
           grep -q 'iap.js' www/index.html || sed -i.bak 's#</body>#<script src="iap.js"></script></body>#' www/index.html
           rm -f www/index.html.bak
-          ls -la www
       - name: Add iOS platform
         script: npx cap add ios || true
       - name: Sync
@@ -41,6 +32,7 @@ workflows:
       - name: Set up signing
         script: |
           keychain initialize
+          app-store-connect create-certificate --type IOS_DISTRIBUTION --save || echo "cert may already exist"
           app-store-connect fetch-signing-files "$BUNDLE_ID" --type IOS_APP_STORE --create
           keychain add-certificates
           xcode-project use-profiles
@@ -72,7 +64,6 @@ workflows:
           cp iap.js www/ 2>/dev/null || true
           grep -q 'iap.js' www/index.html || sed -i.bak 's#</body>#<script src="iap.js"></script></body>#' www/index.html
           rm -f www/index.html.bak
-          ls -la www
       - name: Add Android platform
         script: npx cap add android || true
       - name: Sync
