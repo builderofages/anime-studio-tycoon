@@ -1136,7 +1136,8 @@ const ACHIEVEMENTS=[
 ];
 function checkAchievements(){
   for(const a of ACHIEVEMENTS){
-    if(!S.achievements.includes(a.id) && a.test()){ S.achievements.push(a.id); S.gems+=a.gems; toastSafe("🏆 "+a.name+" — +"+a.gems+" 💎",true); }
+    if(!S.achievements.includes(a.id) && a.test()){ S.achievements.push(a.id); S.gems+=a.gems; toastSafe("🏆 "+a.name+" — +"+a.gems+" 💎",true);
+      try{ if(window.STEAM_ACHIEVE) window.STEAM_ACHIEVE(a.id); }catch(e){} /* Steam desktop build hook (no-op on web) */ }
   }
 }
 /* ---- Seasons / Live Events (rotates daily, always a positive bonus) ---- */
