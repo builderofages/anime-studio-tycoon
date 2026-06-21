@@ -278,6 +278,36 @@ h1,h2,h3,.panel h2,.prem-title{font-family:'Baloo 2',cursive !important;letter-s
 @keyframes asdDrop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 @media(max-width:560px){.asd-mbtn{font-size:12px;padding:7px 10px}}
 .asd-rc{position:relative}.asd-rare{box-shadow:0 0 0 2px #3aa0ff inset,0 0 16px rgba(58,160,255,.45) !important}.asd-epic{box-shadow:0 0 0 2px #a45cff inset,0 0 22px rgba(164,92,255,.55) !important;animation:asdPulse 2.2s ease-in-out infinite}.asd-legendary{box-shadow:0 0 0 3px #ffcf45 inset,0 0 30px rgba(255,207,69,.6) !important;animation:asdPulse 1.8s ease-in-out infinite}.asd-mythic{box-shadow:0 0 0 3px #ff5ed4 inset,0 0 36px rgba(255,94,212,.65) !important;animation:asdPulse 1.6s ease-in-out infinite}.asd-uncommon{box-shadow:0 0 0 2px #46c46b inset,0 0 10px rgba(70,196,107,.35) !important}.asd-common{box-shadow:0 0 0 2px #b8bec9 inset !important}.asd-abil{display:inline-flex;align-items:center;gap:4px;margin-top:4px;font-size:12px;font-weight:700;color:#7a3fd0}.asd-abil.lock{color:#9aa0ad}@keyframes asdPulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.12)}}
+
+/* ================= RESPONSIVE / MULTI-DEVICE SIZING (phone · tablet · desktop) ================= */
+:root{ --safe-t:env(safe-area-inset-top,0px); --safe-b:env(safe-area-inset-bottom,0px);
+       --safe-l:env(safe-area-inset-left,0px); --safe-r:env(safe-area-inset-right,0px); }
+/* use the dynamic viewport height so mobile browser chrome doesn't crop the UI */
+@supports(height:100dvh){ html,body{height:100dvh} }
+/* notch / rounded-corner safe areas */
+#top{padding-top:calc(10px + var(--safe-t))}
+.foot{padding-bottom:calc(10px + var(--safe-b))}
+#app{padding-left:var(--safe-l);padding-right:var(--safe-r)}
+/* keep all 8 tabs reachable on the narrowest phones */
+@media(max-width:560px){ #tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}#tabs::-webkit-scrollbar{display:none}.tab{flex:0 0 auto} }
+/* very short / landscape phones: tighten vertical rhythm */
+@media(max-height:480px){ #goal{margin-bottom:4px} .panel{padding:10px 12px} #top{padding-top:calc(6px + var(--safe-t))} }
+/* TABLET & UP: widen the stage and lay panels out as a responsive dashboard grid (scrolls vertically) */
+@media(min-width:760px){
+  #app{max-width:1060px}
+  #main{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 18px;align-content:start;padding:12px 18px 20px}
+  #main>*{margin:0!important}
+  .res .v{font-size:16px}
+  .pickgrid{grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}
+}
+@media(min-width:1180px){ #app{max-width:1320px} #main{grid-template-columns:repeat(3,minmax(0,1fr))} }
+@media(min-width:1600px){ #app{max-width:1560px} }
+/* desktop pointer: subtle hover lift on cards/rows for a premium feel */
+@media(hover:hover) and (pointer:fine){
+  .panel{transition:transform .15s ease, box-shadow .2s ease}
+  .staffrow:hover,.uprow:hover{filter:brightness(1.02)}
+  .chip{cursor:pointer}
+}
 </style>
 <script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script></head>
 <body>
@@ -692,7 +722,10 @@ const MONETIZATION = {
     gems_l:"https://trainagent.gumroad.com/l/gtdyn?wanted=true",
     gems_mega:"https://trainagent.gumroad.com/l/kttuab?wanted=true"
   },
-  prices:{ pass:"$4.99", gems_s:"$0.99", gems_m:"$1.99", gems_l:"$4.99", gems_mega:"$9.99", bundle:"$2.99" },
+  prices:{ pass:"$4.99", gems_s:"$0.99", gems_m:"$1.99", gems_l:"$4.99", gems_mega:"$9.99", bundle:"$2.99",
+           bundle_legend:"$7.99", bundle_mogul:"$19.99",
+           star_aurora:"$3.99", star_phoenix:"$3.99", star_shogun:"$4.99",
+           items_pack:"$2.99", noads:"$2.99" },
   adProvider:null,                          // optional: async fn that resolves when a rewarded ad finishes
   analytics:null,                           // optional: function(eventName, props){} — auto-detects plausible/gtag/dataLayer too
   leaderboardUrl:"",                        // optional: POST endpoint {name,score} to record studio value on a global board
@@ -700,6 +733,50 @@ const MONETIZATION = {
   codes:{ "ANIME50":{gems:50}, "WELCOME":{gems:25} } // redeemable codes you can hand out
 };
 const GEM_PACKS={ gems_s:120, gems_m:350, gems_l:800, gems_mega:2000 };
+/* ---- Premium exclusive stars (sold for real money / awarded by bundles — never in the free gacha) ---- */
+const EXCLUSIVE_STARS=[
+  {sku:"star_aurora",  id:"x_aurora",  name:"Aurora Vesper ☆", role:"director", rarity:"Legendary", exclusive:true},
+  {sku:"star_phoenix", id:"x_phoenix", name:"Phoenix Kogane ☆",role:"animator", rarity:"Legendary", exclusive:true},
+  {sku:"star_shogun",  id:"x_shogun",  name:"Kaiser Shogun ☆", role:"voice",    rarity:"Legendary", exclusive:true},
+];
+EXCLUSIVE_STARS.forEach(x=>{ x.img=STAR_IMG[x.role]||STAR_IMG.director; STAR_POOL.push(x); });
+const SKU2STAR=Object.fromEntries(EXCLUSIVE_STARS.map(x=>[x.sku,x.id]));
+/* ---- Power Items (consumables) — homage props inspired by iconic movie gear (parody names, no trademarks) ---- */
+const ITEMS={
+  clapboard:   {name:"Lucky Clapboard",   ic:"🎬", desc:"+100 Hype instantly",                 gem:4,  use:()=>{ S.hype+=100; }},
+  reel:        {name:"Platinum Film Reel", ic:"🎞️", desc:"Big cash injection",                  gem:8,  use:()=>{ S.yen+=gemCashAmount()*3; }},
+  stardust:    {name:"Stardust Vial",      ic:"✨", desc:"+25 energy to every star",            gem:5,  use:()=>{ (S.stars||[]).forEach(s=>s.energy=Math.min(100,starEnergy(s)+25)); }},
+  espresso:    {name:"Director's Espresso", ic:"☕", desc:"Refill Studio Stamina to 100%",       gem:5,  use:()=>{ S.stamina=100; }},
+  megaphone:   {name:"Golden Megaphone",   ic:"📣", desc:"Instantly finish all productions",    gem:10, use:()=>{ S.projects.forEach(pr=>{ if(pr) pr.progress=PROJECTS[pr.pid].work; }); }},
+  // ——— iconic homages ———
+  time_pendant:{name:"Time Pendant",       ic:"⏳", desc:"2× production speed for 5 min",        gem:8,  premium:true, use:()=>{ S.overdriveUntil=Date.now()+300000; }},
+  power_glove: {name:"Power Gauntlet",     ic:"🧤", desc:"3× income for 10 min",                gem:14, premium:true, use:()=>{ S.goldenUntil=Math.max(S.goldenUntil||0,Date.now()+600000); }},
+  flux_key:    {name:"Flux Capacitor Key", ic:"🚗", desc:"Skip 4 hours of idle earnings",        gem:12, premium:true, use:()=>{ const r=simulateOffline(4*3600); toastSafe(`⏩ +¥${fmt(r.yen)} · +${fmt(r.fans)} fans from the future`,true); }},
+  golden_ticket:{name:"Golden Ticket",     ic:"🎫", desc:"One free Premium Scout",              gem:6,  use:()=>{ const r=pullStar(true); play("reward"); showReveal(r.t,r.rar,r.leveled); }},
+  calm_orb:    {name:"Orb of Calm",        ic:"🔮", desc:"Reset the Chaos meter to zero",        gem:6,  use:()=>{ S.chaos=0; }},
+};
+const WHEEL=[
+  {w:28, label:"Cash",      apply:()=>{ const a=gemCashAmount(); S.yen+=a; return "+¥"+fmt(a); }},
+  {w:20, label:"+60 Hype",  apply:()=>{ S.hype+=60; return "+60 Hype"; }},
+  {w:14, label:"+8 Gems",   apply:()=>{ S.gems+=8; return "+8 💎"; }},
+  {w:9,  label:"+20 Gems",  apply:()=>{ S.gems+=20; return "+20 💎"; }},
+  {w:9,  label:"Clapboard", apply:()=>{ addItem("clapboard"); return "🎬 Lucky Clapboard"; }},
+  {w:7,  label:"2× Boost",  apply:()=>{ S.rewardedUntil=Date.now()+300000; return "⚡ 2× income 5 min"; }},
+  {w:5,  label:"Film Reel", apply:()=>{ addItem("reel"); return "🎞️ Platinum Film Reel"; }},
+  {w:5,  label:"Stardust",  apply:()=>{ addItem("stardust"); return "✨ Stardust Vial"; }},
+  {w:3,  label:"⭐ Star",    apply:()=>{ const r=pullStar(true); showReveal(r.t,r.rar,r.leveled); return "⭐ "+r.t.name; }},
+];
+const SCRATCH=[
+  {w:30, label:"Cash",     apply:()=>{ const a=Math.floor(gemCashAmount()*1.5); S.yen+=a; return "+¥"+fmt(a); }},
+  {w:18, label:"+12 Gems", apply:()=>{ S.gems+=12; return "+12 💎"; }},
+  {w:12, label:"+30 Gems", apply:()=>{ S.gems+=30; return "+30 💎"; }},
+  {w:12, label:"Espresso", apply:()=>{ addItem("espresso"); return "☕ Director's Espresso"; }},
+  {w:10, label:"+150 Hype",apply:()=>{ S.hype+=150; return "+150 Hype"; }},
+  {w:8,  label:"Golden Ticket", apply:()=>{ addItem("golden_ticket"); return "🎫 Golden Ticket"; }},
+  {w:6,  label:"Time Pendant",  apply:()=>{ addItem("time_pendant"); return "⏳ Time Pendant"; }},
+  {w:4,  label:"⭐ Star",   apply:()=>{ const r=pullStar(true); showReveal(r.t,r.rar,r.leveled); return "⭐ "+r.t.name; }},
+];
+const SPIN_GEM_COST=4, SCRATCH_GEM_COST=6;
 const MAX_SLOTS=4;
 const EXPANSION_COST=[0, 15000, 90000, 500000]; // cost to reach slot 2,3,4 (index = current slots)
 /* lightweight analytics: routes to your provider or any of plausible / gtag / dataLayer */
@@ -718,6 +795,8 @@ function freshState(){
   return {
     yen:1500, fans:0, hype:0, totalFansEver:0, legacy:0,
     catalogIncome:0, totalEarned:0, awardsWon:0, legacySpent:0, perks:{income:0,speed:0,fans:0,offline:0},
+    stamina:100, chaos:0, chaosMode:false, lastChaos:0, lastStarDemand:0,
+    items:{}, entitlements:[], purchaseLog:[], firstPurchaseDone:false, noAds:false, wheelDate:"", scratchDate:"",
     gems:0, producerPass:false, bundleBought:false, goldenUntil:0, rewardedUntil:0, rewardedCdUntil:0,
     milestonesClaimed:[],
     slots:1, projects:[null],   // each slot: {pid, genre, progress} or null
@@ -802,10 +881,21 @@ function marketingMult(){ return (1+S.upgrades.marketing*0.10); }
 function legacyMult(){ return 1 + S.legacy*0.05; }
 function perkMult(k){ return 1 + (((S.perks&&S.perks[k])||0)*0.05); }
 const STAR_BY_ID=Object.fromEntries(STAR_POOL.map(s=>[s.id,s]));
-function starPowerForRole(role){
-  let p=0; for(const st of (S.stars||[])){ const t=STAR_BY_ID[st.sid]; if(t&&t.role===role){ p += STAR_RARITY[t.rarity].power * st.level; } }
-  return p;
-}
+/* ---- Star development model: rarity-promotion, fame, and energy all shape a star's real output ---- */
+const RARITY_ORDER=["Common","Rare","Epic","Legendary"];
+function normStar(st){ if(st.energy==null)st.energy=100; if(st.fame==null)st.fame=0; if(st.xp==null)st.xp=0; if(st.loyalty==null)st.loyalty=100; if(st.resting==null)st.resting=false; if(st.promo==null)st.promo=0; if(!st.level)st.level=1; return st; }
+function normStars(){ if(Array.isArray(S.stars)) S.stars.forEach(normStar); }
+function effRarity(st){ const t=STAR_BY_ID[st.sid]; if(!t) return "Common"; const i=RARITY_ORDER.indexOf(t.rarity); return RARITY_ORDER[Math.min(RARITY_ORDER.length-1, i+(st.promo||0))]; }
+function starEnergy(st){ return Math.max(0,Math.min(100, st.energy==null?100:st.energy)); }
+function starLoyalty(st){ return Math.max(0,Math.min(100, st.loyalty==null?100:st.loyalty)); }
+function starFameMult(st){ return 1 + (st.fame||0)*0.08; }                 // investing in fame raises raw power…
+function starEnergyFactor(st){ return st.resting?0:(0.5+0.5*(starEnergy(st)/100)); } // …but a tired star underperforms
+function effStarPower(st){ const t=STAR_BY_ID[st.sid]; if(!t) return 0; return STAR_RARITY[effRarity(st)].power * (st.level||1) * starFameMult(st) * starEnergyFactor(st); }
+function starPowerForRole(role){ let p=0; for(const st of (S.stars||[])){ const t=STAR_BY_ID[st.sid]; if(t&&t.role===role) p+=effStarPower(st); } return p; }
+function xpNeed(lvl){ return 8+(lvl||1)*6; }
+function castCap(){ return 3 + (S.producerPass?1:0); }                      // how many stars you can feature on one show
+function castSet(){ const s=new Set(); for(const pr of (S.projects||[])){ if(pr&&pr.cast&&pr.progress<PROJECTS[pr.pid].work) pr.cast.forEach(id=>s.add(id)); } return s; }
+function castStarPower(pr){ if(!pr||!pr.cast) return 0; let p=0; for(const id of pr.cast){ const st=(S.stars||[]).find(x=>x.sid===id); if(st) p+=effStarPower(st); } return p; }
 function rolePower(role){ return S.staff[role]*ROLES[role].power + starPowerForRole(role); }
 function studioValue(){ return Math.floor(S.totalFansEver + S.fans + S.releases*8 + S.legacy*3000); }
 /* quests */
@@ -864,10 +954,10 @@ function pullStar(allowAll){
   let total=0; for(const r of pool) total+=STAR_RARITY[r].w;
   let roll=Math.random()*total, rar=pool[0];
   for(const r of pool){ roll-=STAR_RARITY[r].w; if(roll<=0){ rar=r; break; } }
-  const cands=STAR_POOL.filter(s=>s.rarity===rar);
+  const cands=STAR_POOL.filter(s=>s.rarity===rar && !s.exclusive);
   const t=cands[Math.floor(Math.random()*cands.length)];
   const owned=S.stars.find(x=>x.sid===t.id); let leveled=false;
-  if(owned){ owned.level++; leveled=true; } else { S.stars.push({sid:t.id, level:1}); }
+  if(owned){ owned.level++; owned.energy=Math.min(100,starEnergy(owned)+20); leveled=true; } else { S.stars.push(normStar({sid:t.id, level:1})); }
   return {t, rar, leveled};
 }
 function scout(kind){
@@ -1038,9 +1128,101 @@ function resolveDecision(yes){
   const m=document.getElementById("decision"); if(m) m.style.display="none";
   if(!d) return;
   const msg=(yes?d.yes[1]:d.no[1])();
-  track("decision",{id:d.id,yes}); play("reward");
+  track("decision",{id:d.id,yes,chaos:!!d.chaos}); play("reward");
   if(msg) toast("📣 "+msg, true);
   checkAchievements(); render(); save();
+}
+/* ========================= CHAOS & STAR-RISK SYSTEMS ========================= */
+function renderDecisionModal(d, danger){
+  const body=document.getElementById("decision-body"); if(!body){ _pendingDecision=null; return; }
+  body.innerHTML=`<div style="font-size:42px">${d.ic}</div><h2 style="margin:6px 0;color:${danger?'var(--bad)':'var(--plum)'}">${danger?'⚠️ ':''}${d.title}</h2>
+    <p style="color:var(--slate);font-size:14px;margin:6px 0 0">${d.text}</p>
+    <div class="row" style="gap:10px;margin-top:16px">
+      <button class="btn-primary" data-act="dec-yes" style="flex:1">${d.yes[0]}</button>
+      <button class="btn-ghost" data-act="dec-no" style="flex:1">${d.no[0]}</button>
+    </div>`;
+  const m=document.getElementById("decision"); if(m) m.style.display="flex"; play("reward");
+}
+/* Jurassic-style crises — the price of pushing your studio too hard. yes = pay to mitigate, no = take the hit. */
+const CHAOS=[
+  {id:"melt", ic:"🔥", title:"Render Farm Meltdown",
+   text:"Your render farm is overheating and productions are stalling. Pay for emergency repairs?",
+   yes:["Pay to fix", ()=>{const c=bigYen(); if(S.yen<c) return "No funds — productions stalled."; S.yen-=c; S.chaos=Math.max(0,(S.chaos||0)-35); return `−¥${fmt(c)}, crisis averted`;}],
+   no:["Ride it out", ()=>{ S.projects.forEach(pr=>{ if(pr) pr.progress*=0.7; }); S.chaos=Math.max(0,(S.chaos||0)-15); return "Every production set back 30%";}]},
+  {id:"scandal", ic:"📰", title:"Online Scandal",
+   text:"A nasty rumor about the studio is trending. Bring in a PR crisis team?",
+   yes:["Hire PR team", ()=>{const c=Math.floor(bigYen()*1.5); if(S.yen<c) return "Couldn't afford PR — fans bail."; S.yen-=c; S.chaos=Math.max(0,(S.chaos||0)-35); return `−¥${fmt(c)}, reputation saved`;}],
+   no:["Ignore it", ()=>{const f=Math.floor((S.fans||0)*0.06); S.fans=Math.max(0,S.fans-f); S.chaos=Math.max(0,(S.chaos||0)-15); return `−${fmt(f)} fans`;}]},
+  {id:"burnout", ic:"😵", title:"Studio Burnout",
+   text:"The whole team is running on fumes. Give everyone a paid recovery break?",
+   yes:["Paid break", ()=>{const c=bigYen(); if(S.yen<c) return "No budget for breaks."; S.yen-=c; S.stamina=100; (S.stars||[]).forEach(s=>s.energy=100); S.chaos=Math.max(0,(S.chaos||0)-40); return `−¥${fmt(c)}, everyone fully recharged`;}],
+   no:["Push through", ()=>{ S.stamina=Math.max(0,(S.stamina||0)-30); S.chaos=Math.max(0,(S.chaos||0)-10); return "Morale drops — Stamina −30";}]},
+  {id:"leak", ic:"🕳️", title:"Plot Leak",
+   text:"A finished show leaked online before its premiere. Rush the release or delay?",
+   yes:["Rush premiere", ()=>{ let done=false; for(let i=0;i<S.projects.length;i++){ const pr=S.projects[i]; if(pr){ pr.progress=PROJECTS[pr.pid].work; done=true; break; } } S.chaos=Math.max(0,(S.chaos||0)-25); return done?"Pushed a show out the door early.":"Nothing in production to rush.";}],
+   no:["Hold the line", ()=>{const f=Math.floor((S.fans||0)*0.04); S.fans=Math.max(0,S.fans-f); S.chaos=Math.max(0,(S.chaos||0)-15); return `−${fmt(f)} fans from the leak`;}]},
+];
+function showChaosDecision(){
+  _pendingDecision=Object.assign({chaos:true}, CHAOS[Math.floor(Math.random()*CHAOS.length)]);
+  renderDecisionModal(_pendingDecision, true);
+}
+function maybeChaos(){
+  if(!started||OFFLINE||_pendingDecision||_premiereOpen) return;
+  if(Date.now()-(S.lastChaos||0) < 60000) return;
+  const chance=((S.chaos||0)/100) * (S.chaosMode?0.55:0.28);
+  if(Math.random()<chance){ S.lastChaos=Date.now(); showChaosDecision(); }
+}
+function removeStar(sid){ S.stars=(S.stars||[]).filter(s=>s.sid!==sid); S.projects.forEach(pr=>{ if(pr&&pr.cast) pr.cast=pr.cast.filter(id=>id!==sid); }); }
+/* The fame trap: a star you've over-hyped can outgrow you and demand a raise — or walk. */
+function maybeStarDemand(){
+  if(!started||OFFLINE||_pendingDecision||_premiereOpen) return;
+  if(Date.now()-(S.lastStarDemand||0) < 120000) return;
+  const cand=(S.stars||[]).filter(s=>(s.fame||0)>=4 && starLoyalty(s)<50);
+  if(!cand.length || Math.random()>0.5) return;
+  const st=cand[Math.floor(Math.random()*cand.length)]; const t=STAR_BY_ID[st.sid]; if(!t) return;
+  S.lastStarDemand=Date.now();
+  const cost=Math.max(2500, Math.floor(studioValue()*0.05)+(st.fame||0)*1500);
+  _pendingDecision={ chaos:true, id:"demand", ic:"🌟", title:t.name+" Demands More",
+    text:`${t.name} has become a Fame ${st.fame} superstar and wants a ¥${fmt(cost)} raise — or they'll sign with a rival studio.`,
+    yes:["Pay the raise", ()=>{ if(S.yen<cost){ removeStar(st.sid); return `Couldn't pay — ${t.name} walked.`; } S.yen-=cost; st.loyalty=100; return `−¥${fmt(cost)}, ${t.name} re-signs`; }],
+    no:["Let them walk", ()=>{ const f=Math.floor((st.fame||0)*200); S.fans+=f; S.totalFansEver+=f; removeStar(st.sid); return `${t.name} left for the big leagues — their fans linger: +${fmt(f)} fans`; }] };
+  renderDecisionModal(_pendingDecision, true);
+}
+function toggleChaosMode(){ S.chaosMode=!S.chaosMode; toast(S.chaosMode?"🌪️ CHAOS MODE ON — +50% rewards, but disasters loom…":"🕊️ Chaos Mode off — calm seas.", S.chaosMode); play("reward"); render(); save(); }
+/* ---- Star management actions ---- */
+function findStar(sid){ return (S.stars||[]).find(s=>s.sid===sid); }
+function toggleRest(sid){ const st=findStar(sid); if(!st) return; st.resting=!st.resting; play("click"); render(); save(); }
+function levelCost(st){ return Math.ceil(1500*Math.pow(1.35,(st.level||1))); }
+function levelStar(sid){ const st=findStar(sid); if(!st) return; const c=levelCost(st);
+  if(S.yen<c){ toast("Need ¥"+fmt(c)+" to train this star"); return; }
+  S.yen-=c; st.level=(st.level||1)+1; play("reward"); toast("⬆ "+(STAR_BY_ID[sid]?STAR_BY_ID[sid].name:"Star")+" is now Lv "+st.level,true); checkAchievements(); render(); save();
+}
+function promoteCost(st){ return 6+(st.promo||0)*6; } // gems
+function promoteStar(sid){ const st=findStar(sid); if(!st) return; const t=STAR_BY_ID[sid]; if(!t) return;
+  if(RARITY_ORDER.indexOf(effRarity(st))>=RARITY_ORDER.length-1){ toast("Already Legendary — can't enhance further"); return; }
+  if((st.level||1)<10){ toast("Reach Lv 10 to enhance rarity"); return; }
+  const c=promoteCost(st); if(S.gems<c){ toast("Need "+c+" 💎 to enhance rarity"); return; }
+  S.gems-=c; st.promo=(st.promo||0)+1; st.level=Math.max(1,(st.level||1)-5);
+  play("reward"); toast("✨ "+t.name+" enhanced to "+effRarity(st)+"!",true); checkAchievements(); render(); save();
+}
+function fameCost(st){ return Math.ceil(2500*Math.pow(1.3,(st.fame||0))); }
+function investFame(sid){ const st=findStar(sid); if(!st) return; const c=fameCost(st);
+  if(S.yen<c){ toast("Need ¥"+fmt(c)+" to boost this star's fame"); return; }
+  S.yen-=c; st.fame=(st.fame||0)+1; st.loyalty=Math.max(0, starLoyalty(st)-7); // fame inflates ego
+  play("reward"); toast("🌟 Fame +1 (now "+st.fame+") — watch their loyalty!",st.fame>=5); render(); save();
+}
+function fireStar(sid){ const st=findStar(sid), t=STAR_BY_ID[sid]; if(!st||!t) return;
+  if(!confirm("Release "+t.name+" from your studio? This can't be undone.")) return;
+  const refund=RARITY_ORDER.indexOf(effRarity(st))+1+Math.floor((st.level||1)/5);
+  removeStar(sid); S.gems+=refund;
+  play("click"); toast("👋 "+t.name+" released · +"+refund+" 💎 severance"); render(); save();
+}
+function toggleCast(sid){ const st=findStar(sid); if(!st) return;
+  if(st.resting||starEnergy(st)<15){ toast("This star needs rest before working"); return; }
+  const i=_castSel.indexOf(sid);
+  if(i>=0) _castSel.splice(i,1);
+  else { if(_castSel.length>=castCap()){ toast("Cast is full ("+castCap()+") — tap a star to remove first"); return; } _castSel.push(sid); }
+  play("click"); render();
 }
 /* ---- active tap-to-boost (more fun + works with zero staff for the first film) ---- */
 function tapBoost(slot){
@@ -1063,9 +1245,13 @@ function claimFreeGems(){
   if(typeof MONETIZATION.adProvider==="function"){ Promise.resolve(MONETIZATION.adProvider()).then(grant).catch(()=>toast("Ad not available right now")); }
   else grant();
 }
+/* Studio Stamina (crew energy): output dips ~40% when the team is fully burned out,
+   so you can't just run every line flat-out forever — rest lines to recover. */
+function staminaFactor(){ const s=(S.stamina==null?100:S.stamina); return 0.6+0.4*Math.max(0,Math.min(1,s/100)); }
+function chaosBonus(){ return S.chaosMode?1.5:1; } // Chaos Mode: bigger rewards, more disasters
 function powerPerTick(){
   let p=0; for(const r in ROLES) p+=rolePower(r);
-  p *= equipMult() * perkMult("speed");
+  p *= equipMult() * perkMult("speed") * staminaFactor();
   if(Date.now()<S.overdriveUntil) p*=2;
   return p;
 }
@@ -1079,12 +1265,14 @@ function dimPowerForQuality(){
   for(const d of DIMS){ const role=DIM_OF_ROLE[d]; o[d]=rolePower(role)*qualityMult(); }
   return o;
 }
-function projectStars(p, genre){
+function projectStars(p, genre, pr){
   const dp=dimPowerForQuality();
   let sum=0;
   for(const d of DIMS){ sum += Math.min(dp[d]/p.talent, 1.5); }
   let q = sum/DIMS.length;                       // 0..1.5
   q *= (1 + (S.mastery[genre]||0)*0.06);
+  // featured cast lifts the rating of this specific show
+  if(pr&&pr.cast&&pr.cast.length){ q *= (1 + Math.min(0.6, 0.05*pr.cast.length + castStarPower(pr)/(p.talent*6))); }
   const stars = Math.max(1, Math.min(5, Math.round(q*3.4)));
   return stars;
 }
@@ -1143,7 +1331,9 @@ function load(){
     let projs = Array.isArray(d.projects) ? d.projects.slice() : (d.project?[d.project]:[]);
     S.projects = Array.from({length:S.slots}, (_,i)=> projs[i]||null);
     S.lastDailyDate=d.lastDailyDate||""; S.dailyStreak=+d.dailyStreak||0;
-    S.stars=Array.isArray(d.stars)?d.stars:[];
+    S.stars=Array.isArray(d.stars)?d.stars:[]; normStars();
+    if(S.stamina==null) S.stamina=100; if(S.chaos==null) S.chaos=0;
+    S.items=(d.items&&typeof d.items==="object")?d.items:{}; S.entitlements=Array.isArray(d.entitlements)?d.entitlements:[];
     S.quests=Array.isArray(d.quests)?d.quests:[];
     S.questProg=Object.assign({releases:0,yen:0,campaigns:0,hires:0,hypeSpent:0,scouts:0}, d.questProg||{});
     S.bestValue=+d.bestValue||0; S.freeGemsDate=d.freeGemsDate||""; S.taps=+d.taps||0;
@@ -1165,16 +1355,30 @@ function floatGain(txt){
 }
 
 /* ========================= ACTIONS ========================= */
-function greenlight(pid, genre){
+function greenlight(pid, genre, cast){
   const p=PROJECTS[pid];
   const slot=firstEmptySlot();
   if(slot<0){ toast("All production slots are busy — expand your studio"); return; }
   if(S.yen < p.cost){ toast("Not enough Yen to greenlight"); return; }
   if(S.fans < p.unlock) return;
+  // validate the featured cast — only working stars with enough energy, capped
+  const ok=(cast||[]).filter(id=>{ const st=(S.stars||[]).find(x=>x.sid===id); return st && !st.resting && starEnergy(st)>=15; }).slice(0,castCap());
   S.yen -= p.cost;
-  S.projects[slot]={ pid, genre, progress:0, title:makeTitle(genre), poster:pickPoster(genre) };
+  S.projects[slot]={ pid, genre, progress:0, title:makeTitle(genre), poster:pickPoster(genre), cast:ok };
+  _castSel=[];
   questAdd("greenlit",1);
-  track("greenlight",{tier:p.tier,genre}); play("click"); render(); save();
+  track("greenlight",{tier:p.tier,genre,cast:ok.length}); play("click"); render(); save();
+}
+/* When a show premieres, the cast gains XP→levels, fame (from hits), drains energy, and earns loyalty for the work. */
+function processCast(pr, stars, p){
+  if(!pr||!pr.cast) return;
+  for(const id of pr.cast){ const st=(S.stars||[]).find(x=>x.sid===id); if(!st) continue;
+    st.energy=Math.max(0, starEnergy(st)-18);
+    st.xp=(st.xp||0)+(p.tier+1)*(stars>=4?2:1);
+    while(st.xp>=xpNeed(st.level||1)){ st.xp-=xpNeed(st.level||1); st.level=(st.level||1)+1; }
+    if(stars>=4) st.fame=(st.fame||0)+(stars-3);     // big hits inflate a star's fame (and ego)
+    st.loyalty=Math.min(100, starLoyalty(st)+1);
+  }
 }
 /* ---- Premiere reveal: the "real flick" moment when a show releases ---- */
 const REVIEWS={
@@ -1220,7 +1424,7 @@ function closePremiere(){ const m=document.getElementById("premiere"); if(m) m.s
 function releaseProject(slot){
   const pr=S.projects[slot]; if(!pr) return; const p=PROJECTS[pr.pid];
   if(pr.progress < p.work) return;
-  const stars=projectStars(p, pr.genre);
+  const stars=projectStars(p, pr.genre, pr);
   const mult = stars/3;
   const trendBonus = (pr.genre===trendGenre()) ? 1.5 : 1.0;
   // Hype Combo — rapid back-to-back premieres build a streak multiplier (rewards active play).
@@ -1229,8 +1433,12 @@ function releaseProject(slot){
     else if(S.combo===10){ S.gems+=8; toastSafe("⚡ 10-COMBO MASTER! +8 💎",true); }
   }
   const comboMult = 1 + Math.min(Math.max(0,(S.combo||1)-1), 9)*0.05;
-  const yenGain = Math.floor(p.base * mult * (1 + S.fans*0.00004) * marketingMult() * legacyMult() * trendBonus * globalIncomeMult() * eventYenMult() * comboMult);
-  const fansGain = Math.max(1, Math.floor(p.fans * mult * trendBonus * eventFanMult() * comboMult * perkMult("fans")));
+  // featured stars add box-office star power; Chaos Mode amplifies all rewards (and the risks)
+  const starMult = 1 + Math.min(1.2, castStarPower(pr)/(p.talent*5));
+  const chaosB = chaosBonus();
+  processCast(pr, stars, p);
+  const yenGain = Math.floor(p.base * mult * (1 + S.fans*0.00004) * marketingMult() * legacyMult() * trendBonus * globalIncomeMult() * eventYenMult() * comboMult * starMult * chaosB);
+  const fansGain = Math.max(1, Math.floor(p.fans * mult * trendBonus * eventFanMult() * comboMult * perkMult("fans") * starMult * chaosB));
   const hypeGain = Math.max(1, Math.floor((p.tier+1)*mult*2));
   S.yen+=yenGain; S.fans+=fansGain; S.totalFansEver+=fansGain; S.hype+=hypeGain;
   S.totalEarned=(S.totalEarned||0)+yenGain;
@@ -1328,14 +1536,61 @@ function buyReal(sku){
   if(url){ try{ window.open(url,"_blank","noopener"); }catch(e){} toast("Opening checkout — your reward unlocks automatically when you return."); }
   else { toast("💳 Payments aren't set up yet. Add your checkout link to enable this."); }
 }
+/* ---- Inventory / consumable items ---- */
+function addItem(id,n){ if(!ITEMS[id]) return; if(!S.items) S.items={}; S.items[id]=(S.items[id]||0)+(n||1); }
+function itemCount(id){ return (S.items&&S.items[id])||0; }
+function useItem(id){ const it=ITEMS[id]; if(!it) return; if(itemCount(id)<=0){ toast("You don't own that item"); return; }
+  S.items[id]--; it.use(); track("item_use",{id}); play("reward"); toast(it.ic+" "+it.name+" used!",true); render(); save(); }
+function buyItem(id){ const it=ITEMS[id]; if(!it||!it.gem) return; if(S.gems<it.gem){ toast("Need "+it.gem+" 💎 — top up in the Store"); return; }
+  S.gems-=it.gem; addItem(id); track("item_buy",{id}); play("reward"); toast(it.ic+" "+it.name+" added to your inventory!",true); render(); save(); }
+/* ---- Spin the Wheel & Scratch Cards (gem sinks with a free daily play) ---- */
+function weightedPick(list){ let tot=0; for(const x of list) tot+=x.w; let r=Math.random()*tot; for(const x of list){ r-=x.w; if(r<=0) return x; } return list[0]; }
+function showPrize(title,label,msg){
+  const el=document.getElementById('reveal-body');
+  if(!el){ toast(title+": "+(msg||label),true); return; }
+  el.innerHTML=`<div style="font-size:13px;font-weight:800;color:var(--plum);letter-spacing:1px">${title}</div>
+    <div style="font-size:52px;margin:10px 0">🎉</div><h1 style="font-size:24px;margin:2px 0">${label}</h1>
+    <div class="muted">${msg||""}</div>`;
+  const m=document.getElementById('reveal'); if(m) m.style.display='flex';
+}
+function spinWheel(){
+  const free=S.wheelDate!==todayStr();
+  if(!free){ if(S.gems<SPIN_GEM_COST){ toast("Daily free spin used — "+SPIN_GEM_COST+" 💎 for another"); return; } S.gems-=SPIN_GEM_COST; }
+  else S.wheelDate=todayStr();
+  const prize=weightedPick(WHEEL); const msg=prize.apply();
+  track("wheel",{prize:prize.label}); play("reward"); showPrize("🎡 Spin & Win",prize.label,msg); checkAchievements(); render(); save();
+}
+function scratchCard(){
+  const free=S.scratchDate!==todayStr();
+  if(!free){ if(S.gems<SCRATCH_GEM_COST){ toast("Daily free card used — "+SCRATCH_GEM_COST+" 💎 for another"); return; } S.gems-=SCRATCH_GEM_COST; }
+  else S.scratchDate=todayStr();
+  const prize=weightedPick(SCRATCH); const msg=prize.apply();
+  track("scratch",{prize:prize.label}); play("reward"); showPrize("🎟️ Scratch Card",prize.label,msg); checkAchievements(); render(); save();
+}
 /* entitlement bridge — called by the native StoreKit layer (iap.js) on a verified purchase,
-   and reused by the web ?grant= redirect. Keeps grant logic in one place. */
-function grantEntitlement(kind, amount){
-  if(kind==="pass"){ S.producerPass=true; toast("🎬 Producer Pass unlocked — thank you!",true); }
-  else if(kind==="bundle"){ S.producerPass=true; S.gems+=200; S.bundleBought=true; toast("🌟 Starter Bundle unlocked: Pass + 200 💎!",true); }
-  else if(kind==="gems"){ const n=+amount||0; if(n>0){ S.gems+=n; toast("💎 +"+n+" Gems — thank you!",true);
+   and reused by the web ?grant= redirect. Idempotent for non-consumables so buyers ALWAYS
+   receive exactly what they paid for, even on restore / re-entry. */
+function addEntitlement(tok){ if(!S.entitlements) S.entitlements=[]; if(S.entitlements.includes(tok)) return false; S.entitlements.push(tok); return true; }
+function grantStar(id){ const t=STAR_BY_ID[id]; if(!t) return false;
+  const owned=(S.stars||[]).find(s=>s.sid===id);
+  if(owned){ owned.level=(owned.level||1)+1; toast("🌟 "+t.name+" leveled up — thank you!",true); }
+  else { if(!S.stars) S.stars=[]; S.stars.push(normStar({sid:id,level:1})); toast("🌟 Exclusive star "+t.name.replace(' ☆','')+" joined your studio!",true); }
+  return true; }
+function grantEntitlement(kind, amount, extra){
+  extra=extra||{}; let delivered=false;
+  if(kind==="pass"){ S.producerPass=true; delivered=true; toast("🎬 Producer Pass unlocked — thank you!",true); }
+  else if(kind==="bundle"){ S.producerPass=true; if(addEntitlement("bundle")) S.gems+=200; S.bundleBought=true; delivered=true; toast("🌟 Starter Bundle: Pass + 200 💎!",true); }
+  else if(kind==="bundle_legend"){ S.producerPass=true; if(addEntitlement("bundle_legend")){ S.gems+=400; grantStar("x_aurora"); } delivered=true; toast("🏆 Legend Bundle delivered — thank you!",true); }
+  else if(kind==="bundle_mogul"){ S.producerPass=true; if(addEntitlement("bundle_mogul")){ S.gems+=1500; grantStar("x_phoenix"); grantStar("x_shogun"); S.noAds=true; } delivered=true; toast("👑 Mogul Bundle delivered — thank you!",true); }
+  else if(kind==="items_pack"){ ["megaphone","power_glove","time_pendant","stardust","espresso"].forEach(i=>addItem(i,1)); S.gems+=50; delivered=true; toast("🧰 Power Items Pack delivered!",true); }
+  else if(kind==="noads"){ S.noAds=true; addEntitlement("noads"); delivered=true; toast("🚫 Ads removed — thank you!",true); }
+  else if(kind==="star"){ const id=extra.id||SKU2STAR[extra.sku]; if(id){ addEntitlement("star:"+id); delivered=grantStar(id); } }
+  else if(kind==="gems"){ const n=+amount||0; if(n>0){ S.gems+=n; delivered=true; toast("💎 +"+n+" Gems — thank you!",true);
       if(flashAvailable()){ const bonus=Math.ceil(n*0.20); S.gems+=bonus; S.flashDealDay=todayStr(); toast("⚡ Daily Deal bonus: +"+bonus+" Gems!",true); } } }
-  track("purchase_grant",{kind,amount}); play("reward"); save(); render();
+  if(delivered && !S.firstPurchaseDone){ S.firstPurchaseDone=true; S.gems+=50; toast("🎁 First-purchase thank-you: +50 💎!",true); }
+  if(delivered){ (S.purchaseLog=S.purchaseLog||[]).push({kind,amount:amount||null,t:Date.now()}); toast("✅ Delivered to your studio",true); }
+  track("purchase_grant",{kind,amount,delivered}); play("reward"); save(); render();
+  return delivered;
 }
 /* One-time Starter Bundle offer — shows once after the player has felt the loop (3 releases). */
 function maybeStarterOffer(){
@@ -1451,7 +1706,8 @@ function prestige(){
               gems:S.gems, pass:S.producerPass, ms:S.milestonesClaimed, bundle:S.bundleBought,
               daily:S.lastDailyDate, streak:S.dailyStreak, stars:S.stars, tut:S.tutorialSeen,
               best:S.bestValue, ach:S.achievements, fg:S.freeGemsDate, taps:S.taps,
-              perks:S.perks, legacySpent:S.legacySpent, awards:S.awardsWon, earned:S.totalEarned, comboBest:S.comboBest};
+              perks:S.perks, legacySpent:S.legacySpent, awards:S.awardsWon, earned:S.totalEarned, comboBest:S.comboBest,
+              items:S.items, entitlements:S.entitlements, purchaseLog:S.purchaseLog, firstPurchaseDone:S.firstPurchaseDone, noAds:S.noAds};
   S=freshState();
   S.legacy=keep.legacy; S.mastery=keep.mastery; S.totalFansEver=keep.total; S.muted=keep.mute;
   S.gems=keep.gems; S.producerPass=keep.pass; S.milestonesClaimed=keep.ms; S.bundleBought=keep.bundle;
@@ -1459,6 +1715,8 @@ function prestige(){
   S.bestValue=keep.best; S.achievements=keep.ach; S.freeGemsDate=keep.fg; S.taps=keep.taps;
   S.perks=keep.perks||{income:0,speed:0,fans:0,offline:0}; S.legacySpent=keep.legacySpent||0;
   S.awardsWon=keep.awards||0; S.totalEarned=keep.earned||0; S.comboBest=keep.comboBest||0;
+  // purchases & entitlements are permanent — they survive every reboot
+  S.items=keep.items||{}; S.entitlements=keep.entitlements||[]; S.purchaseLog=keep.purchaseLog||[]; S.firstPurchaseDone=!!keep.firstPurchaseDone; S.noAds=!!keep.noAds;
   checkAchievements(); track("prestige",{gain});
   toast("🌸 Studio rebooted! +"+gain+" Legacy",true); render(); save();
 }
@@ -1494,6 +1752,20 @@ function tick(seconds){
   }
   if(anyActive) S.yen=Math.max(0, S.yen - salaryPerTick()*seconds); // staff paid while any line is filming
   if(S.catalogIncome>0) S.yen += royaltyPerSec()*seconds; // passive back-catalog royalties
+  // --- Studio Stamina (crew energy): running many lines tires the team; idle time recovers it ---
+  { const active=activeCount();
+    const drain=active*0.5 + (Date.now()<S.overdriveUntil?1:0) + (S.chaosMode?0.4:0);
+    S.stamina=Math.max(0,Math.min(100,(S.stamina==null?100:S.stamina) + (0.8 - drain)*seconds)); }
+  // --- Star energy: featured stars on a running line tire out; benched/resting stars recover ---
+  { const cs=castSet(), running=activeCount()>0;
+    for(const st of (S.stars||[])){
+      if(st.resting) st.energy=Math.min(100, starEnergy(st)+3*seconds);
+      else if(cs.has(st.sid)&&running) st.energy=Math.max(0, starEnergy(st)-0.4*seconds);
+      else st.energy=Math.min(100, starEnergy(st)+0.6*seconds);
+    } }
+  // --- Chaos meter: rises with crunch/overdrive/Chaos Mode, decays during calm play ---
+  { let rise=(S.chaosMode?0.25:0.08); if((S.stamina||100)<30) rise+=0.15; if(Date.now()<S.overdriveUntil) rise+=0.1;
+    S.chaos=Math.max(0,Math.min(100,(S.chaos||0)+(rise-0.12)*seconds)); }
 }
 
 /* offline earning cap (seconds): base 8h, ×2 with Producer Pass, +1h per offline perk level */
@@ -1548,7 +1820,7 @@ function updateSlotLive(i){
   if((cont.dataset.done==="1")!==done) return true; // transitioned to/from "Ready" → buttons change
   const bar=cont.querySelector(".slot-bar"); if(bar) bar.style.width=Math.min(100,pr.progress/p.work*100)+"%";
   if(!done){ const eta=cont.querySelector(".slot-eta");
-    if(eta){ const s=Math.ceil((p.work-pr.progress)/Math.max(0.0001,powerPerTick())); const st=projectStars(p,pr.genre);
+    if(eta){ const s=Math.ceil((p.work-pr.progress)/Math.max(0.0001,powerPerTick())); const st=projectStars(p,pr.genre,pr);
       eta.textContent="ETA ~"+s+"s · projected "+"★".repeat(st)+"☆".repeat(5-st); } }
   return false;
 }
@@ -1666,13 +1938,14 @@ function renderProduce(){
     const p=PROJECTS[pr.pid];
     const pct=Math.min(100, pr.progress/p.work*100);
     const done=pr.progress>=p.work;
-    const stars=projectStars(p, pr.genre);
+    const stars=projectStars(p, pr.genre, pr);
     const eta = done?0:Math.ceil((p.work-pr.progress)/Math.max(0.0001,powerPerTick()));
     h+=`<div class="panel slotpanel" id="slot-${i}" data-done="${done?'1':'0'}"><h2 style="font-size:15px">🎬 Studio ${i+1}${done?" — ✅ Ready":""}</h2><div class="card">
       <div class="poster" ${done?'':`data-act="tapboost" data-slot="${i}"`} style="background-image:url(${pr.poster||GENRE_POSTER[pr.genre]||DEFAULT_POSTER});${done?'':'cursor:pointer'}" title="${done?'':'Tap to boost!'}"><div class="gtag">${pr.genre}${pr.genre===trendGenre()?" 🔥":""}${done?'':' · 👆'}</div></div>
       <div class="pinfo">
         <h3>${pr.title?`“${pr.title}”`:p.name}</h3>
         <div class="muted" style="margin-bottom:2px">${p.name} · ${pr.genre}</div>
+        ${(pr.cast&&pr.cast.length)?`<div class="muted" style="margin-bottom:2px">🎭 Starring ${pr.cast.map(id=>STAR_BY_ID[id]?STAR_BY_ID[id].name:"").filter(Boolean).join(", ")}</div>`:""}
         <div class="muted slot-eta">${done?"Ready to release":("ETA ~"+eta+"s")} · projected ${"★".repeat(stars)}${"☆".repeat(5-stars)}</div>
         <div class="progress"><i class="slot-bar" style="width:${pct}%"></i></div>
         <div class="dims">
@@ -1690,6 +1963,19 @@ function renderProduce(){
   if(empties>0){
     h+=`<div class="panel"><h2>🎬 Greenlight a Project <span class="pill">${empties}/${S.slots} slots free</span></h2><div class="muted" style="margin-bottom:8px">Pick a genre, then choose what to produce. Match the trending genre for a 1.5× bonus.</div>`;
     h+=`<div class="genrepick" id="genres">`+GENRES.map((g,i)=>`<span class="chip ${i===_selGenre?'sel':''} ${g===trendGenre()?'trend':''}" data-g="${i}">${g}${g===trendGenre()?" 🔥":""}${S.mastery[g]?` <span class="pill">L${S.mastery[g]}</span>`:""}</span>`).join("")+`</div>`;
+    // ---- Casting: choose which stars to feature on this show (energy permitting) ----
+    const roster=(S.stars||[]).map(st=>({st,t:STAR_BY_ID[st.sid]})).filter(x=>x.t);
+    if(roster.length){
+      _castSel=_castSel.filter(id=>{ const st=findStar(id); return st && !st.resting && starEnergy(st)>=15; });
+      const order=["Legendary","Epic","Rare","Common"];
+      roster.sort((a,b)=>order.indexOf(effRarity(a.st))-order.indexOf(effRarity(b.st)));
+      h+=`<div class="muted" style="margin:10px 0 4px;font-weight:800;color:var(--plum)">🎭 Cast your stars <span class="pill">${_castSel.length}/${castCap()}</span></div>
+        <div class="genrepick">`+roster.map(({st,t})=>{
+          const R=STAR_RARITY[effRarity(st)]; const sel=_castSel.includes(st.sid); const tired=st.resting||starEnergy(st)<15;
+          return `<span class="chip ${sel?'sel':''}" data-cast="${st.sid}" style="border-color:${R.color};${tired?'opacity:.45':''}" title="Energy ${Math.round(starEnergy(st))}%">${sel?'✓ ':''}${t.name.replace(' ☆','')} <span class="pill" style="background:${R.color}22;color:${R.color}">L${st.level}${(st.fame||0)?' ★'+st.fame:''}</span></span>`;
+        }).join("")+`</div>
+        <div class="muted" style="margin:4px 0 2px;font-size:11px">Featured stars raise the show's rating &amp; box office and gain fame — but they tire out, so rotate them.</div>`;
+    }
     h+=`<div class="pickgrid">`+PROJECTS.map(p=>{
       const locked=S.fans<p.unlock; const afford=S.yen>=p.cost;
       return `<div class="pick ${locked?'lock':''}">
@@ -1731,12 +2017,17 @@ function renderProduce(){
      </div>
      ${(()=>{const L=studioLevel(),lo=fansForLevel(L),hi=fansForLevel(L+1),f=Math.max(0,Math.min(1,(S.totalFansEver-lo)/(hi-lo)));return `<div style="margin-top:10px"><div class="muted" style="display:flex;justify-content:space-between;font-weight:700;font-size:12px"><span>🎖️ Studio Lv. ${L} → ${L+1}</span><span>${fmt(Math.max(0,hi-S.totalFansEver))} fans to go</span></div><div style="height:9px;border-radius:6px;background:rgba(0,0,0,.12);overflow:hidden;margin-top:3px"><div style="height:100%;width:${(f*100).toFixed(1)}%;background:linear-gradient(90deg,#f6b73c,#ff7eb3)"></div></div></div>`;})()}
      ${boosts.length?`<div class="muted" style="margin-top:8px;color:#0c7d96;font-weight:700">⚡ Active: ${boosts.join(" · ")}</div>`:""}
-     ${activeCount()>0?`<button class="btn-cyan" id="a-over" style="margin-top:10px;width:100%">🚀 ${STR.overdrive} · 15 Hype (all lines, 2× speed 30s)</button>`:""}
+     ${(()=>{const st=Math.round(S.stamina==null?100:S.stamina), ch=Math.round(S.chaos||0);
+       const meter=(label,val,c1,c2)=>`<div style="margin-top:8px"><div class="muted" style="display:flex;justify-content:space-between;font-weight:700;font-size:12px"><span>${label}</span><span>${val}%</span></div><div style="height:9px;border-radius:6px;background:rgba(0,0,0,.12);overflow:hidden;margin-top:3px"><div style="height:100%;width:${val}%;background:linear-gradient(90deg,${c1},${c2})"></div></div></div>`;
+       return meter("💪 Studio Stamina",st,"#ff7eb3","#5fd38a")+meter("🌪️ Chaos",ch,"#5fd38a","#ff6b8a");})()}
+     <button class="btn-ghost" data-act="chaos-toggle" style="margin-top:8px;width:100%;${S.chaosMode?'background:linear-gradient(180deg,#ff6b8a,#c0497f);color:#fff':''}">${S.chaosMode?"🌪️ Chaos Mode: ON (+50% rewards, +risk)":"🌪️ Enable Chaos Mode (+50% rewards, +risk)"}</button>
+     ${activeCount()>0?`<button class="btn-cyan" id="a-over" style="margin-top:8px;width:100%">🚀 ${STR.overdrive} · 15 Hype (all lines, 2× speed 30s)</button>`:""}
      ${S.fans>=PRESTIGE_FANS?`<button class="btn-cyan" id="a-prestige" style="margin-top:8px;width:100%">🌸 Reboot Studio for +${Math.floor(Math.sqrt(S.totalFansEver/1000))} Legacy</button>`:`<div class="muted" style="margin-top:6px">Reach ${fmt(PRESTIGE_FANS)} fans to unlock Studio Reboot (prestige).</div>`}
    </div>`;
   main.innerHTML=h;
 }
 let _selGenre=0;
+let _castSel=[];   // sids the player has selected to feature on the next greenlight
 
 function renderStaff(){
   let h=`<div class="panel"><h2>👥 Hire Your Team</h2><div class="muted" style="margin-bottom:10px">Each role boosts one quality dimension. Balanced teams make higher-rated anime. Salaries are paid from release revenue.</div>`;
@@ -1758,17 +2049,32 @@ function renderStars(){
       <button class="btn-gold hirebtn" data-scout="gems" ${S.gems>=SCOUT_GEMS?"":"disabled"}>🌟 Premium Scout<small>${SCOUT_GEMS} 💎</small></button>
     </div>
     <div class="muted" style="margin-top:6px">Open Casting → Common/Rare. Premium Scout → full odds incl. Epic &amp; Legendary.</div></div>`;
-  h+=`<div class="panel"><h2>🎭 Your Stars <span class="pill">${(S.stars||[]).length}</span></h2>`;
+  h+=`<div class="panel"><h2>🎭 Your Stars <span class="pill">${(S.stars||[]).length}</span></h2>
+    <div class="muted" style="margin-bottom:10px">Rest tired stars to recharge them, train &amp; enhance their rarity, and invest in their fame for more power — but the more famous they get, the more they may demand to stay. Cast them on shows from the Produce tab.</div>`;
   if(!S.stars||!S.stars.length){ h+=`<div class="muted">No stars yet — scout your first talent above!</div>`; }
   else{
     const order=["Legendary","Epic","Rare","Common"];
     [...S.stars].map(st=>({st,t:STAR_BY_ID[st.sid]})).filter(x=>x.t)
-      .sort((a,b)=>order.indexOf(a.t.rarity)-order.indexOf(b.t.rarity))
-      .forEach(({st,t})=>{ const R=STAR_RARITY[t.rarity];
-        h+=`<div class="staffrow" style="border-left:5px solid ${R.color}">
+      .sort((a,b)=>order.indexOf(effRarity(a.st))-order.indexOf(effRarity(b.st)) || (b.st.level||1)-(a.st.level||1))
+      .forEach(({st,t})=>{ const rar=effRarity(st); const R=STAR_RARITY[rar];
+        const en=Math.round(starEnergy(st)), loy=Math.round(starLoyalty(st)); const maxR=RARITY_ORDER.indexOf(rar)>=RARITY_ORDER.length-1;
+        const enColor=en>=60?"#5fd38a":(en>=30?"#ffc845":"#ff6b8a"); const loyColor=loy>=60?"#5fd38a":(loy>=35?"#ffc845":"#ff6b8a");
+        h+=`<div class="staffrow" style="border-left:5px solid ${R.color};${st.resting?'opacity:.7':''};flex-wrap:wrap">
           <img src="${t.img}" alt="" style="box-shadow:inset 0 0 0 2px ${R.color}">
-          <div class="meta"><h4>${t.name} <span class="pill" style="background:${R.color}22;color:${R.color}">${t.rarity}</span> <span class="pill">Lv ${st.level}</span></h4>
-          <div class="muted">${ROLES[t.role].name} · +${fmt(R.power*st.level)} ${ROLES[t.role].dimName} output</div></div></div>`;
+          <div class="meta" style="min-width:150px"><h4>${t.name.replace(' ☆','')} <span class="pill" style="background:${R.color}22;color:${R.color}">${rar}</span> <span class="pill">Lv ${st.level}</span>${(st.fame||0)?` <span class="pill" style="background:#ffe39a;color:#7a5200">★ Fame ${st.fame}</span>`:""}${st.resting?` <span class="pill" style="background:#cdd6e6;color:#46506b">💤 Resting</span>`:""}</h4>
+            <div class="muted">${ROLES[t.role].name} · +${fmt(effStarPower(st))} ${ROLES[t.role].dimName}</div>
+            <div style="display:flex;gap:8px;margin-top:4px;font-size:11px;font-weight:700">
+              <span style="flex:1">⚡ Energy <div class="db" style="background:rgba(0,0,0,.12)"><i style="width:${en}%;background:${enColor}"></i></div></span>
+              <span style="flex:1">❤️ Loyalty <div class="db" style="background:rgba(0,0,0,.12)"><i style="width:${loy}%;background:${loyColor}"></i></div></span>
+            </div>
+            <div class="row" style="gap:6px;margin-top:7px;flex-wrap:wrap">
+              <button class="btn-ghost hirebtn" data-sa="rest" data-sid="${st.sid}" style="padding:6px 9px">${st.resting?"▶️ Work":"💤 Rest"}</button>
+              <button class="btn-cyan hirebtn" data-sa="level" data-sid="${st.sid}" ${S.yen>=levelCost(st)?"":"disabled"} style="padding:6px 9px">⬆ Train<small>¥${fmt(levelCost(st))}</small></button>
+              <button class="btn-gold hirebtn" data-sa="fame" data-sid="${st.sid}" ${S.yen>=fameCost(st)?"":"disabled"} style="padding:6px 9px">🌟 Fame<small>¥${fmt(fameCost(st))}</small></button>
+              <button class="btn-primary hirebtn" data-sa="promote" data-sid="${st.sid}" ${(!maxR&&(st.level||1)>=10&&S.gems>=promoteCost(st))?"":"disabled"} style="padding:6px 9px">✨ Enhance<small>${maxR?"MAX":"💎"+promoteCost(st)}</small></button>
+              <button class="btn-ghost hirebtn" data-sa="fire" data-sid="${st.sid}" style="padding:6px 9px">👋 Release</button>
+            </div>
+          </div></div>`;
       });
   }
   h+=`</div>`;
@@ -1852,6 +2158,22 @@ function renderStore(){
       h+=`<div class="uprow"><div class="meta"><h4>💎 ${label}</h4><div class="muted">${fmt(GEM_PACKS[sku])} Gems</div></div>
         <button class="btn-primary hirebtn" data-buy="${sku}">Buy<small>${P[sku]}</small></button></div>`;
     });
+    // Premium bundles (more value, strong nudges)
+    h+=`<div class="muted" style="margin:12px 0 6px;font-weight:800;color:var(--plum)">Premium Bundles</div>
+      <div class="uprow" style="border:2px solid var(--gold)"><div class="meta"><h4>🏆 Legend Bundle <span class="pill">POPULAR</span></h4><div class="muted">Producer Pass + 400 💎 + exclusive Legendary <b>Aurora Vesper</b></div></div>
+        <button class="btn-gold hirebtn" data-buy="bundle_legend">Get<small>${P.bundle_legend}</small></button></div>
+      <div class="uprow" style="border:2px solid #b06bff"><div class="meta"><h4>👑 Mogul Bundle <span class="pill">BEST DEAL</span></h4><div class="muted">Pass + 1,500 💎 + 2 exclusive Legendary stars + Remove Ads</div></div>
+        <button class="btn-gold hirebtn" data-buy="bundle_mogul">Get<small>${P.bundle_mogul}</small></button></div>`;
+    // Exclusive purchasable stars (never in the free gacha)
+    h+=`<div class="muted" style="margin:12px 0 6px;font-weight:800;color:var(--plum)">🌟 Exclusive Stars <span class="pill">PERMANENT</span></div>`;
+    EXCLUSIVE_STARS.forEach(x=>{ const owned=(S.stars||[]).some(s=>s.sid===x.id); const C=STAR_RARITY[x.rarity].color;
+      h+=`<div class="uprow" style="border-left:5px solid ${C}"><img src="${x.img}" alt="" style="width:42px;height:42px;border-radius:10px;object-fit:cover;margin-right:8px;box-shadow:inset 0 0 0 2px ${C}"><div class="meta"><h4>${x.name.replace(' ☆','')} <span class="pill" style="background:${C}22;color:${C}">${x.rarity}</span>${owned?' <span class="pill">OWNED</span>':''}</h4><div class="muted">${ROLES[x.role].name} · a one-of-a-kind star you can't scout</div></div>
+        <button class="btn-gold hirebtn" data-buy="${x.sku}">${owned?'+Lvl':'Get'}<small>${P[x.sku]}</small></button></div>`;
+    });
+    h+=`<div class="uprow"><div class="meta"><h4>🧰 Power Items Pack <span class="pill">VALUE</span></h4><div class="muted">5 premium prop items + 50 💎</div></div>
+        <button class="btn-primary hirebtn" data-buy="items_pack">Get<small>${P.items_pack}</small></button></div>`;
+    if(!S.noAds) h+=`<div class="uprow"><div class="meta"><h4>🚫 Remove Ads</h4><div class="muted">Removes ad prompts; keeps all free rewards</div></div>
+        <button class="btn-ghost hirebtn" data-buy="noads">Get<small>${P.noads}</small></button></div>`;
   } else if(!S.producerPass){
     h+=`<div class="muted" style="margin:8px 0">💎 Earn Gems free through milestones, daily rewards, quests &amp; every 25 releases — then spend them below.</div>`;
   }
@@ -1881,15 +2203,34 @@ function renderStore(){
   if(NATIVE){
     h+=`<button class="btn-ghost" data-act="restore" style="width:100%;margin-top:10px">↺ Restore Purchases</button>`;
   }
-  h+=`<div class="muted" style="margin-top:12px;font-size:12px;line-height:1.5">Gems and the Producer Pass are virtual items with no real-world value. Purchases are final and non-refundable. By buying you agree to our <a href="terms.html" target="_blank" rel="noopener">Terms</a> &amp; <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</div>`;
+  h+=`<div class="muted" style="margin-top:12px;font-size:12px;line-height:1.5">Gems, items and the Producer Pass are virtual items with no real-world value. Purchases are final and non-refundable. By buying you agree to our <a href="terms.html" target="_blank" rel="noopener">Terms</a> &amp; <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</div>`;
+  h+=`</div>`;
+  // ----- Mini-games: Spin & Win + Scratch Cards (free daily play; gem sink after) -----
+  const spinFree=S.wheelDate!==todayStr(), scratchFree=S.scratchDate!==todayStr();
+  h+=`<div class="panel"><h2>🎡 Spin &amp; Win</h2>
+    <div class="muted" style="margin-bottom:8px">One FREE spin daily, then ${SPIN_GEM_COST} 💎 each. Win Yen, Gems, Hype, items, boosts &amp; rare stars.</div>
+    <button class="btn-gold" data-act="spin" style="width:100%" ${(spinFree||S.gems>=SPIN_GEM_COST)?"":"disabled"}>🎡 ${spinFree?"FREE Daily Spin":("Spin · "+SPIN_GEM_COST+" 💎")}</button>
+    <h2 style="margin-top:14px">🎟️ Scratch Cards</h2>
+    <div class="muted" style="margin-bottom:8px">One FREE card daily, then ${SCRATCH_GEM_COST} 💎. Bigger prizes — premium items &amp; stars.</div>
+    <button class="btn-primary" data-act="scratch" style="width:100%" ${(scratchFree||S.gems>=SCRATCH_GEM_COST)?"":"disabled"}>🎟️ ${scratchFree?"FREE Daily Card":("Scratch · "+SCRATCH_GEM_COST+" 💎")}</button></div>`;
+  // ----- Power Items shop + inventory -----
+  h+=`<div class="panel"><h2>🧰 Power Items</h2><div class="muted" style="margin-bottom:8px">One-use props for an instant edge — buy with Gems, win from spins, or grab the Items Pack above.</div>`;
+  Object.keys(ITEMS).forEach(id=>{ const it=ITEMS[id]; const have=itemCount(id);
+    h+=`<div class="uprow"><div class="meta"><h4>${it.ic} ${it.name}${have?` <span class="pill">×${have}</span>`:""}${it.premium?` <span class="pill" style="background:#ffe39a;color:#7a5200">PREMIUM</span>`:""}</h4><div class="muted">${it.desc}</div></div>
+      <div class="row" style="gap:6px">${have?`<button class="btn-cyan hirebtn" data-itemuse="${id}">Use</button>`:""}<button class="btn-gold hirebtn" data-itembuy="${id}" ${S.gems>=it.gem?"":"disabled"}>Buy<small>${it.gem} 💎</small></button></div></div>`;
+  });
   h+=`</div>`;
   main.innerHTML=h;
 }
 
 /* ========================= EVENTS (delegated) ========================= */
 document.addEventListener("click", e=>{
-  const t=e.target.closest("[data-tab],[data-gl],[data-hire],[data-up],[data-res],[data-camp],[data-g],[data-buy],[data-gem],[data-act],[data-rel],[data-rush],[data-scout],[data-quest],[data-week],[data-perk],#a-over,#a-prestige");
+  const t=e.target.closest("[data-tab],[data-gl],[data-hire],[data-up],[data-res],[data-camp],[data-g],[data-buy],[data-gem],[data-act],[data-rel],[data-rush],[data-scout],[data-quest],[data-week],[data-perk],[data-cast],[data-sa],[data-itemuse],[data-itembuy],#a-over,#a-prestige");
   if(!t) return;
+  if(t.dataset.itemuse) return useItem(t.dataset.itemuse);
+  if(t.dataset.itembuy) return buyItem(t.dataset.itembuy);
+  if(t.dataset.act==="spin") return spinWheel();
+  if(t.dataset.act==="scratch") return scratchCard();
   if(t.dataset.perk) return buyPerk(t.dataset.perk);
   if(t.dataset.tab) return setTab(t.dataset.tab);
   if(t.dataset.scout) return scout(t.dataset.scout);
@@ -1897,7 +2238,10 @@ document.addEventListener("click", e=>{
   if(t.dataset.week!=null) return claimWeekly(+t.dataset.week);
   if(t.dataset.act==="login-claim") return claimLoginDay();
   if(t.dataset.g!=null){ _selGenre=+t.dataset.g; play("click"); return render(); }
-  if(t.dataset.gl!=null) return greenlight(+t.dataset.gl, GENRES[_selGenre]);
+  if(t.dataset.cast) return toggleCast(t.dataset.cast);
+  if(t.dataset.sa) return ({rest:toggleRest,level:levelStar,promote:promoteStar,fame:investFame,fire:fireStar}[t.dataset.sa]||(()=>{}))(t.dataset.sid);
+  if(t.dataset.act==="chaos-toggle") return toggleChaosMode();
+  if(t.dataset.gl!=null) return greenlight(+t.dataset.gl, GENRES[_selGenre], _castSel.slice());
   if(t.dataset.rel!=null) return releaseProject(+t.dataset.rel);
   if(t.dataset.rush!=null) return rush(+t.dataset.rush);
   if(t.dataset.hire) return hire(t.dataset.hire);
@@ -1978,7 +2322,7 @@ document.addEventListener("visibilitychange", ()=>{
   last=performance.now();
 });
 setInterval(()=>{ if(started) save(); }, 8000);
-setInterval(()=>{ const el=document.getElementById("flash-cd"); if(el) el.textContent=flashCountdown(); updateComboMeter(); }, 1000);
+setInterval(()=>{ const el=document.getElementById("flash-cd"); if(el) el.textContent=flashCountdown(); updateComboMeter(); maybeChaos(); maybeStarDemand(); }, 1000);
 function updateComboMeter(){
   let el=document.getElementById("combo-meter");
   const left=60000-(Date.now()-(S.lastReleaseAt||0));
@@ -2041,14 +2385,17 @@ function readGrant(){
     let search=location.search;
     try{ if(window.top!==window && window.top.location && window.top.location.search){ search += (search?"&":"?") + window.top.location.search.replace(/^\?/,""); } }catch(_){}
     const q=new URLSearchParams(search); let changed=false; const g=q.get("grant");
-    if(g==="pass" && !S.producerPass){ S.producerPass=true; changed=true; toastLater("🎬 Producer Pass activated — thank you!",true); }
-    if(g==="gems"){ const a=parseInt(q.get("amt")||"0",10); if(a>0){ S.gems+=a; changed=true; toastLater("💎 +"+a+" Gems added — thank you!",true);} }
-    if(g==="bundle"){ S.producerPass=true; S.gems+=200; S.bundleBought=true; changed=true; toastLater("🌟 Starter Bundle unlocked: Producer Pass + 200 💎!",true); }
-    // Gumroad post-purchase links: ?unlock=pass | bundle | gems120 / gems350 / gems800 / gems2000
+    // Route every redirect grant through the reliable, idempotent delivery path.
+    if(g){
+      if(g==="gems"){ changed=grantEntitlement("gems", parseInt(q.get("amt")||"0",10)); }
+      else if(g==="star"){ changed=grantEntitlement("star",0,{id:q.get("id"),sku:q.get("sku")}); }
+      else { changed=grantEntitlement(g); } // pass | bundle | bundle_legend | bundle_mogul | items_pack | noads
+    }
+    // Gumroad post-purchase links: ?unlock=pass | bundle | gems120 / gems350 / gems800 / gems2000 | star_aurora …
     const u=q.get("unlock");
-    if(u==="pass" && !S.producerPass){ S.producerPass=true; changed=true; toastLater("🎬 Producer Pass activated — thank you!",true); }
-    else if(u==="bundle"){ S.producerPass=true; S.gems+=200; S.bundleBought=true; changed=true; toastLater("🌟 Starter Bundle unlocked: Producer Pass + 200 💎!",true); }
-    else if(u && /^gems\d+$/.test(u)){ const a=parseInt(u.replace("gems",""),10)||0; if(a>0){ S.gems+=a; changed=true; toastLater("💎 +"+a+" Gems added — thank you!",true);} }
+    if(u==="pass"||u==="bundle"||u==="bundle_legend"||u==="bundle_mogul"||u==="items_pack"||u==="noads"){ changed=grantEntitlement(u)||changed; }
+    else if(u && /^gems\d+$/.test(u)){ changed=grantEntitlement("gems", parseInt(u.replace("gems",""),10)||0)||changed; }
+    else if(u && SKU2STAR[u]){ changed=grantEntitlement("star",0,{sku:u})||changed; }
     if(changed){ track("purchase_grant",{grant:g||u}); save(); try{ history.replaceState(null,"",location.pathname); }catch(_){}
       try{ if(window.top!==window && window.top.history){ window.top.history.replaceState(null,"",window.top.location.pathname); } }catch(_){} }
   }catch(e){}

@@ -1,258 +1,468 @@
-# Anime Studio Tycoon — Expansion Roadmap (200 Improvements)
+# Anime Studio Tycoon — Master Roadmap (400 Ideas)
 
-This is the product/engineering backlog for turning the game into a *truly endless*,
-feature-complete idle tycoon. Items marked **✅ DONE** were implemented in the
-"full audit / flaws" pass (engine fixes + first expansion wave). Everything else is
-the prioritized backlog, grouped by system. Numbers are stable IDs, not priority order.
+A thought-out backlog to make the game *truly endless*, top-tier, and addictive across
+**App Store, Google Play, and Steam**. **✅ DONE** = shipped in the audit/expansion passes.
+Everything else is the prioritized build list. IDs are stable, not priority order.
 
-> Two player-reported bugs fixed this pass:
-> - **Productions now count down on their own.** The game loop only ran after tapping the hidden
->   "Enter the Studio" gate, so `tick()` never advanced — only manual taps moved the bar.
->   The simulation now auto-resumes for returning players; tapping only *speeds it up*.
-> - **Tapping a poster no longer pops a menu or shifts the screen.** Taps/ticks now update the
->   moving numbers in place instead of rebuilding `#main` (which reset scroll), and the
->   background DOM-shuffling "Status/Menu" layer that popped in every 900ms was removed.
+> ### Player-driven changes already shipped
+> - **Productions count down on their own** (auto-running sim; tapping only speeds it up).
+> - **Tapping a poster no longer pops a menu / shifts the screen** (in-place updates, removed the DOM-shuffling layer).
+> - **Management & risk layer:** per-show **casting**, **star energy**, **studio stamina/crunch**, **Chaos Mode**, **chaos crises**, and star development (**train / enhance rarity / invest fame / fire**) with a **fame-leave-risk** ("they get too big and walk").
+> - **Endless systems:** back-catalog royalties, studio awards, legacy perks, endless milestones & marketing tiers.
+> - **Responsive sizing:** safe-area insets, dynamic viewport height, tablet/desktop dashboard grid, scrollable tabs.
 
 ---
 
-## A. Core loop & the two reported bugs
-1. ✅ Auto-run the simulation loop (no tap-to-start; productions always count down).
-2. ✅ Tap-to-boost only *accelerates* a running production; never required to progress.
-3. ✅ In-place live updates (progress/ETA/resources) — no `#main` rebuild, no scroll jump.
-4. ✅ Remove the 900ms DOM-shuffling top-menu layer that popped in and shifted the view on tap.
-5. ✅ De-duplicate the daily-quest panel off the Produce tab (it caused the layout shift).
-6. Per-slot "boost charge" meter so holding/tapping has a visible, satisfying ceiling.
-7. Auto-greenlight toggle per slot (pick genre+project once, keep re-producing).
-8. "Smart greenlight" that auto-picks the best affordable project for the trending genre.
-9. Long-press a poster to open a quick action sheet (Rush / Premiere Now / Cancel).
-10. Cancel-production button that refunds part of the greenlight cost.
-11. Pause/resume an individual production line.
-12. Drag-to-reorder production slots.
-13. Confirmation when spending gems on instant-premiere above a threshold.
-14. Haptic feedback on tap (Capacitor Haptics) for native builds.
-15. Visual "ka-ching" particle burst scaled to payout size.
+## A. Core loop, casting & the reported bugs
+1. ✅ Auto-run the sim (no tap-to-start).
+2. ✅ Tap-to-boost only accelerates a running show.
+3. ✅ In-place live updates (no `#main` rebuild / scroll jump).
+4. ✅ Removed the 900ms DOM-shuffling top-menu layer.
+5. ✅ De-duplicated the daily-quest panel off Produce.
+6. ✅ Per-show **casting** — select which stars work on each movie.
+7. ✅ "Starring …" line on active productions.
+8. ✅ Cast cap that grows with the Producer Pass.
+9. Auto-greenlight toggle per slot (genre+project locked in).
+10. "Smart cast" button that auto-fills the best available stars.
+11. Long-press a poster for a quick action sheet.
+12. Cancel-production with partial refund.
+13. Pause/resume a single line.
+14. Drag-to-reorder slots.
+15. Haptics on tap (Capacitor Haptics) for native.
+16. Payout-scaled particle burst on premiere.
+17. Per-slot "boost charge" ceiling meter.
+18. Combo-aware casting hints.
+19. Confirm large gem spends.
+20. Tap-to-skip premiere animation.
 
-## B. Production depth
-16. Multi-stage productions (pre-production → animation → post → premiere) with per-stage staff.
-17. Episode/cour system: shows run 12 episodes, each a mini-production.
-18. Seasons & sequels: produce Season 2 of a hit for a quality/fan head-start.
-19. Franchises: link related shows into a franchise with a stacking multiplier.
-20. Production risk dial (safe/balanced/ambitious) trading cost vs payout variance.
-21. Mid-production random events (budget overrun, viral leak, key animator sick).
-22. Quality "polish" phase: spend extra time/yen post-completion to bump star rating.
-23. Genre-blending: pick a primary+secondary genre for hybrid bonuses/penalties.
-24. Source material: Original vs Manga vs Light-Novel adaptation, each with trade-offs.
-25. Target demographic (kids/shonen/seinen/josei) affecting fan vs yen weighting.
-26. Soundtrack/OST production as an optional add-on for a hype boost.
-27. Theme-song tie-in with a guest musician (mini-gacha).
-28. Dub/localization pass to unlock additional regional fan pools.
-29. Animation style choice (2D/CGI/hybrid) gated by research.
-30. Per-show review score history kept in a catalog/gallery.
-31. "Troubled production" recovery minigame.
-32. Crunch meter: pushing speed lowers staff morale (see Staff).
-33. Production templates/presets the player can save and reuse.
-34. Simulcast vs delayed release timing decision.
-35. Box-office vs streaming revenue split per show.
+## B. Star energy, rotation & development
+21. ✅ Star **energy** that drains when cast and recovers on the bench/rest.
+22. ✅ **Rest/Work** toggle per star.
+23. ✅ Energy-gated casting (tired stars can't be featured).
+24. ✅ **Train** (spend ¥ to level a star).
+25. ✅ Casting grants **XP → auto-levels**.
+26. ✅ **Enhance rarity** (promote Common→…→Legendary with gems + level gate).
+27. ✅ **Invest in Fame** (raw power up, loyalty down).
+28. ✅ **Fire/Release** a star for a gem severance.
+29. ✅ **Loyalty** stat + **fame-leave-risk** demand event.
+30. Star "mood" states (inspired / tired / restless) with icons.
+31. Energy drinks / spa item to instantly refill energy.
+32. Training camps that level multiple stars over time.
+33. Star contracts with length + renewal terms.
+34. Loyalty-restoring "pep talk" / bonus action.
+35. Star injuries/illness (temporary unavailability) from over-work.
+36. Veteran bonus for long-tenured stars.
+37. Star rivalries (two stars who clash on the same cast).
+38. Star friendships (chemistry bonus when cast together).
+39. Mentor system: a Legendary trains a rookie faster.
+40. Star "signature genre" affinity bonuses.
+41. Auto-rest toggle (auto-bench at low energy).
+42. Roster capacity upgrades (bench size).
+43. Star "ascension" using duplicate pulls + materials.
+44. Star equipment/accessories (slot items).
+45. Per-star lifetime stats (shows, hits, fame peak).
+46. Retirement → Hall of Fame with a permanent small buff.
+47. Star "comeback" event for retired legends.
+48. Energy/loyalty tooltips with exact numbers.
+49. Bulk "rest all / work all" controls.
+50. Star portrait variants unlocked by fame tiers.
 
-## C. Staff & studio team
-36. Staff XP and levels earned from completed productions.
-37. Staff morale & burnout; rest days; morale affects output.
-38. Staff specializations (e.g., action animator, romance writer).
-39. Trainable skills / a small per-employee skill tree.
-40. Hireable executives/managers granting passive studio-wide bonuses.
-41. Staff traits (fast, perfectionist, cheap, diva) drawn on hire.
-42. Department leads that buff everyone in their role.
-43. Salary negotiation / contracts with terms and renewal.
-44. Staff retirement and a "legacy hall" for long-tenured staff.
-45. Studio culture stat influencing hire cost and retention.
-46. Recruiting events / job fairs (limited-time better hires).
-47. Overtime budget slider.
-48. Per-role automation unlocks (auto-hire to keep ratios balanced).
-49. Team chemistry: balanced role ratios give a multiplier.
-50. Internship pipeline producing cheap junior staff over time.
+## C. Chaos, risk & crisis management
+51. ✅ **Chaos meter** rising from crunch/overdrive/Chaos Mode.
+52. ✅ **Chaos Mode** toggle (+50% rewards, +disasters).
+53. ✅ **Crisis events** (meltdown, scandal, burnout, leak) as decisions.
+54. ✅ **Studio Stamina** (crew energy) gating output.
+55. Difficulty tiers (Casual / Standard / Chaos / Nightmare).
+56. A visible "risk forecast" before enabling Chaos Mode.
+57. Insurance you can buy to soften crises.
+58. Cascading crises if chaos is ignored.
+59. Crisis "war room" mini-decisions with multiple options.
+60. Reputation damage/recovery from mishandled crises.
+61. Rare positive "miracle" events at high chaos (high risk/high reward).
+62. Chaos-only exclusive rewards (prestige currency).
+63. Burnout heat-map across departments.
+64. Weather/season events affecting chaos.
+65. Sabotage from rival studios at high market share.
+66. Emergency overtime toggle (drains stamina fast).
+67. Crisis streak tracker + "calm streak" rewards.
+68. Chaos leaderboard ("survived N disasters").
+69. Auto-resolve minor crises with a manager hire.
+70. Post-crisis recap card.
 
-## D. Stars, gacha & collection
-51. ✅ Expand the star roster (14 new talents across all rarities).
-52. **Publish gacha odds numerically** (per-rarity %), required for store compliance.
-53. Pity counter: guaranteed Epic+ after N scouts without one.
-54. Rate-up banners (rotating featured star, limited time).
-55. Star synergy sets (e.g., "Studio Ghibli-style trio" bonus when 3 specific stars owned).
-56. Star bond/affinity that grows as a star works on shows.
-57. Star-specific signature abilities (genre crit, no-flop insurance, viral hook).
-58. Star awakening/ascension using duplicates + materials.
-59. Star retirement & a Hall of Fame.
-60. Limited collab/seasonal stars.
-61. Star scouting "scout report" preview before committing gems.
-62. Star equipment/accessories that modify their stats.
-63. Collection book with completion rewards.
-64. Star trade-in: convert unwanted dupes into currency.
-65. Voice-actor casting per show that affects the "voice" dimension specifically.
-66. Star "drama"/scandal events with risk/reward.
+## D. Production depth
+71. Multi-stage productions (pre-pro → animation → post → premiere).
+72. Episode/cour system (12-ep seasons).
+73. Sequels & Season 2 head-starts.
+74. Franchises with stacking multipliers.
+75. Production risk dial (safe/balanced/ambitious).
+76. Mid-production random events.
+77. Polish phase to bump star rating.
+78. Genre-blending (primary + secondary).
+79. Source material (Original / Manga / Light Novel).
+80. Target demographic weighting (fans vs yen).
+81. OST production add-on.
+82. Theme-song guest musician (mini-gacha).
+83. Dub/localization pass → regional fans.
+84. Animation style choice (2D/CGI/hybrid).
+85. Per-show review history.
+86. "Troubled production" recovery minigame.
+87. Production templates/presets.
+88. Simulcast vs delayed release timing.
+89. Box-office vs streaming split.
+90. Director's-cut re-releases of old hits.
 
-## E. Economy, idle & offline
-67. ✅ Back-catalog royalties: permanent passive Yen/sec from every premiere.
-68. ✅ Royalties accrue offline as well as online.
-69. ✅ Royalties surfaced on the dashboard (¥/s KPI).
-70. Merchandising lines (figures, apparel) as separate passive income streams.
-71. Licensing deals: recurring income contracts with streaming platforms.
-72. Investment/bank system: park yen for interest, or take loans.
-73. Multiple currencies UI cleanup (yen/hype/gems/legacy) with tooltips.
-74. Soft + hard currency sinks tuned across the whole curve.
-75. Inflation-proof number formatting verified past 1e30 (scientific fallback).
-76. Offline summary screen upgrades (per-stream breakdown).
-77. Bonus offline time tokens (earn/buy extra offline cap).
-78. "Catch-up" mechanic so lapsed players aren't hopelessly behind.
-79. Daily budget/expense report panel.
-80. Tax/expense events for high earners (optional difficulty).
+## E. Staff & studio team (beyond Stamina)
+91. Individual staff with names, traits, XP.
+92. Staff morale & burnout per person.
+93. Role specializations (action animator, romance writer).
+94. Department leads that buff their role.
+95. Hireable executives with passive bonuses.
+96. Trainable per-staff skill trees.
+97. Salary negotiation & contracts.
+98. Recruiting events / job fairs.
+99. Overtime budget slider.
+100. Internship pipeline (cheap juniors over time).
+101. Staff retirement & legacy hall.
+102. Studio culture stat (hiring cost/retention).
+103. Team chemistry from balanced ratios.
+104. Cross-training to flex roles.
+105. Per-department upgrades (rooms/tools).
+106. Remote vs in-house staff trade-offs.
+107. Staff awards & morale boosts.
+108. Auto-balance hiring assistant.
+109. Headhunting rival staff.
+110. Staff strike risk (ties into Chaos).
 
-## F. Progression, prestige & meta
-81. ✅ Legacy Perk Tree (income/speed/fans/offline) — permanent, survives reboot.
-82. ✅ Perks persist correctly through prestige; legacy points tracked & spent.
-83. Multiple prestige layers (Studio Reboot → Industry Reboot → Era Reboot).
-84. Prestige currency variety (Legacy + a deeper "Influence" currency).
-85. Respec option for perks (with a cost).
-86. Bigger perk tree (10+ nodes, branching, prerequisites).
-87. Prestige milestones with one-time permanent unlocks.
-88. "New Game+" modifiers chosen at reboot.
-89. Ascension challenges (restricted runs for special rewards).
-90. Studio levels beyond the current curve with named tiers.
-91. Mastery rework: per-genre mastery tree, not just a single level.
-92. Permanent unlock ledger ("what carries over") shown before prestige.
-93. Prestige preview calculator ("reboot now for +X").
-94. Era/age system that reskins the world as you advance decades.
+## F. Gacha, scouting & collection
+111. ✅ Bigger star roster (+14).
+112. **Publish gacha odds numerically** (compliance).
+113. Pity counter (guaranteed Epic+).
+114. Rate-up banners (rotating featured star).
+115. Star synergy sets.
+116. Scout report preview before committing.
+117. Dupe trade-in currency.
+118. Collection book with completion rewards.
+119. Limited collab/seasonal stars.
+120. Wishlist/targeted banners.
+121. Multi-pull (10x) with bonus.
+122. Spark/exchange shop for guaranteed pick.
+123. Star "shards" as an alt currency.
+124. Animated rarity reveal per tier.
+125. First-pull-of-the-day bonus.
+126. Scout streak rewards.
+127. Cross-role legendary "wildcards."
+128. Seasonal banner calendar.
+129. Free daily single pull.
+130. Lore/bio cards per star.
 
-## G. Endless scaling & content
-95. ✅ Endless goal/milestone ladder (procedural, never "finished").
-96. ✅ Endless marketing campaign tiers (procedural beyond Viral).
-97. ✅ Procedural project tiers already extend past Blockbuster — verified intact.
-98. Procedural star generation for an infinite roster at high prestige.
-99. Procedural genre sub-types unlocked late game.
-100. Scaling boss "rival blockbusters" you must out-produce.
-101. Infinite research tree with diminishing, never-zero returns.
-102. Dynamic difficulty so the curve never flatlines.
-103. Procedural award categories at awards nights.
-104. Endless achievement tiers (auto-generated "release N" / "fans N").
-105. Prestige-scaled event rewards.
+## G. Economy, idle & offline
+131. ✅ Back-catalog royalties (online + offline).
+132. ✅ Royalties surfaced on the dashboard.
+133. Merch lines (passive income).
+134. Licensing/streaming contracts (recurring).
+135. Investment/interest + loans.
+136. Currency tooltips & exact-value popovers.
+137. Verified number formatting past 1e30.
+138. Offline summary with per-stream breakdown.
+139. Offline-time tokens (earn/buy more cap).
+140. Catch-up mechanic for lapsed players.
+141. Daily budget/expense report.
+142. Optional tax events for high earners.
+143. Royalty upgrade tree (raise the catalog %).
+144. Merch design minigame.
+145. Stock-market-style "studio shares."
+146. Sponsorship contracts with deliverables.
+147. Dynamic pricing for in-game services.
+148. Bulk-buy multipliers (x1/x10/xMax).
+149. "Prestige preview" earnings calculator.
+150. Endgame sink: vanity studio cosmetics.
 
-## H. Events, live-ops & seasons
-106. ✅ Studio Awards Night every 50 premieres (gems + 3× income window).
-107. ✅ More interactive studio decisions (poaching, collab, slump, awards, fan mail).
-108. Seasonal themes (spring sakura, summer festival, winter) reskinning UI + bonuses.
-109. Real-calendar holidays with special banners.
-110. Weekend rush events (limited-time multipliers).
-111. Anime convention event (booth, panels, fan growth minigame).
-112. Tournament/ranked event vs rival studios.
-113. Community goals (shared global target — needs backend) or local stand-in.
-114. Login-calendar rework with milestone chests.
-115. Timed "production marathon" challenges.
-116. Mystery box / daily spin wheel.
-117. Limited-time genre crazes (huge trend bonus for one genre).
-118. Event currency + event shop.
-119. Story-driven campaign chapters with cutscene cards.
-120. Boss "deadline" events with a countdown.
+## H. Progression, prestige & meta
+151. ✅ Legacy Perk Tree (income/speed/fans/offline), prestige-proof.
+152. Multiple prestige layers (Studio → Industry → Era).
+153. Extra prestige currency ("Influence").
+154. Perk respec (for a cost).
+155. Bigger branching perk tree w/ prerequisites.
+156. Prestige milestone one-time unlocks.
+157. New Game+ modifiers chosen at reboot.
+158. Ascension challenges (restricted runs).
+159. Named studio-level tiers.
+160. Per-genre mastery trees.
+161. Permanent unlock ledger before prestige.
+162. Era reskins (decades of anime history).
+163. Prestige-gated automation unlocks.
+164. Talent "legacy" inheritance across reboots.
+165. Meta achievements spanning prestiges.
+166. Skill-point respec tokens as rewards.
+167. Prestige speedrun timer + records.
+168. "Golden path" recommended build.
+169. Endless paragon levels post-cap.
+170. Cross-save prestige bonuses.
 
-## I. Rivals, world & social
-121. Rival studios with names, market share, and a visible leaderboard.
-122. Local "industry rankings" you climb as studio value grows.
-123. Poaching/being-poached interactions with rivals (hooks D + C).
-124. Bidding wars over hot source material.
-125. Studio reputation stat affecting deals and hires.
-126. Critics vs Audience dual scores per show.
-127. Fan demographics dashboard (regions, age, genre affinity).
-128. Shareable "studio card" image (canvas-rendered) for real virality.
-129. Async ghost leaderboard (compare to a snapshot, no server) + optional online board.
-130. In-game social feed of fictional fan reactions to your premieres.
+## I. Endless scaling & content
+171. ✅ Endless milestone/goal ladder.
+172. ✅ Endless marketing tiers.
+173. ✅ Procedural project tiers past Blockbuster.
+174. Procedural star generation at high prestige.
+175. Procedural genre sub-types late game.
+176. Scaling rival "boss blockbusters."
+177. Infinite research tree (diminishing, never zero).
+178. Dynamic difficulty so the curve never flatlines.
+179. Procedural award categories.
+180. Endless achievement tiers.
+181. Prestige-scaled event rewards.
+182. Procedural crises at high chaos.
+183. Infinite cosmetic unlock track.
+184. Endless "season pass" cycles.
+185. Procedural fan-demographic regions.
+186. Scaling merch catalogs.
+187. Endless studio-expansion floors.
+188. Procedural sponsor offers.
+189. Infinite leaderboard brackets.
+190. Mastery prestige loops.
 
-## J. UX / UI / onboarding
-131. Fix the committed file being a serialized DOM snapshot (ship clean source).
-132. Stable, scroll-preserving renders across *all* tabs (not just Produce).
-133. Number-abbreviation tooltips (hover/long-press to see exact value).
-134. First-session guided tutorial with highlighted steps.
-135. Contextual tips when a new system unlocks.
-136. Settings panel (audio sliders, reduced motion, number format, language).
-137. Confirm dialogs styled in-theme (replace native `confirm`).
-138. Empty-state art for each tab.
-139. Search/sort/filter for stars and achievements.
-140. Pinnable goals / quest tracker overlay.
-141. Toast queue with de-duplication and priority.
-142. Dark/light theme toggle.
-143. Landscape/tablet layout.
-144. Better disabled-button affordances ("need ¥X more").
-145. Animated resource counters on change.
-146. Persistent "what's new" changelog modal.
-147. Offline/error banner when assets fail to load.
+## J. Events, live-ops & seasons
+191. ✅ Studio Awards every 50 premieres.
+192. ✅ More studio decisions (poaching, collab, slump, fan mail).
+193. Seasonal themes (sakura/summer/winter) reskin + bonuses.
+194. Real-calendar holiday banners.
+195. Weekend rush multipliers.
+196. Anime-convention event (booth/panel minigame).
+197. Ranked tournament vs rivals.
+198. Community/global goals (server-lite).
+199. Login-calendar rework w/ milestone chests.
+200. Production-marathon challenges.
+201. Daily spin wheel / mystery box.
+202. Limited genre crazes (huge trend bonus).
+203. Event currency + event shop.
+204. Story-driven campaign chapters.
+205. Boss "deadline" countdown events.
+206. Battle/season pass (free + premium tracks).
+207. Time-limited star banners tied to events.
+208. Live "industry news" ticker.
+209. Anniversary mega-events.
+210. Returning-player welcome-back event.
 
-## K. Accessibility
-148. Full keyboard navigation + visible focus rings.
-149. ARIA labels/roles on interactive elements.
-150. Screen-reader live regions for key events (premiere, level up).
-151. Colorblind-safe rarity/quality palettes + icons (not color alone).
-152. Respect `prefers-reduced-motion` everywhere (partially done for float gains).
-153. Adjustable font scaling.
-154. High-contrast mode.
-155. Larger tap targets on small screens.
+## K. Rivals, world & social
+211. Named rival studios + market share.
+212. Local industry rankings you climb.
+213. Bidding wars over hot source material.
+214. Studio reputation affecting deals/hires.
+215. Critics vs Audience dual scores.
+216. Fan demographics dashboard.
+217. Shareable canvas "studio card" image.
+218. Async ghost leaderboard (+ optional online board).
+219. Fictional fan-reaction social feed.
+220. Rival raids / sabotage (ties to Chaos).
+221. Co-op alliances (server-lite).
+222. Trade/gift stars with friends (server).
+223. Weekly rival "face-off" with rewards.
+224. Studio mascots / branding.
+225. Press conferences with PR choices.
+226. Awards red-carpet cosmetic moments.
+227. Industry hall-of-fame leaderboard.
+228. Referral rewards.
+229. Spectate top studios.
+230. Cross-promo with real socials (share-to-earn, ethical).
 
-## L. Audio
-156. Volume sliders (music/SFX separate) + persistence.
-157. More SFX (greenlight, hire, upgrade, award, gacha pull by rarity).
-158. Rarity-tiered gacha jingles.
-159. Music ducking during big premiere moments.
-160. Mute respects system silent switch on iOS.
-161. Bundle audio as local assets (no CDN dependency).
+## L. UX / UI / onboarding
+231. Ship clean source (no serialized-DOM snapshot).
+232. ✅ Scroll-preserving in-place updates on Produce.
+233. Scroll preservation on all tabs.
+234. Number-abbreviation tooltips.
+235. Guided first-session tutorial with highlights.
+236. Contextual "new system unlocked" tips.
+237. Settings panel (audio/motion/format/language).
+238. In-theme confirm dialogs (replace native `confirm`).
+239. Empty-state art per tab.
+240. Search/sort/filter for stars & achievements.
+241. Pinnable goal/quest tracker overlay.
+242. Toast queue w/ de-dupe + priority.
+243. Dark/light theme toggle.
+244. ✅ Tablet/desktop dashboard grid layout.
+245. ✅ Scrollable tabs on narrow phones.
+246. Animated resource counters.
+247. "What's new" changelog modal.
+248. Asset-failure offline banner.
+249. Compact vs comfortable density toggle.
+250. Onboarding checklist with rewards.
 
-## M. Performance & tech
-162. Throttle live updates with `requestAnimationFrame` coalescing.
-163. Avoid `innerHTML` rebuilds for list tabs; use targeted diffing.
-164. Lazy-load off-screen images; preconnect to the CDN.
-165. Cache DOM lookups (`$` results) for hot paths.
-166. Web Worker for offline simulation of long absences.
-167. Guard against `localStorage` quota errors with a fallback.
-168. Save-versioning + migration framework (schema `v` field).
-169. Debounced autosave + save-on-pagehide (partly present) unified.
-170. Remove dead code (disabled ast46 helpers) once design is finalized.
-171. Unit-test harness for economy math (the audit added a Node smoke test — formalize it).
-172. Deterministic RNG option (seeded) for testing/replays.
+## M. Responsive, platform & sizing
+251. ✅ Safe-area insets (notch/rounded corners).
+252. ✅ Dynamic viewport height (`100dvh`).
+253. ✅ Tablet (≥760px) 2-col, desktop (≥1180px) 3-col dashboard.
+254. ✅ Large-desktop max-width caps (≤1560px).
+255. ✅ Hover-lift affordances for pointer devices.
+256. Fluid type scale via `clamp()` across all text.
+257. Landscape-optimized phone layout.
+258. Foldable/dual-screen handling.
+259. Keyboard + gamepad navigation for Steam.
+260. Steam Deck layout & controller glyphs.
+261. Ultrawide and 4K polish.
+262. DPI/asset @2x/@3x variants.
+263. Orientation-lock option.
+264. Reduced-data mode (skip heavy art).
+265. PWA installable web build + icons.
+266. Window-resize live reflow (desktop).
+267. Mouse-wheel + trackpad tuning.
+268. Pixel-perfect tap targets ≥44px.
+269. Per-platform UI scale slider.
+270. Test matrix across common device sizes.
 
-## N. Localization & content
-173. Translate *all* gameplay strings, not just chrome (quests, store, decisions, premieres).
-174. Externalize every user-facing string into the i18n table.
-175. Locale-aware number/date formatting.
-176. RTL layout support.
-177. More languages (zh, ko, it, ru, hi).
-178. Localized store pricing display.
-179. Per-locale anime title banks for authentic generated titles.
+## N. Accessibility
+271. Full keyboard navigation + focus rings.
+272. ARIA roles/labels on controls.
+273. Screen-reader live regions (level up, premiere, crisis).
+274. Colorblind-safe rarity/energy palettes + icons.
+275. Honor `prefers-reduced-motion` everywhere.
+276. Adjustable font scaling.
+277. High-contrast mode.
+278. Larger tap targets on small screens.
+279. Subtitles/captions for any audio cues.
+280. Dyslexia-friendly font option.
 
-## O. Monetization (ethical) & compliance
-180. Verify web purchase grants server-side or via signed tokens (remove trivial `?grant=` exploit).
-181. Publish gacha odds (duplicate of #52 — compliance blocker).
-182. Add a "Restore Purchases" path on web (license re-check) as well as native.
-183. Wire the rewarded-ad copy to a real ad SDK, or change the copy (no fake "watch an ad").
-184. "Name your own show" feature to match the store/marketing claim, or update the copy.
-185. Family/kids compliance review (gacha + IAP + "all ages" positioning).
-186. Spending limits / parental gate for purchases.
-187. Clear "no real-world value" + odds disclosures near every purchase (partly present).
-188. A/B-testable offer system instead of hard-coded starter bundle timing.
-189. Receipt validation hardening in `iap.js` (platform-correct registration timing).
-190. Single source of truth for build (stop building from a hard-coded CloudFront zip).
+## O. Audio
+281. Separate music/SFX volume sliders + persistence.
+282. More SFX (greenlight, hire, upgrade, award, crisis, pull-by-rarity).
+283. Rarity-tiered gacha jingles.
+284. Music ducking during premieres/crises.
+285. iOS silent-switch respect.
+286. Bundle audio as local assets (no CDN dep).
+287. Dynamic/adaptive music by studio size.
+288. Crisis stinger audio.
+289. Mute-on-background option.
+290. Audio accessibility (mono/balance).
 
-## P. Quality, polish & gaps found in audit
-191. Unify date handling (UTC vs local) so daily/weekly/login resets & countdowns agree.
-192. Make week boundary in `weekKeyStr` match `msToWeekReset`.
-193. Fallback art for CSS background posters & audio (not just `<img>`).
-194. Bundle game art/audio as app assets for native reliability.
-195. Fix `package.json` scripts that reference missing `scripts/*.mjs`.
-196. Gallery/"Hall of Fame" of your best (5★) premieres with their reviews.
-197. Stats/records screen (lifetime earned, best combo, most-produced genre).
-198. Cloud save / cross-device sync (optional account).
-199. Daily/weekly streak insurance (one free miss).
-200. End-to-end playtest pass to balance the full curve from minute 1 to prestige 10+.
+## P. Performance & tech
+291. rAF-coalesced live updates.
+292. Targeted DOM diffing for list tabs.
+293. Lazy-load offscreen images; CDN preconnect.
+294. Cache hot DOM lookups.
+295. Web Worker for long offline sims.
+296. `localStorage` quota fallback.
+297. Save-versioning + migration framework.
+298. Unified debounced autosave + pagehide save.
+299. Remove dead code (disabled ast46 helpers).
+300. ✅ Node smoke-test harness (boot + tabs + gameplay/management asserts).
+301. Deterministic seeded RNG option.
+302. Frame-budget profiling.
+303. Memory-leak audit on long sessions.
+304. Crash/error reporting (opt-in).
+305. Feature flags for staged rollouts.
+306. Cloud save (optional account).
+307. Anti-cheat for online leaderboards.
+308. CI build + automated tests.
+309. Modular code split (data vs engine vs UI).
+310. Telemetry dashboards (privacy-respecting).
+
+## Q. Localization & content
+311. Translate ALL gameplay strings (not just chrome).
+312. Externalize every string into the i18n table.
+313. Locale-aware number/date formatting.
+314. RTL layout support.
+315. More languages (zh, ko, it, ru, hi).
+316. Localized store pricing display.
+317. Per-locale title banks for generated names.
+318. Localized voice/cultural flavor.
+319. Community translation pipeline.
+320. Font coverage for CJK/RTL.
+
+## R. Monetization, mini-games & gem sinks
+321. ✅ **Idempotent, reliable delivery** — buyers always receive exactly what they paid for (entitlement ledger; safe on restore/re-entry; "✅ Delivered" confirmation).
+322. ✅ **Spin & Win** wheel (free daily + gem spins; weighted prizes incl. items & stars).
+323. ✅ **Scratch Cards** (free daily + gem buys; premium prize pool).
+324. ✅ **Power Items / consumables** — homage "prop" items (parody-named, no trademarks) bought with gems, won from mini-games, or in the Items Pack.
+325. ✅ **Exclusive purchasable stars** (e.g., Aurora Vesper $3.99) — never in the free gacha.
+326. ✅ **Premium bundles** (Legend / Mogul) with stars + gems + perks.
+327. ✅ **First-purchase thank-you bonus** (+50 💎) nudge.
+328. ✅ **Remove-Ads** one-time purchase.
+329. ✅ **Purchases persist through prestige** (entitlements/items/no-ads are permanent).
+330. Server-side/signed verification of web grants (remove the trivial `?grant=` exploit).
+331. **Publish gacha & wheel/scratch odds numerically** (store compliance blocker).
+332. Web "Restore Purchases" (license re-check) in addition to native restore.
+333. Wire rewarded-ad copy to a real SDK or change the copy.
+334. "Name your own show" feature to match marketing, or update copy.
+335. Family/kids compliance review (gacha + mini-games + IAP + "all ages") — likely needs an age gate.
+336. Spending limits / parental gate for real-money buys.
+337. A/B-testable offers (not hard-coded timing).
+338. Receipt-validation hardening + correct platform registration timing.
+339. Single source of truth for builds (stop building from the hard-coded CloudFront zip).
+340. Battle/season pass, subscription "studio club", gift purchases, regional pricing, transparent pity UI.
+
+## S. Quality, polish & gaps found in audit
+341. Unify date handling (UTC vs local) for resets/countdowns.
+342. Match `weekKeyStr` to `msToWeekReset`.
+343. Fallback art for CSS backgrounds & audio (not just `<img>`).
+344. Bundle all art/audio as app assets for native reliability.
+345. Fix `package.json` scripts referencing missing `scripts/*.mjs`.
+346. Hall of Fame of best (5★) premieres + reviews.
+347. Stats/records screen (lifetime earned, best combo, top genre).
+348. Daily/weekly streak insurance (one free miss).
+349. Full curve balance pass (minute 1 → prestige 10+).
+350. Visual feedback when energy/stamina is low.
+351. Cast-power preview on the greenlight screen.
+352. "Recommended cast" suggestions.
+353. Tutorialize the new energy/chaos systems.
+354. Crisis/award cinematic cards.
+355. Star-leave "goodbye" cinematic moment.
+356. Trend forecast (show the next trending genre).
+357. Combo/streak UI polish.
+358. Achievement toasts with progress bars.
+359. Confirm-on-fire styled in-theme.
+360. Onboarding for casting on first owned star.
+
+## T. Launch — App Store, Google Play & Steam
+361. Steam build via a desktop wrapper (Electron/Tauri/Steam-friendly).
+362. Steamworks integration (achievements, cloud saves, rich presence).
+363. Steam store page (capsules, trailer, screenshots, tags).
+364. Steam Deck "Verified" pass (controller + readable text).
+365. Controller-first navigation for Steam.
+366. App Store listing (screenshots, preview video, keywords).
+367. App Privacy "nutrition label" accuracy.
+368. Age rating questionnaires (Apple/Google/ESRB/PEGI/USK).
+369. Google Play data-safety form.
+370. Loot-box odds disclosure on all three stores.
+371. Localized store listings (top markets).
+372. Pre-registration / wishlist campaigns.
+373. Build pipeline: one source → web + iOS + Android + desktop.
+374. Crash-free-rate gating before release.
+375. Beta tracks (TestFlight / Play internal / Steam playtest).
+376. App icons & adaptive icons per platform.
+377. Deep links / universal links.
+378. Press kit + launch trailer.
+379. Day-1 patch process & rollback plan.
+380. Post-launch live-ops calendar.
+
+## U. Retention & "addictive" (ethical) hooks
+381. Smart, respectful push notifications (production done, energy full, crisis).
+382. Daily-goal "3 things to do today" card.
+383. Streak system with visible momentum.
+384. Near-miss/almost-there nudges ("1 more fan to unlock…").
+385. Surprise rewards (variable but fair).
+386. Comeback bonuses after time away.
+387. Milestone celebration moments.
+388. Personal-best chasing (records everywhere).
+389. Collection completion drives.
+390. Weekly recap ("your studio this week").
+391. Goal-laddering that always shows the next target.
+392. Light social comparison (opt-in).
+393. Seasonal FOMO done ethically (cosmetics, not power).
+394. Mastery/skill expression for depth.
+395. Quick-session friendliness (meaningful 60-sec play).
+396. Long-session depth (management & risk).
+397. Sound/visual "juice" on every win.
+398. Healthy-play reminders / session caps option.
+399. Onboarding that reaches the first "wow" fast.
+400. Endgame purpose: chase the global #1 studio, forever.
 
 ---
 
-### Implemented in this pass (summary)
-Engine: auto-run loop, in-place live updates (no scroll jump), removed pop-in menu layer,
-de-duped daily quests off Produce. Systems: back-catalog royalties (online+offline),
-Studio Awards every 50 premieres, Legacy Perk Tree (4 perks, prestige-proof), endless
-milestone ladder, endless marketing tiers. Content: +14 stars, +13 achievements,
-+6 decisions, +3 daily quests, dashboard royalties/awards KPIs. All verified via a Node
-smoke-test harness (boot + every tab render + gameplay/economy/prestige assertions).
+### Implemented across passes (summary)
+**Engine/bugs:** auto-run loop, in-place live updates (no scroll jump), removed pop-in menu,
+de-duped daily quests. **Management/risk:** per-show casting, star energy + rest/rotation,
+studio stamina/crunch, Chaos Mode + crises, star development (train / enhance rarity / invest
+fame / fire) with fame-leave-risk. **Endless:** royalties, awards, legacy perks, endless
+milestones & marketing. **Content:** +14 stars, +13 achievements, +6 decisions, +3 quests.
+**Responsive:** safe areas, dynamic viewport height, tablet/desktop dashboard grid, scrollable
+tabs, hover affordances. All verified via a Node harness (boot + every tab + 32 gameplay/
+management assertions).
