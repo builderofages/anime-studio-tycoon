@@ -2538,7 +2538,7 @@ function asd47(){try{
   }
  }
  var pS=document.getElementById('asd-p-status'),pM=document.getElementById('asd-p-menu');
- if(pS){var ebs=document.querySelectorAll('.eventbar');for(var i=0;i<ebs.length;i++){if(ebs[i].parentNode!==pS)pS.appendChild(ebs[i]);}var g=document.getElementById('goal');if(g&&g.parentNode!==pS)pS.appendChild(g);}
+ if(pS){var live=document.querySelector('#main .eventbar');var parked=pS.querySelectorAll('.eventbar');for(var i=0;i<parked.length;i++){if(parked[i]!==live)parked[i].remove();}/* dedupe: keep only the current event bar, never accumulate */ if(live&&live.parentNode!==pS)pS.appendChild(live);var g=document.getElementById('goal');if(g&&g.parentNode!==pS)pS.appendChild(g);}
  if(pM){var f=document.querySelector('.foot');if(f&&f.parentNode!==pM){pM.appendChild(f);f.style.display='flex';f.style.flexWrap='wrap';f.style.justifyContent='flex-start';}}
 }catch(e){}}
 setInterval(asd47,800);if(document.readyState!=='loading'){setTimeout(asd47,200);}else{document.addEventListener('DOMContentLoaded',function(){setTimeout(asd47,200);});}
