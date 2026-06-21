@@ -363,12 +363,19 @@ h1,h2,h3,.panel h2,.prem-title{font-family:'Baloo 2',cursive !important;letter-s
 .asd-topbar,.asd-mpanel,#asd-p-status,#asd-p-menu{display:none !important}
 /* the goal bar and footer live where they belong, always visible */
 #goal{display:block !important}
-.foot{display:flex !important;flex-wrap:wrap;justify-content:center;gap:8px;padding:6px 12px calc(10px + var(--safe-b,0px)) !important;background:transparent !important}
-.foot>*{flex:0 0 auto}
+/* compact, single-row, horizontally-scrollable footer that always clears the
+   home indicator / browser toolbar instead of wrapping off-screen */
+.foot{display:flex !important;flex-wrap:nowrap !important;justify-content:flex-start !important;gap:6px !important;
+  overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;
+  padding:6px 10px calc(8px + var(--safe-b,0px)) !important;background:transparent !important}
+.foot::-webkit-scrollbar{display:none}
+.foot>*{flex:0 0 auto !important}
+.foot button,.foot a,.foot select{padding:7px 11px !important;font-size:12px !important;min-height:36px !important;display:inline-flex;align-items:center;white-space:nowrap;line-height:1}
 
 /* #main is a responsive card grid that fills the width without empty gutters */
 #main{display:grid !important;grid-template-columns:1fr !important;gap:12px 16px !important;
   align-content:start !important;align-items:start !important;
+  min-height:0 !important;   /* CRITICAL: lets the scroll area shrink so #tabs + .foot stay on-screen */
   padding:10px 12px calc(16px + var(--safe-b,0px)) !important}
 #main>*{margin:0 !important;min-width:0}                 /* gap owns the spacing; prevent grid blow-out */
 #main>.eventbar{grid-column:1 / -1 !important}           /* live event banner spans full width */
