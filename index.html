@@ -1601,7 +1601,7 @@ function releaseProject(slot){
   const chaosB = chaosBonus();
   // franchise/sequel bonus — built-in audience for an established series
   const franMult = pr.seq ? (1 + Math.min(0.6, 0.08*pr.seq)) : 1;
-  if(pr.base){ S.franchises[pr.base]=Math.max(S.franchises[pr.base]||1, pr.seq||1); if(!OFFLINE&&pr.seq>=2) toastSafe("📺 "+pr.base+" "+["","","II","III","IV","V","VI"][pr.seq]||pr.seq+" — franchise bonus!",true); }
+  if(pr.base){ S.franchises[pr.base]=Math.max(S.franchises[pr.base]||1, pr.seq||1); if(!OFFLINE&&pr.seq>=2) toastSafe("📺 "+sequelTitle(pr.base, pr.seq)+" — franchise bonus!",true); }
   processCast(pr, stars, p);
   const yenGain = Math.floor(p.base * mult * (1 + S.fans*0.00004) * marketingMult() * legacyMult() * trendBonus * globalIncomeMult() * eventYenMult() * comboMult * starMult * chaosB * franMult);
   const fansGain = Math.max(1, Math.floor(p.fans * mult * trendBonus * eventFanMult() * comboMult * perkMult("fans") * starMult * chaosB * franMult));
