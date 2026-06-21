@@ -17,12 +17,11 @@ workflows:
     scripts:
       - name: Install deps
         script: npm ci || npm install
-      - name: Assemble web (www)
+      - name: Assemble web (www) from repo source
         script: |
           mkdir -p www
-          curl -fsSL "https://d2ol7oe51mr4n9.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/049d3e57-4991-46cf-a63d-35b3bc7a915a.zip" -o /tmp/game.zip
-          unzip -o /tmp/game.zip -d www
-          cp iap.js www/ 2>/dev/null || true
+          cp index.html strings.js logic.js iap.js privacy.html terms.html www/ 2>/dev/null || true
+          # native builds need the StoreKit/Play IAP bridge injected before </body>
           grep -q 'iap.js' www/index.html || sed -i.bak 's#</body>#<script src="iap.js"></script></body>#' www/index.html
           rm -f www/index.html.bak
       - name: Add iOS platform
@@ -56,12 +55,11 @@ workflows:
     scripts:
       - name: Install deps
         script: npm ci || npm install
-      - name: Assemble web (www)
+      - name: Assemble web (www) from repo source
         script: |
           mkdir -p www
-          curl -fsSL "https://d2ol7oe51mr4n9.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/049d3e57-4991-46cf-a63d-35b3bc7a915a.zip" -o /tmp/game.zip
-          unzip -o /tmp/game.zip -d www
-          cp iap.js www/ 2>/dev/null || true
+          cp index.html strings.js logic.js iap.js privacy.html terms.html www/ 2>/dev/null || true
+          # native builds need the StoreKit/Play IAP bridge injected before </body>
           grep -q 'iap.js' www/index.html || sed -i.bak 's#</body>#<script src="iap.js"></script></body>#' www/index.html
           rm -f www/index.html.bak
       - name: Add Android platform

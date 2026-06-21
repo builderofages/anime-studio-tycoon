@@ -1,0 +1,51 @@
+name: Deploy web build to GitHub Pages
+
+# Publishes the playable web version (static files) to GitHub Pages.
+# After the first successful run the game is live at:
+#   https://<owner>.github.io/anime-studio-tycoon/
+
+on:
+  push:
+    branches: [ main, claude/full-audit-flaws-ik5skw ]
+    paths:
+      - 'index.html'
+      - 'strings.js'
+      - 'logic.js'
+      - 'privacy.html'
+      - 'terms.html'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Assemble static site
+        run: |
+          mkdir -p _site
+          # iap.js is intentionally omitted: it's a native-only StoreKit/Play bridge and is a no-op on the web.
+          cp index.html strings.js logic.js privacy.html terms.html _site/ 2>/dev/null || true
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
