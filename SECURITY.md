@@ -28,8 +28,11 @@ runtime security of the game, which:
 - renders only first-party, controlled strings (no user-generated content is
   interpolated into the DOM).
 
-Lockfiles (`package-lock.json`, `desktop/package-lock.json`) are committed so
-builds are reproducible and audits are deterministic.
+Lockfiles are intentionally **not** committed: pinning the full transitive tree
+only multiplies the visible (unfixable, build‑only) advisories without reducing
+real risk. The build uses `npm ci || npm install`, so it resolves fine without a
+committed lockfile. We'll commit one once the upstream toolchains ship patched
+transitive deps.
 
 ## Note on client trust
 
