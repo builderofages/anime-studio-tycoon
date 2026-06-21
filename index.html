@@ -400,6 +400,42 @@ button,.btn-ghost{min-height:40px}
 @media(max-width:560px){ #tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}#tabs::-webkit-scrollbar{display:none}.tab{flex:0 0 auto} }
 /* landscape / short screens: tighten so the board still fits */
 @media(max-height:460px){ #goal{margin-bottom:4px} .panel{padding:10px 12px} }
+
+/* ============================================================================
+   AAA POLISH — final consistency pass (HUD · buttons · cards · spacing)
+   ============================================================================ */
+/* Resource HUD: four equal, tidy pills on one row; trending banner full-width below */
+#top{flex-wrap:wrap !important;gap:6px !important;align-items:stretch !important;
+  padding:calc(8px + var(--safe-t)) 10px 4px !important}
+.res{flex:1 1 0 !important;min-width:0 !important;justify-content:center !important;
+  gap:5px !important;padding:8px 6px !important;border-radius:14px !important;min-height:44px !important}
+.res img{width:19px !important;height:19px !important}
+.res .v{font-size:14px !important;font-weight:800 !important}
+.res small{font-size:9px !important;opacity:.65}
+#trendbar{flex:1 1 100% !important;order:9 !important;margin:2px 0 0 !important;
+  justify-content:center !important;font-size:12px !important;min-height:30px}
+#goal{margin:0 10px 8px !important;border-radius:13px}
+
+/* Cards & list rows: one consistent radius, padding and rhythm */
+.panel{padding:14px !important;border-radius:20px !important;margin:0}
+.panel h2{font-size:16px !important;margin:0 0 10px !important;letter-spacing:.2px}
+.staffrow,.uprow{padding:10px 12px !important;border-radius:15px !important;gap:10px !important;align-items:center !important}
+.staffrow .meta h4,.uprow .meta h4{font-size:14px !important;line-height:1.25}
+.staffrow .muted,.uprow .muted{font-size:12px !important;line-height:1.3}
+.staffrow img{width:50px !important;height:50px !important;border-radius:13px !important}
+
+/* Action buttons: uniform height, padding and small-label so a row of them lines up */
+.hirebtn,.uprow button,.staffrow button,.pick .btn-primary{min-height:44px !important;border-radius:13px !important;
+  padding:8px 14px !important;font-size:13px !important;display:inline-flex !important;align-items:center;justify-content:center;gap:2px;flex-direction:column}
+.hirebtn small,.uprow button small,.staffrow button small{display:block;font-size:10px !important;opacity:.85;font-weight:700}
+.btn-primary,.btn-gold,.btn-cyan{letter-spacing:.2px}
+
+/* Chips (genre / cast pickers): even, comfortable tap targets */
+.chip{min-height:36px;display:inline-flex !important;align-items:center;border-radius:12px !important;padding:7px 11px !important;font-size:13px}
+/* Project pick cards: consistent sizing */
+.pick{border-radius:16px !important;padding:12px !important}
+.pick h4{font-size:14px !important;margin:0 0 6px}
+.pick .stat{font-size:12px !important}
 </style>
 <script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script></head>
 <body>
