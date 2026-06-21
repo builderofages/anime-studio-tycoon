@@ -321,6 +321,15 @@ h1,h2,h3,.panel h2,.prem-title{font-family:'Baloo 2',cursive !important;letter-s
 .asd-mpanel{display:none;margin:0 12px 10px}
 .asd-mpanel.open{display:block;animation:asdDrop .18s ease}
 @keyframes asdDrop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+
+/* ast48 layout fill + header */
+#main{grid-template-columns:repeat(auto-fit,minmax(min(460px,100%),1fr)) !important;align-items:start !important}
+.asd-listpanel{display:grid !important;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr)) !important;gap:10px 12px !important;align-content:start !important}
+.asd-listpanel>h2,.asd-listpanel>.muted,.asd-listpanel>.qhead,.asd-listpanel>p,.asd-listpanel>.bar,.asd-listpanel>.eventbar{grid-column:1 / -1 !important}
+.asd-mbtn{padding:9px 16px !important;font-size:13.5px !important;border-radius:16px !important;font-weight:800 !important;letter-spacing:.2px;border:1px solid rgba(255,255,255,.7) !important;background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(252,246,236,.9)) !important;color:#2e2742 !important;box-shadow:0 10px 24px rgba(20,14,32,.18),inset 0 1px 0 rgba(255,255,255,.9) !important;transition:transform .12s}
+.asd-mbtn:hover{transform:translateY(-1px)}
+.asd-mbtn.on{background:linear-gradient(135deg,#7c5cff,#ff6fae) !important;color:#fff !important;border-color:transparent !important;box-shadow:0 12px 26px rgba(124,92,255,.45) !important}
+@media(max-width:560px){#main{grid-template-columns:1fr !important}.asd-listpanel{grid-template-columns:1fr !important}}
 </style>
 <script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script></head>
 <body>
@@ -2509,6 +2518,13 @@ function asd47(){try{
  if(pM){var f=document.querySelector('.foot');if(f&&f.parentNode!==pM){pM.appendChild(f);f.style.display='flex';f.style.flexWrap='wrap';f.style.justifyContent='flex-start';}}
 }catch(e){}}
 setInterval(asd47,800);if(document.readyState!=='loading'){setTimeout(asd47,200);}else{document.addEventListener('DOMContentLoaded',function(){setTimeout(asd47,200);});}
+})();}catch(e){}
+</script>
+
+<script>
+try{(function(){/* ast48 */
+function asd48(){try{var main=document.getElementById('main');if(!main)return;var ps=main.querySelectorAll('.panel');for(var i=0;i<ps.length;i++){var p=ps[i];var rows=0;var kids=p.children;for(var j=0;j<kids.length;j++){var c=(kids[j].className||'').toString();if(/\buprow\b/.test(c)||/\bstaffrow\b/.test(c))rows++;}if(rows>=4){p.classList.add('asd-listpanel');}else{p.classList.remove('asd-listpanel');}}}catch(e){}}
+setInterval(asd48,700);setTimeout(asd48,300);
 })();}catch(e){}
 </script>
 </body></html>
