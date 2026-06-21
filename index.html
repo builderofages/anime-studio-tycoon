@@ -348,6 +348,12 @@ h1,h2,h3,.panel h2,.prem-title{font-family:'Baloo 2',cursive !important;letter-s
 #asd-p-menu .foot > *{display:flex !important;align-items:center !important;justify-content:flex-start !important;gap:8px !important;width:100% !important;padding:12px 14px !important;border-radius:12px !important;font-size:14px !important;font-weight:700 !important;background:#fff !important;border:1px solid #eee2cf !important;color:#3a2b4d !important;text-decoration:none !important;box-shadow:none !important;opacity:1 !important}
 #asd-p-menu .foot > *:hover{background:#f3ebdc !important;transform:none !important}
 @media(max-width:560px){#main{grid-template-columns:1fr !important}.asd-listpanel{grid-template-columns:1fr !important}.asd-mpanel{max-width:none !important}}
+
+/* ast51 overlay dropdowns */
+.asd-topbar{position:relative !important;z-index:50 !important}
+#asd-p-status,#asd-p-menu{position:absolute !important;top:calc(100% + 6px) !important;right:0 !important;z-index:60 !important;width:min(420px,92vw) !important;margin:0 !important}
+.asd-mpanel.open{animation:asdPop .16s ease}
+@keyframes asdPop{from{opacity:0;transform:translateY(-8px) scale(.985)}to{opacity:1;transform:none}}
 </style>
 <script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script></head>
 <body>
@@ -2550,6 +2556,13 @@ setInterval(asd48,700);setTimeout(asd48,300);
 try{(function(){/* ast50 */
 function asd50(){try{var main=document.getElementById('main');if(!main)return;var ps=main.querySelectorAll('.panel');for(var i=0;i<ps.length;i++){var p=ps[i];var rows=0;for(var j=0;j<p.children.length;j++){var c=(p.children[j].className||'').toString();if(/\buprow\b|\bstaffrow\b/.test(c))rows++;}if(rows>=4){p.classList.add('asd-listpanel');p.classList.remove('asd-banner');continue;}p.classList.remove('asd-listpanel');if(p.children.length<=3&&p.offsetHeight<150){p.classList.add('asd-banner');}else{p.classList.remove('asd-banner');}}}catch(e){}}
 setInterval(asd50,700);setTimeout(asd50,300);
+})();}catch(e){}
+</script>
+
+<script>
+try{(function(){/* ast51 */
+function asd51(){try{var bar=document.getElementById('asd-topbar');if(!bar)return;var pS=document.getElementById('asd-p-status'),pM=document.getElementById('asd-p-menu');if(pS&&pS.parentNode!==bar)bar.appendChild(pS);if(pM&&pM.parentNode!==bar)bar.appendChild(pM);}catch(e){}}
+setInterval(asd51,600);setTimeout(asd51,250);
 })();}catch(e){}
 </script>
 </body></html>
