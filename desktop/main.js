@@ -108,3 +108,12 @@ app.on("window-all-closed", () => { if (process.platform !== "darwin") app.quit(
 // Renderer → main bridge for Steam achievements (see preload.js + steam.js)
 const { ipcMain } = require("electron");
 ipcMain.on("steam-achievement", (_e, id) => { try { steam && steam.unlock && steam.unlock(id); } catch (e) {} });
+
+// Cloud-save file bridge. Steam Auto-Cloud is configured to sync this file
+// (see desktop/README.md). Lives in userData so it survives updates.
+function savePath() { return path.join(app.getPath("userData"), "ast_save.json"); }
+ipcMain.on("ast-save", (_e, data) => { try { fs.writeFileSync(savePath(), String(data), "utf8"); } catch (e) {} });
+ipcMain.on("ast-load", (e) => {
+  try { e.returnValue = fs.existsSync(savePath()) ? fs.readFileSync(savePath(), "utf8") : null; }
+  catch (err) { e.returnValue = null; }
+});

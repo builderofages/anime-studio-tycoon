@@ -1426,8 +1426,21 @@ function updateChrome(){
 }
 
 /* ========================= SAVE / LOAD ========================= */
-function save(){ S.lastSave=Date.now(); try{ localStorage.setItem(SAVE_KEY, JSON.stringify(S)); }catch(e){} }
+function save(){ S.lastSave=Date.now(); try{ const j=JSON.stringify(S); localStorage.setItem(SAVE_KEY, j); try{ if(window.ASTCloudSave) window.ASTCloudSave(j); }catch(_){} }catch(e){} }
+/* On the Steam/desktop build, seed from the Steam-Cloud-synced save file when it's
+   newer than (or replaces a missing) local save. No-op on web. */
+function syncCloudSave(){
+  try{
+    if(!window.ASTCloudLoad) return;
+    const cloud=window.ASTCloudLoad(); if(!cloud) return;
+    const local=localStorage.getItem(SAVE_KEY);
+    let useCloud=true;
+    if(local){ try{ useCloud=(JSON.parse(cloud).lastSave||0) >= (JSON.parse(local).lastSave||0); }catch(_){} }
+    if(useCloud) localStorage.setItem(SAVE_KEY, cloud);
+  }catch(e){}
+}
 function load(){
+  syncCloudSave();
   try{ const raw=localStorage.getItem(SAVE_KEY); if(!raw) return false;
     const d=JSON.parse(raw); S=Object.assign(freshState(), d);
     S.staff=Object.assign({animator:0,writer:0,director:0,voice:0,producer:0}, d.staff||{});
@@ -2389,7 +2402,7 @@ function renderMarket(){
 
 function renderStore(){
   const P=MONETIZATION.prices, packCfg=[["gems_s","Starter Pack"],["gems_m","Studio Pack"],["gems_l","Producer Pack"],["gems_mega","Mogul Pack"]];
-  let h=`<div class="panel"><h2>💎 Studio Store</h2>
+  let h=`<div class="panel"><h2>💎 ${t("s_store","Studio Store")}</h2>
     <div class="muted" style="margin-bottom:10px">You have <b>${fmt(S.gems)}</b> 💎 Gems. Gems are earned free from milestones &amp; every 25 releases — or topped up below.</div>`;
   // Producer Pass (owned state always shown)
   if(S.producerPass){
@@ -2409,19 +2422,19 @@ function renderStore(){
       h+=`<div class="flash-deal"><div class="flash-row"><span class="flash-tag">⚡ DAILY DEAL</span><span class="flash-cd" id="flash-cd">${flashCountdown()}</span></div>
         <div class="flash-body">+20% bonus Gems on <b>any</b> pack today — added automatically on purchase.</div></div>`;
     }
-    h+=`<div class="muted" style="margin:12px 0 6px;font-weight:800;color:var(--plum)">Top up Gems</div>`;
+    h+=`<div class="muted" style="margin:12px 0 6px;font-weight:800;color:var(--plum)">${t("s_topup","Top up Gems")}</div>`;
     packCfg.forEach(([sku,label])=>{
       h+=`<div class="uprow"><div class="meta"><h4>💎 ${label}</h4><div class="muted">${fmt(GEM_PACKS[sku])} Gems</div></div>
         <button class="btn-primary hirebtn" data-buy="${sku}">Buy<small>${P[sku]}</small></button></div>`;
     });
     // Premium bundles (more value, strong nudges)
-    h+=`<div class="muted" style="margin:12px 0 6px;font-weight:800;color:var(--plum)">Premium Bundles</div>
+    h+=`<div class="muted" style="margin:12px 0 6px;font-weight:800;color:var(--plum)">${t("s_premium","Premium Bundles")}</div>
       <div class="uprow" style="border:2px solid var(--gold)"><div class="meta"><h4>🏆 Legend Bundle <span class="pill">POPULAR</span></h4><div class="muted">Producer Pass + 400 💎 + exclusive Legendary <b>Aurora Vesper</b></div></div>
         <button class="btn-gold hirebtn" data-buy="bundle_legend">Get<small>${P.bundle_legend}</small></button></div>
       <div class="uprow" style="border:2px solid #b06bff"><div class="meta"><h4>👑 Mogul Bundle <span class="pill">BEST DEAL</span></h4><div class="muted">Pass + 1,500 💎 + 2 exclusive Legendary stars + Remove Ads</div></div>
         <button class="btn-gold hirebtn" data-buy="bundle_mogul">Get<small>${P.bundle_mogul}</small></button></div>`;
     // Exclusive purchasable stars (never in the free gacha)
-    h+=`<div class="muted" style="margin:12px 0 6px;font-weight:800;color:var(--plum)">🌟 Exclusive Stars <span class="pill">PERMANENT</span></div>`;
+    h+=`<div class="muted" style="margin:12px 0 6px;font-weight:800;color:var(--plum)">🌟 ${t("s_exclusive","Exclusive Stars")} <span class="pill">PERMANENT</span></div>`;
     EXCLUSIVE_STARS.forEach(x=>{ const owned=(S.stars||[]).some(s=>s.sid===x.id); const C=STAR_RARITY[x.rarity].color;
       h+=`<div class="uprow" style="border-left:5px solid ${C}"><img src="${x.img}" alt="" style="width:42px;height:42px;border-radius:10px;object-fit:cover;margin-right:8px;box-shadow:inset 0 0 0 2px ${C}"><div class="meta"><h4>${x.name.replace(' ☆','')} <span class="pill" style="background:${C}22;color:${C}">${x.rarity}</span>${owned?' <span class="pill">OWNED</span>':''}</h4><div class="muted">${ROLES[x.role].name} · a one-of-a-kind star you can't scout</div></div>
         <button class="btn-gold hirebtn" data-buy="${x.sku}">${owned?'+Lvl':'Get'}<small>${P[x.sku]}</small></button></div>`;
@@ -2434,7 +2447,7 @@ function renderStore(){
     h+=`<div class="muted" style="margin:8px 0">💎 Earn Gems free through milestones, daily rewards, quests &amp; every 25 releases — then spend them below.</div>`;
   }
   // Spend gems
-  h+=`<div class="muted" style="margin:12px 0 6px;font-weight:800;color:var(--plum)">Spend Gems</div>
+  h+=`<div class="muted" style="margin:12px 0 6px;font-weight:800;color:var(--plum)">${t("s_spend","Spend Gems")}</div>
     <div class="uprow"><div class="meta"><h4>⚡ Hype Boost</h4><div class="muted">+50 Hype instantly</div></div><button class="btn-cyan hirebtn" data-gem="hype">Spend<small>5 💎</small></button></div>
     <div class="uprow"><div class="meta"><h4>💰 Cash Injection</h4><div class="muted">+¥${fmt(gemCashAmount())} now</div></div><button class="btn-cyan hirebtn" data-gem="cash">Spend<small>8 💎</small></button></div>
     <div class="uprow"><div class="meta"><h4>⏭️ Skip Production</h4><div class="muted">Instantly finish all active projects</div></div><button class="btn-cyan hirebtn" data-gem="skip" ${activeCount()>0?"":"disabled"}>Spend<small>4 💎</small></button></div>
@@ -2442,19 +2455,19 @@ function renderStore(){
   // Free rewarded boost + daily free gems
   const cd=Math.max(0,Math.ceil((S.rewardedCdUntil-Date.now())/1000));
   const fgClaimed = S.freeGemsDate===todayStr();
-  h+=`<div class="muted" style="margin:12px 0 6px;font-weight:800;color:var(--plum)">Free Rewards</div>
+  h+=`<div class="muted" style="margin:12px 0 6px;font-weight:800;color:var(--plum)">${t("s_free","Free Rewards")}</div>
     <div class="uprow"><div class="meta"><h4>🎁 Daily Free Gems</h4><div class="muted">${fgClaimed?"Claimed — back tomorrow!":(typeof MONETIZATION.adProvider==="function"?"Watch a short ad and collect +10 💎":"Collect your free +10 💎 today")}</div></div>
       <button class="btn-gold hirebtn" data-act="freegems" ${fgClaimed?"disabled":""}>Claim<small>+10 💎</small></button></div>
     <div class="uprow"><div class="meta"><h4>⚡ Free 2× Income</h4><div class="muted">${rewardedActive()?"Active now!":(cd>0?("Recharges in "+cd+"s"):(typeof MONETIZATION.adProvider==="function"?"Watch &amp; earn 2× income for 5 min":"Claim a free 2× income boost for 5 min"))}</div></div>
       <button class="btn-gold hirebtn" data-act="rewarded" ${cd>0?"disabled":""}>Boost<small>FREE</small></button></div>`;
   // Achievements
   const got=S.achievements.length, tot=ACHIEVEMENTS.length;
-  h+=`<div class="muted" style="margin:12px 0 6px;font-weight:800;color:var(--plum)">🏆 Achievements (${got}/${tot})</div>`;
+  h+=`<div class="muted" style="margin:12px 0 6px;font-weight:800;color:var(--plum)">🏆 ${t("s_ach","Achievements")} (${got}/${tot})</div>`;
   ACHIEVEMENTS.forEach(a=>{ const done=S.achievements.includes(a.id);
     h+=`<div class="uprow" style="${done?'border-left:5px solid var(--gold)':'opacity:.7'}"><div class="meta"><h4>${done?'✅':'🔒'} ${a.name}</h4><div class="muted">${a.desc}</div></div><span class="pill">+${a.gems}💎</span></div>`;
   });
   // Redeem
-  h+=`<div class="muted" style="margin:12px 0 6px;font-weight:800;color:var(--plum)">Redeem a Code</div>
+  h+=`<div class="muted" style="margin:12px 0 6px;font-weight:800;color:var(--plum)">${t("s_redeem","Redeem a Code")}</div>
     <div class="row" style="gap:8px"><input id="redeemcode" placeholder="ENTER CODE" style="flex:1;padding:10px;border-radius:12px;border:2px solid rgba(70,80,107,.25);font-weight:700;text-transform:uppercase"><button class="btn-ghost hirebtn" data-act="redeem">Redeem</button></div>`;
   if(NATIVE){
     h+=`<button class="btn-ghost" data-act="restore" style="width:100%;margin-top:10px">↺ Restore Purchases</button>`;

@@ -8,3 +8,12 @@ contextBridge.exposeInMainWorld("STEAM", true);
 contextBridge.exposeInMainWorld("STEAM_ACHIEVE", (id) => {
   try { ipcRenderer.send("steam-achievement", String(id)); } catch (e) {}
 });
+
+// Cloud-save bridge: mirror the save blob to a file in userData (which Steam
+// Auto-Cloud syncs). The game writes on every save and reads once on boot.
+contextBridge.exposeInMainWorld("ASTCloudSave", (data) => {
+  try { ipcRenderer.send("ast-save", String(data)); } catch (e) {}
+});
+contextBridge.exposeInMainWorld("ASTCloudLoad", () => {
+  try { return ipcRenderer.sendSync("ast-load"); } catch (e) { return null; }
+});

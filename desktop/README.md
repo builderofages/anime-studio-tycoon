@@ -48,11 +48,23 @@ To wire a real release:
 Use SteamPipe (`steamcmd` + an app build script) to push `desktop/dist/<platform>`
 to your app's depots, then set the default branch live in Steamworks.
 
-## What's stubbed / next
+## Cloud saves (wired)
 
-- **Cloud saves:** the game saves to `localStorage`. For Steam Auto‑Cloud, add a
-  file‑based save bridge (mirror the save blob to a file in `app.getPath('userData')`
-  and map it in Steamworks). Tracked as a follow‑up.
+The game mirrors its save to `ast_save.json` in Electron's `userData` directory
+(`main.js` ↔ `preload.js` ↔ the game's `save()`/`syncCloudSave()`), and reads the
+newer of cloud‑vs‑local on boot. To enable **Steam Auto‑Cloud**, in Steamworks →
+*Cloud* add a root mapping for each OS pointing at the userData folder, e.g.:
+
+| OS | userData path (root: substitute as shown) |
+|---|---|
+| Windows | `%AppData%/Anime Studio Tycoon` → pattern `ast_save.json` |
+| macOS | `~/Library/Application Support/Anime Studio Tycoon` |
+| Linux | `~/.config/Anime Studio Tycoon` |
+
+(Or use the Steamworks ISteamRemoteStorage API for explicit control.)
+
+## What's next
+
 - **Steam overlay / rich presence:** available through `steamworks.js`; not yet wired.
 - **Controller / Steam Deck input:** the game supports gamepad nav already; verify
   glyphs and text legibility on Deck before requesting "Verified".
