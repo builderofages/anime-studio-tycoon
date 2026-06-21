@@ -404,7 +404,7 @@ h1,h2,h3,.panel h2,.prem-title{font-family:'Baloo 2',cursive !important;letter-s
       <option value="ja">日本語</option>
     </select>
     <button class="btn-primary" id="btn-start" style="font-size:17px;width:100%">▶ Enter the Studio</button>
-    <p id="start-legal" style="font-size:11px;opacity:.72;margin:12px 0 0;line-height:1.5">By entering, you agree to our <a href="terms.html" target="_blank" rel="noopener">Terms &amp; EULA</a> and <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</p>
+    <p id="start-legal" style="font-size:11px;opacity:.72;margin:12px 0 0;line-height:1.5">By entering, you agree to our <a href="terms.html" target="_blank" rel="noopener">Terms &amp; EULA</a> and <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>. Includes optional in-app purchases and items with randomized rewards (odds shown in-game).</p>
   </div>
 </div>
 
@@ -1567,6 +1567,24 @@ function scratchCard(){
   const prize=weightedPick(SCRATCH); const msg=prize.apply();
   track("scratch",{prize:prize.label}); play("reward"); showPrize("🎟️ Scratch Card",prize.label,msg); checkAchievements(); render(); save();
 }
+/* Published odds for every randomized reward (App Store / Google Play loot-box disclosure requirement). */
+function showOdds(){
+  const el=document.getElementById('reveal-body'); if(!el) return;
+  const pct=(w,tot)=>((w/tot)*100).toFixed(1)+"%";
+  const sum=l=>l.reduce((a,x)=>a+x.w,0);
+  const full=Object.keys(STAR_RARITY), ft=full.reduce((a,r)=>a+STAR_RARITY[r].w,0);
+  const open=["Common","Rare"], ot=open.reduce((a,r)=>a+STAR_RARITY[r].w,0);
+  const wt=sum(WHEEL), st=sum(SCRATCH);
+  el.innerHTML=`<div style="text-align:left;max-height:62vh;overflow:auto">
+    <h2 style="text-align:center;margin:0 0 4px">📊 Drop Rates &amp; Odds</h2>
+    <div class="muted" style="margin:0 0 10px;text-align:center">Real probability of each randomized reward, per single draw (independent each time).</div>
+    <h4 style="margin:8px 0 2px">🌟 Premium Scout</h4><div class="muted">${full.map(r=>`${r} <b style="color:${STAR_RARITY[r].color}">${pct(STAR_RARITY[r].w,ft)}</b>`).join(" · ")}</div>
+    <h4 style="margin:8px 0 2px">🎬 Open Casting</h4><div class="muted">${open.map(r=>`${r} <b style="color:${STAR_RARITY[r].color}">${pct(STAR_RARITY[r].w,ot)}</b>`).join(" · ")}</div>
+    <h4 style="margin:8px 0 2px">🎡 Spin &amp; Win</h4><div class="muted">${WHEEL.map(x=>`${x.label} <b>${pct(x.w,wt)}</b>`).join(" · ")}</div>
+    <h4 style="margin:8px 0 2px">🎟️ Scratch Cards</h4><div class="muted">${SCRATCH.map(x=>`${x.label} <b>${pct(x.w,st)}</b>`).join(" · ")}</div>
+    <div class="muted" style="margin-top:10px;font-size:11px;line-height:1.5">Gems can be earned free through play or bought. Items, stars, and gems are virtual goods with no real-world value and are non-refundable.</div></div>`;
+  const m=document.getElementById('reveal'); if(m) m.style.display='flex';
+}
 /* entitlement bridge — called by the native StoreKit layer (iap.js) on a verified purchase,
    and reused by the web ?grant= redirect. Idempotent for non-consumables so buyers ALWAYS
    receive exactly what they paid for, even on restore / re-entry. */
@@ -2212,7 +2230,8 @@ function renderStore(){
     <button class="btn-gold" data-act="spin" style="width:100%" ${(spinFree||S.gems>=SPIN_GEM_COST)?"":"disabled"}>🎡 ${spinFree?"FREE Daily Spin":("Spin · "+SPIN_GEM_COST+" 💎")}</button>
     <h2 style="margin-top:14px">🎟️ Scratch Cards</h2>
     <div class="muted" style="margin-bottom:8px">One FREE card daily, then ${SCRATCH_GEM_COST} 💎. Bigger prizes — premium items &amp; stars.</div>
-    <button class="btn-primary" data-act="scratch" style="width:100%" ${(scratchFree||S.gems>=SCRATCH_GEM_COST)?"":"disabled"}>🎟️ ${scratchFree?"FREE Daily Card":("Scratch · "+SCRATCH_GEM_COST+" 💎")}</button></div>`;
+    <button class="btn-primary" data-act="scratch" style="width:100%" ${(scratchFree||S.gems>=SCRATCH_GEM_COST)?"":"disabled"}>🎟️ ${scratchFree?"FREE Daily Card":("Scratch · "+SCRATCH_GEM_COST+" 💎")}</button>
+    <button class="btn-ghost" data-act="odds" style="width:100%;margin-top:8px">📊 View all drop rates &amp; odds</button></div>`;
   // ----- Power Items shop + inventory -----
   h+=`<div class="panel"><h2>🧰 Power Items</h2><div class="muted" style="margin-bottom:8px">One-use props for an instant edge — buy with Gems, win from spins, or grab the Items Pack above.</div>`;
   Object.keys(ITEMS).forEach(id=>{ const it=ITEMS[id]; const have=itemCount(id);
@@ -2231,6 +2250,7 @@ document.addEventListener("click", e=>{
   if(t.dataset.itembuy) return buyItem(t.dataset.itembuy);
   if(t.dataset.act==="spin") return spinWheel();
   if(t.dataset.act==="scratch") return scratchCard();
+  if(t.dataset.act==="odds") return showOdds();
   if(t.dataset.perk) return buyPerk(t.dataset.perk);
   if(t.dataset.tab) return setTab(t.dataset.tab);
   if(t.dataset.scout) return scout(t.dataset.scout);
