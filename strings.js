@@ -142,6 +142,17 @@ const UI2 = {
 };
 for(const c in UI2){ if(LANGS[c]) Object.assign(LANGS[c], UI2[c]); }
 
+// Third batch: Store section headers (the monetization screen).
+const UI3 = {
+  en:{ s_store:"Studio Store", s_topup:"Top up Gems", s_premium:"Premium Bundles", s_exclusive:"Exclusive Stars", s_spend:"Spend Gems", s_free:"Free Rewards", s_redeem:"Redeem a Code", s_ach:"Achievements" },
+  es:{ s_store:"Tienda del Estudio", s_topup:"Recargar Gemas", s_premium:"Paquetes Premium", s_exclusive:"Estrellas Exclusivas", s_spend:"Gastar Gemas", s_free:"Recompensas Gratis", s_redeem:"Canjear un Código", s_ach:"Logros" },
+  pt:{ s_store:"Loja do Estúdio", s_topup:"Recarregar Gemas", s_premium:"Pacotes Premium", s_exclusive:"Estrelas Exclusivas", s_spend:"Gastar Gemas", s_free:"Recompensas Grátis", s_redeem:"Resgatar um Código", s_ach:"Conquistas" },
+  fr:{ s_store:"Boutique du Studio", s_topup:"Recharger des Gemmes", s_premium:"Packs Premium", s_exclusive:"Stars Exclusives", s_spend:"Dépenser des Gemmes", s_free:"Récompenses Gratuites", s_redeem:"Utiliser un Code", s_ach:"Succès" },
+  de:{ s_store:"Studio-Shop", s_topup:"Gems aufladen", s_premium:"Premium-Pakete", s_exclusive:"Exklusive Stars", s_spend:"Gems ausgeben", s_free:"Gratis-Belohnungen", s_redeem:"Code einlösen", s_ach:"Erfolge" },
+  ja:{ s_store:"スタジオストア", s_topup:"ジェムを補充", s_premium:"プレミアムバンドル", s_exclusive:"限定スター", s_spend:"ジェムを使う", s_free:"無料報酬", s_redeem:"コードを引き換える", s_ach:"実績" },
+};
+for(const c in UI3){ if(LANGS[c]) Object.assign(LANGS[c], UI3[c]); }
+
 // STR is the live, current-language object. Mutated in place by setLang.
 export const STR = Object.assign({}, EN);
 STR.__code = "en";
