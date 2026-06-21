@@ -546,7 +546,7 @@ button,.btn-ghost{min-height:40px}
 </div>
 
 <script type="module">
-import { STR, LANGS, LANG_NAMES, setLang, initialLang } from "./strings.js";
+import { STR, LANGS, LANG_NAMES, setLang, initialLang, t } from "./strings.js";
 setLang(initialLang());
 
 /* robustness: never show a broken-image icon — failed images get a clean on-brand tile */
@@ -2137,7 +2137,7 @@ function industryHTML(){
   [0,1,2].forEach(i=>{ if(st.all[i]){ rows.push(mark(st.all[i],i)); shown.add(i); }});
   for(let i=st.idx-1;i<=st.idx+1;i++){ if(i>=0&&i<st.all.length&&!shown.has(i)){ if(i>3) rows.push(`<div class="muted" style="text-align:center;opacity:.6">⋯</div>`); rows.push(mark(st.all[i],i)); shown.add(i);} }
   const next=st.idx>0?st.all[st.idx-1]:null;
-  return `<div class="panel"><h2>🏆 Industry Ranking</h2>
+  return `<div class="panel"><h2>🏆 ${t("h_industry","Industry Ranking")}</h2>
     <div class="muted" style="margin-bottom:8px">You're <b>#${st.rank}</b> of ${st.total} studios${next?` · pass <b>${next.name}</b> (${fmt(next.val)}) to rank up`:` — you're the <b>#1 studio in the world!</b>`}</div>
     ${rows.join("")}</div>`;
 }
@@ -2158,13 +2158,13 @@ function statsHTML(){
     ["📺 Franchises",fmt(franCount)],
     ["🌸 Legacy points",fmt(S.legacy||0)],
   ];
-  return `<div class="panel listgrid"><h2>📈 Studio Records</h2>`+rows.map(r=>`<div class="uprow"><div class="meta"><h4 style="font-size:13px">${r[0]}</h4><div class="muted">${r[1]}</div></div></div>`).join("")+`</div>`;
+  return `<div class="panel listgrid"><h2>📈 ${t("h_records","Studio Records")}</h2>`+rows.map(r=>`<div class="uprow"><div class="meta"><h4 style="font-size:13px">${r[0]}</h4><div class="muted">${r[1]}</div></div></div>`).join("")+`</div>`;
 }
 /* Hall of Fame — your standout premieres */
 function hallOfFameHTML(){
   const hof=(S.hallOfFame||[]);
-  if(!hof.length) return `<div class="panel"><h2>🌟 Hall of Fame</h2><div class="muted">Premiere a hit (4★+) or a TV Series and up — your best shows are immortalized here.</div></div>`;
-  let h=`<div class="panel listgrid"><h2>🌟 Hall of Fame <span class="pill">${hof.length}</span></h2>`;
+  if(!hof.length) return `<div class="panel"><h2>🌟 ${t("h_hof","Hall of Fame")}</h2><div class="muted">Premiere a hit (4★+) or a TV Series and up — your best shows are immortalized here.</div></div>`;
+  let h=`<div class="panel listgrid"><h2>🌟 ${t("h_hof","Hall of Fame")} <span class="pill">${hof.length}</span></h2>`;
   hof.slice(0,12).forEach(s=>{
     h+=`<div class="uprow"><div class="meta"><h4 style="font-size:13px">${"★".repeat(s.stars)}${"☆".repeat(5-s.stars)} “${s.title}”</h4>
       <div class="muted">${s.genre} · +¥${fmt(s.yen)} · +${fmt(s.fans)} fans</div></div></div>`;
@@ -2207,7 +2207,7 @@ function renderProduce(){
   // greenlight picker when a slot is free
   const empties=S.slots-activeCount();
   if(empties>0){
-    h+=`<div class="panel"><h2>🎬 Greenlight a Project <span class="pill">${empties}/${S.slots} slots free</span></h2><div class="muted" style="margin-bottom:8px">Pick a genre, then choose what to produce. Match the trending genre for a 1.5× bonus.</div>`;
+    h+=`<div class="panel"><h2>🎬 ${t("h_greenlight","Greenlight a Project")} <span class="pill">${empties}/${S.slots} slots free</span></h2><div class="muted" style="margin-bottom:8px">Pick a genre, then choose what to produce. Match the trending genre for a 1.5× bonus.</div>`;
     h+=`<div class="genrepick" id="genres">`+GENRES.map((g,i)=>`<span class="chip ${i===_selGenre?'sel':''} ${g===trendGenre()?'trend':''}" data-g="${i}">${g}${g===trendGenre()?" 🔥":""}${S.mastery[g]?` <span class="pill">L${S.mastery[g]}</span>`:""}</span>`).join("")+`</div>`;
     // ---- Casting: choose which stars to feature on this show (energy permitting) ----
     const roster=(S.stars||[]).map(st=>({st,t:STAR_BY_ID[st.sid]})).filter(x=>x.t);
@@ -2285,7 +2285,7 @@ let _selGenre=0;
 let _castSel=[];   // sids the player has selected to feature on the next greenlight
 
 function renderStaff(){
-  let h=`<div class="panel listgrid"><h2>👥 Hire Your Team</h2><div class="muted" style="margin-bottom:10px">Each role boosts one quality dimension. Balanced teams make higher-rated anime. Salaries are paid from release revenue.</div>`;
+  let h=`<div class="panel listgrid"><h2>👥 ${t("h_hire","Hire Your Team")}</h2><div class="muted" style="margin-bottom:10px">Each role boosts one quality dimension. Balanced teams make higher-rated anime. Salaries are paid from release revenue.</div>`;
   for(const key in ROLES){ const r=ROLES[key]; const c=hireCost(key);
     h+=`<div class="staffrow">
       <img src="${r.img}" alt="">
@@ -2298,13 +2298,13 @@ function renderStaff(){
 }
 
 function renderStars(){
-  let h=`<div class="panel"><h2>⭐ Star Talent</h2><div class="muted" style="margin-bottom:10px">Scout famous creators — Stars add big permanent output to their role and boost anime quality. Duplicates level up. Rarer = stronger.</div>
+  let h=`<div class="panel"><h2>⭐ ${t("h_stars","Star Talent")}</h2><div class="muted" style="margin-bottom:10px">Scout famous creators — Stars add big permanent output to their role and boost anime quality. Duplicates level up. Rarer = stronger.</div>
     <div class="row" style="gap:8px;flex-wrap:wrap">
-      <button class="btn-primary hirebtn" data-scout="yen" ${S.yen>=castingCost()?"":"disabled"}>🎬 Open Casting<small>¥${fmt(castingCost())}</small></button>
-      <button class="btn-gold hirebtn" data-scout="gems" ${S.gems>=SCOUT_GEMS?"":"disabled"}>🌟 Premium Scout<small>${SCOUT_GEMS} 💎</small></button>
+      <button class="btn-primary hirebtn" data-scout="yen" ${S.yen>=castingCost()?"":"disabled"}>🎬 ${t("b_scoutOpen","Open Casting")}<small>¥${fmt(castingCost())}</small></button>
+      <button class="btn-gold hirebtn" data-scout="gems" ${S.gems>=SCOUT_GEMS?"":"disabled"}>🌟 ${t("b_scoutPremium","Premium Scout")}<small>${SCOUT_GEMS} 💎</small></button>
     </div>
     <div class="muted" style="margin-top:6px">Open Casting → Common/Rare. Premium Scout → full odds incl. Epic &amp; Legendary.</div></div>`;
-  h+=`<div class="panel listgrid"><h2>🎭 Your Stars <span class="pill">${(S.stars||[]).length}</span></h2>
+  h+=`<div class="panel listgrid"><h2>🎭 ${t("h_yourstars","Your Stars")} <span class="pill">${(S.stars||[]).length}</span></h2>
     <div class="muted" style="margin-bottom:10px">Rest tired stars to recharge them, train &amp; enhance their rarity, and invest in their fame for more power — but the more famous they get, the more they may demand to stay. Cast them on shows from the Produce tab.</div>`;
   if(!S.stars||!S.stars.length){ h+=`<div class="muted">No stars yet — scout your first talent above!</div>`; }
   else{
@@ -2338,17 +2338,17 @@ function renderStars(){
 }
 
 function renderResearch(){
-  let h=`<div class="panel listgrid"><h2>🔬 Genre Mastery</h2><div class="muted" style="margin-bottom:10px">Research genres to permanently boost the quality of projects in that genre (+6% per level). Costs Yen + Hype.</div>`;
+  let h=`<div class="panel listgrid"><h2>🔬 ${t("h_research","Genre Mastery")}</h2><div class="muted" style="margin-bottom:10px">Research genres to permanently boost the quality of projects in that genre (+6% per level). Costs Yen + Hype.</div>`;
   for(const g of GENRES){ const lvl=S.mastery[g]||0; const cost=Math.ceil(1200*Math.pow(1.9,lvl)); const hc=2+lvl;
     h+=`<div class="uprow"><div class="meta"><h4>${g} <span class="pill">L${lvl}</span></h4>
       <div class="muted">+${(lvl*6)}% quality now → +${((lvl+1)*6)}% next</div></div>
-      <button class="btn-cyan hirebtn" data-res="${g}" ${(S.yen>=cost&&S.hype>=hc)?"":"disabled"}>Research<small>¥${fmt(cost)} · ${hc}⚡</small></button></div>`;
+      <button class="btn-cyan hirebtn" data-res="${g}" ${(S.yen>=cost&&S.hype>=hc)?"":"disabled"}>${t("b_research","Research")}<small>¥${fmt(cost)} · ${hc}⚡</small></button></div>`;
   }
   h+=`</div>`; main.innerHTML=h;
 }
 
 function renderStudio(){
-  let h=`<div class="panel listgrid"><h2>🏢 Studio Upgrades</h2><div class="muted" style="margin-bottom:10px">Permanent multipliers. Reinvest your profits to scale output.</div>`;
+  let h=`<div class="panel listgrid"><h2>🏢 ${t("h_upgrades","Studio Upgrades")}</h2><div class="muted" style="margin-bottom:10px">Permanent multipliers. Reinvest your profits to scale output.</div>`;
   // production slot expansion (parallel lines)
   if(S.slots<MAX_SLOTS){
     const c=expandCost();
@@ -2361,12 +2361,12 @@ function renderStudio(){
   for(const key in UPGRADES){ const u=UPGRADES[key]; const c=upCost(key);
     h+=`<div class="uprow"><div class="meta"><h4>${u.ic} ${u.name} <span class="pill">L${S.upgrades[key]}</span></h4>
       <div class="muted">${u.desc}</div></div>
-      <button class="btn-gold hirebtn" data-up="${key}" ${S.yen>=c?"":"disabled"}>Upgrade<small>¥${fmt(c)}</small></button></div>`;
+      <button class="btn-gold hirebtn" data-up="${key}" ${S.yen>=c?"":"disabled"}>${t("b_upgrade","Upgrade")}<small>¥${fmt(c)}</small></button></div>`;
   }
   h+=`</div>`;
   // Legacy Perk Tree — permanent bonuses bought with Legacy Points (earned from Studio Reboots)
   const avail=legacyAvailable();
-  h+=`<div class="panel listgrid"><h2>🌸 Legacy Perks <span class="pill">${avail} Legacy Point${avail===1?"":"s"}</span></h2>
+  h+=`<div class="panel listgrid"><h2>🌸 ${t("h_perks","Legacy Perks")} <span class="pill">${avail} Legacy Point${avail===1?"":"s"}</span></h2>
     <div class="muted" style="margin-bottom:10px">Earn Legacy Points by rebooting your studio (prestige). Perks are <b>permanent</b> and survive every reboot.</div>`;
   for(const key in PERKS){ const pk=PERKS[key]; const lvl=(S.perks&&S.perks[key])||0; const c=perkCost(key);
     h+=`<div class="uprow"><div class="meta"><h4>${pk.ic} ${pk.name} <span class="pill">L${lvl}</span></h4>
@@ -2379,10 +2379,10 @@ function renderStudio(){
 }
 
 function renderMarket(){
-  let h=`<div class="panel listgrid"><h2>📣 Marketing</h2><div class="muted" style="margin-bottom:10px">Convert Yen into Fans instantly. Fans unlock bigger projects and multiply your revenue.</div>`;
+  let h=`<div class="panel listgrid"><h2>📣 ${t("h_marketing","Marketing")}</h2><div class="muted" style="margin-bottom:10px">Convert Yen into Fans instantly. Fans unlock bigger projects and multiply your revenue.</div>`;
   CAMPAIGNS.forEach((c,i)=>{
     h+=`<div class="uprow"><div class="meta"><h4>${c.ic} ${c.name}</h4><div class="muted">+${fmt(c.fans)} fans</div></div>
-      <button class="btn-primary hirebtn" data-camp="${i}" ${S.yen>=c.cost?"":"disabled"}>Run<small>¥${fmt(c.cost)}</small></button></div>`;
+      <button class="btn-primary hirebtn" data-camp="${i}" ${S.yen>=c.cost?"":"disabled"}>${t("b_run","Run")}<small>¥${fmt(c.cost)}</small></button></div>`;
   });
   h+=`</div>`; main.innerHTML=h;
 }
