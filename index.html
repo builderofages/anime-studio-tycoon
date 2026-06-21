@@ -458,6 +458,9 @@ button,.btn-ghost{min-height:40px}
 .dim{font-size:11px;font-weight:700;color:var(--slate)}
 .dim .db{height:7px !important;border-radius:5px !important;background:rgba(0,0,0,.10) !important;margin-top:3px;overflow:hidden}
 .dim .db i{border-radius:5px}
+/* footer is now a short utility row (Share / Sound / Reset / Language) + a build tag */
+.foot{flex-wrap:wrap !important;justify-content:center !important;align-items:center !important}
+#buildtag{font-size:10px;font-weight:700;color:#fff;opacity:.55;padding:4px 8px;align-self:center;white-space:nowrap;letter-spacing:.3px}
 </style>
 <script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script></head>
 <body>
@@ -516,11 +519,9 @@ button,.btn-ghost{min-height:40px}
   <div class="foot">
     <button class="btn-ghost" data-act="share">📣 Share <small id="share-bonus">+25💎</small></button>
     <button class="btn-ghost" id="btn-mute">🔊 Sound: On</button>
-    <button class="btn-ghost" id="btn-save">💾 Save</button>
+    <button class="btn-ghost" id="btn-save" style="display:none">💾 Save</button>
     <button class="btn-ghost" id="btn-reset">↺ Reset</button>
-    <a class="btn-ghost" href="privacy.html" target="_blank" rel="noopener" style="text-decoration:none">Privacy</a>
-    <a class="btn-ghost" href="terms.html" target="_blank" rel="noopener" style="text-decoration:none">Terms</a>
-  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select></div>
+  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 15</span></div>
   <div id="toasts"></div>
 </div>
 
