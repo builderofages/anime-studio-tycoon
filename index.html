@@ -432,15 +432,15 @@ button,.btn-ghost{min-height:40px}
         </div>
       </div></div></div><div class="panel" style="background-image:linear-gradient(rgba(251,243,230,.84),rgba(251,243,230,.93)),url(https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260615_090333_353ef636-ad49-44bb-9447-8653a12f9eae.png);background-size:cover;background-position:center"><h2>📊 Studio Dashboard</h2>
      <div class="kpis">
-       <div class="kpi accent"><div class="kl">🎖️ Studio Lv.</div><div class="kv">1 <small style="font-size:11px;opacity:.7">+2%</small></div></div>
-       <div class="kpi accent"><div class="kl">Studio Value</div><div class="kv">140</div></div>
-       <div class="kpi"><div class="kl">Income ×</div><div class="kv">1.02</div></div>
-       <div class="kpi"><div class="kl">Output/s</div><div class="kv">16</div></div>
-       <div class="kpi"><div class="kl">Premieres</div><div class="kv">7</div></div>
-       <div class="kpi"><div class="kl">⭐ Stars</div><div class="kv">1</div></div>
-       <div class="kpi"><div class="kl">Slots</div><div class="kv">1/1</div></div>
-       <div class="kpi"><div class="kl">Legacy</div><div class="kv">0 <small style="font-size:11px;opacity:.7">+0%</small></div></div>
-       <div class="kpi"><div class="kl">Best Value</div><div class="kv">140</div></div>
+       <div class="kpi accent"><div class="kl">🎖️ ${t("k_level","Studio Lv.")}</div><div class="kv">1 <small style="font-size:11px;opacity:.7">+2%</small></div></div>
+       <div class="kpi accent"><div class="kl">${t("k_value","Studio Value")}</div><div class="kv">140</div></div>
+       <div class="kpi"><div class="kl">${t("k_income","Income ×")}</div><div class="kv">1.02</div></div>
+       <div class="kpi"><div class="kl">${t("k_output","Output/s")}</div><div class="kv">16</div></div>
+       <div class="kpi"><div class="kl">${t("k_premieres","Premieres")}</div><div class="kv">7</div></div>
+       <div class="kpi"><div class="kl">⭐ ${t("k_stars","Stars")}</div><div class="kv">1</div></div>
+       <div class="kpi"><div class="kl">${t("k_slots","Slots")}</div><div class="kv">1/1</div></div>
+       <div class="kpi"><div class="kl">${t("k_legacy","Legacy")}</div><div class="kv">0 <small style="font-size:11px;opacity:.7">+0%</small></div></div>
+       <div class="kpi"><div class="kl">${t("k_best","Best Value")}</div><div class="kv">140</div></div>
      </div>
      <div style="margin-top:10px"><div class="muted" style="display:flex;justify-content:space-between;font-weight:700;font-size:12px"><span>🎖️ Studio Lv. 1 → 2</span><span>219 fans to go</span></div><div style="height:9px;border-radius:6px;background:rgba(0,0,0,.12);overflow:hidden;margin-top:3px"><div style="height:100%;width:0.9%;background:linear-gradient(90deg,#f6b73c,#ff7eb3)"></div></div></div>
      
@@ -2233,9 +2233,9 @@ function renderProduce(){
       const locked=S.fans<p.unlock; const afford=S.yen>=p.cost;
       return `<div class="pick ${locked?'lock':''}">
         <h4>${p.name}</h4>
-        <div class="stat">Cost: ¥${fmt(p.cost)}</div>
-        <div class="stat">Reward: ¥${fmt(p.base)} · +${fmt(p.fans)} fans</div>
-        <div class="stat">Workload: ${fmt(p.work)}</div>
+        <div class="stat">${t("c_cost","Cost")}: ¥${fmt(p.cost)}</div>
+        <div class="stat">${t("c_reward","Reward")}: ¥${fmt(p.base)} · +${fmt(p.fans)} ${t("c_fans","fans")}</div>
+        <div class="stat">${t("c_workload","Workload")}: ${fmt(p.work)}</div>
         ${locked?`<div class="stat" style="color:var(--bad)">🔒 ${fmt(p.unlock)} fans</div>`
           :`<button class="btn-primary" data-gl="${p.id}" ${afford?"":"disabled"} style="width:100%;margin-top:8px">${STR.greenlight}</button>`}
       </div>`;
@@ -2265,8 +2265,8 @@ function renderProduce(){
        <div class="kpi"><div class="kl">Slots</div><div class="kv">${activeCount()}/${S.slots}</div></div>
        <div class="kpi"><div class="kl">Legacy</div><div class="kv">${S.legacy} <small style="font-size:11px;opacity:.7">+${S.legacy*5}%</small></div></div>
        <div class="kpi"><div class="kl">Best Value</div><div class="kv">${fmt(Math.max(S.bestValue,studioValue()))}</div></div>
-       <div class="kpi accent"><div class="kl">📚 Royalties</div><div class="kv">¥${fmt(royaltyPerSec())}<small style="font-size:11px;opacity:.7">/s</small></div></div>
-       <div class="kpi"><div class="kl">🏆 Awards</div><div class="kv">${fmt(S.awardsWon||0)}</div></div>
+       <div class="kpi accent"><div class="kl">📚 ${t("k_royalties","Royalties")}</div><div class="kv">¥${fmt(royaltyPerSec())}<small style="font-size:11px;opacity:.7">/s</small></div></div>
+       <div class="kpi"><div class="kl">🏆 ${t("k_awards","Awards")}</div><div class="kv">${fmt(S.awardsWon||0)}</div></div>
      </div>
      ${(()=>{const L=studioLevel(),lo=fansForLevel(L),hi=fansForLevel(L+1),f=Math.max(0,Math.min(1,(S.totalFansEver-lo)/(hi-lo)));return `<div style="margin-top:10px"><div class="muted" style="display:flex;justify-content:space-between;font-weight:700;font-size:12px"><span>🎖️ Studio Lv. ${L} → ${L+1}</span><span>${fmt(Math.max(0,hi-S.totalFansEver))} fans to go</span></div><div style="height:9px;border-radius:6px;background:rgba(0,0,0,.12);overflow:hidden;margin-top:3px"><div style="height:100%;width:${(f*100).toFixed(1)}%;background:linear-gradient(90deg,#f6b73c,#ff7eb3)"></div></div></div>`;})()}
      ${boosts.length?`<div class="muted" style="margin-top:8px;color:#0c7d96;font-weight:700">⚡ Active: ${boosts.join(" · ")}</div>`:""}

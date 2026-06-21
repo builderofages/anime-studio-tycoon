@@ -131,6 +131,17 @@ const UI = {
 };
 for(const c in UI){ if(LANGS[c]) Object.assign(LANGS[c], UI[c]); }
 
+// Second batch: Produce-screen dashboard KPIs + greenlight card labels (most-seen screen).
+const UI2 = {
+  en:{ k_level:"Studio Lv.", k_value:"Studio Value", k_income:"Income ×", k_output:"Output/s", k_premieres:"Premieres", k_stars:"Stars", k_slots:"Slots", k_legacy:"Legacy", k_best:"Best Value", k_royalties:"Royalties", k_awards:"Awards", c_cost:"Cost", c_reward:"Reward", c_workload:"Workload", c_fans:"fans" },
+  es:{ k_level:"Nivel", k_value:"Valor", k_income:"Ingresos ×", k_output:"Salida/s", k_premieres:"Estrenos", k_stars:"Estrellas", k_slots:"Líneas", k_legacy:"Legado", k_best:"Mejor Valor", k_royalties:"Regalías", k_awards:"Premios", c_cost:"Costo", c_reward:"Recompensa", c_workload:"Trabajo", c_fans:"fans" },
+  pt:{ k_level:"Nível", k_value:"Valor", k_income:"Receita ×", k_output:"Saída/s", k_premieres:"Estreias", k_stars:"Estrelas", k_slots:"Linhas", k_legacy:"Legado", k_best:"Melhor Valor", k_royalties:"Royalties", k_awards:"Prêmios", c_cost:"Custo", c_reward:"Recompensa", c_workload:"Trabalho", c_fans:"fãs" },
+  fr:{ k_level:"Niveau", k_value:"Valeur", k_income:"Revenu ×", k_output:"Sortie/s", k_premieres:"Premières", k_stars:"Stars", k_slots:"Lignes", k_legacy:"Héritage", k_best:"Meilleure Valeur", k_royalties:"Royalties", k_awards:"Prix", c_cost:"Coût", c_reward:"Récompense", c_workload:"Charge", c_fans:"fans" },
+  de:{ k_level:"Level", k_value:"Wert", k_income:"Einkommen ×", k_output:"Ausstoß/s", k_premieres:"Premieren", k_stars:"Stars", k_slots:"Linien", k_legacy:"Vermächtnis", k_best:"Bester Wert", k_royalties:"Tantiemen", k_awards:"Preise", c_cost:"Kosten", c_reward:"Belohnung", c_workload:"Aufwand", c_fans:"Fans" },
+  ja:{ k_level:"レベル", k_value:"価値", k_income:"収入 ×", k_output:"出力/秒", k_premieres:"公開数", k_stars:"スター", k_slots:"ライン", k_legacy:"レガシー", k_best:"最高価値", k_royalties:"印税", k_awards:"受賞", c_cost:"費用", c_reward:"報酬", c_workload:"作業量", c_fans:"ファン" },
+};
+for(const c in UI2){ if(LANGS[c]) Object.assign(LANGS[c], UI2[c]); }
+
 // STR is the live, current-language object. Mutated in place by setLang.
 export const STR = Object.assign({}, EN);
 STR.__code = "en";
