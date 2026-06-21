@@ -308,8 +308,21 @@ h1,h2,h3,.panel h2,.prem-title{font-family:'Baloo 2',cursive !important;letter-s
   .staffrow:hover,.uprow:hover{filter:brightness(1.02)}
   .chip{cursor:pointer}
 }
+
+/* ast47 event+footer fix */
+.eventbar{display:flex !important;align-items:center !important;gap:10px !important;height:auto !important;min-height:0 !important;max-height:none !important;padding:10px 14px !important;margin:0 12px 8px !important;width:auto !important;background:#fff7e6 !important;background-image:none !important;border:1.5px solid #f0d79a !important;border-radius:14px !important;box-shadow:0 6px 16px rgba(20,14,32,.12) !important;overflow:hidden !important;color:#3a2b4d !important}
+.eventbar *{color:#3a2b4d !important;text-shadow:none !important}
+.eventbar .ev-ic{font-size:20px !important;line-height:1 !important}
+.eventbar .ev-meta,.eventbar .ev-meta *{font-size:12.5px !important;line-height:1.25 !important}
+.eventbar .ev-meta b,.eventbar strong{color:#7a3fd0 !important}
+.asd-topbar{display:flex;gap:8px;justify-content:flex-end;align-items:center;margin:0 12px 8px}
+.asd-mbtn{display:inline-flex;align-items:center;gap:6px;padding:8px 13px;border-radius:14px;border:1px solid rgba(255,255,255,.6);background:rgba(252,248,240,.92);backdrop-filter:blur(6px);font-weight:800;font-size:13px;color:#2e2742;cursor:pointer;box-shadow:0 8px 20px rgba(20,14,32,.16)}
+.asd-mbtn.on{background:linear-gradient(135deg,#7c5cff,#ff6fae);color:#fff;border-color:transparent}
+.asd-mpanel{display:none;margin:0 12px 10px}
+.asd-mpanel.open{display:block;animation:asdDrop .18s ease}
+@keyframes asdDrop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 </style>
-<script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script></head>
+<script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script></head>
 <body>
 <div id="app">
   <div id="top">
@@ -2469,6 +2482,33 @@ function keep(){var pS=document.getElementById('asd-p-status');if(!pS)return;var
    pop in and the screen jump when you tapped a poster. The main renderer now owns a stable layout. */
 function loop(){}
 void topmenu; void keep; void hideDaily; void enhStars;
+})();}catch(e){}
+</script>
+
+<script>
+try{(function(){/* ast47 */
+function asd47(){try{
+ var app=document.getElementById('app');
+ if(app && !document.getElementById('asd-topbar')){
+  var anchor=document.getElementById('goal')||document.getElementById('top')||app.children[1];
+  if(anchor){
+   var bar=document.createElement('div');bar.className='asd-topbar';bar.id='asd-topbar';
+   var bS=document.createElement('button');bS.className='asd-mbtn';bS.innerHTML='\uD83C\uDFC6 Status';
+   var bM=document.createElement('button');bM.className='asd-mbtn';bM.innerHTML='\u2699\uFE0F Menu';
+   bar.appendChild(bS);bar.appendChild(bM);
+   var pS=document.createElement('div');pS.className='asd-mpanel';pS.id='asd-p-status';
+   var pM=document.createElement('div');pM.className='asd-mpanel';pM.id='asd-p-menu';
+   anchor.parentNode.insertBefore(bar,anchor);
+   bar.parentNode.insertBefore(pS,bar.nextSibling);pS.parentNode.insertBefore(pM,pS.nextSibling);
+   bS.onclick=function(){var o=pS.classList.toggle('open');bS.classList.toggle('on',o);pM.classList.remove('open');bM.classList.remove('on');};
+   bM.onclick=function(){var o=pM.classList.toggle('open');bM.classList.toggle('on',o);pS.classList.remove('open');bS.classList.remove('on');};
+  }
+ }
+ var pS=document.getElementById('asd-p-status'),pM=document.getElementById('asd-p-menu');
+ if(pS){var ebs=document.querySelectorAll('.eventbar');for(var i=0;i<ebs.length;i++){if(ebs[i].parentNode!==pS)pS.appendChild(ebs[i]);}var g=document.getElementById('goal');if(g&&g.parentNode!==pS)pS.appendChild(g);}
+ if(pM){var f=document.querySelector('.foot');if(f&&f.parentNode!==pM){pM.appendChild(f);f.style.display='flex';f.style.flexWrap='wrap';f.style.justifyContent='flex-start';}}
+}catch(e){}}
+setInterval(asd47,800);if(document.readyState!=='loading'){setTimeout(asd47,200);}else{document.addEventListener('DOMContentLoaded',function(){setTimeout(asd47,200);});}
 })();}catch(e){}
 </script>
 </body></html>
