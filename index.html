@@ -354,6 +354,45 @@ h1,h2,h3,.panel h2,.prem-title{font-family:'Baloo 2',cursive !important;letter-s
 #asd-p-status,#asd-p-menu{position:absolute !important;top:calc(100% + 6px) !important;right:0 !important;z-index:60 !important;width:min(420px,92vw) !important;margin:0 !important}
 .asd-mpanel.open{animation:asdPop .16s ease}
 @keyframes asdPop{from{opacity:0;transform:translateY(-8px) scale(.985)}to{opacity:1;transform:none}}
+
+/* ============================================================================
+   AAA LAYOUT — authoritative pass. Supersedes the experimental ast47–51 rules.
+   Stable, intentional placement + correct sizing on phone / tablet / desktop.
+   ============================================================================ */
+/* retire the pop-in Status/Menu system entirely (its scripts are removed) */
+.asd-topbar,.asd-mpanel,#asd-p-status,#asd-p-menu{display:none !important}
+/* the goal bar and footer live where they belong, always visible */
+#goal{display:block !important}
+.foot{display:flex !important;flex-wrap:wrap;justify-content:center;gap:8px;padding:6px 12px calc(10px + var(--safe-b,0px)) !important;background:transparent !important}
+.foot>*{flex:0 0 auto}
+
+/* #main is a responsive card grid that fills the width without empty gutters */
+#main{display:grid !important;grid-template-columns:1fr !important;gap:12px 16px !important;
+  align-content:start !important;align-items:start !important;
+  padding:10px 12px calc(16px + var(--safe-b,0px)) !important}
+#main>*{margin:0 !important;min-width:0}                 /* gap owns the spacing; prevent grid blow-out */
+#main>.eventbar{grid-column:1 / -1 !important}           /* live event banner spans full width */
+.asd-listpanel,.asd-banner{display:block !important}     /* neutralize leftover sub-grid classes */
+
+/* a panel that is one long list spans the full width and flows its rows into
+   responsive columns, so single-list tabs (Staff, Research, Marketing, Stars…)
+   fill the screen instead of leaving empty columns on tablet/desktop */
+#main>.listgrid{grid-column:1 / -1 !important}
+.listgrid{display:grid !important;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr)) !important;gap:8px 12px !important;align-content:start !important}
+.listgrid>h2,.listgrid>.muted,.listgrid>.qhead,.listgrid>p,.listgrid>.row{grid-column:1 / -1}
+.listgrid>.uprow,.listgrid>.staffrow{min-width:0;margin:0 !important}
+
+/* breakpoints: 1 col phone · 2 col large-phone/tablet · 3 col desktop */
+@media(min-width:680px){ #main{grid-template-columns:repeat(2,minmax(0,1fr)) !important;padding:14px 16px 18px !important} }
+@media(min-width:1080px){ #main{grid-template-columns:repeat(3,minmax(0,1fr)) !important} }
+@media(min-width:1480px){ #app{max-width:1460px} }
+
+/* readable tap targets + tidy tabs on the smallest phones */
+.tab{min-height:48px}
+button,.btn-ghost{min-height:40px}
+@media(max-width:560px){ #tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}#tabs::-webkit-scrollbar{display:none}.tab{flex:0 0 auto} }
+/* landscape / short screens: tighten so the board still fits */
+@media(max-height:460px){ #goal{margin-bottom:4px} .panel{padding:10px 12px} }
 </style>
 <script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script><script>(function(){try{var t=false;try{t=window.self===window.top}catch(e){t=false}if(t){var u=new URL(location.href);if(u.searchParams.has('__raw')){u.searchParams.delete('__raw');location.replace(u.pathname+u.search+u.hash)}}}catch(e){}})()</script></head>
 <body>
@@ -2094,7 +2133,7 @@ let _selGenre=0;
 let _castSel=[];   // sids the player has selected to feature on the next greenlight
 
 function renderStaff(){
-  let h=`<div class="panel"><h2>👥 Hire Your Team</h2><div class="muted" style="margin-bottom:10px">Each role boosts one quality dimension. Balanced teams make higher-rated anime. Salaries are paid from release revenue.</div>`;
+  let h=`<div class="panel listgrid"><h2>👥 Hire Your Team</h2><div class="muted" style="margin-bottom:10px">Each role boosts one quality dimension. Balanced teams make higher-rated anime. Salaries are paid from release revenue.</div>`;
   for(const key in ROLES){ const r=ROLES[key]; const c=hireCost(key);
     h+=`<div class="staffrow">
       <img src="${r.img}" alt="">
@@ -2113,7 +2152,7 @@ function renderStars(){
       <button class="btn-gold hirebtn" data-scout="gems" ${S.gems>=SCOUT_GEMS?"":"disabled"}>🌟 Premium Scout<small>${SCOUT_GEMS} 💎</small></button>
     </div>
     <div class="muted" style="margin-top:6px">Open Casting → Common/Rare. Premium Scout → full odds incl. Epic &amp; Legendary.</div></div>`;
-  h+=`<div class="panel"><h2>🎭 Your Stars <span class="pill">${(S.stars||[]).length}</span></h2>
+  h+=`<div class="panel listgrid"><h2>🎭 Your Stars <span class="pill">${(S.stars||[]).length}</span></h2>
     <div class="muted" style="margin-bottom:10px">Rest tired stars to recharge them, train &amp; enhance their rarity, and invest in their fame for more power — but the more famous they get, the more they may demand to stay. Cast them on shows from the Produce tab.</div>`;
   if(!S.stars||!S.stars.length){ h+=`<div class="muted">No stars yet — scout your first talent above!</div>`; }
   else{
@@ -2147,7 +2186,7 @@ function renderStars(){
 }
 
 function renderResearch(){
-  let h=`<div class="panel"><h2>🔬 Genre Mastery</h2><div class="muted" style="margin-bottom:10px">Research genres to permanently boost the quality of projects in that genre (+6% per level). Costs Yen + Hype.</div>`;
+  let h=`<div class="panel listgrid"><h2>🔬 Genre Mastery</h2><div class="muted" style="margin-bottom:10px">Research genres to permanently boost the quality of projects in that genre (+6% per level). Costs Yen + Hype.</div>`;
   for(const g of GENRES){ const lvl=S.mastery[g]||0; const cost=Math.ceil(1200*Math.pow(1.9,lvl)); const hc=2+lvl;
     h+=`<div class="uprow"><div class="meta"><h4>${g} <span class="pill">L${lvl}</span></h4>
       <div class="muted">+${(lvl*6)}% quality now → +${((lvl+1)*6)}% next</div></div>
@@ -2157,7 +2196,7 @@ function renderResearch(){
 }
 
 function renderStudio(){
-  let h=`<div class="panel"><h2>🏢 Studio Upgrades</h2><div class="muted" style="margin-bottom:10px">Permanent multipliers. Reinvest your profits to scale output.</div>`;
+  let h=`<div class="panel listgrid"><h2>🏢 Studio Upgrades</h2><div class="muted" style="margin-bottom:10px">Permanent multipliers. Reinvest your profits to scale output.</div>`;
   // production slot expansion (parallel lines)
   if(S.slots<MAX_SLOTS){
     const c=expandCost();
@@ -2175,7 +2214,7 @@ function renderStudio(){
   h+=`</div>`;
   // Legacy Perk Tree — permanent bonuses bought with Legacy Points (earned from Studio Reboots)
   const avail=legacyAvailable();
-  h+=`<div class="panel"><h2>🌸 Legacy Perks <span class="pill">${avail} Legacy Point${avail===1?"":"s"}</span></h2>
+  h+=`<div class="panel listgrid"><h2>🌸 Legacy Perks <span class="pill">${avail} Legacy Point${avail===1?"":"s"}</span></h2>
     <div class="muted" style="margin-bottom:10px">Earn Legacy Points by rebooting your studio (prestige). Perks are <b>permanent</b> and survive every reboot.</div>`;
   for(const key in PERKS){ const pk=PERKS[key]; const lvl=(S.perks&&S.perks[key])||0; const c=perkCost(key);
     h+=`<div class="uprow"><div class="meta"><h4>${pk.ic} ${pk.name} <span class="pill">L${lvl}</span></h4>
@@ -2187,7 +2226,7 @@ function renderStudio(){
 }
 
 function renderMarket(){
-  let h=`<div class="panel"><h2>📣 Marketing</h2><div class="muted" style="margin-bottom:10px">Convert Yen into Fans instantly. Fans unlock bigger projects and multiply your revenue.</div>`;
+  let h=`<div class="panel listgrid"><h2>📣 Marketing</h2><div class="muted" style="margin-bottom:10px">Convert Yen into Fans instantly. Fans unlock bigger projects and multiply your revenue.</div>`;
   CAMPAIGNS.forEach((c,i)=>{
     h+=`<div class="uprow"><div class="meta"><h4>${c.ic} ${c.name}</h4><div class="muted">+${fmt(c.fans)} fans</div></div>
       <button class="btn-primary hirebtn" data-camp="${i}" ${S.yen>=c.cost?"":"disabled"}>Run<small>¥${fmt(c.cost)}</small></button></div>`;
@@ -2279,7 +2318,7 @@ function renderStore(){
     <button class="btn-primary" data-act="scratch" style="width:100%" ${(scratchFree||S.gems>=SCRATCH_GEM_COST)?"":"disabled"}>🎟️ ${scratchFree?"FREE Daily Card":("Scratch · "+SCRATCH_GEM_COST+" 💎")}</button>
     <button class="btn-ghost" data-act="odds" style="width:100%;margin-top:8px">📊 View all drop rates &amp; odds</button></div>`;
   // ----- Power Items shop + inventory -----
-  h+=`<div class="panel"><h2>🧰 Power Items</h2><div class="muted" style="margin-bottom:8px">One-use props for an instant edge — buy with Gems, win from spins, or grab the Items Pack above.</div>`;
+  h+=`<div class="panel listgrid"><h2>🧰 Power Items</h2><div class="muted" style="margin-bottom:8px">One-use props for an instant edge — buy with Gems, win from spins, or grab the Items Pack above.</div>`;
   Object.keys(ITEMS).forEach(id=>{ const it=ITEMS[id]; const have=itemCount(id);
     h+=`<div class="uprow"><div class="meta"><h4>${it.ic} ${it.name}${have?` <span class="pill">×${have}</span>`:""}${it.premium?` <span class="pill" style="background:#ffe39a;color:#7a5200">PREMIUM</span>`:""}</h4><div class="muted">${it.desc}</div></div>
       <div class="row" style="gap:6px">${have?`<button class="btn-cyan hirebtn" data-itemuse="${id}">Use</button>`:""}<button class="btn-gold hirebtn" data-itembuy="${id}" ${S.gems>=it.gem?"":"disabled"}>Buy<small>${it.gem} 💎</small></button></div></div>`;
@@ -2518,51 +2557,4 @@ void topmenu; void keep; void hideDaily; void enhStars;
 })();}catch(e){}
 </script>
 
-<script>
-try{(function(){/* ast47 */
-function asd47(){try{
- var app=document.getElementById('app');
- if(app && !document.getElementById('asd-topbar')){
-  var anchor=document.getElementById('goal')||document.getElementById('top')||app.children[1];
-  if(anchor){
-   var bar=document.createElement('div');bar.className='asd-topbar';bar.id='asd-topbar';
-   var bS=document.createElement('button');bS.className='asd-mbtn';bS.innerHTML='\uD83C\uDFC6 Status';
-   var bM=document.createElement('button');bM.className='asd-mbtn';bM.innerHTML='\u2699\uFE0F Menu';
-   bar.appendChild(bS);bar.appendChild(bM);
-   var pS=document.createElement('div');pS.className='asd-mpanel';pS.id='asd-p-status';
-   var pM=document.createElement('div');pM.className='asd-mpanel';pM.id='asd-p-menu';
-   anchor.parentNode.insertBefore(bar,anchor);
-   bar.parentNode.insertBefore(pS,bar.nextSibling);pS.parentNode.insertBefore(pM,pS.nextSibling);
-   bS.onclick=function(){var o=pS.classList.toggle('open');bS.classList.toggle('on',o);pM.classList.remove('open');bM.classList.remove('on');};
-   bM.onclick=function(){var o=pM.classList.toggle('open');bM.classList.toggle('on',o);pS.classList.remove('open');bS.classList.remove('on');};
-  }
- }
- var pS=document.getElementById('asd-p-status'),pM=document.getElementById('asd-p-menu');
- if(pS){var live=document.querySelector('#main .eventbar');var parked=pS.querySelectorAll('.eventbar');for(var i=0;i<parked.length;i++){if(parked[i]!==live)parked[i].remove();}/* dedupe: keep only the current event bar, never accumulate */ if(live&&live.parentNode!==pS)pS.appendChild(live);var g=document.getElementById('goal');if(g&&g.parentNode!==pS)pS.appendChild(g);}
- if(pM){var f=document.querySelector('.foot');if(f&&f.parentNode!==pM){pM.appendChild(f);f.style.display='flex';f.style.flexWrap='wrap';f.style.justifyContent='flex-start';}}
-}catch(e){}}
-setInterval(asd47,800);if(document.readyState!=='loading'){setTimeout(asd47,200);}else{document.addEventListener('DOMContentLoaded',function(){setTimeout(asd47,200);});}
-})();}catch(e){}
-</script>
-
-<script>
-try{(function(){/* ast48 */
-function asd48(){try{var main=document.getElementById('main');if(!main)return;var ps=main.querySelectorAll('.panel');for(var i=0;i<ps.length;i++){var p=ps[i];var rows=0;var kids=p.children;for(var j=0;j<kids.length;j++){var c=(kids[j].className||'').toString();if(/\buprow\b/.test(c)||/\bstaffrow\b/.test(c))rows++;}if(rows>=4){p.classList.add('asd-listpanel');}else{p.classList.remove('asd-listpanel');}}}catch(e){}}
-setInterval(asd48,700);setTimeout(asd48,300);
-})();}catch(e){}
-</script>
-
-<script>
-try{(function(){/* ast50 */
-function asd50(){try{var main=document.getElementById('main');if(!main)return;var ps=main.querySelectorAll('.panel');for(var i=0;i<ps.length;i++){var p=ps[i];var rows=0;for(var j=0;j<p.children.length;j++){var c=(p.children[j].className||'').toString();if(/\buprow\b|\bstaffrow\b/.test(c))rows++;}if(rows>=4){p.classList.add('asd-listpanel');p.classList.remove('asd-banner');continue;}p.classList.remove('asd-listpanel');if(p.children.length<=3&&p.offsetHeight<150){p.classList.add('asd-banner');}else{p.classList.remove('asd-banner');}}}catch(e){}}
-setInterval(asd50,700);setTimeout(asd50,300);
-})();}catch(e){}
-</script>
-
-<script>
-try{(function(){/* ast51 */
-function asd51(){try{var bar=document.getElementById('asd-topbar');if(!bar)return;var pS=document.getElementById('asd-p-status'),pM=document.getElementById('asd-p-menu');if(pS&&pS.parentNode!==bar)bar.appendChild(pS);if(pM&&pM.parentNode!==bar)bar.appendChild(pM);}catch(e){}}
-setInterval(asd51,600);setTimeout(asd51,250);
-})();}catch(e){}
-</script>
 </body></html>
