@@ -479,6 +479,8 @@ button,.btn-ghost{min-height:40px}
     </svg>
     <h1>Anime Studio Tycoon</h1>
     <p id="start-tagline">From a one-room studio to a global anime empire</p>
+    <label style="display:block;font-size:12px;font-weight:800;color:var(--plum);margin:4px 0 4px">🏢 Studio Name</label>
+    <input id="start-studio" maxlength="40" placeholder="My Studio" style="width:100%;padding:11px;border-radius:12px;border:2px solid rgba(70,80,107,.25);font-weight:700;font-size:14px;margin-bottom:12px;background:#fff">
     <label id="start-lang-label" style="display:block;font-size:12px;font-weight:800;color:var(--plum);margin:4px 0 4px">🌐 Language</label>
     <select id="start-lang" style="width:100%;padding:11px;border-radius:12px;border:2px solid rgba(70,80,107,.25);font-weight:700;font-size:14px;margin-bottom:12px;background:#fff">
       <option value="en">English</option>
@@ -766,6 +768,24 @@ const LOGIN_REWARDS=(function(){
   return a;
 })();
 
+/* ---- Rival studios: a living industry ladder you climb as your studio value grows ---- */
+const RIVALS=(function(){
+  const names=["Sakura Pictures","Neon Mirage","Aoba Animation","Starlight Works","Crimson Crane",
+    "Lumen Studio","Sterling Frames","Onyx Atelier","Velvet Sky","Golden Koi",
+    "Pixel Forge","Aurora Cinema","Tidal Wave Toons","Iron Lotus","Comet Tail",
+    "Moonlit Reel","Vanguard Animation","Echo Chamber","Radiant Pictures","Zenith Studio",
+    "Empyrean Works","Celestial Forge","Mythos Media","Infinity Frame","Apex Animation"];
+  const a=[]; let v=240;
+  for(let i=0;i<names.length;i++){ a.push({name:names[i], val:Math.round(v)}); v*=2.35; }
+  return a;
+})();
+function industryStandings(){
+  const me={ name:(S.studioName||"My Studio"), val:studioValue(), me:true };
+  const all=RIVALS.map(r=>({name:r.name,val:r.val})).concat([me]).sort((a,b)=>b.val-a.val);
+  const idx=all.findIndex(r=>r.me);
+  return { all, idx, rank:idx+1, total:all.length, me };
+}
+
 const MILESTONES = [
   { fans:20,    label:"Earn 20 Fans to unlock Web Series" },
   { fans:120,   label:"Reach 120 Fans for your own TV Series" },
@@ -882,6 +902,7 @@ function freshState(){
     catalogIncome:0, totalEarned:0, awardsWon:0, legacySpent:0, perks:{income:0,speed:0,fans:0,offline:0},
     stamina:100, chaos:0, chaosMode:false, lastChaos:0, lastStarDemand:0,
     items:{}, entitlements:[], purchaseLog:[], firstPurchaseDone:false, noAds:false, wheelDate:"", scratchDate:"",
+    studioName:"", hallOfFame:[], bestRank:99,
     gems:0, producerPass:false, bundleBought:false, goldenUntil:0, rewardedUntil:0, rewardedCdUntil:0,
     milestonesClaimed:[],
     slots:1, projects:[null],   // each slot: {pid, genre, progress} or null
@@ -1419,6 +1440,7 @@ function load(){
     S.stars=Array.isArray(d.stars)?d.stars:[]; normStars();
     if(S.stamina==null) S.stamina=100; if(S.chaos==null) S.chaos=0;
     S.items=(d.items&&typeof d.items==="object")?d.items:{}; S.entitlements=Array.isArray(d.entitlements)?d.entitlements:[];
+    S.hallOfFame=Array.isArray(d.hallOfFame)?d.hallOfFame:[]; S.studioName=d.studioName||"";
     S.quests=Array.isArray(d.quests)?d.quests:[];
     S.questProg=Object.assign({releases:0,yen:0,campaigns:0,hires:0,hypeSpent:0,scouts:0}, d.questProg||{});
     S.bestValue=+d.bestValue||0; S.freeGemsDate=d.freeGemsDate||""; S.taps=+d.taps||0;
@@ -1473,6 +1495,20 @@ const REVIEWS={
   2:["Rough around the edges, but it has soul.","A decent effort with real moments.","The studio is finding its voice.","Promising — keep building."],
   1:["A brave little experiment.","Not for everyone… yet.","Early days. Onward and upward!","Every legend starts somewhere."]
 };
+/* ---- Personalization: name your studio and your shows ---- */
+function cleanName(s){ return (s||"").replace(/[<>]/g,"").trim().slice(0,40); }
+function setStudioName(){
+  if(typeof prompt!=="function") return;
+  const v=cleanName(prompt("Name your studio:", S.studioName||"My Studio"));
+  if(v){ S.studioName=v; play("click"); toast("🏢 Studio renamed: "+v,true); render(); save(); }
+}
+function renameShow(slot){
+  const pr=S.projects[slot]; if(!pr) return;
+  if(typeof prompt!=="function") return;
+  const v=cleanName(prompt("Name this anime:", pr.title||PROJECTS[pr.pid].name));
+  if(v){ pr.title=v; play("click"); render(); save(); }
+}
+function studioName(){ return S.studioName || "My Studio"; }
 let _premiereOpen=false;
 function animateCount(el,to,prefix){
   const dur=1000, t0=performance.now();
@@ -1529,7 +1565,13 @@ function releaseProject(slot){
   S.totalEarned=(S.totalEarned||0)+yenGain;
   // back-catalog royalties — a slice of every premiere becomes permanent passive Yen/sec
   S.catalogIncome=(S.catalogIncome||0)+Math.max(1, Math.floor(yenGain*0.02));
-  S.releases++; S.projects[slot]=null;
+  S.releases++;
+  // Hall of Fame — remember your standout premieres (the "look what I built" payoff)
+  if(stars>=4 || p.tier>=2){
+    (S.hallOfFame=S.hallOfFame||[]).unshift({title:pr.title||p.name, genre:pr.genre, stars, yen:yenGain, fans:fansGain, tier:p.tier, t:Date.now()});
+    if(S.hallOfFame.length>40) S.hallOfFame.length=40;
+  }
+  S.projects[slot]=null;
   questAdd("releases",1); questAdd("yen",yenGain);
   if(studioValue()>S.bestValue) S.bestValue=studioValue();
   awardMilestoneGems(); checkAchievements(); checkStudioLevel();
@@ -1752,11 +1794,11 @@ function shareUrl(){
   return url;
 }
 function shareText(){
-  const fans=fmt(S.totalFansEver||S.fans||0), rel=S.releases||0;
+  const fans=fmt(S.totalFansEver||S.fans||0), rel=S.releases||0, sn=studioName(), rank=industryStandings().rank;
   const lines=[
-    `My anime studio just hit ${fans} fans in Anime Studio Tycoon 🎬🔥 Think you can out-produce me?`,
-    `I've shipped ${rel} anime ${rel===1?'hit':'hits'} and built ${fans} fans in Anime Studio Tycoon — your move 👀`,
-    `Building the #1 anime studio in the world rn 🌸 ${fans} fans and counting. Beat my run:`
+    `${sn} just hit ${fans} fans in Anime Studio Tycoon 🎬🔥 Think you can out-produce me?`,
+    `I run ${sn} — ${rel} anime ${rel===1?'hit':'hits'}, ${fans} fans, ranked #${rank} in the industry. Your move 👀`,
+    `Building ${sn} into the #1 anime studio in the world 🌸 ${fans} fans and counting. Beat my run:`
   ];
   return lines[Math.floor(Math.random()*lines.length)];
 }
@@ -1810,7 +1852,8 @@ function prestige(){
               daily:S.lastDailyDate, streak:S.dailyStreak, stars:S.stars, tut:S.tutorialSeen,
               best:S.bestValue, ach:S.achievements, fg:S.freeGemsDate, taps:S.taps,
               perks:S.perks, legacySpent:S.legacySpent, awards:S.awardsWon, earned:S.totalEarned, comboBest:S.comboBest,
-              items:S.items, entitlements:S.entitlements, purchaseLog:S.purchaseLog, firstPurchaseDone:S.firstPurchaseDone, noAds:S.noAds};
+              items:S.items, entitlements:S.entitlements, purchaseLog:S.purchaseLog, firstPurchaseDone:S.firstPurchaseDone, noAds:S.noAds,
+              studioName:S.studioName, hof:S.hallOfFame, bestRank:S.bestRank};
   S=freshState();
   S.legacy=keep.legacy; S.mastery=keep.mastery; S.totalFansEver=keep.total; S.muted=keep.mute;
   S.gems=keep.gems; S.producerPass=keep.pass; S.milestonesClaimed=keep.ms; S.bundleBought=keep.bundle;
@@ -1820,6 +1863,7 @@ function prestige(){
   S.awardsWon=keep.awards||0; S.totalEarned=keep.earned||0; S.comboBest=keep.comboBest||0;
   // purchases & entitlements are permanent — they survive every reboot
   S.items=keep.items||{}; S.entitlements=keep.entitlements||[]; S.purchaseLog=keep.purchaseLog||[]; S.firstPurchaseDone=!!keep.firstPurchaseDone; S.noAds=!!keep.noAds;
+  S.studioName=keep.studioName||""; S.hallOfFame=keep.hof||[]; S.bestRank=keep.bestRank||99;
   checkAchievements(); track("prestige",{gain});
   toast("🌸 Studio rebooted! +"+gain+" Legacy",true); render(); save();
 }
@@ -2028,6 +2072,34 @@ function renderQuests(){
   h+=weeklyQuestHTML();
   main.innerHTML=h;
 }
+/* Industry Ranking — a live ladder of rival studios you climb */
+function industryHTML(){
+  const st=industryStandings();
+  if(st.rank<(S.bestRank||99)){ S.bestRank=st.rank; }
+  const rows=[];
+  const mark=(r,i)=>`<div class="uprow" style="${r.me?'border:2px solid var(--sakura);background:linear-gradient(180deg,#fff,var(--sakura2))':''}">
+    <div class="meta"><h4 style="font-size:14px">#${i+1} ${r.me?'⭐ ':''}${r.name}${r.me?' <span class="pill">YOU</span>':''}</h4>
+    <div class="muted">Studio value ${fmt(r.val)}</div></div></div>`;
+  // top 3, then a window around you
+  const shown=new Set();
+  [0,1,2].forEach(i=>{ if(st.all[i]){ rows.push(mark(st.all[i],i)); shown.add(i); }});
+  for(let i=st.idx-1;i<=st.idx+1;i++){ if(i>=0&&i<st.all.length&&!shown.has(i)){ if(i>3) rows.push(`<div class="muted" style="text-align:center;opacity:.6">⋯</div>`); rows.push(mark(st.all[i],i)); shown.add(i);} }
+  const next=st.idx>0?st.all[st.idx-1]:null;
+  return `<div class="panel"><h2>🏆 Industry Ranking</h2>
+    <div class="muted" style="margin-bottom:8px">You're <b>#${st.rank}</b> of ${st.total} studios${next?` · pass <b>${next.name}</b> (${fmt(next.val)}) to rank up`:` — you're the <b>#1 studio in the world!</b>`}</div>
+    ${rows.join("")}</div>`;
+}
+/* Hall of Fame — your standout premieres */
+function hallOfFameHTML(){
+  const hof=(S.hallOfFame||[]);
+  if(!hof.length) return `<div class="panel"><h2>🌟 Hall of Fame</h2><div class="muted">Premiere a hit (4★+) or a TV Series and up — your best shows are immortalized here.</div></div>`;
+  let h=`<div class="panel listgrid"><h2>🌟 Hall of Fame <span class="pill">${hof.length}</span></h2>`;
+  hof.slice(0,12).forEach(s=>{
+    h+=`<div class="uprow"><div class="meta"><h4 style="font-size:13px">${"★".repeat(s.stars)}${"☆".repeat(5-s.stars)} “${s.title}”</h4>
+      <div class="muted">${s.genre} · +¥${fmt(s.yen)} · +${fmt(s.fans)} fans</div></div></div>`;
+  });
+  return h+`</div>`;
+}
 function renderProduce(){
   let h="";
   const dp=dimPowerForQuality();
@@ -2046,7 +2118,7 @@ function renderProduce(){
     h+=`<div class="panel slotpanel" id="slot-${i}" data-done="${done?'1':'0'}"><h2 style="font-size:15px">🎬 Studio ${i+1}${done?" — ✅ Ready":""}</h2><div class="card">
       <div class="poster" ${done?'':`data-act="tapboost" data-slot="${i}"`} style="background-image:url(${pr.poster||GENRE_POSTER[pr.genre]||DEFAULT_POSTER});${done?'':'cursor:pointer'}" title="${done?'':'Tap to boost!'}"><div class="gtag">${pr.genre}${pr.genre===trendGenre()?" 🔥":""}${done?'':' · 👆'}</div></div>
       <div class="pinfo">
-        <h3>${pr.title?`“${pr.title}”`:p.name}</h3>
+        <h3 style="display:flex;align-items:center;gap:6px">${pr.title?`“${pr.title}”`:p.name} <button class="btn-ghost" data-act="rename-show" data-slot="${i}" style="padding:3px 7px;font-size:11px;min-height:0" title="Name this anime">✏️</button></h3>
         <div class="muted" style="margin-bottom:2px">${p.name} · ${pr.genre}</div>
         ${(pr.cast&&pr.cast.length)?`<div class="muted" style="margin-bottom:2px">🎭 Starring ${pr.cast.map(id=>STAR_BY_ID[id]?STAR_BY_ID[id].name:"").filter(Boolean).join(", ")}</div>`:""}
         <div class="muted slot-eta">${done?"Ready to release":("ETA ~"+eta+"s")} · projected ${"★".repeat(stars)}${"☆".repeat(5-stars)}</div>
@@ -2104,7 +2176,7 @@ function renderProduce(){
   if(rewardedActive()) boosts.push("⚡ 2× Boost ("+Math.ceil((S.rewardedUntil-Date.now())/1000)+"s)");
   if(Date.now()<S.overdriveUntil) boosts.push("🚀 Overdrive 2× speed ("+Math.ceil((S.overdriveUntil-Date.now())/1000)+"s)");
   // legacy / prestige / overdrive
-  h+=`<div class="panel" style="background-image:linear-gradient(rgba(251,243,230,.84),rgba(251,243,230,.93)),url(${DASHBOARD_BG});background-size:cover;background-position:center"><h2>📊 ${STR.h_dashboard}</h2>
+  h+=`<div class="panel" style="background-image:linear-gradient(rgba(251,243,230,.84),rgba(251,243,230,.93)),url(${DASHBOARD_BG});background-size:cover;background-position:center"><h2 style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">🏢 ${studioName()} <button class="btn-ghost" data-act="studio-name" style="padding:3px 8px;font-size:11px;min-height:0" title="Rename your studio">✏️</button> <span class="pill" style="margin-left:auto">${(()=>{const s=industryStandings();return "🏆 Industry #"+s.rank+" / "+s.total;})()}</span></h2>
      <div class="kpis">
        <div class="kpi accent"><div class="kl">🎖️ Studio Lv.</div><div class="kv">${studioLevel()} <small style="font-size:11px;opacity:.7">+${studioLevel()*2}%</small></div></div>
        <div class="kpi accent"><div class="kl">Studio Value</div><div class="kv">${fmt(studioValue())}</div></div>
@@ -2127,6 +2199,8 @@ function renderProduce(){
      ${activeCount()>0?`<button class="btn-cyan" id="a-over" style="margin-top:8px;width:100%">🚀 ${STR.overdrive} · 15 Hype (all lines, 2× speed 30s)</button>`:""}
      ${S.fans>=PRESTIGE_FANS?`<button class="btn-cyan" id="a-prestige" style="margin-top:8px;width:100%">🌸 Reboot Studio for +${Math.floor(Math.sqrt(S.totalFansEver/1000))} Legacy</button>`:`<div class="muted" style="margin-top:6px">Reach ${fmt(PRESTIGE_FANS)} fans to unlock Studio Reboot (prestige).</div>`}
    </div>`;
+  h+=industryHTML();
+  h+=hallOfFameHTML();
   main.innerHTML=h;
 }
 let _selGenre=0;
@@ -2336,6 +2410,8 @@ document.addEventListener("click", e=>{
   if(t.dataset.act==="spin") return spinWheel();
   if(t.dataset.act==="scratch") return scratchCard();
   if(t.dataset.act==="odds") return showOdds();
+  if(t.dataset.act==="studio-name") return setStudioName();
+  if(t.dataset.act==="rename-show") return renameShow(+t.dataset.slot);
   if(t.dataset.perk) return buyPerk(t.dataset.perk);
   if(t.dataset.tab) return setTab(t.dataset.tab);
   if(t.dataset.scout) return scout(t.dataset.scout);
@@ -2444,6 +2520,8 @@ function updateComboMeter(){
 let started=false;
 function begin(){
   if(started) return; started=true;
+  // adopt the studio name chosen on the intro screen (if any)
+  try{ const sn=document.getElementById("start-studio"); if(sn && sn.value && !S.studioName){ S.studioName=cleanName(sn.value); } }catch(e){}
   initAudio(); updateMute();
   $("#start").style.display="none";
   // flush any grant/redeem messages queued before start
