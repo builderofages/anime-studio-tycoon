@@ -95,17 +95,57 @@ const JA = {
 export const LANGS = { en:EN, es:ES, pt:PT, fr:FR, de:DE, ja:JA };
 export const LANG_NAMES = { en:"English", es:"Español", pt:"Português", fr:"Français", de:"Deutsch", ja:"日本語" };
 
+/* ---- Extended UI vocabulary (first i18n batch beyond the chrome).
+   English is the base/fallback; any key missing in a language falls back to it. ---- */
+const UI = {
+  en:{ h_hire:"Hire Your Team", h_stars:"Star Talent", h_yourstars:"Your Stars", h_research:"Genre Mastery",
+       h_upgrades:"Studio Upgrades", h_perks:"Legacy Perks", h_records:"Studio Records", h_marketing:"Marketing",
+       h_industry:"Industry Ranking", h_hof:"Hall of Fame", h_greenlight:"Greenlight a Project",
+       b_buy:"Buy", b_run:"Run", b_upgrade:"Upgrade", b_research:"Research", b_spend:"Spend", b_use:"Use",
+       b_get:"Get", b_expand:"Expand", b_scoutOpen:"Open Casting", b_scoutPremium:"Premium Scout" },
+  es:{ h_hire:"Contrata tu Equipo", h_stars:"Talento Estrella", h_yourstars:"Tus Estrellas", h_research:"Maestría de Género",
+       h_upgrades:"Mejoras del Estudio", h_perks:"Ventajas de Legado", h_records:"Récords del Estudio", h_marketing:"Marketing",
+       h_industry:"Clasificación", h_hof:"Salón de la Fama", h_greenlight:"Aprobar un Proyecto",
+       b_buy:"Comprar", b_run:"Lanzar", b_upgrade:"Mejorar", b_research:"Investigar", b_spend:"Gastar", b_use:"Usar",
+       b_get:"Obtener", b_expand:"Ampliar", b_scoutOpen:"Casting Abierto", b_scoutPremium:"Reclutar Premium" },
+  pt:{ h_hire:"Contrate sua Equipe", h_stars:"Talento Estrela", h_yourstars:"Suas Estrelas", h_research:"Maestria de Gênero",
+       h_upgrades:"Melhorias do Estúdio", h_perks:"Vantagens de Legado", h_records:"Recordes do Estúdio", h_marketing:"Marketing",
+       h_industry:"Ranking da Indústria", h_hof:"Hall da Fama", h_greenlight:"Aprovar um Projeto",
+       b_buy:"Comprar", b_run:"Lançar", b_upgrade:"Melhorar", b_research:"Pesquisar", b_spend:"Gastar", b_use:"Usar",
+       b_get:"Obter", b_expand:"Expandir", b_scoutOpen:"Seleção Aberta", b_scoutPremium:"Recrutar Premium" },
+  fr:{ h_hire:"Recrutez votre Équipe", h_stars:"Talent Vedette", h_yourstars:"Vos Stars", h_research:"Maîtrise de Genre",
+       h_upgrades:"Améliorations du Studio", h_perks:"Atouts d'Héritage", h_records:"Records du Studio", h_marketing:"Marketing",
+       h_industry:"Classement", h_hof:"Temple de la Renommée", h_greenlight:"Lancer un Projet",
+       b_buy:"Acheter", b_run:"Lancer", b_upgrade:"Améliorer", b_research:"Rechercher", b_spend:"Dépenser", b_use:"Utiliser",
+       b_get:"Obtenir", b_expand:"Agrandir", b_scoutOpen:"Casting Ouvert", b_scoutPremium:"Recrutement Premium" },
+  de:{ h_hire:"Stelle dein Team ein", h_stars:"Star-Talente", h_yourstars:"Deine Stars", h_research:"Genre-Meisterschaft",
+       h_upgrades:"Studio-Upgrades", h_perks:"Vermächtnis-Boni", h_records:"Studio-Rekorde", h_marketing:"Marketing",
+       h_industry:"Branchen-Rangliste", h_hof:"Ruhmeshalle", h_greenlight:"Projekt freigeben",
+       b_buy:"Kaufen", b_run:"Starten", b_upgrade:"Verbessern", b_research:"Erforschen", b_spend:"Ausgeben", b_use:"Nutzen",
+       b_get:"Holen", b_expand:"Erweitern", b_scoutOpen:"Offenes Casting", b_scoutPremium:"Premium-Scout" },
+  ja:{ h_hire:"スタッフを雇う", h_stars:"スター人材", h_yourstars:"あなたのスター", h_research:"ジャンル熟練",
+       h_upgrades:"スタジオ強化", h_perks:"レガシー特典", h_records:"スタジオ記録", h_marketing:"マーケティング",
+       h_industry:"業界ランキング", h_hof:"殿堂", h_greenlight:"企画を承認",
+       b_buy:"購入", b_run:"実施", b_upgrade:"強化", b_research:"研究", b_spend:"消費", b_use:"使う",
+       b_get:"入手", b_expand:"拡張", b_scoutOpen:"オープン採用", b_scoutPremium:"プレミアム採用" },
+};
+for(const c in UI){ if(LANGS[c]) Object.assign(LANGS[c], UI[c]); }
+
 // STR is the live, current-language object. Mutated in place by setLang.
 export const STR = Object.assign({}, EN);
 STR.__code = "en";
 
 export function setLang(code){
   const L = LANGS[code] || EN;
-  Object.assign(STR, L);
+  // reset to the English base first so a partial translation never leaves stale
+  // keys from a previously selected language, then overlay the chosen language.
+  Object.assign(STR, EN, L);
   STR.__code = LANGS[code] ? code : "en";
   try{ localStorage.setItem("ast_lang", STR.__code); }catch(e){}
   return STR.__code;
 }
+/* Translate a key, falling back to English (or the provided fallback). */
+export function t(key, fallback){ const v=STR[key]; return (v==null) ? (fallback!=null?fallback:key) : v; }
 export function initialLang(){
   // Default to English. Only use a language the player explicitly chose before.
   try{ const s=localStorage.getItem("ast_lang"); if(s && LANGS[s]) return s; }catch(e){}
