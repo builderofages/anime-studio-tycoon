@@ -18,12 +18,7 @@ workflows:
       - name: Install deps
         script: npm ci || npm install
       - name: Assemble web (www) from repo source
-        script: |
-          mkdir -p www
-          cp index.html strings.js logic.js iap.js privacy.html terms.html www/ 2>/dev/null || true
-          # native builds need the StoreKit/Play IAP bridge injected before </body>
-          grep -q 'iap.js' www/index.html || sed -i.bak 's#</body>#<script src="iap.js"></script></body>#' www/index.html
-          rm -f www/index.html.bak
+        script: npm run prepare-native
       - name: Add iOS platform
         script: npx cap add ios || true
       - name: Sync
@@ -56,12 +51,7 @@ workflows:
       - name: Install deps
         script: npm ci || npm install
       - name: Assemble web (www) from repo source
-        script: |
-          mkdir -p www
-          cp index.html strings.js logic.js iap.js privacy.html terms.html www/ 2>/dev/null || true
-          # native builds need the StoreKit/Play IAP bridge injected before </body>
-          grep -q 'iap.js' www/index.html || sed -i.bak 's#</body>#<script src="iap.js"></script></body>#' www/index.html
-          rm -f www/index.html.bak
+        script: npm run prepare-native
       - name: Add Android platform
         script: npx cap add android || true
       - name: Sync

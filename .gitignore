@@ -3,3 +3,7 @@ dist/
 *.log
 package-lock.json
 desktop/package-lock.json
+.vercel
+www/
+ios/
+.vercel

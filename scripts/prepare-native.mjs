@@ -1,0 +1,45 @@
+#!/usr/bin/env node
+/**
+ * Assemble www/ for Capacitor native builds from repo source.
+ */
+import { cpSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
+import { join } from "path";
+
+const ROOT = new URL("..", import.meta.url).pathname;
+const WWW = join(ROOT, "www");
+
+const FILES = [
+  "index.html",
+  "strings.js",
+  "logic.js",
+  "iap.js",
+  "aaa-upgrade.js",
+  "aaa-upgrade.css",
+  "manifest.json",
+  "privacy.html",
+  "terms.html",
+];
+
+mkdirSync(WWW, { recursive: true });
+
+for (const f of FILES) {
+  const src = join(ROOT, f);
+  if (!existsSync(src)) {
+    console.warn(`skip missing: ${f}`);
+    continue;
+  }
+  cpSync(src, join(WWW, f));
+  console.log(`copied ${f}`);
+}
+
+const idx = join(WWW, "index.html");
+if (existsSync(idx)) {
+  let html = readFileSync(idx, "utf8");
+  if (!html.includes('src="iap.js"')) {
+    html = html.replace("</body>", '<script src="iap.js"></script>\n</body>');
+    writeFileSync(idx, html);
+    console.log("injected iap.js into www/index.html");
+  }
+}
+
+console.log("www/ ready for cap sync");

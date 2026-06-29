@@ -4,7 +4,10 @@
   "private": true,
   "description": "Anime Studio Tycoon — iOS + Android app wrapper (Capacitor)",
   "scripts": {
+    "test": "node scripts/smoke-test.mjs",
+    "prepare": "node scripts/prepare-native.mjs",
     "prepare-native": "node scripts/prepare-native.mjs",
+    "bundle": "node scripts/bundle-assets.mjs",
     "bundle-assets": "node scripts/bundle-assets.mjs",
     "fetch-resources": "node scripts/fetch-resources.mjs",
     "add-ios": "cap add ios",
