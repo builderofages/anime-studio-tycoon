@@ -1,0 +1,9 @@
+ios/
+www/
+node_modules/
+desktop/
+.git/
+*.mp3
+*.m4a
+*.jpeg
+*.png
