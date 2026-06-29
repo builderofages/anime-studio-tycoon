@@ -21,6 +21,8 @@ const FILES = [
   "gameplay-ultra.css",
   "gameplay-endless.js",
   "gameplay-endless.css",
+  "gameplay-empire.js",
+  "gameplay-empire.css",
   "manifest.json",
   "privacy.html",
   "terms.html",

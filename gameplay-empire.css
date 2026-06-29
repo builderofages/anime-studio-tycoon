@@ -1,0 +1,112 @@
+/* Anime Studio Tycoon — Empire expansion */
+.blend-pick {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin: 8px 0;
+}
+.blend-pick .bp {
+  font-size: 10px;
+  font-weight: 800;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 2px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.45);
+  cursor: pointer;
+}
+.blend-pick .bp.sel {
+  border-color: var(--gold);
+  background: rgba(255, 200, 80, 0.25);
+}
+.source-pick {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin: 6px 0 10px;
+}
+.source-pick .sp {
+  flex: 1;
+  min-width: 80px;
+  text-align: center;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 8px 4px;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+}
+.source-pick .sp.sel {
+  border-color: var(--cyan);
+  background: rgba(61, 232, 255, 0.2);
+}
+.scout-banner {
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(255, 215, 120, 0.4), rgba(255, 126, 179, 0.25));
+  border: 2px solid rgba(255, 180, 60, 0.5);
+  text-align: center;
+}
+.scout-banner img {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 6px auto;
+  display: block;
+  box-shadow: 0 0 16px rgba(255, 180, 60, 0.6);
+}
+.named-staff {
+  border-left: 4px solid var(--sakura) !important;
+}
+.named-staff .trait {
+  font-size: 10px;
+  font-weight: 800;
+  color: #7a5200;
+  background: #ffe39a;
+  padding: 2px 7px;
+  border-radius: 999px;
+  margin-left: 4px;
+}
+.warroom-opt {
+  width: 100%;
+  text-align: left;
+  padding: 10px 12px !important;
+  margin-bottom: 6px;
+  font-size: 13px !important;
+}
+.chaos-forecast {
+  font-size: 11px;
+  font-weight: 800;
+  color: #a03050;
+  margin-top: 6px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: rgba(255, 107, 138, 0.12);
+}
+.insurance-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+  padding: 10px;
+  border-radius: 12px;
+  background: rgba(95, 211, 138, 0.15);
+  border: 1px solid rgba(95, 211, 138, 0.35);
+  font-size: 12px;
+  font-weight: 700;
+}
+.calm-streak {
+  font-size: 11px;
+  font-weight: 800;
+  color: #1a7a4a;
+  margin-top: 6px;
+}
+.empire-recruit {
+  margin-top: 12px;
+  padding: 10px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(189, 246, 255, 0.3), rgba(255, 217, 236, 0.25));
+  border: 1px solid rgba(61, 232, 255, 0.3);
+}
