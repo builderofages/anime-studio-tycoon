@@ -11,6 +11,9 @@ on:
       - 'index.html'
       - 'strings.js'
       - 'logic.js'
+      - 'aaa-upgrade.js'
+      - 'aaa-upgrade.css'
+      - 'manifest.json'
       - 'privacy.html'
       - 'terms.html'
       - '.github/workflows/pages.yml'
@@ -37,7 +40,7 @@ jobs:
         run: |
           mkdir -p _site
           # iap.js is intentionally omitted: it's a native-only StoreKit/Play bridge and is a no-op on the web.
-          cp index.html strings.js logic.js privacy.html terms.html _site/ 2>/dev/null || true
+          cp index.html strings.js logic.js aaa-upgrade.js aaa-upgrade.css manifest.json privacy.html terms.html _site/ 2>/dev/null || true
       - name: Configure Pages
         uses: actions/configure-pages@v5
         with:
