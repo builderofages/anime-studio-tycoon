@@ -37,6 +37,8 @@ const required = [
   "gameplay-plus.css",
   "gameplay-ultra.js",
   "gameplay-ultra.css",
+  "gameplay-endless.js",
+  "gameplay-endless.css",
   "manifest.json",
   "privacy.html",
   "terms.html",
@@ -57,6 +59,10 @@ assert(html.includes("autoGreenlight"), "auto-greenlight state");
 assert(html.includes("marketShare"), "market share state");
 assert(html.includes("applyAudioSettings"), "audio settings");
 assert(html.includes('src="gameplay-ultra.js"'), "gameplay-ultra.js linked");
+assert(html.includes('src="gameplay-endless.js"'), "gameplay-endless.js linked");
+assert(html.includes("endlessRisk"), "endless risk state");
+assert(html.includes("endlessDiff"), "endless difficulty state");
+assert(html.includes("projectStars"), "projectStars on hook");
 assert(html.includes("seasonClaimed"), "season pass state");
 assert(html.includes('id="main"></div>'), "clean #main shell");
 assert(html.includes("BUILD_TAG"), "build tag constant");
@@ -65,7 +71,7 @@ assert(html.includes("whatsnew"), "what's new modal");
 const rawCount = (html.match(/__raw/g) || []).length;
 assert(rawCount <= 2, "single __raw redirect script", `found ${rawCount}`);
 
-for (const f of ["strings.js", "logic.js", "aaa-upgrade.js", "gameplay-plus.js", "gameplay-ultra.js"]) {
+for (const f of ["strings.js", "logic.js", "aaa-upgrade.js", "gameplay-plus.js", "gameplay-ultra.js", "gameplay-endless.js"]) {
   const r = spawnSync("node", ["--check", join(root, f)], { encoding: "utf8" });
   assert(r.status === 0, `syntax OK: ${f}`, r.stderr?.trim());
 }
@@ -91,8 +97,10 @@ assert(prep.status === 0, "prepare-native.mjs runs", prep.stderr?.trim() || prep
 assert(existsSync(join(root, "www/index.html")), "www/index.html created");
 assert(existsSync(join(root, "www/aaa-upgrade.js")), "www/aaa-upgrade.js copied");
 assert(existsSync(join(root, "www/gameplay-ultra.js")), "www/gameplay-ultra.js copied");
+assert(existsSync(join(root, "www/gameplay-endless.js")), "www/gameplay-endless.js copied");
 const dpkg = JSON.parse(readFileSync(join(root, "desktop/package.json"), "utf8"));
 assert(dpkg.build?.extraResources?.[0]?.filter?.includes("gameplay-ultra.js"), "desktop bundles ultra");
+assert(dpkg.build?.extraResources?.[0]?.filter?.includes("gameplay-endless.js"), "desktop bundles endless");
 
 console.log(`\n${passed} passed, ${failed} failed`);
 process.exit(failed > 0 ? 1 : 0);

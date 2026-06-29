@@ -1,6 +1,6 @@
 {
   "name": "anime-studio-tycoon-desktop",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "private": true,
   "description": "Anime Studio Tycoon — Steam / desktop build (Electron)",
   "author": "TrainYourAgent",
@@ -38,6 +38,8 @@
           "gameplay-plus.css",
           "gameplay-ultra.js",
           "gameplay-ultra.css",
+          "gameplay-endless.js",
+          "gameplay-endless.css",
           "manifest.json",
           "privacy.html",
           "terms.html"

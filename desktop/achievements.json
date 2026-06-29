@@ -38,5 +38,9 @@
   "bid5": "ACH_BID5",
   "share25": "ACH_SHARE25",
   "share50": "ACH_SHARE50",
-  "merch3": "ACH_MERCH3"
+  "merch3": "ACH_MERCH3",
+  "cour12": "ACH_COUR12",
+  "chem1": "ACH_CHEM1",
+  "nightmare": "ACH_NIGHTMARE",
+  "riskamb": "ACH_RISKAMB"
 }

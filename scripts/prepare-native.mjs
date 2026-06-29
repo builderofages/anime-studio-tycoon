@@ -19,6 +19,8 @@ const FILES = [
   "gameplay-plus.css",
   "gameplay-ultra.js",
   "gameplay-ultra.css",
+  "gameplay-endless.js",
+  "gameplay-endless.css",
   "manifest.json",
   "privacy.html",
   "terms.html",

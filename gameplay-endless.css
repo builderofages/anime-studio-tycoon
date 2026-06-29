@@ -1,0 +1,113 @@
+/* Anime Studio Tycoon — Endless expansion */
+.risk-dial {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin: 10px 0 6px;
+}
+.risk-dial .rd {
+  flex: 1;
+  min-width: 90px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 8px 6px;
+  border-radius: 10px;
+  border: 2px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: transform 0.12s, border-color 0.12s;
+}
+.risk-dial .rd.sel {
+  border-color: var(--sakura);
+  background: linear-gradient(135deg, rgba(255, 182, 212, 0.35), rgba(189, 246, 255, 0.3));
+  transform: scale(1.03);
+}
+.cour-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0;
+  font-size: 12px;
+  font-weight: 700;
+}
+.mood-pill {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 999px;
+  margin-left: 4px;
+}
+.mood-inspired { background: #d4f8e8; color: #1a7a4a; }
+.mood-tired { background: #ffe0e8; color: #a03050; }
+.mood-restless { background: #fff3c4; color: #8a6500; }
+.chem-banner {
+  margin-top: 6px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, rgba(255, 215, 120, 0.35), rgba(255, 126, 179, 0.2));
+  font-size: 11px;
+  font-weight: 800;
+  color: #7a5200;
+}
+.prod-event {
+  margin-top: 8px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(61, 232, 255, 0.15);
+  border: 1px solid rgba(61, 232, 255, 0.35);
+  font-size: 11px;
+  font-weight: 700;
+}
+.diff-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(120, 80, 200, 0.15);
+  color: #5a3d9a;
+  margin-left: 6px;
+}
+.endless-panel {
+  margin-top: 8px;
+  padding: 10px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(230, 220, 255, 0.3), rgba(255, 230, 245, 0.25));
+  border: 1px solid rgba(150, 100, 220, 0.25);
+}
+.endless-panel h3 {
+  font-size: 13px;
+  margin: 0 0 6px;
+}
+.diff-pick {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+}
+.diff-pick .dp {
+  font-size: 11px;
+  font-weight: 800;
+  padding: 8px;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background: rgba(255, 255, 255, 0.45);
+  cursor: pointer;
+  text-align: center;
+}
+.diff-pick .dp.sel {
+  border-color: #9b6dff;
+  background: rgba(155, 109, 255, 0.15);
+}
+.cour-ep {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--plum);
+  margin-top: 4px;
+}
+.btn-cancel-prod {
+  font-size: 11px !important;
+  padding: 5px 10px !important;
+  opacity: 0.85;
+}
