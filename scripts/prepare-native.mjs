@@ -15,6 +15,8 @@ const FILES = [
   "iap.js",
   "aaa-upgrade.js",
   "aaa-upgrade.css",
+  "gameplay-plus.js",
+  "gameplay-plus.css",
   "manifest.json",
   "privacy.html",
   "terms.html",

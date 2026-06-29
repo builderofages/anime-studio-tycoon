@@ -22,6 +22,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%233a2b4d'/%3E%3Ccircle cx='32' cy='32' r='30' fill='none' stroke='%23ffc845' stroke-width='3'/%3E%3Cg fill='%23ff9bc4'%3E%3Cellipse cx='32' cy='15' rx='5' ry='8'/%3E%3Cellipse cx='32' cy='49' rx='5' ry='8'/%3E%3Cellipse cx='15' cy='32' rx='8' ry='5'/%3E%3Cellipse cx='49' cy='32' rx='8' ry='5'/%3E%3C/g%3E%3Ccircle cx='32' cy='32' r='7' fill='%23ffc845'/%3E%3C/svg%3E">
 <link rel="manifest" href="manifest.json">
 <link rel="stylesheet" href="aaa-upgrade.css">
+<link rel="stylesheet" href="gameplay-plus.css">
 <meta name="theme-color" content="#3a2b4d">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <style>
@@ -487,7 +488,7 @@ button,.btn-ghost{min-height:40px}
     <button class="btn-ghost" id="btn-mute">🔊 Sound: On</button>
     <button class="btn-ghost" id="btn-save" style="display:none">💾 Save</button>
     <button class="btn-ghost" id="btn-reset">↺ Reset</button>
-  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 17 · v2 AAA</span></div>
+  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 18 · Gameplay+</span></div>
   <div id="toasts"></div>
 </div>
 
@@ -563,15 +564,27 @@ button,.btn-ghost{min-height:40px}
   </div>
 </div>
 
+<div class="overlay" id="settings" style="display:none">
+  <div class="card-modal" id="settings-panel" style="max-width:400px;text-align:left">
+    <h1 style="font-size:22px;text-align:center">⚙️ Settings</h1>
+    <div class="setting-row"><span>🌸 Sakura particles</span><input type="checkbox" data-settings-motion checked></div>
+    <div class="setting-row"><span>📰 News ticker</span><input type="checkbox" data-settings-ticker checked></div>
+    <div class="setting-row"><span>⚡ Auto-greenlight</span><input type="checkbox" data-settings-autogl></div>
+    <div class="muted" style="margin-top:10px;font-size:12px">Auto-greenlight fills empty slots with your best affordable project in the trending genre.</div>
+    <button class="btn-primary" data-settings-close style="width:100%;margin-top:14px">Done</button>
+  </div>
+</div>
+
 <div class="overlay" id="whatsnew" style="display:none">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <h1 style="font-size:22px;text-align:center">✨ What's New — v2 AAA</h1>
+    <h1 style="font-size:22px;text-align:center">✨ What's New — Gameplay+</h1>
     <div class="offlist" style="margin:12px 0">
-      <div><span>🎬 Studio Ranks</span><b>Garage → Empire</b></div>
-      <div><span>🎫 Season Pass</span><b>Free gem milestones</b></div>
-      <div><span>🌸 Sakura FX</span><b>Particles &amp; premieres</b></div>
-      <div><span>📺 Franchise banners</span><b>Sequel bonuses</b></div>
-      <div><span>📱 PWA</span><b>Install to home screen</b></div>
+      <div><span>🎯 Daily Goals</span><b>3 gem rewards every day</b></div>
+      <div><span>🎭 Smart Cast</span><b>Auto-pick your best stars</b></div>
+      <div><span>🧸 Merch Line</span><b>Passive ¥/sec income</b></div>
+      <div><span>⚔️ Weekly Rivalry</span><b>Beat rivals for loot</b></div>
+      <div><span>🍀 Scout Pity</span><b>Guaranteed Epic/Legendary</b></div>
+      <div><span>⚡ Auto-Greenlight</span><b>Never idle a slot</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
   </div>
@@ -611,7 +624,7 @@ const STORE_PAYMENTS = true; // store always visible; buyReal routes web→check
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 17 · v2 AAA";
+const BUILD_TAG = "build 18 · Gameplay+";
 const OFFLINE_CAP = 8*3600; // seconds
 
 const GENRES = ["Action","Romance","Fantasy","Sci-Fi","Comedy","Slice of Life"];
@@ -966,6 +979,9 @@ function freshState(){
     loginMonth:"", loginClaimedCount:0, loginLastClaimDate:"", lastDecision:0, studioLevel:1, starterSeen:false, combo:0, comboBest:0, lastReleaseAt:0, flashDealDay:"", flashSeen:false,
     lastDailyDate:"", dailyStreak:0, bestValue:0, freeGemsDate:"", taps:0, sharedOnce:false,
     tutorialSeen:false, whatsnewSeen:false, achievements:[],
+    pityCount:0, merchLevel:0, autoGreenlight:false, rivalWins:0,
+    plusGoals:[], plusGoalsDate:"", plusGoalsBase:{}, plusCollection50:false,
+    settings:{motion:true,ticker:true}, lastWhatsNewBuild:"",
     lastSave:Date.now(),
     muted:false,
     tab:"produce",
@@ -1104,10 +1120,17 @@ function claimQuest(i){
 }
 /* star scouting (gacha) */
 function pullStar(allowAll){
+  S.pityCount=(S.pityCount||0)+1;
   const pool = allowAll ? Object.keys(STAR_RARITY) : ["Common","Rare"];
-  let total=0; for(const r of pool) total+=STAR_RARITY[r].w;
-  let roll=Math.random()*total, rar=pool[0];
-  for(const r of pool){ roll-=STAR_RARITY[r].w; if(roll<=0){ rar=r; break; } }
+  let rar=pool[0];
+  if(allowAll && S.pityCount>=80) rar="Legendary";
+  else if(allowAll && S.pityCount>=25 && Math.random()<0.35) rar="Epic";
+  else {
+    let total=0; for(const r of pool) total+=STAR_RARITY[r].w;
+    let roll=Math.random()*total;
+    for(const r of pool){ roll-=STAR_RARITY[r].w; if(roll<=0){ rar=r; break; } }
+  }
+  if(rar==="Epic"||rar==="Legendary") S.pityCount=0;
   const cands=STAR_POOL.filter(s=>s.rarity===rar && !s.exclusive);
   const t=cands[Math.floor(Math.random()*cands.length)];
   const owned=S.stars.find(x=>x.sid===t.id); let leveled=false;
@@ -1512,6 +1535,11 @@ function load(){
     S.bestValue=+d.bestValue||0; S.freeGemsDate=d.freeGemsDate||""; S.taps=+d.taps||0;
     S.achievements=Array.isArray(d.achievements)?d.achievements:[];
     S.whatsnewSeen=!!d.whatsnewSeen;
+    S.pityCount=+d.pityCount||0; S.merchLevel=+d.merchLevel||0; S.autoGreenlight=!!d.autoGreenlight;
+    S.rivalWins=+d.rivalWins||0; S.plusCollection50=!!d.plusCollection50;
+    S.plusGoals=Array.isArray(d.plusGoals)?d.plusGoals:[]; S.plusGoalsDate=d.plusGoalsDate||"";
+    S.plusGoalsBase=(d.plusGoalsBase&&typeof d.plusGoalsBase==="object")?d.plusGoalsBase:{};
+    S.settings=(d.settings&&typeof d.settings==="object")?Object.assign({motion:true,ticker:true},d.settings):{motion:true,ticker:true};
     return true;
   }catch(e){ return false; }
 }
@@ -2220,6 +2248,9 @@ function statsHTML(){
     ["📈 Best industry rank","#"+(S.bestRank||99)],
     ["📺 Franchises",fmt(franCount)],
     ["🌸 Legacy points",fmt(S.legacy||0)],
+    ["🧸 Merch level",fmt(S.merchLevel||0)],
+    ["⚔️ Rival wins",fmt(S.rivalWins||0)],
+    ["🍀 Scout pity",fmt(S.pityCount||0)],
   ];
   return `<div class="panel listgrid"><h2>📈 ${t("h_records","Studio Records")}</h2>`+rows.map(r=>`<div class="uprow"><div class="meta"><h4 style="font-size:13px">${r[0]}</h4><div class="muted">${r[1]}</div></div></div>`).join("")+`</div>`;
 }
@@ -2699,8 +2730,8 @@ function begin(){
        <div class="muted">Come back tomorrow to grow your streak — bigger rewards every day!</div>`;
     $("#daily").style.display="flex";
   }
-  // v2 changelog for returning players; how-to for brand-new players
-  if(!S.whatsnewSeen){ const wn=document.getElementById("whatsnew"); if(wn) wn.style.display="flex"; }
+  // Gameplay+ changelog — show once per major version (reset whatsnewSeen on build bump)
+  if(!S.whatsnewSeen || S.lastWhatsNewBuild !== BUILD_TAG){ S.whatsnewSeen=false; S.lastWhatsNewBuild=BUILD_TAG; const wn=document.getElementById("whatsnew"); if(wn) wn.style.display="flex"; }
   else if(!S.tutorialSeen){ $("#howto").style.display="flex"; }
   track("game_start",{slots:S.slots,fans:S.fans});
   render(); save();
@@ -2753,12 +2784,31 @@ window.__AST_HOOK__ = {
   getProject: (pid) => PROJECTS[pid],
   render,
   releaseProject,
+  tick,
+  greenlight,
+  freelance,
   toast: toastSafe,
   play,
-  save
+  save,
+  fmt,
+  trendGenre,
+  unlockedProjects,
+  firstEmptySlot,
+  industryStandings,
+  studioValue,
+  castCap,
+  starEnergy,
+  effRarity,
+  setCastSel: (arr) => { _castSel = (arr || []).slice(); },
+  GENRES,
+  PROJECTS,
+  STAR_POOL,
+  STAR_BY_ID,
+  MILESTONES,
 };
 </script>
 <script src="aaa-upgrade.js"></script>
+<script src="gameplay-plus.js"></script>
 
 
 <script>(function(){var d;function f(){try{var b=document.getElementById('btn-save');if(b)b.click();}catch(e){}if(!d){d=document.createElement('div');d.style.cssText='position:fixed;bottom:10px;left:50%;transform:translateX(-50%);background:rgba(40,30,55,.92);color:#9be29b;font:600 12px system-ui;padding:5px 12px;border-radius:999px;z-index:99999;opacity:0;transition:opacity .25s;pointer-events:none';d.textContent='\u2713 Saved';document.body.appendChild(d);}d.style.opacity='1';clearTimeout(d._t);d._t=setTimeout(function(){d.style.opacity='0';},1100);}document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden')f();});window.addEventListener('pagehide',f);})();</script>

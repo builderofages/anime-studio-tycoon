@@ -33,6 +33,8 @@ const required = [
   "logic.js",
   "aaa-upgrade.js",
   "aaa-upgrade.css",
+  "gameplay-plus.js",
+  "gameplay-plus.css",
   "manifest.json",
   "privacy.html",
   "terms.html",
@@ -46,6 +48,10 @@ const html = readFileSync(join(root, "index.html"), "utf8");
 assert(!html.includes('${t("k_level"'), "no baked template literals in HTML");
 assert(html.includes("window.__AST_HOOK__"), "AST hook exported");
 assert(html.includes('src="aaa-upgrade.js"'), "aaa-upgrade.js linked");
+assert(html.includes('src="gameplay-plus.js"'), "gameplay-plus.js linked");
+assert(html.includes("pityCount"), "scout pity state");
+assert(html.includes("merchLevel"), "merch line state");
+assert(html.includes("autoGreenlight"), "auto-greenlight state");
 assert(html.includes("seasonClaimed"), "season pass state");
 assert(html.includes('id="main"></div>'), "clean #main shell");
 assert(html.includes("BUILD_TAG"), "build tag constant");
@@ -54,7 +60,7 @@ assert(html.includes("whatsnew"), "what's new modal");
 const rawCount = (html.match(/__raw/g) || []).length;
 assert(rawCount <= 2, "single __raw redirect script", `found ${rawCount}`);
 
-for (const f of ["strings.js", "logic.js", "aaa-upgrade.js"]) {
+for (const f of ["strings.js", "logic.js", "aaa-upgrade.js", "gameplay-plus.js"]) {
   const r = spawnSync("node", ["--check", join(root, f)], { encoding: "utf8" });
   assert(r.status === 0, `syntax OK: ${f}`, r.stderr?.trim());
 }

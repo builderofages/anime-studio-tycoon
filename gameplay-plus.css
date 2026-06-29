@@ -1,0 +1,177 @@
+/* Anime Studio Tycoon — Gameplay+ expansion layer */
+#news-ticker {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background: linear-gradient(90deg, rgba(45, 31, 66, 0.95), rgba(74, 84, 112, 0.92));
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 5px 0;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255, 204, 77, 0.25);
+  pointer-events: none;
+}
+#news-ticker .tick-inner {
+  display: inline-block;
+  white-space: nowrap;
+  animation: tickScroll 28s linear infinite;
+  padding-left: 100%;
+}
+@keyframes tickScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+body.has-ticker #app { padding-top: 28px; }
+
+#trend-forecast {
+  font-size: 10px;
+  font-weight: 700;
+  opacity: 0.75;
+  margin-left: 6px;
+  color: var(--gold2, #ffe9a8);
+}
+
+.daily-goals {
+  background: linear-gradient(135deg, rgba(255, 217, 236, 0.45), rgba(189, 246, 255, 0.35)) !important;
+  border: 1px solid rgba(255, 126, 179, 0.3) !important;
+}
+.daily-goals .dg-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px dashed rgba(70, 80, 107, 0.2);
+}
+.daily-goals .dg-row:last-child { border-bottom: none; }
+.daily-goals .dg-check {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  background: rgba(70, 80, 107, 0.15);
+  flex-shrink: 0;
+}
+.daily-goals .dg-row.done .dg-check { background: var(--good, #4ee89a); color: #fff; }
+.daily-goals .dg-row.ready .dg-check { background: var(--gold, #ffcc4d); animation: pulse 1.2s infinite; }
+
+.quick-bar {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.quick-bar button {
+  flex: 1;
+  min-width: 100px;
+  font-size: 11px !important;
+  padding: 8px 10px !important;
+}
+
+.prod-stage {
+  display: flex;
+  gap: 4px;
+  margin: 6px 0 4px;
+}
+.prod-stage span {
+  flex: 1;
+  text-align: center;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 3px 2px;
+  border-radius: 6px;
+  background: rgba(70, 80, 107, 0.12);
+  opacity: 0.45;
+}
+.prod-stage span.on {
+  opacity: 1;
+  background: linear-gradient(180deg, var(--sakura2, #ffd9ec), var(--sakura, #ff7eb3));
+  color: #fff;
+}
+.prod-stage span.done {
+  opacity: 0.7;
+  background: var(--good, #4ee89a);
+  color: #fff;
+}
+
+.rival-card {
+  background: linear-gradient(135deg, rgba(255, 126, 179, 0.15), rgba(255, 204, 77, 0.12)) !important;
+  border: 1px solid rgba(255, 126, 179, 0.35) !important;
+}
+.rival-card.won { border-color: var(--good, #4ee89a) !important; }
+.rival-card.lost { border-color: var(--bad, #ff5c8a) !important; }
+
+.merch-panel .merch-tier {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #fff, var(--cream2, #f5e8d4));
+  margin-bottom: 8px;
+  border: 2px solid transparent;
+}
+.merch-panel .merch-tier.owned { border-color: var(--gold, #ffcc4d); }
+
+.collection-bar {
+  height: 8px;
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin-top: 6px;
+}
+.collection-bar i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--sakura, #ff7eb3), var(--gold, #ffcc4d));
+}
+
+.pity-meter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: rgba(176, 107, 255, 0.12);
+  border: 1px solid rgba(176, 107, 255, 0.3);
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.pity-meter .pity-bar {
+  flex: 1;
+  height: 6px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+}
+.pity-meter .pity-bar i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #b06bff, #ffba38);
+}
+
+.near-miss-toast {
+  border: 2px solid var(--gold, #ffcc4d) !important;
+  box-shadow: 0 0 20px rgba(255, 204, 77, 0.4) !important;
+}
+
+#settings-panel .setting-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px dashed rgba(70, 80, 107, 0.2);
+  font-size: 13px;
+  font-weight: 700;
+}
+#settings-panel input[type="range"] { width: 120px; }
+
+@media (prefers-reduced-motion: reduce) {
+  #news-ticker .tick-inner { animation: none; }
+}
