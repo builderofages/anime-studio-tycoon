@@ -1,7 +1,17 @@
 /* In-app purchases for native builds — Apple App Store AND Google Play
-   (cordova-plugin-purchase v13). Calls window.AST_GRANT(kind, amount) on a verified purchase. */
+   (cordova-plugin-purchase v13). Calls window.AST_GRANT(kind, amount) on a verified purchase.
+
+   SECURITY (flagged by GLM-5.2 audit):
+   - Set VALIDATOR_URL to your backend receipt-validation endpoint. Without server-side
+     validation, forged receipts can grant purchases. The server must verify receipts with
+     Apple App Store Server API / Google Play Developer API before returning success.
+   - Entitlements should ultimately be authoritative on your server, not client memory,
+     because window.AST_GRANT is reachable from the WebView console. VALIDATOR_URL is the
+     gate that closes that hole. */
 (function(){
   var APP = "com.trainyouragent.animestudiotycoon";
+  // TODO: set to your HTTPS receipt-validation endpoint, e.g. "https://api.yourdomain.com/iap/validate"
+  var VALIDATOR_URL = "";
   // Apple uses reverse-domain product IDs; Google Play uses short lowercase IDs.
   var APPLE = { pass:APP+".pass", bundle:APP+".bundle", bundle_legend:APP+".bundlelegend", bundle_mogul:APP+".bundlemogul",
     gems_s:APP+".gems120", gems_m:APP+".gems350", gems_l:APP+".gems800", gems_mega:APP+".gems2000",
@@ -30,6 +40,9 @@
     var P = window.CdvPurchase;
     if(!P || !P.store){ setTimeout(init, 600); return; }
     var store = P.store, APStore = P.Platform.APPLE_APPSTORE, GP = P.Platform.GOOGLE_PLAY;
+    // SECURITY: enable server-side receipt validation when configured.
+    if(VALIDATOR_URL){ store.validator = VALIDATOR_URL; }
+    else { try{ console.warn("IAP: VALIDATOR_URL not set — receipts are NOT server-validated (insecure)."); }catch(_){} }
     var defs = [], plats = [];
     var isiOS = !!(window.NATIVE_IOS) || (window.Capacitor && window.Capacitor.getPlatform && window.Capacitor.getPlatform()==="ios");
     var isAndroid = (window.Capacitor && window.Capacitor.getPlatform && window.Capacitor.getPlatform()==="android");
@@ -49,7 +62,8 @@
     store.when()
       .approved(function(t){ return t.verify(); })
       .verified(function(receipt){
-        try{ (receipt.collection || receipt.products || []).forEach(function(p){ grant(p.id || p.productId); }); }catch(e){}
+        try{ (receipt.collection || receipt.products || []).forEach(function(p){ grant(p.id || p.productId); }); }
+        catch(e){ try{ console.error("IAP grant error", e); }catch(_){} }
         receipt.finish();
       });
     store.error(function(e){ try{ console.warn("IAP error", e && e.message); }catch(_){} });
