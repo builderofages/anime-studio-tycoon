@@ -1,6 +1,6 @@
 {
   "name": "anime-studio-tycoon-desktop",
-  "version": "1.0.0",
+  "version": "4.0.0",
   "private": true,
   "description": "Anime Studio Tycoon — Steam / desktop build (Electron)",
   "author": "TrainYourAgent",
@@ -25,11 +25,24 @@
     "directories": { "output": "dist" },
     "files": ["main.js", "preload.js", "steam.js", "achievements.json", "package.json"],
     "extraResources": [
-      { "from": "../index.html", "to": "game/index.html" },
-      { "from": "../strings.js",  "to": "game/strings.js" },
-      { "from": "../logic.js",    "to": "game/logic.js" },
-      { "from": "../privacy.html","to": "game/privacy.html" },
-      { "from": "../terms.html",  "to": "game/terms.html" }
+      {
+        "from": "..",
+        "to": "game",
+        "filter": [
+          "index.html",
+          "strings.js",
+          "logic.js",
+          "aaa-upgrade.js",
+          "aaa-upgrade.css",
+          "gameplay-plus.js",
+          "gameplay-plus.css",
+          "gameplay-ultra.js",
+          "gameplay-ultra.css",
+          "manifest.json",
+          "privacy.html",
+          "terms.html"
+        ]
+      }
     ],
     "win": { "target": ["nsis", "zip"] },
     "mac": { "target": ["dmg", "zip"], "category": "public.app-category.games" },

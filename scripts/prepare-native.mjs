@@ -17,6 +17,8 @@ const FILES = [
   "aaa-upgrade.css",
   "gameplay-plus.js",
   "gameplay-plus.css",
+  "gameplay-ultra.js",
+  "gameplay-ultra.css",
   "manifest.json",
   "privacy.html",
   "terms.html",

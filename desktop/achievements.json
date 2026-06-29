@@ -33,5 +33,10 @@
   "perk20": "ACH_PERK20",
   "prestige10": "ACH_PRESTIGE10",
   "stars30": "ACH_STARS30",
-  "earn1b": "ACH_EARN1B"
+  "earn1b": "ACH_EARN1B",
+  "bid1": "ACH_BID1",
+  "bid5": "ACH_BID5",
+  "share25": "ACH_SHARE25",
+  "share50": "ACH_SHARE50",
+  "merch3": "ACH_MERCH3"
 }

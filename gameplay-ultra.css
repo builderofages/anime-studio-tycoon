@@ -1,0 +1,144 @@
+/* Anime Studio Tycoon — Ultra expansion */
+.stage-minigame {
+  margin-top: 8px;
+  padding: 10px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(189, 246, 255, 0.25), rgba(255, 217, 236, 0.2));
+  border: 1px solid rgba(61, 232, 255, 0.3);
+}
+.stage-minigame .sg-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+.stage-pipeline {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  margin-bottom: 8px;
+}
+.stage-pipeline .sp {
+  text-align: center;
+  font-size: 8px;
+  font-weight: 800;
+  padding: 5px 2px;
+  border-radius: 8px;
+  background: rgba(70, 80, 107, 0.12);
+  opacity: 0.45;
+}
+.stage-pipeline .sp.cur {
+  opacity: 1;
+  background: linear-gradient(180deg, #3de8ff, #22b8d4);
+  color: #fff;
+  box-shadow: 0 0 12px rgba(61, 232, 255, 0.4);
+}
+.stage-pipeline .sp.done {
+  opacity: 0.85;
+  background: var(--good, #4ee89a);
+  color: #fff;
+}
+
+.market-dash {
+  background: linear-gradient(135deg, rgba(45, 31, 66, 0.08), rgba(255, 204, 77, 0.12)) !important;
+  border: 1px solid rgba(255, 204, 77, 0.35) !important;
+}
+.market-share-ring {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 10px 0;
+}
+.market-share-ring .ring {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: conic-gradient(var(--gold, #ffcc4d) calc(var(--pct) * 1%), rgba(0,0,0,.1) 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 16px;
+  position: relative;
+}
+.market-share-ring .ring::after {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border-radius: 50%;
+  background: var(--cream, #fdf8f0);
+}
+.market-share-ring .ring span {
+  position: relative;
+  z-index: 1;
+  color: var(--plum, #2d1f42);
+}
+
+.bid-card {
+  padding: 12px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #fff, var(--cream2, #f5e8d4));
+  border: 2px solid transparent;
+  margin-bottom: 10px;
+}
+.bid-card.active {
+  border-color: var(--sakura, #ff7eb3);
+  box-shadow: 0 0 16px rgba(255, 126, 179, 0.25);
+}
+.bid-card .bid-rival {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--bad, #ff5c8a);
+}
+.bid-timer {
+  font-size: 10px;
+  font-weight: 700;
+  opacity: 0.7;
+}
+
+#confirm-gem {
+  z-index: 60;
+}
+#confirm-gem .gem-preview {
+  font-size: 32px;
+  text-align: center;
+  margin: 8px 0;
+}
+
+.settings-vol {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  justify-content: flex-end;
+}
+.settings-vol input[type="range"] {
+  width: 130px;
+}
+
+.rival-ladder {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.rival-ladder .rl-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.rival-ladder .rl-bar {
+  flex: 1;
+  height: 8px;
+  border-radius: 5px;
+  background: rgba(0,0,0,.1);
+  overflow: hidden;
+}
+.rival-ladder .rl-bar i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #ff7eb3, #ffcc4d);
+}

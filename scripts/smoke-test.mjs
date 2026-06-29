@@ -35,6 +35,8 @@ const required = [
   "aaa-upgrade.css",
   "gameplay-plus.js",
   "gameplay-plus.css",
+  "gameplay-ultra.js",
+  "gameplay-ultra.css",
   "manifest.json",
   "privacy.html",
   "terms.html",
@@ -52,6 +54,9 @@ assert(html.includes('src="gameplay-plus.js"'), "gameplay-plus.js linked");
 assert(html.includes("pityCount"), "scout pity state");
 assert(html.includes("merchLevel"), "merch line state");
 assert(html.includes("autoGreenlight"), "auto-greenlight state");
+assert(html.includes("marketShare"), "market share state");
+assert(html.includes("applyAudioSettings"), "audio settings");
+assert(html.includes('src="gameplay-ultra.js"'), "gameplay-ultra.js linked");
 assert(html.includes("seasonClaimed"), "season pass state");
 assert(html.includes('id="main"></div>'), "clean #main shell");
 assert(html.includes("BUILD_TAG"), "build tag constant");
@@ -60,7 +65,7 @@ assert(html.includes("whatsnew"), "what's new modal");
 const rawCount = (html.match(/__raw/g) || []).length;
 assert(rawCount <= 2, "single __raw redirect script", `found ${rawCount}`);
 
-for (const f of ["strings.js", "logic.js", "aaa-upgrade.js", "gameplay-plus.js"]) {
+for (const f of ["strings.js", "logic.js", "aaa-upgrade.js", "gameplay-plus.js", "gameplay-ultra.js"]) {
   const r = spawnSync("node", ["--check", join(root, f)], { encoding: "utf8" });
   assert(r.status === 0, `syntax OK: ${f}`, r.stderr?.trim());
 }
@@ -85,6 +90,9 @@ const prep = spawnSync("node", ["scripts/prepare-native.mjs"], { cwd: root, enco
 assert(prep.status === 0, "prepare-native.mjs runs", prep.stderr?.trim() || prep.stdout?.trim());
 assert(existsSync(join(root, "www/index.html")), "www/index.html created");
 assert(existsSync(join(root, "www/aaa-upgrade.js")), "www/aaa-upgrade.js copied");
+assert(existsSync(join(root, "www/gameplay-ultra.js")), "www/gameplay-ultra.js copied");
+const dpkg = JSON.parse(readFileSync(join(root, "desktop/package.json"), "utf8"));
+assert(dpkg.build?.extraResources?.[0]?.filter?.includes("gameplay-ultra.js"), "desktop bundles ultra");
 
 console.log(`\n${passed} passed, ${failed} failed`);
 process.exit(failed > 0 ? 1 : 0);

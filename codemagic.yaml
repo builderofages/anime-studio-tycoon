@@ -17,6 +17,8 @@ workflows:
     scripts:
       - name: Install deps
         script: npm ci || npm install
+      - name: Smoke test
+        script: npm test
       - name: Assemble web (www) from repo source
         script: npm run prepare-native
       - name: Add iOS platform
@@ -50,6 +52,8 @@ workflows:
     scripts:
       - name: Install deps
         script: npm ci || npm install
+      - name: Smoke test
+        script: npm test
       - name: Assemble web (www) from repo source
         script: npm run prepare-native
       - name: Add Android platform

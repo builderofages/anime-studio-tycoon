@@ -23,6 +23,7 @@
 <link rel="manifest" href="manifest.json">
 <link rel="stylesheet" href="aaa-upgrade.css">
 <link rel="stylesheet" href="gameplay-plus.css">
+<link rel="stylesheet" href="gameplay-ultra.css">
 <meta name="theme-color" content="#3a2b4d">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <style>
@@ -488,7 +489,7 @@ button,.btn-ghost{min-height:40px}
     <button class="btn-ghost" id="btn-mute">🔊 Sound: On</button>
     <button class="btn-ghost" id="btn-save" style="display:none">💾 Save</button>
     <button class="btn-ghost" id="btn-reset">↺ Reset</button>
-  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 18 · Gameplay+</span></div>
+  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 19 · Ultra</span></div>
   <div id="toasts"></div>
 </div>
 
@@ -577,14 +578,14 @@ button,.btn-ghost{min-height:40px}
 
 <div class="overlay" id="whatsnew" style="display:none">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <h1 style="font-size:22px;text-align:center">✨ What's New — Gameplay+</h1>
+    <h1 style="font-size:22px;text-align:center">✨ What's New — Ultra Edition</h1>
     <div class="offlist" style="margin:12px 0">
-      <div><span>🎯 Daily Goals</span><b>3 gem rewards every day</b></div>
-      <div><span>🎭 Smart Cast</span><b>Auto-pick your best stars</b></div>
-      <div><span>🧸 Merch Line</span><b>Passive ¥/sec income</b></div>
-      <div><span>⚔️ Weekly Rivalry</span><b>Beat rivals for loot</b></div>
-      <div><span>🍀 Scout Pity</span><b>Guaranteed Epic/Legendary</b></div>
-      <div><span>⚡ Auto-Greenlight</span><b>Never idle a slot</b></div>
+      <div><span>🎮 Production Pipeline</span><b>4-stage minigame + hype rush</b></div>
+      <div><span>⚔️ Bidding Wars</span><b>Win licenses vs rivals</b></div>
+      <div><span>📊 Market Share</span><b>Dashboard + income bonus</b></div>
+      <div><span>⚙️ Full Settings</span><b>Music/SFX sliders + gem confirm</b></div>
+      <div><span>🎯 Daily Goals</span><b>Smart Cast · Merch · Pity</b></div>
+      <div><span>🖥️ Steam / iOS</span><b>Achievements + TestFlight ready</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
   </div>
@@ -624,7 +625,7 @@ const STORE_PAYMENTS = true; // store always visible; buyReal routes web→check
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 18 · Gameplay+";
+const BUILD_TAG = "build 19 · Ultra";
 const OFFLINE_CAP = 8*3600; // seconds
 
 const GENRES = ["Action","Romance","Fantasy","Sci-Fi","Comedy","Slice of Life"];
@@ -981,7 +982,8 @@ function freshState(){
     tutorialSeen:false, whatsnewSeen:false, achievements:[],
     pityCount:0, merchLevel:0, autoGreenlight:false, rivalWins:0,
     plusGoals:[], plusGoalsDate:"", plusGoalsBase:{}, plusCollection50:false,
-    settings:{motion:true,ticker:true}, lastWhatsNewBuild:"",
+    settings:{motion:true,ticker:true,musicVol:0.35,sfxVol:0.5,confirmGems:true}, lastWhatsNewBuild:"",
+    marketShare:5, bidsWon:0, bidWeek:"", bidResolved:false,
     lastSave:Date.now(),
     muted:false,
     tab:"produce",
@@ -1203,6 +1205,11 @@ const ACHIEVEMENTS=[
   {id:"prestige10",name:"Eternal",       desc:"Reboot your studio 10 times",     gems:50, test:()=>S.legacy>=10},
   {id:"stars30", name:"Talent Empire",   desc:"Sign 30 star talents",            gems:30, test:()=>(S.stars||[]).length>=30},
   {id:"earn1b",  name:"Billionaire Studio",desc:"Earn ¥1B in total revenue",     gems:40, test:()=>(S.totalEarned||0)>=1000000000},
+  {id:"bid1",    name:"Deal Maker",        desc:"Win your first bidding war",    gems:10, test:()=>(S.bidsWon||0)>=1},
+  {id:"bid5",    name:"Industry Shark",    desc:"Win 5 bidding wars",            gems:25, test:()=>(S.bidsWon||0)>=5},
+  {id:"share25", name:"Market Player",   desc:"Reach 25% market share",        gems:20, test:()=>(S.marketShare||0)>=25},
+  {id:"share50", name:"Market Dominator",desc:"Reach 50% market share",        gems:40, test:()=>(S.marketShare||0)>=50},
+  {id:"merch3",  name:"Merch Mogul",      desc:"Launch Merch Line level 3",     gems:15, test:()=>(S.merchLevel||0)>=3},
 ];
 function checkAchievements(){
   for(const a of ACHIEVEMENTS){
@@ -1460,13 +1467,22 @@ function unlockedProjects(){ return PROJECTS.filter(p=>S.fans>=p.unlock); }
 /* ========================= AUDIO ========================= */
 let bgm=null; const sfx={};
 function initAudio(){
-  bgm=new Audio("https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_062744_f564f7ba-ec29-4a6e-a28b-023ff2c2f867.m4a"); bgm.loop=true; bgm.volume=0.35;
-  sfx.click=new Audio("https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_062745_f345d8e7-d3ee-47c5-b9c5-2474f060ee3d.mp3"); sfx.click.volume=0.5;
-  sfx.reward=new Audio("https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_062746_9941319d-2b65-406d-a9d3-bb1010fb5616.mp3"); sfx.reward.volume=0.6;
+  bgm=new Audio("https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_062744_f564f7ba-ec29-4a6e-a28b-023ff2c2f867.m4a"); bgm.loop=true;
+  sfx.click=new Audio("https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_062745_f345d8e7-d3ee-47c5-b9c5-2474f060ee3d.mp3");
+  sfx.reward=new Audio("https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_062746_9941319d-2b65-406d-a9d3-bb1010fb5616.mp3");
+  applyAudioSettings();
+}
+function applyAudioSettings(){
+  const mv=(S.settings&&S.settings.musicVol!=null)?S.settings.musicVol:0.35;
+  const sv=(S.settings&&S.settings.sfxVol!=null)?S.settings.sfxVol:0.5;
+  if(bgm) bgm.volume=S.muted?0:mv;
+  if(sfx.click) sfx.click.volume=sv;
+  if(sfx.reward) sfx.reward.volume=Math.min(1,sv*1.2);
 }
 function play(n){ if(S.muted||!sfx[n])return; try{ const a=sfx[n].cloneNode(); a.volume=sfx[n].volume; a.play().catch(()=>{}); }catch(e){} }
 function updateMute(){
   $("#btn-mute").textContent = (S.muted?("🔇 "+STR.muteOff):("🔊 "+STR.muteOn));
+  applyAudioSettings();
   if(bgm){ if(S.muted) bgm.pause(); else bgm.play().catch(()=>{}); }
 }
 /* localize the static chrome (footer, start screen) + build the language picker */
@@ -1539,7 +1555,9 @@ function load(){
     S.rivalWins=+d.rivalWins||0; S.plusCollection50=!!d.plusCollection50;
     S.plusGoals=Array.isArray(d.plusGoals)?d.plusGoals:[]; S.plusGoalsDate=d.plusGoalsDate||"";
     S.plusGoalsBase=(d.plusGoalsBase&&typeof d.plusGoalsBase==="object")?d.plusGoalsBase:{};
-    S.settings=(d.settings&&typeof d.settings==="object")?Object.assign({motion:true,ticker:true},d.settings):{motion:true,ticker:true};
+    S.settings=(d.settings&&typeof d.settings==="object")?Object.assign({motion:true,ticker:true,musicVol:0.35,sfxVol:0.5,confirmGems:true},d.settings):{motion:true,ticker:true,musicVol:0.35,sfxVol:0.5,confirmGems:true};
+    S.marketShare=+d.marketShare||5; S.bidsWon=+d.bidsWon||0; S.bidWeek=d.bidWeek||""; S.bidResolved=!!d.bidResolved;
+    S.activeBid=(d.activeBid&&typeof d.activeBid==="object")?d.activeBid:null;
     return true;
   }catch(e){ return false; }
 }
@@ -1695,8 +1713,9 @@ function releaseProject(slot){
   const franMult = pr.seq ? (1 + Math.min(0.6, 0.08*pr.seq)) : 1;
   if(pr.base){ S.franchises[pr.base]=Math.max(S.franchises[pr.base]||1, pr.seq||1); if(!OFFLINE&&pr.seq>=2) toastSafe("📺 "+sequelTitle(pr.base, pr.seq)+" — franchise bonus!",true); }
   processCast(pr, stars, p);
-  const yenGain = Math.floor(p.base * mult * (1 + S.fans*0.00004) * marketingMult() * legacyMult() * trendBonus * globalIncomeMult() * eventYenMult() * comboMult * starMult * chaosB * franMult);
-  const fansGain = Math.max(1, Math.floor(p.fans * mult * trendBonus * eventFanMult() * comboMult * perkMult("fans") * starMult * chaosB * franMult));
+  const shareMult = S._ultraShareMult || (1 + (S.marketShare||0)*0.0015);
+  const yenGain = Math.floor(p.base * mult * (1 + S.fans*0.00004) * marketingMult() * legacyMult() * trendBonus * globalIncomeMult() * eventYenMult() * comboMult * starMult * chaosB * franMult * shareMult);
+  const fansGain = Math.max(1, Math.floor(p.fans * mult * trendBonus * eventFanMult() * comboMult * perkMult("fans") * starMult * chaosB * franMult * shareMult));
   const hypeGain = Math.max(1, Math.floor((p.tier+1)*mult*2));
   S.yen+=yenGain; S.fans+=fansGain; S.totalFansEver+=fansGain; S.hype+=hypeGain;
   S.totalEarned=(S.totalEarned||0)+yenGain;
@@ -1776,7 +1795,8 @@ function freelance(){
 }
 /* ---- premium: spend Gems ---- */
 function gemCashAmount(){ const o=unlockedProjects(); const best=o[o.length-1]||PROJECTS[0]; return Math.floor(best.base*1.5*legacyMult()*passMult()); }
-function spendGem(act){
+function spendGem(act, force){
+  if(!force && window.__AST_CONFIRM_GEM__){ window.__AST_CONFIRM_GEM__(act, ()=>spendGem(act,true)); return; }
   const costs={hype:5,cash:8,skip:4,golden:12};
   const c=costs[act]; if(c==null) return;
   if(S.gems<c){ toast("Need "+c+" 💎 Gems — earn or buy more in the Store"); return; }
@@ -2805,10 +2825,13 @@ window.__AST_HOOK__ = {
   STAR_POOL,
   STAR_BY_ID,
   MILESTONES,
+  spendGem,
+  applyAudioSettings,
 };
 </script>
 <script src="aaa-upgrade.js"></script>
 <script src="gameplay-plus.js"></script>
+<script src="gameplay-ultra.js"></script>
 
 
 <script>(function(){var d;function f(){try{var b=document.getElementById('btn-save');if(b)b.click();}catch(e){}if(!d){d=document.createElement('div');d.style.cssText='position:fixed;bottom:10px;left:50%;transform:translateX(-50%);background:rgba(40,30,55,.92);color:#9be29b;font:600 12px system-ui;padding:5px 12px;border-radius:999px;z-index:99999;opacity:0;transition:opacity .25s;pointer-events:none';d.textContent='\u2713 Saved';document.body.appendChild(d);}d.style.opacity='1';clearTimeout(d._t);d._t=setTimeout(function(){d.style.opacity='0';},1100);}document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden')f();});window.addEventListener('pagehide',f);})();</script>

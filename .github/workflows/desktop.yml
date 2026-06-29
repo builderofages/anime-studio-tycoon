@@ -1,0 +1,30 @@
+name: Desktop / Steam build check
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'strings.js'
+      - 'gameplay-*.js'
+      - 'gameplay-*.css'
+      - 'aaa-upgrade.*'
+      - 'desktop/**'
+      - '.github/workflows/desktop.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: npm test
+      - run: node scripts/assemble-desktop.mjs
+      - name: Install desktop deps
+        working-directory: desktop
+        run: npm install
+      - name: Syntax check desktop main
+        run: node --check desktop/main.js && node --check desktop/preload.js && node --check desktop/steam.js

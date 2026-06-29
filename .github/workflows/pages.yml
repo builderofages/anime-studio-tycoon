@@ -15,6 +15,8 @@ on:
       - 'aaa-upgrade.css'
       - 'gameplay-plus.js'
       - 'gameplay-plus.css'
+      - 'gameplay-ultra.js'
+      - 'gameplay-ultra.css'
       - 'manifest.json'
       - 'privacy.html'
       - 'terms.html'
@@ -42,7 +44,7 @@ jobs:
         run: |
           mkdir -p _site
           # iap.js is intentionally omitted: it's a native-only StoreKit/Play bridge and is a no-op on the web.
-          cp index.html strings.js logic.js aaa-upgrade.js aaa-upgrade.css gameplay-plus.js gameplay-plus.css manifest.json privacy.html terms.html _site/ 2>/dev/null || true
+          cp index.html strings.js logic.js aaa-upgrade.js aaa-upgrade.css gameplay-plus.js gameplay-plus.css gameplay-ultra.js gameplay-ultra.css manifest.json privacy.html terms.html _site/ 2>/dev/null || true
       - name: Configure Pages
         uses: actions/configure-pages@v5
         with:
