@@ -8,10 +8,13 @@ node scripts/gen-env-secrets.mjs
 
 ## Vercel (required for web purchases)
 
-- [ ] `GRANT_JWT_SECRET`
-- [ ] `GRANT_MINT_SECRET`
+- [x] `GRANT_JWT_SECRET` *(set on production)*
+- [x] `GRANT_MINT_SECRET` *(set on production)*
+- [x] `GRANT_REDIRECT_BASE` *(set on production)*
 - [ ] `GUMROAD_ACCESS_TOKEN`
 - [ ] `GUMROAD_SELLER_ID`
+
+Re-generate locally: `npm run gen-env-secrets` (only if rotating secrets)
 
 ## Vercel (required for native IAP)
 

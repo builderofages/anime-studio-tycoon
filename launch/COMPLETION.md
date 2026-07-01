@@ -2,7 +2,7 @@
 
 **Current build:** 23 · Final  
 **Gameplay completion:** 100%  
-**Launch readiness:** ~80% (env secrets + store submit + Codemagic trigger)
+**Launch readiness:** ~85% (Gumroad token + 7 products + Codemagic)
 
 ## Shipped layers (v1–v8)
 
@@ -47,7 +47,7 @@ TestFlight: `launch/CODEMAGIC.md`
 | CI smoke tests | Auto | ✅ |
 | Gameplay v8 Final | Auto | ✅ |
 | Store assets (CDN) | Auto | `npm run fetch-launch-assets` ✅ |
-| IAP + web grant APIs | Auto | `/api/iap/validate`, `/api/grant/*` — set Vercel env |
+| IAP + web grant APIs | Auto | JWT/MINT secrets on Vercel ✅ — add `GUMROAD_ACCESS_TOKEN` |
 | Higgsfield fresh assets | You | `higgsfield auth login` (optional) |
 | Codemagic iOS/Android | You | Trigger + ASC credentials |
 | TestFlight beta | You | App Store Connect |

@@ -23,7 +23,8 @@
     "appId": "com.trainyouragent.animestudiotycoon",
     "productName": "Anime Studio Tycoon",
     "directories": { "output": "dist" },
-    "files": ["main.js", "preload.js", "steam.js", "achievements.json", "package.json"],
+    "files": ["main.js", "preload.js", "steam.js", "achievements.json", "package.json", "icon.png"],
+    "icon": "icon.png",
     "extraResources": [
       {
         "from": "..",
@@ -52,8 +53,8 @@
         ]
       }
     ],
-    "win": { "target": ["nsis", "zip"] },
-    "mac": { "target": ["dmg", "zip"], "category": "public.app-category.games" },
+    "win": { "target": ["nsis", "zip"], "icon": "icon.png" },
+    "mac": { "target": ["dmg", "zip"], "category": "public.app-category.games", "icon": "icon.png" },
     "linux": { "target": ["AppImage", "tar.gz"], "category": "Game" }
   }
 }
