@@ -2,7 +2,7 @@
 
 **Current build:** 23 · Final  
 **Gameplay completion:** 100%  
-**Launch readiness:** ~75% (store submit + env secrets + Higgsfield auth optional)
+**Launch readiness:** ~80% (env secrets + store submit + Codemagic trigger)
 
 ## Shipped layers (v1–v8)
 
@@ -35,7 +35,9 @@ higgsfield auth login
 node scripts/collect-higgsfield-urls.mjs
 ```
 
-Store copy: `launch/STORE_LISTING.md`
+Store copy: `launch/STORE_LISTING.md`  
+Gumroad wiring: `launch/GUMROAD_SETUP.md`  
+TestFlight: `launch/CODEMAGIC.md`
 
 ## Platform launch checklist
 

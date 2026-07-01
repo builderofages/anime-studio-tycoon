@@ -23,4 +23,6 @@ Production web no longer honors raw `?grant=` / `?unlock=` URLs.
 3. Redirect buyer to `https://anime-studio-tycoon.vercel.app/?pt=<token>`.
 4. Game calls `/api/grant/redeem?pt=` — server verifies and returns the entitlement.
 
-**Env:** `GRANT_JWT_SECRET` (random 32+ chars), `GRANT_MINT_SECRET` (webhook/admin key).
+**Gumroad (recommended):** `launch/GUMROAD_SETUP.md` — `/api/grant/finish` + ping webhook.
+
+**Env:** `GRANT_JWT_SECRET`, `GRANT_MINT_SECRET`, `GUMROAD_ACCESS_TOKEN`, `GUMROAD_SELLER_ID`.

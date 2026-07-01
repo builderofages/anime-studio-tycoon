@@ -47,16 +47,14 @@ Anime Studio Tycoon is a cozy idle management game with deep systems: production
 
 ---
 
-## Gumroad web checkout (signed grants)
+## Gumroad web checkout
 
-Production web no longer accepts raw `?grant=` URLs. After a sale:
+Full setup: **`launch/GUMROAD_SETUP.md`**
 
-```bash
-curl -X POST https://anime-studio-tycoon.vercel.app/api/grant/mint \
-  -H "Content-Type: application/json" \
-  -d '{"secret":"YOUR_GRANT_MINT_SECRET","kind":"pass"}'
+Per-product redirect URL:
+
+```
+https://anime-studio-tycoon.vercel.app/api/grant/finish?permalink=xmwvvi&license_key={license_key}
 ```
 
-Redirect the buyer to the `redirect` URL in the response.
-
-Set Vercel env: `GRANT_JWT_SECRET`, `GRANT_MINT_SECRET`, `GRANT_REDIRECT_BASE`.
+Vercel env: `GRANT_JWT_SECRET`, `GRANT_MINT_SECRET`, `GUMROAD_ACCESS_TOKEN`, `GUMROAD_SELLER_ID`.

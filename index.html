@@ -878,10 +878,10 @@ const PRESTIGE_FANS = 25000;
    This game is fully playable free (Gems are also earned in-game).
    To enable REAL purchases: set the checkout URLs below to your own
    Gumroad / Stripe / Lemon Squeezy links. On a successful purchase,
-   redirect the buyer back to:
-       <yourGameURL>?grant=pass            (grants Producer Pass)
-       <yourGameURL>?grant=gems&amt=350    (grants 350 Gems)
-   …and the entitlement is applied automatically on return.            */
+   redirect buyers via signed tokens (see launch/GUMROAD_SETUP.md):
+       Gumroad redirect → /api/grant/finish?permalink=SLUG&license_key={license_key}
+       → game opens with ?pt=… and entitlement applies automatically.
+   Dev/localhost still supports legacy ?grant= for testing.                    */
 const MONETIZATION = {
   currency:"$",
   checkout:{
