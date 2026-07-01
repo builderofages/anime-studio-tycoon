@@ -1,0 +1,117 @@
+/* Anime Studio Tycoon — AAA S-Tier (v9) */
+.has-ticker body { padding-top: 0; }
+
+.dynasty-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-weight: 900;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+.dynasty-s { background: linear-gradient(135deg, #ffd700, #ff9bc4, #b06bff); color: #2c1538; }
+.dynasty-a { background: linear-gradient(135deg, #5fd38a, #7ee8fa); color: #1a3a2a; }
+.dynasty-b { background: linear-gradient(135deg, #7eb8ff, #c4d9ff); color: #1a2a4a; }
+.dynasty-c { background: linear-gradient(135deg, #ffc845, #ffe39a); color: #5a4200; }
+.dynasty-d { background: linear-gradient(135deg, #cdd6e6, #e8ecf4); color: #46506b; }
+
+.aaa-glass {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.72), rgba(255, 214, 231, 0.35));
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 16px;
+}
+
+.briefing-card {
+  border: 2px solid var(--gold, #f6b73c);
+  background: linear-gradient(180deg, #fffef8, #fff5d6);
+}
+.briefing-opt {
+  display: block;
+  width: 100%;
+  text-align: left;
+  margin-top: 8px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 2px solid rgba(0, 0, 0, 0.08);
+  background: #fff;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+}
+.briefing-opt:hover { border-color: var(--sakura, #ff9bc4); }
+
+.festival-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 12px;
+  background: rgba(255, 215, 0, 0.12);
+  border: 1px solid rgba(255, 190, 60, 0.35);
+  margin-top: 8px;
+  font-size: 12px;
+}
+
+.slotpanel.slot-ready {
+  box-shadow: 0 0 0 2px rgba(246, 183, 60, 0.55), 0 8px 28px rgba(246, 183, 60, 0.2);
+  animation: aaa-pulse 2.4s ease-in-out infinite;
+}
+@keyframes aaa-pulse {
+  0%, 100% { box-shadow: 0 0 0 2px rgba(246, 183, 60, 0.45), 0 6px 20px rgba(246, 183, 60, 0.15); }
+  50% { box-shadow: 0 0 0 3px rgba(255, 155, 196, 0.65), 0 10px 32px rgba(255, 155, 196, 0.25); }
+}
+
+.achieve-pop {
+  position: fixed;
+  top: 72px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-20px);
+  z-index: 99998;
+  padding: 14px 22px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #2c1538, #5a2d6e);
+  color: #ffd700;
+  font-weight: 900;
+  font-size: 15px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s, transform 0.35s;
+}
+.achieve-pop.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.smart-cast-bar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 8px 0;
+}
+.contract-chip {
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(95, 211, 138, 0.25);
+  color: #1a5a30;
+  font-weight: 800;
+}
+.franchise-universe {
+  display: grid;
+  gap: 8px;
+  margin-top: 10px;
+}
+.franchise-node {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border-left: 4px solid var(--sakura, #ff9bc4);
+  background: rgba(255, 255, 255, 0.5);
+  font-size: 12px;
+}

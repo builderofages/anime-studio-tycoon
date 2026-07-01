@@ -53,5 +53,12 @@
   "ost3": "ACH_OST3",
   "stream1": "ACH_STREAM1",
   "influence10": "ACH_INFLUENCE10",
-  "recover5": "ACH_RECOVER5"
+  "recover5": "ACH_RECOVER5",
+  "festival1": "ACH_FESTIVAL1",
+  "festival5": "ACH_FESTIVAL5",
+  "directors1": "ACH_DIRECTORS1",
+  "syndication1": "ACH_SYNDICATION1",
+  "contract3": "ACH_CONTRACT3",
+  "dynasty50": "ACH_DYNASTY50",
+  "dynastyS": "ACH_DYNASTYS"
 }

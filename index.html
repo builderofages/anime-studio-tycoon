@@ -28,6 +28,7 @@
 <link rel="stylesheet" href="gameplay-empire.css">
 <link rel="stylesheet" href="gameplay-studio.css">
 <link rel="stylesheet" href="gameplay-final.css">
+<link rel="stylesheet" href="gameplay-aaa.css">
 <meta name="theme-color" content="#3a2b4d">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <style>
@@ -582,14 +583,15 @@ button,.btn-ghost{min-height:40px}
 
 <div class="overlay" id="whatsnew" style="display:none">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <h1 style="font-size:22px;text-align:center">✨ What's New — Final Edition</h1>
+    <h1 style="font-size:22px;text-align:center">✨ What's New — AAA S-Tier</h1>
     <div class="offlist" style="margin:12px 0">
-      <div><span>🎵 OST Commissions</span><b>Hype → theme songs & premiere boost</b></div>
-      <div><span>📡 Streaming Deals</span><b>Recurring royalty contracts</b></div>
-      <div><span>🎖️ Influence</span><b>Second prestige currency & perks</b></div>
-      <div><span>🚑 Recovery Rally</span><b>Troubled production minigame</b></div>
-      <div><span>📋 Crisis Recaps</span><b>Post–war room summary cards</b></div>
-      <div><span>🎓 Pro Tips</span><b>Energy, chaos & casting guide</b></div>
+      <div><span>👑 Dynasty Score</span><b>S/A/B/C/D rank — your studio legacy meter</b></div>
+      <div><span>📋 Director's Briefing</span><b>Daily executive choices shape premieres</b></div>
+      <div><span>🏆 Festival Circuit</span><b>Win Annecy, Crunchyroll & Japan awards</b></div>
+      <div><span>📋 Star Contracts</span><b>Lifetime stats, deals & mentor bonuses</b></div>
+      <div><span>🎬 Director's Cuts</span><b>Re-release hall-of-fame hits for royalties</b></div>
+      <div><span>🌍 Global Syndication</span><b>+25% all income for 21 days</b></div>
+      <div><span>🎭 Smart Cast</span><b>Auto-pick, auto-rest & cancel production</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
   </div>
@@ -629,7 +631,7 @@ const STORE_PAYMENTS = true; // store always visible; buyReal routes web→check
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 23 · Final";
+const BUILD_TAG = "build 24 · AAA S-Tier";
 const OFFLINE_CAP = 8*3600; // seconds
 
 const GENRES = ["Action","Romance","Fantasy","Sci-Fi","Comedy","Slice of Life"];
@@ -1001,6 +1003,9 @@ function freshState(){
     sparks:0, templates:[],
     influence:0, influenceSpent:0, inflPerks:{income:0,premiere:0,chaos:0},
     streaming:[], recoveries:0, ostTotal:0, finalGuideSeen:false, finalGuideStep:0,
+    starStats:{}, starContracts:{}, festivalWins:[], directorsCuts:[], dynastyPoints:0,
+    autoRest:false, syndicationUntil:"", briefingDay:"", briefingPending:"", contractsSigned:0,
+    aaaQualityBoost:0, aaaYenBoost:0,
     lastSave:Date.now(),
     muted:false,
     tab:"produce",
@@ -1227,7 +1232,22 @@ const ACHIEVEMENTS=[
   {id:"share25", name:"Market Player",   desc:"Reach 25% market share",        gems:20, test:()=>(S.marketShare||0)>=25},
   {id:"share50", name:"Market Dominator",desc:"Reach 50% market share",        gems:40, test:()=>(S.marketShare||0)>=50},
   {id:"merch3",  name:"Merch Mogul",      desc:"Launch Merch Line level 3",     gems:15, test:()=>(S.merchLevel||0)>=3},
+  {id:"festival1",name:"Festival Darling",desc:"Win your first festival award", gems:12, test:()=>(S.festivalWins||[]).length>=1},
+  {id:"festival5",name:"Circuit Legend",  desc:"Win 5 festival awards",         gems:30, test:()=>(S.festivalWins||[]).length>=5},
+  {id:"directors1",name:"Director's Vision",desc:"Release a Director's Cut",   gems:10, test:()=>(S.directorsCuts||[]).length>=1},
+  {id:"syndication1",name:"Global Syndicate",desc:"Sign Global Syndication",   gems:25, test:()=>!!(S.syndicationUntil&&S.syndicationUntil.length)},
+  {id:"contract3",name:"Talent Agent",    desc:"Sign 3 star contracts",         gems:12, test:()=>(S.contractsSigned||0)>=3},
+  {id:"dynasty50",name:"Dynasty Builder", desc:"Earn 50 dynasty points",        gems:20, test:()=>(S.dynastyPoints||0)>=50},
+  {id:"dynastyS", name:"S-Tier Legend",   desc:"Reach S-Rank dynasty score",    gems:40, test:()=>{
+    let s=0; s+=Math.min(18,(S.releases||0)/15); s+=Math.min(15,Math.log10(Math.max(1,S.totalFansEver||1))*3);
+    s+=Math.min(12,(S.marketShare||5)/4); s+=Math.min(10,(S.awardsWon||0)*2); s+=Math.min(10,(S.festivalWins||[]).length*2.5);
+    s+=Math.min(8,(S.legacy||0)*1.5); s+=Math.min(8,(S.influence||0)/3); s+=Math.min(7,(S.stars||[]).length/2);
+    s+=Math.min(6,Object.keys(S.franchises||{}).length); s+=Math.min(6,(S.dynastyPoints||0)/20);
+    if(S.producerPass) s+=4; if((S.endlessDiff||"")==="nightmare") s+=5;
+    return Math.round(Math.min(100,s))>=92;
+  }},
 ];
+window.ACHIEVEMENTS=ACHIEVEMENTS;
 function checkAchievements(){
   for(const a of ACHIEVEMENTS){
     if(!S.achievements.includes(a.id) && a.test()){ S.achievements.push(a.id); S.gems+=a.gems; toastSafe("🏆 "+a.name+" — +"+a.gems+" 💎",true);
@@ -1482,6 +1502,7 @@ function projectStars(p, genre, pr){
   if(S._empireStarAdj) stars=Math.max(1,Math.min(5,Math.round(stars*S._empireStarAdj)));
   if(S._studioStarAdj) stars=Math.max(1,Math.min(5,Math.round(stars*S._studioStarAdj)));
   if(S._finalStarAdj) stars=Math.max(1,Math.min(5,Math.round(stars*S._finalStarAdj)));
+  if(S._aaaStarAdj) stars=Math.max(1,Math.min(5,Math.round(stars*S._aaaStarAdj)));
   return stars;
 }
 function unlockedProjects(){ return PROJECTS.filter(p=>S.fans>=p.unlock); }
@@ -1746,8 +1767,8 @@ function releaseProject(slot){
   const shareMult = S._ultraShareMult || (1 + (S.marketShare||0)*0.0015);
   let yenGain = Math.floor(p.base * mult * (1 + S.fans*0.00004) * marketingMult() * legacyMult() * trendBonus * globalIncomeMult() * eventYenMult() * comboMult * starMult * chaosB * franMult * shareMult);
   let fansGain = Math.max(1, Math.floor(p.fans * mult * trendBonus * eventFanMult() * comboMult * perkMult("fans") * starMult * chaosB * franMult * shareMult));
-  const endlessM=S._endlessReleaseMult||1, empireM=S._empireReleaseMult||1, studioM=S._studioReleaseMult||1, finalM=S._finalReleaseMult||1;
-  yenGain=Math.floor(yenGain*endlessM*empireM*studioM*finalM); fansGain=Math.max(1,Math.floor(fansGain*endlessM*empireM*studioM*finalM));
+  const endlessM=S._endlessReleaseMult||1, empireM=S._empireReleaseMult||1, studioM=S._studioReleaseMult||1, finalM=S._finalReleaseMult||1, aaaM=S._aaaReleaseMult||1;
+  yenGain=Math.floor(yenGain*endlessM*empireM*studioM*finalM*aaaM); fansGain=Math.max(1,Math.floor(fansGain*endlessM*empireM*studioM*finalM*aaaM));
   const hypeGain = Math.max(1, Math.floor((p.tier+1)*mult*2));
   S.yen+=yenGain; S.fans+=fansGain; S.totalFansEver+=fansGain; S.hype+=hypeGain;
   S.totalEarned=(S.totalEarned||0)+yenGain;
@@ -2106,7 +2127,7 @@ function tick(seconds){
     if(S.producerPass && pr.progress>=p.work){ releaseProject(i); }
   }
   if(anyActive) S.yen=Math.max(0, S.yen - salaryPerTick()*seconds); // staff paid while any line is filming
-  if(S.catalogIncome>0) S.yen += royaltyPerSec()*seconds; // passive back-catalog royalties
+  if(S.catalogIncome>0) S.yen += royaltyPerSec()*seconds*(1+(S._aaaTickRoyaltyBoost||0)); // passive back-catalog royalties (+ syndication)
   // --- Studio Stamina (crew energy): running many lines tires the team; idle time recovers it ---
   { const active=activeCount();
     const drain=active*0.5 + (Date.now()<S.overdriveUntil?1:0) + (S.chaosMode?0.4:0);
@@ -2918,6 +2939,7 @@ window.__AST_HOOK__ = {
 <script src="gameplay-empire.js"></script>
 <script src="gameplay-studio.js"></script>
 <script src="gameplay-final.js"></script>
+<script src="gameplay-aaa.js"></script>
 
 
 <script>(function(){var d;function f(){try{var b=document.getElementById('btn-save');if(b)b.click();}catch(e){}if(!d){d=document.createElement('div');d.style.cssText='position:fixed;bottom:10px;left:50%;transform:translateX(-50%);background:rgba(40,30,55,.92);color:#9be29b;font:600 12px system-ui;padding:5px 12px;border-radius:999px;z-index:99999;opacity:0;transition:opacity .25s;pointer-events:none';d.textContent='\u2713 Saved';document.body.appendChild(d);}d.style.opacity='1';clearTimeout(d._t);d._t=setTimeout(function(){d.style.opacity='0';},1100);}document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden')f();});window.addEventListener('pagehide',f);})();</script>

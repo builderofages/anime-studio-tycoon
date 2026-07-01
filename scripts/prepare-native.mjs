@@ -27,6 +27,8 @@ const FILES = [
   "gameplay-studio.css",
   "gameplay-final.js",
   "gameplay-final.css",
+  "gameplay-aaa.js",
+  "gameplay-aaa.css",
   "manifest.json",
   "icons/icon-512.png",
   "privacy.html",
