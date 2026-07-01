@@ -41,6 +41,8 @@ const required = [
   "gameplay-endless.css",
   "gameplay-empire.js",
   "gameplay-empire.css",
+  "gameplay-studio.js",
+  "gameplay-studio.css",
   "manifest.json",
   "privacy.html",
   "terms.html",
@@ -68,6 +70,9 @@ assert(html.includes("projectStars"), "projectStars on hook");
 assert(html.includes('src="gameplay-empire.js"'), "gameplay-empire.js linked");
 assert(html.includes("namedStaff"), "named staff state");
 assert(html.includes("pullStar"), "pullStar on hook");
+assert(html.includes('src="gameplay-studio.js"'), "gameplay-studio.js linked");
+assert(html.includes("sparks"), "spark currency state");
+assert(html.includes("__AST_CONFIRM__"), "in-theme confirm hook");
 assert(html.includes("seasonClaimed"), "season pass state");
 assert(html.includes('id="main"></div>'), "clean #main shell");
 assert(html.includes("BUILD_TAG"), "build tag constant");
@@ -76,7 +81,7 @@ assert(html.includes("whatsnew"), "what's new modal");
 const rawCount = (html.match(/__raw/g) || []).length;
 assert(rawCount <= 2, "single __raw redirect script", `found ${rawCount}`);
 
-for (const f of ["strings.js", "logic.js", "aaa-upgrade.js", "gameplay-plus.js", "gameplay-ultra.js", "gameplay-endless.js", "gameplay-empire.js"]) {
+for (const f of ["strings.js", "logic.js", "aaa-upgrade.js", "gameplay-plus.js", "gameplay-ultra.js", "gameplay-endless.js", "gameplay-empire.js", "gameplay-studio.js"]) {
   const r = spawnSync("node", ["--check", join(root, f)], { encoding: "utf8" });
   assert(r.status === 0, `syntax OK: ${f}`, r.stderr?.trim());
 }
@@ -107,7 +112,9 @@ const dpkg = JSON.parse(readFileSync(join(root, "desktop/package.json"), "utf8")
 assert(dpkg.build?.extraResources?.[0]?.filter?.includes("gameplay-ultra.js"), "desktop bundles ultra");
 assert(dpkg.build?.extraResources?.[0]?.filter?.includes("gameplay-endless.js"), "desktop bundles endless");
 assert(dpkg.build?.extraResources?.[0]?.filter?.includes("gameplay-empire.js"), "desktop bundles empire");
+assert(dpkg.build?.extraResources?.[0]?.filter?.includes("gameplay-studio.js"), "desktop bundles studio");
 assert(existsSync(join(root, "www/gameplay-empire.js")), "www/gameplay-empire.js copied");
+assert(existsSync(join(root, "www/gameplay-studio.js")), "www/gameplay-studio.js copied");
 
 console.log(`\n${passed} passed, ${failed} failed`);
 process.exit(failed > 0 ? 1 : 0);

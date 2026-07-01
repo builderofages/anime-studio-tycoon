@@ -23,6 +23,8 @@ const FILES = [
   "gameplay-endless.css",
   "gameplay-empire.js",
   "gameplay-empire.css",
+  "gameplay-studio.js",
+  "gameplay-studio.css",
   "manifest.json",
   "privacy.html",
   "terms.html",

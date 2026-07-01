@@ -26,6 +26,7 @@
 <link rel="stylesheet" href="gameplay-ultra.css">
 <link rel="stylesheet" href="gameplay-endless.css">
 <link rel="stylesheet" href="gameplay-empire.css">
+<link rel="stylesheet" href="gameplay-studio.css">
 <meta name="theme-color" content="#3a2b4d">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <style>
@@ -580,14 +581,14 @@ button,.btn-ghost{min-height:40px}
 
 <div class="overlay" id="whatsnew" style="display:none">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <h1 style="font-size:22px;text-align:center">✨ What's New — Empire Edition</h1>
+    <h1 style="font-size:22px;text-align:center">✨ What's New — Studio+ Edition</h1>
     <div class="offlist" style="margin:12px 0">
-      <div><span>👤 Named Staff</span><b>Elite hires with traits</b></div>
-      <div><span>⚠️ War Room</span><b>3-option crisis decisions</b></div>
-      <div><span>🎨 Genre Blend</span><b>Primary + secondary genre</b></div>
-      <div><span>🌟 Scout Banner</span><b>Weekly rate-up featured star</b></div>
-      <div><span>🛡️ Chaos Insurance</span><b>Soften crisis costs</b></div>
-      <div><span>🕊️ Calm Streak</span><b>7 days → +5 💎</b></div>
+      <div><span>🌟 10× Scout</span><b>72💎 multi-pull with spark rewards</b></div>
+      <div><span>✨ Spark Shop</span><b>Trade sparks for Epic/Legendary</b></div>
+      <div><span>✨ Polish Phase</span><b>Hype passes → better premieres</b></div>
+      <div><span>💚💢 Relations</span><b>Friend & rival cast dynamics</b></div>
+      <div><span>📋 Templates</span><b>Save greenlight presets</b></div>
+      <div><span>📊 Records</span><b>Full lifetime stats dashboard</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
   </div>
@@ -627,7 +628,7 @@ const STORE_PAYMENTS = true; // store always visible; buyReal routes web→check
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 21 · Empire";
+const BUILD_TAG = "build 22 · Studio+";
 const OFFLINE_CAP = 8*3600; // seconds
 
 const GENRES = ["Action","Romance","Fantasy","Sci-Fi","Comedy","Slice of Life"];
@@ -989,6 +990,7 @@ function freshState(){
     endlessRisk:"balanced", endlessDiff:"standard", endlessCourMode:false, endlessEvents:0,
     namedStaff:[], empireSource:"original", empireBlendGenre:-1, scoutBannerWeek:"", scoutBannerStar:"",
     chaosInsurance:false, calmStreak:0, crisesSurvived:0, lastCrisisDay:"",
+    sparks:0, templates:[],
     lastSave:Date.now(),
     muted:false,
     tab:"produce",
@@ -1404,10 +1406,10 @@ function investFame(sid){ const st=findStar(sid); if(!st) return; const c=fameCo
   play("reward"); toast("🌟 Fame +1 (now "+st.fame+") — watch their loyalty!",st.fame>=5); render(); save();
 }
 function fireStar(sid){ const st=findStar(sid), t=STAR_BY_ID[sid]; if(!st||!t) return;
-  if(!confirm("Release "+t.name+" from your studio? This can't be undone.")) return;
-  const refund=RARITY_ORDER.indexOf(effRarity(st))+1+Math.floor((st.level||1)/5);
-  removeStar(sid); S.gems+=refund;
-  play("click"); toast("👋 "+t.name+" released · +"+refund+" 💎 severance"); render(); save();
+  const doFire=()=>{ const refund=RARITY_ORDER.indexOf(effRarity(st))+1+Math.floor((st.level||1)/5);
+    removeStar(sid); S.gems+=refund; play("click"); toast("👋 "+t.name+" released · +"+refund+" 💎 severance"); render(); save(); };
+  if(window.__AST_CONFIRM__) window.__AST_CONFIRM__("Release "+t.name+"?","They leave permanently — can't be undone.",doFire);
+  else if(!confirm("Release "+t.name+" from your studio? This can't be undone.")) return; else doFire();
 }
 function toggleCast(sid){ const st=findStar(sid); if(!st) return;
   if(st.resting||starEnergy(st)<15){ toast("This star needs rest before working"); return; }
@@ -1468,6 +1470,7 @@ function projectStars(p, genre, pr){
   let stars = Math.max(1, Math.min(5, Math.round(q*3.4)));
   if(S._endlessStarAdj) stars=Math.max(1,Math.min(5,Math.round(stars*S._endlessStarAdj)));
   if(S._empireStarAdj) stars=Math.max(1,Math.min(5,Math.round(stars*S._empireStarAdj)));
+  if(S._studioStarAdj) stars=Math.max(1,Math.min(5,Math.round(stars*S._studioStarAdj)));
   return stars;
 }
 function unlockedProjects(){ return PROJECTS.filter(p=>S.fans>=p.unlock); }
@@ -1573,6 +1576,7 @@ function load(){
     S.scoutBannerWeek=d.scoutBannerWeek||""; S.scoutBannerStar=d.scoutBannerStar||"";
     S.chaosInsurance=!!d.chaosInsurance; S.calmStreak=+d.calmStreak||0;
     S.crisesSurvived=+d.crisesSurvived||0; S.lastCrisisDay=d.lastCrisisDay||"";
+    S.sparks=+d.sparks||0; S.templates=Array.isArray(d.templates)?d.templates:[];
     return true;
   }catch(e){ return false; }
 }
@@ -1731,8 +1735,8 @@ function releaseProject(slot){
   const shareMult = S._ultraShareMult || (1 + (S.marketShare||0)*0.0015);
   let yenGain = Math.floor(p.base * mult * (1 + S.fans*0.00004) * marketingMult() * legacyMult() * trendBonus * globalIncomeMult() * eventYenMult() * comboMult * starMult * chaosB * franMult * shareMult);
   let fansGain = Math.max(1, Math.floor(p.fans * mult * trendBonus * eventFanMult() * comboMult * perkMult("fans") * starMult * chaosB * franMult * shareMult));
-  const endlessM=S._endlessReleaseMult||1, empireM=S._empireReleaseMult||1;
-  yenGain=Math.floor(yenGain*endlessM*empireM); fansGain=Math.max(1,Math.floor(fansGain*endlessM*empireM));
+  const endlessM=S._endlessReleaseMult||1, empireM=S._empireReleaseMult||1, studioM=S._studioReleaseMult||1;
+  yenGain=Math.floor(yenGain*endlessM*empireM*studioM); fansGain=Math.max(1,Math.floor(fansGain*endlessM*empireM*studioM));
   const hypeGain = Math.max(1, Math.floor((p.tier+1)*mult*2));
   S.yen+=yenGain; S.fans+=fansGain; S.totalFansEver+=fansGain; S.hype+=hypeGain;
   S.totalEarned=(S.totalEarned||0)+yenGain;
@@ -2022,7 +2026,7 @@ function overdrive(){
 function prestige(){
   if(S.fans<PRESTIGE_FANS) return;
   const gain=Math.floor(Math.sqrt(S.totalFansEver/1000));
-  if(!confirm(`Reboot the studio?\nReset money, fans, staff & upgrades, but gain ${gain} Legacy Points (permanent +${gain*5}% income forever). Genre mastery is kept.`)) return;
+  const doPrestige=()=>{
   const keep={legacy:S.legacy+gain, mastery:S.mastery, total:S.totalFansEver, mute:S.muted,
               gems:S.gems, pass:S.producerPass, ms:S.milestonesClaimed, bundle:S.bundleBought,
               daily:S.lastDailyDate, streak:S.dailyStreak, stars:S.stars, tut:S.tutorialSeen,
@@ -2042,6 +2046,9 @@ function prestige(){
   S.studioName=keep.studioName||""; S.hallOfFame=keep.hof||[]; S.bestRank=keep.bestRank||99;
   checkAchievements(); track("prestige",{gain});
   toast("🌸 Studio rebooted! +"+gain+" Legacy",true); render(); save();
+  };
+  if(window.__AST_CONFIRM__) window.__AST_CONFIRM__("Reboot the studio?","Reset money, fans & upgrades — gain "+gain+" Legacy Points (+5% income each). Genre mastery kept.",doPrestige);
+  else if(confirm("Reboot the studio?\nReset money, fans, staff & upgrades, but gain "+gain+" Legacy Points (permanent +"+gain*5+"% income forever). Genre mastery is kept.")) doPrestige();
 }
 /* ---- Legacy Perk Tree — spend Legacy Points on permanent, prestige-proof bonuses ---- */
 const PERKS={
@@ -2666,7 +2673,9 @@ document.addEventListener("click", e=>{
 });
 $("#btn-mute").onclick=()=>{ S.muted=!S.muted; updateMute(); save(); };
 $("#btn-save").onclick=()=>{ save(); toast("Game saved 💾"); };
-$("#btn-reset").onclick=()=>{ if(confirm("Reset ALL progress? This cannot be undone.")){ S=freshState(); save(); render(); toast("Progress reset"); } };
+$("#btn-reset").onclick=()=>{ const reset=()=>{ S=freshState(); save(); render(); toast("Progress reset"); };
+  if(window.__AST_CONFIRM__) window.__AST_CONFIRM__("Reset ALL progress?","Every save wiped — cannot be undone.",reset);
+  else if(confirm("Reset ALL progress? This cannot be undone.")) reset(); };
 
 /* keyboard shortcuts (physical key codes) */
 const KEYTAB={ Digit1:"produce",Digit2:"staff",Digit3:"stars",Digit4:"research",Digit5:"studio",Digit6:"market",Digit7:"store" };
@@ -2854,6 +2863,7 @@ window.__AST_HOOK__ = {
 <script src="gameplay-ultra.js"></script>
 <script src="gameplay-endless.js"></script>
 <script src="gameplay-empire.js"></script>
+<script src="gameplay-studio.js"></script>
 
 
 <script>(function(){var d;function f(){try{var b=document.getElementById('btn-save');if(b)b.click();}catch(e){}if(!d){d=document.createElement('div');d.style.cssText='position:fixed;bottom:10px;left:50%;transform:translateX(-50%);background:rgba(40,30,55,.92);color:#9be29b;font:600 12px system-ui;padding:5px 12px;border-radius:999px;z-index:99999;opacity:0;transition:opacity .25s;pointer-events:none';d.textContent='\u2713 Saved';document.body.appendChild(d);}d.style.opacity='1';clearTimeout(d._t);d._t=setTimeout(function(){d.style.opacity='0';},1100);}document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden')f();});window.addEventListener('pagehide',f);})();</script>
