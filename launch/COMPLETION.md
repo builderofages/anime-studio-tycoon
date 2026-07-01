@@ -1,8 +1,8 @@
 # Anime Studio Tycoon — Path to 100%
 
-**Current build:** 23 · Final  
+**Current build:** 25 · Legend  
 **Gameplay completion:** 100%  
-**Launch readiness:** ~85% (Gumroad token + 7 products + Codemagic)
+**Launch readiness:** ~88% (Gumroad token + 7 products + Codemagic)
 
 ## Shipped layers (v1–v8)
 
@@ -16,6 +16,8 @@
 | 21 | Empire | Named staff, war room, blend, banner, insurance |
 | 22 | Studio+ | 10× scout, spark shop, polish, relations, templates |
 | 23 | Final | OST, streaming deals, Influence, recovery minigame, crisis recaps, scroll fix, pro guide |
+| 24 | AAA S-Tier | Dynasty score, briefings, festivals, contracts, syndication, smart cast, director's cuts |
+| 25 | Legend | Dynasty perks shop, career ledger, rival festivals, rank ceremonies, achievement dynasty |
 
 ## Art & media
 

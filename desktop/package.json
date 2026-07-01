@@ -49,6 +49,8 @@
           "gameplay-final.css",
           "gameplay-aaa.js",
           "gameplay-aaa.css",
+          "gameplay-legend.js",
+          "gameplay-legend.css",
           "manifest.json",
           "privacy.html",
           "terms.html"

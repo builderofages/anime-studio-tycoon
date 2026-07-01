@@ -1,0 +1,52 @@
+/* Anime Studio Tycoon — Legend expansion (v10) */
+.legend-glass {
+  background: linear-gradient(145deg, rgba(255, 248, 230, 0.85), rgba(255, 200, 220, 0.35));
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 215, 0, 0.35);
+  border-radius: 16px;
+}
+
+.legend-perk-row {
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+.legend-perk-row:last-child { border-bottom: none; }
+
+.ledger-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 8px;
+}
+@media (min-width: 520px) {
+  .ledger-grid { grid-template-columns: repeat(4, 1fr); }
+}
+.ledger-cell {
+  text-align: center;
+  padding: 12px 8px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 190, 60, 0.25);
+}
+.ledger-val {
+  display: block;
+  font-weight: 900;
+  font-size: 16px;
+  color: var(--plum, #3a2b4d);
+}
+.ledger-lbl {
+  display: block;
+  font-size: 10px;
+  color: #6a5a7a;
+  margin-top: 4px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.legend-dynasty-bar {
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: rgba(255, 215, 0, 0.12);
+  border: 1px dashed rgba(255, 190, 60, 0.4);
+}

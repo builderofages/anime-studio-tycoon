@@ -60,5 +60,8 @@
   "syndication1": "ACH_SYNDICATION1",
   "contract3": "ACH_CONTRACT3",
   "dynasty50": "ACH_DYNASTY50",
-  "dynastyS": "ACH_DYNASTYS"
+  "dynastyS": "ACH_DYNASTYS",
+  "dynperk1": "ACH_DYNPERK1",
+  "festivalloss3": "ACH_FESTLOSS3",
+  "peak80": "ACH_PEAK80"
 }

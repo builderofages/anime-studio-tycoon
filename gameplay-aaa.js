@@ -371,7 +371,8 @@
     if ((S.releases || 0) < 3) return;
     if (S.briefingPending === day) return;
     S.briefingPending = day;
-    const b = BRIEFINGS[Math.floor(Math.random() * BRIEFINGS.length)];
+    const pool = BRIEFINGS.concat(window.__AST_AAA_BRIEF_POOL__ || []);
+    const b = pool[Math.floor(Math.random() * pool.length)];
     setTimeout(() => showBriefing(b, h), 1200);
   }
 
@@ -407,7 +408,7 @@
       if (pr && (S.releases || 0) > rel0) {
         const yenGain = S.yen - yen0;
         recordStarStats(S, pr, starsAtRelease, yenGain);
-        tryFestivalSubmit(pr, pRef, starsAtRelease, S, hook);
+        if (!window.__LEGEND_FESTIVAL__) tryFestivalSubmit(pr, pRef, starsAtRelease, S, hook);
       }
       delete S._aaaReleaseMult;
       delete S._aaaStarAdj;

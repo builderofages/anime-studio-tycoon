@@ -47,6 +47,8 @@ const required = [
   "gameplay-final.css",
   "gameplay-aaa.js",
   "gameplay-aaa.css",
+  "gameplay-legend.js",
+  "gameplay-legend.css",
   "manifest.json",
   "privacy.html",
   "terms.html",
@@ -86,6 +88,9 @@ assert(html.includes("dynastyPoints"), "dynasty points state");
 assert(html.includes("festivalWins"), "festival wins state");
 assert(html.includes("_aaaReleaseMult"), "aaa release multiplier");
 assert(html.includes("window.ACHIEVEMENTS"), "achievements exposed for aaa popups");
+assert(html.includes('src="gameplay-legend.js"'), "gameplay-legend.js linked");
+assert(html.includes("dynastyPerks"), "dynasty perks state");
+assert(html.includes("_legendReleaseMult"), "legend release multiplier");
 assert(html.includes("seasonClaimed"), "season pass state");
 assert(html.includes('id="main"></div>'), "clean #main shell");
 assert(html.includes("BUILD_TAG"), "build tag constant");
@@ -94,7 +99,7 @@ assert(html.includes("whatsnew"), "what's new modal");
 const rawCount = (html.match(/__raw/g) || []).length;
 assert(rawCount <= 2, "single __raw redirect script", `found ${rawCount}`);
 
-for (const f of ["strings.js", "logic.js", "aaa-upgrade.js", "gameplay-plus.js", "gameplay-ultra.js", "gameplay-endless.js", "gameplay-empire.js", "gameplay-studio.js", "gameplay-final.js", "gameplay-aaa.js"]) {
+for (const f of ["strings.js", "logic.js", "aaa-upgrade.js", "gameplay-plus.js", "gameplay-ultra.js", "gameplay-endless.js", "gameplay-empire.js", "gameplay-studio.js", "gameplay-final.js", "gameplay-aaa.js", "gameplay-legend.js"]) {
   const r = spawnSync("node", ["--check", join(root, f)], { encoding: "utf8" });
   assert(r.status === 0, `syntax OK: ${f}`, r.stderr?.trim());
 }
@@ -132,6 +137,8 @@ assert(existsSync(join(root, "www/gameplay-studio.js")), "www/gameplay-studio.js
 assert(existsSync(join(root, "www/gameplay-final.js")), "www/gameplay-final.js copied");
 assert(existsSync(join(root, "www/gameplay-aaa.js")), "www/gameplay-aaa.js copied");
 assert(dpkg.build?.extraResources?.[0]?.filter?.includes("gameplay-aaa.js"), "desktop bundles aaa");
+assert(existsSync(join(root, "www/gameplay-legend.js")), "www/gameplay-legend.js copied");
+assert(dpkg.build?.extraResources?.[0]?.filter?.includes("gameplay-legend.js"), "desktop bundles legend");
 
 console.log(`\n${passed} passed, ${failed} failed`);
 process.exit(failed > 0 ? 1 : 0);
