@@ -25,6 +25,8 @@ const FILES = [
   "gameplay-empire.css",
   "gameplay-studio.js",
   "gameplay-studio.css",
+  "gameplay-final.js",
+  "gameplay-final.css",
   "manifest.json",
   "privacy.html",
   "terms.html",

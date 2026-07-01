@@ -1,0 +1,67 @@
+/* Anime Studio Tycoon — Final expansion (v8) */
+.ost-btn, .recovery-btn {
+  margin-top: 6px;
+  width: 100%;
+  font-size: 11px !important;
+  padding: 7px !important;
+}
+.influence-panel .infl-perks {
+  display: grid;
+  gap: 10px;
+}
+.infl-perk {
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(180, 140, 255, 0.2), rgba(255, 155, 196, 0.15));
+  border: 1px solid rgba(120, 80, 180, 0.25);
+}
+.stream-grid {
+  display: grid;
+  gap: 8px;
+}
+.stream-deal small {
+  display: block;
+  font-size: 10px;
+  opacity: 0.85;
+  margin-top: 2px;
+}
+.stream-active {
+  margin-top: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--good, #2d8a50);
+  padding: 8px;
+  border-radius: 10px;
+  background: rgba(95, 211, 138, 0.2);
+}
+.crisis-recap-card .recap-stats {
+  display: grid;
+  gap: 6px;
+  margin-top: 12px;
+}
+.recap-stat {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.04);
+}
+.recap-stat b { color: var(--plum, #3a2b4d); }
+.recovery-bar {
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.08);
+  margin: 12px 0 6px;
+  overflow: hidden;
+}
+.recovery-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ff9bc4, #ffc845);
+  transition: width 0.08s linear;
+}
+.recovery-count {
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--plum, #3a2b4d);
+}

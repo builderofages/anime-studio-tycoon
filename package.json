@@ -1,6 +1,6 @@
 {
   "name": "anime-studio-tycoon-mobile",
-  "version": "7.0.0",
+  "version": "8.0.0",
   "private": true,
   "description": "Anime Studio Tycoon — iOS + Android app wrapper (Capacitor)",
   "scripts": {

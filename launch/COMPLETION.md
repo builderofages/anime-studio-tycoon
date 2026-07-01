@@ -1,10 +1,10 @@
 # Anime Studio Tycoon — Path to 100%
 
-**Current build:** 22 · Studio+  
-**Gameplay completion:** ~92%  
-**Launch readiness:** ~55% (needs store ops + Higgsfield assets)
+**Current build:** 23 · Final  
+**Gameplay completion:** 100%  
+**Launch readiness:** ~60% (store ops + Higgsfield auth for fresh assets)
 
-## Shipped layers (v1–v7)
+## Shipped layers (v1–v8)
 
 | Build | Layer | Key systems |
 |-------|-------|-------------|
@@ -14,52 +14,50 @@
 | 19 | Ultra | Pipeline, bidding, market share, audio settings |
 | 20 | Endless | Moods, chemistry, risk, cour, difficulty |
 | 21 | Empire | Named staff, war room, blend, banner, insurance |
-| 22 | Studio+ | 10× scout, spark shop, polish, relations, templates, records |
+| 22 | Studio+ | 10× scout, spark shop, polish, relations, templates |
+| 23 | Final | OST, streaming deals, Influence, recovery minigame, crisis recaps, scroll fix, pro guide |
 
-## Remaining gameplay (~8%)
+## Art & media (Higgsfield CLI)
 
-- OST / theme song production add-on
-- Licensing/streaming recurring contracts
-- Second prestige currency (Influence)
-- Troubled production recovery minigame
-- Post-crisis recap cards
-- Full scroll preservation on all tabs
-- Guided tutorial for energy/chaos/casting
+No separate Higgsfield MCP — use the **`higgsfield` CLI** (same API).
 
-## Art & media (Higgsfield)
+**Auth required (one-time, interactive):**
 
-**Auth required:** `hf auth login`
+```bash
+higgsfield auth login
+```
 
-Then run:
+**Generate all launch assets:**
 
 ```bash
 chmod +x scripts/generate-launch-assets.sh
 ./scripts/generate-launch-assets.sh
+node scripts/collect-higgsfield-urls.mjs
 ```
 
-Generates: app icon, Steam capsule, 2 store screenshots, trailer keyframe (+ optional 6s clip).
+Outputs land in `launch/store/` (icon, Steam capsule, screenshots, trailer keyframe/clip).
 
-Existing in-game art uses CloudFront CDN (`hf_*` assets). Optional: bundle locally under `assets/` for offline native.
+Existing in-game art uses CloudFront CDN (`hf_*` assets in `index.html`).
 
 ## Platform launch checklist
 
 | Task | Owner | Status |
 |------|-------|--------|
 | Web (Vercel + Pages) | Auto | ✅ |
-| CI smoke tests (58) | Auto | ✅ |
+| CI smoke tests | Auto | ✅ |
+| Gameplay v8 Final | Auto | ✅ |
+| Higgsfield store assets | You | `higgsfield auth login` then run scripts |
 | Codemagic iOS/Android | You | Trigger + ASC credentials |
 | TestFlight beta | You | App Store Connect |
 | Steam Electron build | Auto | `cd desktop && npm run dist:mac` |
 | Steam store page | You | Capsule + trailer + tags |
 | Age rating / privacy labels | You | Apple + Google forms |
 | IAP receipt hardening | Dev | `security/iap-hardening` branch |
-| Dependabot vulns (16) | Dev | npm audit fix |
+| Dependabot vulns | Dev | npm audit fix |
 
-## One command to ship beta
+## One command to ship web
 
 ```bash
-# After hf auth login + assets generated:
 cd /Users/alexandermills/anime-studio
 npm test && git push && vercel --prod --yes
-# Codemagic: trigger ios_release workflow
 ```

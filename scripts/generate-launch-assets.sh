@@ -46,11 +46,22 @@ higgsfield generate create gpt_image_2 \
   --aspect_ratio 16:9 --resolution 2k --wait \
   | tee "$OUT/trailer-keyframe.log"
 
-echo "→ Optional 6s trailer clip (Seedance)..."
-higgsfield generate create seedance_2_0 \
-  --prompt "Anime studio celebration, premiere night, camera push in on glowing studio logo, sakura petals, cinematic" \
-  --start-image "$OUT/trailer-keyframe.log" \
-  --duration 6 --wait 2>/dev/null | tee "$OUT/trailer-clip.log" || echo "(skip video if start-image URL not extracted)"
+KEYFRAME_URL=""
+if [ -f "$OUT/trailer-keyframe.log" ]; then
+  KEYFRAME_URL=$(grep -Eo 'https?://[^[:space:]"<>]+\.(png|jpe?g|webp)' "$OUT/trailer-keyframe.log" | tail -1 || true)
+fi
 
-echo "Done. Check logs in $OUT for download URLs."
-echo "Upload URLs to: launch/store/, App Store Connect, Steam partner."
+if [ -n "$KEYFRAME_URL" ]; then
+  echo "→ Optional 6s trailer clip (Seedance)..."
+  higgsfield generate create seedance_2_0 \
+    --prompt "Anime studio celebration, premiere night, camera push in on glowing studio logo, sakura petals, cinematic" \
+    --start-image "$KEYFRAME_URL" \
+    --duration 6 --wait 2>/dev/null | tee "$OUT/trailer-clip.log" || echo "(video skipped — re-run after keyframe succeeds)"
+else
+  echo "(skip trailer clip — no keyframe URL yet)"
+fi
+
+echo ""
+echo "Done. Logs: $OUT"
+echo "Download assets: node scripts/collect-higgsfield-urls.mjs"
+echo "Upload launch/store/ to App Store Connect + Steam partner."

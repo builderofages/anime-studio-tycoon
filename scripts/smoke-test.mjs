@@ -43,6 +43,8 @@ const required = [
   "gameplay-empire.css",
   "gameplay-studio.js",
   "gameplay-studio.css",
+  "gameplay-final.js",
+  "gameplay-final.css",
   "manifest.json",
   "privacy.html",
   "terms.html",
@@ -73,6 +75,10 @@ assert(html.includes("pullStar"), "pullStar on hook");
 assert(html.includes('src="gameplay-studio.js"'), "gameplay-studio.js linked");
 assert(html.includes("sparks"), "spark currency state");
 assert(html.includes("__AST_CONFIRM__"), "in-theme confirm hook");
+assert(html.includes('src="gameplay-final.js"'), "gameplay-final.js linked");
+assert(html.includes("influence"), "influence currency state");
+assert(html.includes("streaming"), "streaming contracts state");
+assert(html.includes("_finalReleaseMult"), "final release multiplier");
 assert(html.includes("seasonClaimed"), "season pass state");
 assert(html.includes('id="main"></div>'), "clean #main shell");
 assert(html.includes("BUILD_TAG"), "build tag constant");
@@ -81,7 +87,7 @@ assert(html.includes("whatsnew"), "what's new modal");
 const rawCount = (html.match(/__raw/g) || []).length;
 assert(rawCount <= 2, "single __raw redirect script", `found ${rawCount}`);
 
-for (const f of ["strings.js", "logic.js", "aaa-upgrade.js", "gameplay-plus.js", "gameplay-ultra.js", "gameplay-endless.js", "gameplay-empire.js", "gameplay-studio.js"]) {
+for (const f of ["strings.js", "logic.js", "aaa-upgrade.js", "gameplay-plus.js", "gameplay-ultra.js", "gameplay-endless.js", "gameplay-empire.js", "gameplay-studio.js", "gameplay-final.js"]) {
   const r = spawnSync("node", ["--check", join(root, f)], { encoding: "utf8" });
   assert(r.status === 0, `syntax OK: ${f}`, r.stderr?.trim());
 }
@@ -113,8 +119,10 @@ assert(dpkg.build?.extraResources?.[0]?.filter?.includes("gameplay-ultra.js"), "
 assert(dpkg.build?.extraResources?.[0]?.filter?.includes("gameplay-endless.js"), "desktop bundles endless");
 assert(dpkg.build?.extraResources?.[0]?.filter?.includes("gameplay-empire.js"), "desktop bundles empire");
 assert(dpkg.build?.extraResources?.[0]?.filter?.includes("gameplay-studio.js"), "desktop bundles studio");
+assert(dpkg.build?.extraResources?.[0]?.filter?.includes("gameplay-final.js"), "desktop bundles final");
 assert(existsSync(join(root, "www/gameplay-empire.js")), "www/gameplay-empire.js copied");
 assert(existsSync(join(root, "www/gameplay-studio.js")), "www/gameplay-studio.js copied");
+assert(existsSync(join(root, "www/gameplay-final.js")), "www/gameplay-final.js copied");
 
 console.log(`\n${passed} passed, ${failed} failed`);
 process.exit(failed > 0 ? 1 : 0);

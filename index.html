@@ -27,6 +27,7 @@
 <link rel="stylesheet" href="gameplay-endless.css">
 <link rel="stylesheet" href="gameplay-empire.css">
 <link rel="stylesheet" href="gameplay-studio.css">
+<link rel="stylesheet" href="gameplay-final.css">
 <meta name="theme-color" content="#3a2b4d">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <style>
@@ -581,14 +582,14 @@ button,.btn-ghost{min-height:40px}
 
 <div class="overlay" id="whatsnew" style="display:none">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <h1 style="font-size:22px;text-align:center">✨ What's New — Studio+ Edition</h1>
+    <h1 style="font-size:22px;text-align:center">✨ What's New — Final Edition</h1>
     <div class="offlist" style="margin:12px 0">
-      <div><span>🌟 10× Scout</span><b>72💎 multi-pull with spark rewards</b></div>
-      <div><span>✨ Spark Shop</span><b>Trade sparks for Epic/Legendary</b></div>
-      <div><span>✨ Polish Phase</span><b>Hype passes → better premieres</b></div>
-      <div><span>💚💢 Relations</span><b>Friend & rival cast dynamics</b></div>
-      <div><span>📋 Templates</span><b>Save greenlight presets</b></div>
-      <div><span>📊 Records</span><b>Full lifetime stats dashboard</b></div>
+      <div><span>🎵 OST Commissions</span><b>Hype → theme songs & premiere boost</b></div>
+      <div><span>📡 Streaming Deals</span><b>Recurring royalty contracts</b></div>
+      <div><span>🎖️ Influence</span><b>Second prestige currency & perks</b></div>
+      <div><span>🚑 Recovery Rally</span><b>Troubled production minigame</b></div>
+      <div><span>📋 Crisis Recaps</span><b>Post–war room summary cards</b></div>
+      <div><span>🎓 Pro Tips</span><b>Energy, chaos & casting guide</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
   </div>
@@ -628,7 +629,7 @@ const STORE_PAYMENTS = true; // store always visible; buyReal routes web→check
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 22 · Studio+";
+const BUILD_TAG = "build 23 · Final";
 const OFFLINE_CAP = 8*3600; // seconds
 
 const GENRES = ["Action","Romance","Fantasy","Sci-Fi","Comedy","Slice of Life"];
@@ -991,6 +992,8 @@ function freshState(){
     namedStaff:[], empireSource:"original", empireBlendGenre:-1, scoutBannerWeek:"", scoutBannerStar:"",
     chaosInsurance:false, calmStreak:0, crisesSurvived:0, lastCrisisDay:"",
     sparks:0, templates:[],
+    influence:0, influenceSpent:0, inflPerks:{income:0,premiere:0,chaos:0},
+    streaming:[], recoveries:0, ostTotal:0, finalGuideSeen:false, finalGuideStep:0,
     lastSave:Date.now(),
     muted:false,
     tab:"produce",
@@ -1471,6 +1474,7 @@ function projectStars(p, genre, pr){
   if(S._endlessStarAdj) stars=Math.max(1,Math.min(5,Math.round(stars*S._endlessStarAdj)));
   if(S._empireStarAdj) stars=Math.max(1,Math.min(5,Math.round(stars*S._empireStarAdj)));
   if(S._studioStarAdj) stars=Math.max(1,Math.min(5,Math.round(stars*S._studioStarAdj)));
+  if(S._finalStarAdj) stars=Math.max(1,Math.min(5,Math.round(stars*S._finalStarAdj)));
   return stars;
 }
 function unlockedProjects(){ return PROJECTS.filter(p=>S.fans>=p.unlock); }
@@ -1735,8 +1739,8 @@ function releaseProject(slot){
   const shareMult = S._ultraShareMult || (1 + (S.marketShare||0)*0.0015);
   let yenGain = Math.floor(p.base * mult * (1 + S.fans*0.00004) * marketingMult() * legacyMult() * trendBonus * globalIncomeMult() * eventYenMult() * comboMult * starMult * chaosB * franMult * shareMult);
   let fansGain = Math.max(1, Math.floor(p.fans * mult * trendBonus * eventFanMult() * comboMult * perkMult("fans") * starMult * chaosB * franMult * shareMult));
-  const endlessM=S._endlessReleaseMult||1, empireM=S._empireReleaseMult||1, studioM=S._studioReleaseMult||1;
-  yenGain=Math.floor(yenGain*endlessM*empireM*studioM); fansGain=Math.max(1,Math.floor(fansGain*endlessM*empireM*studioM));
+  const endlessM=S._endlessReleaseMult||1, empireM=S._empireReleaseMult||1, studioM=S._studioReleaseMult||1, finalM=S._finalReleaseMult||1;
+  yenGain=Math.floor(yenGain*endlessM*empireM*studioM*finalM); fansGain=Math.max(1,Math.floor(fansGain*endlessM*empireM*studioM*finalM));
   const hypeGain = Math.max(1, Math.floor((p.tier+1)*mult*2));
   S.yen+=yenGain; S.fans+=fansGain; S.totalFansEver+=fansGain; S.hype+=hypeGain;
   S.totalEarned=(S.totalEarned||0)+yenGain;
@@ -2032,6 +2036,8 @@ function prestige(){
               daily:S.lastDailyDate, streak:S.dailyStreak, stars:S.stars, tut:S.tutorialSeen,
               best:S.bestValue, ach:S.achievements, fg:S.freeGemsDate, taps:S.taps,
               perks:S.perks, legacySpent:S.legacySpent, awards:S.awardsWon, earned:S.totalEarned, comboBest:S.comboBest,
+              influence:S.influence, influenceSpent:S.influenceSpent, inflPerks:S.inflPerks, streaming:S.streaming,
+              finalGuideSeen:S.finalGuideSeen, finalGuideStep:S.finalGuideStep,
               items:S.items, entitlements:S.entitlements, purchaseLog:S.purchaseLog, firstPurchaseDone:S.firstPurchaseDone, noAds:S.noAds,
               studioName:S.studioName, hof:S.hallOfFame, bestRank:S.bestRank};
   S=freshState();
@@ -2040,6 +2046,8 @@ function prestige(){
   S.lastDailyDate=keep.daily; S.dailyStreak=keep.streak; S.stars=keep.stars; S.tutorialSeen=keep.tut;
   S.bestValue=keep.best; S.achievements=keep.ach; S.freeGemsDate=keep.fg; S.taps=keep.taps;
   S.perks=keep.perks||{income:0,speed:0,fans:0,offline:0}; S.legacySpent=keep.legacySpent||0;
+  S.influence=keep.influence||0; S.influenceSpent=keep.influenceSpent||0; S.inflPerks=keep.inflPerks||{income:0,premiere:0,chaos:0};
+  S.streaming=keep.streaming||[]; S.finalGuideSeen=keep.finalGuideSeen; S.finalGuideStep=keep.finalGuideStep||0;
   S.awardsWon=keep.awards||0; S.totalEarned=keep.earned||0; S.comboBest=keep.comboBest||0;
   // purchases & entitlements are permanent — they survive every reboot
   S.items=keep.items||{}; S.entitlements=keep.entitlements||[]; S.purchaseLog=keep.purchaseLog||[]; S.firstPurchaseDone=!!keep.firstPurchaseDone; S.noAds=!!keep.noAds;
@@ -2864,6 +2872,7 @@ window.__AST_HOOK__ = {
 <script src="gameplay-endless.js"></script>
 <script src="gameplay-empire.js"></script>
 <script src="gameplay-studio.js"></script>
+<script src="gameplay-final.js"></script>
 
 
 <script>(function(){var d;function f(){try{var b=document.getElementById('btn-save');if(b)b.click();}catch(e){}if(!d){d=document.createElement('div');d.style.cssText='position:fixed;bottom:10px;left:50%;transform:translateX(-50%);background:rgba(40,30,55,.92);color:#9be29b;font:600 12px system-ui;padding:5px 12px;border-radius:999px;z-index:99999;opacity:0;transition:opacity .25s;pointer-events:none';d.textContent='\u2713 Saved';document.body.appendChild(d);}d.style.opacity='1';clearTimeout(d._t);d._t=setTimeout(function(){d.style.opacity='0';},1100);}document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden')f();});window.addEventListener('pagehide',f);})();</script>
