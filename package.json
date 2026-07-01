@@ -12,6 +12,7 @@
     "bundle-assets": "node scripts/bundle-assets.mjs",
     "fetch-resources": "node scripts/fetch-resources.mjs",
     "fetch-launch-assets": "node scripts/fetch-launch-assets.mjs",
+    "gen-env-secrets": "node scripts/gen-env-secrets.mjs",
     "add-ios": "cap add ios",
     "add-android": "cap add android",
     "sync": "cap sync",

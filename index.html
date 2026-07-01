@@ -890,7 +890,14 @@ const MONETIZATION = {
     gems_s:"https://trainagent.gumroad.com/l/jbclqp?wanted=true",
     gems_m:"https://trainagent.gumroad.com/l/legvhu?wanted=true",
     gems_l:"https://trainagent.gumroad.com/l/gtdyn?wanted=true",
-    gems_mega:"https://trainagent.gumroad.com/l/kttuab?wanted=true"
+    gems_mega:"https://trainagent.gumroad.com/l/kttuab?wanted=true",
+    bundle_legend:"https://trainagent.gumroad.com/l/astlegend?wanted=true",
+    bundle_mogul:"https://trainagent.gumroad.com/l/astmogul?wanted=true",
+    star_aurora:"https://trainagent.gumroad.com/l/astaurora?wanted=true",
+    star_phoenix:"https://trainagent.gumroad.com/l/astphoenix?wanted=true",
+    star_shogun:"https://trainagent.gumroad.com/l/astshogun?wanted=true",
+    items_pack:"https://trainagent.gumroad.com/l/astitems?wanted=true",
+    noads:"https://trainagent.gumroad.com/l/astnoads?wanted=true"
   },
   prices:{ pass:"$4.99", gems_s:"$0.99", gems_m:"$1.99", gems_l:"$4.99", gems_mega:"$9.99", bundle:"$2.99",
            bundle_legend:"$7.99", bundle_mogul:"$19.99",
@@ -1842,8 +1849,18 @@ function buyReal(sku){
     return;
   }
   const url=(MONETIZATION.checkout||{})[sku];
-  if(url){ try{ window.open(url,"_blank","noopener"); }catch(e){} toast("Opening checkout — your reward unlocks automatically when you return."); }
+  if(url){ try{ window.open(url,"_blank","noopener"); }catch(e){} toast("Opening checkout — you'll return to the game automatically after payment."); }
   else { toast("💳 Payments aren't set up yet. Add your checkout link to enable this."); }
+async function redeemLicenseKey(sku, key){
+  if(!key||!sku){ toast("Enter your license key and pick what you bought"); return; }
+  try{
+    const r=await fetch("/api/grant/license",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({sku,license_key:key.trim()})});
+    const j=await r.json();
+    if(!j.ok||!j.pt){ toast(j.error==="invalid license"?"Invalid license — check key & product":"Redeem failed — try again or email support"); return; }
+    await redeemPurchaseToken(j.pt);
+    toast("✅ Purchase redeemed!",true);
+  }catch(e){ toast("Network error — try again"); }
+}
 }
 /* ---- Inventory / consumable items ---- */
 function addItem(id,n){ if(!ITEMS[id]) return; if(!S.items) S.items={}; S.items[id]=(S.items[id]||0)+(n||1); }
@@ -2576,6 +2593,12 @@ function renderStore(){
         <button class="btn-primary hirebtn" data-buy="items_pack">Get<small>${P.items_pack}</small></button></div>`;
     if(!S.noAds) h+=`<div class="uprow"><div class="meta"><h4>🚫 Remove Ads</h4><div class="muted">Removes ad prompts; keeps all free rewards</div></div>
         <button class="btn-ghost hirebtn" data-buy="noads">Get<small>${P.noads}</small></button></div>`;
+    const redeemSkus=[["pass","Producer Pass"],["bundle","Starter Bundle"],["bundle_legend","Legend Bundle"],["bundle_mogul","Mogul Bundle"],["gems_s","Gems 120"],["gems_m","Gems 350"],["gems_l","Gems 800"],["gems_mega","Gems 2000"],["star_aurora","Aurora Vesper"],["star_phoenix","Phoenix Kogane"],["star_shogun","Kaiser Shogun"],["items_pack","Items Pack"],["noads","Remove Ads"]];
+    h+=`<div class="panel" style="margin-top:12px;border:2px dashed rgba(70,80,107,.35)"><h3 style="margin:0 0 8px;font-size:14px">🔑 Redeem Gumroad License</h3>
+      <div class="muted" style="font-size:11px;margin-bottom:8px">If auto-redirect didn't work, paste the license key from your Gumroad receipt.</div>
+      <select id="redeem-sku" style="width:100%;padding:8px;border-radius:10px;margin-bottom:8px;border:2px solid var(--cream2)">${redeemSkus.map(([k,l])=>`<option value="${k}">${l}</option>`).join("")}</select>
+      <input id="redeem-key" type="text" placeholder="XXXX-XXXX-XXXX-XXXX" style="width:100%;padding:8px;border-radius:10px;margin-bottom:8px;border:2px solid var(--cream2)">
+      <button class="btn-cyan" data-act="redeem-submit" style="width:100%">Redeem Purchase</button></div>`;
   } else if(!S.producerPass){
     h+=`<div class="muted" style="margin:8px 0">💎 Earn Gems free through milestones, daily rewards, quests &amp; every 25 releases — then spend them below.</div>`;
   }
@@ -2658,6 +2681,7 @@ document.addEventListener("click", e=>{
   if(t.dataset.act==="starter-close") return closeStarterOffer();
   if(t.dataset.act==="starter-buy"){ closeStarterOffer(); return buyReal("bundle"); }
   if(t.dataset.buy) return buyReal(t.dataset.buy);
+  if(t.dataset.act==="redeem-submit"){ const sk=document.getElementById("redeem-sku"), ky=document.getElementById("redeem-key"); return redeemLicenseKey(sk&&sk.value, ky&&ky.value); }
   if(t.dataset.gem) return spendGem(t.dataset.gem);
   if(t.dataset.act==="freelance") return freelance();
   if(t.dataset.act==="rewarded") return rewardedBoost();

@@ -33,8 +33,17 @@ https://anime-studio-tycoon.vercel.app/api/grant/finish?permalink=SLUG&license_k
 | Gems 350 | `legvhu` |
 | Gems 800 | `gtdyn` |
 | Gems 2000 | `kttuab` |
+| Legend Bundle | `astlegend` *(create product)* |
+| Mogul Bundle | `astmogul` *(create product)* |
+| Aurora Vesper | `astaurora` *(create product)* |
+| Phoenix Kogane | `astphoenix` *(create product)* |
+| Kaiser Shogun | `astshogun` *(create product)* |
+| Items Pack | `astitems` *(create product)* |
+| Remove Ads | `astnoads` *(create product)* |
 
 Buyer flow: pay → Gumroad redirects → `/api/grant/finish` verifies license → game opens with `?pt=` → entitlement applied automatically.
+
+**Fallback:** Store tab → **Redeem Gumroad License** (paste key + pick product).
 
 ## 4. Ping webhook (optional audit)
 
