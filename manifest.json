@@ -9,8 +9,14 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260615_090332_3e1dbb67-bab0-488a-abd4-5c9b12bc2740.png",
+      "src": "/icons/icon-512.png",
       "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "1024x1024",
       "type": "image/png",
       "purpose": "any maskable"
     }

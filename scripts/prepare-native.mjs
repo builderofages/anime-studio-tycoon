@@ -28,6 +28,7 @@ const FILES = [
   "gameplay-final.js",
   "gameplay-final.css",
   "manifest.json",
+  "icons/icon-512.png",
   "privacy.html",
   "terms.html",
 ];

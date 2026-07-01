@@ -35,9 +35,14 @@ higgsfield auth login
 node scripts/collect-higgsfield-urls.mjs
 ```
 
-Store copy: `launch/STORE_LISTING.md`  
-Gumroad wiring: `launch/GUMROAD_SETUP.md`  
-TestFlight: `launch/CODEMAGIC.md`
+| Doc | Purpose |
+|-----|---------|
+| `STORE_LISTING.md` | App Store + Steam copy |
+| `GUMROAD_SETUP.md` | Redirect URLs + webhook |
+| `GUMROAD_PRODUCTS.md` | 7 products to create (copy-paste) |
+| `CODEMAGIC.md` | TestFlight trigger |
+| `STEAM_SUBMISSION.md` | Steam depot + assets |
+| `ENV_CHECKLIST.md` | Vercel secrets |
 
 ## Platform launch checklist
 

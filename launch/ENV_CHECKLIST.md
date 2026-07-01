@@ -38,6 +38,20 @@ Re-generate locally: `npm run gen-env-secrets` (only if rotating secrets)
 
 Each product: enable license keys + redirect URL from `GUMROAD_SETUP.md`.
 
+## Icons & native
+
+```bash
+npm run prepare-store-icons   # PWA + iOS TestFlight icon
+```
+
 ## Codemagic
 
 See `CODEMAGIC.md` — groups `app_store_connect`, `google_play`, `keystore_credentials`.
+
+## Steam
+
+See `STEAM_SUBMISSION.md` — dmg in `desktop/dist/`.
+
+## Gumroad products (7 to create)
+
+Copy-paste specs: `GUMROAD_PRODUCTS.md`

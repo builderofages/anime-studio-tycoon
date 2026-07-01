@@ -52,16 +52,35 @@ try {
   failMsg("live site", e.message);
 }
 
-const guides = ["launch/ENV_CHECKLIST.md", "launch/GUMROAD_SETUP.md", "launch/CODEMAGIC.md", "launch/STORE_LISTING.md"];
+const guides = [
+  "launch/ENV_CHECKLIST.md", "launch/GUMROAD_SETUP.md", "launch/GUMROAD_PRODUCTS.md",
+  "launch/CODEMAGIC.md", "launch/STORE_LISTING.md", "launch/STEAM_SUBMISSION.md",
+];
 for (const g of guides) {
   existsSync(join(root, g)) ? pass(`guide: ${g}`) : failMsg(`guide: ${g}`, "missing");
 }
 
-console.log(`\n${ok} passed, ${fail} failed`);
-if (fail) {
-  console.log("\nStill needed:");
-  console.log("  • GUMROAD_ACCESS_TOKEN + GUMROAD_SELLER_ID on Vercel");
-  console.log("  • Create 7 Gumroad products (launch/ENV_CHECKLIST.md)");
-  console.log("  • Codemagic ios-release trigger (launch/CODEMAGIC.md)");
+existsSync(join(root, "icons/icon-512.png")) ? pass("local PWA icon") : failMsg("local PWA icon", "run npm run prepare-store-icons");
+
+try {
+  const lic = await fetch(`${base}/api/grant/license`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ sku: "pass", license_key: "TEST-INVALID" }),
+  });
+  const j = await lic.json();
+  if (lic.status === 503 && String(j.error || "").includes("GRANT_JWT")) failMsg("license API", "JWT not configured");
+  else if (lic.status === 400 && j.error === "invalid license") pass("license API (needs GUMROAD_ACCESS_TOKEN for real keys)");
+  else if (lic.status === 400 && j.error === "license_key required") pass("license API reachable");
+  else pass("license API responds");
+} catch (e) {
+  failMsg("license API", e.message);
 }
+
+console.log(`\n${ok} passed, ${fail} failed`);
+console.log("\nManual steps:");
+console.log("  • Vercel: GUMROAD_ACCESS_TOKEN + GUMROAD_SELLER_ID");
+console.log("  • Create 7 Gumroad products → launch/GUMROAD_PRODUCTS.md");
+console.log("  • Codemagic ios-release → launch/CODEMAGIC.md");
+console.log("  • Steam upload → launch/STEAM_SUBMISSION.md");
 process.exit(fail > 0 ? 1 : 0);
