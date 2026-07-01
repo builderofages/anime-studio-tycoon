@@ -2792,26 +2792,47 @@ function begin(){
   requestAnimationFrame(frame);
 }
 const loaded=load(); if(!loaded) S=freshState();
-// grant entitlements from a checkout success redirect (?grant=pass / ?grant=gems&amt=N)
+// Web purchase delivery: production uses signed ?pt= tokens (api/grant/redeem). Dev/localhost keeps legacy ?grant=.
+function clearGrantParams(){
+  try{ history.replaceState(null,"",location.pathname); }catch(_){}
+  try{ if(window.top!==window && window.top.history){ window.top.history.replaceState(null,"",window.top.location.pathname); } }catch(_){}
+}
+async function redeemPurchaseToken(pt){
+  try{
+    const r=await fetch("/api/grant/redeem?pt="+encodeURIComponent(pt));
+    const j=await r.json();
+    if(!j.ok||!j.grant) return false;
+    const g=j.grant;
+    let changed=false;
+    if(g.kind==="gems") changed=grantEntitlement("gems", parseInt(g.amount||"0",10));
+    else if(g.kind==="star") changed=grantEntitlement("star",0,{id:g.id,sku:g.sku});
+    else changed=grantEntitlement(g.kind);
+    if(changed){ track("purchase_grant",{grant:g.kind,signed:true}); clearGrantParams(); }
+    return changed;
+  }catch(e){ return false; }
+}
 function readGrant(){
   try{
-    // The game may run inside the platform iframe; the purchase param can land on the parent URL.
     let search=location.search;
     try{ if(window.top!==window && window.top.location && window.top.location.search){ search += (search?"&":"?") + window.top.location.search.replace(/^\?/,""); } }catch(_){}
-    const q=new URLSearchParams(search); let changed=false; const g=q.get("grant");
-    // Route every redirect grant through the reliable, idempotent delivery path.
+    const q=new URLSearchParams(search);
+    const pt=q.get("pt");
+    if(pt){ redeemPurchaseToken(pt); return; }
+    if(NATIVE) return;
+    const host=location.hostname;
+    const dev=host==="localhost"||host==="127.0.0.1"||q.get("devgrants")==="1";
+    if(!dev) return;
+    let changed=false; const g=q.get("grant");
     if(g){
       if(g==="gems"){ changed=grantEntitlement("gems", parseInt(q.get("amt")||"0",10)); }
       else if(g==="star"){ changed=grantEntitlement("star",0,{id:q.get("id"),sku:q.get("sku")}); }
-      else { changed=grantEntitlement(g); } // pass | bundle | bundle_legend | bundle_mogul | items_pack | noads
+      else { changed=grantEntitlement(g); }
     }
-    // Gumroad post-purchase links: ?unlock=pass | bundle | gems120 / gems350 / gems800 / gems2000 | star_aurora …
     const u=q.get("unlock");
     if(u==="pass"||u==="bundle"||u==="bundle_legend"||u==="bundle_mogul"||u==="items_pack"||u==="noads"){ changed=grantEntitlement(u)||changed; }
     else if(u && /^gems\d+$/.test(u)){ changed=grantEntitlement("gems", parseInt(u.replace("gems",""),10)||0)||changed; }
     else if(u && SKU2STAR[u]){ changed=grantEntitlement("star",0,{sku:u})||changed; }
-    if(changed){ track("purchase_grant",{grant:g||u}); save(); try{ history.replaceState(null,"",location.pathname); }catch(_){}
-      try{ if(window.top!==window && window.top.history){ window.top.history.replaceState(null,"",window.top.location.pathname); } }catch(_){} }
+    if(changed){ track("purchase_grant",{grant:g||u,dev:true}); save(); clearGrantParams(); }
   }catch(e){}
 }
 readGrant();

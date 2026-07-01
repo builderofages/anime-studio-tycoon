@@ -1,0 +1,31 @@
+{
+  "source": "cdn-fallback",
+  "generated": "2026-07-01T23:09:13.549Z",
+  "assets": [
+    {
+      "name": "app-icon.png",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260615_090332_3e1dbb67-bab0-488a-abd4-5c9b12bc2740.png",
+      "bytes": 1346779
+    },
+    {
+      "name": "steam-capsule.jpg",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_062706_8cb8f42c-84b2-45b0-8c27-96e8ffc01bb7.jpeg",
+      "bytes": 782507
+    },
+    {
+      "name": "screenshot-produce.png",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260615_183520_5f614e0c-17ed-4762-9e20-dd33a0ee5546.png",
+      "bytes": 2514767
+    },
+    {
+      "name": "screenshot-stars.png",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260618_054255_9ff5fbbe-0d2e-43f8-b099-cba0d82252b4.png",
+      "bytes": 2543854
+    },
+    {
+      "name": "trailer-keyframe.jpg",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260615_183556_a9b8c0f1-0aba-4f05-b1b9-eb889227c5b1.png",
+      "bytes": 2122579
+    }
+  ]
+}

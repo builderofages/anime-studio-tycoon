@@ -1,6 +1,9 @@
 /* In-app purchases for native builds — Apple App Store AND Google Play
-   (cordova-plugin-purchase v13). Calls window.AST_GRANT(kind, amount) on a verified purchase. */
+   (cordova-plugin-purchase v13). Calls window.AST_GRANT(kind, amount) on a verified purchase.
+
+   Set VALIDATOR_URL to your receipt-validation endpoint (defaults to same-origin /api/iap/validate). */
 (function(){
+  var VALIDATOR_URL = "/api/iap/validate";
   var APP = "com.trainyouragent.animestudiotycoon";
   // Apple uses reverse-domain product IDs; Google Play uses short lowercase IDs.
   var APPLE = { pass:APP+".pass", bundle:APP+".bundle", bundle_legend:APP+".bundlelegend", bundle_mogul:APP+".bundlemogul",
@@ -30,6 +33,8 @@
     var P = window.CdvPurchase;
     if(!P || !P.store){ setTimeout(init, 600); return; }
     var store = P.store, APStore = P.Platform.APPLE_APPSTORE, GP = P.Platform.GOOGLE_PLAY;
+    if(VALIDATOR_URL){ store.validator = VALIDATOR_URL; }
+    else { try{ console.warn("IAP: VALIDATOR_URL not set — receipts are NOT server-validated."); }catch(_){} }
     var defs = [], plats = [];
     var isiOS = !!(window.NATIVE_IOS) || (window.Capacitor && window.Capacitor.getPlatform && window.Capacitor.getPlatform()==="ios");
     var isAndroid = (window.Capacitor && window.Capacitor.getPlatform && window.Capacitor.getPlatform()==="android");
@@ -49,7 +54,8 @@
     store.when()
       .approved(function(t){ return t.verify(); })
       .verified(function(receipt){
-        try{ (receipt.collection || receipt.products || []).forEach(function(p){ grant(p.id || p.productId); }); }catch(e){}
+        try{ (receipt.collection || receipt.products || []).forEach(function(p){ grant(p.id || p.productId); }); }
+        catch(e){ try{ console.error("IAP grant error", e); }catch(_){} }
         receipt.finish();
       });
     store.error(function(e){ try{ console.warn("IAP error", e && e.message); }catch(_){} });

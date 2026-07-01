@@ -2,7 +2,7 @@
 
 **Current build:** 23 · Final  
 **Gameplay completion:** 100%  
-**Launch readiness:** ~60% (store ops + Higgsfield auth for fresh assets)
+**Launch readiness:** ~75% (store submit + env secrets + Higgsfield auth optional)
 
 ## Shipped layers (v1–v8)
 
@@ -17,27 +17,25 @@
 | 22 | Studio+ | 10× scout, spark shop, polish, relations, templates |
 | 23 | Final | OST, streaming deals, Influence, recovery minigame, crisis recaps, scroll fix, pro guide |
 
-## Art & media (Higgsfield CLI)
+## Art & media
 
-No separate Higgsfield MCP — use the **`higgsfield` CLI** (same API).
+**CDN fallback (ready now):**
 
-**Auth required (one-time, interactive):**
+```bash
+npm run fetch-launch-assets
+```
+
+Downloads icon, Steam capsule, screenshots → `launch/store/`.
+
+**Fresh Higgsfield gens (optional):**
 
 ```bash
 higgsfield auth login
-```
-
-**Generate all launch assets:**
-
-```bash
-chmod +x scripts/generate-launch-assets.sh
 ./scripts/generate-launch-assets.sh
 node scripts/collect-higgsfield-urls.mjs
 ```
 
-Outputs land in `launch/store/` (icon, Steam capsule, screenshots, trailer keyframe/clip).
-
-Existing in-game art uses CloudFront CDN (`hf_*` assets in `index.html`).
+Store copy: `launch/STORE_LISTING.md`
 
 ## Platform launch checklist
 
@@ -46,14 +44,15 @@ Existing in-game art uses CloudFront CDN (`hf_*` assets in `index.html`).
 | Web (Vercel + Pages) | Auto | ✅ |
 | CI smoke tests | Auto | ✅ |
 | Gameplay v8 Final | Auto | ✅ |
-| Higgsfield store assets | You | `higgsfield auth login` then run scripts |
+| Store assets (CDN) | Auto | `npm run fetch-launch-assets` ✅ |
+| IAP + web grant APIs | Auto | `/api/iap/validate`, `/api/grant/*` — set Vercel env |
+| Higgsfield fresh assets | You | `higgsfield auth login` (optional) |
 | Codemagic iOS/Android | You | Trigger + ASC credentials |
 | TestFlight beta | You | App Store Connect |
 | Steam Electron build | Auto | `cd desktop && npm run dist:mac` |
-| Steam store page | You | Capsule + trailer + tags |
+| Steam store page | You | `launch/STORE_LISTING.md` + assets |
 | Age rating / privacy labels | You | Apple + Google forms |
-| IAP receipt hardening | Dev | `security/iap-hardening` branch |
-| Dependabot vulns | Dev | npm audit fix |
+| Dependabot vulns | N/A | Build-time only — see SECURITY.md |
 
 ## One command to ship web
 

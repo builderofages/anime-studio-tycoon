@@ -34,10 +34,15 @@ real risk. The build uses `npm ci || npm install`, so it resolves fine without a
 committed lockfile. We'll commit one once the upstream toolchains ship patched
 transitive deps.
 
-## Note on client trust
+## IAP & web purchase validation
 
-Like most single-player idle games, the economy runs entirely client-side, so a
-determined user can edit their own save. Real-money entitlements on native builds
-are validated by the App Store / Google Play purchase flow. The web `?grant=`
-convenience path is honor-system; server-side receipt verification is tracked as
-a roadmap item before any competitive/online leaderboard ships.
+**Native (iOS/Android):** `iap.js` posts receipts to `/api/iap/validate` (deploy
+`server/validate.js`). Set `APPLE_SHARED_SECRET`, `GOOGLE_SA_JSON`, and
+`GOOGLE_PACKAGE_NAME` in Vercel env before shipping paid builds.
+
+**Web:** Raw `?grant=` / `?unlock=` URLs are **disabled on production**. Buyers
+receive signed `?pt=` tokens minted via `POST /api/grant/mint` (Gumroad webhook
+or manual). Set `GRANT_JWT_SECRET` and `GRANT_MINT_SECRET` in Vercel.
+
+**Client trust:** Single-player economy is client-side; saves can be edited locally.
+Server validation applies to **real-money entitlements only**.
