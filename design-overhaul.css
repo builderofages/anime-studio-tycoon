@@ -1,0 +1,342 @@
+/**
+ * Design Overhaul — authoritative visual layer (build 31)
+ * Single dark anime-studio aesthetic. Loads last.
+ */
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:opsz,wght@9..40,500;600;700;800&display=swap');
+
+/* ---- Base: kill cream/light flash ---- */
+html.premium-hud,
+html.premium-hud body {
+  font-family: 'DM Sans', system-ui, sans-serif !important;
+  background: #08050f !important;
+  color: #f0e8f8 !important;
+}
+
+html.premium-hud body {
+  background:
+    radial-gradient(ellipse 100% 70% at 50% -15%, rgba(124, 92, 255, 0.28), transparent 55%),
+    radial-gradient(ellipse 60% 50% at 100% 20%, rgba(255, 110, 180, 0.14), transparent 50%),
+    linear-gradient(180deg, #0c0614 0%, #08050f 100%) !important;
+  background-attachment: fixed !important;
+}
+
+html.premium-hud #app {
+  max-width: 960px !important;
+}
+
+/* ---- HUD: studio rating integrated ---- */
+#hud-studio-rating {
+  flex-shrink: 0;
+  cursor: pointer;
+  padding: 6px 12px 7px;
+  border-radius: 14px;
+  background: linear-gradient(145deg, rgba(255, 201, 77, 0.14), rgba(124, 92, 255, 0.12));
+  border: 1px solid rgba(255, 201, 77, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  position: relative;
+  overflow: hidden;
+  min-width: 96px;
+  max-width: 140px;
+}
+
+#hud-studio-rating:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(124, 92, 255, 0.25);
+}
+
+#hud-studio-rating.jw-max {
+  border-color: rgba(255, 215, 0, 0.55);
+  background: linear-gradient(145deg, rgba(255, 215, 0, 0.2), rgba(176, 107, 255, 0.15));
+}
+
+#hud-studio-rating .jw-rank-stars {
+  display: block;
+  line-height: 1;
+}
+
+#hud-studio-rating .rank-tier {
+  display: block;
+  font-size: 9px !important;
+  font-weight: 800 !important;
+  color: #c4b8d8 !important;
+  letter-spacing: 0.04em;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#hud-studio-rating .jw-rank-icon { display: none; }
+
+#hud-studio-rating .jw-stars-sm {
+  font-size: 12px !important;
+  color: #ffc94d !important;
+  letter-spacing: 2px;
+}
+
+#hud-studio-rating .jw-rank-pct {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+#hud-studio-rating .jw-rank-pct::after {
+  content: "";
+  display: block;
+  height: 100%;
+  width: var(--jw-pct, 0%);
+  background: linear-gradient(90deg, #ffc94d, #ff6eb4);
+}
+
+.hud-row-top {
+  flex-wrap: nowrap !important;
+}
+
+/* Hide legacy rank in dead top bar */
+html.premium-hud #top.legacy-hidden,
+html.premium-hud #studio-rank:not(#hud-studio-rating) {
+  display: none !important;
+}
+
+/* ---- Slimmer mission stack ---- */
+html.premium-hud #goal {
+  margin: 6px 10px 0 !important;
+  padding: 8px 12px !important;
+  font-size: 11px !important;
+  border-radius: 14px !important;
+}
+
+html.premium-hud #pathway-rail {
+  margin: 6px 10px 0 !important;
+  padding: 10px 12px !important;
+  border-radius: 16px !important;
+}
+
+html.premium-hud .pathway-now {
+  font-size: 12px !important;
+  line-height: 1.45 !important;
+  color: #b8a8d0 !important;
+}
+
+html.premium-hud .pathway-steps {
+  margin-bottom: 6px !important;
+}
+
+/* ---- Produce rating strip (dark) ---- */
+.jw-produce-rating {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 8px !important;
+  padding: 10px 14px !important;
+  border-radius: 16px !important;
+  background: linear-gradient(135deg, rgba(124, 92, 255, 0.14), rgba(18, 12, 28, 0.95)) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  cursor: pointer;
+}
+
+.jw-produce-rating .jw-produce-left b {
+  color: #f0e8f8 !important;
+  font-size: 11px !important;
+}
+
+.jw-produce-rating .jw-produce-mid {
+  color: #9d8fb8 !important;
+}
+
+.jw-produce-rating .jw-bar {
+  background: rgba(0, 0, 0, 0.4) !important;
+}
+
+.jw-produce-rating .jw-bar i {
+  background: linear-gradient(90deg, #7c5cff, #ff6eb4, #ffc94d) !important;
+}
+
+/* ---- JW modals dark ---- */
+.jw-rating-card,
+.jw-rankup-card {
+  background: linear-gradient(165deg, #1e1430, #100a18) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: #f0e8f8 !important;
+}
+
+.jw-rating-card h2,
+.jw-rankup-card h2 {
+  color: #f0e8f8 !important;
+  font-family: 'Syne', sans-serif !important;
+}
+
+.jw-rating-kpis > div {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.jw-rating-kpis b { color: #ffc94d !important; }
+
+.jw-next-block,
+.jw-pillar {
+  color: #f0e8f8;
+}
+
+.jw-pillar-head { color: #9d8fb8 !important; }
+
+.jw-unlock {
+  background: rgba(255, 255, 255, 0.04) !important;
+  color: #b8a8d0 !important;
+}
+
+.jw-unlock.on {
+  background: linear-gradient(90deg, rgba(124, 92, 255, 0.2), rgba(255, 110, 180, 0.1)) !important;
+  border-color: rgba(255, 201, 77, 0.3) !important;
+  color: #f0e8f8 !important;
+}
+
+.jw-rating-close {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #9d8fb8 !important;
+}
+
+/* ---- Kill light panels from inline + aaa ---- */
+html.premium-hud .panel,
+html.premium-hud .staffrow,
+html.premium-hud .uprow,
+html.premium-hud .pick,
+html.premium-hud .slotpanel,
+html.premium-hud .card {
+  background: linear-gradient(165deg, rgba(28, 18, 42, 0.96), rgba(14, 10, 22, 0.98)) !important;
+  color: #f0e8f8 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35) !important;
+}
+
+html.premium-hud .pick {
+  background: rgba(255, 255, 255, 0.04) !important;
+}
+
+html.premium-hud .pick.lock {
+  opacity: 0.45 !important;
+  filter: grayscale(0.4) !important;
+}
+
+html.premium-hud .staffrow,
+html.premium-hud .uprow {
+  background: rgba(255, 255, 255, 0.04) !important;
+}
+
+html.premium-hud .stat,
+html.premium-hud .dim {
+  color: #9d8fb8 !important;
+}
+
+html.premium-hud .franchise-banner,
+html.premium-hud .mastery-banner,
+html.premium-hud .insurance-bar {
+  background: linear-gradient(90deg, rgba(124, 92, 255, 0.15), rgba(255, 110, 180, 0.08)) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #f0e8f8 !important;
+  border-radius: 14px !important;
+}
+
+/* ---- Buttons: consistent, no chunky 3D ---- */
+html.premium-hud .btn-primary {
+  background: linear-gradient(135deg, #7c5cff, #ff6eb4) !important;
+  box-shadow: 0 6px 20px rgba(124, 92, 255, 0.4) !important;
+  border: none !important;
+  padding: 11px 16px !important;
+  border-radius: 12px !important;
+  font-weight: 700 !important;
+}
+
+html.premium-hud .btn-primary:active,
+html.premium-hud .btn-ghost:active {
+  transform: scale(0.98) !important;
+  box-shadow: none !important;
+}
+
+html.premium-hud .btn-ghost {
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: #b8a8d0 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 12px !important;
+}
+
+/* ---- Tabs: cleaner dock ---- */
+html.premium-hud #command-dock {
+  background: rgba(8, 5, 15, 0.92) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(16px) !important;
+  padding-bottom: calc(4px + var(--safe-b, 0px)) !important;
+}
+
+html.premium-hud .tab {
+  background: transparent !important;
+  border: none !important;
+  opacity: 0.55;
+  padding: 8px 4px !important;
+}
+
+html.premium-hud .tab.active {
+  opacity: 1 !important;
+  background: rgba(124, 92, 255, 0.15) !important;
+  border-radius: 14px !important;
+  transform: none !important;
+}
+
+/* ---- Loading splash ---- */
+#loading-splash {
+  background: #08050f !important;
+  color: #f0e8f8 !important;
+}
+
+#loading-splash h1 {
+  font-family: 'Syne', sans-serif !important;
+  background: linear-gradient(135deg, #ffc94d, #ff6eb4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+#loading-bar {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-radius: 999px !important;
+}
+
+#loading-bar i {
+  background: linear-gradient(90deg, #7c5cff, #ff6eb4) !important;
+  border-radius: 999px !important;
+}
+
+/* ---- Toasts ---- */
+html.premium-hud .toast {
+  border-radius: 14px !important;
+  font-weight: 700 !important;
+  font-size: 13px !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45) !important;
+}
+
+/* ---- Reduce duplicate heroes ---- */
+html.premium-hud #main > .dynasty-badge:first-child {
+  margin-top: 0 !important;
+}
+
+@media (max-width: 520px) {
+  #hud-studio-rating {
+    min-width: 82px;
+    padding: 5px 8px 6px;
+  }
+  .hud-row-top { gap: 6px !important; }
+  .hud-logo { width: 36px !important; height: 36px !important; font-size: 17px !important; }
+  .hud-studio-name { font-size: 12px !important; }
+  html.premium-hud #pathway-rail .pathway-steps { display: none; }
+  html.premium-hud .pathway-header { margin-bottom: 4px !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.premium-hud .panel,
+  .ui-tab-hero,
+  #hud-studio-rating { animation: none !important; transition: none !important; }
+}

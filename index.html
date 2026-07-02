@@ -33,7 +33,9 @@
 <link rel="stylesheet" href="hud-premium.css">
 <link rel="stylesheet" href="ui-complete.css">
 <link rel="stylesheet" href="gameplay-studio-rating.css">
-<meta name="theme-color" content="#3a2b4d">
+<link rel="stylesheet" href="design-overhaul.css">
+<script>document.documentElement.classList.add("premium-hud")</script>
+<meta name="theme-color" content="#08050f">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <style>
 :root{
@@ -587,14 +589,14 @@ button,.btn-ghost{min-height:40px}
 
 <div class="overlay" id="whatsnew" style="display:none">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <h1 style="font-size:22px;text-align:center">✨ What's New — Build 30 Polish</h1>
+    <h1 style="font-size:22px;text-align:center">✨ What's New — Design Overhaul</h1>
     <div class="offlist" style="margin:12px 0">
-      <div><span>😴 Crisis Snooze</span><b>10-min break button on every crisis modal</b></div>
-      <div><span>🏆 Rating Achievements</span><b>2★, 3★ & 5★ studio milestones</b></div>
-      <div><span>📣 Rating Coach</span><b>Hint after your first premiere</b></div>
-      <div><span>🧭 Pathway Hints</span><b>Director's Pathway nudges studio star progress</b></div>
-      <div><span>🔧 Build 29</span><b>Hook bridge + all expansion layers live</b></div>
-      <div><span>⭐ Studio Stars</span><b>JW-style 5★ rating with project gates</b></div>
+      <div><span>🎨 Unified Dark UI</span><b>One cohesive premium theme — no more cream clash</b></div>
+      <div><span>⭐ Rating in HUD</span><b>Studio stars visible in the top bar again</b></div>
+      <div><span>📐 Slimmer Layout</span><b>Less banner spam, cleaner mobile</b></div>
+      <div><span>🌙 Dark Modals</span><b>Panels, cards, buttons all match</b></div>
+      <div><span>😴 Crisis Snooze</span><b>10-min break on crisis modals</b></div>
+      <div><span>⭐ Studio Stars</span><b>JW-style rating with gates & bonuses</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
   </div>
@@ -634,7 +636,7 @@ const STORE_PAYMENTS = true; // store always visible; buyReal routes web→check
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 30 · Polish";
+const BUILD_TAG = "build 31 · Design";
 const OFFLINE_CAP = 8*3600; // seconds
 
 const GENRES = ["Action","Romance","Fantasy","Sci-Fi","Comedy","Slice of Life"];
@@ -3025,6 +3027,7 @@ window.__AST_HOOK__ = {
 <script src="gameplay-studio-rating.js"></script>
 <script src="gameplay-polish.js"></script>
 <script src="hook-bridge.js"></script>
+<!-- design-overhaul.css loaded in head -->
 
 
 <script>(function(){var d;function f(){try{var b=document.getElementById('btn-save');if(b)b.click();}catch(e){}if(!d){d=document.createElement('div');d.style.cssText='position:fixed;bottom:10px;left:50%;transform:translateX(-50%);background:rgba(40,30,55,.92);color:#9be29b;font:600 12px system-ui;padding:5px 12px;border-radius:999px;z-index:99999;opacity:0;transition:opacity .25s;pointer-events:none';d.textContent='\u2713 Saved';document.body.appendChild(d);}d.style.opacity='1';clearTimeout(d._t);d._t=setTimeout(function(){d.style.opacity='0';},1100);}document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden')f();});window.addEventListener('pagehide',f);})();</script>

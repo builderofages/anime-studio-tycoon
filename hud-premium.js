@@ -210,6 +210,7 @@
             <span class="hud-dynasty-pill rank-d" id="hud-dynasty"><span id="hud-dynasty-grade">D</span> · <span id="hud-dynasty-score">0</span></span>
           </div>
         </div>
+        <div id="hud-studio-rating" class="hud-studio-rating" title="Studio rating — tap to view"></div>
         <div class="hud-combo" id="hud-combo">🔥 <span id="hud-combo-n">0</span>x</div>
       </div>
       <div class="hud-resources" id="hud-resources"></div>
@@ -261,7 +262,7 @@
       if (!hook) return;
       const pw = window.__AST_PATHWAY__;
       if (pw && pw.action && pw.action.type === "rating") {
-        document.getElementById("studio-rank")?.click();
+        (document.getElementById("hud-studio-rating") || document.getElementById("studio-rank"))?.click();
         hook.play("click");
         return;
       }

@@ -272,14 +272,18 @@
     } catch (e) {}
   }
 
+  function ratingEl() {
+    return document.getElementById("hud-studio-rating") || document.getElementById("studio-rank");
+  }
+
   function updateHud(S, hook) {
-    const el = document.getElementById("studio-rank");
+    const el = ratingEl();
     if (!el) return;
     const stars = S.studioStars || 1;
     const ti = tierInfo(stars);
     const next = stars < 5 ? stars + 1 : null;
     const pct = next ? pillarProgress(S, NEXT_REQ[next]).pct : 100;
-    el.className = "jw-studio-rank" + (stars >= 5 ? " jw-max" : "");
+    el.className = "hud-studio-rating jw-studio-rank" + (stars >= 5 ? " jw-max" : "");
     el.title = "Tap for Studio Rating";
     el.innerHTML = `<span class="jw-rank-icon">${ti.icon}</span>
       <span class="jw-rank-stars">${starsHTML(stars, "sm")}</span>
@@ -373,7 +377,7 @@
     }
 
     document.addEventListener("click", (e) => {
-      if (e.target.closest("#studio-rank")) {
+      if (e.target.closest("#hud-studio-rating, #studio-rank")) {
         showRatingPanel(hook);
         return;
       }

@@ -1,6 +1,6 @@
 # Anime Studio Tycoon — Path to 100%
 
-**Current build:** 30 · Polish  
+**Current build:** 31 · Design  
 **Version:** 9.0.0  
 **Gameplay completion:** 100%  
 **UI/UX completion:** 100%  
@@ -25,6 +25,7 @@
 | 28 | Studio Stars | JW-style 5★ rating, pillar progress, project gates |
 | 29 | Fixed | Hook bridge — all expansion layers actually run |
 | 30 | Polish | Crisis snooze, rating achievements, rating coach, pathway hints |
+| 31 | Design | Unified dark UI, rating in HUD, slimmer layout, dark modals |
 
 ## Art & media
 
