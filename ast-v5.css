@@ -827,6 +827,53 @@ html.hud-v3-active #btn-start {
   margin-top: 8px !important;
 }
 
+/* ---- Premiere modal (dark glass) ---- */
+html.hud-v3-active #premiere .premiere-card {
+  background: var(--ast-glass) !important;
+  border: 1px solid var(--ast-border) !important;
+  border-radius: 22px !important;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55), 0 0 40px rgba(255, 92, 168, 0.15) !important;
+}
+
+html.hud-v3-active #premiere .prem-banner {
+  border-radius: 22px 22px 0 0 !important;
+  height: 240px !important;
+}
+
+html.hud-v3-active #premiere .prem-review {
+  color: var(--ast-muted) !important;
+}
+
+html.hud-v3-active #premiere .prem-stats .kpi {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid var(--ast-border-soft) !important;
+}
+
+html.hud-v3-active #premiere .prem-stats .kpi.accent {
+  background: linear-gradient(135deg, rgba(255, 200, 69, 0.2), rgba(255, 92, 168, 0.12)) !important;
+  border-color: rgba(255, 200, 69, 0.3) !important;
+}
+
+html.hud-v3-active #premiere .prem-stats .kpi .kl {
+  color: var(--ast-muted) !important;
+}
+
+html.hud-v3-active #premiere .prem-stats .kpi .kv {
+  color: var(--ast-text) !important;
+}
+
+html.hud-v3-active #premiere .prem-stats .kpi.accent .kl,
+html.hud-v3-active #premiere .prem-stats .kpi.accent .kv {
+  color: var(--ast-gold) !important;
+}
+
+/* ---- Greenlight pick posters ---- */
+html.hud-v3-active .aaa-pick-poster {
+  background-size: cover !important;
+  background-position: center top !important;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12), 0 6px 16px rgba(0, 0, 0, 0.35) !important;
+}
+
 /* ---- Greenlight pick scroll ---- */
 html.hud-v3-active .aaa-pick-scroll {
   display: flex !important;

@@ -105,6 +105,8 @@
     }
   }
 
+  window.__AST_FX__ = { burst: burstParticles, shake: screenShake };
+
   function studioRank(fans) {
     let r = RANKS[0];
     let idx = 0;
