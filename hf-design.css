@@ -26,11 +26,71 @@ html.hud-v3-active {
 html.hud-v3-active body {
   background:
     linear-gradient(180deg, rgba(12, 10, 24, 0.25) 0%, rgba(12, 10, 24, 0.65) 100%),
-    url('bg-v4.png?v=37') center top / cover no-repeat fixed !important;
+    url('bg-v4.png?v=42') center top / cover no-repeat fixed !important;
 }
 
 html.hud-v3-active #app {
+  position: relative;
+  z-index: 2;
   background: transparent !important;
+}
+
+/* FX canvas + splash + ticker: aaa-upgrade.js injects these into <body>.
+   aaa-upgrade.css is not linked (avoids light-theme clash) — layout rules live here. */
+#fx-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+#loading-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+#loading-splash.hide {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+#news-ticker {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background: linear-gradient(90deg, rgba(45, 31, 66, 0.95), rgba(74, 84, 112, 0.92));
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 5px 0;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255, 204, 77, 0.25);
+  pointer-events: none;
+}
+
+#news-ticker .tick-inner {
+  display: inline-block;
+  white-space: nowrap;
+  animation: hf-tick-scroll 28s linear infinite;
+  padding-left: 100%;
+}
+
+@keyframes hf-tick-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+body.has-ticker #app {
+  padding-top: 28px;
 }
 
 /* ---- HUD: glass bar like mockup ---- */
@@ -337,7 +397,7 @@ html.hud-v3-active .panel[style*="dashed"] {
 html.hud-v3-active #loading-splash {
   background:
     linear-gradient(180deg, rgba(12, 10, 24, 0.5) 0%, rgba(12, 10, 24, 0.85) 100%),
-    url('bg-v4.png?v=37') center / cover no-repeat !important;
+    url('bg-v4.png?v=42') center / cover no-repeat !important;
 }
 
 
