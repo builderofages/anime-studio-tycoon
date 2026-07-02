@@ -138,7 +138,8 @@ assert(!html.includes('href="game-skin.css'), "game-skin.css not linked (ast-v5 
 assert(html.includes("hf-design.css"), "higgsfield design css linked");
 assert(html.includes("legacy-fx.css"), "legacy-fx css linked");
 assert(html.includes("ast-v5.css"), "ast-v5 design css linked");
-assert(html.includes("build 51"), "build 51 tag");
+assert(html.includes("build 52"), "build 52 tag");
+assert(html.includes("⭐ Production Score"), "production score star label");
 assert(html.includes("Design v5+ Overhaul"), "whatsnew v5 changelog");
 assert(html.includes("hireCost,"), "hireCost on hook for tab badges");
 assert(html.includes("estimatePremiere"), "premiere bonus estimator");

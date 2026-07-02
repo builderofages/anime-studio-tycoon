@@ -34,7 +34,7 @@ html.hud-v3-active body {
 html.hud-v3-active body {
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.35) 0%, rgba(8, 6, 15, 0.82) 100%),
-    url('bg-v4.png?v=51') center top / cover no-repeat fixed !important;
+    url('bg-v4.png?v=52') center top / cover no-repeat fixed !important;
 }
 
 html.hud-v3-active button {
@@ -486,6 +486,85 @@ html.hud-v3-active .aaa-poster {
 
 html.hud-v3-active .aaa-poster[data-act="tapboost"]:active {
   transform: scale(0.98);
+}
+
+/* ---- Stars gacha hero (HF bg) ---- */
+html.hud-v3-active .aaa-page-hero.aaa-gacha-hero {
+  background:
+    linear-gradient(135deg, rgba(107, 92, 255, 0.2), rgba(255, 92, 168, 0.14)),
+    url('assets/hf/gacha-bg.png?v=52') center/cover !important;
+  border: 1px solid rgba(180, 140, 255, 0.28) !important;
+  overflow: hidden;
+}
+
+html.hud-v3-active .aaa-page-hero.aaa-gacha-hero h2,
+html.hud-v3-active .aaa-page-hero.aaa-gacha-hero p {
+  position: relative;
+  z-index: 1;
+}
+
+html.hud-v3-active .aaa-gacha-btns {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- Market campaigns ---- */
+html.hud-v3-active .aaa-market-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 8px !important;
+}
+
+html.hud-v3-active .aaa-market-card {
+  background: var(--ast-glass) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid var(--ast-border-soft) !important;
+  border-radius: 14px !important;
+  padding: 14px 10px !important;
+  text-align: center !important;
+  box-shadow: none !important;
+}
+
+html.hud-v3-active .aaa-market-card .ic {
+  font-size: 30px !important;
+  margin-bottom: 6px !important;
+  filter: drop-shadow(0 2px 8px rgba(255, 92, 168, 0.25));
+}
+
+html.hud-v3-active .aaa-market-card h4 {
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  color: var(--ast-text) !important;
+  margin: 0 0 4px !important;
+}
+
+html.hud-v3-active .aaa-market-card .hirebtn {
+  width: 100% !important;
+  margin-top: 8px !important;
+}
+
+/* ---- Research mastery ---- */
+html.hud-v3-active .aaa-mastery-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 8px !important;
+}
+
+html.hud-v3-active .aaa-mastery-card {
+  background: var(--ast-glass) !important;
+  border: 1px solid var(--ast-border-soft) !important;
+  border-radius: 14px !important;
+  padding: 12px !important;
+}
+
+html.hud-v3-active .aaa-mastery-card h4 {
+  font-size: 12px !important;
+  color: var(--ast-text) !important;
+  margin: 0 0 6px !important;
+}
+
+html.hud-v3-active .aaa-score-label {
+  color: var(--ast-muted) !important;
 }
 
 html.hud-v3-active .aaa-team {
