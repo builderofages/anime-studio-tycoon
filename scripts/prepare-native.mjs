@@ -40,6 +40,7 @@ const FILES = [
   "hook-bridge.js",
   "gameplay-polish.js",
   "studio-premium.css",
+  "game-skin.css",
   "manifest.json",
   "icons/icon-512.png",
   "privacy.html",

@@ -1,0 +1,565 @@
+/**
+ * Game Skin v4 — SINGLE visual authority. Loads last. Overrides everything.
+ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+html.hud-v3-active {
+  --c-bg: #09090f;
+  --c-surface: #14141c;
+  --c-surface-2: #1c1c28;
+  --c-border: rgba(255, 255, 255, 0.08);
+  --c-text: #eeeef2;
+  --c-muted: #8888a0;
+  --c-accent: #7c3aed;
+  --c-pink: #db2777;
+  --c-gold: #eab308;
+  --c-cyan: #0891b2;
+  --c-good: #16a34a;
+  --c-bad: #dc2626;
+  --c-r: 14px;
+}
+
+/* ===== NUCLEAR: kill legacy light theme from 12 CSS files ===== */
+html.hud-v3-active * {
+  font-family: 'Inter', system-ui, sans-serif !important;
+}
+
+html.hud-v3-active .panel,
+html.hud-v3-active .staffrow,
+html.hud-v3-active .uprow,
+html.hud-v3-active .pick,
+html.hud-v3-active .kpi,
+html.hud-v3-active .loginday,
+html.hud-v3-active .slotpanel,
+html.hud-v3-active .card-modal,
+html.hud-v3-active .briefing-card,
+html.hud-v3-active .briefing-opt,
+html.hud-v3-active .aaa-glass,
+html.hud-v3-active .legend-glass,
+html.hud-v3-active .flash-deal,
+html.hud-v3-active .hero-card,
+html.hud-v3-active .dash-panel,
+html.hud-v3-active .you-row,
+html.hud-v3-active .starter-row {
+  background: var(--c-surface) !important;
+  background-image: none !important;
+  color: var(--c-text) !important;
+  border: 1px solid var(--c-border) !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  animation: none !important;
+}
+
+html.hud-v3-active .panel {
+  border-radius: var(--c-r) !important;
+  padding: 14px !important;
+  margin: 0 !important;
+}
+
+html.hud-v3-active .panel h2 {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  color: var(--c-muted) !important;
+  margin: 0 0 12px !important;
+  padding: 0 !important;
+  border: none !important;
+}
+
+html.hud-v3-active .muted,
+html.hud-v3-active .stat,
+html.hud-v3-active .dim {
+  color: var(--c-muted) !important;
+  opacity: 1 !important;
+  font-size: 12px !important;
+  line-height: 1.45 !important;
+}
+
+/* ===== Production slots ===== */
+html.hud-v3-active .slotpanel {
+  padding: 12px !important;
+  overflow: hidden;
+}
+
+html.hud-v3-active .slotpanel h2 {
+  display: none !important;
+}
+
+html.hud-v3-active .slotpanel .card {
+  display: flex !important;
+  gap: 12px !important;
+  align-items: flex-start !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+html.hud-v3-active .poster {
+  width: 88px !important;
+  height: 88px !important;
+  border-radius: 12px !important;
+  flex-shrink: 0 !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+}
+
+html.hud-v3-active .poster .gtag {
+  font-size: 9px !important;
+  padding: 4px !important;
+  background: rgba(0, 0, 0, 0.75) !important;
+}
+
+html.hud-v3-active .pinfo {
+  flex: 1 !important;
+  min-width: 0 !important;
+}
+
+html.hud-v3-active .pinfo h3 {
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  color: var(--c-text) !important;
+  margin: 0 0 4px !important;
+  line-height: 1.3 !important;
+}
+
+html.hud-v3-active .slotpanel[data-done="1"],
+html.hud-v3-active .slotpanel.slot-ready {
+  border-color: rgba(234, 179, 8, 0.45) !important;
+  box-shadow: 0 0 0 1px rgba(234, 179, 8, 0.15) !important;
+}
+
+html.hud-v3-active .progress {
+  height: 5px !important;
+  background: rgba(0, 0, 0, 0.4) !important;
+  border-radius: 3px !important;
+  margin: 6px 0 !important;
+}
+
+html.hud-v3-active .progress i,
+html.hud-v3-active .dim .db i {
+  background: var(--c-accent) !important;
+  border-radius: 3px !important;
+  box-shadow: none !important;
+}
+
+html.hud-v3-active .dim .db {
+  height: 4px !important;
+  background: rgba(0, 0, 0, 0.35) !important;
+  border-radius: 2px !important;
+}
+
+html.hud-v3-active .dims {
+  gap: 4px 8px !important;
+  margin-top: 6px !important;
+}
+
+html.hud-v3-active .dim {
+  font-size: 9px !important;
+  color: var(--c-muted) !important;
+}
+
+/* ===== Staff / upgrade rows ===== */
+html.hud-v3-active .staffrow,
+html.hud-v3-active .uprow {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding: 10px 12px !important;
+  border-radius: var(--c-r) !important;
+  margin-bottom: 6px !important;
+}
+
+html.hud-v3-active .staffrow img {
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 10px !important;
+}
+
+html.hud-v3-active .staffrow .meta h4,
+html.hud-v3-active .uprow .meta h4 {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: var(--c-text) !important;
+  margin: 0 !important;
+}
+
+html.hud-v3-active .you-row {
+  border-color: var(--c-pink) !important;
+  background: rgba(219, 39, 119, 0.08) !important;
+}
+
+/* ===== Pick grid / greenlight ===== */
+html.hud-v3-active .pickgrid {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 8px !important;
+}
+
+html.hud-v3-active .pick {
+  padding: 10px !important;
+  border-radius: var(--c-r) !important;
+}
+
+html.hud-v3-active .pick h4 {
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  margin: 0 0 6px !important;
+}
+
+html.hud-v3-active .pick .stat {
+  font-size: 10px !important;
+}
+
+html.hud-v3-active .pick.lock {
+  opacity: 0.35 !important;
+}
+
+/* ===== Chips ===== */
+html.hud-v3-active .chip {
+  padding: 6px 10px !important;
+  border-radius: 8px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  background: var(--c-surface-2) !important;
+  border: 1px solid var(--c-border) !important;
+  color: var(--c-text) !important;
+  box-shadow: none !important;
+}
+
+html.hud-v3-active .chip.sel {
+  background: var(--c-accent) !important;
+  border-color: var(--c-accent) !important;
+  color: #fff !important;
+}
+
+html.hud-v3-active .chip.trend {
+  outline: 1px dashed var(--c-cyan) !important;
+}
+
+html.hud-v3-active .genrepick {
+  gap: 6px !important;
+  margin: 8px 0 !important;
+}
+
+/* ===== KPI dashboard ===== */
+html.hud-v3-active .kpis {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 6px !important;
+}
+
+html.hud-v3-active .kpi {
+  padding: 8px 10px !important;
+  border-radius: 10px !important;
+}
+
+html.hud-v3-active .kpi .kl {
+  font-size: 9px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  color: var(--c-muted) !important;
+}
+
+html.hud-v3-active .kpi .kv {
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: var(--c-text) !important;
+}
+
+html.hud-v3-active .kpi.accent {
+  background: rgba(234, 179, 8, 0.1) !important;
+  border-color: rgba(234, 179, 8, 0.2) !important;
+}
+
+html.hud-v3-active .kpi.accent .kv {
+  color: var(--c-gold) !important;
+}
+
+html.hud-v3-active .dash-panel {
+  background: var(--c-surface) !important;
+}
+
+/* ===== Buttons ===== */
+html.hud-v3-active button {
+  font-weight: 600 !important;
+  letter-spacing: 0 !important;
+  text-shadow: none !important;
+}
+
+html.hud-v3-active .btn-primary {
+  background: var(--c-accent) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 10px !important;
+  padding: 10px 14px !important;
+  box-shadow: none !important;
+}
+
+html.hud-v3-active .btn-gold {
+  background: var(--c-gold) !important;
+  color: #1a1200 !important;
+  box-shadow: none !important;
+  border-radius: 10px !important;
+}
+
+html.hud-v3-active .btn-cyan {
+  background: var(--c-cyan) !important;
+  color: #fff !important;
+  box-shadow: none !important;
+  border-radius: 10px !important;
+}
+
+html.hud-v3-active .btn-ghost {
+  background: var(--c-surface-2) !important;
+  color: var(--c-muted) !important;
+  border: 1px solid var(--c-border) !important;
+  border-radius: 10px !important;
+}
+
+html.hud-v3-active .hirebtn {
+  min-width: 72px !important;
+  padding: 8px 10px !important;
+  font-size: 12px !important;
+}
+
+/* ===== Pills & badges ===== */
+html.hud-v3-active .pill {
+  background: rgba(8, 145, 178, 0.15) !important;
+  color: var(--c-cyan) !important;
+  font-size: 10px !important;
+  padding: 2px 7px !important;
+  border-radius: 6px !important;
+}
+
+html.hud-v3-active .qtimer {
+  background: var(--c-surface-2) !important;
+  color: var(--c-muted) !important;
+  font-size: 10px !important;
+  padding: 3px 8px !important;
+  border-radius: 6px !important;
+}
+
+/* ===== Event bar ===== */
+html.hud-v3-active .eventbar {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding: 10px 12px !important;
+  border-radius: var(--c-r) !important;
+  background: rgba(234, 179, 8, 0.08) !important;
+  border: 1px solid rgba(234, 179, 8, 0.2) !important;
+  margin: 0 !important;
+}
+
+html.hud-v3-active .eventbar .ev-ic {
+  font-size: 18px !important;
+}
+
+html.hud-v3-active .eventbar .ev-meta b {
+  font-size: 13px !important;
+  color: var(--c-gold) !important;
+}
+
+/* ===== Login calendar ===== */
+html.hud-v3-active .logingrid {
+  gap: 4px !important;
+}
+
+html.hud-v3-active .loginday {
+  min-height: 42px !important;
+  padding: 4px !important;
+  border-radius: 8px !important;
+}
+
+html.hud-v3-active .loginday.next {
+  border-color: var(--c-accent) !important;
+  box-shadow: none !important;
+  animation: none !important;
+}
+
+html.hud-v3-active .loginday.big {
+  border-color: rgba(234, 179, 8, 0.3) !important;
+}
+
+/* ===== Stars ===== */
+html.hud-v3-active .stars,
+html.hud-v3-active .slot-eta {
+  color: var(--c-gold) !important;
+}
+
+/* ===== Start screen ===== */
+html.hud-v3-active #start .card-modal {
+  background: var(--c-surface) !important;
+  border: 1px solid var(--c-border) !important;
+  border-radius: 20px !important;
+  padding: 28px 24px !important;
+  max-width: 340px !important;
+}
+
+html.hud-v3-active #start h1 {
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  color: var(--c-text) !important;
+  margin: 12px 0 4px !important;
+}
+
+html.hud-v3-active #start p {
+  color: var(--c-muted) !important;
+  font-size: 13px !important;
+}
+
+html.hud-v3-active .ast-input,
+html.hud-v3-active #start-studio,
+html.hud-v3-active #start-lang {
+  width: 100% !important;
+  padding: 11px 12px !important;
+  border-radius: 10px !important;
+  border: 1px solid var(--c-border) !important;
+  background: var(--c-surface-2) !important;
+  color: var(--c-text) !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  margin-bottom: 10px !important;
+}
+
+html.hud-v3-active #start label {
+  color: var(--c-muted) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.06em !important;
+}
+
+/* ===== Modals & overlays ===== */
+html.hud-v3-active .overlay {
+  background: rgba(0, 0, 0, 0.85) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+html.hud-v3-active .card-modal h1 {
+  color: var(--c-text) !important;
+}
+
+html.hud-v3-active .briefing-opt {
+  color: var(--c-text) !important;
+  margin-top: 6px !important;
+  padding: 12px !important;
+}
+
+html.hud-v3-active .briefing-opt:hover {
+  border-color: var(--c-accent) !important;
+}
+
+/* ===== Empire / AAA components ===== */
+html.hud-v3-active .warroom-opt,
+html.hud-v3-active .blend-pick .bp,
+html.hud-v3-active .source-pick .sp,
+html.hud-v3-active .festival-row,
+html.hud-v3-active .scout-banner,
+html.hud-v3-active .insurance-bar,
+html.hud-v3-active .franchise-banner,
+html.hud-v3-active .mastery-banner {
+  background: var(--c-surface-2) !important;
+  border: 1px solid var(--c-border) !important;
+  color: var(--c-text) !important;
+}
+
+html.hud-v3-active .dynasty-badge,
+html.hud-v3-active .ui-tab-hero {
+  display: none !important;
+}
+
+/* ===== JW Rating ===== */
+html.hud-v3-active .jw-rating-card,
+html.hud-v3-active .jw-rankup-card {
+  background: var(--c-surface) !important;
+  border: 1px solid var(--c-border) !important;
+  color: var(--c-text) !important;
+  border-radius: 16px !important;
+}
+
+html.hud-v3-active .jw-rating-kpis > div {
+  background: var(--c-surface-2) !important;
+}
+
+html.hud-v3-active .jw-rating-kpis b { color: var(--c-gold) !important; }
+
+html.hud-v3-active .jw-produce-rating {
+  background: var(--c-surface-2) !important;
+  border: 1px solid var(--c-border) !important;
+  border-radius: var(--c-r) !important;
+  padding: 8px 10px !important;
+}
+
+/* ===== Store ===== */
+html.hud-v3-active .flash-deal {
+  border-color: rgba(234, 179, 8, 0.3) !important;
+}
+
+html.hud-v3-active .flash-body { color: var(--c-muted) !important; }
+
+html.hud-v3-active .starter-ribbon {
+  background: linear-gradient(90deg, var(--c-gold), var(--c-pink)) !important;
+}
+
+/* ===== Toasts ===== */
+html.hud-v3-active .toast {
+  background: var(--c-surface) !important;
+  border: 1px solid var(--c-border) !important;
+  border-radius: 10px !important;
+  font-size: 12px !important;
+  padding: 8px 14px !important;
+}
+
+html.hud-v3-active .toast.gold {
+  background: var(--c-gold) !important;
+  color: #1a1000 !important;
+}
+
+/* ===== Tab labels hidden (icons only) ===== */
+html.hud-v3-active .tab .tab-lbl {
+  display: none !important;
+}
+
+/* ===== Qhead ===== */
+html.hud-v3-active .qhead {
+  margin-bottom: 8px !important;
+}
+
+html.hud-v3-active .qhead h2 {
+  margin: 0 !important;
+}
+
+/* ===== List grids ===== */
+html.hud-v3-active .listgrid {
+  gap: 6px !important;
+}
+
+/* ===== Loading ===== */
+html.hud-v3-active #loading-splash {
+  background: var(--c-bg) !important;
+  color: var(--c-text) !important;
+}
+
+html.hud-v3-active #loading-bar {
+  background: var(--c-surface-2) !important;
+}
+
+html.hud-v3-active #loading-bar i {
+  background: var(--c-accent) !important;
+}
+
+@media (min-width: 600px) {
+  html.hud-v3-active .pickgrid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+  html.hud-v3-active .kpis {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+  html.hud-v3-active .poster {
+    width: 100px !important;
+    height: 100px !important;
+  }
+}

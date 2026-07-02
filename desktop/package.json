@@ -60,6 +60,7 @@
           "hook-bridge.js",
           "gameplay-polish.js",
           "studio-premium.css",
+          "game-skin.css",
           "manifest.json",
           "privacy.html",
           "terms.html"
