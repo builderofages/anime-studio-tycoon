@@ -378,8 +378,8 @@
 
   function installHooks() {
     const hook = window.__AST_HOOK__;
-    if (!hook || hook.__aaaInstalled) return false;
-    hook.__aaaInstalled = true;
+    if (!hook || hook.__aaaLayerInstalled) return false;
+    hook.__aaaLayerInstalled = true;
 
     setupBriefingModal();
     setupAchievePop();

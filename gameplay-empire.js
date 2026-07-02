@@ -129,9 +129,9 @@
   }
 
   function renderWarRoom(d, h) {
-    if (window.__AST_CRISIS_OPEN__ || window.__AST_PENDING_WARROOM__) return;
+    if (window.__AST_CRISIS_OPEN__ || window.__AST_PENDING_WARROOM__) return false;
     const body = document.getElementById("decision-body");
-    if (!body) return;
+    if (!body) return false;
     window.__AST_CRISIS_OPEN__ = true;
     const opts = d.opts.map((o, i) =>
       `<button class="btn-ghost warroom-opt" data-empire-war="${i}">${o.label}</button>`
@@ -143,6 +143,7 @@
     document.getElementById("decision").style.display = "flex";
     h.play("reward");
     window.__AST_PENDING_WARROOM__ = d;
+    return true;
   }
 
   function resolveWarRoom(idx, h) {
@@ -276,13 +277,15 @@
       if (Date.now() - (S.lastChaos || 0) < 180000) return;
       const chance = ((S.chaos || 0) / 100) * (S.chaosMode ? 0.22 : 0.12);
       if (Math.random() >= chance) return;
-      S.lastChaos = Date.now();
       const ev = WARROOM[Math.floor(Math.random() * WARROOM.length)];
+      let opened = false;
       if ((S.marketShare || 0) >= 20 && Math.random() < 0.35) {
-        renderWarRoom(WARROOM[2], hook);
+        opened = renderWarRoom(WARROOM[2], hook);
       } else {
-        renderWarRoom(ev, hook);
+        opened = renderWarRoom(ev, hook);
       }
+      if (opened) S.lastChaos = Date.now();
+      else if (fallback) fallback();
     };
 
     const origGreen = hook.greenlight;
@@ -364,7 +367,7 @@
     hook.render = function () {
       origRender();
       const S = hook.getState();
-      S._empireRoleBonus = computeRoleBonus(S);
+      S._empireRoleBonus = computeRoleBonus(S, hook);
       injectStaffUI(S, hook);
       injectStarsBanner(S, hook);
       injectGreenlightExtras(S, hook);

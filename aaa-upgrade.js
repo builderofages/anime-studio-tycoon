@@ -140,6 +140,10 @@
   function updateRankBadge() {
     const hook = window.__AST_HOOK__;
     if (!hook) return;
+    if (hook.__jwRatingInstalled) {
+      updateComboPill(hook.getState());
+      return;
+    }
     const S = hook.getState();
     const el = document.getElementById("studio-rank");
     if (!el) return;

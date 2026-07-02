@@ -17,7 +17,7 @@
       pillars: [
         { id: "catalog", label: "Catalog", icon: "🎬", cur: (S) => S.releases || 0, need: 3 },
         { id: "reach", label: "Audience", icon: "👥", cur: (S) => S.fans || 0, need: 50 },
-        { id: "team", label: "Team Size", icon: "👥", cur: (S) => staffSum(S), need: 3 },
+        { id: "team", label: "Team Size", icon: "👥", cur: (S) => staffSum(S), need: 2 },
       ],
       gems: 5,
       blurb: "Indie credibility — bigger projects trust your name.",
@@ -107,27 +107,50 @@
     return pillarProgress(S, NEXT_REQ[next]).ready;
   }
 
-  function syncStarsFromSave(S, hook, silent) {
+  let _pendingRankUp = false;
+
+  function modalBlocking() {
+    if (window.crisisModalOpen && window.crisisModalOpen()) return true;
+    const prem = document.getElementById("premiere");
+    if (prem && prem.style.display === "flex") return true;
+    const rank = document.getElementById("jw-rankup");
+    if (rank && rank.style.display === "flex") return true;
+    return false;
+  }
+
+  function syncStarsFromSave(S, hook) {
     initState(S);
-    let promoted = false;
+    const before = S.studioStars || 1;
     while (canPromote(S)) {
       const next = S.studioStars + 1;
       const req = NEXT_REQ[next];
       S.studioStars = next;
       S.studioStarBest = Math.max(S.studioStarBest || 1, next);
-      S.studioStarPerks[next] = true;
-      if (!silent && req) {
-        S.gems = (S.gems || 0) + (req.gems || 0);
-        hook.toast(`${tierInfo(next).icon} Studio Rating: ${next}★ ${tierInfo(next).name}! +${req.gems}💎`, true);
-        hook.play("reward");
+      if (!S.studioStarPerks[next]) {
+        S.studioStarPerks[next] = true;
+        if (req) S.gems = (S.gems || 0) + (req.gems || 0);
       }
-      promoted = true;
     }
-    return promoted;
+    if (S.studioStars > before) {
+      hook.toast(`⭐ Studio rating synced to ${S.studioStars}★ — rewards granted`, true);
+      hook.save();
+    }
+  }
+
+  function tryPendingRankUp(hook) {
+    if (!_pendingRankUp) return;
+    if (modalBlocking()) return;
+    _pendingRankUp = false;
+    const S = hook.getState();
+    if (canPromote(S)) promoteOne(S, hook);
   }
 
   function promoteOne(S, hook) {
     if (!canPromote(S)) return false;
+    if (modalBlocking()) {
+      _pendingRankUp = true;
+      return false;
+    }
     const next = S.studioStars + 1;
     const req = NEXT_REQ[next];
     const ti = tierInfo(next);
@@ -280,7 +303,7 @@
     hook.__jwRatingInstalled = true;
 
     initState(hook.getState());
-    syncStarsFromSave(hook.getState(), hook, true);
+    syncStarsFromSave(hook.getState(), hook);
     ensureModal();
 
     hook.studioStars = () => hook.getState().studioStars || 1;
@@ -360,9 +383,19 @@
       if (e.target.closest("[data-jw-rankup-close]")) {
         document.getElementById("jw-rankup").style.display = "none";
         hook.render();
+        tryPendingRankUp(hook);
       }
     });
 
+    const origClosePremiere = window.closePremiere;
+    if (typeof origClosePremiere === "function") {
+      window.closePremiere = function () {
+        origClosePremiere();
+        tryPendingRankUp(hook);
+      };
+    }
+
+    window.__AST_TRY_RANKUP__ = () => tryPendingRankUp(hook);
     updateHud(hook.getState(), hook);
     return true;
   }
@@ -383,10 +416,12 @@
         <button class="btn-ghost" data-jw-open style="font-size:11px;padding:6px 10px">Rating</button>
       </div>`
     );
-    main.querySelector("[data-jw-open]")?.addEventListener("click", () => showRatingPanel(hook));
+    main.querySelectorAll("[data-jw-open]").forEach((el) => {
+      el.addEventListener("click", (e) => { e.stopPropagation(); showRatingPanel(hook); });
+    });
   }
 
-  window.__AST_STUDIO_RATING__ = { tierInfo, pillarProgress, starsHTML, TIERS };
+  window.__AST_STUDIO_RATING__ = { tierInfo, pillarProgress, starsHTML, TIERS, initState };
 
   const poll = setInterval(() => {
     if (installHooks()) clearInterval(poll);
