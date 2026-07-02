@@ -90,6 +90,18 @@
         action: { type: "tab", tab: "produce" },
       };
     }
+    if ((S.studioStars || 1) < 3 && (S.releases || 0) >= 1 && (S.releases || 0) < 15) {
+      const next = (S.studioStars || 1) + 1;
+      return {
+        phase: "grow",
+        phaseIdx: 4,
+        message: `⭐ Studio ${next}★ within reach — tap your stars (top-left) and fill every pillar!`,
+        tab: "produce",
+        cta: "View Rating",
+        urgent: false,
+        action: { type: "rating" },
+      };
+    }
     if ((S.releases || 0) === 0 && activeCount(S) === 0) {
       if (staffTotal(S) === 0) {
         return {
@@ -248,6 +260,11 @@
       const hook = window.__AST_HOOK__;
       if (!hook) return;
       const pw = window.__AST_PATHWAY__;
+      if (pw && pw.action && pw.action.type === "rating") {
+        document.getElementById("studio-rank")?.click();
+        hook.play("click");
+        return;
+      }
       if (pw && pw.action && pw.action.type === "tab") {
         hook.getState().tab = pw.action.tab;
         hook.render();

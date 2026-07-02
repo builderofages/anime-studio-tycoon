@@ -56,6 +56,7 @@ const required = [
   "gameplay-studio-rating.js",
   "gameplay-studio-rating.css",
   "hook-bridge.js",
+  "gameplay-polish.js",
   "manifest.json",
   "privacy.html",
   "terms.html",
@@ -112,6 +113,9 @@ assert(html.includes('src="hook-bridge.js"'), "hook-bridge.js linked");
 assert(readFileSync(join(root, "hook-bridge.js"), "utf8").includes("__globalsRebound"), "hook global rebind");
 assert(readFileSync(join(root, "gameplay-aaa.js"), "utf8").includes("__aaaLayerInstalled"), "aaa layer install flag");
 assert(html.includes("hire,") && html.includes("expandStudio,"), "hire/expand on hook");
+assert(html.includes('src="gameplay-polish.js"'), "gameplay-polish.js linked");
+assert(html.includes("crisisSnoozeUntil"), "crisis snooze state");
+assert(html.includes('id:"rat5"'), "studio rating achievements");
 assert(html.includes("seasonClaimed"), "season pass state");
 assert(html.includes('id="main"></div>'), "clean #main shell");
 assert(html.includes("BUILD_TAG"), "build tag constant");
@@ -120,7 +124,7 @@ assert(html.includes("whatsnew"), "what's new modal");
 const rawCount = (html.match(/__raw/g) || []).length;
 assert(rawCount <= 2, "single __raw redirect script", `found ${rawCount}`);
 
-for (const f of ["strings.js", "logic.js", "aaa-upgrade.js", "gameplay-plus.js", "gameplay-ultra.js", "gameplay-endless.js", "gameplay-empire.js", "gameplay-studio.js", "gameplay-final.js", "gameplay-aaa.js", "gameplay-legend.js", "hud-premium.js", "ui-complete.js", "gameplay-studio-rating.js", "hook-bridge.js"]) {
+for (const f of ["strings.js", "logic.js", "aaa-upgrade.js", "gameplay-plus.js", "gameplay-ultra.js", "gameplay-endless.js", "gameplay-empire.js", "gameplay-studio.js", "gameplay-final.js", "gameplay-aaa.js", "gameplay-legend.js", "hud-premium.js", "ui-complete.js", "gameplay-studio-rating.js", "gameplay-polish.js", "hook-bridge.js"]) {
   const r = spawnSync("node", ["--check", join(root, f)], { encoding: "utf8" });
   assert(r.status === 0, `syntax OK: ${f}`, r.stderr?.trim());
 }
@@ -168,6 +172,8 @@ assert(existsSync(join(root, "www/gameplay-studio-rating.js")), "www/gameplay-st
 assert(dpkg.build?.extraResources?.[0]?.filter?.includes("gameplay-studio-rating.js"), "desktop bundles studio-rating");
 assert(existsSync(join(root, "www/hook-bridge.js")), "www/hook-bridge.js copied");
 assert(dpkg.build?.extraResources?.[0]?.filter?.includes("hook-bridge.js"), "desktop bundles hook-bridge");
+assert(existsSync(join(root, "www/gameplay-polish.js")), "www/gameplay-polish.js copied");
+assert(dpkg.build?.extraResources?.[0]?.filter?.includes("gameplay-polish.js"), "desktop bundles polish");
 
 console.log(`\n${passed} passed, ${failed} failed`);
 process.exit(failed > 0 ? 1 : 0);

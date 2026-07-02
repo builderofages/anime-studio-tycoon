@@ -38,6 +38,7 @@ const FILES = [
   "gameplay-studio-rating.js",
   "gameplay-studio-rating.css",
   "hook-bridge.js",
+  "gameplay-polish.js",
   "manifest.json",
   "icons/icon-512.png",
   "privacy.html",

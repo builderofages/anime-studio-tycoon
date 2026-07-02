@@ -16,6 +16,7 @@
     "__hudPremiumInstalled",
     "__uiCompleteInstalled",
     "__jwRatingInstalled",
+    "__polishInstalled",
   ];
 
   function ready(h) {

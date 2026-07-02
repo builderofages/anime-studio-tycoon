@@ -1,12 +1,12 @@
 # Anime Studio Tycoon — Path to 100%
 
-**Current build:** 27 · Complete  
+**Current build:** 30 · Polish  
 **Version:** 9.0.0  
 **Gameplay completion:** 100%  
 **UI/UX completion:** 100%  
-**Launch readiness:** ~92% (Gumroad token + 7 products + Codemagic)
+**Launch readiness:** ~94% (Gumroad token + 7 products + Codemagic)
 
-## Shipped layers (v1–v27)
+## Shipped layers (v1–v30)
 
 | Build | Layer | Key systems |
 |-------|-------|-------------|
@@ -22,6 +22,9 @@
 | 25 | Legend | Dynasty perks, career ledger, rival festivals, rank ceremonies |
 | 26 | Premium HUD | Command HUD, pathway rail, tab badges, command dock |
 | 27 | Complete | Tab heroes, produce grid, star cards, store shelf, quest chest |
+| 28 | Studio Stars | JW-style 5★ rating, pillar progress, project gates |
+| 29 | Fixed | Hook bridge — all expansion layers actually run |
+| 30 | Polish | Crisis snooze, rating achievements, rating coach, pathway hints |
 
 ## Art & media
 
@@ -36,10 +39,10 @@ cd desktop && npm run dist:mac  # Steam .dmg
 | Task | Owner | Status |
 |------|-------|--------|
 | Web (Vercel) | Auto | ✅ |
-| CI smoke tests (105+) | Auto | ✅ |
-| Gameplay v27 Complete | Auto | ✅ |
-| Premium HUD + tab layouts | Auto | ✅ |
-| Store assets (CDN) | Auto | ✅ |
+| CI smoke tests (126+) | Auto | ✅ |
+| Hook bridge (all layers live) | Auto | ✅ |
+| Crisis spam + snooze | Auto | ✅ |
+| Studio star rating (JW-style) | Auto | ✅ |
 | IAP + grant APIs | Auto | ✅ JWT/MINT on Vercel |
 | Desktop Electron 9.0.0 | Auto | `npm run dist:mac` |
 | Gumroad live keys | You | `GUMROAD_ACCESS_TOKEN` + 7 products |

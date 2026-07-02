@@ -159,6 +159,7 @@
     S.studioStarPerks[next] = true;
     S.gems = (S.gems || 0) + (req.gems || 0);
     showRankUp(next, ti, req, hook);
+    if (typeof window.checkAchievements === "function") window.checkAchievements();
     hook.save();
     return true;
   }

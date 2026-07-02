@@ -1,7 +1,7 @@
 # Anime Studio Tycoon — Test Links (all angles)
 
-**Build:** 27 · Complete · v9.0.0  
-**Verified:** 2026-07-02
+**Build:** 30 · Polish · v9.0.0  
+**Verified:** 2026-07-01
 
 ---
 
@@ -46,8 +46,10 @@ Install → launch **Anime Studio Tycoon** (Electron + Steam achievements hook).
 3. **Produce** → pick genre → greenlight **Short Film**
 4. Tap poster to boost → wait for **Ready** → **Premiere**
 5. Check **Director's Pathway** CTA updates
-6. **Quests** → claim login reward if shown
-7. Refresh page → save should persist
+6. Tap **studio stars** (top-left) → rating panel with pillar bars
+7. **Quests** → claim login reward if shown
+8. Refresh page → save should persist
+9. If a crisis pops → use **Snooze 10 min** to keep playing
 
 ---
 

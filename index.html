@@ -587,14 +587,14 @@ button,.btn-ghost{min-height:40px}
 
 <div class="overlay" id="whatsnew" style="display:none">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <h1 style="font-size:22px;text-align:center">✨ What's New — Build 29 Fixed</h1>
+    <h1 style="font-size:22px;text-align:center">✨ What's New — Build 30 Polish</h1>
     <div class="offlist" style="margin:12px 0">
-      <div><span>🔧 Hook Bridge</span><b>All expansion systems now actually run in-game</b></div>
-      <div><span>⭐ Studio Rating</span><b>5-star JW rating, gates, bonuses & ceremony</b></div>
-      <div><span>🛡️ Crisis Fix</span><b>No more popup spam or stuck crisis modals</b></div>
-      <div><span>🏆 AAA Layer</span><b>Dynasty, festivals & briefings restored</b></div>
-      <div><span>🔒 Clear Locks</span><b>Projects show fan + star requirements together</b></div>
-      <div><span>💾 Save Sync</span><b>Rating rewards granted on load for returning players</b></div>
+      <div><span>😴 Crisis Snooze</span><b>10-min break button on every crisis modal</b></div>
+      <div><span>🏆 Rating Achievements</span><b>2★, 3★ & 5★ studio milestones</b></div>
+      <div><span>📣 Rating Coach</span><b>Hint after your first premiere</b></div>
+      <div><span>🧭 Pathway Hints</span><b>Director's Pathway nudges studio star progress</b></div>
+      <div><span>🔧 Build 29</span><b>Hook bridge + all expansion layers live</b></div>
+      <div><span>⭐ Studio Stars</span><b>JW-style 5★ rating with project gates</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
   </div>
@@ -634,7 +634,7 @@ const STORE_PAYMENTS = true; // store always visible; buyReal routes web→check
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 29 · Fixed";
+const BUILD_TAG = "build 30 · Polish";
 const OFFLINE_CAP = 8*3600; // seconds
 
 const GENRES = ["Action","Romance","Fantasy","Sci-Fi","Comedy","Slice of Life"];
@@ -1011,7 +1011,8 @@ function freshState(){
     autoRest:false, syndicationUntil:"", briefingDay:"", briefingPending:"", contractsSigned:0,
     aaaQualityBoost:0, aaaYenBoost:0,
     dynastyPerks:{income:0,premiere:0,festival:0}, dynastySpent:0,
-    studioStars:1, studioStarBest:1, premiereStats:{fourPlus:0,five:0}, studioStarPerks:{}, peakDynasty:0,
+    studioStars:1, studioStarBest:1, premiereStats:{fourPlus:0,five:0}, studioStarPerks:{},
+    crisisSnoozeUntil:0, ratingGuideSeen:false, peakDynasty:0,
     dynastyRankUps:[], festivalLosses:0, legendSlotDiscount:0, careerYen:0, careerFans:0,
     lastSave:Date.now(),
     muted:false,
@@ -1248,6 +1249,9 @@ const ACHIEVEMENTS=[
   {id:"dynperk1",name:"Dynasty Investor",desc:"Buy your first dynasty perk",   gems:8,  test:()=>{const p=S.dynastyPerks||{};return (p.income+p.premiere+p.festival)>=1;}},
   {id:"festivalloss3",name:"Gracious Rival",desc:"3 festival runner-up finishes",gems:10,test:()=>(S.festivalLosses||0)>=3},
   {id:"peak80",  name:"Peak Performer",    desc:"Reach 80 peak dynasty score",   gems:15, test:()=>(S.peakDynasty||0)>=80},
+  {id:"rat2",   name:"Indie Cred",        desc:"Reach 2★ studio rating",        gems:8,  test:()=>(S.studioStars||1)>=2},
+  {id:"rat3",   name:"Rising Studio",     desc:"Reach 3★ studio rating",        gems:12, test:()=>(S.studioStars||1)>=3},
+  {id:"rat5",   name:"Global Brand",      desc:"Reach max 5★ studio rating",    gems:25, test:()=>(S.studioStars||1)>=5},
   {id:"dynastyS", name:"S-Tier Legend",   desc:"Reach S-Rank dynasty score",    gems:40, test:()=>{
     let s=0; s+=Math.min(18,(S.releases||0)/15); s+=Math.min(15,Math.log10(Math.max(1,S.totalFansEver||1))*3);
     s+=Math.min(12,(S.marketShare||5)/4); s+=Math.min(10,(S.awardsWon||0)*2); s+=Math.min(10,(S.festivalWins||[]).length*2.5);
@@ -1264,6 +1268,7 @@ function checkAchievements(){
       try{ if(window.STEAM_ACHIEVE) window.STEAM_ACHIEVE(a.id); }catch(e){} /* Steam desktop build hook (no-op on web) */ }
   }
 }
+window.checkAchievements=checkAchievements;
 /* ---- Seasons / Live Events (rotates daily, always a positive bonus) ---- */
 const EVENTS=[
   {id:"sakura", ic:"🌸", name:"Sakura Festival",  desc:"+25% Fans on every premiere",        fanMult:1.25, yenMult:1.00},
@@ -1353,7 +1358,16 @@ function crisisModalOpen(){
   return false;
 }
 window.crisisModalOpen=crisisModalOpen;
+function dismissCrisisModal(){
+  _pendingDecision=null;
+  window.__AST_CRISIS_OPEN__=false;
+  window.__AST_PENDING_WARROOM__=null;
+  const m=document.getElementById("decision"); if(m) m.style.display="none";
+}
+window.dismissCrisisModal=dismissCrisisModal;
+function crisesSnoozed(){ return S.crisisSnoozeUntil&&Date.now()<S.crisisSnoozeUntil; }
 function maybeDecision(){
+  if(crisesSnoozed()) return;
   if(crisisModalOpen()) return;
   if(maybeStarterOffer()) return;
   if(Date.now()-(S.lastDecision||0) < 180000) return;
@@ -1431,6 +1445,7 @@ function showChaosDecision(){
 }
 function maybeChaos(){
   if(!started||OFFLINE||_premiereOpen) return;
+  if(crisesSnoozed()) return;
   if(crisisModalOpen()) return;
   if(window.__AST_MAYBE_CHAOS__){ window.__AST_MAYBE_CHAOS__(showChaosDecision); return; }
   if(Date.now()-(S.lastChaos||0) < 180000) return;
@@ -1441,6 +1456,7 @@ function removeStar(sid){ S.stars=(S.stars||[]).filter(s=>s.sid!==sid); S.projec
 /* The fame trap: a star you've over-hyped can outgrow you and demand a raise — or walk. */
 function maybeStarDemand(){
   if(!started||OFFLINE||_premiereOpen) return;
+  if(crisesSnoozed()) return;
   if(crisisModalOpen()) return;
   if(Date.now()-(S.lastStarDemand||0) < 240000) return;
   const cand=(S.stars||[]).filter(s=>(s.fame||0)>=4 && starLoyalty(s)<50);
@@ -1665,6 +1681,8 @@ function load(){
     S.studioStarBest=Math.max(S.studioStars,+d.studioStarBest||S.studioStars);
     S.premiereStats=(d.premiereStats&&typeof d.premiereStats==="object")?d.premiereStats:{fourPlus:0,five:0};
     S.studioStarPerks=(d.studioStarPerks&&typeof d.studioStarPerks==="object")?d.studioStarPerks:{};
+    S.crisisSnoozeUntil=+d.crisisSnoozeUntil||0;
+    S.ratingGuideSeen=!!d.ratingGuideSeen;
     if(window.__AST_STUDIO_RATING__?.initState) window.__AST_STUDIO_RATING__.initState(S);
     return true;
   }catch(e){ return false; }
@@ -3005,6 +3023,7 @@ window.__AST_HOOK__ = {
 <script src="hud-premium.js"></script>
 <script src="ui-complete.js"></script>
 <script src="gameplay-studio-rating.js"></script>
+<script src="gameplay-polish.js"></script>
 <script src="hook-bridge.js"></script>
 
 
