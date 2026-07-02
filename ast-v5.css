@@ -34,7 +34,7 @@ html.hud-v3-active body {
 html.hud-v3-active body {
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.35) 0%, rgba(8, 6, 15, 0.82) 100%),
-    url('bg-v4.png?v=50') center top / cover no-repeat fixed !important;
+    url('bg-v4.png?v=51') center top / cover no-repeat fixed !important;
 }
 
 html.hud-v3-active button {
@@ -449,6 +449,43 @@ html.hud-v3-active .aaa-pick-genre {
   background: rgba(8, 6, 15, 0.75);
   color: var(--ast-pink);
   border: 1px solid rgba(255, 92, 168, 0.35);
+}
+
+/* ---- S-rank laurel glow (mockup) ---- */
+html.hud-v3-active .aaa-rank-S {
+  width: 36px !important;
+  height: 36px !important;
+  font-size: 15px !important;
+  background: linear-gradient(135deg, #ffd45a, #ff5ca8) !important;
+  box-shadow:
+    0 0 0 2px rgba(255, 212, 90, 0.4),
+    0 0 20px rgba(255, 200, 69, 0.55),
+    0 0 32px rgba(255, 92, 168, 0.35) !important;
+}
+
+html.hud-v3-active .aaa-team-card.aaa-rank-S {
+  border-color: rgba(255, 200, 69, 0.35) !important;
+  box-shadow: 0 0 16px rgba(255, 200, 69, 0.12) !important;
+}
+
+/* ---- Tap boost poster pulse ---- */
+html.hud-v3-active .aaa-poster.aaa-poster-pulse {
+  animation: ast-poster-pulse 0.45s ease-out;
+}
+
+@keyframes ast-poster-pulse {
+  0% { transform: scale(1); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5); }
+  35% { transform: scale(1.04); box-shadow: 0 0 28px rgba(255, 92, 168, 0.65); }
+  100% { transform: scale(1); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5); }
+}
+
+html.hud-v3-active .aaa-poster {
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  cursor: pointer;
+}
+
+html.hud-v3-active .aaa-poster[data-act="tapboost"]:active {
+  transform: scale(0.98);
 }
 
 html.hud-v3-active .aaa-team {
