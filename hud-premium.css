@@ -357,6 +357,40 @@ html.hud-v3-active .foot { display: none !important; }
   background: var(--ui-accent-hot);
 }
 
+.coach-gift {
+  flex-shrink: 0;
+  position: relative;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  border-radius: 12px;
+  background: rgba(255, 92, 168, 0.18);
+  color: #ff9bc4;
+  cursor: pointer;
+}
+
+.coach-gift-ic {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.coach-gift-dot {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ff3b6b;
+  border: 2px solid rgba(12, 8, 22, 0.9);
+  box-shadow: 0 0 8px rgba(255, 59, 107, 0.7);
+}
+
+.coach-gift-dot[hidden] {
+  display: none !important;
+}
+
 .coach-dismiss {
   flex-shrink: 0;
   width: 28px;

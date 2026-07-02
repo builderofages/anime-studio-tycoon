@@ -34,7 +34,7 @@ html.hud-v3-active body {
 html.hud-v3-active body {
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.35) 0%, rgba(8, 6, 15, 0.82) 100%),
-    url('bg-v4.png?v=48') center top / cover no-repeat fixed !important;
+    url('bg-v4.png?v=49') center top / cover no-repeat fixed !important;
 }
 
 html.hud-v3-active button {
@@ -335,14 +335,60 @@ html.hud-v3-active .aaa-show-panel {
 }
 
 html.hud-v3-active .aaa-cta,
-html.hud-v3-active .aaa-show-card .btn-gold {
-  background: linear-gradient(135deg, var(--ast-pink), var(--ast-pink-2)) !important;
+html.hud-v3-active .aaa-show-card .btn-gold.aaa-cta {
+  background: linear-gradient(135deg, var(--ast-pink), var(--ast-pink-2), #ff6b8a) !important;
   color: #fff !important;
-  font-size: 13px !important;
+  font-size: 14px !important;
   font-weight: 800 !important;
-  padding: 12px !important;
-  border-radius: 12px !important;
+  padding: 13px 14px !important;
+  border-radius: 14px !important;
   width: 100%;
+  box-shadow: 0 8px 28px rgba(255, 92, 168, 0.45), 0 0 20px rgba(255, 92, 168, 0.2) !important;
+  border: none !important;
+  letter-spacing: 0.02em !important;
+}
+
+html.hud-v3-active .aaa-show-panel.slot-ready,
+html.hud-v3-active .aaa-show-panel[data-done="1"] {
+  border-color: rgba(255, 200, 69, 0.45) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 32px rgba(255, 200, 69, 0.15) !important;
+}
+
+html.hud-v3-active .aaa-premiere-bonus {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 8px 0 4px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(77, 212, 255, 0.08);
+  border: 1px solid rgba(77, 212, 255, 0.18);
+}
+
+html.hud-v3-active .aaa-premiere-bonus span {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ast-muted);
+}
+
+html.hud-v3-active .aaa-premiere-bonus b {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--ast-cyan);
+  line-height: 1.3;
+}
+
+html.hud-v3-active .coach-gift {
+  background: rgba(255, 92, 168, 0.2) !important;
+  border: 1px solid rgba(255, 92, 168, 0.35) !important;
+  border-radius: 12px !important;
+}
+
+html.hud-v3-active .coach-gift-dot {
+  background: #ff3b6b !important;
+  box-shadow: 0 0 10px rgba(255, 59, 107, 0.8) !important;
 }
 
 html.hud-v3-active .aaa-team {
