@@ -43,6 +43,7 @@ const FILES = [
   "game-skin.css",
   "hf-design.css",
   "aaa-ui.css",
+  "ast-v5.css",
   "bg-v4.png",
   "design-ref-v4.png",
   "start-hero.png",

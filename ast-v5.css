@@ -1,0 +1,498 @@
+/**
+ * AST Design v5 — single authoritative layer (loads last)
+ * Matched to design-ref-v4.png · kills legacy inline CSS wars
+ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&display=swap');
+
+html.hud-v3-active {
+  --ast-bg: #08060f;
+  --ast-surface: rgba(16, 12, 28, 0.92);
+  --ast-glass: rgba(22, 16, 38, 0.78);
+  --ast-border: rgba(255, 120, 180, 0.2);
+  --ast-border-soft: rgba(255, 255, 255, 0.08);
+  --ast-text: #f4f0fa;
+  --ast-muted: #9a92b0;
+  --ast-pink: #ff5ca8;
+  --ast-pink-2: #ff3d96;
+  --ast-gold: #ffc845;
+  --ast-cyan: #4dd4ff;
+  --ast-violet: #8b5cf6;
+  --ast-r: 16px;
+  --ast-gutter: 10px;
+  --ast-dock: 52px;
+  font-family: 'Inter', system-ui, sans-serif !important;
+}
+
+/* ---- Nuclear: neutralize 240 lines of legacy inline CSS ---- */
+html.hud-v3-active,
+html.hud-v3-active body {
+  background: var(--ast-bg) !important;
+  color: var(--ast-text) !important;
+  font-family: 'Inter', system-ui, sans-serif !important;
+}
+
+html.hud-v3-active body {
+  background:
+    linear-gradient(180deg, rgba(8, 6, 15, 0.35) 0%, rgba(8, 6, 15, 0.82) 100%),
+    url('bg-v4.png?v=45') center top / cover no-repeat fixed !important;
+}
+
+html.hud-v3-active button {
+  font-family: inherit !important;
+  border-radius: 12px !important;
+  font-weight: 700 !important;
+  transition: transform 0.08s ease, filter 0.12s ease, opacity 0.12s ease !important;
+  box-shadow: none !important;
+}
+
+html.hud-v3-active button:active {
+  transform: scale(0.98) !important;
+}
+
+html.hud-v3-active button:disabled {
+  filter: none !important;
+  opacity: 1 !important;
+  cursor: not-allowed !important;
+}
+
+html.hud-v3-active .btn-primary {
+  background: linear-gradient(135deg, var(--ast-pink), var(--ast-pink-2)) !important;
+  color: #fff !important;
+  border: none !important;
+  padding: 11px 16px !important;
+}
+
+html.hud-v3-active .btn-primary:disabled {
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: var(--ast-muted) !important;
+  border: 1px solid var(--ast-border-soft) !important;
+}
+
+html.hud-v3-active .btn-gold {
+  background: linear-gradient(135deg, var(--ast-gold), #ffb020) !important;
+  color: #3d2800 !important;
+}
+
+html.hud-v3-active .btn-cyan {
+  background: linear-gradient(135deg, #22d3ee, #0891b2) !important;
+  color: #fff !important;
+}
+
+html.hud-v3-active .btn-ghost {
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: var(--ast-muted) !important;
+  border: 1px solid var(--ast-border-soft) !important;
+}
+
+html.hud-v3-active .tab.active {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* ---- App shell ---- */
+html.hud-v3-active #app {
+  max-width: 440px !important;
+  background: transparent !important;
+}
+
+@media (max-width: 767px) {
+  html.hud-v3-active #app {
+    max-width: none !important;
+  }
+}
+
+/* ---- HUD: mockup glass bar ---- */
+html.hud-v3-active #hud-shell {
+  margin: calc(var(--safe-t, 0px)) var(--ast-gutter) 0 !important;
+  padding: 8px 10px !important;
+  background: var(--ast-glass) !important;
+  backdrop-filter: blur(18px) saturate(1.4) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(1.4) !important;
+  border: 1px solid rgba(255, 92, 168, 0.35) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45), 0 0 24px rgba(255, 92, 168, 0.12) !important;
+}
+
+html.hud-v3-active .hud-studio-name {
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.02em !important;
+}
+
+html.hud-v3-active .hud-avatar {
+  width: 38px !important;
+  height: 38px !important;
+  border: 2px solid rgba(255, 200, 69, 0.55) !important;
+  box-shadow: 0 0 16px rgba(255, 92, 168, 0.35) !important;
+}
+
+html.hud-v3-active .hud-lv-badge {
+  background: linear-gradient(135deg, var(--ast-pink), var(--ast-pink-2)) !important;
+  color: #fff !important;
+  border-color: var(--ast-bg) !important;
+  font-size: 9px !important;
+}
+
+html.hud-v3-active .hud-stat {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid var(--ast-border-soft) !important;
+  border-radius: 12px !important;
+}
+
+html.hud-v3-active .hud-stat img {
+  width: 18px !important;
+  height: 18px !important;
+}
+
+html.hud-v3-active .hud-stat .v {
+  font-size: 12px !important;
+  font-weight: 800 !important;
+}
+
+/* ---- Coach: mockup tip strip ---- */
+html.hud-v3-active #pathway-rail.coach-bar {
+  margin: 8px var(--ast-gutter) 0 !important;
+  padding: 8px 10px !important;
+  background: var(--ast-glass) !important;
+  backdrop-filter: blur(14px) !important;
+  border: 1px solid var(--ast-border) !important;
+  border-radius: 14px !important;
+  gap: 8px !important;
+}
+
+html.hud-v3-active .coach-avatar {
+  width: 40px !important;
+  height: 40px !important;
+}
+
+html.hud-v3-active .coach-body {
+  flex: 1;
+  min-width: 0;
+}
+
+html.hud-v3-active .coach-label {
+  display: block;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ast-pink);
+  margin-bottom: 2px;
+}
+
+html.hud-v3-active .coach-msg {
+  font-size: 11px !important;
+  line-height: 1.35 !important;
+  color: var(--ast-text) !important;
+  margin: 0 !important;
+}
+
+html.hud-v3-active .coach-cta {
+  background: linear-gradient(135deg, var(--ast-pink), var(--ast-pink-2)) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 10px !important;
+  padding: 8px 12px !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  white-space: nowrap;
+}
+
+html.hud-v3-active .coach-dismiss {
+  opacity: 0.45;
+  font-size: 18px;
+  line-height: 1;
+  padding: 4px;
+  background: transparent !important;
+  border: none !important;
+  color: var(--ast-muted) !important;
+}
+
+/* ---- Main scroll ---- */
+html.hud-v3-active #main {
+  padding: 8px var(--ast-gutter) 12px !important;
+  gap: 10px !important;
+  background: transparent !important;
+}
+
+/* ---- Tab dock: icon-only like mockup ---- */
+html.hud-v3-active #command-dock {
+  background: rgba(12, 8, 22, 0.95) !important;
+  border-top: 1px solid var(--ast-border) !important;
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.35) !important;
+}
+
+html.hud-v3-active #tabs {
+  height: var(--ast-dock) !important;
+  padding-bottom: var(--safe-b, 0px) !important;
+}
+
+html.hud-v3-active .tab .tab-lbl {
+  display: none !important;
+}
+
+html.hud-v3-active .tab .ic img.tab-ic {
+  width: 24px !important;
+  height: 24px !important;
+  opacity: 0.45;
+  transition: opacity 0.15s, filter 0.15s;
+}
+
+html.hud-v3-active .tab.active .ic img.tab-ic {
+  opacity: 1;
+  filter: drop-shadow(0 0 8px rgba(255, 92, 168, 0.85));
+}
+
+html.hud-v3-active .tab.active::after {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 20% !important;
+  right: 20% !important;
+  height: 2px !important;
+  background: linear-gradient(90deg, transparent, var(--ast-pink), transparent) !important;
+  border-radius: 2px !important;
+  box-shadow: 0 0 12px rgba(255, 92, 168, 0.7) !important;
+}
+
+/* ---- Page heroes: slimmer ---- */
+html.hud-v3-active .aaa-page-hero {
+  padding: 14px 14px !important;
+  margin-bottom: 0 !important;
+  background: linear-gradient(135deg, rgba(255, 92, 168, 0.14), rgba(107, 92, 255, 0.1)) !important;
+  border: 1px solid var(--ast-border) !important;
+  border-radius: var(--ast-r) !important;
+}
+
+html.hud-v3-active .aaa-page-hero h2 {
+  font-size: 17px !important;
+}
+
+html.hud-v3-active .aaa-page-hero p {
+  font-size: 11px !important;
+  margin-bottom: 0 !important;
+  color: var(--ast-muted) !important;
+}
+
+/* ---- Staff: full-width roster rows (not cramped grid) ---- */
+html.hud-v3-active .aaa-staff-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+html.hud-v3-active .aaa-staff-row {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: var(--ast-glass);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--ast-border-soft);
+}
+
+html.hud-v3-active .aaa-staff-row .aaa-staff-portrait {
+  width: 56px;
+  height: 56px;
+  margin: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 2px solid rgba(255, 92, 168, 0.3);
+}
+
+html.hud-v3-active .aaa-staff-row .aaa-staff-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+html.hud-v3-active .aaa-staff-row h4 {
+  font-size: 14px !important;
+  margin: 0 0 2px !important;
+  text-align: left !important;
+}
+
+html.hud-v3-active .aaa-staff-row .muted {
+  font-size: 10px !important;
+  margin: 0 !important;
+  text-align: left !important;
+}
+
+html.hud-v3-active .aaa-staff-row .aaa-staff-hire {
+  min-width: 88px !important;
+  width: auto !important;
+  padding: 10px 10px !important;
+  margin: 0 !important;
+}
+
+/* ---- Produce: hero card polish ---- */
+html.hud-v3-active .aaa-show-panel {
+  border-radius: var(--ast-r) !important;
+  border: 1px solid rgba(255, 92, 168, 0.28) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 32px rgba(255, 92, 168, 0.08) !important;
+}
+
+html.hud-v3-active .aaa-cta,
+html.hud-v3-active .aaa-show-card .btn-gold {
+  background: linear-gradient(135deg, var(--ast-pink), var(--ast-pink-2)) !important;
+  color: #fff !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  padding: 12px !important;
+  border-radius: 12px !important;
+  width: 100%;
+}
+
+html.hud-v3-active .aaa-team {
+  margin-top: 0 !important;
+  border-radius: 0 0 var(--ast-r) var(--ast-r) !important;
+}
+
+/* ---- Produce strip (replaces KPI wall) ---- */
+html.hud-v3-active .aaa-produce-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--ast-border-soft);
+}
+
+html.hud-v3-active .aaa-strip-chip {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--ast-border-soft);
+  color: var(--ast-text);
+}
+
+html.hud-v3-active .aaa-strip-chip.boost {
+  color: var(--ast-cyan);
+  border-color: rgba(77, 212, 255, 0.25);
+}
+
+html.hud-v3-active .aaa-strip-link {
+  margin-left: auto;
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--ast-pink);
+  background: transparent !important;
+  border: none !important;
+  padding: 4px 8px !important;
+}
+
+/* ---- Event bar: compact ---- */
+html.hud-v3-active .eventbar {
+  padding: 8px 10px !important;
+  margin-bottom: 0 !important;
+  border-radius: 12px !important;
+  background: linear-gradient(135deg, rgba(255, 200, 69, 0.12), rgba(255, 92, 168, 0.1)) !important;
+  border: 1px solid rgba(255, 200, 69, 0.2) !important;
+}
+
+html.hud-v3-active .eventbar .ev-ic {
+  font-size: 20px !important;
+}
+
+html.hud-v3-active .eventbar .ev-meta b {
+  font-size: 12px !important;
+}
+
+/* ---- Panels / cards unified ---- */
+html.hud-v3-active .panel,
+html.hud-v3-active .aaa-greenlight,
+html.hud-v3-active .aaa-pick-card,
+html.hud-v3-active .aaa-star-card,
+html.hud-v3-active .aaa-upgrade-card,
+html.hud-v3-active .aaa-quest-card {
+  background: var(--ast-glass) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid var(--ast-border-soft) !important;
+  border-radius: var(--ast-r) !important;
+  box-shadow: none !important;
+}
+
+html.hud-v3-active .aaa-greenlight-head {
+  background-image: url('assets/hf/greenlight-bg.png?v=45') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  border-radius: var(--ast-r) var(--ast-r) 0 0 !important;
+}
+
+/* ---- Settings drawer ---- */
+html.hud-v3-active .hud-drawer-inner {
+  background: var(--ast-surface) !important;
+  border: 1px solid var(--ast-border) !important;
+  border-radius: 16px !important;
+}
+
+/* ---- Chips / pills ---- */
+html.hud-v3-active .chip.sel {
+  background: linear-gradient(135deg, var(--ast-pink), var(--ast-pink-2)) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 14px rgba(255, 92, 168, 0.35) !important;
+  border: none !important;
+}
+
+html.hud-v3-active .pill {
+  background: rgba(77, 212, 255, 0.12) !important;
+  color: var(--ast-cyan) !important;
+}
+
+/* ---- Studio dashboard (studio tab only) ---- */
+html.hud-v3-active .aaa-dash-compact .kpis {
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 6px !important;
+}
+
+html.hud-v3-active .aaa-dash-compact .kpi {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid var(--ast-border-soft) !important;
+  border-radius: 12px !important;
+  padding: 8px !important;
+}
+
+html.hud-v3-active .aaa-dash-compact .kpi.accent {
+  background: linear-gradient(135deg, rgba(255, 200, 69, 0.15), rgba(255, 92, 168, 0.1)) !important;
+  border-color: rgba(255, 200, 69, 0.25) !important;
+}
+
+html.hud-v3-active .aaa-dash-compact .kpi .kl {
+  font-size: 9px !important;
+  color: var(--ast-muted) !important;
+}
+
+html.hud-v3-active .aaa-dash-compact .kpi .kv {
+  font-size: 14px !important;
+  color: var(--ast-text) !important;
+}
+
+/* ---- Overlays ---- */
+html.hud-v3-active .overlay {
+  background: rgba(6, 4, 12, 0.88) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+html.hud-v3-active .card-modal {
+  background: var(--ast-glass) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid var(--ast-border) !important;
+  border-radius: 22px !important;
+}
+
+/* ---- FX layers ---- */
+#fx-canvas {
+  z-index: 0 !important;
+  opacity: 0.85;
+}
+
+html.hud-v3-active #app {
+  position: relative;
+  z-index: 2;
+}

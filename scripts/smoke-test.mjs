@@ -61,6 +61,7 @@ const required = [
   "game-skin.css",
   "hf-design.css",
   "aaa-ui.css",
+  "ast-v5.css",
   "bg-v4.png",
   "start-hero.png",
   "assets/hf/gacha-bg.png",
@@ -134,6 +135,7 @@ assert(html.includes('id:"rat5"'), "studio rating achievements");
 assert(html.includes("studio-premium.css"), "studio premium css linked");
 assert(html.includes("game-skin.css"), "game skin css linked");
 assert(html.includes("hf-design.css"), "higgsfield design css linked");
+assert(html.includes("ast-v5.css"), "ast-v5 design css linked");
 assert(html.includes("premium-hud"), "early premium-hud class");
 assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("hud-studio-rating"), "rating in hud shell");
 assert(html.includes("seasonClaimed"), "season pass state");
