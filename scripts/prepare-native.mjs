@@ -33,6 +33,8 @@ const FILES = [
   "gameplay-legend.css",
   "hud-premium.js",
   "hud-premium.css",
+  "ui-complete.js",
+  "ui-complete.css",
   "manifest.json",
   "icons/icon-512.png",
   "privacy.html",

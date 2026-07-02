@@ -1,6 +1,6 @@
 {
   "name": "anime-studio-tycoon-desktop",
-  "version": "8.0.0",
+  "version": "9.0.0",
   "private": true,
   "description": "Anime Studio Tycoon — Steam / desktop build (Electron)",
   "author": "TrainYourAgent",
@@ -53,6 +53,8 @@
           "gameplay-legend.css",
           "hud-premium.js",
           "hud-premium.css",
+          "ui-complete.js",
+          "ui-complete.css",
           "manifest.json",
           "privacy.html",
           "terms.html"

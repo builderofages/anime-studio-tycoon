@@ -1,0 +1,266 @@
+/* Anime Studio Tycoon — UI Complete (v27) tab layouts & polish */
+
+/* ---- TAB HERO BANNERS ---- */
+.ui-tab-hero {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  margin-bottom: 4px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(124, 92, 255, 0.28), rgba(255, 110, 180, 0.14));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+  animation: uiHeroIn 0.4s ease backwards;
+}
+@keyframes uiHeroIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: none; }
+}
+
+.ui-tab-hero .uth-ic {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04));
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  flex-shrink: 0;
+}
+
+.ui-tab-hero .uth-body { flex: 1; min-width: 0; }
+
+.ui-tab-hero .uth-title {
+  font-family: 'Syne', 'Baloo 2', sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+  color: #f4eef8;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.ui-tab-hero .uth-sub {
+  font-size: 12px;
+  color: #9d8fb8;
+  margin-top: 3px;
+  font-weight: 600;
+}
+
+.ui-tab-hero .uth-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.ui-stat-chip {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e8dff0;
+}
+.ui-stat-chip.hot {
+  background: linear-gradient(135deg, rgba(255, 51, 102, 0.35), rgba(255, 201, 77, 0.2));
+  border-color: rgba(255, 201, 77, 0.4);
+  color: #ffd56b;
+  animation: uiHotPulse 1.5s ease-in-out infinite;
+}
+@keyframes uiHotPulse {
+  50% { box-shadow: 0 0 12px rgba(255, 201, 77, 0.35); }
+}
+
+/* ---- PRODUCE LAYOUT ---- */
+.ui-prod-slots {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+@media (min-width: 680px) {
+  .ui-prod-slots { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1080px) {
+  .ui-prod-slots { grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); }
+}
+
+html.premium-hud .ui-prod-slots .slotpanel {
+  margin: 0 !important;
+}
+
+.ui-greenlight-panel {
+  grid-column: 1 / -1;
+  border: 1px solid rgba(124, 92, 255, 0.35) !important;
+  background: linear-gradient(165deg, rgba(124, 92, 255, 0.12), rgba(18, 12, 28, 0.98)) !important;
+}
+
+.ui-dash-panel {
+  grid-column: 1 / -1;
+}
+
+/* ---- STAR CARDS ---- */
+.ui-star-card {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.15s, box-shadow 0.2s;
+}
+.ui-star-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  opacity: 0.35;
+}
+.ui-star-card.rarity-Legendary::before {
+  background: radial-gradient(ellipse at top right, rgba(255, 201, 77, 0.4), transparent 60%);
+  animation: uiLegGlow 2s ease-in-out infinite;
+}
+.ui-star-card.rarity-Epic::before {
+  background: radial-gradient(ellipse at top right, rgba(176, 107, 255, 0.35), transparent 60%);
+}
+.ui-star-card.rarity-Rare::before {
+  background: radial-gradient(ellipse at top right, rgba(63, 169, 255, 0.25), transparent 60%);
+}
+@keyframes uiLegGlow {
+  50% { opacity: 0.55; }
+}
+@media (hover: hover) {
+  .ui-star-card:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4); }
+}
+
+/* ---- STORE SHELF ---- */
+.ui-store-hero {
+  grid-column: 1 / -1;
+  padding: 18px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(255, 201, 77, 0.2), rgba(255, 110, 180, 0.12));
+  border: 2px solid rgba(255, 201, 77, 0.35);
+  text-align: center;
+  margin-bottom: 4px;
+}
+.ui-store-hero h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: #ffd56b;
+  margin: 0 0 6px;
+}
+.ui-store-hero p {
+  font-size: 13px;
+  color: #c4b8d8;
+  margin: 0;
+}
+
+.ui-store-shelf {
+  display: grid;
+  gap: 10px;
+}
+@media (min-width: 600px) {
+  .ui-store-shelf { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.ui-shelf-item {
+  border-radius: 16px !important;
+  transition: transform 0.12s;
+}
+.ui-shelf-item.featured {
+  border: 2px solid rgba(255, 110, 180, 0.5) !important;
+  background: linear-gradient(135deg, rgba(255, 110, 180, 0.1), rgba(255, 255, 255, 0.04)) !important;
+}
+.ui-shelf-item.owned {
+  opacity: 0.75;
+  border-color: rgba(78, 232, 154, 0.4) !important;
+}
+
+/* ---- STAFF DEPARTMENTS ---- */
+.ui-dept-header {
+  grid-column: 1 / -1;
+  font-family: 'Syne', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #9d8fb8;
+  padding: 12px 4px 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  margin-top: 4px;
+}
+
+/* ---- QUESTS TREASURE ---- */
+.ui-quest-chest {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: linear-gradient(90deg, rgba(255, 201, 77, 0.15), rgba(124, 92, 255, 0.1));
+  border: 1px dashed rgba(255, 201, 77, 0.4);
+  margin-bottom: 8px;
+}
+.ui-quest-chest .uqc-ic { font-size: 28px; }
+.ui-quest-chest .uqc-txt { font-size: 13px; font-weight: 700; color: #f4eef8; }
+
+/* ---- ACHIEVEMENTS STRIP ---- */
+.ui-achieve-strip {
+  grid-column: 1 / -1;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.ui-achieve-bar {
+  height: 8px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+  margin-top: 8px;
+}
+.ui-achieve-bar i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #7c5cff, #ffd56b);
+  border-radius: 6px;
+  transition: width 0.4s ease;
+}
+
+/* ---- MARKET CAMPAIGN CARDS ---- */
+.ui-campaign-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 10px;
+}
+.ui-campaign-card {
+  text-align: center;
+  padding: 16px 12px !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+.ui-campaign-card .meta { text-align: center; width: 100%; }
+.ui-campaign-card .meta h4 { font-size: 16px !important; }
+.ui-campaign-card button { width: 100%; margin-top: 10px !important; }
+
+/* ---- COMBO METER FIX ---- */
+html.premium-hud #combo-meter {
+  bottom: calc(80px + var(--safe-b, 0px)) !important;
+  z-index: 45 !important;
+}
+
+/* ---- SECTION LABELS ---- */
+.ui-section-label {
+  grid-column: 1 / -1;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #7a6a94;
+  padding: 8px 2px 0;
+}

@@ -51,6 +51,8 @@ const required = [
   "gameplay-legend.css",
   "hud-premium.js",
   "hud-premium.css",
+  "ui-complete.js",
+  "ui-complete.css",
   "manifest.json",
   "privacy.html",
   "terms.html",
@@ -96,6 +98,8 @@ assert(html.includes("_legendReleaseMult"), "legend release multiplier");
 assert(html.includes('src="hud-premium.js"'), "hud-premium.js linked");
 assert(html.includes("hud-premium.css"), "hud-premium.css linked");
 assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("pathway-rail"), "pathway rail in hud script");
+assert(html.includes('src="ui-complete.js"'), "ui-complete.js linked");
+assert(readFileSync(join(root, "ui-complete.js"), "utf8").includes("ui-tab-hero"), "tab hero layouts");
 assert(html.includes("seasonClaimed"), "season pass state");
 assert(html.includes('id="main"></div>'), "clean #main shell");
 assert(html.includes("BUILD_TAG"), "build tag constant");
@@ -104,7 +108,7 @@ assert(html.includes("whatsnew"), "what's new modal");
 const rawCount = (html.match(/__raw/g) || []).length;
 assert(rawCount <= 2, "single __raw redirect script", `found ${rawCount}`);
 
-for (const f of ["strings.js", "logic.js", "aaa-upgrade.js", "gameplay-plus.js", "gameplay-ultra.js", "gameplay-endless.js", "gameplay-empire.js", "gameplay-studio.js", "gameplay-final.js", "gameplay-aaa.js", "gameplay-legend.js", "hud-premium.js"]) {
+for (const f of ["strings.js", "logic.js", "aaa-upgrade.js", "gameplay-plus.js", "gameplay-ultra.js", "gameplay-endless.js", "gameplay-empire.js", "gameplay-studio.js", "gameplay-final.js", "gameplay-aaa.js", "gameplay-legend.js", "hud-premium.js", "ui-complete.js"]) {
   const r = spawnSync("node", ["--check", join(root, f)], { encoding: "utf8" });
   assert(r.status === 0, `syntax OK: ${f}`, r.stderr?.trim());
 }
@@ -146,6 +150,8 @@ assert(existsSync(join(root, "www/gameplay-legend.js")), "www/gameplay-legend.js
 assert(dpkg.build?.extraResources?.[0]?.filter?.includes("gameplay-legend.js"), "desktop bundles legend");
 assert(existsSync(join(root, "www/hud-premium.js")), "www/hud-premium.js copied");
 assert(dpkg.build?.extraResources?.[0]?.filter?.includes("hud-premium.js"), "desktop bundles hud");
+assert(existsSync(join(root, "www/ui-complete.js")), "www/ui-complete.js copied");
+assert(dpkg.build?.extraResources?.[0]?.filter?.includes("ui-complete.js"), "desktop bundles ui-complete");
 
 console.log(`\n${passed} passed, ${failed} failed`);
 process.exit(failed > 0 ? 1 : 0);

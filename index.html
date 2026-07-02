@@ -31,6 +31,7 @@
 <link rel="stylesheet" href="gameplay-aaa.css">
 <link rel="stylesheet" href="gameplay-legend.css">
 <link rel="stylesheet" href="hud-premium.css">
+<link rel="stylesheet" href="ui-complete.css">
 <meta name="theme-color" content="#3a2b4d">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <style>
@@ -585,14 +586,14 @@ button,.btn-ghost{min-height:40px}
 
 <div class="overlay" id="whatsnew" style="display:none">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <h1 style="font-size:22px;text-align:center">✨ What's New — Premium HUD</h1>
+    <h1 style="font-size:22px;text-align:center">✨ What's New — Complete Edition</h1>
     <div class="offlist" style="margin:12px 0">
-      <div><span>🎮 Command HUD</span><b>Cinematic dark UI with live dynasty rank & combo</b></div>
-      <div><span>🧭 Director's Pathway</span><b>6-step journey rail — always know what to do next</b></div>
-      <div><span>📍 Smart CTA</span><b>One-tap jump to the right tab for your current goal</b></div>
-      <div><span>🔔 Tab Badges</span><b>Red dots when premieres or quests are ready</b></div>
-      <div><span>🌙 Premium Panels</span><b>Glass-dark cards, shimmer bars, hero slots</b></div>
-      <div><span>📱 Command Dock</span><b>Bottom nav rebuilt for thumb-friendly play</b></div>
+      <div><span>🎬 Tab Heroes</span><b>Every tab has a banner, stats & context</b></div>
+      <div><span>📺 Produce Grid</span><b>Cinematic multi-slot production layout</b></div>
+      <div><span>⭐ Star Cards</span><b>Rarity glow frames on legendaries</b></div>
+      <div><span>💎 Store Shelf</span><b>Premium bundle showcase layout</b></div>
+      <div><span>🎁 Quest Chest</span><b>Claimable rewards highlighted up top</b></div>
+      <div><span>🏆 Achievement Strip</span><b>Live progress bar on Quests & Studio</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
   </div>
@@ -632,7 +633,7 @@ const STORE_PAYMENTS = true; // store always visible; buyReal routes web→check
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 26 · Premium HUD";
+const BUILD_TAG = "build 27 · Complete";
 const OFFLINE_CAP = 8*3600; // seconds
 
 const GENRES = ["Action","Romance","Fantasy","Sci-Fi","Comedy","Slice of Life"];
@@ -2949,6 +2950,7 @@ window.__AST_HOOK__ = {
 <script src="gameplay-aaa.js"></script>
 <script src="gameplay-legend.js"></script>
 <script src="hud-premium.js"></script>
+<script src="ui-complete.js"></script>
 
 
 <script>(function(){var d;function f(){try{var b=document.getElementById('btn-save');if(b)b.click();}catch(e){}if(!d){d=document.createElement('div');d.style.cssText='position:fixed;bottom:10px;left:50%;transform:translateX(-50%);background:rgba(40,30,55,.92);color:#9be29b;font:600 12px system-ui;padding:5px 12px;border-radius:999px;z-index:99999;opacity:0;transition:opacity .25s;pointer-events:none';d.textContent='\u2713 Saved';document.body.appendChild(d);}d.style.opacity='1';clearTimeout(d._t);d._t=setTimeout(function(){d.style.opacity='0';},1100);}document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden')f();});window.addEventListener('pagehide',f);})();</script>
