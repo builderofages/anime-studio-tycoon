@@ -26,7 +26,7 @@ html.hud-v3-active {
 html.hud-v3-active body {
   background:
     linear-gradient(180deg, rgba(12, 10, 24, 0.25) 0%, rgba(12, 10, 24, 0.65) 100%),
-    url('bg-v4.png?v=42') center top / cover no-repeat fixed !important;
+    url('bg-v4.png?v=43') center top / cover no-repeat fixed !important;
 }
 
 html.hud-v3-active #app {
@@ -61,36 +61,35 @@ html.hud-v3-active #app {
   pointer-events: none;
 }
 
-#news-ticker {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 50;
-  background: linear-gradient(90deg, rgba(45, 31, 66, 0.95), rgba(74, 84, 112, 0.92));
-  color: #fff;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 5px 0;
+#loading-bar {
+  width: 200px;
+  height: 6px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.12);
   overflow: hidden;
-  border-bottom: 1px solid rgba(255, 204, 77, 0.25);
-  pointer-events: none;
+  margin-top: 14px;
 }
 
-#news-ticker .tick-inner {
-  display: inline-block;
-  white-space: nowrap;
-  animation: hf-tick-scroll 28s linear infinite;
-  padding-left: 100%;
+#loading-bar i {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--hf-pink), var(--hf-gold));
+  border-radius: 4px;
+  transition: width 0.15s ease;
 }
 
-@keyframes hf-tick-scroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-100%); }
+/* Overlays sit above ticker (z-index 50 in gameplay-plus.css) */
+html.hud-v3-active .overlay,
+.overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 200 !important;
 }
 
-body.has-ticker #app {
-  padding-top: 28px;
+#combo-meter {
+  bottom: calc(var(--ui-dock-h, 56px) + 12px) !important;
+  z-index: 90 !important;
 }
 
 /* ---- HUD: glass bar like mockup ---- */
@@ -381,6 +380,31 @@ html.hud-v3-active .overlay {
   backdrop-filter: blur(6px) !important;
 }
 
+/* gameplay-plus.css dark-theme companions */
+html.hud-v3-active .daily-goals {
+  background: linear-gradient(135deg, rgba(255, 92, 168, 0.12), rgba(77, 212, 255, 0.08)) !important;
+  border: 1px solid var(--hf-border) !important;
+  color: var(--hf-text) !important;
+}
+
+html.hud-v3-active .merch-panel .merch-tier {
+  background: var(--hf-glass) !important;
+  border: 1px solid var(--hf-border-soft) !important;
+  color: var(--hf-text) !important;
+}
+
+html.hud-v3-active .rival-card {
+  background: linear-gradient(135deg, rgba(255, 92, 168, 0.1), rgba(255, 200, 69, 0.08)) !important;
+  border: 1px solid var(--hf-border) !important;
+  color: var(--hf-text) !important;
+}
+
+html.hud-v3-active .pity-meter {
+  background: rgba(180, 140, 255, 0.12) !important;
+  border-color: rgba(180, 140, 255, 0.28) !important;
+  color: var(--hf-text) !important;
+}
+
 /* ---- Store featured rows ---- */
 html.hud-v3-active .uprow-featured {
   border: 1px solid rgba(255, 200, 69, 0.35) !important;
@@ -397,7 +421,7 @@ html.hud-v3-active .panel[style*="dashed"] {
 html.hud-v3-active #loading-splash {
   background:
     linear-gradient(180deg, rgba(12, 10, 24, 0.5) 0%, rgba(12, 10, 24, 0.85) 100%),
-    url('bg-v4.png?v=42') center / cover no-repeat !important;
+    url('bg-v4.png?v=43') center / cover no-repeat !important;
 }
 
 

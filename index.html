@@ -22,13 +22,14 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%233a2b4d'/%3E%3Ccircle cx='32' cy='32' r='30' fill='none' stroke='%23ffc845' stroke-width='3'/%3E%3Cg fill='%23ff9bc4'%3E%3Cellipse cx='32' cy='15' rx='5' ry='8'/%3E%3Cellipse cx='32' cy='49' rx='5' ry='8'/%3E%3Cellipse cx='15' cy='32' rx='8' ry='5'/%3E%3Cellipse cx='49' cy='32' rx='8' ry='5'/%3E%3C/g%3E%3Ccircle cx='32' cy='32' r='7' fill='%23ffc845'/%3E%3C/svg%3E">
 <link rel="manifest" href="manifest.json">
 <!-- Legacy gameplay-*.css disabled — aaa-ui + game-skin + hud-premium own chrome -->
-<link rel="stylesheet" href="hud-premium.css?v=42">
-<link rel="stylesheet" href="ui-complete.css?v=42">
-<link rel="stylesheet" href="gameplay-studio-rating.css?v=42">
-<link rel="stylesheet" href="studio-premium.css?v=42">
-<link rel="stylesheet" href="game-skin.css?v=42">
-<link rel="stylesheet" href="hf-design.css?v=42">
-<link rel="stylesheet" href="aaa-ui.css?v=42">
+<link rel="stylesheet" href="hud-premium.css?v=43">
+<link rel="stylesheet" href="ui-complete.css?v=43">
+<link rel="stylesheet" href="gameplay-studio-rating.css?v=43">
+<link rel="stylesheet" href="studio-premium.css?v=43">
+<link rel="stylesheet" href="gameplay-plus.css?v=43">
+<link rel="stylesheet" href="game-skin.css?v=43">
+<link rel="stylesheet" href="hf-design.css?v=43">
+<link rel="stylesheet" href="aaa-ui.css?v=43">
 <script>document.documentElement.classList.add("premium-hud","hud-v3-active")</script>
 <meta name="theme-color" content="#08050f">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -123,7 +124,7 @@ button:disabled{filter:grayscale(.6) brightness(.85);cursor:not-allowed;opacity:
 .hirebtn small{display:block;font-weight:700;opacity:.85;font-size:11px}
 
 /* START / MODAL */
-.overlay{position:absolute;inset:0;z-index:30;display:flex;align-items:center;justify-content:center;
+.overlay{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;
   background:linear-gradient(rgba(26,20,38,.55),rgba(26,20,38,.85));backdrop-filter:blur(3px);padding:20px}
 .card-modal{background:var(--panel);border-radius:24px;box-shadow:var(--shadow);padding:26px;max-width:380px;text-align:center}
 .card-modal img.logo{width:120px;height:120px;object-fit:contain;filter:drop-shadow(0 6px 12px rgba(0,0,0,.3))}
@@ -285,10 +286,10 @@ html.hud-v3-active #goal{display:none !important}
 <div id="app">
   <div id="top">
     <div id="studio-rank"><span>🎬</span><span class="rank-tier">Garage Studio</span></div>
-    <div class="res yen"><img src="icons/hf/yen.png?v=42" alt="Yen"><span><span class="v" id="r-yen">0</span> <small>¥</small></span></div>
-    <div class="res fans"><img src="icons/hf/fans.png?v=42" alt="Fans"><span class="v" id="r-fans">0</span></div>
-    <div class="res hype"><img src="icons/hf/hype.png?v=42" alt="Hype"><span class="v" id="r-hype">0</span></div>
-    <div class="res gems"><img src="icons/hf/gems.png?v=42" alt="Gems"><span class="v" id="r-gems">0</span></div>
+    <div class="res yen"><img src="icons/hf/yen.png?v=43" alt="Yen"><span><span class="v" id="r-yen">0</span> <small>¥</small></span></div>
+    <div class="res fans"><img src="icons/hf/fans.png?v=43" alt="Fans"><span class="v" id="r-fans">0</span></div>
+    <div class="res hype"><img src="icons/hf/hype.png?v=43" alt="Hype"><span class="v" id="r-hype">0</span></div>
+    <div class="res gems"><img src="icons/hf/gems.png?v=43" alt="Gems"><span class="v" id="r-gems">0</span></div>
     <div id="trendbar"><span class="spark">📈</span> Trending: <b id="trend">Action</b></div>
   </div>
   <div id="goal"><span id="goal-txt">🎯 Reach 50 Fans for Web Series</span><div class="bar"><i id="goal-bar" style="width:0%"></i></div></div>
@@ -306,7 +307,7 @@ html.hud-v3-active #goal{display:none !important}
 
 <div class="overlay" id="start" style="display: none;">
   <div class="card-modal">
-    <img class="start-hero" src="start-hero.png?v=42" width="140" height="140" alt="Anime Studio Tycoon">
+    <img class="start-hero" src="start-hero.png?v=43" width="140" height="140" alt="Anime Studio Tycoon">
     <h1>Anime Studio Tycoon</h1>
     <p id="start-tagline">From a one-room studio to a global anime empire</p>
     <label style="display:block;font-size:12px;font-weight:800;color:var(--plum);margin:4px 0 4px">🏢 Studio Name</label>
@@ -374,7 +375,7 @@ html.hud-v3-active #goal{display:none !important}
 
 <div class="overlay" id="whatsnew" style="display:none">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <img src="start-hero.png?v=42" alt="" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
+    <img src="start-hero.png?v=43" alt="" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
     <h1 style="font-size:22px;text-align:center">✨ Build 40 — Greenlight + Gacha Reveal</h1>
     <div class="offlist" style="margin:12px 0">
       <div><span>🖼️ Cinematic BG</span><b>Higgsfield sakura sunset now fills the screen</b></div>
@@ -422,7 +423,7 @@ const STORE_PAYMENTS = true; // store always visible; buyReal routes web→check
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 42 · Layout Fix";
+const BUILD_TAG = "build 43 · Full Fix";
 const ASSET_V = "41";
 const TAB_ICON_IMG = {
   produce:"icons/tabs/produce.png", quests:"icons/tabs/quests.png", staff:"icons/tabs/staff.png",
@@ -2247,6 +2248,9 @@ function hallOfFameHTML(){
   });
   return h+`</div>`;
 }
+function aaaMeterHead(label, right, pct, fill){
+  return `<div class="aaa-meter"><div class="aaa-meter-head"><span>${label}</span><span>${right}</span></div><div class="aaa-meter-track"><div class="aaa-meter-fill ${fill}" style="width:${Math.max(0,Math.min(100,pct))}%"></div></div></div>`;
+}
 function renderProduce(){
   let h="";
   const dp=dimPowerForQuality();
@@ -2329,25 +2333,24 @@ function renderProduce(){
   if(rewardedActive()) boosts.push("⚡ 2× Boost ("+Math.ceil((S.rewardedUntil-Date.now())/1000)+"s)");
   if(Date.now()<S.overdriveUntil) boosts.push("🚀 Overdrive 2× speed ("+Math.ceil((S.overdriveUntil-Date.now())/1000)+"s)");
   // legacy / prestige / overdrive
-  h+=`<div class="panel dash-panel"><h2 style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">🏢 ${studioName()} <button class="btn-ghost" data-act="studio-name" style="padding:3px 8px;font-size:11px;min-height:0" title="Rename your studio">✏️</button> <span class="pill" style="margin-left:auto">${(()=>{const s=industryStandings();return "🏆 Industry #"+s.rank+" / "+s.total;})()}</span></h2>
+  h+=`<div class="panel dash-panel aaa-dash-compact"><h2 class="aaa-dash-title">🏢 ${studioName()} <button class="btn-ghost aaa-dash-edit" data-act="studio-name" title="Rename your studio">✏️</button> <span class="pill aaa-dash-rank">${(()=>{const s=industryStandings();return "🏆 #"+s.rank+" / "+s.total;})()}</span></h2>
      <div class="kpis">
-       <div class="kpi accent"><div class="kl">🎖️ Studio Lv.</div><div class="kv">${studioLevel()} <small style="font-size:11px;opacity:.7">+${studioLevel()*2}%</small></div></div>
+       <div class="kpi accent"><div class="kl">🎖️ Studio Lv.</div><div class="kv">${studioLevel()} <small>+${studioLevel()*2}%</small></div></div>
        <div class="kpi accent"><div class="kl">Studio Value</div><div class="kv">${fmt(studioValue())}</div></div>
        <div class="kpi"><div class="kl">Income ×</div><div class="kv">${(globalIncomeMult()).toFixed(2)}</div></div>
        <div class="kpi"><div class="kl">Output/s</div><div class="kv">${fmt(powerPerTick())}</div></div>
        <div class="kpi"><div class="kl">Premieres</div><div class="kv">${fmt(S.releases)}</div></div>
        <div class="kpi"><div class="kl">⭐ Stars</div><div class="kv">${(S.stars||[]).length}</div></div>
        <div class="kpi"><div class="kl">Slots</div><div class="kv">${activeCount()}/${S.slots}</div></div>
-       <div class="kpi"><div class="kl">Legacy</div><div class="kv">${S.legacy} <small style="font-size:11px;opacity:.7">+${S.legacy*5}%</small></div></div>
+       <div class="kpi"><div class="kl">Legacy</div><div class="kv">${S.legacy} <small>+${S.legacy*5}%</small></div></div>
        <div class="kpi"><div class="kl">Best Value</div><div class="kv">${fmt(Math.max(S.bestValue,studioValue()))}</div></div>
-       <div class="kpi accent"><div class="kl">📚 ${t("k_royalties","Royalties")}</div><div class="kv">¥${fmt(royaltyPerSec())}<small style="font-size:11px;opacity:.7">/s</small></div></div>
+       <div class="kpi accent"><div class="kl">📚 ${t("k_royalties","Royalties")}</div><div class="kv">¥${fmt(royaltyPerSec())}<small>/s</small></div></div>
        <div class="kpi"><div class="kl">🏆 ${t("k_awards","Awards")}</div><div class="kv">${fmt(S.awardsWon||0)}</div></div>
      </div>
-     ${(()=>{const L=studioLevel(),lo=fansForLevel(L),hi=fansForLevel(L+1),f=Math.max(0,Math.min(1,(S.totalFansEver-lo)/(hi-lo)));return `<div style="margin-top:10px"><div class="muted" style="display:flex;justify-content:space-between;font-weight:700;font-size:12px"><span>🎖️ Studio Lv. ${L} → ${L+1}</span><span>${fmt(Math.max(0,hi-S.totalFansEver))} fans to go</span></div><div style="height:9px;border-radius:6px;background:rgba(0,0,0,.12);overflow:hidden;margin-top:3px"><div style="height:100%;width:${(f*100).toFixed(1)}%;background:linear-gradient(90deg,#f6b73c,#ff7eb3)"></div></div></div>`;})()}
-     ${boosts.length?`<div class="muted" style="margin-top:8px;color:#0c7d96;font-weight:700">⚡ Active: ${boosts.join(" · ")}</div>`:""}
+     ${(()=>{const L=studioLevel(),lo=fansForLevel(L),hi=fansForLevel(L+1),f=Math.max(0,Math.min(100,(S.totalFansEver-lo)/(hi-lo)*100));return aaaMeterHead(`🎖️ Studio Lv. ${L} → ${L+1}`, `${fmt(Math.max(0,hi-S.totalFansEver))} fans to go`, f, "gold");})()}
+     ${boosts.length?`<div class="aaa-boosts">⚡ Active: ${boosts.join(" · ")}</div>`:""}
      ${(()=>{const st=Math.round(S.stamina==null?100:S.stamina), ch=Math.round(S.chaos||0);
-       const meter=(label,val,c1,c2)=>`<div style="margin-top:8px"><div class="muted" style="display:flex;justify-content:space-between;font-weight:700;font-size:12px"><span>${label}</span><span>${val}%</span></div><div style="height:9px;border-radius:6px;background:rgba(0,0,0,.12);overflow:hidden;margin-top:3px"><div style="height:100%;width:${val}%;background:linear-gradient(90deg,${c1},${c2})"></div></div></div>`;
-       return meter("💪 Studio Stamina",st,"#ff7eb3","#5fd38a")+meter("🌪️ Chaos",ch,"#5fd38a","#ff6b8a");})()}
+       return aaaMeterHead("💪 Studio Stamina", st+"%", st, "stamina")+aaaMeterHead("🌪️ Chaos", ch+"%", ch, "chaos");})()}
      ${featureUnlocked("chaos")?`<button class="btn-ghost" data-act="chaos-toggle" style="margin-top:8px;width:100%;${S.chaosMode?'background:linear-gradient(180deg,#ff6b8a,#c0497f);color:#fff':''}">${S.chaosMode?"🌪️ Chaos Mode: ON (+50% rewards, +risk)":"🌪️ Enable Chaos Mode (+50% rewards, +risk)"}</button>`:`<div class="muted" style="margin-top:8px;font-size:12px">🌪️ Chaos Mode unlocks at 10 premieres.</div>`}
      ${activeCount()>0?`<button class="btn-cyan" id="a-over" style="margin-top:8px;width:100%">🚀 ${STR.overdrive} · 15 Hype (all lines, 2× speed 30s)</button>`:""}
      ${S.fans>=PRESTIGE_FANS?`<button class="btn-cyan" id="a-prestige" style="margin-top:8px;width:100%">🌸 Reboot Studio for +${Math.floor(Math.sqrt(S.totalFansEver/1000))} Legacy</button>`:`<div class="muted" style="margin-top:6px">Reach ${fmt(PRESTIGE_FANS)} fans to unlock Studio Reboot (prestige).</div>`}
@@ -2771,7 +2774,8 @@ if(MONETIZATION.supportUrl){
   const a=document.createElement("a");
   a.href=MONETIZATION.supportUrl; a.target="_blank"; a.rel="noopener";
   a.textContent="Made with TrainYourAgent ↗"; a.style.cssText="color:#fff;opacity:.7;font-size:11px;text-decoration:none;font-weight:700;align-self:center;padding:2px 8px";
-  document.querySelector(".foot").appendChild(a);
+  const foot=document.querySelector(".foot")||document.getElementById("hud-drawer-slot");
+  if(foot) foot.appendChild(a);
 }
 $("#btn-start").onclick=begin;
 $("#btn-offclose").onclick=()=>{ $("#offline").style.display="none"; };
@@ -2818,20 +2822,20 @@ window.__AST_HOOK__ = {
   studioLevel,
 };
 </script>
-<script src="aaa-upgrade.js?v=42"></script>
-<script src="gameplay-plus.js?v=42"></script>
-<script src="gameplay-ultra.js?v=42"></script>
-<script src="gameplay-endless.js?v=42"></script>
-<script src="gameplay-empire.js?v=42"></script>
-<script src="gameplay-studio.js?v=42"></script>
-<script src="gameplay-final.js?v=42"></script>
-<script src="gameplay-aaa.js?v=42"></script>
-<script src="gameplay-legend.js?v=42"></script>
-<script src="hud-premium.js?v=42"></script>
-<script src="ui-complete.js?v=42"></script>
-<script src="gameplay-studio-rating.js?v=42"></script>
-<script src="gameplay-polish.js?v=42"></script>
-<script src="hook-bridge.js?v=42"></script>
+<script src="aaa-upgrade.js?v=43"></script>
+<script src="gameplay-plus.js?v=43"></script>
+<script src="gameplay-ultra.js?v=43"></script>
+<script src="gameplay-endless.js?v=43"></script>
+<script src="gameplay-empire.js?v=43"></script>
+<script src="gameplay-studio.js?v=43"></script>
+<script src="gameplay-final.js?v=43"></script>
+<script src="gameplay-aaa.js?v=43"></script>
+<script src="gameplay-legend.js?v=43"></script>
+<script src="hud-premium.js?v=43"></script>
+<script src="ui-complete.js?v=43"></script>
+<script src="gameplay-studio-rating.js?v=43"></script>
+<script src="gameplay-polish.js?v=43"></script>
+<script src="hook-bridge.js?v=43"></script>
 <!-- studio-premium.css loaded in head -->
 
 

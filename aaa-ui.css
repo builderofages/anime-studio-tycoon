@@ -988,6 +988,76 @@ html.hud-v3-active .aaa-market-card .hirebtn {
   margin-top: 8px;
 }
 
+html.hud-v3-active .aaa-dash-title {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex-wrap: wrap !important;
+  margin: 0 0 12px !important;
+  font-size: 15px !important;
+  color: #fff !important;
+}
+
+html.hud-v3-active .aaa-dash-edit {
+  padding: 3px 8px !important;
+  font-size: 11px !important;
+  min-height: 0 !important;
+}
+
+html.hud-v3-active .aaa-dash-rank {
+  margin-left: auto !important;
+}
+
+html.hud-v3-active .aaa-dash-compact .kpi small {
+  font-size: 10px !important;
+  opacity: 0.7 !important;
+  font-weight: 600 !important;
+}
+
+html.hud-v3-active .aaa-meter {
+  margin-top: 10px;
+}
+
+html.hud-v3-active .aaa-meter-head {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 700;
+  color: #9a92b0;
+}
+
+html.hud-v3-active .aaa-meter-track {
+  height: 9px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+html.hud-v3-active .aaa-meter-fill {
+  height: 100%;
+  border-radius: 6px;
+}
+
+html.hud-v3-active .aaa-meter-fill.gold {
+  background: linear-gradient(90deg, #f6b73c, #ff7eb3);
+}
+
+html.hud-v3-active .aaa-meter-fill.stamina {
+  background: linear-gradient(90deg, #ff7eb3, #5fd38a);
+}
+
+html.hud-v3-active .aaa-meter-fill.chaos {
+  background: linear-gradient(90deg, #5fd38a, #ff6b8a);
+}
+
+html.hud-v3-active .aaa-boosts {
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #4dd4ff;
+}
+
 html.hud-v3-active .aaa-dash-compact .kpis {
   grid-template-columns: repeat(3, 1fr) !important;
   gap: 6px !important;

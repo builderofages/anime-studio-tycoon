@@ -538,6 +538,9 @@ html.hud-v3-active .ui-tab-hero,
 html.hud-v3-active .dynasty-badge { display: none !important; }
 
 html.hud-v3-active .overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 200 !important;
   background: rgba(0, 0, 0, 0.8) !important;
 }
 
