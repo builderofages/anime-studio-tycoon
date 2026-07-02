@@ -51,6 +51,8 @@
           "gameplay-aaa.css",
           "gameplay-legend.js",
           "gameplay-legend.css",
+          "hud-premium.js",
+          "hud-premium.css",
           "manifest.json",
           "privacy.html",
           "terms.html"

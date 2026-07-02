@@ -31,6 +31,8 @@ const FILES = [
   "gameplay-aaa.css",
   "gameplay-legend.js",
   "gameplay-legend.css",
+  "hud-premium.js",
+  "hud-premium.css",
   "manifest.json",
   "icons/icon-512.png",
   "privacy.html",
