@@ -1,0 +1,1020 @@
+/**
+ * AAA UI — structural layer matched to design-ref-v4.png
+ * Produce hero card · production team strip · typography scale
+ */
+html.hud-v3-active {
+  --aaa-pink: #ff5ca8;
+  --aaa-pink-2: #ff3d96;
+  --aaa-gold: #ffc845;
+  --aaa-surface: rgba(14, 11, 24, 0.92);
+  --aaa-card: rgba(22, 18, 36, 0.95);
+  --aaa-border: rgba(255, 120, 180, 0.22);
+}
+
+/* ---- Produce: hero show card (mockup layout) ---- */
+html.hud-v3-active .aaa-show-panel {
+  padding: 0 !important;
+  overflow: hidden !important;
+  border: 1px solid var(--aaa-border) !important;
+  background: var(--aaa-card) !important;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 92, 168, 0.08) !important;
+}
+
+html.hud-v3-active .aaa-show-card {
+  display: grid;
+  grid-template-columns: 108px 1fr;
+  gap: 12px;
+  padding: 12px;
+}
+
+html.hud-v3-active .aaa-poster {
+  width: 108px;
+  height: 148px;
+  border-radius: 14px;
+  background: #2b2440 center/cover;
+  position: relative;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), inset 0 0 0 2px rgba(255, 255, 255, 0.12);
+  cursor: pointer;
+}
+
+html.hud-v3-active .aaa-ep {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 3px 7px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--aaa-pink), var(--aaa-pink-2));
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(255, 92, 168, 0.45);
+}
+
+html.hud-v3-active .aaa-trend {
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  font-size: 14px;
+}
+
+html.hud-v3-active .aaa-title {
+  margin: 0 0 4px;
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.15;
+  color: #fff !important;
+  letter-spacing: -0.02em;
+}
+
+html.hud-v3-active .aaa-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+html.hud-v3-active .aaa-chip {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(255, 92, 168, 0.15);
+  border: 1px solid rgba(255, 92, 168, 0.25);
+  color: #f9a8d4;
+}
+
+html.hud-v3-active .aaa-chip.gold {
+  background: rgba(255, 200, 69, 0.12);
+  border-color: rgba(255, 200, 69, 0.3);
+  color: var(--aaa-gold);
+}
+
+html.hud-v3-active .aaa-score-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: #9a92b0;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 2px;
+}
+
+html.hud-v3-active .aaa-score-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+html.hud-v3-active .aaa-score-val {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--aaa-gold);
+  font-variant-numeric: tabular-nums;
+}
+
+html.hud-v3-active .aaa-rank {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  font-weight: 900;
+  color: #fff;
+  background: linear-gradient(135deg, var(--aaa-pink), #b48cff);
+  box-shadow: 0 0 16px rgba(255, 92, 168, 0.5);
+}
+
+html.hud-v3-active .aaa-rank-S { background: linear-gradient(135deg, #ff5ca8, #ff3d96); }
+html.hud-v3-active .aaa-rank-A { background: linear-gradient(135deg, #4dd4ff, #6b5cff); }
+html.hud-v3-active .aaa-rank-B { background: linear-gradient(135deg, #22c55e, #06b6d4); }
+
+html.hud-v3-active .aaa-stat-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  margin-bottom: 5px;
+  color: #9a92b0;
+}
+
+html.hud-v3-active .aaa-stat-line b {
+  color: #f4f0fa;
+  font-weight: 700;
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+}
+
+html.hud-v3-active .aaa-mini-bar {
+  flex: 1;
+  max-width: 72px;
+  height: 4px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+html.hud-v3-active .aaa-mini-bar i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--aaa-pink), var(--aaa-gold));
+}
+
+html.hud-v3-active .aaa-progress {
+  height: 6px !important;
+  margin: 8px 0 !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-radius: 6px !important;
+}
+
+html.hud-v3-active .aaa-progress i {
+  background: linear-gradient(90deg, var(--aaa-pink), var(--aaa-gold)) !important;
+  box-shadow: 0 0 10px rgba(255, 92, 168, 0.5);
+}
+
+html.hud-v3-active .aaa-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+html.hud-v3-active .aaa-cta {
+  flex: 1 !important;
+  font-size: 13px !important;
+  padding: 11px 12px !important;
+  border-radius: 12px !important;
+  background: linear-gradient(135deg, var(--aaa-pink-2), var(--aaa-pink)) !important;
+  box-shadow: 0 6px 20px rgba(255, 92, 168, 0.45) !important;
+  color: #fff !important;
+}
+
+/* ---- Production team strip ---- */
+html.hud-v3-active .aaa-team {
+  border-top: 1px solid var(--aaa-border);
+  padding: 10px 12px 12px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+html.hud-v3-active .aaa-team-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #9a92b0;
+  margin-bottom: 8px;
+}
+
+html.hud-v3-active .aaa-team-add {
+  width: 22px;
+  height: 22px;
+  border-radius: 8px;
+  border: 1px solid var(--aaa-border);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--aaa-pink);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+html.hud-v3-active .aaa-team-scroll {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 2px;
+}
+
+html.hud-v3-active .aaa-team-card {
+  flex: 0 0 72px;
+  text-align: center;
+  padding: 8px 6px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+}
+
+html.hud-v3-active .aaa-team-rank {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  font-size: 9px;
+  font-weight: 900;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+}
+
+html.hud-v3-active .aaa-team-card.aaa-rank-S .aaa-team-rank { background: var(--aaa-pink); }
+html.hud-v3-active .aaa-team-card.aaa-rank-A .aaa-team-rank { background: #4dd4ff; }
+html.hud-v3-active .aaa-team-card.aaa-rank-B .aaa-team-rank { background: #6b7280; }
+
+html.hud-v3-active .aaa-team-avatar {
+  font-size: 26px;
+  line-height: 1;
+  margin: 6px 0 4px;
+}
+
+html.hud-v3-active .aaa-team-role {
+  font-size: 9px;
+  font-weight: 700;
+  color: #e8e4f0;
+  line-height: 1.2;
+}
+
+html.hud-v3-active .aaa-team-lv {
+  font-size: 9px;
+  color: #7a7289;
+  margin-top: 2px;
+}
+
+/* ---- Coach bar with portrait ---- */
+html.hud-v3-active .coach-bar {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+html.hud-v3-active .coach-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 2px solid rgba(255, 92, 168, 0.45);
+  box-shadow: 0 0 12px rgba(255, 92, 168, 0.3);
+}
+
+html.hud-v3-active .coach-msg {
+  flex: 1;
+  font-size: 12px !important;
+  line-height: 1.35 !important;
+}
+
+/* ---- Tab dock: SVG icons not emoji ---- */
+html.hud-v3-active .tab .ic {
+  width: 22px !important;
+  height: 22px !important;
+  display: grid !important;
+  place-items: center !important;
+}
+
+html.hud-v3-active .tab .ic svg {
+  width: 20px;
+  height: 20px;
+  opacity: 0.55;
+  transition: opacity 0.15s, filter 0.15s;
+}
+
+html.hud-v3-active .tab.active .ic svg {
+  opacity: 1;
+  filter: drop-shadow(0 0 6px rgba(255, 92, 168, 0.8));
+}
+
+html.hud-v3-active .tab.active::after {
+  background: var(--aaa-pink) !important;
+  box-shadow: 0 0 10px rgba(255, 92, 168, 0.6) !important;
+}
+
+/* ---- HUD studio avatar ---- */
+html.hud-v3-active .hud-avatar-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+html.hud-v3-active .hud-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 200, 69, 0.5);
+}
+
+html.hud-v3-active .hud-lv-badge {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  font-size: 8px;
+  font-weight: 900;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 3px;
+  border-radius: 8px;
+  background: var(--aaa-gold);
+  color: #3d2800;
+  display: grid;
+  place-items: center;
+  border: 1.5px solid #1a1228;
+}
+
+/* ---- Page heroes (Stars / Store / Staff / Quests) ---- */
+html.hud-v3-active .aaa-page-hero {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, rgba(255, 92, 168, 0.18), rgba(107, 92, 255, 0.12));
+  border: 1px solid var(--aaa-border);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+
+html.hud-v3-active .aaa-page-hero h2 {
+  margin: 0 0 4px !important;
+  font-size: 20px !important;
+  font-weight: 800 !important;
+  color: #fff !important;
+  text-transform: none !important;
+  letter-spacing: -0.02em !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+html.hud-v3-active .aaa-page-hero p {
+  margin: 0 0 12px;
+  font-size: 12px;
+  color: #b8b0c8;
+  line-height: 1.4;
+}
+
+html.hud-v3-active .aaa-gacha-btns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+html.hud-v3-active .aaa-gacha-btn {
+  border: none;
+  border-radius: 14px;
+  padding: 12px 10px;
+  font-weight: 800;
+  font-size: 12px;
+  cursor: pointer;
+  text-align: left;
+  color: #fff;
+}
+
+html.hud-v3-active .aaa-gacha-btn.standard {
+  background: linear-gradient(135deg, #6b5cff, #4dd4ff);
+  box-shadow: 0 6px 18px rgba(77, 212, 255, 0.3);
+}
+
+html.hud-v3-active .aaa-gacha-btn.premium {
+  background: linear-gradient(135deg, var(--aaa-pink-2), var(--aaa-gold));
+  box-shadow: 0 6px 18px rgba(255, 92, 168, 0.4);
+}
+
+html.hud-v3-active .aaa-gacha-btn small {
+  display: block;
+  margin-top: 4px;
+  font-size: 11px;
+  opacity: 0.9;
+}
+
+html.hud-v3-active .aaa-gacha-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ---- Star talent cards ---- */
+html.hud-v3-active .aaa-star-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+html.hud-v3-active .aaa-star-card {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 14px;
+  background: var(--aaa-card);
+  border: 1px solid var(--aaa-border);
+}
+
+html.hud-v3-active .aaa-star-card.aaa-rarity-Legendary { border-color: rgba(255, 200, 69, 0.5); box-shadow: 0 0 20px rgba(255, 200, 69, 0.12); }
+html.hud-v3-active .aaa-star-card.aaa-rarity-Epic { border-color: rgba(180, 140, 255, 0.45); }
+html.hud-v3-active .aaa-star-card.aaa-rarity-Rare { border-color: rgba(77, 212, 255, 0.35); }
+
+html.hud-v3-active .aaa-star-portrait img {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+}
+
+html.hud-v3-active .aaa-star-name {
+  font-size: 14px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 2px;
+}
+
+html.hud-v3-active .aaa-star-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+html.hud-v3-active .aaa-star-tags .pill {
+  font-size: 9px !important;
+  padding: 2px 6px !important;
+}
+
+html.hud-v3-active .aaa-meter-row {
+  display: flex;
+  gap: 8px;
+  margin: 6px 0;
+}
+
+html.hud-v3-active .aaa-meter {
+  flex: 1;
+  font-size: 9px;
+  font-weight: 700;
+  color: #9a92b0;
+}
+
+html.hud-v3-active .aaa-meter .db {
+  height: 4px;
+  margin-top: 3px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+html.hud-v3-active .aaa-star-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  grid-column: 1 / -1;
+}
+
+html.hud-v3-active .aaa-star-actions button {
+  font-size: 10px !important;
+  padding: 6px 8px !important;
+}
+
+/* ---- Staff hire roster ---- */
+html.hud-v3-active .aaa-staff-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+html.hud-v3-active .aaa-staff-card {
+  padding: 12px;
+  border-radius: 14px;
+  background: var(--aaa-card);
+  border: 1px solid var(--aaa-border);
+  text-align: center;
+}
+
+html.hud-v3-active .aaa-staff-card img {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 8px;
+  display: block;
+  border: 2px solid rgba(255, 92, 168, 0.35);
+}
+
+html.hud-v3-active .aaa-staff-card h4 {
+  font-size: 13px !important;
+  margin: 0 0 4px !important;
+  color: #fff !important;
+}
+
+html.hud-v3-active .aaa-staff-card .muted {
+  font-size: 10px !important;
+  margin-bottom: 8px;
+  line-height: 1.35;
+}
+
+html.hud-v3-active .aaa-staff-card .hirebtn {
+  width: 100%;
+}
+
+/* ---- Store shelf ---- */
+html.hud-v3-active .aaa-store-balance {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(180, 140, 255, 0.15), rgba(255, 92, 168, 0.1));
+  border: 1px solid rgba(180, 140, 255, 0.3);
+  margin-bottom: 12px;
+}
+
+html.hud-v3-active .aaa-store-balance img {
+  width: 28px;
+  height: 28px;
+}
+
+html.hud-v3-active .aaa-store-balance b {
+  font-size: 22px;
+  font-weight: 800;
+  color: #c4b5fd;
+}
+
+html.hud-v3-active .aaa-shelf {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+html.hud-v3-active .aaa-shelf-item {
+  padding: 12px;
+  border-radius: 14px;
+  background: var(--aaa-card);
+  border: 1px solid var(--aaa-border);
+  text-align: center;
+}
+
+html.hud-v3-active .aaa-shelf-item h4 {
+  font-size: 12px !important;
+  margin: 0 0 4px !important;
+  color: #fff !important;
+}
+
+html.hud-v3-active .aaa-shelf-item .hirebtn {
+  width: 100%;
+  margin-top: 8px;
+}
+
+html.hud-v3-active .aaa-store-section {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #9a92b0;
+  margin: 14px 0 8px;
+}
+
+html.hud-v3-active .aaa-store-featured {
+  border: 1px solid rgba(255, 200, 69, 0.35) !important;
+  background: linear-gradient(135deg, rgba(255, 200, 69, 0.08), rgba(255, 92, 168, 0.06)) !important;
+  border-radius: 14px !important;
+  margin-bottom: 8px;
+}
+
+/* ---- Quest cards ---- */
+html.hud-v3-active .aaa-quest-block {
+  margin-bottom: 12px;
+}
+
+html.hud-v3-active .aaa-quest-block > h3 {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #9a92b0;
+  margin: 0 0 8px;
+}
+
+html.hud-v3-active .aaa-quest-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: var(--aaa-card);
+  border: 1px solid var(--aaa-border);
+  margin-bottom: 6px;
+}
+
+html.hud-v3-active .aaa-quest-card.done {
+  border-color: rgba(34, 197, 94, 0.35);
+}
+
+html.hud-v3-active .aaa-quest-card.claimable {
+  border-color: rgba(255, 200, 69, 0.45);
+  box-shadow: 0 0 16px rgba(255, 200, 69, 0.12);
+}
+
+html.hud-v3-active .aaa-quest-ic {
+  font-size: 22px;
+  line-height: 1;
+}
+
+html.hud-v3-active .aaa-quest-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+html.hud-v3-active .aaa-quest-meta b {
+  display: block;
+  font-size: 12px;
+  color: #fff;
+}
+
+html.hud-v3-active .aaa-quest-meta span {
+  font-size: 10px;
+  color: #9a92b0;
+}
+
+/* ---- Tab HF icons ---- */
+html.hud-v3-active .tab .ic img.tab-ic {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  opacity: 0.55;
+  filter: drop-shadow(0 0 4px rgba(255, 92, 168, 0.2));
+}
+
+html.hud-v3-active .tab.active .ic img.tab-ic {
+  opacity: 1;
+  filter: drop-shadow(0 0 8px rgba(255, 92, 168, 0.7));
+}
+
+html.hud-v3-active .tab .ic img.tab-ic + svg { display: none; }
+
+/* ---- Kill legacy cream panels in AAA mode ---- */
+html.hud-v3-active .panel.hero-card,
+html.hud-v3-active .eventbar {
+  background: var(--aaa-card) !important;
+  border: 1px solid var(--aaa-border) !important;
+  border-radius: 14px !important;
+}
+
+/* ---- Greenlight picker ---- */
+html.hud-v3-active .aaa-greenlight {
+  padding: 0 !important;
+  overflow: hidden !important;
+  border: 1px solid var(--aaa-border) !important;
+  background: var(--aaa-card) !important;
+  margin-bottom: 10px !important;
+}
+
+html.hud-v3-active .aaa-greenlight-head {
+  padding: 14px 14px 0;
+  background:
+    linear-gradient(180deg, rgba(12, 10, 24, 0.55), rgba(12, 10, 24, 0.92)),
+    url('assets/hf/greenlight-bg.png') center top / cover no-repeat;
+  border-bottom: 1px solid var(--aaa-border);
+}
+
+html.hud-v3-active .aaa-greenlight-head h2 {
+  font-size: 18px !important;
+  font-weight: 800 !important;
+  color: #fff !important;
+  text-transform: none !important;
+  letter-spacing: -0.02em !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 0 4px !important;
+}
+
+html.hud-v3-active .aaa-genre-row {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 10px 14px;
+  -webkit-overflow-scrolling: touch;
+}
+
+html.hud-v3-active .aaa-genre-row .chip {
+  flex: 0 0 auto;
+  border-radius: 999px !important;
+  padding: 7px 12px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #d8d2e8 !important;
+  box-shadow: none !important;
+}
+
+html.hud-v3-active .aaa-genre-row .chip.sel {
+  background: linear-gradient(135deg, var(--aaa-pink-2), var(--aaa-pink)) !important;
+  border: none !important;
+  color: #fff !important;
+  box-shadow: 0 4px 14px rgba(255, 92, 168, 0.4) !important;
+}
+
+html.hud-v3-active .aaa-genre-row .chip.trend {
+  outline: 2px solid var(--aaa-gold) !important;
+}
+
+html.hud-v3-active .aaa-pick-scroll {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 0 14px 14px;
+  -webkit-overflow-scrolling: touch;
+}
+
+html.hud-v3-active .aaa-pick-card {
+  flex: 0 0 140px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  text-align: center;
+}
+
+html.hud-v3-active .aaa-pick-card.lock {
+  opacity: 0.5;
+  filter: grayscale(0.4);
+}
+
+html.hud-v3-active .aaa-pick-poster {
+  height: 100px;
+  background: #2b2440 center/cover;
+  position: relative;
+}
+
+html.hud-v3-active .aaa-pick-poster::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, 0.65));
+}
+
+html.hud-v3-active .aaa-pick-card h4 {
+  font-size: 12px !important;
+  margin: 8px 8px 2px !important;
+  color: #fff !important;
+}
+
+html.hud-v3-active .aaa-pick-card .stat {
+  font-size: 10px;
+  color: #9a92b0;
+  padding: 0 8px;
+  line-height: 1.35;
+}
+
+html.hud-v3-active .aaa-pick-card .btn-primary,
+html.hud-v3-active .aaa-pick-card .btn-ghost {
+  width: calc(100% - 16px) !important;
+  margin: 8px !important;
+  font-size: 11px !important;
+}
+
+html.hud-v3-active .aaa-cast-row {
+  padding: 0 14px 10px;
+}
+
+html.hud-v3-active .aaa-cast-row .genrepick {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* ---- Gacha reveal overlay ---- */
+#reveal.aaa-reveal-overlay {
+  background: rgba(4, 2, 10, 0.92) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+#reveal.aaa-reveal-overlay .aaa-reveal-modal {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  max-width: 340px !important;
+  text-align: center !important;
+  position: relative !important;
+}
+
+html.hud-v3-active .aaa-reveal-wrap {
+  position: relative;
+  padding: 20px 16px;
+  border-radius: 20px;
+  background:
+    linear-gradient(180deg, rgba(12, 10, 24, 0.7), rgba(12, 10, 24, 0.92)),
+    url('assets/hf/gacha-bg.png') center/cover;
+  border: 1px solid var(--aaa-border);
+  box-shadow: 0 24px 60px rgba(255, 92, 168, 0.25);
+  overflow: hidden;
+}
+
+html.hud-v3-active .aaa-reveal-wrap::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  background: radial-gradient(circle, rgba(255, 200, 69, 0.15), transparent 55%);
+  animation: aaa-reveal-pulse 2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes aaa-reveal-pulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+html.hud-v3-active .aaa-reveal-rarity {
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  margin-bottom: 8px;
+  position: relative;
+}
+
+html.hud-v3-active .aaa-reveal-portrait {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 12px;
+  display: block;
+  position: relative;
+  animation: aaa-reveal-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes aaa-reveal-pop {
+  from { transform: scale(0.3); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+html.hud-v3-active .aaa-reveal-name {
+  font-size: 24px;
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 6px;
+  position: relative;
+}
+
+html.hud-v3-active .aaa-reveal-sub {
+  font-size: 12px;
+  color: #b8b0c8;
+  margin-bottom: 4px;
+  position: relative;
+}
+
+/* ---- Research / Studio / Market cards ---- */
+html.hud-v3-active .aaa-upgrade-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+html.hud-v3-active .aaa-upgrade-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 14px;
+  background: var(--aaa-card);
+  border: 1px solid var(--aaa-border);
+}
+
+html.hud-v3-active .aaa-upgrade-card .meta {
+  flex: 1;
+  min-width: 0;
+}
+
+html.hud-v3-active .aaa-upgrade-card h4 {
+  font-size: 13px !important;
+  margin: 0 0 2px !important;
+  color: #fff !important;
+}
+
+html.hud-v3-active .aaa-upgrade-card .muted {
+  font-size: 10px !important;
+}
+
+html.hud-v3-active .aaa-mastery-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+html.hud-v3-active .aaa-mastery-card {
+  padding: 12px;
+  border-radius: 14px;
+  background: var(--aaa-card);
+  border: 1px solid var(--aaa-border);
+}
+
+html.hud-v3-active .aaa-mastery-card h4 {
+  font-size: 12px !important;
+  margin: 0 0 4px !important;
+  color: #fff !important;
+}
+
+html.hud-v3-active .aaa-mastery-bar {
+  height: 4px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  margin: 6px 0;
+}
+
+html.hud-v3-active .aaa-mastery-bar i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--aaa-pink), var(--aaa-gold));
+}
+
+html.hud-v3-active .aaa-market-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+html.hud-v3-active .aaa-market-card {
+  padding: 14px 12px;
+  border-radius: 14px;
+  background: var(--aaa-card);
+  border: 1px solid var(--aaa-border);
+  text-align: center;
+}
+
+html.hud-v3-active .aaa-market-card .ic {
+  font-size: 28px;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+html.hud-v3-active .aaa-market-card h4 {
+  font-size: 12px !important;
+  margin: 0 0 4px !important;
+  color: #fff !important;
+}
+
+html.hud-v3-active .aaa-market-card .hirebtn {
+  width: 100%;
+  margin-top: 8px;
+}
+
+html.hud-v3-active .aaa-dash-compact .kpis {
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 6px !important;
+}
+
+html.hud-v3-active .aaa-dash-compact .kpi {
+  padding: 8px !important;
+}
+
+html.hud-v3-active .aaa-dash-compact .kpi .kv {
+  font-size: 14px !important;
+}
+
+@media (min-width: 600px) {
+  html.hud-v3-active .aaa-show-card {
+    grid-template-columns: 130px 1fr;
+    gap: 16px;
+    padding: 14px;
+  }
+  html.hud-v3-active .aaa-poster {
+    width: 130px;
+    height: 178px;
+  }
+  html.hud-v3-active .aaa-staff-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  html.hud-v3-active .aaa-mastery-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

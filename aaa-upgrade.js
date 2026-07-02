@@ -32,9 +32,9 @@
   const splash = document.createElement("div");
   splash.id = "loading-splash";
   splash.innerHTML = `
-    <svg width="80" height="80" viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="#3a2b4d"/><circle cx="32" cy="32" r="30" fill="none" stroke="#ffc845" stroke-width="3"/><circle cx="32" cy="32" r="7" fill="#ffc845"/></svg>
+    <img class="splash-hero" src="start-hero.png?v=41" width="96" height="96" alt="">
     <h1>Anime Studio Tycoon</h1>
-    <div style="opacity:.7;font-size:13px;font-weight:600">Loading your empire…</div>
+    <div class="splash-tag">Loading your empire…</div>
     <div id="loading-bar"><i></i></div>`;
   document.body.prepend(splash);
   let loadPct = 0;

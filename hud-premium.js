@@ -155,6 +155,7 @@
     shell.innerHTML = `
       <div class="hud-top">
         <button type="button" class="hud-menu-btn" id="hud-menu-btn" aria-label="Menu">☰</button>
+        <div class="hud-avatar-wrap"><img class="hud-avatar" src="start-hero.png?v=41" alt=""><span class="hud-lv-badge" id="hud-lv-badge">1</span></div>
         <div class="hud-identity">
           <span class="hud-studio-name" id="hud-studio-name">Studio</span>
           <div id="hud-studio-rating" class="hud-rating-chip" title="Studio rating"></div>
@@ -186,6 +187,7 @@
       rail.id = "pathway-rail";
       rail.className = "coach-bar";
       rail.innerHTML = `
+        <img class="coach-avatar" src="start-hero.png?v=41" alt="" width="36" height="36">
         <p class="coach-msg" id="pathway-now"></p>
         <button type="button" class="coach-cta" id="pathway-cta">Go</button>
         <button type="button" class="coach-dismiss" id="coach-dismiss" aria-label="Dismiss">×</button>
@@ -229,6 +231,8 @@
     buildHudShell();
     const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
     set("hud-studio-name", S.studioName || "Your Studio");
+    const lv = document.getElementById("hud-lv-badge");
+    if (lv) lv.textContent = String(S.studioLevel || 1);
 
     const trend = hook.trendGenre ? hook.trendGenre() : "Action";
     set("hud-trend-chip", "📈 " + trend);

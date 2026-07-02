@@ -25,8 +25,8 @@ html.hud-v3-active {
 
 html.hud-v3-active body {
   background:
-    linear-gradient(180deg, rgba(12, 10, 24, 0.55) 0%, rgba(12, 10, 24, 0.82) 100%),
-    url('bg-v4.png') center top / cover no-repeat fixed !important;
+    linear-gradient(180deg, rgba(12, 10, 24, 0.25) 0%, rgba(12, 10, 24, 0.65) 100%),
+    url('bg-v4.png?v=37') center top / cover no-repeat fixed !important;
 }
 
 html.hud-v3-active #app {
@@ -40,9 +40,21 @@ html.hud-v3-active #app {
   background: var(--hf-glass) !important;
   backdrop-filter: blur(16px) saturate(1.3) !important;
   -webkit-backdrop-filter: blur(16px) saturate(1.3) !important;
-  border: 1px solid var(--hf-border-soft) !important;
+  border: 1px solid rgba(255, 92, 168, 0.45) !important;
   border-radius: 18px !important;
-  box-shadow: var(--hf-glow) !important;
+  box-shadow: 0 0 28px rgba(255, 92, 168, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  position: relative !important;
+}
+
+#hud-shell::after {
+  content: "" !important;
+  position: absolute !important;
+  left: 12px !important;
+  right: 12px !important;
+  bottom: -1px !important;
+  height: 2px !important;
+  background: linear-gradient(90deg, transparent, var(--hf-pink), var(--hf-gold), var(--hf-pink), transparent) !important;
+  border-radius: 2px !important;
 }
 
 .hud-menu-btn {
@@ -217,9 +229,10 @@ html.hud-v3-active .kpi.accent .kv {
 
 /* ---- Tab dock: pink active glow ---- */
 #command-dock {
-  background: rgba(10, 8, 20, 0.92) !important;
+  background: rgba(10, 8, 20, 0.88) !important;
   backdrop-filter: blur(16px) !important;
-  border-top: 1px solid var(--hf-border-soft) !important;
+  border-top: 2px solid rgba(255, 92, 168, 0.4) !important;
+  box-shadow: 0 -8px 32px rgba(255, 92, 168, 0.15) !important;
 }
 
 html.hud-v3-active .tab.active::after {
@@ -231,12 +244,55 @@ html.hud-v3-active .tab.active .ic {
   filter: drop-shadow(0 0 6px var(--hf-pink)) !important;
 }
 
+/* ---- Resource icons ---- */
+.hud-stat img,
+.res img {
+  width: 30px !important;
+  height: 30px !important;
+  object-fit: contain !important;
+  filter: drop-shadow(0 0 10px rgba(255, 92, 168, 0.55)) !important;
+}
+
+.hud-stat {
+  min-height: 44px !important;
+}
+
 /* ---- Start screen ---- */
 html.hud-v3-active #start .card-modal {
   background: var(--hf-glass) !important;
   backdrop-filter: blur(20px) !important;
   border: 1px solid var(--hf-border) !important;
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5), var(--hf-glow) !important;
+  text-align: center !important;
+}
+
+html.hud-v3-active .start-hero {
+  width: 140px !important;
+  height: 140px !important;
+  border-radius: 28px !important;
+  object-fit: cover !important;
+  box-shadow: 0 12px 40px rgba(255, 92, 168, 0.35), 0 0 0 2px rgba(255, 200, 69, 0.25) !important;
+}
+
+html.hud-v3-active #start h1 {
+  font-size: 24px !important;
+  font-weight: 800 !important;
+  background: linear-gradient(135deg, var(--hf-text), var(--hf-pink)) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+  margin: 14px 0 6px !important;
+}
+
+html.hud-v3-active #start #start-tagline {
+  color: var(--hf-muted) !important;
+  font-size: 13px !important;
+  margin-bottom: 16px !important;
+}
+
+html.hud-v3-active #btn-start {
+  margin-top: 4px !important;
+  box-shadow: 0 4px 20px var(--hf-pink-soft) !important;
 }
 
 html.hud-v3-active .ast-input {
@@ -263,6 +319,64 @@ html.hud-v3-active .jw-rating-card {
 html.hud-v3-active .overlay {
   background: rgba(8, 6, 16, 0.88) !important;
   backdrop-filter: blur(6px) !important;
+}
+
+/* ---- Store featured rows ---- */
+html.hud-v3-active .uprow-featured {
+  border: 1px solid rgba(255, 200, 69, 0.35) !important;
+  background: linear-gradient(135deg, rgba(255, 200, 69, 0.08), rgba(255, 92, 168, 0.06)) !important;
+  box-shadow: 0 0 16px rgba(255, 200, 69, 0.1) !important;
+}
+
+html.hud-v3-active .panel[style*="dashed"] {
+  border: 1px dashed var(--hf-border-soft) !important;
+  background: var(--hf-glass-2) !important;
+}
+
+/* ---- Loading splash ---- */
+html.hud-v3-active #loading-splash {
+  background:
+    linear-gradient(180deg, rgba(12, 10, 24, 0.5) 0%, rgba(12, 10, 24, 0.85) 100%),
+    url('bg-v4.png?v=37') center / cover no-repeat !important;
+}
+
+
+
+html.hud-v3-active #loading-splash h1 {
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  color: var(--hf-text) !important;
+  margin: 12px 0 4px !important;
+}
+
+html.hud-v3-active .splash-hero {
+  width: 96px !important;
+  height: 96px !important;
+  border-radius: 22px !important;
+  object-fit: cover !important;
+  box-shadow: 0 8px 32px rgba(255, 92, 168, 0.4) !important;
+  animation: hf-pulse 2s ease-in-out infinite !important;
+}
+
+html.hud-v3-active .splash-tag {
+  opacity: 0.75 !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: var(--hf-muted) !important;
+}
+
+html.hud-v3-active #loading-bar {
+  background: var(--hf-glass-2) !important;
+  border: 1px solid var(--hf-border-soft) !important;
+}
+
+html.hud-v3-active #loading-bar i {
+  background: linear-gradient(90deg, var(--hf-pink), var(--hf-gold)) !important;
+}
+
+@keyframes hf-pulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 8px 32px rgba(255, 92, 168, 0.4); }
+  50% { transform: scale(1.04); box-shadow: 0 12px 40px rgba(255, 92, 168, 0.55); }
 }
 
 /* ---- Main scroll area ---- */

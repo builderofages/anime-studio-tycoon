@@ -60,7 +60,17 @@ const required = [
   "studio-premium.css",
   "game-skin.css",
   "hf-design.css",
+  "aaa-ui.css",
   "bg-v4.png",
+  "start-hero.png",
+  "assets/hf/gacha-bg.png",
+  "assets/hf/greenlight-bg.png",
+  "icons/hf/yen.png",
+  "icons/hf/fans.png",
+  "icons/hf/hype.png",
+  "icons/hf/gems.png",
+  "icons/tabs/produce.png",
+  "icons/tabs/store.png",
   "manifest.json",
   "privacy.html",
   "terms.html",
@@ -73,52 +83,52 @@ for (const f of required) {
 const html = readFileSync(join(root, "index.html"), "utf8");
 assert(!html.includes('${t("k_level"'), "no baked template literals in HTML");
 assert(html.includes("window.__AST_HOOK__"), "AST hook exported");
-assert(html.includes('src="aaa-upgrade.js"'), "aaa-upgrade.js linked");
-assert(html.includes('src="gameplay-plus.js"'), "gameplay-plus.js linked");
+assert(/src="aaa-upgrade\.js(\?v=\d+)?"/.test(html), "aaa-upgrade.js linked");
+assert(/src="gameplay-plus\.js(\?v=\d+)?"/.test(html), "gameplay-plus.js linked");
 assert(html.includes("pityCount"), "scout pity state");
 assert(html.includes("merchLevel"), "merch line state");
 assert(html.includes("autoGreenlight"), "auto-greenlight state");
 assert(html.includes("marketShare"), "market share state");
 assert(html.includes("applyAudioSettings"), "audio settings");
-assert(html.includes('src="gameplay-ultra.js"'), "gameplay-ultra.js linked");
-assert(html.includes('src="gameplay-endless.js"'), "gameplay-endless.js linked");
+assert(/src="gameplay-ultra\.js(\?v=\d+)?"/.test(html), "gameplay-ultra.js linked");
+assert(/src="gameplay-endless\.js(\?v=\d+)?"/.test(html), "gameplay-endless.js linked");
 assert(html.includes("endlessRisk"), "endless risk state");
 assert(html.includes("endlessDiff"), "endless difficulty state");
 assert(html.includes("projectStars"), "projectStars on hook");
-assert(html.includes('src="gameplay-empire.js"'), "gameplay-empire.js linked");
+assert(/src="gameplay-empire\.js(\?v=\d+)?"/.test(html), "gameplay-empire.js linked");
 assert(html.includes("namedStaff"), "named staff state");
 assert(html.includes("pullStar"), "pullStar on hook");
-assert(html.includes('src="gameplay-studio.js"'), "gameplay-studio.js linked");
+assert(/src="gameplay-studio\.js(\?v=\d+)?"/.test(html), "gameplay-studio.js linked");
 assert(html.includes("sparks"), "spark currency state");
 assert(html.includes("__AST_CONFIRM__"), "in-theme confirm hook");
-assert(html.includes('src="gameplay-final.js"'), "gameplay-final.js linked");
+assert(/src="gameplay-final\.js(\?v=\d+)?"/.test(html), "gameplay-final.js linked");
 assert(html.includes("influence"), "influence currency state");
 assert(html.includes("streaming"), "streaming contracts state");
 assert(html.includes("_finalReleaseMult"), "final release multiplier");
-assert(html.includes('src="gameplay-aaa.js"'), "gameplay-aaa.js linked");
+assert(/src="gameplay-aaa\.js(\?v=\d+)?"/.test(html), "gameplay-aaa.js linked");
 assert(html.includes("dynastyPoints"), "dynasty points state");
 assert(html.includes("festivalWins"), "festival wins state");
 assert(html.includes("_aaaReleaseMult"), "aaa release multiplier");
 assert(html.includes("window.ACHIEVEMENTS"), "achievements exposed for aaa popups");
-assert(html.includes('src="gameplay-legend.js"'), "gameplay-legend.js linked");
+assert(/src="gameplay-legend\.js(\?v=\d+)?"/.test(html), "gameplay-legend.js linked");
 assert(html.includes("dynastyPerks"), "dynasty perks state");
 assert(html.includes("_legendReleaseMult"), "legend release multiplier");
-assert(html.includes('src="hud-premium.js"'), "hud-premium.js linked");
+assert(/src="hud-premium\.js(\?v=\d+)?"/.test(html), "hud-premium.js linked");
 assert(html.includes("hud-premium.css"), "hud-premium.css linked");
 assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("pathway-rail"), "pathway rail in hud script");
 assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("hud-v3"), "hud v3 shell");
-assert(html.includes('src="ui-complete.js"'), "ui-complete.js linked");
+assert(/src="ui-complete\.js(\?v=\d+)?"/.test(html), "ui-complete.js linked");
 assert(readFileSync(join(root, "ui-complete.js"), "utf8").includes("ui-tab-hero"), "tab hero layouts");
-assert(html.includes('src="gameplay-studio-rating.js"'), "gameplay-studio-rating.js linked");
+assert(/src="gameplay-studio-rating\.js(\?v=\d+)?"/.test(html), "gameplay-studio-rating.js linked");
 assert(html.includes("gameplay-studio-rating.css"), "gameplay-studio-rating.css linked");
 assert(html.includes("studioStars"), "studio star rating state");
 assert(html.includes("starUnlock"), "project star gates");
 assert(readFileSync(join(root, "gameplay-studio-rating.js"), "utf8").includes("jw-studio-rank"), "JW rating HUD");
-assert(html.includes('src="hook-bridge.js"'), "hook-bridge.js linked");
+assert(/src="hook-bridge\.js(\?v=\d+)?"/.test(html), "hook-bridge.js linked");
 assert(readFileSync(join(root, "hook-bridge.js"), "utf8").includes("__globalsRebound"), "hook global rebind");
 assert(readFileSync(join(root, "gameplay-aaa.js"), "utf8").includes("__aaaLayerInstalled"), "aaa layer install flag");
 assert(html.includes("hire,") && html.includes("expandStudio,"), "hire/expand on hook");
-assert(html.includes('src="gameplay-polish.js"'), "gameplay-polish.js linked");
+assert(/src="gameplay-polish\.js(\?v=\d+)?"/.test(html), "gameplay-polish.js linked");
 assert(html.includes("crisisSnoozeUntil"), "crisis snooze state");
 assert(html.includes('id:"rat5"'), "studio rating achievements");
 assert(html.includes("studio-premium.css"), "studio premium css linked");

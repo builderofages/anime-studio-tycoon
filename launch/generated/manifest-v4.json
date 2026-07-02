@@ -1,6 +1,7 @@
 {
-  "generated": "2026-07-02T04:17:00Z",
+  "generated": "2026-07-02T04:26:00Z",
   "model": "gpt_image_2",
+  "build": "36",
   "assets": [
     {
       "name": "ui-mockup-v4.png",
@@ -13,6 +14,19 @@
       "role": "game-background",
       "url": "https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260702_041440_04fd812e-5b40-437b-af7c-c67f72d93a4a.png",
       "local": "bg-v4.png"
+    },
+    {
+      "name": "icons-sheet.png",
+      "role": "resource-icons",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260702_042243_fddb92b3-a928-4e49-9907-381ae89a2882.png",
+      "local": "launch/generated/icons-sheet.png",
+      "sliced": ["icons/hf/yen.png", "icons/hf/fans.png", "icons/hf/hype.png", "icons/hf/gems.png"]
+    },
+    {
+      "name": "start-hero.png",
+      "role": "start-screen-hero",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260702_042243_d993ca45-be0d-495b-b45b-fb98413c156e.png",
+      "local": "start-hero.png"
     }
   ]
 }

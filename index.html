@@ -21,22 +21,15 @@
 <meta name="twitter:image" content="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_062706_8cb8f42c-84b2-45b0-8c27-96e8ffc01bb7.jpeg">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%233a2b4d'/%3E%3Ccircle cx='32' cy='32' r='30' fill='none' stroke='%23ffc845' stroke-width='3'/%3E%3Cg fill='%23ff9bc4'%3E%3Cellipse cx='32' cy='15' rx='5' ry='8'/%3E%3Cellipse cx='32' cy='49' rx='5' ry='8'/%3E%3Cellipse cx='15' cy='32' rx='8' ry='5'/%3E%3Cellipse cx='49' cy='32' rx='8' ry='5'/%3E%3C/g%3E%3Ccircle cx='32' cy='32' r='7' fill='%23ffc845'/%3E%3C/svg%3E">
 <link rel="manifest" href="manifest.json">
-<!-- aaa-upgrade.css disabled: cream theme fights HUD v3 -->
-<link rel="stylesheet" href="gameplay-plus.css">
-<link rel="stylesheet" href="gameplay-ultra.css">
-<link rel="stylesheet" href="gameplay-endless.css">
-<link rel="stylesheet" href="gameplay-empire.css">
-<link rel="stylesheet" href="gameplay-studio.css">
-<link rel="stylesheet" href="gameplay-final.css">
-<link rel="stylesheet" href="gameplay-aaa.css">
-<link rel="stylesheet" href="gameplay-legend.css">
-<link rel="stylesheet" href="hud-premium.css">
-<link rel="stylesheet" href="ui-complete.css">
-<link rel="stylesheet" href="gameplay-studio-rating.css">
-<link rel="stylesheet" href="studio-premium.css">
-<link rel="stylesheet" href="game-skin.css">
-<link rel="stylesheet" href="hf-design.css">
-<script>document.documentElement.classList.add("premium-hud")</script>
+<!-- Legacy gameplay-*.css disabled — aaa-ui + game-skin + hud-premium own chrome -->
+<link rel="stylesheet" href="hud-premium.css?v=41">
+<link rel="stylesheet" href="ui-complete.css?v=41">
+<link rel="stylesheet" href="gameplay-studio-rating.css?v=41">
+<link rel="stylesheet" href="studio-premium.css?v=41">
+<link rel="stylesheet" href="game-skin.css?v=41">
+<link rel="stylesheet" href="hf-design.css?v=41">
+<link rel="stylesheet" href="aaa-ui.css?v=41">
+<script>document.documentElement.classList.add("premium-hud","hud-v3-active")</script>
 <meta name="theme-color" content="#08050f">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <style>
@@ -292,10 +285,10 @@ html.hud-v3-active #goal{display:none !important}
 <div id="app">
   <div id="top">
     <div id="studio-rank"><span>🎬</span><span class="rank-tier">Garage Studio</span></div>
-    <div class="res yen"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063653_0cab503b-2e31-4345-99ff-ae5e7feaf8cf.jpeg" alt=""><span><span class="v" id="r-yen">0</span> <small>¥</small></span></div>
-    <div class="res fans"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063657_ea737528-07a1-4505-8b28-4d3a333429a0.png" alt=""><span class="v" id="r-fans">0</span></div>
-    <div class="res hype"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063700_a7e9a3b2-0ce9-4893-9280-ac8532498a22.png" alt=""><span class="v" id="r-hype">0</span></div>
-    <div class="res gems"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260615_090332_3e1dbb67-bab0-488a-abd4-5c9b12bc2740.png" alt=""><span class="v" id="r-gems">0</span></div>
+    <div class="res yen"><img src="icons/hf/yen.png?v=41" alt="Yen"><span><span class="v" id="r-yen">0</span> <small>¥</small></span></div>
+    <div class="res fans"><img src="icons/hf/fans.png?v=41" alt="Fans"><span class="v" id="r-fans">0</span></div>
+    <div class="res hype"><img src="icons/hf/hype.png?v=41" alt="Hype"><span class="v" id="r-hype">0</span></div>
+    <div class="res gems"><img src="icons/hf/gems.png?v=41" alt="Gems"><span class="v" id="r-gems">0</span></div>
     <div id="trendbar"><span class="spark">📈</span> Trending: <b id="trend">Action</b></div>
   </div>
   <div id="goal"><span id="goal-txt">🎯 Reach 50 Fans for Web Series</span><div class="bar"><i id="goal-bar" style="width:0%"></i></div></div>
@@ -313,22 +306,7 @@ html.hud-v3-active #goal{display:none !important}
 
 <div class="overlay" id="start" style="display: none;">
   <div class="card-modal">
-    <svg class="logo" viewBox="0 0 120 120" width="120" height="120" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 6px 12px rgba(0,0,0,.3))" aria-label="Anime Studio Tycoon">
-      <circle cx="60" cy="60" r="56" fill="#3a2b4d"></circle>
-      <circle cx="60" cy="60" r="56" fill="none" stroke="#ffc845" stroke-width="5"></circle>
-      <g fill="#ffe39a">
-        <circle cx="60" cy="20" r="6"></circle><circle cx="100" cy="60" r="6"></circle><circle cx="60" cy="100" r="6"></circle><circle cx="20" cy="60" r="6"></circle>
-        <circle cx="88" cy="32" r="5"></circle><circle cx="88" cy="88" r="5"></circle><circle cx="32" cy="88" r="5"></circle><circle cx="32" cy="32" r="5"></circle>
-      </g>
-      <g transform="translate(60 60)" fill="#ff9bc4">
-        <ellipse cx="0" cy="-22" rx="9" ry="15"></ellipse>
-        <g transform="rotate(72)"><ellipse cx="0" cy="-22" rx="9" ry="15"></ellipse></g>
-        <g transform="rotate(144)"><ellipse cx="0" cy="-22" rx="9" ry="15"></ellipse></g>
-        <g transform="rotate(216)"><ellipse cx="0" cy="-22" rx="9" ry="15"></ellipse></g>
-        <g transform="rotate(288)"><ellipse cx="0" cy="-22" rx="9" ry="15"></ellipse></g>
-      </g>
-      <circle cx="60" cy="60" r="9" fill="#ffc845"></circle>
-    </svg>
+    <img class="start-hero" src="start-hero.png?v=41" width="140" height="140" alt="Anime Studio Tycoon">
     <h1>Anime Studio Tycoon</h1>
     <p id="start-tagline">From a one-room studio to a global anime empire</p>
     <label style="display:block;font-size:12px;font-weight:800;color:var(--plum);margin:4px 0 4px">🏢 Studio Name</label>
@@ -363,10 +341,10 @@ html.hud-v3-active #goal{display:none !important}
   </div>
 </div>
 
-<div class="overlay" id="reveal" style="display:none">
-  <div class="card-modal">
+<div class="overlay aaa-reveal-overlay" id="reveal" style="display:none">
+  <div class="card-modal aaa-reveal-modal">
     <div id="reveal-body"></div>
-    <button class="btn-primary" data-act="reveal-close" style="width:100%;margin-top:8px">✨ Awesome!</button>
+    <button class="btn-primary aaa-cta" data-act="reveal-close" style="width:100%;margin-top:12px">✨ Sign Contract</button>
   </div>
 </div>
 
@@ -396,14 +374,15 @@ html.hud-v3-active #goal{display:none !important}
 
 <div class="overlay" id="whatsnew" style="display:none">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <h1 style="font-size:22px;text-align:center">✨ What's New — Higgsfield Design</h1>
+    <img src="start-hero.png?v=41" alt="" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
+    <h1 style="font-size:22px;text-align:center">✨ Build 40 — Greenlight + Gacha Reveal</h1>
     <div class="offlist" style="margin:12px 0">
-      <div><span>🎨 HF UI mockup</span><b>GPT Image 2 directed the full visual system</b></div>
-      <div><span>🌸 Sakura glass</span><b>Pink/gold glass cards on cinematic bg</b></div>
-      <div><span>🎬 Production cards</span><b>Tall posters, glowing progress bars</b></div>
-      <div><span>📱 App Store polish</span><b>Matches generated reference design</b></div>
-      <div><span>😴 Crisis Snooze</span><b>10-min break on crisis modals</b></div>
-      <div><span>⭐ Studio Stars</span><b>JW-style rating with gates & bonuses</b></div>
+      <div><span>🖼️ Cinematic BG</span><b>Higgsfield sakura sunset now fills the screen</b></div>
+      <div><span>💎 New icons</span><b>HF yen / fans / hype / gem icons in the HUD</b></div>
+      <div><span>🌸 Glass UI</span><b>Pink neon borders on HUD + tab dock</b></div>
+      <div><span>🎬 Hero art</span><b>New start screen + loading splash artwork</b></div>
+      <div><span>😴 Crisis Snooze</span><b>10-min break on crisis popups</b></div>
+      <div><span>⭐ Studio Stars</span><b>JW-style 5★ rating system</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
   </div>
@@ -443,7 +422,38 @@ const STORE_PAYMENTS = true; // store always visible; buyReal routes web→check
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 35 · HF Design";
+const BUILD_TAG = "build 41 · HF Greenlight";
+const ASSET_V = "41";
+const TAB_ICON_IMG = {
+  produce:"icons/tabs/produce.png", quests:"icons/tabs/quests.png", staff:"icons/tabs/staff.png",
+  stars:"icons/tabs/stars.png", research:"icons/tabs/research.png", studio:"icons/tabs/studio.png",
+  market:"icons/tabs/market.png", store:"icons/tabs/store.png",
+};
+function tabIcon(k,fallback){ const p=TAB_ICON_IMG[k]; return p?`<img class="tab-ic" src="${p}?v=${ASSET_V}" alt="">`:(TAB_ICONS[k]||fallback); }
+const TAB_ICONS = {
+  produce:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M10 4v16M6 8h2M6 12h2"/></svg>',
+  quests:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>',
+  staff:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="7" r="3"/><circle cx="17" cy="9" r="2"/><path d="M3 21v-1a5 5 0 015-5h2a5 5 0 015 5v1M14 21v-1a3 3 0 013-3h1"/></svg>',
+  stars:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.9L22 9.8l-5.5 4.7L18.2 22 12 18.2 5.8 22l1.7-7.5L2 9.8l7.1-.9z"/></svg>',
+  research:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 2v7.5L4 20a1 1 0 00.9 1.4h14.2a1 1 0 00.9-1.4L14 9.5V2"/><line x1="8" y1="2" x2="16" y2="2"/></svg>',
+  studio:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><rect x="9" y="13" width="6" height="8"/></svg>',
+  market:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 16l4-6 4 3 5-8"/></svg>',
+  store:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>',
+};
+function starRankLetter(stars){ return stars>=5?"S":stars>=4?"A":stars>=3?"B":stars>=2?"C":"D"; }
+function productionScore(stars,p,pr){ return Math.round(4200+stars*1100+Math.min(800,(pr.progress||0)/Math.max(1,p.work)*800)); }
+function productionTeamHTML(){
+  const order=["director","writer","animator","voice","producer"];
+  const labels={director:"Director",writer:"Scriptwriter",animator:"Character Design",voice:"Music",producer:"Producer"};
+  let h=`<div class="aaa-team"><div class="aaa-team-head"><span>Production Team</span><button type="button" class="aaa-team-add" data-tab="staff">+</button></div><div class="aaa-team-scroll">`;
+  order.forEach(role=>{
+    const n=(S.staff||{})[role]||0; const lv=Math.min(60,18+n*6+studioLevel());
+    const rank=lv>=55?"S":lv>=45?"A":"B";
+    const r=ROLES[role];
+    h+=`<div class="aaa-team-card aaa-rank-${rank}"><span class="aaa-team-rank">${rank}</span><img class="aaa-team-avatar" src="${r.img}" alt="" style="width:32px;height:32px;border-radius:50%;object-fit:cover;margin:6px auto 4px;display:block"><div class="aaa-team-role">${labels[role]}</div><div class="aaa-team-lv">LV.${lv}</div></div>`;
+  });
+  return h+`</div></div>`;
+}
 const OFFLINE_CAP = 8*3600; // seconds
 
 const GENRES = ["Action","Romance","Fantasy","Sci-Fi","Comedy","Slice of Life"];
@@ -997,10 +1007,11 @@ function scout(kind){
 function showReveal(t, rar, leveled){
   const R=STAR_RARITY[rar];
   const el=document.getElementById('reveal-body'); if(!el) return;
-  el.innerHTML=`<div style="font-size:13px;font-weight:800;color:${R.color};letter-spacing:1.5px">${rar.toUpperCase()}${rar==='Legendary'?' 🌟':(rar==='Epic'?' ✨':'')}</div>
-    <img src="${t.img}" alt="" style="width:168px;height:168px;object-fit:cover;border-radius:50%;box-shadow:0 0 26px ${R.color}cc, inset 0 0 0 3px ${R.color};margin:10px auto;display:block">
-    <h1 style="font-size:23px;margin:2px 0">${t.name}</h1>
-    <div class="muted" style="margin-bottom:4px">${ROLES[t.role].name} · ${leveled?'⬆ Leveled up!':'✨ New talent!'} · +${fmt(R.power)}/level</div>`;
+  el.innerHTML=`<div class="aaa-reveal-wrap">
+    <div class="aaa-reveal-rarity" style="color:${R.color}">${rar.toUpperCase()}${rar==='Legendary'?' 🌟':(rar==='Epic'?' ✨':'')}</div>
+    <img class="aaa-reveal-portrait" src="${t.img}" alt="" style="box-shadow:0 0 32px ${R.color}99, inset 0 0 0 3px ${R.color}">
+    <h2 class="aaa-reveal-name">${t.name.replace(' ☆','')}</h2>
+    <div class="aaa-reveal-sub">${ROLES[t.role].name} · ${leveled?'⬆ Contract renewed — leveled up!':'✨ New talent signed!'} · +${fmt(R.power)}/level</div></div>`;
   document.getElementById('reveal').style.display='flex';
 }
 function submitScore(){
@@ -2119,7 +2130,7 @@ function render(){
   // tabs
   const tabs=[["produce","🎬",STR.tab_produce],["quests","📋",STR.tab_quests],["staff","👥",STR.tab_staff],["stars","⭐",STR.tab_stars],["research","🔬",STR.tab_research],["studio","🏢",STR.tab_studio],["market","📣",STR.tab_market],["store","💎",STR.tab_store]]
     .filter(([k])=>featureUnlocked(k));   // reveal Stars / Research / Studio as the player grows
-  $("#tabs").innerHTML=tabs.map(([k,ic,l])=>`<button class="tab ${S.tab===k?'active':''}" data-tab="${k}" aria-label="${l}"><span class="ic">${ic}</span><span class="tab-lbl">${l}</span></button>`).join("");
+  $("#tabs").innerHTML=tabs.map(([k,ic,l])=>`<button class="tab ${S.tab===k?'active':''}" data-tab="${k}" aria-label="${l}"><span class="ic">${tabIcon(k,ic)}</span><span class="tab-lbl">${l}</span></button>`).join("");
 
   if(S.tab==="produce") renderProduce();
   else if(S.tab==="quests") renderQuests();
@@ -2133,28 +2144,24 @@ function render(){
 
 function dailyQuestHTML(){
   if(!(S.quests && S.quests.length)) return "";
-  let h=`<div class="panel"><div class="qhead"><h2>📋 ${STR.h_daily}</h2><span class="qtimer">⏳ ${STR.resetsIn} ${fmtDur(msToMidnight())}</span></div>`;
+  let h=`<div class="aaa-quest-block"><h3>📋 ${STR.h_daily} · ${fmtDur(msToMidnight())}</h3>`;
   S.quests.forEach((q,i)=>{
     const t=QUEST_POOL.find(x=>x.id===q.id);
     const prog=Math.min(q.goal, S.questProg[questMetric(q.id)]||0);
     const done=prog>=q.goal;
-    h+=`<div class="uprow"><div class="meta"><h4 style="font-size:14px">${t?t.desc(q.goal):q.id}</h4>
-      <div class="progress" style="height:8px;margin:5px 0"><i style="width:${Math.min(100,prog/q.goal*100)}%"></i></div>
-      <div class="muted">${fmt(prog)}/${fmt(q.goal)} · reward +${q.reward} 💎</div></div>
+    h+=`<div class="aaa-quest-card ${q.claimed?'done':done?'claimable':''}"><span class="aaa-quest-ic">📋</span><div class="aaa-quest-meta"><b>${t?t.desc(q.goal):q.id}</b><span>${fmt(prog)}/${fmt(q.goal)} · +${q.reward} 💎</span><div class="progress aaa-progress" style="margin-top:4px"><i style="width:${Math.min(100,prog/q.goal*100)}%"></i></div></div>
       <button class="btn-gold hirebtn" data-quest="${i}" ${(done&&!q.claimed)?"":"disabled"}>${q.claimed?"✓":(done?STR.claim:"…")}</button></div>`;
   });
   return h+`</div>`;
 }
 function weeklyQuestHTML(){
   checkWeekly();
-  let h=`<div class="panel"><div class="qhead"><h2>🏆 ${STR.h_weekly}</h2><span class="qtimer">⏳ ${STR.resetsIn} ${fmtDur(msToWeekReset())}</span></div>`;
+  let h=`<div class="aaa-quest-block"><h3>🏆 ${STR.h_weekly} · ${fmtDur(msToWeekReset())}</h3>`;
   (S.weeklyQuests||[]).forEach((q,i)=>{
     const t=WEEKLY_POOL.find(x=>x.id===q.id);
     const prog=Math.min(q.goal, S.weekProg[weeklyMetric(q.id)]||0);
     const done=prog>=q.goal;
-    h+=`<div class="uprow"><div class="meta"><h4 style="font-size:14px">${t?t.desc(q.goal):q.id}</h4>
-      <div class="progress" style="height:8px;margin:5px 0"><i style="width:${Math.min(100,prog/q.goal*100)}%"></i></div>
-      <div class="muted">${fmt(prog)}/${fmt(q.goal)} · reward +${q.reward} 💎</div></div>
+    h+=`<div class="aaa-quest-card ${q.claimed?'done':done?'claimable':''}"><span class="aaa-quest-ic">🏆</span><div class="aaa-quest-meta"><b>${t?t.desc(q.goal):q.id}</b><span>${fmt(prog)}/${fmt(q.goal)} · +${q.reward} 💎</span><div class="progress aaa-progress" style="margin-top:4px"><i style="width:${Math.min(100,prog/q.goal*100)}%"></i></div></div>
       <button class="btn-gold hirebtn" data-week="${i}" ${(done&&!q.claimed)?"":"disabled"}>${q.claimed?"✓":(done?STR.claim:"…")}</button></div>`;
   });
   return h+`</div>`;
@@ -2184,7 +2191,7 @@ function loginCalendarHTML(){
   return h;
 }
 function renderQuests(){
-  let h=`<div class="panel hero-card"><h2 style="font-size:17px">🎯 ${STR.h_rewards}</h2><div class="muted">Complete quests and log in daily to earn Gems and Yen. Everything rotates on a timer — keep coming back!</div></div>`;
+  let h=`<div class="aaa-page-hero"><h2>🎯 ${STR.h_rewards}</h2><p>Complete quests and log in daily to earn Gems and Yen. Everything rotates on a timer.</p></div>`;
   h+=loginCalendarHTML();
   h+=dailyQuestHTML();
   h+=weeklyQuestHTML();
@@ -2255,58 +2262,57 @@ function renderProduce(){
     const done=pr.progress>=p.work;
     const stars=projectStars(p, pr.genre, pr);
     const eta = done?0:Math.ceil((p.work-pr.progress)/Math.max(0.0001,powerPerTick()));
-    h+=`<div class="panel slotpanel" id="slot-${i}" data-done="${done?'1':'0'}"><h2 style="font-size:15px">🎬 Studio ${i+1}${done?" — ✅ Ready":""}</h2><div class="card">
-      <div class="poster" ${done?'':`data-act="tapboost" data-slot="${i}"`} style="background-image:url(${pr.poster||GENRE_POSTER[pr.genre]||DEFAULT_POSTER});${done?'':'cursor:pointer'}" title="${done?'':'Tap to boost!'}"><div class="gtag">${pr.genre}${pr.genre===trendGenre()?" 🔥":""}${done?'':' · 👆'}</div></div>
-      <div class="pinfo">
-        <h3 style="display:flex;align-items:center;gap:6px">${pr.title?`“${pr.title}”`:p.name} <button class="btn-ghost" data-act="rename-show" data-slot="${i}" style="padding:3px 7px;font-size:11px;min-height:0" title="Name this anime">✏️</button></h3>
-        <div class="muted" style="margin-bottom:2px">${p.name} · ${pr.genre}</div>
-        ${(pr.cast&&pr.cast.length)?`<div class="muted" style="margin-bottom:2px">🎭 Starring ${pr.cast.map(id=>STAR_BY_ID[id]?STAR_BY_ID[id].name:"").filter(Boolean).join(", ")}</div>`:""}
-        <div class="muted slot-eta">${done?"Ready to release":("ETA ~"+eta+"s")} · projected ${"★".repeat(stars)}${"☆".repeat(5-stars)}</div>
-        <div class="progress"><i class="slot-bar" style="width:${pct}%"></i></div>
-        <div class="dims">
-          ${DIMS.map(d=>{const role=DIM_OF_ROLE[d];const fillP=Math.min(100,dp[d]/p.talent*100/1.5);
-            return `<div class="dim">${ROLES[role].dimName} <div class="db"><i style="width:${fillP}%"></i></div></div>`}).join("")}
-        </div>
-        <div class="row" style="margin-top:10px;flex-wrap:wrap;gap:8px">
-          ${done?`<button class="btn-gold" data-rel="${i}" style="font-size:16px;flex:1">🎉 ${STR.release}</button>`
-                :`<button class="btn-cyan" data-rush="${i}">⚡ ${STR.rush} · 5</button><button class="btn-gold" data-act="instant" data-slot="${i}">⏩ Premiere Now · 💎${instantCost(p,pr)}</button>`}
-        </div>
-      </div></div></div>`;
+    const rank=starRankLetter(stars), score=productionScore(stars,p,pr);
+    const epN=Math.min(12,Math.max(1,Math.floor(pct/8.5)+1));
+    h+=`<div class="panel slotpanel aaa-show-panel" id="slot-${i}" data-done="${done?'1':'0'}"><div class="aaa-show-card">
+      <div class="aaa-poster-col"><div class="aaa-poster" ${done?'':`data-act="tapboost" data-slot="${i}"`} style="background-image:url(${pr.poster||GENRE_POSTER[pr.genre]||DEFAULT_POSTER})" title="${done?'':'Tap to boost!'}"><span class="aaa-ep">EP ${epN}/12</span>${pr.genre===trendGenre()?'<span class="aaa-trend">🔥</span>':''}</div></div>
+      <div class="aaa-meta-col">
+        <h2 class="aaa-title">${pr.title?pr.title:p.name} <button class="btn-ghost" data-act="rename-show" data-slot="${i}" style="padding:2px 6px;font-size:10px;min-height:0;vertical-align:middle" title="Rename">✏️</button></h2>
+        <div class="aaa-chips"><span class="aaa-chip">🌸 Original</span><span class="aaa-chip gold">${pr.genre}</span></div>
+        <div class="aaa-score-label">Production Score</div>
+        <div class="aaa-score-row"><span class="aaa-score-val">${fmt(score)}</span><span class="aaa-rank aaa-rank-${rank}">${rank}</span></div>
+        <div class="aaa-stat-line"><span>🎬 Budget</span><b>¥${fmt(Math.round(p.cost*pct/100))} / ¥${fmt(Math.round(p.cost*1.15))}</b></div>
+        <div class="aaa-stat-line"><span>📣 Hype</span><b>${fmt(S.hype)}</b><div class="aaa-mini-bar"><i style="width:${Math.min(100,S.hype/3)}%"></i></div></div>
+        <div class="aaa-stat-line"><span>📅 Premiere In</span><b>${done?"Ready!":(eta>=3600?Math.floor(eta/3600)+"H "+Math.floor((eta%3600)/60)+"M":eta+"s")}</b></div>
+        ${(pr.cast&&pr.cast.length)?`<div class="aaa-stat-line"><span>🎭 Cast</span><b style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${pr.cast.map(id=>STAR_BY_ID[id]?STAR_BY_ID[id].name.replace(' ☆',''):"").filter(Boolean).join(", ")}</b></div>`:""}
+        <div class="progress aaa-progress"><i class="slot-bar" style="width:${pct}%"></i></div>
+        <div class="aaa-actions">${done?`<button class="btn-gold aaa-cta" data-rel="${i}">🎬 Global Premiere</button>`:`<button class="btn-cyan" data-rush="${i}">⚡ Rush</button><button class="btn-gold" data-act="instant" data-slot="${i}">⏩ · 💎${instantCost(p,pr)}</button>`}</div>
+      </div></div>${productionTeamHTML()}</div>`;
   });
   // greenlight picker when a slot is free
   const empties=S.slots-activeCount();
   if(empties>0){
-    h+=`<div class="panel"><h2>🎬 ${t("h_greenlight","Greenlight a Project")} <span class="pill">${empties}/${S.slots} slots free</span></h2><div class="muted" style="margin-bottom:8px">Pick a genre, then choose what to produce. Match the trending genre for a 1.5× bonus.</div>`;
-    h+=`<div class="genrepick" id="genres">`+GENRES.map((g,i)=>`<span class="chip ${i===_selGenre?'sel':''} ${g===trendGenre()?'trend':''}" data-g="${i}">${g}${g===trendGenre()?" 🔥":""}${S.mastery[g]?` <span class="pill">L${S.mastery[g]}</span>`:""}</span>`).join("")+`</div>`;
+    const selG=GENRES[_selGenre]||GENRES[0];
+    h+=`<div class="panel aaa-greenlight"><div class="aaa-greenlight-head"><h2>🎬 ${t("h_greenlight","Greenlight a Project")}</h2><div class="muted" style="font-size:12px">${empties}/${S.slots} slots free · Trending <b>${trendGenre()}</b> for 1.5× bonus</div></div>`;
+    h+=`<div class="aaa-genre-row" id="genres">`+GENRES.map((g,i)=>`<span class="chip ${i===_selGenre?'sel':''} ${g===trendGenre()?'trend':''}" data-g="${i}">${g}${g===trendGenre()?" 🔥":""}${S.mastery[g]?` L${S.mastery[g]}`:""}</span>`).join("")+`</div>`;
     // ---- Casting: choose which stars to feature on this show (energy permitting) ----
     const roster=(S.stars||[]).map(st=>({st,t:STAR_BY_ID[st.sid]})).filter(x=>x.t);
     if(roster.length){
       _castSel=_castSel.filter(id=>{ const st=findStar(id); return st && !st.resting && starEnergy(st)>=15; });
       const order=["Legendary","Epic","Rare","Common"];
       roster.sort((a,b)=>order.indexOf(effRarity(a.st))-order.indexOf(effRarity(b.st)));
-      h+=`<div class="muted" style="margin:10px 0 4px;font-weight:800;color:var(--plum)">🎭 Cast your stars <span class="pill">${_castSel.length}/${castCap()}</span></div>
+      h+=`<div class="aaa-cast-row"><div class="muted" style="margin:0 0 6px;font-weight:800;font-size:11px">🎭 Cast stars <span class="pill">${_castSel.length}/${castCap()}</span></div>
         <div class="genrepick">`+roster.map(({st,t})=>{
           const R=STAR_RARITY[effRarity(st)]; const sel=_castSel.includes(st.sid); const tired=st.resting||starEnergy(st)<15;
           return `<span class="chip ${sel?'sel':''}" data-cast="${st.sid}" style="border-color:${R.color};${tired?'opacity:.45':''}" title="Energy ${Math.round(starEnergy(st))}%">${sel?'✓ ':''}${t.name.replace(' ☆','')} <span class="pill" style="background:${R.color}22;color:${R.color}">L${st.level}${(st.fame||0)?' ★'+st.fame:''}</span></span>`;
         }).join("")+`</div>
-        <div class="muted" style="margin:4px 0 2px;font-size:11px">Featured stars raise the show's rating &amp; box office and gain fame — but they tire out, so rotate them.</div>`;
+        <div class="muted" style="margin:6px 0 0;font-size:10px">Featured stars boost rating &amp; box office.</div></div>`;
     }
-    // ---- Sequels: build on an established franchise for a built-in audience ----
     const fr=franchiseList();
     if(fr.length){
-      h+=`<div class="muted" style="margin:10px 0 4px;font-weight:800;color:var(--plum)">📺 Make a Sequel <span class="pill">franchise bonus</span></div>
-        <div class="genrepick">`+fr.map(f=>`<span class="chip" data-seq="${encodeURIComponent(f.base)}" data-seqg="${encodeURIComponent(f.genre)}" title="Continue the ${f.base} franchise">▶ ${f.base} ${["","","II","III","IV","V","VI"][(f.season||1)+1]||((f.season||1)+1)}</span>`).join("")+`</div>
-        <div class="muted" style="margin:4px 0 2px;font-size:11px">A sequel reuses the title and earns a growing fans &amp; box-office bonus each season.</div>`;
+      h+=`<div class="aaa-cast-row"><div class="muted" style="margin:0 0 6px;font-weight:800;font-size:11px">📺 Sequels</div>
+        <div class="genrepick">`+fr.map(f=>`<span class="chip" data-seq="${encodeURIComponent(f.base)}" data-seqg="${encodeURIComponent(f.genre)}" title="Continue the ${f.base} franchise">▶ ${f.base} ${["","","II","III","IV","V","VI"][(f.season||1)+1]||((f.season||1)+1)}</span>`).join("")+`</div></div>`;
     }
-    h+=`<div class="pickgrid">`+PROJECTS.map(p=>{
+    const poster=GENRE_POSTER[selG]||DEFAULT_POSTER;
+    h+=`<div class="aaa-pick-scroll">`+PROJECTS.map(p=>{
       const lock=projectLockInfo(p); const afford=S.yen>=p.cost;
-      return `<div class="pick ${lock.locked?'lock':''}">
+      return `<div class="aaa-pick-card ${lock.locked?'lock':''}">
+        <div class="aaa-pick-poster" style="background-image:url(${poster})"></div>
         <h4>${p.name}</h4>
-        <div class="stat">${t("c_cost","Cost")}: ¥${fmt(p.cost)}</div>
-        <div class="stat">${t("c_reward","Reward")}: ¥${fmt(p.base)} · +${fmt(p.fans)} ${t("c_fans","fans")}</div>
-        <div class="stat">${t("c_workload","Workload")}: ${fmt(p.work)}</div>
+        <div class="stat">¥${fmt(p.cost)} · +${fmt(p.fans)} fans</div>
+        <div class="stat">${fmt(p.work)} workload</div>
         ${lock.locked?`<div class="stat" style="color:var(--bad)">🔒 ${lock.reason}</div>`
-          :`<button class="btn-primary" data-gl="${p.id}" ${afford?"":"disabled"} style="width:100%;margin-top:8px">${STR.greenlight}</button>`}
+          :`<button class="btn-primary" data-gl="${p.id}" ${afford?"":"disabled"}>${STR.greenlight}</button>`}
       </div>`;
     }).join("")+`</div></div>`;
   }
@@ -2354,12 +2360,12 @@ let _selGenre=0;
 let _castSel=[];   // sids the player has selected to feature on the next greenlight
 
 function renderStaff(){
-  let h=`<div class="panel listgrid"><h2>👥 ${t("h_hire","Hire Your Team")}</h2><div class="muted" style="margin-bottom:10px">Each role boosts one quality dimension. Balanced teams make higher-rated anime. Salaries are paid from release revenue.</div>`;
+  let h=`<div class="aaa-page-hero"><h2>👥 ${t("h_hire","Hire Your Team")}</h2><p>Each role boosts one quality dimension. Balanced teams make higher-rated anime.</p></div><div class="aaa-staff-grid">`;
   for(const key in ROLES){ const r=ROLES[key]; const c=hireCost(key);
-    h+=`<div class="staffrow">
+    h+=`<div class="aaa-staff-card">
       <img src="${r.img}" alt="">
-      <div class="meta"><h4>${r.name} <span class="pill">×${S.staff[key]}</span></h4>
-        <div class="muted">Boosts ${r.dimName} · +${r.power}/s output · ¥${r.salary}/s salary</div></div>
+      <h4>${r.name} <span class="pill">×${S.staff[key]}</span></h4>
+      <div class="muted">${r.dimName} · +${r.power}/s · ¥${r.salary}/s salary</div>
       <button class="btn-primary hirebtn" data-hire="${key}" ${S.yen>=c?"":"disabled"}>${STR.hire}<small>¥${fmt(c)}</small></button>
     </div>`;
   }
@@ -2367,15 +2373,13 @@ function renderStaff(){
 }
 
 function renderStars(){
-  let h=`<div class="panel"><h2>⭐ ${t("h_stars","Star Talent")}</h2><div class="muted" style="margin-bottom:10px">Scout famous creators — Stars add big permanent output to their role and boost anime quality. Duplicates level up. Rarer = stronger.</div>
-    <div class="row" style="gap:8px;flex-wrap:wrap">
-      <button class="btn-primary hirebtn" data-scout="yen" ${S.yen>=castingCost()?"":"disabled"}>🎬 ${t("b_scoutOpen","Open Casting")}<small>¥${fmt(castingCost())}</small></button>
-      <button class="btn-gold hirebtn" data-scout="gems" ${S.gems>=SCOUT_GEMS?"":"disabled"}>🌟 ${t("b_scoutPremium","Premium Scout")}<small>${SCOUT_GEMS} 💎</small></button>
-    </div>
-    <div class="muted" style="margin-top:6px">Open Casting → Common/Rare. Premium Scout → full odds incl. Epic &amp; Legendary.</div></div>`;
-  h+=`<div class="panel listgrid"><h2>🎭 ${t("h_yourstars","Your Stars")} <span class="pill">${(S.stars||[]).length}</span></h2>
-    <div class="muted" style="margin-bottom:10px">Rest tired stars to recharge them, train &amp; enhance their rarity, and invest in their fame for more power — but the more famous they get, the more they may demand to stay. Cast them on shows from the Produce tab.</div>`;
-  if(!S.stars||!S.stars.length){ h+=`<div class="muted">No stars yet — scout your first talent above!</div>`; }
+  let h=`<div class="aaa-page-hero aaa-gacha-hero"><h2>⭐ ${t("h_stars","Star Talent")}</h2><p>Scout famous creators — rarer stars boost quality and output. Duplicates level up.</p>
+    <div class="aaa-gacha-btns">
+      <button type="button" class="aaa-gacha-btn standard hirebtn" data-scout="yen" ${S.yen>=castingCost()?"":"disabled"}>🎬 ${t("b_scoutOpen","Open Casting")}<small>¥${fmt(castingCost())} · Common/Rare</small></button>
+      <button type="button" class="aaa-gacha-btn premium hirebtn" data-scout="gems" ${S.gems>=SCOUT_GEMS?"":"disabled"}>🌟 ${t("b_scoutPremium","Premium Scout")}<small>${SCOUT_GEMS} 💎 · Epic+ odds</small></button>
+    </div></div>`;
+  h+=`<div class="aaa-store-section">🎭 ${t("h_yourstars","Your Roster")} <span class="pill">${(S.stars||[]).length}</span></div><div class="aaa-star-grid">`;
+  if(!S.stars||!S.stars.length){ h+=`<div class="muted" style="padding:12px">No stars yet — run your first scout above!</div>`; }
   else{
     const order=["Legendary","Epic","Rare","Common"];
     [...S.stars].map(st=>({st,t:STAR_BY_ID[st.sid]})).filter(x=>x.t)
@@ -2383,63 +2387,54 @@ function renderStars(){
       .forEach(({st,t})=>{ const rar=effRarity(st); const R=STAR_RARITY[rar];
         const en=Math.round(starEnergy(st)), loy=Math.round(starLoyalty(st)); const maxR=RARITY_ORDER.indexOf(rar)>=RARITY_ORDER.length-1;
         const enColor=en>=60?"#5fd38a":(en>=30?"#ffc845":"#ff6b8a"); const loyColor=loy>=60?"#5fd38a":(loy>=35?"#ffc845":"#ff6b8a");
-        h+=`<div class="staffrow" style="border-left:5px solid ${R.color};${st.resting?'opacity:.7':''};flex-wrap:wrap">
-          <img src="${t.img}" alt="" style="box-shadow:inset 0 0 0 2px ${R.color}">
-          <div class="meta" style="min-width:150px"><h4>${t.name.replace(' ☆','')} <span class="pill" style="background:${R.color}22;color:${R.color}">${rar}</span> <span class="pill">Lv ${st.level}</span>${(st.fame||0)?` <span class="pill" style="background:#ffe39a;color:#7a5200">★ Fame ${st.fame}</span>`:""}${st.resting?` <span class="pill" style="background:#cdd6e6;color:#46506b">💤 Resting</span>`:""}</h4>
-            <div class="muted">${ROLES[t.role].name} · +${fmt(effStarPower(st))} ${ROLES[t.role].dimName}</div>
-            <div style="display:flex;gap:8px;margin-top:4px;font-size:11px;font-weight:700">
-              <span style="flex:1">⚡ Energy <div class="db" style="background:rgba(0,0,0,.12)"><i style="width:${en}%;background:${enColor}"></i></div></span>
-              <span style="flex:1">❤️ Loyalty <div class="db" style="background:rgba(0,0,0,.12)"><i style="width:${loy}%;background:${loyColor}"></i></div></span>
-            </div>
-            <div class="row" style="gap:6px;margin-top:7px;flex-wrap:wrap">
-              <button class="btn-ghost hirebtn" data-sa="rest" data-sid="${st.sid}" style="padding:6px 9px">${st.resting?"▶️ Work":"💤 Rest"}</button>
-              <button class="btn-cyan hirebtn" data-sa="level" data-sid="${st.sid}" ${S.yen>=levelCost(st)?"":"disabled"} style="padding:6px 9px">⬆ Train<small>¥${fmt(levelCost(st))}</small></button>
-              <button class="btn-gold hirebtn" data-sa="fame" data-sid="${st.sid}" ${S.yen>=fameCost(st)?"":"disabled"} style="padding:6px 9px">🌟 Fame<small>¥${fmt(fameCost(st))}</small></button>
-              <button class="btn-primary hirebtn" data-sa="promote" data-sid="${st.sid}" ${(!maxR&&(st.level||1)>=10&&S.gems>=promoteCost(st))?"":"disabled"} style="padding:6px 9px">✨ Enhance<small>${maxR?"MAX":"💎"+promoteCost(st)}</small></button>
-              <button class="btn-ghost hirebtn" data-sa="fire" data-sid="${st.sid}" style="padding:6px 9px">👋 Release</button>
-            </div>
+        h+=`<div class="aaa-star-card aaa-rarity-${rar}${st.resting?' opacity-70':''}">
+          <div class="aaa-star-portrait"><img src="${t.img}" alt="" style="box-shadow:0 0 0 2px ${R.color}"></div>
+          <div><div class="aaa-star-name">${t.name.replace(' ☆','')}</div>
+            <div class="aaa-star-tags"><span class="pill" style="background:${R.color}22;color:${R.color}">${rar}</span><span class="pill">Lv ${st.level}</span>${(st.fame||0)?`<span class="pill" style="background:#ffe39a;color:#7a5200">★${st.fame}</span>`:""}${st.resting?`<span class="pill">💤</span>`:""}</div>
+            <div class="muted" style="font-size:10px">${ROLES[t.role].name} · +${fmt(effStarPower(st))}</div>
+            <div class="aaa-meter-row"><div class="aaa-meter">⚡ Energy<div class="db"><i style="width:${en}%;background:${enColor}"></i></div></div><div class="aaa-meter">❤️ Loyalty<div class="db"><i style="width:${loy}%;background:${loyColor}"></i></div></div></div></div>
+          <div class="aaa-star-actions">
+            <button class="btn-ghost hirebtn" data-sa="rest" data-sid="${st.sid}">${st.resting?"▶️":"💤"}</button>
+            <button class="btn-cyan hirebtn" data-sa="level" data-sid="${st.sid}" ${S.yen>=levelCost(st)?"":"disabled"}>⬆<small>¥${fmt(levelCost(st))}</small></button>
+            <button class="btn-gold hirebtn" data-sa="fame" data-sid="${st.sid}" ${S.yen>=fameCost(st)?"":"disabled"}>🌟</button>
+            <button class="btn-primary hirebtn" data-sa="promote" data-sid="${st.sid}" ${(!maxR&&(st.level||1)>=10&&S.gems>=promoteCost(st))?"":"disabled"}>✨<small>${maxR?"MAX":"💎"+promoteCost(st)}</small></button>
+            <button class="btn-ghost hirebtn" data-sa="fire" data-sid="${st.sid}">👋</button>
           </div></div>`;
       });
   }
-  h+=`</div>`;
-  h+=`<div class="panel"><h2>📈 Star Bonus by Role</h2><div class="muted">`+Object.keys(ROLES).map(r=>`${ROLES[r].name}: <b>+${fmt(starPowerForRole(r))}</b>`).join(" · ")+`</div></div>`;
+  h+=`</div><div class="panel" style="margin-top:10px"><h2>📈 Role Bonuses</h2><div class="muted" style="font-size:11px">`+Object.keys(ROLES).map(r=>`${ROLES[r].name}: <b>+${fmt(starPowerForRole(r))}</b>`).join(" · ")+`</div></div>`;
   main.innerHTML=h;
 }
 
 function renderResearch(){
-  let h=`<div class="panel listgrid"><h2>🔬 ${t("h_research","Genre Mastery")}</h2><div class="muted" style="margin-bottom:10px">Research genres to permanently boost the quality of projects in that genre (+6% per level). Costs Yen + Hype.</div>`;
-  for(const g of GENRES){ const lvl=S.mastery[g]||0; const cost=Math.ceil(1200*Math.pow(1.9,lvl)); const hc=2+lvl;
-    h+=`<div class="uprow"><div class="meta"><h4>${g} <span class="pill">L${lvl}</span></h4>
-      <div class="muted">+${(lvl*6)}% quality now → +${((lvl+1)*6)}% next</div></div>
-      <button class="btn-cyan hirebtn" data-res="${g}" ${(S.yen>=cost&&S.hype>=hc)?"":"disabled"}>${t("b_research","Research")}<small>¥${fmt(cost)} · ${hc}⚡</small></button></div>`;
+  let h=`<div class="aaa-page-hero"><h2>🔬 ${t("h_research","Genre Mastery")}</h2><p>+6% quality per level in each genre. Costs Yen + Hype.</p></div><div class="aaa-mastery-grid">`;
+  for(const g of GENRES){ const lvl=S.mastery[g]||0; const cost=Math.ceil(1200*Math.pow(1.9,lvl)); const hc=2+lvl; const pct=Math.min(100,lvl*10);
+    h+=`<div class="aaa-mastery-card"><h4>${g} <span class="pill">L${lvl}</span></h4>
+      <div class="aaa-mastery-bar"><i style="width:${pct}%"></i></div>
+      <div class="muted" style="font-size:10px">+${lvl*6}% → +${(lvl+1)*6}%</div>
+      <button class="btn-cyan hirebtn" data-res="${g}" style="width:100%;margin-top:8px" ${(S.yen>=cost&&S.hype>=hc)?"":"disabled"}>${t("b_research","Research")}<small>¥${fmt(cost)} · ${hc}⚡</small></button></div>`;
   }
   h+=`</div>`; main.innerHTML=h;
 }
 
 function renderStudio(){
-  let h=`<div class="panel listgrid"><h2>🏢 ${t("h_upgrades","Studio Upgrades")}</h2><div class="muted" style="margin-bottom:10px">Permanent multipliers. Reinvest your profits to scale output.</div>`;
-  // production slot expansion (parallel lines)
+  let h=`<div class="aaa-page-hero"><h2>🏢 ${t("h_upgrades","Studio Upgrades")}</h2><p>Permanent multipliers — reinvest profits to scale your empire.</p></div><div class="aaa-upgrade-grid">`;
   if(S.slots<MAX_SLOTS){
     const c=expandCost();
-    h+=`<div class="uprow" style="border:2px solid var(--sakura)"><div class="meta"><h4>🏗️ Studio Expansion <span class="pill">${S.slots}/${MAX_SLOTS} slots</span></h4>
-      <div class="muted">Unlock another production line to make ${S.slots+1} anime at once.</div></div>
+    h+=`<div class="aaa-upgrade-card uprow-featured"><div class="meta"><h4>🏗️ Studio Expansion <span class="pill">${S.slots}/${MAX_SLOTS}</span></h4><div class="muted">Unlock production line ${S.slots+1}</div></div>
       <button class="btn-primary hirebtn" data-act="expand" ${S.yen>=c?"":"disabled"}>Expand<small>¥${fmt(c)}</small></button></div>`;
   } else {
-    h+=`<div class="uprow" style="border:2px solid var(--gold)"><div class="meta"><h4>🏗️ Studio Expansion <span class="pill">MAX</span></h4><div class="muted">All ${MAX_SLOTS} production lines unlocked.</div></div></div>`;
+    h+=`<div class="aaa-upgrade-card uprow-featured"><div class="meta"><h4>🏗️ Expansion <span class="pill">MAX</span></h4><div class="muted">All ${MAX_SLOTS} lines unlocked</div></div></div>`;
   }
   for(const key in UPGRADES){ const u=UPGRADES[key]; const c=upCost(key);
-    h+=`<div class="uprow"><div class="meta"><h4>${u.ic} ${u.name} <span class="pill">L${S.upgrades[key]}</span></h4>
-      <div class="muted">${u.desc}</div></div>
+    h+=`<div class="aaa-upgrade-card"><div class="meta"><h4>${u.ic} ${u.name} <span class="pill">L${S.upgrades[key]}</span></h4><div class="muted">${u.desc}</div></div>
       <button class="btn-gold hirebtn" data-up="${key}" ${S.yen>=c?"":"disabled"}>${t("b_upgrade","Upgrade")}<small>¥${fmt(c)}</small></button></div>`;
   }
   h+=`</div>`;
-  // Legacy Perk Tree — permanent bonuses bought with Legacy Points (earned from Studio Reboots)
   const avail=legacyAvailable();
-  h+=`<div class="panel listgrid"><h2>🌸 ${t("h_perks","Legacy Perks")} <span class="pill">${avail} Legacy Point${avail===1?"":"s"}</span></h2>
-    <div class="muted" style="margin-bottom:10px">Earn Legacy Points by rebooting your studio (prestige). Perks are <b>permanent</b> and survive every reboot.</div>`;
+  h+=`<div class="aaa-store-section">🌸 ${t("h_perks","Legacy Perks")} · ${avail} pts</div><div class="aaa-upgrade-grid">`;
   for(const key in PERKS){ const pk=PERKS[key]; const lvl=(S.perks&&S.perks[key])||0; const c=perkCost(key);
-    h+=`<div class="uprow"><div class="meta"><h4>${pk.ic} ${pk.name} <span class="pill">L${lvl}</span></h4>
-      <div class="muted">${pk.desc}</div></div>
+    h+=`<div class="aaa-upgrade-card"><div class="meta"><h4>${pk.ic} ${pk.name} <span class="pill">L${lvl}</span></h4><div class="muted">${pk.desc}</div></div>
       <button class="btn-cyan hirebtn" data-perk="${key}" ${avail>=c?"":"disabled"}>Buy<small>${c} 🌸</small></button></div>`;
   }
   h+=`</div>`;
@@ -2448,9 +2443,9 @@ function renderStudio(){
 }
 
 function renderMarket(){
-  let h=`<div class="panel listgrid"><h2>📣 ${t("h_marketing","Marketing")}</h2><div class="muted" style="margin-bottom:10px">Convert Yen into Fans instantly. Fans unlock bigger projects and multiply your revenue.</div>`;
+  let h=`<div class="aaa-page-hero"><h2>📣 ${t("h_marketing","Marketing")}</h2><p>Convert Yen into Fans — unlock bigger projects and multiply revenue.</p></div><div class="aaa-market-grid">`;
   CAMPAIGNS.forEach((c,i)=>{
-    h+=`<div class="uprow"><div class="meta"><h4>${c.ic} ${c.name}</h4><div class="muted">+${fmt(c.fans)} fans</div></div>
+    h+=`<div class="aaa-market-card"><div class="ic">${c.ic}</div><h4>${c.name}</h4><div class="muted" style="font-size:11px">+${fmt(c.fans)} fans</div>
       <button class="btn-primary hirebtn" data-camp="${i}" ${S.yen>=c.cost?"":"disabled"}>${t("b_run","Run")}<small>¥${fmt(c.cost)}</small></button></div>`;
   });
   h+=`</div>`; main.innerHTML=h;
@@ -2458,11 +2453,12 @@ function renderMarket(){
 
 function renderStore(){
   const P=MONETIZATION.prices, packCfg=[["gems_s","Starter Pack"],["gems_m","Studio Pack"],["gems_l","Producer Pack"],["gems_mega","Mogul Pack"]];
-  let h=`<div class="panel"><h2>💎 ${t("s_store","Studio Store")}</h2>
-    <div class="muted" style="margin-bottom:10px">You have <b>${fmt(S.gems)}</b> 💎 Gems. Gems are earned free from milestones &amp; every 25 releases — or topped up below.</div>`;
+  let h=`<div class="aaa-page-hero"><h2>💎 ${t("s_store","Studio Store")}</h2><p>Gems power scouts, skips, and boosts. Earn free or top up below.</p></div>
+    <div class="aaa-store-balance"><img src="icons/hf/gems.png?v=${ASSET_V}" alt=""><div><div class="muted" style="font-size:10px;margin:0">Your Balance</div><b>${fmt(S.gems)}</b></div></div>`;
+  h+=`<div class="panel" style="padding:12px">`;
   // Producer Pass (owned state always shown)
   if(S.producerPass){
-    h+=`<div class="uprow" style="border:2px solid var(--gold)"><div class="meta"><h4>🎬 Producer Pass <span class="pill">OWNED</span></h4><div class="muted">+50% Yen on every release · auto-releases finished projects · 2× offline earnings cap</div></div></div>`;
+    h+=`<div class="uprow uprow-featured"><div class="meta"><h4>🎬 Producer Pass <span class="pill">OWNED</span></h4><div class="muted">+50% Yen on every release · auto-releases finished projects · 2× offline earnings cap</div></div></div>`;
   }
   // Real-money purchases — only when a payment rail is available (hidden in native builds w/o StoreKit, per App Store rules)
   if(STORE_PAYMENTS){
@@ -2471,21 +2467,22 @@ function renderStore(){
         <button class="btn-gold hirebtn" data-buy="bundle">Get<small>${P.bundle}</small></button></div>`;
     }
     if(!S.producerPass){
-      h+=`<div class="uprow" style="border:2px solid var(--gold)"><div class="meta"><h4>🎬 Producer Pass</h4><div class="muted">+50% Yen forever · auto-release · 2× offline cap. One-time.</div></div>
+      h+=`<div class="uprow uprow-featured"><div class="meta"><h4>🎬 Producer Pass</h4><div class="muted">+50% Yen forever · auto-release · 2× offline cap. One-time.</div></div>
         <button class="btn-gold hirebtn" data-buy="pass">Unlock<small>${P.pass}</small></button></div>`;
     }
     if(flashAvailable()){
       h+=`<div class="flash-deal"><div class="flash-row"><span class="flash-tag">⚡ DAILY DEAL</span><span class="flash-cd" id="flash-cd">${flashCountdown()}</span></div>
         <div class="flash-body">+20% bonus Gems on <b>any</b> pack today — added automatically on purchase.</div></div>`;
     }
-    h+=`<div class="muted" style="margin:12px 0 6px;font-weight:800;color:var(--plum)">${t("s_topup","Top up Gems")}</div>`;
+    h+=`<div class="aaa-store-section">${t("s_topup","Top up Gems")}</div><div class="aaa-shelf">`;
     packCfg.forEach(([sku,label])=>{
-      h+=`<div class="uprow"><div class="meta"><h4>💎 ${label}</h4><div class="muted">${fmt(GEM_PACKS[sku])} Gems</div></div>
+      h+=`<div class="aaa-shelf-item"><h4>💎 ${label}</h4><div class="muted" style="font-size:11px">${fmt(GEM_PACKS[sku])} Gems</div>
         <button class="btn-primary hirebtn" data-buy="${sku}">Buy<small>${P[sku]}</small></button></div>`;
     });
+    h+=`</div>`;
     // Premium bundles (more value, strong nudges)
     h+=`<div class="muted" style="margin:12px 0 6px;font-weight:800;color:var(--plum)">${t("s_premium","Premium Bundles")}</div>
-      <div class="uprow" style="border:2px solid var(--gold)"><div class="meta"><h4>🏆 Legend Bundle <span class="pill">POPULAR</span></h4><div class="muted">Producer Pass + 400 💎 + exclusive Legendary <b>Aurora Vesper</b></div></div>
+      <div class="uprow uprow-featured"><div class="meta"><h4>🏆 Legend Bundle <span class="pill">POPULAR</span></h4><div class="muted">Producer Pass + 400 💎 + exclusive Legendary <b>Aurora Vesper</b></div></div>
         <button class="btn-gold hirebtn" data-buy="bundle_legend">Get<small>${P.bundle_legend}</small></button></div>
       <div class="uprow" style="border:2px solid #b06bff"><div class="meta"><h4>👑 Mogul Bundle <span class="pill">BEST DEAL</span></h4><div class="muted">Pass + 1,500 💎 + 2 exclusive Legendary stars + Remove Ads</div></div>
         <button class="btn-gold hirebtn" data-buy="bundle_mogul">Get<small>${P.bundle_mogul}</small></button></div>`;
@@ -2502,8 +2499,8 @@ function renderStore(){
     const redeemSkus=[["pass","Producer Pass"],["bundle","Starter Bundle"],["bundle_legend","Legend Bundle"],["bundle_mogul","Mogul Bundle"],["gems_s","Gems 120"],["gems_m","Gems 350"],["gems_l","Gems 800"],["gems_mega","Gems 2000"],["star_aurora","Aurora Vesper"],["star_phoenix","Phoenix Kogane"],["star_shogun","Kaiser Shogun"],["items_pack","Items Pack"],["noads","Remove Ads"]];
     h+=`<div class="panel" style="margin-top:12px;border:2px dashed rgba(70,80,107,.35)"><h3 style="margin:0 0 8px;font-size:14px">🔑 Redeem Gumroad License</h3>
       <div class="muted" style="font-size:11px;margin-bottom:8px">If auto-redirect didn't work, paste the license key from your Gumroad receipt.</div>
-      <select id="redeem-sku" style="width:100%;padding:8px;border-radius:10px;margin-bottom:8px;border:2px solid var(--cream2)">${redeemSkus.map(([k,l])=>`<option value="${k}">${l}</option>`).join("")}</select>
-      <input id="redeem-key" type="text" placeholder="XXXX-XXXX-XXXX-XXXX" style="width:100%;padding:8px;border-radius:10px;margin-bottom:8px;border:2px solid var(--cream2)">
+      <select id="redeem-sku" class="ast-input">${redeemSkus.map(([k,l])=>`<option value="${k}">${l}</option>`).join("")}</select>
+      <input id="redeem-key" class="ast-input" type="text" placeholder="XXXX-XXXX-XXXX-XXXX">
       <button class="btn-cyan" data-act="redeem-submit" style="width:100%">Redeem Purchase</button></div>`;
   } else if(!S.producerPass){
     h+=`<div class="muted" style="margin:8px 0">💎 Earn Gems free through milestones, daily rewards, quests &amp; every 25 releases — then spend them below.</div>`;
@@ -2818,22 +2815,23 @@ window.__AST_HOOK__ = {
   hire,
   expandStudio,
   ROLES,
+  studioLevel,
 };
 </script>
-<script src="aaa-upgrade.js"></script>
-<script src="gameplay-plus.js"></script>
-<script src="gameplay-ultra.js"></script>
-<script src="gameplay-endless.js"></script>
-<script src="gameplay-empire.js"></script>
-<script src="gameplay-studio.js"></script>
-<script src="gameplay-final.js"></script>
-<script src="gameplay-aaa.js"></script>
-<script src="gameplay-legend.js"></script>
-<script src="hud-premium.js"></script>
-<script src="ui-complete.js"></script>
-<script src="gameplay-studio-rating.js"></script>
-<script src="gameplay-polish.js"></script>
-<script src="hook-bridge.js"></script>
+<script src="aaa-upgrade.js?v=41"></script>
+<script src="gameplay-plus.js?v=41"></script>
+<script src="gameplay-ultra.js?v=41"></script>
+<script src="gameplay-endless.js?v=41"></script>
+<script src="gameplay-empire.js?v=41"></script>
+<script src="gameplay-studio.js?v=41"></script>
+<script src="gameplay-final.js?v=41"></script>
+<script src="gameplay-aaa.js?v=41"></script>
+<script src="gameplay-legend.js?v=41"></script>
+<script src="hud-premium.js?v=41"></script>
+<script src="ui-complete.js?v=41"></script>
+<script src="gameplay-studio-rating.js?v=41"></script>
+<script src="gameplay-polish.js?v=41"></script>
+<script src="hook-bridge.js?v=41"></script>
 <!-- studio-premium.css loaded in head -->
 
 

@@ -4,6 +4,8 @@ dist/
 package-lock.json
 desktop/package-lock.json
 .vercel
+launch/generated/*.png
+launch/generated/*.jpg
 www/
 ios/
 .vercel
