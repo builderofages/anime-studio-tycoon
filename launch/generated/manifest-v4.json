@@ -1,0 +1,18 @@
+{
+  "generated": "2026-07-02T04:17:00Z",
+  "model": "gpt_image_2",
+  "assets": [
+    {
+      "name": "ui-mockup-v4.png",
+      "role": "design-reference",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260702_041440_92d145bc-308b-44aa-8429-9db7f90742bb.png",
+      "local": "design-ref-v4.png"
+    },
+    {
+      "name": "bg-texture-v4.png",
+      "role": "game-background",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260702_041440_04fd812e-5b40-437b-af7c-c67f72d93a4a.png",
+      "local": "bg-v4.png"
+    }
+  ]
+}

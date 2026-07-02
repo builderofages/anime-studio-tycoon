@@ -1,0 +1,279 @@
+/**
+ * Higgsfield-directed design v4 — matched to GPT Image 2 UI mockup
+ * Ref: design-ref-v4.png · bg: bg-v4.png
+ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+html.hud-v3-active {
+  --hf-bg: #0c0a18;
+  --hf-glass: rgba(18, 14, 32, 0.72);
+  --hf-glass-2: rgba(255, 255, 255, 0.06);
+  --hf-border: rgba(255, 120, 180, 0.18);
+  --hf-border-soft: rgba(255, 255, 255, 0.08);
+  --hf-text: #f4f0fa;
+  --hf-muted: #9a92b0;
+  --hf-pink: #ff5ca8;
+  --hf-pink-soft: rgba(255, 92, 168, 0.25);
+  --hf-gold: #ffc845;
+  --hf-gold-soft: rgba(255, 200, 69, 0.2);
+  --hf-cyan: #4dd4ff;
+  --hf-purple: #b48cff;
+  --hf-indigo: #6b5cff;
+  --hf-r: 16px;
+  --hf-glow: 0 0 24px rgba(255, 92, 168, 0.15);
+}
+
+html.hud-v3-active body {
+  background:
+    linear-gradient(180deg, rgba(12, 10, 24, 0.55) 0%, rgba(12, 10, 24, 0.82) 100%),
+    url('bg-v4.png') center top / cover no-repeat fixed !important;
+}
+
+html.hud-v3-active #app {
+  background: transparent !important;
+}
+
+/* ---- HUD: glass bar like mockup ---- */
+#hud-shell {
+  margin: calc(4px + var(--safe-t, 0px)) 8px 0 !important;
+  padding: 8px 10px !important;
+  background: var(--hf-glass) !important;
+  backdrop-filter: blur(16px) saturate(1.3) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.3) !important;
+  border: 1px solid var(--hf-border-soft) !important;
+  border-radius: 18px !important;
+  box-shadow: var(--hf-glow) !important;
+}
+
+.hud-menu-btn {
+  background: var(--hf-glass-2) !important;
+  border-color: var(--hf-border-soft) !important;
+  color: var(--hf-text) !important;
+}
+
+.hud-studio-name {
+  color: var(--hf-text) !important;
+  font-weight: 700 !important;
+}
+
+#hud-studio-rating,
+.hud-rating-chip {
+  background: var(--hf-gold-soft) !important;
+  border-color: rgba(255, 200, 69, 0.35) !important;
+}
+
+.hud-trend-chip {
+  background: rgba(77, 212, 255, 0.1) !important;
+  border-color: rgba(77, 212, 255, 0.25) !important;
+  color: var(--hf-cyan) !important;
+}
+
+.hud-stats { gap: 5px !important; margin-top: 7px !important; }
+
+.hud-stat {
+  background: var(--hf-glass-2) !important;
+  border: 1px solid var(--hf-border-soft) !important;
+  border-radius: 12px !important;
+  padding: 6px 4px !important;
+}
+
+.hud-stat.yen .v { color: var(--hf-gold) !important; }
+.hud-stat.fans .v { color: var(--hf-pink) !important; }
+.hud-stat.hype .v { color: var(--hf-cyan) !important; }
+.hud-stat.gems .v { color: var(--hf-purple) !important; }
+
+/* ---- Coach strip ---- */
+#pathway-rail.coach-bar {
+  margin: 6px 8px 0 !important;
+  padding: 7px 10px !important;
+  background: var(--hf-glass) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid var(--hf-border-soft) !important;
+  border-radius: 14px !important;
+}
+
+.coach-msg { color: var(--hf-muted) !important; }
+
+.coach-cta {
+  background: linear-gradient(135deg, var(--hf-indigo), var(--hf-pink)) !important;
+  border-radius: 10px !important;
+  font-weight: 700 !important;
+}
+
+.coach-cta.urgent {
+  background: linear-gradient(135deg, var(--hf-pink), var(--hf-gold)) !important;
+}
+
+/* ---- Glass panels ---- */
+html.hud-v3-active .panel,
+html.hud-v3-active .slotpanel {
+  background: var(--hf-glass) !important;
+  backdrop-filter: blur(14px) saturate(1.2) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(1.2) !important;
+  border: 1px solid var(--hf-border-soft) !important;
+  border-radius: 18px !important;
+  box-shadow: var(--hf-glow), 0 8px 32px rgba(0, 0, 0, 0.35) !important;
+}
+
+html.hud-v3-active .panel h2 {
+  color: var(--hf-muted) !important;
+  font-size: 10px !important;
+  letter-spacing: 0.1em !important;
+}
+
+/* ---- Production card (mockup layout) ---- */
+html.hud-v3-active .slotpanel .card {
+  gap: 14px !important;
+}
+
+html.hud-v3-active .poster {
+  width: 96px !important;
+  height: 128px !important;
+  border-radius: 14px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--hf-pink-soft) !important;
+}
+
+html.hud-v3-active .pinfo h3 {
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: var(--hf-text) !important;
+}
+
+html.hud-v3-active .slotpanel[data-done="1"],
+html.hud-v3-active .slotpanel.slot-ready {
+  border-color: var(--hf-gold-soft) !important;
+  box-shadow: 0 0 0 1px rgba(255, 200, 69, 0.3), var(--hf-glow) !important;
+}
+
+html.hud-v3-active .progress {
+  height: 6px !important;
+  background: rgba(0, 0, 0, 0.4) !important;
+  border-radius: 4px !important;
+}
+
+html.hud-v3-active .progress i {
+  background: linear-gradient(90deg, var(--hf-pink), var(--hf-gold)) !important;
+  border-radius: 4px !important;
+  box-shadow: 0 0 8px var(--hf-pink-soft) !important;
+}
+
+html.hud-v3-active .btn-gold {
+  background: linear-gradient(135deg, var(--hf-gold), #ff9d2c) !important;
+  color: #2a1800 !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 16px var(--hf-gold-soft) !important;
+}
+
+html.hud-v3-active .btn-primary {
+  background: linear-gradient(135deg, var(--hf-indigo), var(--hf-pink)) !important;
+  box-shadow: 0 4px 16px var(--hf-pink-soft) !important;
+}
+
+html.hud-v3-active .btn-cyan {
+  background: linear-gradient(135deg, var(--hf-cyan), var(--hf-indigo)) !important;
+}
+
+/* ---- Event bar ---- */
+html.hud-v3-active .eventbar {
+  background: var(--hf-glass) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid var(--hf-gold-soft) !important;
+  border-radius: var(--hf-r) !important;
+}
+
+html.hud-v3-active .eventbar .ev-meta b {
+  color: var(--hf-gold) !important;
+}
+
+/* ---- Rows & picks ---- */
+html.hud-v3-active .staffrow,
+html.hud-v3-active .uprow,
+html.hud-v3-active .pick,
+html.hud-v3-active .kpi {
+  background: var(--hf-glass-2) !important;
+  border: 1px solid var(--hf-border-soft) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+html.hud-v3-active .you-row {
+  border-color: var(--hf-pink) !important;
+  background: var(--hf-pink-soft) !important;
+}
+
+html.hud-v3-active .chip.sel {
+  background: linear-gradient(135deg, var(--hf-indigo), var(--hf-pink)) !important;
+  border: none !important;
+  color: #fff !important;
+}
+
+html.hud-v3-active .kpi.accent {
+  background: var(--hf-gold-soft) !important;
+  border-color: rgba(255, 200, 69, 0.25) !important;
+}
+
+html.hud-v3-active .kpi.accent .kv {
+  color: var(--hf-gold) !important;
+}
+
+/* ---- Tab dock: pink active glow ---- */
+#command-dock {
+  background: rgba(10, 8, 20, 0.92) !important;
+  backdrop-filter: blur(16px) !important;
+  border-top: 1px solid var(--hf-border-soft) !important;
+}
+
+html.hud-v3-active .tab.active::after {
+  background: var(--hf-pink) !important;
+  box-shadow: 0 0 12px var(--hf-pink-soft) !important;
+}
+
+html.hud-v3-active .tab.active .ic {
+  filter: drop-shadow(0 0 6px var(--hf-pink)) !important;
+}
+
+/* ---- Start screen ---- */
+html.hud-v3-active #start .card-modal {
+  background: var(--hf-glass) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid var(--hf-border) !important;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5), var(--hf-glow) !important;
+}
+
+html.hud-v3-active .ast-input {
+  background: var(--hf-glass-2) !important;
+  border-color: var(--hf-border-soft) !important;
+  color: var(--hf-text) !important;
+}
+
+/* ---- Drawer ---- */
+.hud-drawer-inner {
+  background: var(--hf-glass) !important;
+  backdrop-filter: blur(20px) !important;
+  border-color: var(--hf-border-soft) !important;
+}
+
+/* ---- Modals ---- */
+html.hud-v3-active .card-modal,
+html.hud-v3-active .jw-rating-card {
+  background: var(--hf-glass) !important;
+  backdrop-filter: blur(16px) !important;
+  border-color: var(--hf-border-soft) !important;
+}
+
+html.hud-v3-active .overlay {
+  background: rgba(8, 6, 16, 0.88) !important;
+  backdrop-filter: blur(6px) !important;
+}
+
+/* ---- Main scroll area ---- */
+html.hud-v3-active #main {
+  padding: 8px 8px 12px !important;
+  gap: 10px !important;
+}
+
+@media (min-width: 600px) {
+  html.hud-v3-active .poster {
+    width: 110px !important;
+    height: 148px !important;
+  }
+}
