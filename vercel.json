@@ -10,7 +10,7 @@
       ]
     },
     {
-      "source": "/(index.html|strings.js|logic.js|iap.js|aaa-upgrade.js|aaa-upgrade.css|gameplay-plus.js|gameplay-plus.css|gameplay-ultra.js|gameplay-ultra.css|gameplay-endless.js|gameplay-endless.css|gameplay-empire.js|gameplay-empire.css|gameplay-studio.js|gameplay-studio.css|gameplay-final.js|gameplay-final.css|manifest.json)",
+      "source": "/(index.html|strings.js|logic.js|iap.js|aaa-upgrade.js|aaa-upgrade.css|gameplay-plus.js|gameplay-plus.css|gameplay-ultra.js|gameplay-ultra.css|gameplay-endless.js|gameplay-endless.css|gameplay-empire.js|gameplay-empire.css|gameplay-studio.js|gameplay-studio.css|gameplay-final.js|gameplay-final.css|gameplay-aaa.js|gameplay-aaa.css|gameplay-legend.js|gameplay-legend.css|hud-premium.js|hud-premium.css|ui-complete.js|ui-complete.css|manifest.json)",
       "headers": [
         { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
       ]
