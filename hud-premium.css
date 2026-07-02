@@ -181,9 +181,40 @@ html.hud-v3-active .foot { display: none !important; }
 /* Stats row */
 .hud-stats {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 4px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
   margin-top: 6px;
+}
+
+.hud-stat-wrap {
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+  min-width: 0;
+}
+
+.hud-stat-wrap .hud-stat {
+  flex: 1;
+  min-width: 0;
+}
+
+.hud-stat-plus {
+  flex-shrink: 0;
+  width: 28px;
+  min-height: 32px;
+  padding: 0;
+  border: none;
+  border-radius: 10px;
+  background: rgba(255, 92, 168, 0.18);
+  color: #ff9bc4;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.hud-stat-plus:active {
+  transform: scale(0.96);
 }
 
 .hud-stat {

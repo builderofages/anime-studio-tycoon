@@ -34,7 +34,7 @@ html.hud-v3-active body {
 html.hud-v3-active body {
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.35) 0%, rgba(8, 6, 15, 0.82) 100%),
-    url('bg-v4.png?v=45') center top / cover no-repeat fixed !important;
+    url('bg-v4.png?v=46') center top / cover no-repeat fixed !important;
 }
 
 html.hud-v3-active button {
@@ -419,7 +419,7 @@ html.hud-v3-active .aaa-quest-card {
 }
 
 html.hud-v3-active .aaa-greenlight-head {
-  background-image: url('assets/hf/greenlight-bg.png?v=45') !important;
+  background-image: url('assets/hf/greenlight-bg.png?v=46') !important;
   background-size: cover !important;
   background-position: center !important;
   border-radius: var(--ast-r) var(--ast-r) 0 0 !important;
@@ -495,4 +495,353 @@ html.hud-v3-active .card-modal {
 html.hud-v3-active #app {
   position: relative;
   z-index: 2;
+}
+
+/* ---- HUD: 3 counters + affordances (mockup) ---- */
+html.hud-v3-active .hud-stats {
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 6px !important;
+}
+
+html.hud-v3-active .hud-stat-plus {
+  background: rgba(255, 92, 168, 0.2) !important;
+  color: var(--ast-pink) !important;
+  border: 1px solid rgba(255, 92, 168, 0.35) !important;
+}
+
+/* ---- Produce hero: mockup proportions (~42% poster) ---- */
+html.hud-v3-active .aaa-show-card {
+  grid-template-columns: minmax(132px, 42%) 1fr !important;
+  gap: 12px !important;
+  padding: 12px !important;
+  align-items: start !important;
+}
+
+html.hud-v3-active .aaa-poster-col {
+  min-width: 0;
+}
+
+html.hud-v3-active .aaa-poster {
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 3 / 4 !important;
+  min-height: 168px !important;
+  max-height: 220px !important;
+  border-radius: 16px !important;
+}
+
+html.hud-v3-active .aaa-meta-col {
+  min-width: 0;
+}
+
+html.hud-v3-active .aaa-actions {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  margin-top: 4px !important;
+}
+
+html.hud-v3-active .aaa-actions .btn-cyan,
+html.hud-v3-active .aaa-actions .btn-gold:not(.aaa-cta) {
+  width: 100% !important;
+}
+
+html.hud-v3-active .aaa-team-scroll {
+  display: flex !important;
+  gap: 8px !important;
+  overflow-x: auto !important;
+  padding-bottom: 4px !important;
+  scrollbar-width: none;
+}
+
+html.hud-v3-active .aaa-team-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+html.hud-v3-active .aaa-team-card {
+  flex: 0 0 72px !important;
+  min-width: 72px !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid var(--ast-border-soft) !important;
+  border-radius: 12px !important;
+  padding: 8px 6px !important;
+}
+
+html.hud-v3-active .aaa-team-head {
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  color: var(--ast-muted) !important;
+}
+
+html.hud-v3-active .aaa-team-avatar {
+  width: 36px !important;
+  height: 36px !important;
+  margin: 4px auto !important;
+  border-radius: 50% !important;
+  display: block !important;
+}
+
+/* ---- Quests / login dark theme ---- */
+html.hud-v3-active .aaa-login-panel,
+html.hud-v3-active .aaa-quest-block {
+  background: var(--ast-glass) !important;
+  border: 1px solid var(--ast-border-soft) !important;
+  border-radius: var(--ast-r) !important;
+  padding: 14px !important;
+}
+
+html.hud-v3-active .aaa-quest-block h3 {
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  color: var(--ast-muted) !important;
+  margin: 0 0 10px !important;
+}
+
+html.hud-v3-active .aaa-quest-card {
+  display: grid !important;
+  grid-template-columns: 28px 1fr auto !important;
+  gap: 10px !important;
+  align-items: center !important;
+  padding: 10px !important;
+  margin-bottom: 6px !important;
+}
+
+html.hud-v3-active .aaa-quest-card.claimable {
+  border-color: rgba(255, 200, 69, 0.35) !important;
+  box-shadow: 0 0 16px rgba(255, 200, 69, 0.08) !important;
+}
+
+html.hud-v3-active .aaa-quest-meta b {
+  font-size: 12px !important;
+  color: var(--ast-text) !important;
+}
+
+html.hud-v3-active .aaa-quest-meta span {
+  font-size: 10px !important;
+  color: var(--ast-muted) !important;
+}
+
+html.hud-v3-active .logingrid {
+  gap: 5px !important;
+}
+
+html.hud-v3-active .loginday {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid var(--ast-border-soft) !important;
+  box-shadow: none !important;
+  color: var(--ast-text) !important;
+}
+
+html.hud-v3-active .loginday.big {
+  background: linear-gradient(135deg, rgba(255, 200, 69, 0.15), rgba(255, 92, 168, 0.1)) !important;
+  border-color: rgba(255, 200, 69, 0.3) !important;
+}
+
+html.hud-v3-active .loginday.next {
+  border-color: var(--ast-pink) !important;
+  box-shadow: 0 0 12px rgba(255, 92, 168, 0.25) !important;
+}
+
+html.hud-v3-active .loginday .ld-day,
+html.hud-v3-active .loginday .ld-rew {
+  color: var(--ast-text) !important;
+}
+
+/* ---- Upgrade / store rows ---- */
+html.hud-v3-active .aaa-upgrade-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+html.hud-v3-active .aaa-upgrade-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 12px;
+  border-radius: 14px;
+  background: var(--ast-glass);
+  border: 1px solid var(--ast-border-soft);
+}
+
+html.hud-v3-active .aaa-upgrade-row.featured {
+  border-color: rgba(255, 200, 69, 0.3) !important;
+  background: linear-gradient(135deg, rgba(255, 200, 69, 0.08), rgba(255, 92, 168, 0.06)) !important;
+}
+
+html.hud-v3-active .aaa-upgrade-row h4 {
+  font-size: 13px !important;
+  margin: 0 0 2px !important;
+  color: var(--ast-text) !important;
+  text-align: left !important;
+}
+
+html.hud-v3-active .aaa-upgrade-row .muted {
+  font-size: 10px !important;
+  text-align: left !important;
+}
+
+html.hud-v3-active .aaa-store-section {
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  color: var(--ast-muted) !important;
+  margin: 12px 0 8px !important;
+}
+
+html.hud-v3-active .aaa-store-balance {
+  background: linear-gradient(135deg, rgba(180, 140, 255, 0.15), rgba(255, 92, 168, 0.1)) !important;
+  border: 1px solid rgba(180, 140, 255, 0.25) !important;
+}
+
+/* ---- Star roster ---- */
+html.hud-v3-active .aaa-star-card {
+  display: grid !important;
+  grid-template-columns: 56px 1fr auto !important;
+  gap: 10px !important;
+  align-items: start !important;
+  padding: 12px !important;
+}
+
+html.hud-v3-active .aaa-star-portrait img {
+  width: 52px !important;
+  height: 52px !important;
+  border-radius: 14px !important;
+  object-fit: cover !important;
+}
+
+html.hud-v3-active .aaa-star-actions {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+}
+
+html.hud-v3-active .aaa-star-actions .hirebtn {
+  min-width: 0 !important;
+  padding: 6px 8px !important;
+  font-size: 10px !important;
+}
+
+/* ---- Mastery grid ---- */
+html.hud-v3-active .aaa-mastery-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
+  gap: 8px !important;
+}
+
+html.hud-v3-active .aaa-mastery-card h4 {
+  font-size: 12px !important;
+  color: var(--ast-text) !important;
+}
+
+/* ---- List rows (industry, store, records) ---- */
+html.hud-v3-active .uprow,
+html.hud-v3-active .you-row {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid var(--ast-border-soft) !important;
+  border-radius: 12px !important;
+  padding: 10px 12px !important;
+  margin-bottom: 6px !important;
+  box-shadow: none !important;
+}
+
+html.hud-v3-active .you-row {
+  border-color: rgba(255, 200, 69, 0.3) !important;
+}
+
+html.hud-v3-active .panel h2,
+html.hud-v3-active .listgrid h2 {
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  color: var(--ast-text) !important;
+  text-transform: none !important;
+  letter-spacing: -0.01em !important;
+}
+
+html.hud-v3-active .muted {
+  color: var(--ast-muted) !important;
+  opacity: 1 !important;
+}
+
+html.hud-v3-active .progress,
+html.hud-v3-active .aaa-progress {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-radius: 8px !important;
+  height: 8px !important;
+}
+
+html.hud-v3-active .progress i,
+html.hud-v3-active .aaa-progress i {
+  background: linear-gradient(90deg, var(--ast-pink), var(--ast-gold)) !important;
+  border-radius: 8px !important;
+}
+
+/* ---- Start screen ---- */
+html.hud-v3-active #start .card-modal {
+  background: var(--ast-glass) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid var(--ast-border) !important;
+  border-radius: 24px !important;
+  max-width: 360px !important;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55), 0 0 40px rgba(255, 92, 168, 0.12) !important;
+}
+
+html.hud-v3-active #start .start-hero {
+  border-radius: 22px !important;
+  box-shadow: 0 12px 40px rgba(255, 92, 168, 0.4) !important;
+}
+
+html.hud-v3-active #start h1 {
+  font-size: 24px !important;
+  font-weight: 900 !important;
+  color: var(--ast-text) !important;
+  letter-spacing: -0.03em !important;
+}
+
+html.hud-v3-active #start p,
+html.hud-v3-active #start label {
+  color: var(--ast-muted) !important;
+}
+
+html.hud-v3-active .ast-input,
+html.hud-v3-active #start-studio,
+html.hud-v3-active #start-lang {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid var(--ast-border-soft) !important;
+  color: var(--ast-text) !important;
+  border-radius: 12px !important;
+  padding: 10px 12px !important;
+  width: 100% !important;
+  font-weight: 600 !important;
+}
+
+html.hud-v3-active #btn-start {
+  font-size: 16px !important;
+  padding: 14px !important;
+  margin-top: 8px !important;
+}
+
+/* ---- Greenlight pick scroll ---- */
+html.hud-v3-active .aaa-pick-scroll {
+  display: flex !important;
+  gap: 10px !important;
+  overflow-x: auto !important;
+  padding: 4px 2px 8px !important;
+  scroll-snap-type: x mandatory;
+}
+
+html.hud-v3-active .aaa-pick-card {
+  flex: 0 0 140px !important;
+  scroll-snap-align: start;
+}
+
+html.hud-v3-active .aaa-pick-poster {
+  height: 100px !important;
+  border-radius: 12px !important;
 }

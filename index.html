@@ -22,15 +22,15 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%233a2b4d'/%3E%3Ccircle cx='32' cy='32' r='30' fill='none' stroke='%23ffc845' stroke-width='3'/%3E%3Cg fill='%23ff9bc4'%3E%3Cellipse cx='32' cy='15' rx='5' ry='8'/%3E%3Cellipse cx='32' cy='49' rx='5' ry='8'/%3E%3Cellipse cx='15' cy='32' rx='8' ry='5'/%3E%3Cellipse cx='49' cy='32' rx='8' ry='5'/%3E%3C/g%3E%3Ccircle cx='32' cy='32' r='7' fill='%23ffc845'/%3E%3C/svg%3E">
 <link rel="manifest" href="manifest.json">
 <!-- Legacy gameplay-*.css disabled — aaa-ui + game-skin + hud-premium own chrome -->
-<link rel="stylesheet" href="hud-premium.css?v=45">
-<link rel="stylesheet" href="ui-complete.css?v=45">
-<link rel="stylesheet" href="gameplay-studio-rating.css?v=45">
-<link rel="stylesheet" href="studio-premium.css?v=45">
-<link rel="stylesheet" href="gameplay-plus.css?v=45">
-<link rel="stylesheet" href="game-skin.css?v=45">
-<link rel="stylesheet" href="hf-design.css?v=45">
-<link rel="stylesheet" href="aaa-ui.css?v=45">
-<link rel="stylesheet" href="ast-v5.css?v=45">
+<link rel="stylesheet" href="hud-premium.css?v=46">
+<link rel="stylesheet" href="ui-complete.css?v=46">
+<link rel="stylesheet" href="gameplay-studio-rating.css?v=46">
+<link rel="stylesheet" href="studio-premium.css?v=46">
+<link rel="stylesheet" href="gameplay-plus.css?v=46">
+<link rel="stylesheet" href="game-skin.css?v=46">
+<link rel="stylesheet" href="hf-design.css?v=46">
+<link rel="stylesheet" href="aaa-ui.css?v=46">
+<link rel="stylesheet" href="ast-v5.css?v=46">
 <script>document.documentElement.classList.add("premium-hud","hud-v3-active")</script>
 <meta name="theme-color" content="#08050f">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -287,10 +287,10 @@ html.hud-v3-active #goal{display:none !important}
 <div id="app">
   <div id="top">
     <div id="studio-rank"><span>🎬</span><span class="rank-tier">Garage Studio</span></div>
-    <div class="res yen"><img src="icons/hf/yen.png?v=45" alt="Yen"><span><span class="v" id="r-yen">0</span> <small>¥</small></span></div>
-    <div class="res fans"><img src="icons/hf/fans.png?v=45" alt="Fans"><span class="v" id="r-fans">0</span></div>
-    <div class="res hype"><img src="icons/hf/hype.png?v=45" alt="Hype"><span class="v" id="r-hype">0</span></div>
-    <div class="res gems"><img src="icons/hf/gems.png?v=45" alt="Gems"><span class="v" id="r-gems">0</span></div>
+    <div class="res yen"><img src="icons/hf/yen.png?v=46" alt="Yen"><span><span class="v" id="r-yen">0</span> <small>¥</small></span></div>
+    <div class="res fans"><img src="icons/hf/fans.png?v=46" alt="Fans"><span class="v" id="r-fans">0</span></div>
+    <div class="res hype"><img src="icons/hf/hype.png?v=46" alt="Hype"><span class="v" id="r-hype">0</span></div>
+    <div class="res gems"><img src="icons/hf/gems.png?v=46" alt="Gems"><span class="v" id="r-gems">0</span></div>
     <div id="trendbar"><span class="spark">📈</span> Trending: <b id="trend">Action</b></div>
   </div>
   <div id="goal"><span id="goal-txt">🎯 Reach 50 Fans for Web Series</span><div class="bar"><i id="goal-bar" style="width:0%"></i></div></div>
@@ -308,7 +308,7 @@ html.hud-v3-active #goal{display:none !important}
 
 <div class="overlay" id="start" style="display: none;">
   <div class="card-modal">
-    <img class="start-hero" src="start-hero.png?v=45" width="140" height="140" alt="Anime Studio Tycoon">
+    <img class="start-hero" src="start-hero.png?v=46" width="140" height="140" alt="Anime Studio Tycoon">
     <h1>Anime Studio Tycoon</h1>
     <p id="start-tagline">From a one-room studio to a global anime empire</p>
     <label style="display:block;font-size:12px;font-weight:800;color:var(--plum);margin:4px 0 4px">🏢 Studio Name</label>
@@ -376,7 +376,7 @@ html.hud-v3-active #goal{display:none !important}
 
 <div class="overlay" id="whatsnew" style="display:none">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <img src="start-hero.png?v=45" alt="" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
+    <img src="start-hero.png?v=46" alt="" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
     <h1 style="font-size:22px;text-align:center">✨ Build 40 — Greenlight + Gacha Reveal</h1>
     <div class="offlist" style="margin:12px 0">
       <div><span>🖼️ Cinematic BG</span><b>Higgsfield sakura sunset now fills the screen</b></div>
@@ -424,8 +424,8 @@ const STORE_PAYMENTS = true; // store always visible; buyReal routes web→check
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 45 · Design v5";
-const ASSET_V = "45";
+const BUILD_TAG = "build 46 · Design v5+";
+const ASSET_V = "46";
 const TAB_ICON_IMG = {
   produce:"icons/tabs/produce.png", quests:"icons/tabs/quests.png", staff:"icons/tabs/staff.png",
   stars:"icons/tabs/stars.png", research:"icons/tabs/research.png", studio:"icons/tabs/studio.png",
@@ -452,7 +452,7 @@ function productionTeamHTML(){
     const n=(S.staff||{})[role]||0; const lv=Math.min(60,18+n*6+studioLevel());
     const rank=lv>=55?"S":lv>=45?"A":"B";
     const r=ROLES[role];
-    h+=`<div class="aaa-team-card aaa-rank-${rank}"><span class="aaa-team-rank">${rank}</span><img class="aaa-team-avatar" src="${r.img}" alt="" style="width:32px;height:32px;border-radius:50%;object-fit:cover;margin:6px auto 4px;display:block"><div class="aaa-team-role">${labels[role]}</div><div class="aaa-team-lv">LV.${lv}</div></div>`;
+    h+=`<div class="aaa-team-card aaa-rank-${rank}"><span class="aaa-team-rank">${rank}</span><img class="aaa-team-avatar" src="${r.img}" alt="${labels[role]}"><div class="aaa-team-role">${labels[role]}</div><div class="aaa-team-lv">LV.${lv}</div></div>`;
   });
   return h+`</div></div>`;
 }
@@ -2174,7 +2174,7 @@ function loginCalendarHTML(){
   loginRefresh();
   const canClaim=canClaimLogin();
   const next=S.loginClaimedCount;
-  let h=`<div class="panel"><div class="qhead"><h2>📅 ${STR.h_login}</h2><span class="qtimer">${monthKeyStr().replace("-","/")}</span></div>
+  let h=`<div class="panel aaa-login-panel"><div class="qhead"><h2>📅 ${STR.h_login}</h2><span class="qtimer">${monthKeyStr().replace("-","/")}</span></div>
     <div class="muted" style="margin-bottom:8px">Log in every day for bigger rewards. Resets at the start of each month.</div>`;
   if(canClaim){
     const r=LOGIN_REWARDS[next];
@@ -2195,10 +2195,11 @@ function loginCalendarHTML(){
   return h;
 }
 function renderQuests(){
-  let h=`<div class="aaa-page-hero"><h2>🎯 ${STR.h_rewards}</h2><p>Complete quests and log in daily to earn Gems and Yen. Everything rotates on a timer.</p></div>`;
+  let h=`<div class="aaa-tab-page"><div class="aaa-page-hero"><h2>🎯 ${STR.h_rewards}</h2><p>Daily login, quests, and weekly challenges — all on timers.</p></div>`;
   h+=loginCalendarHTML();
   h+=dailyQuestHTML();
   h+=weeklyQuestHTML();
+  h+=`</div>`;
   main.innerHTML=h;
 }
 /* Industry Ranking — a live ladder of rival studios you climb */
@@ -2285,9 +2286,18 @@ function dashboardHTML(){
   return h;
 }
 function renderProduce(){
-  let h="";
+  let h=`<div class="aaa-tab-page">`;
   const dp=dimPowerForQuality();
-  // live event banner
+  const standings=industryStandings();
+  let boostN=0;
+  if(S.producerPass||goldenActive()||rewardedActive()||Date.now()<S.overdriveUntil) boostN=1;
+  h+=`<div class="aaa-produce-strip">
+    <button type="button" class="aaa-strip-chip" data-act="studio-name">🏢 ${studioName()}</button>
+    <span class="aaa-strip-chip">Lv.${studioLevel()}</span>
+    <span class="aaa-strip-chip">🏆 #${standings.rank}</span>
+    ${boostN?`<span class="aaa-strip-chip boost">⚡ Active</span>`:""}
+    <button type="button" class="aaa-strip-link" data-tab="studio">Stats →</button>
+  </div>`;
   const ev=currentEvent();
   h+=`<div class="eventbar"><span class="ev-ic">${ev.ic}</span><div class="ev-meta"><b>${ev.name}</b><div class="muted">${ev.desc}</div></div><span class="qtimer">⏳ ${fmtDur(msToMidnight())}</span></div>`;
   // (Daily quests live on the Quests tab — not duplicated here, so tapping a poster never shifts the layout.)
@@ -2359,16 +2369,7 @@ function renderProduce(){
       <div class="muted" style="margin-bottom:8px">Take a quick freelance job to get back on your feet.</div>
       <button class="btn-primary" data-act="freelance" style="width:100%">🖌️ Freelance commission · +¥150</button></div>`;
   }
-  const standings=industryStandings();
-  let boostN=0;
-  if(S.producerPass||goldenActive()||rewardedActive()||Date.now()<S.overdriveUntil) boostN=1;
-  h+=`<div class="aaa-produce-strip">
-    <button type="button" class="aaa-strip-chip" data-act="studio-name">🏢 ${studioName()}</button>
-    <span class="aaa-strip-chip">Lv.${studioLevel()}</span>
-    <span class="aaa-strip-chip">🏆 #${standings.rank}</span>
-    ${boostN?`<span class="aaa-strip-chip boost">⚡ Boosts active</span>`:""}
-    <button type="button" class="aaa-strip-link" data-tab="studio">Stats →</button>
-  </div>`;
+  h+=`</div>`;
   main.innerHTML=h;
 }
 let _selGenre=0;
@@ -2390,7 +2391,7 @@ function renderStaff(){
 }
 
 function renderStars(){
-  let h=`<div class="aaa-page-hero aaa-gacha-hero"><h2>⭐ ${t("h_stars","Star Talent")}</h2><p>Scout famous creators — rarer stars boost quality and output. Duplicates level up.</p>
+  let h=`<div class="aaa-tab-page"><div class="aaa-page-hero aaa-gacha-hero"><h2>⭐ ${t("h_stars","Star Talent")}</h2><p>Scout famous creators — rarer stars boost quality and output. Duplicates level up.</p>
     <div class="aaa-gacha-btns">
       <button type="button" class="aaa-gacha-btn standard hirebtn" data-scout="yen" ${S.yen>=castingCost()?"":"disabled"}>🎬 ${t("b_scoutOpen","Open Casting")}<small>¥${fmt(castingCost())} · Common/Rare</small></button>
       <button type="button" class="aaa-gacha-btn premium hirebtn" data-scout="gems" ${S.gems>=SCOUT_GEMS?"":"disabled"}>🌟 ${t("b_scoutPremium","Premium Scout")}<small>${SCOUT_GEMS} 💎 · Epic+ odds</small></button>
@@ -2419,58 +2420,58 @@ function renderStars(){
           </div></div>`;
       });
   }
-  h+=`</div><div class="panel" style="margin-top:10px"><h2>📈 Role Bonuses</h2><div class="muted" style="font-size:11px">`+Object.keys(ROLES).map(r=>`${ROLES[r].name}: <b>+${fmt(starPowerForRole(r))}</b>`).join(" · ")+`</div></div>`;
+  h+=`</div><div class="panel" style="margin-top:10px"><h2>📈 Role Bonuses</h2><div class="muted" style="font-size:11px">`+Object.keys(ROLES).map(r=>`${ROLES[r].name}: <b>+${fmt(starPowerForRole(r))}</b>`).join(" · ")+`</div></div></div>`;
   main.innerHTML=h;
 }
 
 function renderResearch(){
-  let h=`<div class="aaa-page-hero"><h2>🔬 ${t("h_research","Genre Mastery")}</h2><p>+6% quality per level in each genre. Costs Yen + Hype.</p></div><div class="aaa-mastery-grid">`;
+  let h=`<div class="aaa-tab-page"><div class="aaa-page-hero"><h2>🔬 ${t("h_research","Genre Mastery")}</h2><p>+6% quality per level in each genre. Costs Yen + Hype.</p></div><div class="aaa-mastery-grid">`;
   for(const g of GENRES){ const lvl=S.mastery[g]||0; const cost=Math.ceil(1200*Math.pow(1.9,lvl)); const hc=2+lvl; const pct=Math.min(100,lvl*10);
     h+=`<div class="aaa-mastery-card"><h4>${g} <span class="pill">L${lvl}</span></h4>
       <div class="aaa-mastery-bar"><i style="width:${pct}%"></i></div>
       <div class="muted" style="font-size:10px">+${lvl*6}% → +${(lvl+1)*6}%</div>
       <button class="btn-cyan hirebtn" data-res="${g}" style="width:100%;margin-top:8px" ${(S.yen>=cost&&S.hype>=hc)?"":"disabled"}>${t("b_research","Research")}<small>¥${fmt(cost)} · ${hc}⚡</small></button></div>`;
   }
-  h+=`</div>`; main.innerHTML=h;
+  h+=`</div></div>`; main.innerHTML=h;
 }
 
 function renderStudio(){
-  let h=dashboardHTML()+`<div class="aaa-page-hero"><h2>🏢 ${t("h_upgrades","Studio Upgrades")}</h2><p>Permanent multipliers — reinvest profits to scale your empire.</p></div><div class="aaa-upgrade-grid">`;
+  let h=`<div class="aaa-tab-page">`+dashboardHTML()+`<div class="aaa-page-hero"><h2>🏢 ${t("h_upgrades","Studio Upgrades")}</h2><p>Permanent multipliers — reinvest profits to scale your empire.</p></div><div class="aaa-upgrade-list">`;
   if(S.slots<MAX_SLOTS){
     const c=expandCost();
-    h+=`<div class="aaa-upgrade-card uprow-featured"><div class="meta"><h4>🏗️ Studio Expansion <span class="pill">${S.slots}/${MAX_SLOTS}</span></h4><div class="muted">Unlock production line ${S.slots+1}</div></div>
+    h+=`<div class="aaa-upgrade-row featured"><div class="meta"><h4>🏗️ Studio Expansion <span class="pill">${S.slots}/${MAX_SLOTS}</span></h4><div class="muted">Unlock production line ${S.slots+1}</div></div>
       <button class="btn-primary hirebtn" data-act="expand" ${S.yen>=c?"":"disabled"}>Expand<small>¥${fmt(c)}</small></button></div>`;
   } else {
-    h+=`<div class="aaa-upgrade-card uprow-featured"><div class="meta"><h4>🏗️ Expansion <span class="pill">MAX</span></h4><div class="muted">All ${MAX_SLOTS} lines unlocked</div></div></div>`;
+    h+=`<div class="aaa-upgrade-row featured"><div class="meta"><h4>🏗️ Expansion <span class="pill">MAX</span></h4><div class="muted">All ${MAX_SLOTS} lines unlocked</div></div></div>`;
   }
   for(const key in UPGRADES){ const u=UPGRADES[key]; const c=upCost(key);
-    h+=`<div class="aaa-upgrade-card"><div class="meta"><h4>${u.ic} ${u.name} <span class="pill">L${S.upgrades[key]}</span></h4><div class="muted">${u.desc}</div></div>
+    h+=`<div class="aaa-upgrade-row"><div class="meta"><h4>${u.ic} ${u.name} <span class="pill">L${S.upgrades[key]}</span></h4><div class="muted">${u.desc}</div></div>
       <button class="btn-gold hirebtn" data-up="${key}" ${S.yen>=c?"":"disabled"}>${t("b_upgrade","Upgrade")}<small>¥${fmt(c)}</small></button></div>`;
   }
   h+=`</div>`;
   const avail=legacyAvailable();
-  h+=`<div class="aaa-store-section">🌸 ${t("h_perks","Legacy Perks")} · ${avail} pts</div><div class="aaa-upgrade-grid">`;
+  h+=`<div class="aaa-store-section">🌸 ${t("h_perks","Legacy Perks")} · ${avail} pts</div><div class="aaa-upgrade-list">`;
   for(const key in PERKS){ const pk=PERKS[key]; const lvl=(S.perks&&S.perks[key])||0; const c=perkCost(key);
-    h+=`<div class="aaa-upgrade-card"><div class="meta"><h4>${pk.ic} ${pk.name} <span class="pill">L${lvl}</span></h4><div class="muted">${pk.desc}</div></div>
+    h+=`<div class="aaa-upgrade-row"><div class="meta"><h4>${pk.ic} ${pk.name} <span class="pill">L${lvl}</span></h4><div class="muted">${pk.desc}</div></div>
       <button class="btn-cyan hirebtn" data-perk="${key}" ${avail>=c?"":"disabled"}>Buy<small>${c} 🌸</small></button></div>`;
   }
   h+=`</div>`;
-  h+=statsHTML();
+  h+=statsHTML()+`</div>`;
   main.innerHTML=h;
 }
 
 function renderMarket(){
-  let h=`<div class="aaa-page-hero"><h2>📣 ${t("h_marketing","Marketing")}</h2><p>Convert Yen into Fans — unlock bigger projects and multiply revenue.</p></div><div class="aaa-market-grid">`;
+  let h=`<div class="aaa-tab-page"><div class="aaa-page-hero"><h2>📣 ${t("h_marketing","Marketing")}</h2><p>Convert Yen into Fans — unlock bigger projects and multiply revenue.</p></div><div class="aaa-market-grid">`;
   CAMPAIGNS.forEach((c,i)=>{
     h+=`<div class="aaa-market-card"><div class="ic">${c.ic}</div><h4>${c.name}</h4><div class="muted" style="font-size:11px">+${fmt(c.fans)} fans</div>
       <button class="btn-primary hirebtn" data-camp="${i}" ${S.yen>=c.cost?"":"disabled"}>${t("b_run","Run")}<small>¥${fmt(c.cost)}</small></button></div>`;
   });
-  h+=`</div>`; main.innerHTML=h;
+  h+=`</div></div>`; main.innerHTML=h;
 }
 
 function renderStore(){
   const P=MONETIZATION.prices, packCfg=[["gems_s","Starter Pack"],["gems_m","Studio Pack"],["gems_l","Producer Pack"],["gems_mega","Mogul Pack"]];
-  let h=`<div class="aaa-page-hero"><h2>💎 ${t("s_store","Studio Store")}</h2><p>Gems power scouts, skips, and boosts. Earn free or top up below.</p></div>
+  let h=`<div class="aaa-tab-page"><div class="aaa-page-hero"><h2>💎 ${t("s_store","Studio Store")}</h2><p>Gems power scouts, skips, and boosts. Earn free or top up below.</p></div>
     <div class="aaa-store-balance"><img src="icons/hf/gems.png?v=${ASSET_V}" alt=""><div><div class="muted" style="font-size:10px;margin:0">Your Balance</div><b>${fmt(S.gems)}</b></div></div>`;
   h+=`<div class="panel" style="padding:12px">`;
   // Producer Pass (owned state always shown)
@@ -2565,7 +2566,7 @@ function renderStore(){
     h+=`<div class="uprow"><div class="meta"><h4>${it.ic} ${it.name}${have?` <span class="pill">×${have}</span>`:""}${it.premium?` <span class="pill" style="background:#ffe39a;color:#7a5200">PREMIUM</span>`:""}</h4><div class="muted">${it.desc}</div></div>
       <div class="row" style="gap:6px">${have?`<button class="btn-cyan hirebtn" data-itemuse="${id}">Use</button>`:""}<button class="btn-gold hirebtn" data-itembuy="${id}" ${S.gems>=it.gem?"":"disabled"}>Buy<small>${it.gem} 💎</small></button></div></div>`;
   });
-  h+=`</div>`;
+  h+=`</div></div>`;
   main.innerHTML=h;
 }
 
@@ -2836,20 +2837,20 @@ window.__AST_HOOK__ = {
   studioLevel,
 };
 </script>
-<script src="aaa-upgrade.js?v=45"></script>
-<script src="gameplay-plus.js?v=45"></script>
-<script src="gameplay-ultra.js?v=45"></script>
-<script src="gameplay-endless.js?v=45"></script>
-<script src="gameplay-empire.js?v=45"></script>
-<script src="gameplay-studio.js?v=45"></script>
-<script src="gameplay-final.js?v=45"></script>
-<script src="gameplay-aaa.js?v=45"></script>
-<script src="gameplay-legend.js?v=45"></script>
-<script src="hud-premium.js?v=45"></script>
-<script src="ui-complete.js?v=45"></script>
-<script src="gameplay-studio-rating.js?v=45"></script>
-<script src="gameplay-polish.js?v=45"></script>
-<script src="hook-bridge.js?v=45"></script>
+<script src="aaa-upgrade.js?v=46"></script>
+<script src="gameplay-plus.js?v=46"></script>
+<script src="gameplay-ultra.js?v=46"></script>
+<script src="gameplay-endless.js?v=46"></script>
+<script src="gameplay-empire.js?v=46"></script>
+<script src="gameplay-studio.js?v=46"></script>
+<script src="gameplay-final.js?v=46"></script>
+<script src="gameplay-aaa.js?v=46"></script>
+<script src="gameplay-legend.js?v=46"></script>
+<script src="hud-premium.js?v=46"></script>
+<script src="ui-complete.js?v=46"></script>
+<script src="gameplay-studio-rating.js?v=46"></script>
+<script src="gameplay-polish.js?v=46"></script>
+<script src="hook-bridge.js?v=46"></script>
 <!-- studio-premium.css loaded in head -->
 
 

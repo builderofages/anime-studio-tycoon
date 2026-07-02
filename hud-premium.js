@@ -174,11 +174,29 @@
     top.parentNode.insertBefore(shell, top);
 
     const resWrap = document.getElementById("hud-resources");
-    ["yen", "fans", "hype", "gems"].forEach((k) => {
+    const plusTab = { yen: "market", fans: "market", gems: "store" };
+    ["yen", "fans", "gems"].forEach((k) => {
       const el = top.querySelector(".res." + k);
       if (!el) return;
       el.classList.add("hud-stat", k);
-      resWrap.appendChild(el);
+      const wrap = document.createElement("div");
+      wrap.className = "hud-stat-wrap " + k;
+      wrap.appendChild(el);
+      const plus = document.createElement("button");
+      plus.type = "button";
+      plus.className = "hud-stat-plus";
+      plus.textContent = "+";
+      plus.setAttribute("aria-label", "Get more " + k);
+      plus.addEventListener("click", () => {
+        const hook = window.__AST_HOOK__;
+        if (!hook) return;
+        hook.getState().tab = plusTab[k];
+        hook.render();
+        hook.play("click");
+        closeDrawer();
+      });
+      wrap.appendChild(plus);
+      resWrap.appendChild(wrap);
     });
 
     const trend = top.querySelector("#trendbar");
@@ -222,7 +240,10 @@
     document.getElementById("pathway-cta").addEventListener("click", runPathwayAction);
     document.getElementById("coach-dismiss").addEventListener("click", () => {
       const rail = document.getElementById("pathway-rail");
-      if (rail) rail.classList.add("coach-hidden");
+      if (rail) {
+        rail.classList.add("coach-hidden");
+        rail.dataset.coachDismissed = "1";
+      }
     });
     document.getElementById("hud-menu-btn").addEventListener("click", () => {
       const d = document.getElementById("hud-drawer");
@@ -267,7 +288,15 @@
     window.__AST_PATHWAY__ = pw;
 
     const rail = document.getElementById("pathway-rail");
-    if (rail && pw.urgent) rail.classList.remove("coach-hidden");
+    const showCoach = !!pw.urgent || (S.releases || 0) < 3;
+    if (rail) {
+      if (showCoach) {
+        rail.classList.remove("coach-hidden");
+        delete rail.dataset.coachDismissed;
+      } else if (!rail.dataset.coachDismissed) {
+        rail.classList.add("coach-hidden");
+      }
+    }
 
     const nowEl = document.getElementById("pathway-now");
     if (nowEl) nowEl.textContent = pw.message;
