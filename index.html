@@ -1333,14 +1333,26 @@ const DECISIONS=[
    yes:["Reply to fans", ()=>{const f=bigFans()*2; S.fans+=f; S.totalFansEver+=f; S.hype+=6; return `+${fmt(f)} fans, +6 Hype`;}],
    no:["Frame the best one", ()=>{S.gems+=2; return `A keepsake: +2 💎`;}]},
 ];
+function crisisModalOpen(){
+  const m=document.getElementById("decision");
+  if(m&&m.style.display==="flex") return true;
+  if(_pendingDecision) return true;
+  if(window.__AST_CRISIS_OPEN__) return true;
+  if(window.__AST_PENDING_WARROOM__) return true;
+  const br=document.getElementById("aaa-briefing");
+  if(br&&br.style.display==="flex") return true;
+  return false;
+}
 function maybeDecision(){
+  if(crisisModalOpen()) return;
   if(maybeStarterOffer()) return;
-  if(Date.now()-(S.lastDecision||0) < 90000) return;
+  if(Date.now()-(S.lastDecision||0) < 180000) return;
   if((S.releases||0)<3) return;
-  if(Math.random()>0.4) return;
+  if(Math.random()>0.25) return;
   showDecision();
 }
 function showDecision(){
+  if(crisisModalOpen()) return;
   _pendingDecision=DECISIONS[Math.floor(Math.random()*DECISIONS.length)];
   S.lastDecision=Date.now();
   const d=_pendingDecision, body=document.getElementById("decision-body");
@@ -1355,8 +1367,12 @@ function showDecision(){
 }
 function resolveDecision(yes){
   const d=_pendingDecision; _pendingDecision=null;
+  window.__AST_CRISIS_OPEN__=false;
+  window.__AST_PENDING_WARROOM__=null;
   const m=document.getElementById("decision"); if(m) m.style.display="none";
   if(!d) return;
+  if(d.chaos) S.lastChaos=Date.now();
+  else S.lastDecision=Date.now();
   const msg=(yes?d.yes[1]:d.no[1])();
   track("decision",{id:d.id,yes,chaos:!!d.chaos}); play("reward");
   if(msg) toast("📣 "+msg, true);
@@ -1393,25 +1409,31 @@ const CHAOS=[
    no:["Hold the line", ()=>{const f=Math.floor((S.fans||0)*0.04); S.fans=Math.max(0,S.fans-f); S.chaos=Math.max(0,(S.chaos||0)-15); return `−${fmt(f)} fans from the leak`;}]},
 ];
 function showChaosDecision(){
+  if(crisisModalOpen()) return;
+  S.lastChaos=Date.now();
+  window.__AST_CRISIS_OPEN__=true;
   _pendingDecision=Object.assign({chaos:true}, CHAOS[Math.floor(Math.random()*CHAOS.length)]);
   renderDecisionModal(_pendingDecision, true);
 }
 function maybeChaos(){
-  if(!started||OFFLINE||_pendingDecision||_premiereOpen) return;
+  if(!started||OFFLINE||_premiereOpen) return;
+  if(crisisModalOpen()) return;
   if(window.__AST_MAYBE_CHAOS__){ window.__AST_MAYBE_CHAOS__(showChaosDecision); return; }
-  if(Date.now()-(S.lastChaos||0) < 60000) return;
-  const chance=((S.chaos||0)/100) * (S.chaosMode?0.55:0.28);
-  if(Math.random()<chance){ S.lastChaos=Date.now(); showChaosDecision(); }
+  if(Date.now()-(S.lastChaos||0) < 180000) return;
+  const chance=((S.chaos||0)/100) * (S.chaosMode?0.22:0.12);
+  if(Math.random()<chance){ showChaosDecision(); }
 }
 function removeStar(sid){ S.stars=(S.stars||[]).filter(s=>s.sid!==sid); S.projects.forEach(pr=>{ if(pr&&pr.cast) pr.cast=pr.cast.filter(id=>id!==sid); }); }
 /* The fame trap: a star you've over-hyped can outgrow you and demand a raise — or walk. */
 function maybeStarDemand(){
-  if(!started||OFFLINE||_pendingDecision||_premiereOpen) return;
-  if(Date.now()-(S.lastStarDemand||0) < 120000) return;
+  if(!started||OFFLINE||_premiereOpen) return;
+  if(crisisModalOpen()) return;
+  if(Date.now()-(S.lastStarDemand||0) < 240000) return;
   const cand=(S.stars||[]).filter(s=>(s.fame||0)>=4 && starLoyalty(s)<50);
   if(!cand.length || Math.random()>0.5) return;
   const st=cand[Math.floor(Math.random()*cand.length)]; const t=STAR_BY_ID[st.sid]; if(!t) return;
   S.lastStarDemand=Date.now();
+  window.__AST_CRISIS_OPEN__=true;
   const cost=Math.max(2500, Math.floor(studioValue()*0.05)+(st.fame||0)*1500);
   _pendingDecision={ chaos:true, id:"demand", ic:"🌟", title:t.name+" Demands More",
     text:`${t.name} has become a Fame ${st.fame} superstar and wants a ¥${fmt(cost)} raise — or they'll sign with a rival studio.`,
@@ -2786,7 +2808,8 @@ document.addEventListener("visibilitychange", ()=>{
   last=performance.now();
 });
 setInterval(()=>{ if(started) save(); }, 8000);
-setInterval(()=>{ const el=document.getElementById("flash-cd"); if(el) el.textContent=flashCountdown(); updateComboMeter(); maybeChaos(); maybeStarDemand(); }, 1000);
+setInterval(()=>{ const el=document.getElementById("flash-cd"); if(el) el.textContent=flashCountdown(); updateComboMeter(); }, 1000);
+setInterval(()=>{ if(started&&!OFFLINE){ maybeChaos(); maybeStarDemand(); } }, 5000);
 function updateComboMeter(){
   let el=document.getElementById("combo-meter");
   const left=60000-(Date.now()-(S.lastReleaseAt||0));

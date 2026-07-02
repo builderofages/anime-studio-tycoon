@@ -129,8 +129,10 @@
   }
 
   function renderWarRoom(d, h) {
+    if (window.__AST_CRISIS_OPEN__ || window.__AST_PENDING_WARROOM__) return;
     const body = document.getElementById("decision-body");
     if (!body) return;
+    window.__AST_CRISIS_OPEN__ = true;
     const opts = d.opts.map((o, i) =>
       `<button class="btn-ghost warroom-opt" data-empire-war="${i}">${o.label}</button>`
     ).join("");
@@ -146,9 +148,11 @@
   function resolveWarRoom(idx, h) {
     const d = window.__AST_PENDING_WARROOM__;
     window.__AST_PENDING_WARROOM__ = null;
+    window.__AST_CRISIS_OPEN__ = false;
     document.getElementById("decision").style.display = "none";
     if (!d || !d.opts[idx]) return;
     const S = h.getState();
+    S.lastChaos = Date.now();
     S.lastCrisisDay = todayStr();
     S.calmStreak = 0;
     S.crisesSurvived = (S.crisesSurvived || 0) + 1;
@@ -266,19 +270,19 @@
 
     window.__AST_MAYBE_CHAOS__ = function (fallback) {
       const S = hook.getState();
-      if (Date.now() - (S.lastChaos || 0) < 60000) return;
-      const chance = ((S.chaos || 0) / 100) * (S.chaosMode ? 0.55 : 0.28);
-      if (Math.random() < chance) {
-        S.lastChaos = Date.now();
-        const ev = WARROOM[Math.floor(Math.random() * WARROOM.length)];
-        if ((S.marketShare || 0) >= 20 && Math.random() < 0.35) {
-          renderWarRoom(WARROOM[2], hook);
-        } else {
-          renderWarRoom(ev, hook);
-        }
-        return;
+      if (window.__AST_CRISIS_OPEN__ || window.__AST_PENDING_WARROOM__) return;
+      const dm = document.getElementById("decision");
+      if (dm && dm.style.display === "flex") return;
+      if (Date.now() - (S.lastChaos || 0) < 180000) return;
+      const chance = ((S.chaos || 0) / 100) * (S.chaosMode ? 0.22 : 0.12);
+      if (Math.random() >= chance) return;
+      S.lastChaos = Date.now();
+      const ev = WARROOM[Math.floor(Math.random() * WARROOM.length)];
+      if ((S.marketShare || 0) >= 20 && Math.random() < 0.35) {
+        renderWarRoom(WARROOM[2], hook);
+      } else {
+        renderWarRoom(ev, hook);
       }
-      if (fallback) fallback();
     };
 
     const origGreen = hook.greenlight;
