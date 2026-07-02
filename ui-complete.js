@@ -102,7 +102,7 @@
   }
 
   function injectTabHero(S, hook) {
-    if (document.documentElement.classList.contains("premium-hud")) return;
+    if (document.documentElement.classList.contains("hud-v3-active")) return;
     const main = document.getElementById("main");
     if (!main) return;
     const old = main.querySelector(".ui-tab-hero");

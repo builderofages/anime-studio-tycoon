@@ -103,6 +103,7 @@ assert(html.includes("_legendReleaseMult"), "legend release multiplier");
 assert(html.includes('src="hud-premium.js"'), "hud-premium.js linked");
 assert(html.includes("hud-premium.css"), "hud-premium.css linked");
 assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("pathway-rail"), "pathway rail in hud script");
+assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("hud-v3"), "hud v3 shell");
 assert(html.includes('src="ui-complete.js"'), "ui-complete.js linked");
 assert(readFileSync(join(root, "ui-complete.js"), "utf8").includes("ui-tab-hero"), "tab hero layouts");
 assert(html.includes('src="gameplay-studio-rating.js"'), "gameplay-studio-rating.js linked");

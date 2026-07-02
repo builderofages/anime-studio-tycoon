@@ -1,41 +1,13 @@
 /**
- * Anime Studio Tycoon — Premium HUD & Pathway System (v11)
- * Rebuilds chrome: command HUD, journey rail, tab badges, smart next-action.
+ * Anime Studio Tycoon — HUD v3
+ * Minimal chrome: compact stat bar, slim coach, icon dock, utility drawer.
  */
 (function () {
-  const JOURNEY = [
-    { id: "hire", ic: "👥", lbl: "Hire" },
-    { id: "greenlight", ic: "🎬", lbl: "Greenlight" },
-    { id: "produce", ic: "⚙️", lbl: "Produce" },
-    { id: "premiere", ic: "🎉", lbl: "Premiere" },
-    { id: "grow", ic: "📈", lbl: "Grow" },
-    { id: "empire", ic: "👑", lbl: "Empire" },
-  ];
-
-  function dynastyScore(S) {
-    let s = 0;
-    s += Math.min(18, (S.releases || 0) / 15);
-    s += Math.min(15, Math.log10(Math.max(1, S.totalFansEver || 1)) * 3);
-    s += Math.min(12, (S.marketShare || 5) / 4);
-    s += Math.min(10, (S.awardsWon || 0) * 2);
-    s += Math.min(10, (S.festivalWins || []).length * 2.5);
-    s += Math.min(8, (S.legacy || 0) * 1.5);
-    s += Math.min(8, (S.influence || 0) / 3);
-    s += Math.min(7, (S.stars || []).length / 2);
-    s += Math.min(6, Object.keys(S.franchises || {}).length);
-    s += Math.min(6, (S.dynastyPoints || 0) / 20);
-    if (S.producerPass) s += 4;
-    if ((S.endlessDiff || "") === "nightmare") s += 5;
-    return Math.round(Math.min(100, s));
-  }
-
-  function dynastyGrade(score) {
-    if (score >= 92) return { g: "S", cls: "rank-s" };
-    if (score >= 78) return { g: "A", cls: "rank-a" };
-    if (score >= 62) return { g: "B", cls: "rank-b" };
-    if (score >= 45) return { g: "C", cls: "rank-c" };
-    return { g: "D", cls: "rank-d" };
-  }
+  const QUEST_METRICS = {
+    rel: "releases", rel2: "releases", yen: "yen", big: "yen", camp: "campaigns",
+    hire: "hires", hire2: "hires", hype: "hypeSpent", scout: "scouts",
+    green: "greenlit", tap: "taps", tap2: "taps",
+  };
 
   function staffTotal(S) {
     const st = S.staff || {};
@@ -56,12 +28,6 @@
     return -1;
   }
 
-  const QUEST_METRICS = {
-    rel: "releases", rel2: "releases", yen: "yen", big: "yen", camp: "campaigns",
-    hire: "hires", hire2: "hires", hype: "hypeSpent", scout: "scouts",
-    green: "greenlit", tap: "taps", tap2: "taps",
-  };
-
   function claimableQuests(S) {
     let n = 0;
     (S.quests || []).forEach((q) => {
@@ -81,23 +47,18 @@
     const ready = readySlot(S, hook);
     if (ready >= 0) {
       return {
-        phase: "premiere",
-        phaseIdx: 3,
-        message: "🎉 A production is ready — premiere it now for fans & yen!",
+        message: "Production ready — premiere now",
         tab: "produce",
-        cta: "Premiere Now",
+        cta: "Premiere",
         urgent: true,
         action: { type: "tab", tab: "produce" },
       };
     }
     if ((S.studioStars || 1) < 3 && (S.releases || 0) >= 1 && (S.releases || 0) < 15) {
-      const next = (S.studioStars || 1) + 1;
       return {
-        phase: "grow",
-        phaseIdx: 4,
-        message: `⭐ Studio ${next}★ within reach — tap your stars (top-left) and fill every pillar!`,
+        message: `Push toward ${(S.studioStars || 1) + 1}★ studio rating`,
         tab: "produce",
-        cta: "View Rating",
+        cta: "Rating",
         urgent: false,
         action: { type: "rating" },
       };
@@ -105,28 +66,22 @@
     if ((S.releases || 0) === 0 && activeCount(S) === 0) {
       if (staffTotal(S) === 0) {
         return {
-          phase: "hire",
-          phaseIdx: 0,
-          message: "👥 Hire your first staff — animators & writers power every show.",
+          message: "Hire animators and writers first",
           tab: "staff",
-          cta: "Hire Staff",
+          cta: "Hire",
           action: { type: "tab", tab: "staff" },
         };
       }
       if (S.yen < 100) {
         return {
-          phase: "hire",
-          phaseIdx: 0,
-          message: "🖌️ Low on cash — tap Freelance on Produce or wait for royalties.",
+          message: "Low cash — freelance or wait for royalties",
           tab: "produce",
-          cta: "Go Produce",
+          cta: "Produce",
           action: { type: "tab", tab: "produce" },
         };
       }
       return {
-        phase: "greenlight",
-        phaseIdx: 1,
-        message: "🎬 Greenlight your first anime — pick a genre & project type.",
+        message: "Greenlight your first anime",
         tab: "produce",
         cta: "Greenlight",
         action: { type: "tab", tab: "produce" },
@@ -134,64 +89,59 @@
     }
     if (activeCount(S) > 0 && (S.releases || 0) < 5) {
       return {
-        phase: "produce",
-        phaseIdx: 2,
-        message: "⚙️ Production running — tap posters to boost speed, or greenlight more shows.",
+        message: "Tap posters to boost production speed",
         tab: "produce",
-        cta: "View Lines",
+        cta: "Lines",
         action: { type: "tab", tab: "produce" },
       };
     }
     if ((S.stars || []).length === 0 && S.fans >= 50) {
       return {
-        phase: "grow",
-        phaseIdx: 4,
-        message: "⭐ Stars tab unlocked — scout talent for bigger premieres!",
+        message: "Scout star talent for bigger premieres",
         tab: "stars",
-        cta: "Scout Stars",
+        cta: "Stars",
         action: { type: "tab", tab: "stars" },
       };
     }
     if (claimableQuests(S) > 0) {
       return {
-        phase: "grow",
-        phaseIdx: 4,
-        message: "📋 Quest rewards ready to claim — free gems waiting!",
+        message: "Quest rewards ready to claim",
         tab: "quests",
-        cta: "Claim Rewards",
+        cta: "Claim",
         urgent: true,
         action: { type: "tab", tab: "quests" },
       };
     }
     if ((S.dynastyPoints || 0) - (S.dynastySpent || 0) >= 12 && (S.releases || 0) >= 15) {
       return {
-        phase: "empire",
-        phaseIdx: 5,
-        message: "👑 Dynasty points available — buy permanent perks in Studio.",
+        message: "Dynasty perks available in Studio",
         tab: "studio",
-        cta: "Dynasty Perks",
+        cta: "Studio",
         action: { type: "tab", tab: "studio" },
       };
     }
-    if ((S.releases || 0) >= 10 && !(S.festivalWins || []).length) {
-      return {
-        phase: "empire",
-        phaseIdx: 5,
-        message: "🏆 Push for 4★+ premieres to enter the festival circuit!",
-        tab: "produce",
-        cta: "Quality Push",
-        action: { type: "tab", tab: "produce" },
-      };
-    }
-    const phaseIdx = (S.releases || 0) >= 50 ? 5 : (S.releases || 0) >= 10 ? 4 : (S.releases || 0) >= 3 ? 3 : 2;
     return {
-      phase: JOURNEY[phaseIdx].id,
-      phaseIdx,
-      message: "🎬 Keep greenlighting, upgrading staff, and climbing the industry ranks.",
+      message: "Trending: " + (hook.trendGenre ? hook.trendGenre() : "Action"),
       tab: "produce",
-      cta: "Continue",
+      cta: "Play",
       action: { type: "tab", tab: "produce" },
     };
+  }
+
+  function runPathwayAction() {
+    const hook = window.__AST_HOOK__;
+    if (!hook) return;
+    const pw = window.__AST_PATHWAY__;
+    if (pw && pw.action && pw.action.type === "rating") {
+      (document.getElementById("hud-studio-rating") || document.getElementById("studio-rank"))?.click();
+      hook.play("click");
+      return;
+    }
+    if (pw && pw.action && pw.action.type === "tab") {
+      hook.getState().tab = pw.action.tab;
+      hook.render();
+      hook.play("click");
+    }
   }
 
   function buildHudShell() {
@@ -201,33 +151,30 @@
 
     const shell = document.createElement("div");
     shell.id = "hud-shell";
+    shell.className = "hud-v3";
     shell.innerHTML = `
-      <div class="hud-row-top">
-        <div class="hud-brand">
-          <div class="hud-logo">🎬</div>
-          <div class="hud-studio-info">
-            <span class="hud-studio-name" id="hud-studio-name">Anime Studio</span>
-            <span class="hud-dynasty-pill rank-d" id="hud-dynasty"><span id="hud-dynasty-grade">D</span> · <span id="hud-dynasty-score">0</span></span>
-          </div>
+      <div class="hud-top">
+        <button type="button" class="hud-menu-btn" id="hud-menu-btn" aria-label="Menu">☰</button>
+        <div class="hud-identity">
+          <span class="hud-studio-name" id="hud-studio-name">Studio</span>
+          <div id="hud-studio-rating" class="hud-rating-chip" title="Studio rating"></div>
         </div>
-        <div id="hud-studio-rating" class="hud-studio-rating" title="Studio rating — tap to view"></div>
-        <div class="hud-combo" id="hud-combo">🔥 <span id="hud-combo-n">0</span>x</div>
+        <span class="hud-trend-chip" id="hud-trend-chip"></span>
+        <span class="hud-combo" id="hud-combo"><span id="hud-combo-n">0</span>x</span>
       </div>
-      <div class="hud-resources" id="hud-resources"></div>
-      <div class="hud-trend"><span class="spark">📈</span> Trending: <b id="hud-trend">Action</b></div>`;
+      <div class="hud-stats" id="hud-resources"></div>
+      <div class="hud-drawer" id="hud-drawer" hidden>
+        <div class="hud-drawer-inner" id="hud-drawer-slot"></div>
+      </div>`;
 
     top.parentNode.insertBefore(shell, top);
 
-    const res = document.getElementById("hud-resources");
+    const resWrap = document.getElementById("hud-resources");
     ["yen", "fans", "hype", "gems"].forEach((k) => {
       const el = top.querySelector(".res." + k);
       if (!el) return;
-      el.classList.add("hud-res", k);
-      const lbl = document.createElement("span");
-      lbl.className = "hud-res-lbl";
-      lbl.textContent = k;
-      el.appendChild(lbl);
-      res.appendChild(el);
+      el.classList.add("hud-stat", k);
+      resWrap.appendChild(el);
     });
 
     const trend = top.querySelector("#trendbar");
@@ -237,12 +184,12 @@
     if (!document.getElementById("pathway-rail")) {
       const rail = document.createElement("div");
       rail.id = "pathway-rail";
-      rail.innerHTML = `<div class="pathway-header">
-          <span class="pathway-title">Director's Pathway</span>
-          <button type="button" class="pathway-cta" id="pathway-cta">Continue</button>
-        </div>
-        <div class="pathway-steps" id="pathway-steps"></div>
-        <div class="pathway-now" id="pathway-now"></div>`;
+      rail.className = "coach-bar";
+      rail.innerHTML = `
+        <p class="coach-msg" id="pathway-now"></p>
+        <button type="button" class="coach-cta" id="pathway-cta">Go</button>
+        <button type="button" class="coach-dismiss" id="coach-dismiss" aria-label="Dismiss">×</button>
+        <div class="pathway-steps" id="pathway-steps" hidden></div>`;
       const goal = document.getElementById("goal");
       goal.parentNode.insertBefore(rail, goal.nextSibling);
     }
@@ -255,22 +202,26 @@
       dock.appendChild(tabs);
     }
 
-    document.documentElement.classList.add("premium-hud");
+    const foot = document.querySelector(".foot");
+    const drawerSlot = document.getElementById("hud-drawer-slot");
+    if (foot && drawerSlot && !drawerSlot.children.length) {
+      while (foot.firstChild) drawerSlot.appendChild(foot.firstChild);
+      foot.remove();
+    }
 
-    document.getElementById("pathway-cta").addEventListener("click", () => {
-      const hook = window.__AST_HOOK__;
-      if (!hook) return;
-      const pw = window.__AST_PATHWAY__;
-      if (pw && pw.action && pw.action.type === "rating") {
-        (document.getElementById("hud-studio-rating") || document.getElementById("studio-rank"))?.click();
-        hook.play("click");
-        return;
-      }
-      if (pw && pw.action && pw.action.type === "tab") {
-        hook.getState().tab = pw.action.tab;
-        hook.render();
-        hook.play("click");
-      }
+    document.documentElement.classList.add("premium-hud", "hud-v3-active");
+
+    document.getElementById("pathway-cta").addEventListener("click", runPathwayAction);
+    document.getElementById("coach-dismiss").addEventListener("click", () => {
+      const rail = document.getElementById("pathway-rail");
+      if (rail) rail.classList.add("coach-hidden");
+    });
+    document.getElementById("hud-menu-btn").addEventListener("click", () => {
+      const d = document.getElementById("hud-drawer");
+      if (d) d.hidden = !d.hidden;
+    });
+    document.getElementById("hud-drawer").addEventListener("click", (e) => {
+      if (e.target.id === "hud-drawer") e.currentTarget.hidden = true;
     });
   }
 
@@ -278,17 +229,11 @@
     buildHudShell();
     const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
     set("hud-studio-name", S.studioName || "Your Studio");
-    const score = dynastyScore(S);
-    const dg = dynastyGrade(score);
-    const pill = document.getElementById("hud-dynasty");
-    if (pill) {
-      pill.className = "hud-dynasty-pill " + dg.cls;
-      set("hud-dynasty-grade", dg.g + "-RANK");
-      set("hud-dynasty-score", score + "/100");
-    }
-    set("hud-trend", hook.trendGenre ? hook.trendGenre() : "Action");
+
+    const trend = hook.trendGenre ? hook.trendGenre() : "Action";
+    set("hud-trend-chip", "📈 " + trend);
     const trendEl = document.getElementById("trend");
-    if (trendEl) trendEl.textContent = hook.trendGenre ? hook.trendGenre() : "Action";
+    if (trendEl) trendEl.textContent = trend;
 
     const combo = document.getElementById("hud-combo");
     const comboN = document.getElementById("hud-combo-n");
@@ -302,13 +247,9 @@
     const pw = analyzePathway(S, hook);
     window.__AST_PATHWAY__ = pw;
 
-    const stepsEl = document.getElementById("pathway-steps");
-    if (stepsEl) {
-      stepsEl.innerHTML = JOURNEY.map((j, i) => {
-        const cls = i < pw.phaseIdx ? "done" : i === pw.phaseIdx ? "current" : "";
-        return `<div class="pathway-step ${cls}"><span class="ps-ic">${j.ic}</span><span class="ps-lbl">${j.lbl}</span></div>`;
-      }).join("");
-    }
+    const rail = document.getElementById("pathway-rail");
+    if (rail && pw.urgent) rail.classList.remove("coach-hidden");
+
     const nowEl = document.getElementById("pathway-now");
     if (nowEl) nowEl.textContent = pw.message;
     const cta = document.getElementById("pathway-cta");
@@ -322,13 +263,10 @@
     const badges = {
       produce: readySlot(S, hook) >= 0,
       quests: claimableQuests(S) > 0,
-      stars: false,
-      store: false,
     };
     document.querySelectorAll(".tab").forEach((tab) => {
       const k = tab.dataset.tab;
-      const existing = tab.querySelector(".tab-badge");
-      if (existing) existing.remove();
+      tab.querySelector(".tab-badge")?.remove();
       if (badges[k]) {
         const b = document.createElement("span");
         b.className = "tab-badge";
@@ -341,17 +279,13 @@
     const hook = window.__AST_HOOK__;
     if (!hook || hook.__hudPremiumInstalled) return false;
     hook.__hudPremiumInstalled = true;
-
     buildHudShell();
-
     const origRender = hook.render;
     hook.render = function () {
       origRender();
-      const S = hook.getState();
-      updateHud(S, hook);
-      updateTabBadges(S, hook);
+      updateHud(hook.getState(), hook);
+      updateTabBadges(hook.getState(), hook);
     };
-
     const origUpdateTop = window.updateTopBar;
     if (typeof origUpdateTop === "function") {
       window.updateTopBar = function () {
@@ -359,7 +293,6 @@
         updateHud(hook.getState(), hook);
       };
     }
-
     hook.render();
     return true;
   }
@@ -368,7 +301,5 @@
     document.addEventListener("DOMContentLoaded", () => setTimeout(buildHudShell, 0));
   } else buildHudShell();
 
-  const poll = setInterval(() => {
-    if (install()) clearInterval(poll);
-  }, 60);
+  const poll = setInterval(() => { if (install()) clearInterval(poll); }, 60);
 })();
