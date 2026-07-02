@@ -33,25 +33,25 @@
 <link rel="stylesheet" href="hud-premium.css">
 <link rel="stylesheet" href="ui-complete.css">
 <link rel="stylesheet" href="gameplay-studio-rating.css">
-<link rel="stylesheet" href="design-overhaul.css">
+<link rel="stylesheet" href="studio-premium.css">
 <script>document.documentElement.classList.add("premium-hud")</script>
 <meta name="theme-color" content="#08050f">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <style>
 :root{
-  --cream:#fbf3e6; --cream2:#f3e6d0; --ink:#2c2536; --plum:#3a2b4d;
-  --sakura:#ff9bc4; --sakura2:#ffd6e7; --slate:#46506b; --slate2:#2f3650;
-  --gold:#ffc845; --gold2:#ffe39a; --cyan:#22e0ff; --cyan2:#bff6ff;
-  --good:#5fd38a; --bad:#ff6b8a;
-  --panel:rgba(251,243,230,.94); --panelblur:saturate(1.1) blur(6px);
-  --shadow:0 10px 30px rgba(28,20,40,.35);
-  --r:18px;
-  font-family:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',sans-serif;
+  --cream:#1a1228; --cream2:#120c1c; --ink:#ece6f4; --plum:#c4b5d8;
+  --sakura:#ec4899; --sakura2:#f472b6; --slate:#8b7da8; --slate2:#6b5f82;
+  --gold:#fbbf24; --gold2:#fcd34d; --cyan:#22d3ee; --cyan2:#67e8f9;
+  --good:#4ade80; --bad:#f87171;
+  --panel:rgba(16,11,26,.94); --panelblur:blur(12px) saturate(1.2);
+  --shadow:0 12px 32px rgba(0,0,0,.45);
+  --r:16px;
+  font-family:'DM Sans',system-ui,-apple-system,sans-serif;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;height:100%;background:#1a1426;color:var(--ink);overflow:hidden}
+html,body{margin:0;height:100%;background:#06040c;color:var(--ink);overflow:hidden}
 body{
-  background:linear-gradient(rgba(26,20,38,.55),rgba(26,20,38,.78)), url(https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_062706_8cb8f42c-84b2-45b0-8c27-96e8ffc01bb7.jpeg) center/cover no-repeat fixed;
+  background:radial-gradient(ellipse 90% 55% at 50% -8%,rgba(168,85,247,.18),transparent 52%),linear-gradient(180deg,#0a0612 0%,#06040c 100%);
 }
 #app{height:100%;display:flex;flex-direction:column;max-width:920px;margin:0 auto;position:relative}
 button{font-family:inherit;cursor:pointer;border:none;border-radius:12px;font-weight:700;transition:transform .07s ease, filter .12s ease}
@@ -108,7 +108,7 @@ button:disabled{filter:grayscale(.6) brightness(.85);cursor:not-allowed;opacity:
 .dim .db i{display:block;height:100%;background:var(--slate);width:0%}
 .stars{color:var(--gold);font-size:18px;letter-spacing:2px;text-shadow:0 1px 1px rgba(0,0,0,.15)}
 .pickgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
-.pick{background:linear-gradient(180deg,#fff,var(--cream2));border-radius:14px;padding:10px;box-shadow:var(--shadow);border:2px solid transparent}
+.pick{background:var(--panel);border-radius:14px;padding:10px;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.08)}
 .pick.lock{filter:grayscale(.5);opacity:.65}
 .pick h4{margin:0 0 4px;color:var(--plum);font-size:15px}
 .pick .stat{font-size:11.5px;color:var(--slate);font-weight:700}
@@ -118,8 +118,8 @@ button:disabled{filter:grayscale(.6) brightness(.85);cursor:not-allowed;opacity:
 .chip.trend{outline:2px dashed var(--cyan)}
 
 /* STAFF / LISTS */
-.staffrow,.uprow{display:flex;align-items:center;gap:12px;background:linear-gradient(180deg,#fff,var(--cream2));
-  border-radius:14px;padding:10px;box-shadow:var(--shadow);margin-bottom:9px}
+.staffrow,.uprow{display:flex;align-items:center;gap:12px;background:var(--panel);
+  border-radius:14px;padding:10px;box-shadow:var(--shadow);margin-bottom:9px;border:1px solid rgba(255,255,255,.08)}
 .staffrow img{width:58px;height:58px;object-fit:cover;flex:none;border-radius:14px;box-shadow:inset 0 0 0 2px rgba(255,255,255,.6),0 2px 6px rgba(28,20,40,.25)}
 .staffrow .meta,.uprow .meta{flex:1;min-width:0}
 .staffrow .meta h4,.uprow .meta h4{margin:0;color:var(--plum);font-size:15px}
@@ -173,14 +173,14 @@ button:disabled{filter:grayscale(.6) brightness(.85);cursor:not-allowed;opacity:
 .hero-card{background:linear-gradient(120deg,rgba(255,155,196,.22),rgba(34,224,255,.18));border:1px solid rgba(255,255,255,.5)}
 /* KPI dashboard cards */
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:8px;margin-top:4px}
-.kpi{background:linear-gradient(180deg,#fff,var(--cream2));border-radius:14px;padding:9px 10px;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.6)}
+.kpi{background:var(--panel);border-radius:14px;padding:9px 10px;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.08)}
 .kpi .kl{font-size:10.5px;font-weight:800;letter-spacing:.3px;text-transform:uppercase;color:var(--slate);opacity:.8}
 .kpi .kv{font-size:17px;font-weight:900;color:var(--plum);font-variant-numeric:tabular-nums;margin-top:2px}
 .kpi.accent{background:linear-gradient(180deg,var(--gold2),var(--gold));}
 .kpi.accent .kl,.kpi.accent .kv{color:#5a3d00}
 /* login calendar */
 .logingrid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-top:4px}
-.loginday{position:relative;background:linear-gradient(180deg,#fff,var(--cream2));border-radius:11px;padding:7px 2px;text-align:center;box-shadow:var(--shadow);border:2px solid transparent;min-height:50px;display:flex;flex-direction:column;justify-content:center;gap:1px}
+.loginday{position:relative;background:var(--panel);border-radius:11px;padding:7px 2px;text-align:center;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.08);min-height:50px;display:flex;flex-direction:column;justify-content:center;gap:1px}
 .loginday .ld-day{font-size:10px;font-weight:800;color:var(--slate);opacity:.8}
 .loginday .ld-rew{font-size:12px;font-weight:900;color:var(--plum)}
 .loginday.big{background:linear-gradient(180deg,#fff,#ffe9bf);border-color:rgba(255,200,69,.6)}
@@ -330,9 +330,9 @@ h1,h2,h3,.panel h2,.prem-title{font-family:'Baloo 2',cursive !important;letter-s
   .chip{cursor:pointer}
 }
 
-/* ast47 event+footer fix */
-.eventbar{display:flex !important;align-items:center !important;gap:10px !important;height:auto !important;min-height:0 !important;max-height:none !important;padding:10px 14px !important;margin:0 12px 8px !important;width:auto !important;background:#fff7e6 !important;background-image:none !important;border:1.5px solid #f0d79a !important;border-radius:14px !important;box-shadow:0 6px 16px rgba(20,14,32,.12) !important;overflow:hidden !important;color:#3a2b4d !important}
-.eventbar *{color:#3a2b4d !important;text-shadow:none !important}
+/* ast47 event+footer fix (legacy light theme only) */
+html:not(.premium-hud) .eventbar{display:flex !important;align-items:center !important;gap:10px !important;height:auto !important;min-height:0 !important;max-height:none !important;padding:10px 14px !important;margin:0 12px 8px !important;width:auto !important;background:#fff7e6 !important;background-image:none !important;border:1.5px solid #f0d79a !important;border-radius:14px !important;box-shadow:0 6px 16px rgba(20,14,32,.12) !important;overflow:hidden !important;color:#3a2b4d !important}
+html:not(.premium-hud) .eventbar *{color:#3a2b4d !important;text-shadow:none !important}
 .eventbar .ev-ic{font-size:20px !important;line-height:1 !important}
 .eventbar .ev-meta,.eventbar .ev-meta *{font-size:12.5px !important;line-height:1.25 !important}
 .eventbar .ev-meta b,.eventbar strong{color:#7a3fd0 !important}
@@ -352,10 +352,10 @@ h1,h2,h3,.panel h2,.prem-title{font-family:'Baloo 2',cursive !important;letter-s
 .asd-mbtn.on{background:linear-gradient(135deg,#7c5cff,#ff6fae) !important;color:#fff !important;border-color:transparent !important;box-shadow:0 12px 26px rgba(124,92,255,.45) !important}
 @media(max-width:560px){#main{grid-template-columns:1fr !important}.asd-listpanel{grid-template-columns:1fr !important}}
 
-/* ast50 solid + menu + fill */
-.panel,.res,#trendbar,.eventbar,.tab,.asd-mbtn,#goal{backdrop-filter:none !important;-webkit-backdrop-filter:none !important}
-.panel{background:#fbf6ec !important}
-.res{background:#fdf9f1 !important}
+/* ast50 solid + menu + fill (legacy light theme only) */
+html:not(.premium-hud) .panel,html:not(.premium-hud) .res,html:not(.premium-hud) #trendbar,html:not(.premium-hud) .eventbar,html:not(.premium-hud) .tab,html:not(.premium-hud) .asd-mbtn,html:not(.premium-hud) #goal{backdrop-filter:none !important;-webkit-backdrop-filter:none !important}
+html:not(.premium-hud) .panel{background:#fbf6ec !important}
+html:not(.premium-hud) .res{background:#fdf9f1 !important}
 #main{grid-template-columns:repeat(auto-fit,minmax(min(460px,100%),1fr)) !important;align-items:start !important}
 .asd-listpanel{display:grid !important;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr)) !important;gap:10px 12px !important;align-content:start !important}
 .asd-listpanel>h2,.asd-listpanel>.muted,.asd-listpanel>.qhead,.asd-listpanel>p,.asd-listpanel>.bar,.asd-listpanel>.eventbar{grid-column:1 / -1 !important}
@@ -364,10 +364,10 @@ h1,h2,h3,.panel h2,.prem-title{font-family:'Baloo 2',cursive !important;letter-s
 .asd-mbtn{padding:9px 16px !important;font-size:13.5px !important;border-radius:16px !important;font-weight:800 !important;border:1px solid rgba(255,255,255,.7) !important;background:linear-gradient(180deg,#ffffff,#fbf4ea) !important;color:#2e2742 !important;box-shadow:0 10px 24px rgba(20,14,32,.18) !important}
 .asd-mbtn.on{background:linear-gradient(135deg,#7c5cff,#ff6fae) !important;color:#fff !important;border-color:transparent !important}
 .asd-mpanel{margin-left:auto !important;max-width:460px !important}
-#asd-p-status,#asd-p-menu{background:#fbf6ec !important;border:1px solid #ead9bf !important;border-radius:18px !important;box-shadow:0 14px 34px rgba(20,14,32,.22) !important;padding:10px !important}
-#asd-p-menu .foot{display:flex !important;flex-direction:column !important;gap:8px !important;align-items:stretch !important;padding:0 !important;background:transparent !important;justify-content:flex-start !important}
-#asd-p-menu .foot > *{display:flex !important;align-items:center !important;justify-content:flex-start !important;gap:8px !important;width:100% !important;padding:12px 14px !important;border-radius:12px !important;font-size:14px !important;font-weight:700 !important;background:#fff !important;border:1px solid #eee2cf !important;color:#3a2b4d !important;text-decoration:none !important;box-shadow:none !important;opacity:1 !important}
-#asd-p-menu .foot > *:hover{background:#f3ebdc !important;transform:none !important}
+html:not(.premium-hud) #asd-p-status,html:not(.premium-hud) #asd-p-menu{background:#fbf6ec !important;border:1px solid #ead9bf !important;border-radius:18px !important;box-shadow:0 14px 34px rgba(20,14,32,.22) !important;padding:10px !important}
+html:not(.premium-hud) #asd-p-menu .foot{display:flex !important;flex-direction:column !important;gap:8px !important;align-items:stretch !important;padding:0 !important;background:transparent !important;justify-content:flex-start !important}
+html:not(.premium-hud) #asd-p-menu .foot > *{display:flex !important;align-items:center !important;justify-content:flex-start !important;gap:8px !important;width:100% !important;padding:12px 14px !important;border-radius:12px !important;font-size:14px !important;font-weight:700 !important;background:#fff !important;border:1px solid #eee2cf !important;color:#3a2b4d !important;text-decoration:none !important;box-shadow:none !important;opacity:1 !important}
+html:not(.premium-hud) #asd-p-menu .foot > *:hover{background:#f3ebdc !important;transform:none !important}
 @media(max-width:560px){#main{grid-template-columns:1fr !important}.asd-listpanel{grid-template-columns:1fr !important}.asd-mpanel{max-width:none !important}}
 
 /* ast51 overlay dropdowns */
@@ -382,8 +382,9 @@ h1,h2,h3,.panel h2,.prem-title{font-family:'Baloo 2',cursive !important;letter-s
    ============================================================================ */
 /* retire the pop-in Status/Menu system entirely (its scripts are removed) */
 .asd-topbar,.asd-mpanel,#asd-p-status,#asd-p-menu{display:none !important}
-/* the goal bar and footer live where they belong, always visible */
-#goal{display:block !important}
+/* goal bar: hidden when premium HUD coach is active */
+html.premium-hud #goal{display:none !important}
+html:not(.premium-hud) #goal{display:block !important}
 /* footer: all controls visible, wrapped + centered (min-height:0 on #main below
    means a wrapped footer is never clipped by the browser chrome) */
 .foot{display:flex !important;flex-wrap:wrap !important;justify-content:center !important;gap:6px !important;
@@ -589,12 +590,12 @@ button,.btn-ghost{min-height:40px}
 
 <div class="overlay" id="whatsnew" style="display:none">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <h1 style="font-size:22px;text-align:center">✨ What's New — Design Overhaul</h1>
+    <h1 style="font-size:22px;text-align:center">✨ What's New — Premium UI v2</h1>
     <div class="offlist" style="margin:12px 0">
-      <div><span>🎨 Unified Dark UI</span><b>One cohesive premium theme — no more cream clash</b></div>
-      <div><span>⭐ Rating in HUD</span><b>Studio stars visible in the top bar again</b></div>
-      <div><span>📐 Slimmer Layout</span><b>Less banner spam, cleaner mobile</b></div>
-      <div><span>🌙 Dark Modals</span><b>Panels, cards, buttons all match</b></div>
+      <div><span>🎨 Premium Dark UI</span><b>Clean cinematic theme — cream panels killed for good</b></div>
+      <div><span>📐 Less Chrome</span><b>One coach bar, no duplicate goal/hero banners</b></div>
+      <div><span>⭐ Rating in HUD</span><b>Studio stars always visible top-right</b></div>
+      <div><span>🌙 Consistent Cards</span><b>Panels, rows, store — all match</b></div>
       <div><span>😴 Crisis Snooze</span><b>10-min break on crisis modals</b></div>
       <div><span>⭐ Studio Stars</span><b>JW-style rating with gates & bonuses</b></div>
     </div>
@@ -636,7 +637,7 @@ const STORE_PAYMENTS = true; // store always visible; buyReal routes web→check
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 31 · Design";
+const BUILD_TAG = "build 32 · Premium UI";
 const OFFLINE_CAP = 8*3600; // seconds
 
 const GENRES = ["Action","Romance","Fantasy","Sci-Fi","Comedy","Slice of Life"];
@@ -3027,7 +3028,7 @@ window.__AST_HOOK__ = {
 <script src="gameplay-studio-rating.js"></script>
 <script src="gameplay-polish.js"></script>
 <script src="hook-bridge.js"></script>
-<!-- design-overhaul.css loaded in head -->
+<!-- studio-premium.css loaded in head -->
 
 
 <script>(function(){var d;function f(){try{var b=document.getElementById('btn-save');if(b)b.click();}catch(e){}if(!d){d=document.createElement('div');d.style.cssText='position:fixed;bottom:10px;left:50%;transform:translateX(-50%);background:rgba(40,30,55,.92);color:#9be29b;font:600 12px system-ui;padding:5px 12px;border-radius:999px;z-index:99999;opacity:0;transition:opacity .25s;pointer-events:none';d.textContent='\u2713 Saved';document.body.appendChild(d);}d.style.opacity='1';clearTimeout(d._t);d._t=setTimeout(function(){d.style.opacity='0';},1100);}document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden')f();});window.addEventListener('pagehide',f);})();</script>

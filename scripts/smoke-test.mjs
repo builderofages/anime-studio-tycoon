@@ -57,7 +57,7 @@ const required = [
   "gameplay-studio-rating.css",
   "hook-bridge.js",
   "gameplay-polish.js",
-  "design-overhaul.css",
+  "studio-premium.css",
   "manifest.json",
   "privacy.html",
   "terms.html",
@@ -117,7 +117,7 @@ assert(html.includes("hire,") && html.includes("expandStudio,"), "hire/expand on
 assert(html.includes('src="gameplay-polish.js"'), "gameplay-polish.js linked");
 assert(html.includes("crisisSnoozeUntil"), "crisis snooze state");
 assert(html.includes('id:"rat5"'), "studio rating achievements");
-assert(html.includes("design-overhaul.css"), "design overhaul css linked");
+assert(html.includes("studio-premium.css"), "studio premium css linked");
 assert(html.includes("premium-hud"), "early premium-hud class");
 assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("hud-studio-rating"), "rating in hud shell");
 assert(html.includes("seasonClaimed"), "season pass state");
