@@ -324,6 +324,40 @@ html.hud-v3-active .hirebtn {
   font-size: 12px !important;
 }
 
+/* Staff hire cards — consistent enabled/disabled (not just cheapest role) */
+html.hud-v3-active .aaa-staff-card {
+  background: var(--c-surface) !important;
+  border: 1px solid var(--c-border) !important;
+  box-shadow: none !important;
+}
+
+html.hud-v3-active .aaa-staff-hire.btn-primary {
+  background: var(--c-accent) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+  min-width: 0 !important;
+  width: 100% !important;
+  padding: 10px 12px !important;
+  font-size: 12px !important;
+}
+
+html.hud-v3-active .aaa-staff-hire.btn-primary:disabled {
+  background: var(--c-surface-2) !important;
+  color: var(--c-muted) !important;
+  border: 1px solid var(--c-border) !important;
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+html.hud-v3-active .aaa-staff-hire.btn-primary small {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  opacity: 0.85;
+}
+
 /* ===== Pills & badges ===== */
 html.hud-v3-active .pill {
   background: rgba(8, 145, 178, 0.15) !important;

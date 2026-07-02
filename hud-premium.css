@@ -36,9 +36,11 @@ html.hud-v3-active body::before { display: none !important; }
 
 /* ---- App grid: hud · coach · main · dock ---- */
 html.hud-v3-active #app {
+  width: 100%;
   max-width: 480px;
   margin: 0 auto;
   display: grid !important;
+  grid-template-columns: minmax(0, 1fr);
   grid-template-rows: auto auto 1fr var(--ui-dock-h);
   grid-template-areas:
     "hud"
@@ -48,12 +50,14 @@ html.hud-v3-active #app {
   height: 100%;
   min-height: 0;
   background: var(--ui-bg);
+  box-sizing: border-box;
 }
 
 html.hud-v3-active #hud-shell { grid-area: hud; }
 html.hud-v3-active #pathway-rail { grid-area: coach; }
 html.hud-v3-active #main { grid-area: main; }
 html.hud-v3-active #command-dock { grid-area: dock; }
+html.hud-v3-active #top,
 html.hud-v3-active #goal,
 html.hud-v3-active #top.legacy-hidden,
 html.hud-v3-active .foot { display: none !important; }
@@ -221,15 +225,15 @@ html.hud-v3-active .foot { display: none !important; }
 .hud-stat.hype .v { color: var(--ui-cyan) !important; }
 .hud-stat.gems .v { color: #a78bfa !important; }
 
-/* Utility drawer */
+/* Utility drawer — slides from right, not over main content column */
 .hud-drawer {
   position: fixed;
   inset: 0;
-  z-index: 50;
+  z-index: 120;
   background: rgba(0, 0, 0, 0.55);
   display: flex;
   align-items: flex-start;
-  justify-content: flex-start;
+  justify-content: flex-end;
   padding: calc(52px + var(--safe-t, 0px)) 10px 10px;
 }
 
@@ -259,6 +263,15 @@ html.hud-v3-active .foot { display: none !important; }
   background: var(--ui-surface-2) !important;
   color: var(--ui-text) !important;
   border: 1px solid var(--ui-border) !important;
+}
+
+.hud-drawer-label {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ui-muted);
+  padding: 4px 12px 8px;
 }
 
 .hud-drawer-inner #buildtag {
@@ -334,25 +347,38 @@ html.hud-v3-active .foot { display: none !important; }
 html.hud-v3-active #main {
   display: flex !important;
   flex-direction: column !important;
-  gap: 8px !important;
-  padding: 8px 10px 10px !important;
+  gap: 10px !important;
+  padding: 8px 10px 12px !important;
   overflow-y: auto !important;
+  overflow-x: hidden !important;
   -webkit-overflow-scrolling: touch;
   min-height: 0 !important;
+  min-width: 0 !important;
+  width: 100% !important;
   background: var(--ui-bg) !important;
 }
 
+html.hud-v3-active #main > * {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* 2-col layout only inside produce wrappers — never split tab heroes from grids */
 @media (min-width: 680px) {
-  html.hud-v3-active #main {
+  html.hud-v3-active .ui-prod-slots {
     display: grid !important;
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     gap: 10px !important;
   }
-  html.hud-v3-active #main > .eventbar,
-  html.hud-v3-active #main > .listgrid,
-  html.hud-v3-active #main > .slotpanel,
-  html.hud-v3-active #main > .ui-prod-slots,
-  html.hud-v3-active #main > .ui-tab-hero { grid-column: 1 / -1; }
+}
+
+@media (max-width: 767px) {
+  html.hud-v3-active #app {
+    max-width: none;
+    margin: 0;
+  }
 }
 
 /* ---- Tab dock ---- */

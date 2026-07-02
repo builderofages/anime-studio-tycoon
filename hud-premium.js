@@ -155,7 +155,7 @@
     shell.innerHTML = `
       <div class="hud-top">
         <button type="button" class="hud-menu-btn" id="hud-menu-btn" aria-label="Menu">☰</button>
-        <div class="hud-avatar-wrap"><img class="hud-avatar" src="start-hero.png?v=41" alt=""><span class="hud-lv-badge" id="hud-lv-badge">1</span></div>
+        <div class="hud-avatar-wrap"><img class="hud-avatar" src="start-hero.png?v=44" alt=""><span class="hud-lv-badge" id="hud-lv-badge">1</span></div>
         <div class="hud-identity">
           <span class="hud-studio-name" id="hud-studio-name">Studio</span>
           <div id="hud-studio-rating" class="hud-rating-chip" title="Studio rating"></div>
@@ -165,7 +165,10 @@
       </div>
       <div class="hud-stats" id="hud-resources"></div>
       <div class="hud-drawer" id="hud-drawer" hidden>
-        <div class="hud-drawer-inner" id="hud-drawer-slot"></div>
+        <div class="hud-drawer-inner">
+          <div class="hud-drawer-label">⚙️ Settings</div>
+          <div id="hud-drawer-slot"></div>
+        </div>
       </div>`;
 
     top.parentNode.insertBefore(shell, top);
@@ -187,7 +190,7 @@
       rail.id = "pathway-rail";
       rail.className = "coach-bar";
       rail.innerHTML = `
-        <img class="coach-avatar" src="start-hero.png?v=41" alt="" width="36" height="36">
+        <img class="coach-avatar" src="start-hero.png?v=44" alt="" width="36" height="36">
         <p class="coach-msg" id="pathway-now"></p>
         <button type="button" class="coach-cta" id="pathway-cta">Go</button>
         <button type="button" class="coach-dismiss" id="coach-dismiss" aria-label="Dismiss">×</button>
@@ -206,7 +209,7 @@
 
     const foot = document.querySelector(".foot");
     const drawerSlot = document.getElementById("hud-drawer-slot");
-    if (foot && drawerSlot && !drawerSlot.children.length) {
+    if (foot && drawerSlot) {
       while (foot.firstChild) drawerSlot.appendChild(foot.firstChild);
       foot.remove();
     }
@@ -222,9 +225,18 @@
       const d = document.getElementById("hud-drawer");
       if (d) d.hidden = !d.hidden;
     });
-    document.getElementById("hud-drawer").addEventListener("click", (e) => {
+    const drawer = document.getElementById("hud-drawer");
+    drawer.addEventListener("click", (e) => {
       if (e.target.id === "hud-drawer") e.currentTarget.hidden = true;
     });
+    drawerSlot.addEventListener("click", (e) => {
+      if (e.target.closest("button, select, a")) drawer.hidden = true;
+    });
+  }
+
+  function closeDrawer() {
+    const d = document.getElementById("hud-drawer");
+    if (d) d.hidden = true;
   }
 
   function updateHud(S, hook) {
@@ -287,6 +299,7 @@
     const origRender = hook.render;
     hook.render = function () {
       origRender();
+      closeDrawer();
       updateHud(hook.getState(), hook);
       updateTabBadges(hook.getState(), hook);
     };

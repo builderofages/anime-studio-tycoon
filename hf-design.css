@@ -5,6 +5,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 html.hud-v3-active {
+  --ui-gutter: 10px;
   --hf-bg: #0c0a18;
   --hf-glass: rgba(18, 14, 32, 0.72);
   --hf-glass-2: rgba(255, 255, 255, 0.06);
@@ -26,7 +27,7 @@ html.hud-v3-active {
 html.hud-v3-active body {
   background:
     linear-gradient(180deg, rgba(12, 10, 24, 0.25) 0%, rgba(12, 10, 24, 0.65) 100%),
-    url('bg-v4.png?v=43') center top / cover no-repeat fixed !important;
+    url('bg-v4.png?v=44') center top / cover no-repeat fixed !important;
 }
 
 html.hud-v3-active #app {
@@ -94,7 +95,7 @@ html.hud-v3-active .overlay,
 
 /* ---- HUD: glass bar like mockup ---- */
 #hud-shell {
-  margin: calc(4px + var(--safe-t, 0px)) 8px 0 !important;
+  margin: calc(4px + var(--safe-t, 0px)) var(--ui-gutter) 0 !important;
   padding: 8px 10px !important;
   background: var(--hf-glass) !important;
   backdrop-filter: blur(16px) saturate(1.3) !important;
@@ -155,7 +156,7 @@ html.hud-v3-active .overlay,
 
 /* ---- Coach strip ---- */
 #pathway-rail.coach-bar {
-  margin: 6px 8px 0 !important;
+  margin: 6px var(--ui-gutter) 0 !important;
   padding: 7px 10px !important;
   background: var(--hf-glass) !important;
   backdrop-filter: blur(12px) !important;
@@ -421,7 +422,7 @@ html.hud-v3-active .panel[style*="dashed"] {
 html.hud-v3-active #loading-splash {
   background:
     linear-gradient(180deg, rgba(12, 10, 24, 0.5) 0%, rgba(12, 10, 24, 0.85) 100%),
-    url('bg-v4.png?v=43') center / cover no-repeat !important;
+    url('bg-v4.png?v=44') center / cover no-repeat !important;
 }
 
 

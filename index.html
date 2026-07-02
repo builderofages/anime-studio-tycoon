@@ -22,14 +22,14 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%233a2b4d'/%3E%3Ccircle cx='32' cy='32' r='30' fill='none' stroke='%23ffc845' stroke-width='3'/%3E%3Cg fill='%23ff9bc4'%3E%3Cellipse cx='32' cy='15' rx='5' ry='8'/%3E%3Cellipse cx='32' cy='49' rx='5' ry='8'/%3E%3Cellipse cx='15' cy='32' rx='8' ry='5'/%3E%3Cellipse cx='49' cy='32' rx='8' ry='5'/%3E%3C/g%3E%3Ccircle cx='32' cy='32' r='7' fill='%23ffc845'/%3E%3C/svg%3E">
 <link rel="manifest" href="manifest.json">
 <!-- Legacy gameplay-*.css disabled — aaa-ui + game-skin + hud-premium own chrome -->
-<link rel="stylesheet" href="hud-premium.css?v=43">
-<link rel="stylesheet" href="ui-complete.css?v=43">
-<link rel="stylesheet" href="gameplay-studio-rating.css?v=43">
-<link rel="stylesheet" href="studio-premium.css?v=43">
-<link rel="stylesheet" href="gameplay-plus.css?v=43">
-<link rel="stylesheet" href="game-skin.css?v=43">
-<link rel="stylesheet" href="hf-design.css?v=43">
-<link rel="stylesheet" href="aaa-ui.css?v=43">
+<link rel="stylesheet" href="hud-premium.css?v=44">
+<link rel="stylesheet" href="ui-complete.css?v=44">
+<link rel="stylesheet" href="gameplay-studio-rating.css?v=44">
+<link rel="stylesheet" href="studio-premium.css?v=44">
+<link rel="stylesheet" href="gameplay-plus.css?v=44">
+<link rel="stylesheet" href="game-skin.css?v=44">
+<link rel="stylesheet" href="hf-design.css?v=44">
+<link rel="stylesheet" href="aaa-ui.css?v=44">
 <script>document.documentElement.classList.add("premium-hud","hud-v3-active")</script>
 <meta name="theme-color" content="#08050f">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -286,10 +286,10 @@ html.hud-v3-active #goal{display:none !important}
 <div id="app">
   <div id="top">
     <div id="studio-rank"><span>🎬</span><span class="rank-tier">Garage Studio</span></div>
-    <div class="res yen"><img src="icons/hf/yen.png?v=43" alt="Yen"><span><span class="v" id="r-yen">0</span> <small>¥</small></span></div>
-    <div class="res fans"><img src="icons/hf/fans.png?v=43" alt="Fans"><span class="v" id="r-fans">0</span></div>
-    <div class="res hype"><img src="icons/hf/hype.png?v=43" alt="Hype"><span class="v" id="r-hype">0</span></div>
-    <div class="res gems"><img src="icons/hf/gems.png?v=43" alt="Gems"><span class="v" id="r-gems">0</span></div>
+    <div class="res yen"><img src="icons/hf/yen.png?v=44" alt="Yen"><span><span class="v" id="r-yen">0</span> <small>¥</small></span></div>
+    <div class="res fans"><img src="icons/hf/fans.png?v=44" alt="Fans"><span class="v" id="r-fans">0</span></div>
+    <div class="res hype"><img src="icons/hf/hype.png?v=44" alt="Hype"><span class="v" id="r-hype">0</span></div>
+    <div class="res gems"><img src="icons/hf/gems.png?v=44" alt="Gems"><span class="v" id="r-gems">0</span></div>
     <div id="trendbar"><span class="spark">📈</span> Trending: <b id="trend">Action</b></div>
   </div>
   <div id="goal"><span id="goal-txt">🎯 Reach 50 Fans for Web Series</span><div class="bar"><i id="goal-bar" style="width:0%"></i></div></div>
@@ -307,7 +307,7 @@ html.hud-v3-active #goal{display:none !important}
 
 <div class="overlay" id="start" style="display: none;">
   <div class="card-modal">
-    <img class="start-hero" src="start-hero.png?v=43" width="140" height="140" alt="Anime Studio Tycoon">
+    <img class="start-hero" src="start-hero.png?v=44" width="140" height="140" alt="Anime Studio Tycoon">
     <h1>Anime Studio Tycoon</h1>
     <p id="start-tagline">From a one-room studio to a global anime empire</p>
     <label style="display:block;font-size:12px;font-weight:800;color:var(--plum);margin:4px 0 4px">🏢 Studio Name</label>
@@ -375,7 +375,7 @@ html.hud-v3-active #goal{display:none !important}
 
 <div class="overlay" id="whatsnew" style="display:none">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <img src="start-hero.png?v=43" alt="" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
+    <img src="start-hero.png?v=44" alt="" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
     <h1 style="font-size:22px;text-align:center">✨ Build 40 — Greenlight + Gacha Reveal</h1>
     <div class="offlist" style="margin:12px 0">
       <div><span>🖼️ Cinematic BG</span><b>Higgsfield sakura sunset now fills the screen</b></div>
@@ -423,7 +423,7 @@ const STORE_PAYMENTS = true; // store always visible; buyReal routes web→check
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 43 · Full Fix";
+const BUILD_TAG = "build 44 · Staff Layout";
 const ASSET_V = "41";
 const TAB_ICON_IMG = {
   produce:"icons/tabs/produce.png", quests:"icons/tabs/quests.png", staff:"icons/tabs/staff.png",
@@ -1423,9 +1423,10 @@ function updateChrome(){
     updateMute();
     const sv=document.getElementById("btn-save"); if(sv) sv.textContent="💾 "+STR.save;
     const rs=document.getElementById("btn-reset"); if(rs) rs.textContent="↺ "+STR.reset;
-    const pv=document.querySelector('.foot a[href="privacy.html"]'); if(pv) pv.textContent=STR.privacy;
-    const tm=document.querySelector('.foot a[href="terms.html"]'); if(tm) tm.textContent=STR.terms;
-    const sh=document.querySelector('.foot [data-act="share"]'); if(sh) sh.innerHTML=`📣 ${STR.share} <small id="share-bonus"${S.sharedOnce?' style="display:none"':''}>+25💎</small>`;
+    const util=document.getElementById("hud-drawer-slot");
+    const pv=util?util.querySelector('a[href="privacy.html"]'):document.querySelector('.foot a[href="privacy.html"]'); if(pv) pv.textContent=STR.privacy;
+    const tm=util?util.querySelector('a[href="terms.html"]'):document.querySelector('.foot a[href="terms.html"]'); if(tm) tm.textContent=STR.terms;
+    const sh=util?util.querySelector('[data-act="share"]'):document.querySelector('.foot [data-act="share"]'); if(sh) sh.innerHTML=`📣 ${STR.share} <small id="share-bonus"${S.sharedOnce?' style="display:none"':''}>+25💎</small>`;
     const st=document.getElementById("btn-start"); if(st) st.textContent="▶ "+STR.start;
     const tg=document.getElementById("start-tagline"); if(tg) tg.textContent=STR.tagline;
     const ll=document.getElementById("start-lang-label"); if(ll) ll.textContent="🌐 "+STR.language;
@@ -1437,7 +1438,7 @@ function updateChrome(){
       sel.style.cssText="padding:7px 10px;font-size:12px;border:none;border-radius:12px;font-weight:700";
       for(const c in LANG_NAMES){ const o=document.createElement("option"); o.value=c; o.textContent="🌐 "+LANG_NAMES[c]; sel.appendChild(o); }
       sel.onchange=()=>{ setLang(sel.value); updateChrome(); render(); };
-      const foot=document.querySelector(".foot"); if(foot) foot.appendChild(sel);
+      const util=document.getElementById("hud-drawer-slot")||document.querySelector(".foot"); if(util) util.appendChild(sel);
     }
     sel.value=STR.__code||"en";
     const bt=document.getElementById("buildtag"); if(bt) bt.textContent=BUILD_TAG;
@@ -2111,6 +2112,7 @@ function render(){
   checkUnlocks();
   // if the player is on a tab that isn't unlocked yet, fall back to Produce
   if(({stars:1,research:1,studio:1})[S.tab] && !featureUnlocked(S.tab)) S.tab="produce";
+  { const m=document.getElementById("main"); if(m) m.dataset.tab=S.tab; }
   // top bar
   $("#r-yen").textContent=fmt(S.yen);
   $("#r-fans").textContent=fmt(S.fans);
@@ -2363,16 +2365,18 @@ let _selGenre=0;
 let _castSel=[];   // sids the player has selected to feature on the next greenlight
 
 function renderStaff(){
-  let h=`<div class="aaa-page-hero"><h2>👥 ${t("h_hire","Hire Your Team")}</h2><p>Each role boosts one quality dimension. Balanced teams make higher-rated anime.</p></div><div class="aaa-staff-grid">`;
+  let h=`<div class="aaa-tab-page"><div class="aaa-page-hero"><h2>👥 ${t("h_hire","Hire Your Team")}</h2><p>Each role boosts one quality dimension. Balanced teams make higher-rated anime.</p></div><div class="aaa-staff-grid">`;
   for(const key in ROLES){ const r=ROLES[key]; const c=hireCost(key);
     h+=`<div class="aaa-staff-card">
-      <img src="${r.img}" alt="">
-      <h4>${r.name} <span class="pill">×${S.staff[key]}</span></h4>
-      <div class="muted">${r.dimName} · +${r.power}/s · ¥${r.salary}/s salary</div>
-      <button class="btn-primary hirebtn" data-hire="${key}" ${S.yen>=c?"":"disabled"}>${STR.hire}<small>¥${fmt(c)}</small></button>
+      <div class="aaa-staff-portrait"><img src="${r.img}" alt="${r.name}"></div>
+      <div class="aaa-staff-body">
+        <h4>${r.name} <span class="pill">×${S.staff[key]}</span></h4>
+        <div class="muted">${r.dimName} · +${r.power}/s · ¥${r.salary}/s salary</div>
+      </div>
+      <button type="button" class="btn-primary hirebtn aaa-staff-hire" data-hire="${key}" ${S.yen>=c?"":"disabled"}>${STR.hire}<small>¥${fmt(c)}</small></button>
     </div>`;
   }
-  h+=`</div>`; main.innerHTML=h;
+  h+=`</div></div>`; main.innerHTML=h;
 }
 
 function renderStars(){
@@ -2822,20 +2826,20 @@ window.__AST_HOOK__ = {
   studioLevel,
 };
 </script>
-<script src="aaa-upgrade.js?v=43"></script>
-<script src="gameplay-plus.js?v=43"></script>
-<script src="gameplay-ultra.js?v=43"></script>
-<script src="gameplay-endless.js?v=43"></script>
-<script src="gameplay-empire.js?v=43"></script>
-<script src="gameplay-studio.js?v=43"></script>
-<script src="gameplay-final.js?v=43"></script>
-<script src="gameplay-aaa.js?v=43"></script>
-<script src="gameplay-legend.js?v=43"></script>
-<script src="hud-premium.js?v=43"></script>
-<script src="ui-complete.js?v=43"></script>
-<script src="gameplay-studio-rating.js?v=43"></script>
-<script src="gameplay-polish.js?v=43"></script>
-<script src="hook-bridge.js?v=43"></script>
+<script src="aaa-upgrade.js?v=44"></script>
+<script src="gameplay-plus.js?v=44"></script>
+<script src="gameplay-ultra.js?v=44"></script>
+<script src="gameplay-endless.js?v=44"></script>
+<script src="gameplay-empire.js?v=44"></script>
+<script src="gameplay-studio.js?v=44"></script>
+<script src="gameplay-final.js?v=44"></script>
+<script src="gameplay-aaa.js?v=44"></script>
+<script src="gameplay-legend.js?v=44"></script>
+<script src="hud-premium.js?v=44"></script>
+<script src="ui-complete.js?v=44"></script>
+<script src="gameplay-studio-rating.js?v=44"></script>
+<script src="gameplay-polish.js?v=44"></script>
+<script src="hook-bridge.js?v=44"></script>
 <!-- studio-premium.css loaded in head -->
 
 

@@ -503,14 +503,25 @@ html.hud-v3-active .aaa-star-actions button {
   padding: 6px 8px !important;
 }
 
+/* ---- Tab page wrapper ---- */
+html.hud-v3-active .aaa-tab-page {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
 /* ---- Staff hire roster ---- */
 html.hud-v3-active .aaa-staff-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(148px, 1fr));
+  gap: 8px;
 }
 
 html.hud-v3-active .aaa-staff-card {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
   padding: 12px;
   border-radius: 14px;
   background: var(--aaa-card);
@@ -518,14 +529,29 @@ html.hud-v3-active .aaa-staff-card {
   text-align: center;
 }
 
-html.hud-v3-active .aaa-staff-card img {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  object-fit: cover;
+html.hud-v3-active .aaa-staff-portrait {
+  width: 64px;
+  height: 64px;
   margin: 0 auto 8px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  flex-shrink: 0;
+}
+
+html.hud-v3-active .aaa-staff-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   display: block;
-  border: 2px solid rgba(255, 92, 168, 0.35);
+  margin: 0;
+  border: none;
+  border-radius: 0;
+}
+
+html.hud-v3-active .aaa-staff-body {
+  flex: 1;
+  min-height: 0;
 }
 
 html.hud-v3-active .aaa-staff-card h4 {
@@ -536,12 +562,13 @@ html.hud-v3-active .aaa-staff-card h4 {
 
 html.hud-v3-active .aaa-staff-card .muted {
   font-size: 10px !important;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   line-height: 1.35;
 }
 
-html.hud-v3-active .aaa-staff-card .hirebtn {
+html.hud-v3-active .aaa-staff-hire {
   width: 100%;
+  margin-top: auto;
 }
 
 /* ---- Store shelf ---- */
@@ -1080,9 +1107,6 @@ html.hud-v3-active .aaa-dash-compact .kpi .kv {
   html.hud-v3-active .aaa-poster {
     width: 130px;
     height: 178px;
-  }
-  html.hud-v3-active .aaa-staff-grid {
-    grid-template-columns: repeat(3, 1fr);
   }
   html.hud-v3-active .aaa-mastery-grid {
     grid-template-columns: repeat(3, 1fr);
