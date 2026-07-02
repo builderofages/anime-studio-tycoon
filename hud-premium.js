@@ -323,9 +323,18 @@
   }
 
   function updateTabBadges(S, hook) {
+    const today = new Date().toISOString().slice(0, 10);
+    const loginPending = S.loginLastClaimDate !== today && (S.loginClaimedCount || 0) < 31;
+    const hireAfford = hook.ROLES && hook.hireCost && Object.keys(hook.ROLES).some((k) => S.yen >= hook.hireCost(k));
+    const scoutAfford = (hook.castingCost && S.yen >= hook.castingCost()) || S.gems >= (hook.SCOUT_GEMS || 8);
+    const starsUnlocked = (S.releases || 0) >= 2 || (S.totalFansEver || 0) >= 20;
+    const freeGems = S.freeGemsDate !== today;
     const badges = {
       produce: readySlot(S, hook) >= 0,
-      quests: claimableQuests(S) > 0,
+      quests: claimableQuests(S) > 0 || loginPending,
+      staff: !!hireAfford,
+      stars: starsUnlocked && scoutAfford,
+      store: freeGems,
     };
     document.querySelectorAll(".tab").forEach((tab) => {
       const k = tab.dataset.tab;

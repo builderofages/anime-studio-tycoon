@@ -34,7 +34,7 @@ html.hud-v3-active body {
 html.hud-v3-active body {
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.35) 0%, rgba(8, 6, 15, 0.82) 100%),
-    url('bg-v4.png?v=49') center top / cover no-repeat fixed !important;
+    url('bg-v4.png?v=50') center top / cover no-repeat fixed !important;
 }
 
 html.hud-v3-active button {
@@ -389,6 +389,66 @@ html.hud-v3-active .coach-gift {
 html.hud-v3-active .coach-gift-dot {
   background: #ff3b6b !important;
   box-shadow: 0 0 10px rgba(255, 59, 107, 0.8) !important;
+}
+
+/* ---- Tab dock notification dots (mockup) ---- */
+html.hud-v3-active .tab-badge {
+  width: 7px !important;
+  height: 7px !important;
+  background: var(--ast-pink) !important;
+  box-shadow: 0 0 10px rgba(255, 92, 168, 0.85) !important;
+  top: 6px !important;
+}
+
+/* ---- Genre chips: horizontal scroll ---- */
+html.hud-v3-active .aaa-genre-row {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  overflow-x: auto !important;
+  gap: 8px !important;
+  padding: 2px 2px 8px !important;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+html.hud-v3-active .aaa-genre-row::-webkit-scrollbar {
+  display: none;
+}
+
+html.hud-v3-active .aaa-genre-row .chip {
+  flex: 0 0 auto !important;
+  scroll-snap-align: start;
+  white-space: nowrap !important;
+}
+
+/* ---- Produce stat rate + pick genre tag ---- */
+html.hud-v3-active .aaa-stat-line .aaa-rate {
+  font-size: 9px;
+  font-weight: 800;
+  color: var(--ast-gold);
+  margin-left: auto;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+html.hud-v3-active .aaa-pick-poster {
+  position: relative !important;
+}
+
+html.hud-v3-active .aaa-pick-genre {
+  position: absolute;
+  left: 6px;
+  bottom: 6px;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 3px 7px;
+  border-radius: 6px;
+  background: rgba(8, 6, 15, 0.75);
+  color: var(--ast-pink);
+  border: 1px solid rgba(255, 92, 168, 0.35);
 }
 
 html.hud-v3-active .aaa-team {
