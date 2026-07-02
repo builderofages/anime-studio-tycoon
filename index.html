@@ -22,16 +22,16 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%233a2b4d'/%3E%3Ccircle cx='32' cy='32' r='30' fill='none' stroke='%23ffc845' stroke-width='3'/%3E%3Cg fill='%23ff9bc4'%3E%3Cellipse cx='32' cy='15' rx='5' ry='8'/%3E%3Cellipse cx='32' cy='49' rx='5' ry='8'/%3E%3Cellipse cx='15' cy='32' rx='8' ry='5'/%3E%3Cellipse cx='49' cy='32' rx='8' ry='5'/%3E%3C/g%3E%3Ccircle cx='32' cy='32' r='7' fill='%23ffc845'/%3E%3C/svg%3E">
 <link rel="manifest" href="manifest.json">
 <!-- Legacy gameplay-*.css disabled — aaa-ui + game-skin + hud-premium own chrome -->
-<link rel="stylesheet" href="hud-premium.css?v=47">
-<link rel="stylesheet" href="ui-complete.css?v=47">
-<link rel="stylesheet" href="gameplay-studio-rating.css?v=47">
-<link rel="stylesheet" href="studio-premium.css?v=47">
-<link rel="stylesheet" href="gameplay-plus.css?v=47">
-<link rel="stylesheet" href="game-skin.css?v=47">
-<link rel="stylesheet" href="hf-design.css?v=47">
-<link rel="stylesheet" href="aaa-ui.css?v=47">
-<link rel="stylesheet" href="legacy-fx.css?v=47">
-<link rel="stylesheet" href="ast-v5.css?v=47">
+<link rel="stylesheet" href="hud-premium.css?v=48">
+<!-- ui-complete.css disabled — v5 uses aaa-tab-page heroes -->
+<link rel="stylesheet" href="gameplay-studio-rating.css?v=48">
+<link rel="stylesheet" href="studio-premium.css?v=48">
+<link rel="stylesheet" href="gameplay-plus.css?v=48">
+<!-- game-skin.css disabled — fought ast-v5 (animation:none, flat panels) -->
+<link rel="stylesheet" href="hf-design.css?v=48">
+<link rel="stylesheet" href="aaa-ui.css?v=48">
+<link rel="stylesheet" href="legacy-fx.css?v=48">
+<link rel="stylesheet" href="ast-v5.css?v=48">
 <script>document.documentElement.classList.add("premium-hud","hud-v3-active")</script>
 <meta name="theme-color" content="#08050f">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -74,10 +74,10 @@ html.hud-v3-active #goal{display:none !important}
 <div id="app">
   <div id="top">
     <div id="studio-rank"><span>🎬</span><span class="rank-tier">Garage Studio</span></div>
-    <div class="res yen"><img src="icons/hf/yen.png?v=47" alt="Yen"><span><span class="v" id="r-yen">0</span> <small>¥</small></span></div>
-    <div class="res fans"><img src="icons/hf/fans.png?v=47" alt="Fans"><span class="v" id="r-fans">0</span></div>
-    <div class="res hype"><img src="icons/hf/hype.png?v=47" alt="Hype"><span class="v" id="r-hype">0</span></div>
-    <div class="res gems"><img src="icons/hf/gems.png?v=47" alt="Gems"><span class="v" id="r-gems">0</span></div>
+    <div class="res yen"><img src="icons/hf/yen.png?v=48" alt="Yen"><span><span class="v" id="r-yen">0</span> <small>¥</small></span></div>
+    <div class="res fans"><img src="icons/hf/fans.png?v=48" alt="Fans"><span class="v" id="r-fans">0</span></div>
+    <div class="res hype"><img src="icons/hf/hype.png?v=48" alt="Hype"><span class="v" id="r-hype">0</span></div>
+    <div class="res gems"><img src="icons/hf/gems.png?v=48" alt="Gems"><span class="v" id="r-gems">0</span></div>
     <div id="trendbar"><span class="spark">📈</span> Trending: <b id="trend">Action</b></div>
   </div>
   <div id="goal"><span id="goal-txt">🎯 Reach 50 Fans for Web Series</span><div class="bar"><i id="goal-bar" style="width:0%"></i></div></div>
@@ -95,7 +95,7 @@ html.hud-v3-active #goal{display:none !important}
 
 <div class="overlay" id="start" style="display: none;">
   <div class="card-modal">
-    <img class="start-hero" src="start-hero.png?v=47" width="140" height="140" alt="Anime Studio Tycoon">
+    <img class="start-hero" src="start-hero.png?v=48" width="140" height="140" alt="Anime Studio Tycoon">
     <h1>Anime Studio Tycoon</h1>
     <p id="start-tagline">From a one-room studio to a global anime empire</p>
     <label style="display:block;font-size:12px;font-weight:800;color:var(--plum);margin:4px 0 4px">🏢 Studio Name</label>
@@ -163,7 +163,7 @@ html.hud-v3-active #goal{display:none !important}
 
 <div class="overlay" id="whatsnew" style="display:none">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <img src="start-hero.png?v=47" alt="" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
+    <img src="start-hero.png?v=48" alt="" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
     <h1 style="font-size:22px;text-align:center">✨ Build 40 — Greenlight + Gacha Reveal</h1>
     <div class="offlist" style="margin:12px 0">
       <div><span>🖼️ Cinematic BG</span><b>Higgsfield sakura sunset now fills the screen</b></div>
@@ -211,8 +211,8 @@ const STORE_PAYMENTS = true; // store always visible; buyReal routes web→check
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 47 · Design v5+";
-const ASSET_V = "47";
+const BUILD_TAG = "build 48 · Design v5+";
+const ASSET_V = "48";
 const TAB_ICON_IMG = {
   produce:"icons/tabs/produce.png", quests:"icons/tabs/quests.png", staff:"icons/tabs/staff.png",
   stars:"icons/tabs/stars.png", research:"icons/tabs/research.png", studio:"icons/tabs/studio.png",
@@ -285,9 +285,13 @@ const POSTER_POOL={
     "hf_20260615_183536_53d33e4f-f832-4560-bc65-e99e9571f01c.png","hf_20260615_183536_9e05cfea-df51-4b8e-8d8c-5d9c0c68008b.png","hf_20260615_183536_8076a42e-5fae-44c3-a8f3-c5d36c5574d6.png",
     "hf_20260615_183538_728795ea-34b0-471f-8768-ea5bff12874b.png","hf_20260615_090349_8daf2954-c8c1-4452-82e8-8b0d5ebaf39e.png"],
   "Comedy":[
-    "hf_20260615_183540_fd181bbe-3f44-431f-80c9-1f2876977f1f.png","hf_20260615_090351_62f5bf3e-ede7-4135-9d86-244a000e6dbf.png"],
+    "hf_20260615_183540_fd181bbe-3f44-431f-80c9-1f2876977f1f.png","hf_20260615_090351_62f5bf3e-ede7-4135-9d86-244a000e6dbf.png",
+    "hf_20260615_090338_3fa6e462-d4cf-4c39-bbfe-50006fefa603.png","hf_20260615_183524_9e981456-8584-46a8-bbbf-e1e19d1f55bd.png",
+    "hf_20260615_183525_524c0813-83e2-4f6e-9838-3a992acaadbe.png","hf_20260614_062706_8cb8f42c-84b2-45b0-8c27-96e8ffc01bb7.jpeg"],
   "Slice of Life":[
-    "hf_20260615_183542_beb43610-a908-47de-90cc-a93532faf0ec.png","hf_20260615_090353_14e1b911-71c7-4416-863d-26e463a4563b.png"],
+    "hf_20260615_183542_beb43610-a908-47de-90cc-a93532faf0ec.png","hf_20260615_090353_14e1b911-71c7-4416-863d-26e463a4563b.png",
+    "hf_20260615_183524_167f57e4-ed36-4fa1-b2a6-39f99e9c494e.png","hf_20260615_183524_ecf9e163-6ada-4a7a-91bd-b3554647fbbf.png",
+    "hf_20260615_090351_62f5bf3e-ede7-4135-9d86-244a000e6dbf.png","hf_20260615_090333_353ef636-ad49-44bb-9447-8653a12f9eae.png"],
 };
 for(const g in POSTER_POOL) POSTER_POOL[g]=POSTER_POOL[g].map(f=>_PCDN+f);
 function pickPoster(genre){ const a=POSTER_POOL[genre]; return (a&&a.length)?a[Math.floor(Math.random()*a.length)]:DEFAULT_POSTER; }
@@ -796,14 +800,21 @@ function scout(kind){
 function showReveal(t, rar, leveled){
   const R=STAR_RARITY[rar];
   const el=document.getElementById('reveal-body'); if(!el) return;
-  el.innerHTML=`<div class="aaa-reveal-wrap">
+  const rKey=rar.toLowerCase();
+  el.innerHTML=`<div class="aaa-reveal-wrap aaa-reveal-${rKey}">
+    <div class="aaa-reveal-burst" aria-hidden="true"></div>
     <div class="aaa-reveal-rarity" style="color:${R.color}">${rar.toUpperCase()}${rar==='Legendary'?' 🌟':(rar==='Epic'?' ✨':'')}</div>
     <img class="aaa-reveal-portrait" src="${t.img}" alt="" style="box-shadow:0 0 32px ${R.color}99, inset 0 0 0 3px ${R.color}">
     <h2 class="aaa-reveal-name">${t.name.replace(' ☆','')}</h2>
     <div class="aaa-reveal-sub">${ROLES[t.role].name} · ${leveled?'⬆ Contract renewed — leveled up!':'✨ New talent signed!'} · +${fmt(R.power)}/level</div></div>`;
-  document.getElementById('reveal').style.display='flex';
-  const burst={Legendary:40,Epic:28,Rare:18,Common:12}[rar]||12;
+  const modal=document.getElementById('reveal');
+  if(modal){
+    modal.className='overlay aaa-reveal-overlay aaa-reveal-'+rKey;
+    modal.style.display='flex';
+  }
+  const burst={Legendary:48,Epic:32,Rare:20,Common:14}[rar]||14;
   window.__AST_FX__?.burst?.(burst);
+  if(rar==='Legendary'||rar==='Epic') window.__AST_FX__?.shake?.();
 }
 function submitScore(){
   if(!MONETIZATION.leaderboardUrl) return;
@@ -2629,20 +2640,20 @@ window.__AST_HOOK__ = {
   studioLevel,
 };
 </script>
-<script src="aaa-upgrade.js?v=47"></script>
-<script src="gameplay-plus.js?v=47"></script>
-<script src="gameplay-ultra.js?v=47"></script>
-<script src="gameplay-endless.js?v=47"></script>
-<script src="gameplay-empire.js?v=47"></script>
-<script src="gameplay-studio.js?v=47"></script>
-<script src="gameplay-final.js?v=47"></script>
-<script src="gameplay-aaa.js?v=47"></script>
-<script src="gameplay-legend.js?v=47"></script>
-<script src="hud-premium.js?v=47"></script>
-<script src="ui-complete.js?v=47"></script>
-<script src="gameplay-studio-rating.js?v=47"></script>
-<script src="gameplay-polish.js?v=47"></script>
-<script src="hook-bridge.js?v=47"></script>
+<script src="aaa-upgrade.js?v=48"></script>
+<script src="gameplay-plus.js?v=48"></script>
+<script src="gameplay-ultra.js?v=48"></script>
+<script src="gameplay-endless.js?v=48"></script>
+<script src="gameplay-empire.js?v=48"></script>
+<script src="gameplay-studio.js?v=48"></script>
+<script src="gameplay-final.js?v=48"></script>
+<script src="gameplay-aaa.js?v=48"></script>
+<script src="gameplay-legend.js?v=48"></script>
+<script src="hud-premium.js?v=48"></script>
+<script src="ui-complete.js?v=48"></script>
+<script src="gameplay-studio-rating.js?v=48"></script>
+<script src="gameplay-polish.js?v=48"></script>
+<script src="hook-bridge.js?v=48"></script>
 <!-- studio-premium.css loaded in head -->
 
 

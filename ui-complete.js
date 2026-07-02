@@ -270,6 +270,7 @@
   }
 
   function enhanceTab(S, hook) {
+    if (document.documentElement.classList.contains("hud-v3-active")) return;
     injectTabHero(S, hook);
     if (S.tab === "produce") layoutProduce();
     if (S.tab === "stars") layoutStars();

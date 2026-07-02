@@ -134,11 +134,11 @@ assert(/src="gameplay-polish\.js(\?v=\d+)?"/.test(html), "gameplay-polish.js lin
 assert(html.includes("crisisSnoozeUntil"), "crisis snooze state");
 assert(html.includes('id:"rat5"'), "studio rating achievements");
 assert(html.includes("studio-premium.css"), "studio premium css linked");
-assert(html.includes("game-skin.css"), "game skin css linked");
+assert(!html.includes('href="game-skin.css'), "game-skin.css not linked (ast-v5 authority)");
 assert(html.includes("hf-design.css"), "higgsfield design css linked");
 assert(html.includes("legacy-fx.css"), "legacy-fx css linked");
 assert(html.includes("ast-v5.css"), "ast-v5 design css linked");
-assert(html.includes("build 47"), "build 47 tag");
+assert(html.includes("build 48"), "build 48 tag");
 assert(html.includes("premium-hud"), "early premium-hud class");
 assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("hud-studio-rating"), "rating in hud shell");
 assert(html.includes("seasonClaimed"), "season pass state");

@@ -34,7 +34,7 @@ html.hud-v3-active body {
 html.hud-v3-active body {
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.35) 0%, rgba(8, 6, 15, 0.82) 100%),
-    url('bg-v4.png?v=46') center top / cover no-repeat fixed !important;
+    url('bg-v4.png?v=48') center top / cover no-repeat fixed !important;
 }
 
 html.hud-v3-active button {
@@ -419,7 +419,7 @@ html.hud-v3-active .aaa-quest-card {
 }
 
 html.hud-v3-active .aaa-greenlight-head {
-  background-image: url('assets/hf/greenlight-bg.png?v=46') !important;
+  background-image: url('assets/hf/greenlight-bg.png?v=48') !important;
   background-size: cover !important;
   background-position: center !important;
   border-radius: var(--ast-r) var(--ast-r) 0 0 !important;
@@ -873,6 +873,53 @@ html.hud-v3-active .aaa-pick-poster {
   background-position: center top !important;
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12), 0 6px 16px rgba(0, 0, 0, 0.35) !important;
 }
+
+/* ---- Gacha reveal pull animation ---- */
+html.hud-v3-active .aaa-reveal-burst {
+  position: absolute;
+  inset: -20%;
+  background: radial-gradient(circle, rgba(255, 200, 69, 0.35), transparent 62%);
+  animation: ast-reveal-burst 0.65s ease-out forwards;
+  pointer-events: none;
+}
+
+html.hud-v3-active .aaa-reveal-wrap.aaa-reveal-legendary .aaa-reveal-burst {
+  background: radial-gradient(circle, rgba(255, 200, 69, 0.55), rgba(255, 92, 168, 0.2) 45%, transparent 68%);
+}
+
+html.hud-v3-active .aaa-reveal-wrap.aaa-reveal-epic .aaa-reveal-burst {
+  background: radial-gradient(circle, rgba(180, 140, 255, 0.45), transparent 65%);
+}
+
+@keyframes ast-reveal-burst {
+  from { opacity: 0; transform: scale(0.4); }
+  40% { opacity: 1; }
+  to { opacity: 0; transform: scale(1.35); }
+}
+
+html.hud-v3-active .aaa-reveal-portrait {
+  animation: ast-reveal-flip 0.55s cubic-bezier(0.34, 1.45, 0.64, 1) both !important;
+}
+
+@keyframes ast-reveal-flip {
+  from { transform: perspective(400px) rotateY(-90deg) scale(0.5); opacity: 0; }
+  to { transform: perspective(400px) rotateY(0deg) scale(1); opacity: 1; }
+}
+
+html.hud-v3-active .aaa-reveal-legendary .aaa-reveal-wrap {
+  box-shadow: 0 24px 60px rgba(255, 200, 69, 0.35), 0 0 48px rgba(255, 92, 168, 0.2) !important;
+}
+
+/* ---- Flash deal (store) — restore on dark theme ---- */
+html.hud-v3-active .flash-deal {
+  background: linear-gradient(135deg, rgba(255, 122, 24, 0.15), rgba(255, 92, 168, 0.1)) !important;
+  border: 1px solid rgba(255, 122, 24, 0.35) !important;
+  animation: none !important;
+}
+
+html.hud-v3-active .flash-tag { color: #ffb86a !important; }
+html.hud-v3-active .flash-cd { color: #ffd4a8 !important; background: rgba(255, 122, 24, 0.2) !important; }
+html.hud-v3-active .flash-body { color: var(--ast-muted) !important; }
 
 /* ---- Greenlight pick scroll ---- */
 html.hud-v3-active .aaa-pick-scroll {
