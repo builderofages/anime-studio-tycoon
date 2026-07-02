@@ -35,6 +35,8 @@ const FILES = [
   "hud-premium.css",
   "ui-complete.js",
   "ui-complete.css",
+  "gameplay-studio-rating.js",
+  "gameplay-studio-rating.css",
   "manifest.json",
   "icons/icon-512.png",
   "privacy.html",

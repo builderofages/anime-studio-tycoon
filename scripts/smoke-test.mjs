@@ -53,6 +53,8 @@ const required = [
   "hud-premium.css",
   "ui-complete.js",
   "ui-complete.css",
+  "gameplay-studio-rating.js",
+  "gameplay-studio-rating.css",
   "manifest.json",
   "privacy.html",
   "terms.html",
@@ -100,6 +102,11 @@ assert(html.includes("hud-premium.css"), "hud-premium.css linked");
 assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("pathway-rail"), "pathway rail in hud script");
 assert(html.includes('src="ui-complete.js"'), "ui-complete.js linked");
 assert(readFileSync(join(root, "ui-complete.js"), "utf8").includes("ui-tab-hero"), "tab hero layouts");
+assert(html.includes('src="gameplay-studio-rating.js"'), "gameplay-studio-rating.js linked");
+assert(html.includes("gameplay-studio-rating.css"), "gameplay-studio-rating.css linked");
+assert(html.includes("studioStars"), "studio star rating state");
+assert(html.includes("starUnlock"), "project star gates");
+assert(readFileSync(join(root, "gameplay-studio-rating.js"), "utf8").includes("jw-studio-rank"), "JW rating HUD");
 assert(html.includes("seasonClaimed"), "season pass state");
 assert(html.includes('id="main"></div>'), "clean #main shell");
 assert(html.includes("BUILD_TAG"), "build tag constant");
@@ -108,7 +115,7 @@ assert(html.includes("whatsnew"), "what's new modal");
 const rawCount = (html.match(/__raw/g) || []).length;
 assert(rawCount <= 2, "single __raw redirect script", `found ${rawCount}`);
 
-for (const f of ["strings.js", "logic.js", "aaa-upgrade.js", "gameplay-plus.js", "gameplay-ultra.js", "gameplay-endless.js", "gameplay-empire.js", "gameplay-studio.js", "gameplay-final.js", "gameplay-aaa.js", "gameplay-legend.js", "hud-premium.js", "ui-complete.js"]) {
+for (const f of ["strings.js", "logic.js", "aaa-upgrade.js", "gameplay-plus.js", "gameplay-ultra.js", "gameplay-endless.js", "gameplay-empire.js", "gameplay-studio.js", "gameplay-final.js", "gameplay-aaa.js", "gameplay-legend.js", "hud-premium.js", "ui-complete.js", "gameplay-studio-rating.js"]) {
   const r = spawnSync("node", ["--check", join(root, f)], { encoding: "utf8" });
   assert(r.status === 0, `syntax OK: ${f}`, r.stderr?.trim());
 }
@@ -152,6 +159,8 @@ assert(existsSync(join(root, "www/hud-premium.js")), "www/hud-premium.js copied"
 assert(dpkg.build?.extraResources?.[0]?.filter?.includes("hud-premium.js"), "desktop bundles hud");
 assert(existsSync(join(root, "www/ui-complete.js")), "www/ui-complete.js copied");
 assert(dpkg.build?.extraResources?.[0]?.filter?.includes("ui-complete.js"), "desktop bundles ui-complete");
+assert(existsSync(join(root, "www/gameplay-studio-rating.js")), "www/gameplay-studio-rating.js copied");
+assert(dpkg.build?.extraResources?.[0]?.filter?.includes("gameplay-studio-rating.js"), "desktop bundles studio-rating");
 
 console.log(`\n${passed} passed, ${failed} failed`);
 process.exit(failed > 0 ? 1 : 0);

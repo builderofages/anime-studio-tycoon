@@ -32,6 +32,7 @@
 <link rel="stylesheet" href="gameplay-legend.css">
 <link rel="stylesheet" href="hud-premium.css">
 <link rel="stylesheet" href="ui-complete.css">
+<link rel="stylesheet" href="gameplay-studio-rating.css">
 <meta name="theme-color" content="#3a2b4d">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <style>
@@ -586,14 +587,14 @@ button,.btn-ghost{min-height:40px}
 
 <div class="overlay" id="whatsnew" style="display:none">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <h1 style="font-size:22px;text-align:center">✨ What's New — Complete Edition</h1>
+    <h1 style="font-size:22px;text-align:center">✨ What's New — Studio Stars</h1>
     <div class="offlist" style="margin:12px 0">
-      <div><span>🎬 Tab Heroes</span><b>Every tab has a banner, stats & context</b></div>
-      <div><span>📺 Produce Grid</span><b>Cinematic multi-slot production layout</b></div>
-      <div><span>⭐ Star Cards</span><b>Rarity glow frames on legendaries</b></div>
-      <div><span>💎 Store Shelf</span><b>Premium bundle showcase layout</b></div>
-      <div><span>🎁 Quest Chest</span><b>Claimable rewards highlighted up top</b></div>
-      <div><span>🏆 Achievement Strip</span><b>Live progress bar on Quests & Studio</b></div>
+      <div><span>⭐ Studio Rating</span><b>5-star JW-style rating in the top HUD</b></div>
+      <div><span>📊 Rating Pillars</span><b>Catalog, audience, talent, hits & lines</b></div>
+      <div><span>🔒 Star Gates</span><b>Higher project tiers need more studio stars</b></div>
+      <div><span>🎉 Rank-Up Ceremony</span><b>Celebration + gems when you earn a star</b></div>
+      <div><span>💰 Rating Bonus</span><b>Each star tier boosts premiere payouts</b></div>
+      <div><span>📺 Produce Banner</span><b>Live progress to your next star</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
   </div>
@@ -633,7 +634,7 @@ const STORE_PAYMENTS = true; // store always visible; buyReal routes web→check
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 27 · Complete";
+const BUILD_TAG = "build 28 · Studio Stars";
 const OFFLINE_CAP = 8*3600; // seconds
 
 const GENRES = ["Action","Romance","Fantasy","Sci-Fi","Comedy","Slice of Life"];
@@ -716,6 +717,7 @@ const PROJECTS = [
       base:Math.round(prev.base*5.0), fans:Math.round(prev.fans*4.2), tier:prev.tier+1 };
     PROJECTS.push(p); prev=p;
   }
+  for(const p of PROJECTS){ if(p.starUnlock==null) p.starUnlock=Math.min(5,Math.max(1,p.tier)); }
 })();
 
 /* ---- Star Talent (gacha) ---- */
@@ -1008,7 +1010,8 @@ function freshState(){
     starStats:{}, starContracts:{}, festivalWins:[], directorsCuts:[], dynastyPoints:0,
     autoRest:false, syndicationUntil:"", briefingDay:"", briefingPending:"", contractsSigned:0,
     aaaQualityBoost:0, aaaYenBoost:0,
-    dynastyPerks:{income:0,premiere:0,festival:0}, dynastySpent:0, peakDynasty:0,
+    dynastyPerks:{income:0,premiere:0,festival:0}, dynastySpent:0,
+    studioStars:1, studioStarBest:1, premiereStats:{fourPlus:0,five:0}, studioStarPerks:{}, peakDynasty:0,
     dynastyRankUps:[], festivalLosses:0, legendSlotDiscount:0, careerYen:0, careerFans:0,
     lastSave:Date.now(),
     muted:false,
@@ -1535,7 +1538,12 @@ function projectStars(p, genre, pr){
   if(S._legendStarAdj) stars=Math.max(1,Math.min(5,Math.round(stars*S._legendStarAdj)));
   return stars;
 }
-function unlockedProjects(){ return PROJECTS.filter(p=>S.fans>=p.unlock); }
+function projectLockInfo(p){
+  if(S.fans<p.unlock) return {locked:true, reason:fmt(p.unlock)+" fans"};
+  if((S.studioStars||1)<(p.starUnlock||1)) return {locked:true, reason:(p.starUnlock||1)+"★ studio"};
+  return {locked:false};
+}
+function unlockedProjects(){ return PROJECTS.filter(p=>!projectLockInfo(p).locked); }
 
 /* ========================= AUDIO ========================= */
 let bgm=null; const sfx={};
@@ -1658,10 +1666,11 @@ function floatGain(txt){
 /* ========================= ACTIONS ========================= */
 function greenlight(pid, genre, cast, sequel){
   const p=PROJECTS[pid];
+  const lock=projectLockInfo(p);
+  if(lock.locked){ toast("🔒 Need "+lock.reason+" for "+p.name); return; }
   const slot=firstEmptySlot();
   if(slot<0){ toast("All production slots are busy — expand your studio"); return; }
   if(S.yen < p.cost){ toast("Not enough Yen to greenlight"); return; }
-  if(S.fans < p.unlock) return;
   // validate the featured cast — only working stars with enough energy, capped
   const ok=(cast||[]).filter(id=>{ const st=(S.stars||[]).find(x=>x.sid===id); return st && !st.resting && starEnergy(st)>=15; }).slice(0,castCap());
   S.yen -= p.cost;
@@ -1797,8 +1806,8 @@ function releaseProject(slot){
   const shareMult = S._ultraShareMult || (1 + (S.marketShare||0)*0.0015);
   let yenGain = Math.floor(p.base * mult * (1 + S.fans*0.00004) * marketingMult() * legacyMult() * trendBonus * globalIncomeMult() * eventYenMult() * comboMult * starMult * chaosB * franMult * shareMult);
   let fansGain = Math.max(1, Math.floor(p.fans * mult * trendBonus * eventFanMult() * comboMult * perkMult("fans") * starMult * chaosB * franMult * shareMult));
-  const endlessM=S._endlessReleaseMult||1, empireM=S._empireReleaseMult||1, studioM=S._studioReleaseMult||1, finalM=S._finalReleaseMult||1, aaaM=S._aaaReleaseMult||1, legendM=S._legendReleaseMult||1;
-  yenGain=Math.floor(yenGain*endlessM*empireM*studioM*finalM*aaaM*legendM); fansGain=Math.max(1,Math.floor(fansGain*endlessM*empireM*studioM*finalM*aaaM*legendM));
+  const endlessM=S._endlessReleaseMult||1, empireM=S._empireReleaseMult||1, studioM=S._studioReleaseMult||1, finalM=S._finalReleaseMult||1, aaaM=S._aaaReleaseMult||1, legendM=S._legendReleaseMult||1, jwM=S._jwReleaseMult||1;
+  yenGain=Math.floor(yenGain*endlessM*empireM*studioM*finalM*aaaM*legendM*jwM); fansGain=Math.max(1,Math.floor(fansGain*endlessM*empireM*studioM*finalM*aaaM*legendM*jwM));
   const hypeGain = Math.max(1, Math.floor((p.tier+1)*mult*2));
   S.yen+=yenGain; S.fans+=fansGain; S.totalFansEver+=fansGain; S.hype+=hypeGain;
   S.totalEarned=(S.totalEarned||0)+yenGain;
@@ -2444,13 +2453,13 @@ function renderProduce(){
         <div class="muted" style="margin:4px 0 2px;font-size:11px">A sequel reuses the title and earns a growing fans &amp; box-office bonus each season.</div>`;
     }
     h+=`<div class="pickgrid">`+PROJECTS.map(p=>{
-      const locked=S.fans<p.unlock; const afford=S.yen>=p.cost;
-      return `<div class="pick ${locked?'lock':''}">
+      const lock=projectLockInfo(p); const afford=S.yen>=p.cost;
+      return `<div class="pick ${lock.locked?'lock':''}">
         <h4>${p.name}</h4>
         <div class="stat">${t("c_cost","Cost")}: ¥${fmt(p.cost)}</div>
         <div class="stat">${t("c_reward","Reward")}: ¥${fmt(p.base)} · +${fmt(p.fans)} ${t("c_fans","fans")}</div>
         <div class="stat">${t("c_workload","Workload")}: ${fmt(p.work)}</div>
-        ${locked?`<div class="stat" style="color:var(--bad)">🔒 ${fmt(p.unlock)} fans</div>`
+        ${lock.locked?`<div class="stat" style="color:var(--bad)">🔒 ${lock.reason}</div>`
           :`<button class="btn-primary" data-gl="${p.id}" ${afford?"":"disabled"} style="width:100%;margin-top:8px">${STR.greenlight}</button>`}
       </div>`;
     }).join("")+`</div></div>`;
@@ -2974,6 +2983,7 @@ window.__AST_HOOK__ = {
 <script src="gameplay-legend.js"></script>
 <script src="hud-premium.js"></script>
 <script src="ui-complete.js"></script>
+<script src="gameplay-studio-rating.js"></script>
 
 
 <script>(function(){var d;function f(){try{var b=document.getElementById('btn-save');if(b)b.click();}catch(e){}if(!d){d=document.createElement('div');d.style.cssText='position:fixed;bottom:10px;left:50%;transform:translateX(-50%);background:rgba(40,30,55,.92);color:#9be29b;font:600 12px system-ui;padding:5px 12px;border-radius:999px;z-index:99999;opacity:0;transition:opacity .25s;pointer-events:none';d.textContent='\u2713 Saved';document.body.appendChild(d);}d.style.opacity='1';clearTimeout(d._t);d._t=setTimeout(function(){d.style.opacity='0';},1100);}document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden')f();});window.addEventListener('pagehide',f);})();</script>

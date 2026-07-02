@@ -55,6 +55,8 @@
           "hud-premium.css",
           "ui-complete.js",
           "ui-complete.css",
+          "gameplay-studio-rating.js",
+          "gameplay-studio-rating.css",
           "manifest.json",
           "privacy.html",
           "terms.html"
