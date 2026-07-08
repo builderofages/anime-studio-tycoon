@@ -141,12 +141,15 @@ assert(!html.includes('href="hf-design.css'), "hf-design.css disabled (ast-v5)")
 assert(!html.includes('href="aaa-ui.css'), "aaa-ui.css disabled (ast-v5)");
 assert(html.includes("legacy-fx.css"), "legacy-fx css linked");
 assert(html.includes("ast-v5.css"), "ast-v5 design css linked");
-assert(html.includes("build 68"), "build 68 tag");
+assert(html.includes("build 69"), "build 69 tag");
 assert(html.includes("Production Score"), "production score label");
-assert(html.includes("Showcase First"), "whatsnew build 68 changelog");
+assert(html.includes("Mock Nav"), "whatsnew build 69 changelog");
 assert(html.includes("scrollSelectedGlCard"), "greenlight carousel center snap");
 assert(html.includes("aaa-gl-slots-plus"), "greenlight slots expand button");
+assert(html.includes("TAB_ORDER_EARLY"), "mockup tab order");
+assert(html.includes("hypeCap"), "hype cap display");
 assert(readFileSync(join(root, "aaa-upgrade.js"), "utf8").includes("fx-canvas-off"), "fx canvas off in hud v3");
+assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes('"hype"'), "hype stat in hud shell");
 assert(html.includes("TAB_MOCKUP"), "mockup tab labels");
 assert(html.includes("Sakura Films"), "default studio name from ref");
 assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("hud-mail-btn"), "hud mail button");

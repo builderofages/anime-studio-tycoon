@@ -236,7 +236,7 @@
     shell.className = "hud-v3";
     shell.innerHTML = `
       <div class="hud-brand-row">
-        <div class="hud-avatar-wrap"><img class="hud-avatar" src="start-hero.png?v=67" alt=""><span class="hud-lv-badge" id="hud-lv-badge">1</span></div>
+        <div class="hud-avatar-wrap"><img class="hud-avatar" src="start-hero.png?v=69" alt=""><span class="hud-lv-badge" id="hud-lv-badge">1</span></div>
         <div class="hud-identity">
           <div class="hud-brand-line"><span class="hud-sakura-logo" aria-hidden="true">🌸</span><span class="hud-studio-name" id="hud-studio-name">Studio</span></div>
           <span class="hud-studio-rank-label" id="hud-studio-rank-label">Studio Rank C</span>
@@ -255,8 +255,8 @@
     top.parentNode.insertBefore(shell, top);
 
     const resWrap = document.getElementById("hud-resources");
-    const plusTab = { yen: "market", fans: "market", gems: "store" };
-    ["yen", "fans", "gems"].forEach((k) => {
+    const plusTab = { yen: "market", gems: "store", hype: "produce" };
+    ["yen", "gems", "hype"].forEach((k) => {
       const el = top.querySelector(".res." + k);
       if (!el) return;
       el.classList.add("hud-stat", k);
@@ -289,7 +289,7 @@
       rail.id = "pathway-rail";
       rail.className = "coach-bar";
       rail.innerHTML = `
-        <img class="coach-avatar" src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg?v=67" alt="" width="40" height="40">
+        <img class="coach-avatar" src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg?v=69" alt="" width="40" height="40">
         <div class="coach-body">
           <span class="coach-label">Coach's Tip</span>
           <p class="coach-msg" id="pathway-now"></p>
@@ -383,6 +383,12 @@
     const trend = hook.trendGenre ? hook.trendGenre() : "Action";
     const trendEl = document.getElementById("trend");
     if (trendEl) trendEl.textContent = trend;
+
+    const hypeEl = document.getElementById("r-hype");
+    if (hypeEl && hook.hypeCap) {
+      const cap = hook.hypeCap();
+      hypeEl.textContent = (hook.fmt ? hook.fmt(S.hype) : String(S.hype)) + "/" + (hook.fmt ? hook.fmt(cap) : String(cap));
+    }
 
     const combo = document.getElementById("hud-combo");
     const comboN = document.getElementById("hud-combo-n");
