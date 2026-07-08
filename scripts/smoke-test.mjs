@@ -141,9 +141,12 @@ assert(!html.includes('href="hf-design.css'), "hf-design.css disabled (ast-v5)")
 assert(!html.includes('href="aaa-ui.css'), "aaa-ui.css disabled (ast-v5)");
 assert(html.includes("legacy-fx.css"), "legacy-fx css linked");
 assert(html.includes("ast-v5.css"), "ast-v5 design css linked");
-assert(html.includes("build 60"), "build 60 tag");
+assert(html.includes("build 61"), "build 61 tag");
 assert(html.includes("⭐ Production Score"), "production score star label");
-assert(html.includes("CSS Unified"), "whatsnew build 60 changelog");
+assert(html.includes("Mockup Polish"), "whatsnew build 61 changelog");
+assert(html.includes("aaa-premiere-bonus-label"), "mockup premiere bonus label");
+assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes('type: "hire"'), "coach one-tap hire");
+assert(html.includes("S.releases<=3"), "early premiere celebration");
 assert(html.includes("aaa-research-hero"), "research glass hero");
 assert(html.includes("aaa-minigame-panel"), "minigame glass panel");
 assert(readFileSync(join(root, "ast-v5.css"), "utf8").includes("#loading-splash"), "loading splash in ast-v5");

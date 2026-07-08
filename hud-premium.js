@@ -140,16 +140,36 @@
         action: { type: "tab", tab: "staff" },
       };
     }
+    if ((S.staff?.director || 0) >= 1 && activeCount(S) > 0 && (S.releases || 0) >= 2 && (S.releases || 0) < 15) {
+      return {
+        message: "Experienced directors increase your final production score",
+        tab: "produce",
+        cta: "Lines",
+        action: { type: "tab", tab: "produce" },
+      };
+    }
     if ((S.releases || 0) < 8 && activeCount(S) > 0 && hook.hireCost && hook.ROLES) {
-      const afford = Object.keys(hook.ROLES).find((k) => S.yen >= hook.hireCost(k));
+      const priority = ["director", "animator", "writer", "producer", "voice"];
+      const afford = priority.find((k) => hook.ROLES[k] && S.yen >= hook.hireCost(k));
       if (afford) {
         return {
           message: `Hire a ${hook.ROLES[afford].name} to speed up production`,
           tab: "staff",
           cta: "Hire",
-          action: { type: "tab", tab: "staff" },
+          urgent: (S.staff[afford] || 0) === 0,
+          action: { type: "hire", role: afford },
         };
       }
+    }
+    const todayGems = new Date().toISOString().slice(0, 10);
+    if (S.freeGemsDate !== todayGems) {
+      return {
+        message: "Free daily gems are waiting in the Store",
+        tab: "store",
+        cta: "Claim",
+        urgent: true,
+        action: { type: "tab", tab: "store" },
+      };
     }
     if ((S.dynastyPoints || 0) - (S.dynastySpent || 0) >= 12 && (S.releases || 0) >= 15) {
       return {
@@ -188,6 +208,12 @@
       hook.play("click");
       return;
     }
+    if (pw.action.type === "hire" && typeof hook.hire === "function") {
+      hook.getState().tab = "staff";
+      hook.hire(pw.action.role);
+      hook.play("click");
+      return;
+    }
     if (pw.action.type === "rating") {
       (document.getElementById("hud-studio-rating") || document.getElementById("studio-rank"))?.click();
       hook.play("click");
@@ -211,7 +237,7 @@
     shell.innerHTML = `
       <div class="hud-top">
         <button type="button" class="hud-menu-btn" id="hud-menu-btn" aria-label="Menu">☰</button>
-        <div class="hud-avatar-wrap"><img class="hud-avatar" src="start-hero.png?v=60" alt=""><span class="hud-lv-badge" id="hud-lv-badge">1</span></div>
+        <div class="hud-avatar-wrap"><img class="hud-avatar" src="start-hero.png?v=61" alt=""><span class="hud-lv-badge" id="hud-lv-badge">1</span></div>
         <div class="hud-identity">
           <span class="hud-studio-name" id="hud-studio-name">Studio</span>
           <div id="hud-studio-rating" class="hud-rating-chip" title="Studio rating"></div>
@@ -264,7 +290,7 @@
       rail.id = "pathway-rail";
       rail.className = "coach-bar";
       rail.innerHTML = `
-        <img class="coach-avatar" src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg?v=60" alt="" width="40" height="40">
+        <img class="coach-avatar" src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg?v=61" alt="" width="40" height="40">
         <div class="coach-body">
           <span class="coach-label">Coach's Tip</span>
           <p class="coach-msg" id="pathway-now"></p>

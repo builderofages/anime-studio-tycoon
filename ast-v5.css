@@ -34,7 +34,7 @@ html.hud-v3-active body {
 html.hud-v3-active body {
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.35) 0%, rgba(8, 6, 15, 0.82) 100%),
-    url('bg-v4.png?v=60') center top / cover no-repeat fixed !important;
+    url('bg-v4.png?v=61') center top / cover no-repeat fixed !important;
 }
 
 html.hud-v3-active button {
@@ -492,7 +492,7 @@ html.hud-v3-active .aaa-poster[data-act="tapboost"]:active {
 html.hud-v3-active .aaa-page-hero.aaa-gacha-hero {
   background:
     linear-gradient(135deg, rgba(107, 92, 255, 0.2), rgba(255, 92, 168, 0.14)),
-    url('assets/hf/gacha-bg.png?v=60') center/cover !important;
+    url('assets/hf/gacha-bg.png?v=61') center/cover !important;
   border: 1px solid rgba(180, 140, 255, 0.28) !important;
   overflow: hidden;
 }
@@ -1919,21 +1919,21 @@ html.hud-v3-active #premiere .premiere-card .btn-gold {
 html.hud-v3-active .aaa-page-hero.aaa-quest-hero {
   background:
     linear-gradient(135deg, rgba(255, 200, 69, 0.16), rgba(255, 92, 168, 0.12)),
-    url('assets/hf/greenlight-bg.png?v=60') center/cover !important;
+    url('assets/hf/greenlight-bg.png?v=61') center/cover !important;
   border: 1px solid rgba(255, 200, 69, 0.28) !important;
 }
 
 html.hud-v3-active .aaa-page-hero.aaa-staff-hero {
   background:
     linear-gradient(135deg, rgba(107, 92, 255, 0.18), rgba(255, 92, 168, 0.1)),
-    url('assets/hf/gacha-bg.png?v=60') center/cover !important;
+    url('assets/hf/gacha-bg.png?v=61') center/cover !important;
   border: 1px solid rgba(180, 140, 255, 0.28) !important;
 }
 
 html.hud-v3-active .aaa-page-hero.aaa-store-hero {
   background:
     linear-gradient(135deg, rgba(34, 211, 238, 0.14), rgba(255, 92, 168, 0.12)),
-    url('assets/hf/greenlight-bg.png?v=60') center/cover !important;
+    url('assets/hf/greenlight-bg.png?v=61') center/cover !important;
   border: 1px solid rgba(255, 92, 168, 0.28) !important;
 }
 
@@ -2147,21 +2147,21 @@ html.hud-v3-active .aaa-easy-mode .aaa-show-panel {
 html.hud-v3-active .aaa-page-hero.aaa-research-hero {
   background:
     linear-gradient(135deg, rgba(34, 211, 238, 0.16), rgba(107, 92, 255, 0.12)),
-    url('assets/hf/gacha-bg.png?v=60') center/cover !important;
+    url('assets/hf/gacha-bg.png?v=61') center/cover !important;
   border: 1px solid rgba(77, 212, 255, 0.28) !important;
 }
 
 html.hud-v3-active .aaa-page-hero.aaa-studio-hero {
   background:
     linear-gradient(135deg, rgba(255, 200, 69, 0.14), rgba(255, 92, 168, 0.1)),
-    url('assets/hf/greenlight-bg.png?v=60') center/cover !important;
+    url('assets/hf/greenlight-bg.png?v=61') center/cover !important;
   border: 1px solid rgba(255, 200, 69, 0.28) !important;
 }
 
 html.hud-v3-active .aaa-page-hero.aaa-market-hero {
   background:
     linear-gradient(135deg, rgba(255, 92, 168, 0.14), rgba(107, 92, 255, 0.1)),
-    url('assets/hf/gacha-bg.png?v=60') center/cover !important;
+    url('assets/hf/gacha-bg.png?v=61') center/cover !important;
   border: 1px solid rgba(255, 92, 168, 0.28) !important;
 }
 
@@ -2191,4 +2191,64 @@ html.hud-v3-active .aaa-minigame-panel h2 {
 html.hud-v3-active .aaa-minigame-panel .btn-gold,
 html.hud-v3-active .aaa-minigame-panel .btn-primary {
   margin-top: 4px !important;
+}
+
+/* ========== BUILD 61 — mockup premiere bonus + modal glass ========== */
+
+html.hud-v3-active .aaa-premiere-bonus-label {
+  font-size: 9px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  color: var(--ast-muted) !important;
+  flex: 1 1 100% !important;
+  margin-bottom: 2px !important;
+}
+
+html.hud-v3-active .aaa-easy-mode .aaa-premiere-bonus-label {
+  flex: 0 1 auto !important;
+  margin-bottom: 0 !important;
+}
+
+html.hud-v3-active .aaa-easy-mode .aaa-premiere-bonus {
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+}
+
+html.hud-v3-active .aaa-bonus-pill.hype {
+  background: rgba(77, 212, 255, 0.14) !important;
+  border-color: rgba(77, 212, 255, 0.3) !important;
+  color: var(--ast-cyan) !important;
+}
+
+html.hud-v3-active .aaa-bonus-pill.fans {
+  background: rgba(255, 92, 168, 0.12) !important;
+  border-color: rgba(255, 92, 168, 0.28) !important;
+  color: #ffb8d9 !important;
+}
+
+html.hud-v3-active #start .card-modal,
+html.hud-v3-active #offline .card-modal,
+html.hud-v3-active #daily .card-modal,
+html.hud-v3-active #whatsnew .card-modal {
+  background: var(--ast-glass) !important;
+  backdrop-filter: blur(16px) saturate(1.2) !important;
+  border: 1px solid var(--ast-border) !important;
+  border-radius: 22px !important;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55), 0 0 40px rgba(255, 92, 168, 0.1) !important;
+  color: var(--ast-text) !important;
+}
+
+html.hud-v3-active #start h1,
+html.hud-v3-active #offline h1,
+html.hud-v3-active #daily h1,
+html.hud-v3-active #whatsnew h1 {
+  color: var(--ast-text) !important;
+}
+
+html.hud-v3-active #start .muted,
+html.hud-v3-active #offline .muted,
+html.hud-v3-active #daily .muted {
+  color: var(--ast-muted) !important;
 }
