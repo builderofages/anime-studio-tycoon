@@ -141,9 +141,13 @@ assert(!html.includes('href="hf-design.css'), "hf-design.css disabled (ast-v5)")
 assert(!html.includes('href="aaa-ui.css'), "aaa-ui.css disabled (ast-v5)");
 assert(html.includes("legacy-fx.css"), "legacy-fx css linked");
 assert(html.includes("ast-v5.css"), "ast-v5 design css linked");
-assert(html.includes("build 64"), "build 64 tag");
+assert(html.includes("build 65"), "build 65 tag");
 assert(html.includes("Production Score"), "production score label");
-assert(html.includes("Ref Clone"), "whatsnew build 64 changelog");
+assert(html.includes("Pixel Match"), "whatsnew build 65 changelog");
+assert(html.includes("v5-slim-gate.js"), "v5 slim gate linked");
+assert(html.includes("aaa-ep-pill"), "EP pill on stats panel");
+assert(html.includes("studioRankLetter"), "studio rank letter helper");
+assert(existsSync(join(root, "v5-slim-gate.js")), "v5-slim-gate.js exists");
 assert(html.includes("GREENLIGHT_SHOWCASE"), "greenlight showcase catalog");
 assert(html.includes("renderGreenlightPage"), "full-screen greenlight page");
 assert(html.includes("aaa-gl-page"), "greenlight page class");

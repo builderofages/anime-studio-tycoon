@@ -39,6 +39,7 @@ const FILES = [
   "gameplay-studio-rating.css",
   "hook-bridge.js",
   "gameplay-polish.js",
+  "v5-slim-gate.js",
   "v5-render-guard.js",
   "studio-premium.css",
   "game-skin.css",

@@ -73,11 +73,19 @@ html.hud-v3-active .foot { display: none !important; }
   border-bottom: 1px solid var(--ui-border);
 }
 
-.hud-top {
+.hud-top,
+.hud-brand-row {
   display: flex;
   align-items: center;
   gap: 8px;
   min-height: 36px;
+}
+
+.hud-studio-rank-label {
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--ui-gold);
+  letter-spacing: 0.04em;
 }
 
 .hud-menu-btn {
@@ -475,13 +483,13 @@ html.hud-v3-active .tab {
   min-width: 44px !important;
   min-height: 0 !important;
   height: 100% !important;
-  padding: 6px 2px !important;
+  padding: 4px 2px !important;
   margin: 0 !important;
   border: none !important;
   border-radius: 0 !important;
   background: transparent !important;
   color: var(--ui-muted) !important;
-  font-size: 0 !important;
+  font-size: inherit !important;
   box-shadow: none !important;
   transform: none !important;
   position: relative;

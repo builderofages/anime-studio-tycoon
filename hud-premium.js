@@ -235,17 +235,14 @@
     shell.id = "hud-shell";
     shell.className = "hud-v3";
     shell.innerHTML = `
-      <div class="hud-top">
-        <button type="button" class="hud-menu-btn" id="hud-menu-btn" aria-label="Menu">☰</button>
-        <div class="hud-avatar-wrap"><img class="hud-avatar" src="start-hero.png?v=64" alt=""><span class="hud-lv-badge" id="hud-lv-badge">1</span></div>
+      <div class="hud-brand-row">
+        <div class="hud-avatar-wrap"><img class="hud-avatar" src="start-hero.png?v=65" alt=""><span class="hud-lv-badge" id="hud-lv-badge">1</span></div>
         <div class="hud-identity">
           <span class="hud-studio-name" id="hud-studio-name">Studio</span>
-          <div id="hud-studio-rating" class="hud-rating-chip" title="Studio rating"></div>
+          <span class="hud-studio-rank-label" id="hud-studio-rank-label">Studio Rank C</span>
         </div>
-        <span class="hud-trend-chip" id="hud-trend-chip"></span>
-        <span class="hud-combo" id="hud-combo"><span id="hud-combo-n">0</span>x</span>
+        <div class="hud-stats" id="hud-resources"></div>
       </div>
-      <div class="hud-stats" id="hud-resources"></div>
       <div class="hud-drawer" id="hud-drawer" hidden>
         <div class="hud-drawer-inner">
           <div class="hud-drawer-label">⚙️ Settings</div>
@@ -290,7 +287,7 @@
       rail.id = "pathway-rail";
       rail.className = "coach-bar";
       rail.innerHTML = `
-        <img class="coach-avatar" src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg?v=64" alt="" width="40" height="40">
+        <img class="coach-avatar" src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg?v=65" alt="" width="40" height="40">
         <div class="coach-body">
           <span class="coach-label">Coach's Tip</span>
           <p class="coach-msg" id="pathway-now"></p>
@@ -338,10 +335,6 @@
       hook.play("click");
       closeDrawer();
     });
-    document.getElementById("hud-menu-btn").addEventListener("click", () => {
-      const d = document.getElementById("hud-drawer");
-      if (d) d.hidden = !d.hidden;
-    });
     const drawer = document.getElementById("hud-drawer");
     drawer.addEventListener("click", (e) => {
       if (e.target.id === "hud-drawer") e.currentTarget.hidden = true;
@@ -359,12 +352,18 @@
   function updateHud(S, hook) {
     buildHudShell();
     const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
-    set("hud-studio-name", S.studioName || "Your Studio");
+    const nameEl = document.getElementById("hud-studio-name");
+    if (nameEl) nameEl.textContent = (S.studioName || "Your Studio").toUpperCase();
+    const rankLbl = document.getElementById("hud-studio-rank-label");
+    if (rankLbl) {
+      const stars = S.studioStars || 1;
+      const letter = stars >= 5 ? "S+" : stars >= 4 ? "S" : stars >= 3 ? "A" : stars >= 2 ? "B" : "C";
+      rankLbl.textContent = "Studio Rank " + letter;
+    }
     const lv = document.getElementById("hud-lv-badge");
     if (lv) lv.textContent = String(S.studioLevel || 1);
 
     const trend = hook.trendGenre ? hook.trendGenre() : "Action";
-    set("hud-trend-chip", "📈 " + trend);
     const trendEl = document.getElementById("trend");
     if (trendEl) trendEl.textContent = trend;
 
