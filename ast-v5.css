@@ -38,7 +38,7 @@ html.hud-v3-active body {
 html.hud-v3-active body {
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.35) 0%, rgba(8, 6, 15, 0.82) 100%),
-    url('bg-v4.png?v=77') center top / cover no-repeat fixed !important;
+    url('bg-v4.png?v=78') center top / cover no-repeat fixed !important;
 }
 
 html.hud-v3-active button {
@@ -496,7 +496,7 @@ html.hud-v3-active .aaa-poster[data-act="tapboost"]:active {
 html.hud-v3-active .aaa-page-hero.aaa-gacha-hero {
   background:
     linear-gradient(135deg, rgba(107, 92, 255, 0.2), rgba(255, 92, 168, 0.14)),
-    url('assets/hf/gacha-bg.png?v=77') center/cover !important;
+    url('assets/hf/gacha-bg.png?v=78') center/cover !important;
   border: 1px solid rgba(180, 140, 255, 0.28) !important;
   overflow: hidden;
 }
@@ -1983,7 +1983,7 @@ html.hud-v3-active .aaa-gl-page-head {
   padding: 14px 14px 10px !important;
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.4) 0%, rgba(8, 6, 15, 0.9) 100%),
-    url('assets/hf/greenlight-bg.png?v=77') center/cover !important;
+    url('assets/hf/greenlight-bg.png?v=78') center/cover !important;
   border-bottom: 1px solid rgba(255, 200, 69, 0.15) !important;
 }
 
@@ -2886,4 +2886,61 @@ html.hud-v3-active .aaa-gl-page .aaa-gl-slots-widget b {
   font-size: 13px !important;
   width: 100% !important;
   text-align: center !important;
+}
+
+/* ========== BUILD 78 (canonical) ========== */
+
+html.hud-v3-active {
+  --ast-dock: 64px;
+}
+
+html.hud-v3-active #command-dock {
+  --ui-dock-h: 64px !important;
+  padding: 4px 6px calc(var(--safe-b, 0px) + 4px) !important;
+}
+
+html.hud-v3-active #tabs {
+  height: auto !important;
+  min-height: var(--ast-dock) !important;
+  align-items: stretch !important;
+}
+
+html.hud-v3-active .tab {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 3px !important;
+  padding: 6px 4px 4px !important;
+  border-radius: 12px !important;
+  min-width: 0 !important;
+  flex: 1 !important;
+}
+
+html.hud-v3-active .tab .tab-lbl {
+  display: block !important;
+  font-size: 7px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  color: rgba(255, 255, 255, 0.42) !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  max-width: 100% !important;
+}
+
+html.hud-v3-active .tab.active {
+  background: rgba(107, 92, 255, 0.22) !important;
+  box-shadow: inset 0 0 0 1px rgba(180, 140, 255, 0.35) !important;
+}
+
+html.hud-v3-active .tab.active .tab-lbl {
+  color: #f9a8d4 !important;
+}
+
+html.hud-v3-active .tab.active .ic img.tab-ic {
+  opacity: 1 !important;
+  filter: drop-shadow(0 0 10px rgba(255, 92, 168, 0.9)) !important;
 }
