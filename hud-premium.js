@@ -296,6 +296,41 @@
     return n;
   }
 
+  function fanMilestoneMarketCoach(S, hook) {
+    const milestones = hook.FAN_TOAST_MILESTONES || [{ fans: 10 }, { fans: 50 }, { fans: 100 }];
+    const target = milestones.map((m) => m.fans).find((f) => S.fans < f);
+    if (!target) return null;
+    const gap = target - S.fans;
+    const stuck = gap > 0 && gap <= Math.max(4, Math.round(target * 0.15));
+    if (!stuck) return null;
+    const marketOk = hook.featureUnlocked ? hook.featureUnlocked("market") : (S.fans || 0) >= 50;
+    if (!marketOk) {
+      if (target === 50 && S.fans >= 38) {
+        const need = 50 - S.fans;
+        return {
+          message: `${hook.fmt ? hook.fmt(need) : need} fans until Marketing unlocks`,
+          tab: "produce",
+          cta: "Play",
+          action: { type: "tab", tab: "produce" },
+        };
+      }
+      return null;
+    }
+    const camps = hook.CAMPAIGNS || [];
+    const afford = camps.find((c) => S.yen >= c.cost);
+    if (!afford) return null;
+    const gapTxt = hook.fmt ? hook.fmt(gap) : String(gap);
+    const targetTxt = hook.fmt ? hook.fmt(target) : String(target);
+    const fanTxt = hook.fmt ? hook.fmt(afford.fans) : String(afford.fans);
+    return {
+      message: `${gapTxt} fans to ${targetTxt} — ${afford.name} adds +${fanTxt}`,
+      tab: "market",
+      cta: "Campaign",
+      urgent: gap <= afford.fans,
+      action: { type: "tab", tab: "market" },
+    };
+  }
+
   function analyzePathway(S, hook, ctx) {
     ctx = ctx || {};
     const glView = !!ctx.glView;
@@ -318,6 +353,24 @@
       };
     }
 
+    const marketUnlocked = hook.featureUnlocked ? hook.featureUnlocked("market") : (S.fans || 0) >= 50;
+    if (marketUnlocked && (S.campaignsRun || 0) === 0 && (S.releases || 0) < 15) {
+      const camps = hook.CAMPAIGNS || [];
+      const afford = camps.find((c) => S.yen >= c.cost);
+      if (afford) {
+        return {
+          message: `Marketing unlocked — run ${afford.name} for quick fans`,
+          tab: "market",
+          cta: "Market",
+          urgent: true,
+          action: { type: "tab", tab: "market" },
+        };
+      }
+    }
+
+    const fanMarketCoach = fanMilestoneMarketCoach(S, hook);
+    if (fanMarketCoach) return fanMarketCoach;
+
     const starsUnlocked = hook.featureUnlocked ? hook.featureUnlocked("stars") : (S.releases || 0) >= 2;
     if (starsUnlocked && (S.stars || []).length === 0 && (S.releases || 0) >= 2 && (S.releases || 0) <= 8) {
       const freeScout = (S.releases || 0) === 2 && !S.freeScoutUsed;
@@ -330,6 +383,24 @@
         urgent: true,
         action: { type: "tab", tab: "stars" },
       };
+    }
+
+    const researchUnlocked = hook.featureUnlocked ? hook.featureUnlocked("research") : (S.totalFansEver || 0) >= 120;
+    if (researchUnlocked && typeof hook.researchCost === "function" && hook.trendGenre) {
+      const trend = hook.trendGenre();
+      const { cost, hypeCost } = hook.researchCost(trend);
+      const totalMastery = hook.totalMasteryLevels ? hook.totalMasteryLevels() : 0;
+      if (S.yen >= cost && S.hype >= hypeCost) {
+        return {
+          message: totalMastery === 0
+            ? `🔬 Research ${trend} — trending genre boosts every premiere`
+            : `🔬 Level ${trend} mastery — it's trending for bonus rewards`,
+          tab: "research",
+          cta: "Lab",
+          urgent: totalMastery === 0,
+          action: { type: "tab", tab: "research" },
+        };
+      }
     }
 
     if (glView) {
@@ -378,6 +449,21 @@
           };
         }
       }
+    }
+    if (
+      (S.releases || 0) >= 1 &&
+      (S.slots || 1) === 1 &&
+      hook.expandCost &&
+      S.yen >= hook.expandCost() &&
+      (S.releases || 0) <= 12
+    ) {
+      return {
+        message: "Expand your studio — unlock a second production line!",
+        tab: "studio",
+        cta: "Expand",
+        urgent: true,
+        action: { type: "studio-expand" },
+      };
     }
     if ((S.studioStars || 1) < 3 && (S.releases || 0) >= 1 && (S.releases || 0) < 15) {
       return {
@@ -467,11 +553,11 @@
     const todayGems = new Date().toISOString().slice(0, 10);
     if (S.freeGemsDate !== todayGems) {
       return {
-        message: "Free daily gems are waiting in the Store",
+        message: "Claim your free +10 💎 in the Store — resets daily",
         tab: "store",
         cta: "Claim",
         urgent: true,
-        action: { type: "tab", tab: "store" },
+        action: { type: "tab", tab: "store", focus: "freegems" },
       };
     }
     if ((S.dynastyPoints || 0) - (S.dynastySpent || 0) >= 12 && (S.releases || 0) >= 15) {
@@ -546,10 +632,25 @@
       hook.play("click");
       return;
     }
+    if (pw.action.type === "studio-expand") {
+      hook.getState().tab = "studio";
+      hook.render();
+      hook.play("click");
+      requestAnimationFrame(() => {
+        const btn = document.querySelector(".aaa-studio-expand-btn,[data-act='expand']");
+        if (btn) btn.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+      return;
+    }
     if (pw.action.type === "tab") {
       hook.getState().tab = pw.action.tab;
       hook.render();
       hook.play("click");
+      if (pw.action.focus === "freegems") {
+        requestAnimationFrame(() => {
+          document.querySelector(".aaa-free-gems-btn:not([disabled])")?.scrollIntoView({ behavior: "smooth", block: "center" });
+        });
+      }
     }
   }
 
@@ -870,6 +971,12 @@
       } else if (fans >= 120) {
         tab = "produce";
         selectors = [".aaa-gl-open", '[data-act="greenlight-view"]', ".aaa-premiere-ready", ".aaa-play-btn"];
+      } else if ((fans === 50 || fans === 100) && hook.featureUnlocked?.("market")) {
+        tab = "market";
+        selectors = [".aaa-market-afford", ".aaa-market-run-afford", "[data-camp]", ".aaa-market-card"];
+      } else if (fans === 10) {
+        tab = "produce";
+        selectors = [".aaa-play-btn", ".aaa-poster", ".aaa-premiere-ready", ".aaa-gl-open"];
       } else if ((S.releases || 0) < 1 && staffTotal(S) === 0) {
         tab = "staff";
         selectors = [".hirebtn", ".staffrow", ".panel"];
@@ -1133,12 +1240,23 @@
     const hireAfford = hook.ROLES && hook.hireCost && Object.keys(hook.ROLES).some((k) => S.yen >= hook.hireCost(k));
     const scoutAfford = (hook.castingCost && S.yen >= hook.castingCost()) || S.gems >= (hook.SCOUT_GEMS || 8);
     const starsUnlocked = (S.releases || 0) >= 2 || (S.totalFansEver || 0) >= 20;
+    const researchUnlocked = hook.featureUnlocked ? hook.featureUnlocked("research") : (S.totalFansEver || 0) >= 120;
+    let researchAfford = false;
+    if (researchUnlocked && hook.researchCost && hook.trendGenre) {
+      const trend = hook.trendGenre();
+      const rc = hook.researchCost(trend);
+      researchAfford = S.yen >= rc.cost && S.hype >= rc.hypeCost;
+    }
+    const marketUnlocked = hook.featureUnlocked ? hook.featureUnlocked("market") : (S.fans || 0) >= 50;
+    const marketAfford = marketUnlocked && hook.CAMPAIGNS && hook.CAMPAIGNS.some((c) => S.yen >= c.cost);
     const freeGems = S.freeGemsDate !== today;
     const badges = {
       produce: readySlot(S, hook) >= 0,
       quests: claimable > 0 || loginPending,
       staff: !!hireAfford,
       stars: starsUnlocked && scoutAfford,
+      market: !!marketAfford,
+      research: researchAfford,
       store: freeGems,
     };
     document.querySelectorAll(".tab").forEach((tab) => {
@@ -1151,12 +1269,16 @@
         b.className = "tab-badge";
         b.setAttribute("aria-hidden", "true");
         if (k === "quests" && claimable > 0) b.title = claimable + " reward" + (claimable > 1 ? "s" : "") + " ready";
+        if (k === "store" && freeGems) b.title = "Free daily gems ready to claim";
         tab.appendChild(b);
       }
       const lbl = tab.querySelector(".tab-lbl");
       if (lbl && k === "quests") {
         const note = claimable > 0 ? " — rewards ready" : loginPending ? " — login reward ready" : "";
         lbl.setAttribute("aria-label", (tab.getAttribute("aria-label") || "Quests") + note);
+      }
+      if (lbl && k === "store" && freeGems) {
+        lbl.setAttribute("aria-label", (tab.getAttribute("aria-label") || "Store") + " — free gems ready");
       }
     });
   }

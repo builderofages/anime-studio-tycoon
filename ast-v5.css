@@ -289,12 +289,6 @@ html.hud-v3-active .aaa-show-card .btn-gold.aaa-cta {
   letter-spacing: 0.02em !important;
 }
 
-html.hud-v3-active .aaa-show-panel.slot-ready,
-html.hud-v3-active .aaa-show-panel[data-done="1"] {
-  border-color: rgba(255, 200, 69, 0.45) !important;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 32px rgba(255, 200, 69, 0.15) !important;
-}
-
 html.hud-v3-active .aaa-premiere-bonus {
   display: flex;
   flex-direction: column;
@@ -3678,20 +3672,194 @@ html.hud-v3-active #premiere .prem-banner-second { box-shadow:inset 0 0 0 1px rg
 html.hud-v3-active #premiere .prem-second-kicker { margin:8px 16px 0 !important; font:700 11px/1.4 system-ui !important; color:var(--ast-muted) !important; text-align:center !important; }
 html.hud-v3-active #goal.goal-milestone-hit { animation:goal-milestone-pulse 1.2s ease-out !important; border-color:rgba(255,92,168,.55) !important; }
 @keyframes goal-milestone-pulse { 0%,100%{box-shadow:0 4px 18px rgba(0,0,0,.28)} 45%{box-shadow:0 0 0 2px rgba(255,92,168,.45),0 8px 28px rgba(255,200,69,.28)} }
-html.hud-v3-active .aaa-login-streak-hero { display:flex !important; align-items:center !important; gap:10px !important; margin:0 0 12px !important; padding:12px 14px !important; border-radius:16px !important; background:linear-gradient(135deg,rgba(255,92,168,.14),rgba(255,200,69,.1)) !important; border:1px solid rgba(255,200,69,.32) !important; }
-html.hud-v3-active .aaa-login-streak-hero.hot { border-color:rgba(255,92,168,.45) !important; box-shadow:0 0 20px rgba(255,92,168,.2) !important; }
-html.hud-v3-active .aaa-login-streak-hero.ready { outline:1px solid rgba(255,200,69,.35) !important; }
-html.hud-v3-active .aaa-login-streak-flame { font-size:28px !important; } html.hud-v3-active .aaa-login-streak-body { flex:1 !important; min-width:0 !important; }
-html.hud-v3-active .aaa-login-streak-n { display:block !important; font-size:18px !important; font-weight:900 !important; color:#fff !important; }
-html.hud-v3-active .aaa-login-streak-sub { display:block !important; font-size:11px !important; color:var(--ast-muted) !important; }
-html.hud-v3-active .aaa-login-streak-best { text-align:center !important; padding:4px 8px !important; border-radius:10px !important; background:rgba(0,0,0,.22) !important; }
-html.hud-v3-active .aaa-login-streak-best b { font-size:16px !important; color:var(--ast-gold) !important; }
-html.hud-v3-active .rival-race-widget { display:flex !important; align-items:center !important; gap:8px !important; margin:4px var(--ast-gutter) 0 !important; padding:6px 12px !important; border-radius:12px !important; background:rgba(8,6,18,.55) !important; border:1px solid rgba(255,255,255,.1) !important; font-size:11px !important; font-weight:700 !important; color:var(--ast-muted) !important; }
-html.hud-v3-active .rival-race-widget .rival-race-rank b { color:var(--ast-gold) !important; font-size:14px !important; }
-html.hud-v3-active .rival-race-widget .rival-race-copy { flex:1 !important; min-width:0 !important; overflow:hidden !important; text-overflow:ellipsis !important; white-space:nowrap !important; }
+html.hud-v3-active .aaa-login-streak-hero { display:flex!important; align-items:center!important; gap:10px!important; margin:0 0 12px!important; padding:12px 14px!important; border-radius:16px!important; background:linear-gradient(135deg,rgba(255,92,168,.14),rgba(255,200,69,.1))!important; border:1px solid rgba(255,200,69,.32)!important; }
+html.hud-v3-active .aaa-login-streak-hero.hot { border-color:rgba(255,92,168,.45)!important; box-shadow:0 0 20px rgba(255,92,168,.2)!important; }
+html.hud-v3-active .aaa-login-streak-hero.ready { outline:1px solid rgba(255,200,69,.35)!important; }
+html.hud-v3-active .aaa-login-streak-flame { font-size:28px!important; } html.hud-v3-active .aaa-login-streak-body { flex:1!important; min-width:0!important; }
+html.hud-v3-active .aaa-login-streak-n { display:block!important; font:900 18px/1.2 system-ui!important; color:#fff!important; }
+html.hud-v3-active .aaa-login-streak-sub, html.hud-v3-active .aaa-login-streak-best b { font-size:11px!important; color:var(--ast-muted)!important; }
+html.hud-v3-active .aaa-login-streak-best { text-align:center!important; padding:4px 8px!important; border-radius:10px!important; background:rgba(0,0,0,.22)!important; }
+html.hud-v3-active .aaa-login-streak-best b { font-size:16px!important; color:var(--ast-gold)!important; }
+html.hud-v3-active .rival-race-widget { display:flex!important; align-items:center!important; gap:8px!important; margin:4px var(--ast-gutter) 0!important; padding:6px 12px!important; border-radius:12px!important; background:rgba(8,6,18,.55)!important; border:1px solid rgba(255,255,255,.1)!important; font:700 11px/1.3 system-ui!important; color:var(--ast-muted)!important; }
+html.hud-v3-active .rival-race-widget .rival-race-rank b { color:var(--ast-gold)!important; font-size:14px!important; }
+html.hud-v3-active .rival-race-widget .rival-race-copy { flex:1!important; min-width:0!important; overflow:hidden!important; text-overflow:ellipsis!important; white-space:nowrap!important; }
 html.hud-v3-active .aaa-gl-trend-suggest { display:flex !important; align-items:center !important; gap:10px !important; margin:8px var(--ast-gutter) 10px !important; padding:10px 12px !important; border-radius:14px !important; background:linear-gradient(90deg,rgba(255,92,168,.12),rgba(255,200,69,.1)) !important; border:1px solid rgba(255,200,69,.28) !important; }
 html.hud-v3-active .aaa-gl-trend-suggest.match { border-color:rgba(74,222,128,.4) !important; background:rgba(74,222,128,.08) !important; }
 html.hud-v3-active .aaa-gl-trend-suggest-body { flex:1 !important; min-width:0 !important; }
 html.hud-v3-active .aaa-gl-trend-suggest-body b { display:block !important; font-size:12px !important; color:#fff !important; }
 html.hud-v3-active .aaa-gl-trend-suggest-body span { display:block !important; font-size:10px !important; color:var(--ast-muted) !important; }
 html.hud-v3-active .aaa-gl-trend-suggest-btn { flex-shrink:0 !important; font-size:11px !important; padding:8px 12px !important; }
+/* BUILD 92 — premiere glow + store polish */
+html.hud-v3-active .aaa-show-panel.slot-ready .aaa-premiere-ready-glow { background:linear-gradient(135deg,#ffc845,#ff9b2e 40%,#ff5ca8)!important; color:#1a0a14!important; border-color:rgba(255,255,255,.28)!important; box-shadow:0 10px 28px rgba(255,200,69,.55),0 0 36px rgba(255,200,69,.38)!important; animation:premiere-cta-glow 1.85s ease-in-out infinite!important; }
+@keyframes premiere-cta-glow { 0%,100%{box-shadow:0 10px 28px rgba(255,200,69,.45),0 0 24px rgba(255,200,69,.28);transform:scale(1)} 50%{box-shadow:0 14px 36px rgba(255,200,69,.62),0 0 48px rgba(255,200,69,.48);transform:scale(1.02)} }
+html.hud-v3-active .aaa-store-balance-hero { padding:18px 20px!important; margin-bottom:16px!important; border-radius:20px!important; background:linear-gradient(135deg,rgba(107,92,255,.28),rgba(255,92,168,.18),rgba(255,200,69,.1))!important; border:1px solid rgba(180,140,255,.45)!important; box-shadow:0 12px 36px rgba(107,92,255,.22)!important; }
+html.hud-v3-active .aaa-store-balance-hero img { width:44px!important; height:44px!important; }
+html.hud-v3-active .aaa-store-balance-kicker { font:800 10px/1 system-ui!important; letter-spacing:.1em!important; text-transform:uppercase!important; color:var(--ast-gold)!important; }
+html.hud-v3-active .aaa-store-balance-amt { display:block!important; font:900 34px/1 system-ui!important; color:#efe6ff!important; }
+html.hud-v3-active .aaa-free-gems-row.claimable { border:1px solid rgba(255,200,69,.42)!important; border-radius:14px!important; background:linear-gradient(135deg,rgba(255,200,69,.12),rgba(255,92,168,.08))!important; }
+html.hud-v3-active .aaa-free-gems-btn:not(:disabled) { animation:ast-free-gems-pulse 2s ease-in-out infinite!important; }
+@keyframes ast-free-gems-pulse { 0%,100%{box-shadow:0 8px 22px rgba(255,200,69,.3);transform:scale(1)} 50%{box-shadow:0 10px 32px rgba(255,92,168,.42);transform:scale(1.03)} }
+html.hud-v3-active .aaa-gem-hint { margin-top:4px!important; font:700 10px/1.35 system-ui!important; color:var(--ast-muted)!important; }
+html.hud-v3-active .aaa-gem-hint.hot, html.hud-v3-active .aaa-gem-row-hot { color:var(--ast-gold)!important; }
+html.hud-v3-active .aaa-ach-next { margin:0 0 10px!important; padding:12px 14px!important; border-radius:16px!important; background:linear-gradient(160deg,rgba(255,200,69,.1),rgba(255,92,168,.08))!important; border:1px solid rgba(255,200,69,.32)!important; }
+html.hud-v3-active .aaa-ach-next-head { display:flex!important; justify-content:space-between!important; margin-bottom:6px!important; }
+html.hud-v3-active .aaa-ach-next-kicker { font:800 10px/1 system-ui!important; text-transform:uppercase!important; color:var(--ast-gold)!important; }
+html.hud-v3-active .aaa-ach-bar { height:8px!important; border-radius:999px!important; background:rgba(255,255,255,.08)!important; overflow:hidden!important; }
+html.hud-v3-active .aaa-ach-bar i { display:block!important; height:100%!important; background:linear-gradient(90deg,#6b5cff,#ff5ca8,#ffc845)!important; }
+html.hud-v3-active .aaa-ach-row-next { border-left:4px solid var(--ast-gold)!important; opacity:1!important; }
+
+/* BUILD 92 — Market retention: unlock modal, ROI hero, afford glow, campaign run */
+html.hud-v3-active .aaa-page-hero.aaa-market-hero {
+  background: linear-gradient(135deg, rgba(74, 222, 128, 0.14), rgba(255, 92, 168, 0.12), rgba(107, 92, 255, 0.1)) !important;
+  border: 1px solid rgba(74, 222, 128, 0.28) !important;
+  backdrop-filter: blur(12px) saturate(1.2) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(1.2) !important;
+}
+html.hud-v3-active .aaa-page-hero.aaa-market-hero.aaa-market-locked {
+  border-color: rgba(255, 200, 69, 0.32) !important;
+  background: linear-gradient(135deg, rgba(255, 200, 69, 0.1), rgba(255, 92, 168, 0.08)) !important;
+}
+html.hud-v3-active .aaa-market-hero-meta {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 6px !important;
+  justify-content: center !important;
+  margin-top: 8px !important;
+}
+html.hud-v3-active .aaa-market-pill-afford {
+  color: var(--ast-gold) !important;
+  background: rgba(255, 200, 69, 0.16) !important;
+  border: 1px solid rgba(255, 200, 69, 0.35) !important;
+}
+html.hud-v3-active .aaa-market-roi {
+  margin: 4px 0 2px !important;
+  font: 800 11px/1.2 system-ui !important;
+  color: var(--ast-gold) !important;
+}
+html.hud-v3-active .aaa-market-roi b { font-size: 15px !important; color: #fff !important; }
+html.hud-v3-active .aaa-market-roi span {
+  display: block !important;
+  font-size: 9px !important;
+  font-weight: 700 !important;
+  color: var(--ast-muted) !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+}
+html.hud-v3-active .aaa-market-fans { font-size: 10px !important; margin-bottom: 2px !important; }
+html.hud-v3-active .aaa-market-card.aaa-market-afford {
+  border-color: rgba(255, 200, 69, 0.45) !important;
+  box-shadow: 0 0 0 1px rgba(255, 200, 69, 0.22), 0 8px 24px rgba(255, 200, 69, 0.12) !important;
+}
+html.hud-v3-active .aaa-market-card.aaa-market-best {
+  outline: 1px solid rgba(74, 222, 128, 0.35) !important;
+}
+html.hud-v3-active .aaa-market-run-afford:not(:disabled) {
+  animation: ast-market-afford-pulse 2.2s ease-in-out infinite !important;
+  box-shadow: 0 6px 20px rgba(255, 200, 69, 0.35), 0 0 16px rgba(74, 222, 128, 0.18) !important;
+}
+@keyframes ast-market-afford-pulse {
+  0%, 100% { box-shadow: 0 6px 18px rgba(255, 200, 69, 0.28); }
+  50% { box-shadow: 0 8px 26px rgba(74, 222, 128, 0.38); }
+}
+html.hud-v3-active .aaa-market-card.aaa-campaign-run,
+html.hud-v3-active .aaa-market-card .aaa-campaign-run {
+  animation: ast-campaign-run 0.85s ease-out !important;
+}
+@keyframes ast-campaign-run {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.04); filter: brightness(1.15); }
+  100% { transform: scale(1); }
+}
+html.hud-v3-active .aaa-market-unlock-modal {
+  max-width: 400px !important;
+  text-align: center !important;
+  background: var(--ast-glass) !important;
+  backdrop-filter: blur(16px) saturate(1.35) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.35) !important;
+  border: 1px solid rgba(74, 222, 128, 0.35) !important;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.55), 0 0 32px rgba(74, 222, 128, 0.18) !important;
+}
+html.hud-v3-active .aaa-market-unlock-hero {
+  font-size: 48px !important;
+  line-height: 1 !important;
+  margin: 4px auto 10px !important;
+  filter: drop-shadow(0 4px 16px rgba(74, 222, 128, 0.45));
+}
+html.hud-v3-active .aaa-market-unlock-lead {
+  margin: 8px 0 12px !important;
+  font-size: 13px !important;
+  line-height: 1.45 !important;
+  color: var(--ast-muted) !important;
+}
+html.hud-v3-active .aaa-market-unlock-perks {
+  display: grid !important;
+  gap: 8px !important;
+  margin: 10px 0 4px !important;
+  text-align: left !important;
+}
+html.hud-v3-active .aaa-market-unlock-perks > div {
+  display: grid !important;
+  grid-template-columns: 28px 1fr !important;
+  gap: 2px 8px !important;
+  padding: 10px 12px !important;
+  border-radius: 12px !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+html.hud-v3-active .aaa-market-unlock-perks > div > span:first-child {
+  grid-row: span 2 !important;
+  font-size: 20px !important;
+  align-self: center !important;
+}
+html.hud-v3-active .aaa-market-unlock-perks b { font-size: 12px !important; color: #fff !important; }
+html.hud-v3-active .aaa-market-unlock-perks small {
+  grid-column: 2 !important;
+  font-size: 10px !important;
+  color: var(--ast-muted) !important;
+}
+html.hud-v3-active .aaa-market-unlock-cta {
+  box-shadow: 0 10px 28px rgba(74, 222, 128, 0.32) !important;
+}
+
+/* BUILD 92 — research unlock modal + genre lab mastery */
+html.hud-v3-active .aaa-research-unlock-modal { max-width:400px!important; text-align:center!important; background:var(--ast-glass)!important; backdrop-filter:blur(16px) saturate(1.35)!important; -webkit-backdrop-filter:blur(16px) saturate(1.35)!important; border:1px solid rgba(77,212,255,.35)!important; box-shadow:0 20px 48px rgba(0,0,0,.55),0 0 32px rgba(77,212,255,.18)!important; }
+html.hud-v3-active .aaa-research-unlock-hero { font-size:48px!important; line-height:1!important; margin:4px auto 10px!important; filter:drop-shadow(0 4px 16px rgba(77,212,255,.45)); }
+html.hud-v3-active .aaa-research-unlock-lead { margin:8px 0 12px!important; font-size:13px!important; line-height:1.45!important; color:var(--ast-muted)!important; }
+html.hud-v3-active .aaa-research-unlock-perks { display:grid!important; gap:8px!important; margin:10px 0 4px!important; text-align:left!important; }
+html.hud-v3-active .aaa-research-unlock-perks > div { display:grid!important; grid-template-columns:28px 1fr!important; gap:2px 8px!important; padding:10px 12px!important; border-radius:12px!important; background:rgba(255,255,255,.04)!important; border:1px solid rgba(255,255,255,.08)!important; }
+html.hud-v3-active .aaa-research-unlock-perks > div > span:first-child { grid-row:span 2!important; font-size:20px!important; align-self:center!important; }
+html.hud-v3-active .aaa-research-unlock-perks b { font-size:12px!important; color:#fff!important; }
+html.hud-v3-active .aaa-research-unlock-perks small { grid-column:2!important; font-size:10px!important; color:var(--ast-muted)!important; }
+html.hud-v3-active .aaa-research-unlock-cta { box-shadow:0 10px 28px rgba(77,212,255,.32)!important; }
+html.hud-v3-active .aaa-research-trend-banner { display:flex!important; align-items:center!important; gap:10px!important; margin:0 0 10px!important; padding:10px 12px!important; border-radius:14px!important; background:linear-gradient(90deg,rgba(255,92,168,.12),rgba(255,200,69,.1))!important; border:1px solid rgba(255,200,69,.28)!important; }
+html.hud-v3-active .aaa-research-trend-ic { font-size:22px!important; flex-shrink:0!important; }
+html.hud-v3-active .aaa-research-trend-body { flex:1!important; min-width:0!important; }
+html.hud-v3-active .aaa-research-trend-body b { display:block!important; font-size:12px!important; color:#fff!important; }
+html.hud-v3-active .aaa-research-trend-body span { display:block!important; font-size:10px!important; color:var(--ast-muted)!important; }
+html.hud-v3-active .aaa-mastery-head { display:flex!important; align-items:center!important; gap:8px!important; margin-bottom:6px!important; }
+html.hud-v3-active .aaa-mastery-genre-ic { display:inline-flex!important; align-items:center!important; justify-content:center!important; width:28px!important; height:28px!important; border-radius:10px!important; font-size:14px!important; font-weight:900!important; color:var(--ast-gold)!important; background:rgba(255,200,69,.12)!important; border:1px solid rgba(255,200,69,.28)!important; flex-shrink:0!important; }
+html.hud-v3-active .aaa-mastery-head h4 { flex:1!important; min-width:0!important; margin:0!important; display:flex!important; flex-wrap:wrap!important; align-items:center!important; gap:4px!important; }
+html.hud-v3-active .aaa-mastery-trend-pill { padding:2px 6px!important; border-radius:999px!important; font:900 8px/1 system-ui!important; letter-spacing:.06em!important; text-transform:uppercase!important; color:#1a0a14!important; background:linear-gradient(135deg,#ffc845,#ff5ca8)!important; }
+html.hud-v3-active .aaa-mastery-card.aaa-mastery-trend { border-color:rgba(255,200,69,.45)!important; box-shadow:0 0 0 1px rgba(255,200,69,.2),0 8px 24px rgba(255,200,69,.12)!important; background:linear-gradient(135deg,rgba(255,200,69,.08),rgba(255,92,168,.06))!important; }
+html.hud-v3-active .aaa-mastery-card.aaa-mastery-afford .hirebtn:not(:disabled) { animation:ast-staff-afford-pulse 2.2s ease-in-out infinite!important; }
+html.hud-v3-active .aaa-mastery-bar { height:8px!important; border-radius:999px!important; background:rgba(255,255,255,.08)!important; overflow:hidden!important; margin-bottom:4px!important; }
+html.hud-v3-active .aaa-mastery-bar i { display:block!important; height:100%!important; border-radius:inherit!important; background:linear-gradient(90deg,#6b5cff,#ff5ca8,#ffc845)!important; transition:width .25s ease!important; }
+html.hud-v3-active .aaa-mastery-card.aaa-mastery-first-hit { animation:aaa-mastery-first-hit 1.1s ease-out!important; }
+@keyframes aaa-mastery-first-hit { 0%,100%{transform:scale(1);box-shadow:none} 40%{transform:scale(1.03);box-shadow:0 0 28px rgba(77,212,255,.45)} }
+
+/* BUILD 92 — studio unlock + expansion afford */
+html.hud-v3-active .aaa-studio-unlock-modal { max-width:400px!important; text-align:center!important; background:var(--ast-glass)!important; backdrop-filter:blur(16px) saturate(1.35)!important; border:1px solid rgba(255,200,69,.35)!important; box-shadow:0 20px 48px rgba(0,0,0,.55),0 0 32px rgba(255,200,69,.18)!important; }
+html.hud-v3-active .aaa-studio-unlock-hero { font-size:48px!important; margin:4px auto 10px!important; filter:drop-shadow(0 4px 16px rgba(255,200,69,.45)); }
+html.hud-v3-active .aaa-studio-unlock-lead { margin:8px 0 12px!important; font-size:13px!important; color:var(--ast-muted)!important; }
+html.hud-v3-active .aaa-studio-unlock-perks { display:grid!important; gap:8px!important; margin:10px 0 4px!important; text-align:left!important; }
+html.hud-v3-active .aaa-studio-unlock-perks > div { display:grid!important; grid-template-columns:28px 1fr!important; gap:2px 8px!important; padding:10px 12px!important; border-radius:12px!important; background:rgba(255,255,255,.04)!important; border:1px solid rgba(255,255,255,.08)!important; }
+html.hud-v3-active .aaa-studio-unlock-cta { box-shadow:0 10px 28px rgba(255,92,168,.35)!important; }
+html.hud-v3-active .aaa-studio-expand-card { grid-template-columns:1fr!important; }
+html.hud-v3-active .aaa-studio-expand-card .aaa-studio-expand-btn { width:100%!important; margin-top:4px!important; }
+html.hud-v3-active .aaa-studio-expand-progress { margin-top:8px!important; }
+html.hud-v3-active .aaa-studio-expand-progress-head { display:flex!important; justify-content:space-between!important; font:700 10px/1.3 system-ui!important; color:var(--ast-muted)!important; margin-bottom:4px!important; }
+html.hud-v3-active .aaa-studio-expand-bar { height:8px!important; border-radius:999px!important; background:rgba(255,255,255,.08)!important; overflow:hidden!important; border:1px solid rgba(255,200,69,.2)!important; }
+html.hud-v3-active .aaa-studio-expand-bar > i { display:block!important; height:100%!important; border-radius:inherit!important; background:linear-gradient(90deg,var(--ast-pink),var(--ast-gold))!important; transition:width .35s ease!important; }
+html.hud-v3-active .aaa-studio-expand-afford { border-color:rgba(255,200,69,.5)!important; box-shadow:0 0 0 1px rgba(255,200,69,.28),0 8px 28px rgba(255,200,69,.16)!important; }
+html.hud-v3-active .aaa-studio-expand-afford .aaa-studio-expand-btn:not(:disabled) { animation:ast-studio-expand-pulse 2.2s ease-in-out infinite!important; box-shadow:0 8px 24px rgba(255,200,69,.4),0 0 20px rgba(255,92,168,.22)!important; }
+@keyframes ast-studio-expand-pulse { 0%,100%{box-shadow:0 6px 18px rgba(255,200,69,.32)} 50%{box-shadow:0 10px 28px rgba(255,92,168,.42)} }
