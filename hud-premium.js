@@ -236,12 +236,13 @@
     shell.className = "hud-v3";
     shell.innerHTML = `
       <div class="hud-brand-row">
-        <div class="hud-avatar-wrap"><img class="hud-avatar" src="start-hero.png?v=66" alt=""><span class="hud-lv-badge" id="hud-lv-badge">1</span></div>
+        <div class="hud-avatar-wrap"><img class="hud-avatar" src="start-hero.png?v=67" alt=""><span class="hud-lv-badge" id="hud-lv-badge">1</span></div>
         <div class="hud-identity">
           <div class="hud-brand-line"><span class="hud-sakura-logo" aria-hidden="true">🌸</span><span class="hud-studio-name" id="hud-studio-name">Studio</span></div>
           <span class="hud-studio-rank-label" id="hud-studio-rank-label">Studio Rank C</span>
         </div>
         <span class="hud-awards-chip" id="hud-awards" hidden title="Golden Anime Awards">🏆</span>
+        <button type="button" class="hud-mail-btn" id="hud-mail-btn" aria-label="Mail and rewards">✉️</button>
         <div class="hud-stats" id="hud-resources"></div>
       </div>
       <div class="hud-drawer" id="hud-drawer" hidden>
@@ -288,7 +289,7 @@
       rail.id = "pathway-rail";
       rail.className = "coach-bar";
       rail.innerHTML = `
-        <img class="coach-avatar" src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg?v=66" alt="" width="40" height="40">
+        <img class="coach-avatar" src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg?v=67" alt="" width="40" height="40">
         <div class="coach-body">
           <span class="coach-label">Coach's Tip</span>
           <p class="coach-msg" id="pathway-now"></p>
@@ -328,6 +329,13 @@
     }
 
     document.getElementById("pathway-cta").addEventListener("click", runPathwayAction);
+    document.getElementById("hud-mail-btn").addEventListener("click", () => {
+      const hook = window.__AST_HOOK__;
+      if (!hook) return;
+      hook.getState().tab = "quests";
+      hook.render();
+      hook.play("click");
+    });
     document.getElementById("coach-gift").addEventListener("click", () => {
       const hook = window.__AST_HOOK__;
       if (!hook) return;
@@ -363,6 +371,12 @@
     }
     const awards = document.getElementById("hud-awards");
     if (awards) awards.hidden = (S.releases || 0) < 8;
+    const mailBtn = document.getElementById("hud-mail-btn");
+    if (mailBtn) {
+      const today = new Date().toISOString().slice(0, 10);
+      const loginPending = S.loginLastClaimDate !== today && (S.loginClaimedCount || 0) < 31;
+      mailBtn.classList.toggle("has-dot", claimableQuests(S) > 0 || loginPending);
+    }
     const lv = document.getElementById("hud-lv-badge");
     if (lv) lv.textContent = String(S.studioLevel || 1);
 

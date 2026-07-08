@@ -34,7 +34,7 @@ html.hud-v3-active body {
 html.hud-v3-active body {
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.35) 0%, rgba(8, 6, 15, 0.82) 100%),
-    url('bg-v4.png?v=66') center top / cover no-repeat fixed !important;
+    url('bg-v4.png?v=67') center top / cover no-repeat fixed !important;
 }
 
 html.hud-v3-active button {
@@ -492,7 +492,7 @@ html.hud-v3-active .aaa-poster[data-act="tapboost"]:active {
 html.hud-v3-active .aaa-page-hero.aaa-gacha-hero {
   background:
     linear-gradient(135deg, rgba(107, 92, 255, 0.2), rgba(255, 92, 168, 0.14)),
-    url('assets/hf/gacha-bg.png?v=66') center/cover !important;
+    url('assets/hf/gacha-bg.png?v=67') center/cover !important;
   border: 1px solid rgba(180, 140, 255, 0.28) !important;
   overflow: hidden;
 }
@@ -1930,21 +1930,21 @@ html.hud-v3-active #premiere .premiere-card .btn-gold {
 html.hud-v3-active .aaa-page-hero.aaa-quest-hero {
   background:
     linear-gradient(135deg, rgba(255, 200, 69, 0.16), rgba(255, 92, 168, 0.12)),
-    url('assets/hf/greenlight-bg.png?v=66') center/cover !important;
+    url('assets/hf/greenlight-bg.png?v=67') center/cover !important;
   border: 1px solid rgba(255, 200, 69, 0.28) !important;
 }
 
 html.hud-v3-active .aaa-page-hero.aaa-staff-hero {
   background:
     linear-gradient(135deg, rgba(107, 92, 255, 0.18), rgba(255, 92, 168, 0.1)),
-    url('assets/hf/gacha-bg.png?v=66') center/cover !important;
+    url('assets/hf/gacha-bg.png?v=67') center/cover !important;
   border: 1px solid rgba(180, 140, 255, 0.28) !important;
 }
 
 html.hud-v3-active .aaa-page-hero.aaa-store-hero {
   background:
     linear-gradient(135deg, rgba(34, 211, 238, 0.14), rgba(255, 92, 168, 0.12)),
-    url('assets/hf/greenlight-bg.png?v=66') center/cover !important;
+    url('assets/hf/greenlight-bg.png?v=67') center/cover !important;
   border: 1px solid rgba(255, 92, 168, 0.28) !important;
 }
 
@@ -2158,21 +2158,21 @@ html.hud-v3-active .aaa-easy-mode .aaa-show-panel {
 html.hud-v3-active .aaa-page-hero.aaa-research-hero {
   background:
     linear-gradient(135deg, rgba(34, 211, 238, 0.16), rgba(107, 92, 255, 0.12)),
-    url('assets/hf/gacha-bg.png?v=66') center/cover !important;
+    url('assets/hf/gacha-bg.png?v=67') center/cover !important;
   border: 1px solid rgba(77, 212, 255, 0.28) !important;
 }
 
 html.hud-v3-active .aaa-page-hero.aaa-studio-hero {
   background:
     linear-gradient(135deg, rgba(255, 200, 69, 0.14), rgba(255, 92, 168, 0.1)),
-    url('assets/hf/greenlight-bg.png?v=66') center/cover !important;
+    url('assets/hf/greenlight-bg.png?v=67') center/cover !important;
   border: 1px solid rgba(255, 200, 69, 0.28) !important;
 }
 
 html.hud-v3-active .aaa-page-hero.aaa-market-hero {
   background:
     linear-gradient(135deg, rgba(255, 92, 168, 0.14), rgba(107, 92, 255, 0.1)),
-    url('assets/hf/gacha-bg.png?v=66') center/cover !important;
+    url('assets/hf/gacha-bg.png?v=67') center/cover !important;
   border: 1px solid rgba(255, 92, 168, 0.28) !important;
 }
 
@@ -2351,7 +2351,7 @@ html.hud-v3-active .aaa-greenlight-cinema-head {
   padding: 18px 16px 12px !important;
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.55) 0%, rgba(8, 6, 15, 0.85) 100%),
-    url('assets/hf/greenlight-bg.png?v=66') center/cover !important;
+    url('assets/hf/greenlight-bg.png?v=67') center/cover !important;
   border-bottom: 1px solid rgba(255, 200, 69, 0.15) !important;
 }
 
@@ -2946,7 +2946,7 @@ html.hud-v3-active .aaa-gl-page-head {
   padding: 14px 14px 10px !important;
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.4) 0%, rgba(8, 6, 15, 0.9) 100%),
-    url('assets/hf/greenlight-bg.png?v=66') center/cover !important;
+    url('assets/hf/greenlight-bg.png?v=67') center/cover !important;
   border-bottom: 1px solid rgba(255, 200, 69, 0.15) !important;
 }
 
@@ -3337,4 +3337,68 @@ html.hud-v3-active .coach-avatar {
   border-radius: 12px !important;
   border: 2px solid rgba(255, 92, 168, 0.35) !important;
   box-shadow: 0 0 12px rgba(255, 92, 168, 0.2) !important;
+}
+
+/* ========== BUILD 67 — First Impression ========== */
+
+html.hud-v3-active .hud-mail-btn {
+  flex-shrink: 0 !important;
+  width: 32px !important;
+  height: 32px !important;
+  padding: 0 !important;
+  border-radius: 10px !important;
+  border: 1px solid rgba(255, 92, 168, 0.25) !important;
+  background: rgba(255, 92, 168, 0.1) !important;
+  font-size: 14px !important;
+  cursor: pointer !important;
+  position: relative !important;
+}
+
+html.hud-v3-active .hud-mail-btn.has-dot::after {
+  content: "" !important;
+  position: absolute !important;
+  top: 4px !important;
+  right: 4px !important;
+  width: 7px !important;
+  height: 7px !important;
+  border-radius: 50% !important;
+  background: #ff3b6b !important;
+  box-shadow: 0 0 8px rgba(255, 59, 107, 0.8) !important;
+}
+
+html.hud-v3-active .aaa-team-card {
+  flex: 0 0 84px !important;
+  min-width: 84px !important;
+  padding: 10px 8px !important;
+  border-radius: 14px !important;
+}
+
+html.hud-v3-active .aaa-team-card .aaa-team-avatar {
+  width: 52px !important;
+  height: 52px !important;
+  border-radius: 14px !important;
+  margin: 6px auto 8px !important;
+}
+
+html.hud-v3-active .aaa-team-card.aaa-rank-S {
+  border: 2px solid rgba(255, 200, 69, 0.5) !important;
+  box-shadow: 0 0 20px rgba(255, 200, 69, 0.2) !important;
+  background: rgba(255, 200, 69, 0.06) !important;
+}
+
+html.hud-v3-active .aaa-team-card.aaa-rank-A {
+  border: 1px solid rgba(77, 212, 255, 0.35) !important;
+  background: rgba(77, 212, 255, 0.05) !important;
+}
+
+html.hud-v3-active .aaa-tab-page {
+  padding: 8px !important;
+}
+
+html.hud-v3-active #command-dock {
+  --ui-dock-h: 58px !important;
+}
+
+html.hud-v3-active .tab .tab-lbl {
+  font-size: 8px !important;
 }

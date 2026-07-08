@@ -141,9 +141,12 @@ assert(!html.includes('href="hf-design.css'), "hf-design.css disabled (ast-v5)")
 assert(!html.includes('href="aaa-ui.css'), "aaa-ui.css disabled (ast-v5)");
 assert(html.includes("legacy-fx.css"), "legacy-fx css linked");
 assert(html.includes("ast-v5.css"), "ast-v5 design css linked");
-assert(html.includes("build 66"), "build 66 tag");
+assert(html.includes("build 67"), "build 67 tag");
 assert(html.includes("Production Score"), "production score label");
-assert(html.includes("Ref Polish"), "whatsnew build 66 changelog");
+assert(html.includes("First Impression"), "whatsnew build 67 changelog");
+assert(html.includes("TAB_MOCKUP"), "mockup tab labels");
+assert(html.includes("Sakura Films"), "default studio name from ref");
+assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("hud-mail-btn"), "hud mail button");
 assert(html.includes("GENRE_ICONS"), "genre filter icons");
 assert(html.includes("aaa-gl-confirm-banner"), "greenlight banner CTA");
 assert(html.includes("aaa-gl-name-ja"), "showcase japanese titles");
