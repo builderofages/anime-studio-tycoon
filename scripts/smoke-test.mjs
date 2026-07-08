@@ -141,9 +141,13 @@ assert(!html.includes('href="hf-design.css'), "hf-design.css disabled (ast-v5)")
 assert(!html.includes('href="aaa-ui.css'), "aaa-ui.css disabled (ast-v5)");
 assert(html.includes("legacy-fx.css"), "legacy-fx css linked");
 assert(html.includes("ast-v5.css"), "ast-v5 design css linked");
-assert(html.includes("build 80"), "build 80 tag");
+assert(html.includes("build 81"), "build 81 tag");
 assert(html.includes("Production Score"), "production score label");
-assert(html.includes("Gem HUD"), "whatsnew build 80 changelog");
+assert(html.includes("GL Budgets"), "whatsnew build 81 changelog");
+assert(html.includes("showcaseCost"), "greenlight showcase budgets");
+assert(html.includes("showcaseGlUsed"), "greenlight slots showcase");
+assert(html.includes("showcaseRewards"), "greenlight showcase rewards");
+assert(html.includes("放課後コメディ"), "after school japanese title");
 assert(html.includes("fmtHudRes"), "hud resource formatter");
 assert(html.includes("aaa-gl-open-hot"), "multi-slot greenlight cta");
 assert(html.includes("BUDGET ALLOCATION"), "greenlight budget header");
@@ -168,7 +172,7 @@ assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("glView ? fal
 assert(readFileSync(join(root, "package.json"), "utf8").includes('"overrides"'), "npm overrides");
 assert(existsSync(join(root, "scripts/audit-check.mjs")), "audit check script");
 const astCss = readFileSync(join(root, "ast-v5.css"), "utf8");
-assert(astCss.includes("BUILD 80"), "build 80 css marker");
+assert(astCss.includes("BUILD 81"), "build 81 css marker");
 assert(astCss.includes(".tab .tab-lbl") && astCss.includes("display: block"), "dock tab labels visible");
 const astLines = astCss.split("\n").length;
 assert(astLines < 3200, "ast-v5.css pruned under 3200 lines", `${astLines} lines`);

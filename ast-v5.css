@@ -38,7 +38,7 @@ html.hud-v3-active body {
 html.hud-v3-active body {
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.35) 0%, rgba(8, 6, 15, 0.82) 100%),
-    url('bg-v4.png?v=80') center top / cover no-repeat fixed !important;
+    url('bg-v4.png?v=81') center top / cover no-repeat fixed !important;
 }
 
 html.hud-v3-active button {
@@ -496,7 +496,7 @@ html.hud-v3-active .aaa-poster[data-act="tapboost"]:active {
 html.hud-v3-active .aaa-page-hero.aaa-gacha-hero {
   background:
     linear-gradient(135deg, rgba(107, 92, 255, 0.2), rgba(255, 92, 168, 0.14)),
-    url('assets/hf/gacha-bg.png?v=80') center/cover !important;
+    url('assets/hf/gacha-bg.png?v=81') center/cover !important;
   border: 1px solid rgba(180, 140, 255, 0.28) !important;
   overflow: hidden;
 }
@@ -1983,7 +1983,7 @@ html.hud-v3-active .aaa-gl-page-head {
   padding: 14px 14px 10px !important;
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.4) 0%, rgba(8, 6, 15, 0.9) 100%),
-    url('assets/hf/greenlight-bg.png?v=80') center/cover !important;
+    url('assets/hf/greenlight-bg.png?v=81') center/cover !important;
   border-bottom: 1px solid rgba(255, 200, 69, 0.15) !important;
 }
 
@@ -3037,4 +3037,45 @@ html.hud-v3-active .aaa-show-panel .aaa-premiere-bonus-label {
   text-transform: uppercase !important;
   color: var(--ast-muted) !important;
   width: 100% !important;
+}
+
+/* ========== BUILD 81 (canonical) ========== */
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-slots-count {
+  display: flex !important;
+  align-items: baseline !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  width: 100% !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  color: #fff !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-slots-count span {
+  font-size: 16px !important;
+  font-weight: 900 !important;
+  color: var(--ast-pink) !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-slots-plus {
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 50% !important;
+  margin-top: 2px !important;
+  background: linear-gradient(135deg, var(--ast-pink), var(--ast-pink-2)) !important;
+  border: none !important;
+  color: #fff !important;
+  box-shadow: 0 4px 14px rgba(255, 92, 168, 0.4) !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-budget {
+  color: var(--ast-gold) !important;
+}
+
+html.hud-v3-active .coach-cta {
+  background: linear-gradient(135deg, var(--ast-pink), var(--ast-pink-2)) !important;
+  border: none !important;
+  color: #fff !important;
+  box-shadow: 0 4px 14px rgba(255, 92, 168, 0.35) !important;
 }
