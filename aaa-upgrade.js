@@ -48,11 +48,12 @@
     }
   }, 120);
 
-  /* ---- Sakura particles ---- */
+  /* ---- Sakura particles (lightweight in HUD v3 — bursts + ambient, no fx-canvas-off) ---- */
   const slimHud = document.documentElement.classList.contains("hud-v3-active");
+  const LIGHT_FX = slimHud;
   const canvas = document.createElement("canvas");
   canvas.id = "fx-canvas";
-  if (slimHud) canvas.className = "fx-canvas-off";
+  if (LIGHT_FX) canvas.classList.add("fx-canvas-lite");
   document.body.prepend(canvas);
   const ctx = canvas.getContext("2d");
   let petals = [];
@@ -80,7 +81,9 @@
   function drawPetals() {
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    if (petals.length < 28 && Math.random() < 0.15) spawnPetal();
+    const ambientCap = LIGHT_FX ? 14 : 28;
+    const ambientRate = LIGHT_FX ? 0.07 : 0.15;
+    if (petals.length < ambientCap && Math.random() < ambientRate) spawnPetal();
     petals = petals.filter((p) => {
       p.x += p.vx;
       p.y += p.vy;
@@ -99,11 +102,14 @@
     });
     requestAnimationFrame(drawPetals);
   }
-  if (!slimHud) requestAnimationFrame(drawPetals);
+  requestAnimationFrame(drawPetals);
 
-  function burstParticles(n) {
+  function burstParticles(n, x, y) {
+    const cx = x ?? canvas.width / 2;
+    const cy = y ?? canvas.height * 0.4;
+    const spread = LIGHT_FX ? 90 : 120;
     for (let i = 0; i < n; i++) {
-      spawnPetal(canvas.width / 2 + (Math.random() - 0.5) * 120, canvas.height * 0.4, true);
+      spawnPetal(cx + (Math.random() - 0.5) * spread, cy + (Math.random() - 0.5) * (spread * 0.35), true);
     }
   }
 

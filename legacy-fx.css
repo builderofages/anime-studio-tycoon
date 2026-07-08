@@ -83,6 +83,21 @@
 .toast.gold {
   background: linear-gradient(180deg, var(--gold, #fbbf24), #e9a91a);
   color: #4a3200;
+  border: 1px solid rgba(255, 220, 120, 0.55);
+  box-shadow: 0 8px 24px rgba(251, 191, 36, 0.35);
+}
+
+.toast.special {
+  background: linear-gradient(135deg, #ff5ca8, #a855f7);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 10px 28px rgba(168, 85, 247, 0.4);
+  animation: rise 0.4s ease, toastPulse 2.2s ease-in-out infinite;
+}
+
+@keyframes toastPulse {
+  0%, 100% { box-shadow: 0 10px 28px rgba(168, 85, 247, 0.4); }
+  50% { box-shadow: 0 12px 32px rgba(255, 92, 168, 0.55); }
 }
 
 @keyframes rise {
@@ -103,10 +118,45 @@
   animation: floatup 1.15s ease-out forwards;
 }
 
+.floatgain.anchored {
+  left: var(--fg-x, 50%);
+  top: var(--fg-y, 46%);
+  transform: translate(-50%, -50%);
+  animation: floatupAnchored 1.15s ease-out forwards;
+}
+
 @keyframes floatup {
   0% { opacity: 0; transform: translate(-50%, 14px) scale(0.8); }
   20% { opacity: 1; }
   100% { opacity: 0; transform: translate(-50%, -66px) scale(1.12); }
+}
+
+@keyframes floatupAnchored {
+  0% { opacity: 0; transform: translate(-50%, calc(-50% + 14px)) scale(0.8); }
+  20% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%, calc(-50% - 66px)) scale(1.12); }
+}
+
+#app.screen-shake {
+  animation: screenShake 0.45s ease;
+}
+
+@keyframes screenShake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
+#app.flash-gold {
+  animation: flashGold 0.5s ease;
+}
+
+@keyframes flashGold {
+  0% { filter: brightness(1); }
+  30% { filter: brightness(1.25) saturate(1.2); }
+  100% { filter: brightness(1); }
 }
 
 .qhead {
@@ -430,8 +480,15 @@
   padding: 12px 14px 0;
 }
 
+#fx-canvas.fx-canvas-lite {
+  opacity: 0.55;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .floatgain,
+  .toast.special,
+  #app.screen-shake,
+  #app.flash-gold,
   .spark,
   .prem-banner,
   .prem-scene,

@@ -22,7 +22,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%233a2b4d'/%3E%3Ccircle cx='32' cy='32' r='30' fill='none' stroke='%23ffc845' stroke-width='3'/%3E%3Cg fill='%23ff9bc4'%3E%3Cellipse cx='32' cy='15' rx='5' ry='8'/%3E%3Cellipse cx='32' cy='49' rx='5' ry='8'/%3E%3Cellipse cx='15' cy='32' rx='8' ry='5'/%3E%3Cellipse cx='49' cy='32' rx='8' ry='5'/%3E%3C/g%3E%3Ccircle cx='32' cy='32' r='7' fill='%23ffc845'/%3E%3C/svg%3E">
 <link rel="manifest" href="manifest.json">
 <!-- Legacy gameplay-*.css disabled — aaa-ui + game-skin + hud-premium own chrome -->
-<link rel="stylesheet" href="hud-premium.css?v=88">
+<link rel="stylesheet" href="hud-premium.css?v=89">
 <!-- ui-complete.css disabled — v5 uses aaa-tab-page heroes -->
 <!-- gameplay-studio-rating.css disabled — ast-v5 authority -->
 <!-- studio-premium.css disabled — ast-v5 authority -->
@@ -30,8 +30,8 @@
 <!-- game-skin.css disabled — fought ast-v5 (animation:none, flat panels) -->
 <!-- hf-design.css disabled — ast-v5 authority -->
 <!-- aaa-ui.css disabled — ast-v5 authority -->
-<link rel="stylesheet" href="legacy-fx.css?v=88">
-<link rel="stylesheet" href="ast-v5.css?v=88">
+<link rel="stylesheet" href="legacy-fx.css?v=89">
+<link rel="stylesheet" href="ast-v5.css?v=89">
 <script>document.documentElement.classList.add("premium-hud","hud-v3-active")</script>
 <meta name="theme-color" content="#08050f">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -63,7 +63,7 @@
        --safe-l:env(safe-area-inset-left,0px); --safe-r:env(safe-area-inset-right,0px); }
 @supports(height:100dvh){ html,body{height:100dvh} }
 #app{padding-left:var(--safe-l);padding-right:var(--safe-r)}
-html.hud-v3-active #goal{display:none !important}
+
 .asd-topbar,.asd-mpanel,#asd-p-status,#asd-p-menu{display:none !important}
 #main{min-height:0 !important}
 #main>*{margin:0 !important}
@@ -89,7 +89,7 @@ html.hud-v3-active #goal{display:none !important}
     <button class="btn-ghost" id="btn-mute">🔊 Sound: On</button>
     <button class="btn-ghost" id="btn-save" style="display:none">💾 Save</button>
     <button class="btn-ghost" id="btn-reset">↺ Reset</button>
-  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 88 · Ref GL</span></div>
+  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 89 · Playable</span></div>
   <div id="toasts"></div>
 </div>
 
@@ -212,14 +212,14 @@ const STORE_PAYMENTS = true; // store always visible; buyReal routes web→check
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 88 · Ref GL";
-const ASSET_V = "88";
+const BUILD_TAG = "build 89 · Playable";
+const ASSET_V = "89";
 const SHOWCASE_TEAM={director:{lv:60,rank:"S"},writer:{lv:50,rank:"A"},animator:{lv:60,rank:"S"},voice:{lv:45,rank:"A"},producer:{lv:50,rank:"S"}};
 const POSTER_META={
   "Sakura no Yakusoku":{ja:"桜色の約束",en:"SAKURA NO YAKUSOKU",tagline:"未来を、もう一度描け。"},
   "Promise of Sakura":{ja:"桜色の約束",en:"SAKURA NO YAKUSOKU",tagline:"未来を、もう一度描け。"},
 };
-const TAB_ORDER_EARLY = ["quests","market","studio","produce","staff","store"];
+const TAB_ORDER_EARLY = ["produce","quests","staff","stars","studio","store"];
 const COACH_AVATAR = "https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg";
 const TAB_ICON_IMG = {
   produce:"icons/tabs/produce.png", quests:"icons/tabs/quests.png", staff:"icons/tabs/staff.png",
@@ -254,7 +254,11 @@ function fmtHudRes(k,n){
   if(k==="yen"||k==="fans") return fmtCompact(n);
   return fmt(n);
 }
-function isShowcaseDemo(){ return (S.releases||0)<3&&!!S._bootstrapped; }
+function isDemoMode(){
+  if(S._demoMode) return true;
+  try{ return new URL(location.href).searchParams.get("demo")==="1"; }catch(e){ return false; }
+}
+function isShowcaseDemo(){ return !!S._demoMode && (S.releases||0)<3; }
 function isGlHudView(){ return document.getElementById("main")?.dataset.glView==="1"; }
 function hudDisplayValue(k){
   if(isShowcaseDemo()){
@@ -288,7 +292,12 @@ function productionTeamHTML(){
   const order=["director","writer","animator","voice","producer"];
   const labels={director:"Director",writer:"Scriptwriter",animator:"Character Design",voice:"Music",producer:"Producer"};
   const demo=isShowcaseDemo();
-  let h=`<div class="aaa-team"><div class="aaa-team-head"><span>Production Team</span><button type="button" class="aaa-team-add" data-tab="staff" aria-label="Hire staff">+</button></div><div class="aaa-team-scroll">`;
+  const emptyRoles=order.filter(role=>!((S.staff||{})[role]||0));
+  const allEmpty=!demo&&emptyRoles.length===order.length;
+  let h=`<div class="aaa-team${allEmpty?" aaa-team-all-empty":""}"><div class="aaa-team-head"><span>Production Team</span><button type="button" class="aaa-team-add" data-tab="staff" aria-label="Hire staff">+</button></div>`;
+  if(allEmpty) h+=`<div class="aaa-team-empty-banner"><span class="aaa-team-empty-ic" aria-hidden="true">👥</span><div><b>No production team yet</b><p>Hire staff to raise quality, speed, and premiere scores.</p></div><button type="button" class="btn-primary aaa-team-empty-cta" data-tab="staff">Hire staff</button></div>`;
+  else if(emptyRoles.length) h+=`<div class="aaa-team-empty-hint">${emptyRoles.length} open role${emptyRoles.length>1?"s":""} — tap a gray slot to hire</div>`;
+  h+=`<div class="aaa-team-scroll">`;
   order.forEach(role=>{
     const n=(S.staff||{})[role]||0;
     const sc=demo?SHOWCASE_TEAM[role]:null;
@@ -296,7 +305,7 @@ function productionTeamHTML(){
     const rank=sc?sc.rank:(lv>=55?"S":lv>=45?"A":"B");
     const r=ROLES[role];
     const empty=n===0;
-    h+=`<div class="aaa-team-card aaa-rank-${rank}${empty?" empty":""}"><span class="aaa-team-rank">${rank}</span><img class="aaa-team-avatar" src="${r.img}" alt="${labels[role]}"><div class="aaa-team-role"><span class="aaa-team-role-ic">${ROLE_ICONS[role]||"👤"}</span>${labels[role]}</div><div class="aaa-team-lv">LV.${empty?"—":lv}</div></div>`;
+    h+=`<div class="aaa-team-card aaa-rank-${rank}${empty?" empty":""}"${empty?` data-tab="staff" role="button" tabindex="0" aria-label="Hire ${labels[role]}"`:""}><span class="aaa-team-rank">${empty?"?":rank}</span><img class="aaa-team-avatar" src="${r.img}" alt="${labels[role]}">${empty?`<span class="aaa-team-hire-pill">+ Hire</span>`:""}<div class="aaa-team-role"><span class="aaa-team-role-ic">${ROLE_ICONS[role]||"👤"}</span>${labels[role]}</div><div class="aaa-team-lv">LV.${empty?"—":lv}</div></div>`;
   });
   return h+`</div></div>`;
 }
@@ -383,10 +392,19 @@ function hypeBarPct(pr,p,pct){
   if(pr.showcaseHypePct!=null) return pr.showcaseHypePct;
   return Math.min(100,pct);
 }
-function bootstrapNewStudio(){
+function bootstrapHonestStudio(){
+  if((S.releases||0)>0||staffTotal()>0||activeCount()>0) return false;
+  try{ const sn=document.getElementById("start-studio"); if(sn&&sn.value) S.studioName=cleanName(sn.value); }catch(e){}
+  if(!S.studioName) S.studioName="My Studio";
+  S._bootstrapped=false;
+  S._demoMode=false;
+  return true;
+}
+function bootstrapDemoStudio(){
   if((S.releases||0)>0||staffTotal()>0||activeCount()>0) return false;
   try{ const sn=document.getElementById("start-studio"); if(sn&&sn.value) S.studioName=cleanName(sn.value); }catch(e){}
   if(!S.studioName) S.studioName="Sakura Films";
+  S._demoMode=true;
   S.studioLevel=47; S.studioStars=5; S.slots=3;
   S.yen=23800000; S.fans=128600; S.gems=6850; S.hype=85;
   S.staff={director:7,writer:5,animator:7,voice:4,producer:5};
@@ -418,6 +436,9 @@ function bootstrapNewStudio(){
   S.showcaseGlUsed=2;
   S._bootstrapped=true;
   return true;
+}
+function bootstrapNewStudio(){
+  return isDemoMode() ? bootstrapDemoStudio() : bootstrapHonestStudio();
 }
 function quickGreenlight(){
   if((S.releases||0)<1){
@@ -498,7 +519,7 @@ const GENRE_POSTER=Object.fromEntries(Object.keys(POSTER_POOL).map(g=>[g,POSTER_
 const DEFAULT_POSTER="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_062729_7bbe33da-ecf7-41a5-ac40-4b8270468fd8.jpeg";
 const HERO_POSTER=(POSTER_POOL["Romance"]||[])[1]||(POSTER_POOL["Romance"]||[])[0]||DEFAULT_POSTER;
 const GREENLIGHT_SHOWCASE=[
-  {pid:0,titleJa:"サクラの約束",titleEn:"Promise of Sakura",genre:"Romance",genres:["Romance","Drama"],poster:HERO_POSTER,appeal:92,trend:88,orig:90,pot:"S",editor:true,showcaseCost:240000000,showcaseRewards:{revenue:680000000,profit:230000000,exp:1250,fans:18000}},
+  {pid:0,titleJa:"桜色の約束",titleEn:"SAKURA NO YAKUSOKU",genre:"Romance",genres:["Romance","Drama"],poster:HERO_POSTER,appeal:92,trend:88,orig:90,pot:"S",editor:true,showcaseCost:240000000,showcaseRewards:{revenue:680000000,profit:230000000,exp:1250,fans:18000}},
   {pid:0,titleJa:"復讐者",titleEn:"The Revenger",genre:"Action",genres:["Action","Drama"],poster:(POSTER_POOL["Action"]||[])[0]||DEFAULT_POSTER,appeal:85,trend:98,orig:78,pot:"A",trending:true,showcaseCost:180000000},
   {pid:2,titleJa:"星界の継承者",titleEn:"Heir of the Stellar Realm",genre:"Fantasy",genres:["Fantasy","Adventure"],poster:(POSTER_POOL["Fantasy"]||[])[0]||DEFAULT_POSTER,appeal:89,trend:75,orig:85,pot:"A+",showcaseCost:210000000},
   {pid:1,titleJa:"放課後コメディ",titleEn:"After School Promises",genre:"Slice of Life",genres:["Comedy","Slice"],poster:(POSTER_POOL["Slice of Life"]||[])[0]||DEFAULT_POSTER,appeal:82,trend:70,orig:88,pot:"B+",showcaseCost:165000000},
@@ -599,6 +620,14 @@ const SCOUT_GEMS=8;                 // premium scout (full odds)
 function castingCost(){ return Math.ceil(2000*Math.pow(1.25, (S.stars?S.stars.length:0))); } // yen casting (common/rare)
 
 /* ---- Daily Quests ---- */
+const EARLY_QUEST_POOL=[
+  {id:"rel",  metric:"releases",  goals:[1,2,3],          reward:4, desc:g=>`Premiere ${g} anime`},
+  {id:"green",metric:"greenlit",  goals:[1,2,3],          reward:3, desc:g=>`Greenlight ${g} projects`},
+  {id:"tap",  metric:"taps",      goals:[10,25,50],       reward:3, desc:g=>`Tap-boost ${g} times`},
+  {id:"hire", metric:"hires",     goals:[1,2,3],          reward:3, desc:g=>`Hire ${g} staff`},
+  {id:"yen",  metric:"yen",       goals:[500,2000,5000],  reward:3, desc:g=>`Earn ¥${fmt(g)}`},
+  {id:"camp", metric:"campaigns", goals:[1],              reward:3, desc:g=>`Run ${g} ad campaign`},
+];
 const QUEST_POOL=[
   {id:"rel",  metric:"releases",  goals:[3,5,8],          reward:4, desc:g=>`Premiere ${g} anime`},
   {id:"yen",  metric:"yen",       goals:[8000,30000,120000], reward:4, desc:g=>`Earn ¥${fmt(g)}`},
@@ -819,6 +848,7 @@ function freshState(){
     lastDailyDate:"", dailyStreak:0, bestValue:0, freeGemsDate:"", taps:0, sharedOnce:false,
     tutorialSeen:false, whatsnewSeen:false, achievements:[],
     pityCount:0, merchLevel:0, autoGreenlight:false, rivalWins:0,
+    rivalWeek:"", rivalTarget:null, rivalStartVal:0, rivalGoal:0, rivalClaimed:false,
     plusGoals:[], plusGoalsDate:"", plusGoalsBase:{}, plusCollection50:false,
     settings:{motion:true,ticker:true,musicVol:0.35,sfxVol:0.5,confirmGems:true}, lastWhatsNewBuild:"",
     marketShare:5, bidsWon:0, bidWeek:"", bidResolved:false,
@@ -838,6 +868,7 @@ function freshState(){
     lastSave:Date.now(),
     muted:false,
     tab:"produce",
+    _demoMode:false, _bootstrapped:false, showcaseGlUsed:0,
   };
 }
 
@@ -949,7 +980,7 @@ function claimLoginDay(){
   const r=LOGIN_REWARDS[S.loginClaimedCount];
   S.gems+=r.gems; S.yen+=Math.floor(r.yen*legacyMult());
   S.loginClaimedCount++; S.loginLastClaimDate=todayStr();
-  play("reward"); toast(`📅 Day ${r.day} reward: +${r.gems}💎 +¥${fmt(r.yen)}`,true); track("login_claim",{day:r.day}); render(); save();
+  play("claim"); toast(`📅 Day ${r.day} reward: +${r.gems}💎 +¥${fmt(r.yen)}`,true); track("login_claim",{day:r.day}); render(); save();
 }
 /* ---- reset countdown helpers ---- */
 function msToMidnight(){ const n=new Date(); const m=new Date(n); m.setHours(24,0,0,0); return m-n; }
@@ -957,7 +988,7 @@ function msToWeekReset(){ const n=new Date(); const day=n.getDay()||7; const m=n
 function fmtDur(ms){ if(ms<0)ms=0; const s=Math.floor(ms/1000); const h=Math.floor(s/3600), mi=Math.floor((s%3600)/60); const d=Math.floor(h/24); if(d>0) return d+"d "+(h%24)+"h"; if(h>0) return h+"h "+mi+"m"; return mi+"m"; }
 function questMetric(id){ const t=QUEST_POOL.find(q=>q.id===id); return t?t.metric:null; }
 function rollQuests(){
-  const pool=[...QUEST_POOL], out=[];
+  const pool=(S.releases||0)<3?[...EARLY_QUEST_POOL]:[...QUEST_POOL], out=[];
   while(out.length<4 && pool.length){
     const tmpl=pool.splice(Math.floor(Math.random()*pool.length),1)[0];
     out.push({id:tmpl.id, goal:tmpl.goals[Math.floor(Math.random()*tmpl.goals.length)], reward:tmpl.reward, claimed:false});
@@ -969,7 +1000,7 @@ function claimQuest(i){
   const prog=S.questProg[questMetric(q.id)]||0;
   if(prog<q.goal){ toast("Quest not complete yet"); return; }
   q.claimed=true; S.gems+=q.reward; track("quest_claim",{id:q.id});
-  play("reward"); toast("✅ Quest complete! +"+q.reward+" 💎",true); render(); save();
+  play("success"); toast("✅ Quest complete! +"+q.reward+" 💎",true); render(); save();
 }
 function claimFirstReward(){
   S.tab="quests";
@@ -1363,8 +1394,8 @@ function tapBoost(slot){
   if((S.releases||0)<1) amt=Math.min(p.work-pr.progress, Math.max(amt, 5));
   pr.progress=Math.min(p.work, pr.progress+amt);
   S.taps=(S.taps||0)+1; questAdd("taps",1); if(S.taps%20===0) checkAchievements();
-  play("click"); floatGain("+"+fmt(amt));
   const poster=document.querySelector("#slot-"+slot+" .aaa-poster");
+  play("tap"); floatGain("+"+fmt(amt), poster);
   if(poster){ poster.classList.remove("aaa-poster-pulse"); void poster.offsetWidth; poster.classList.add("aaa-poster-pulse"); }
   // in-place update only — tapping the poster must never rebuild the page or shift the view
   if(S.tab==="produce"){ if(updateSlotLive(slot)) render(); }
@@ -1426,6 +1457,16 @@ function unlockedProjects(){ return PROJECTS.filter(p=>!projectLockInfo(p).locke
 
 /* ========================= AUDIO ========================= */
 let bgm=null; const sfx={};
+const SFX_PROFILES={
+  click:{src:"click",rate:1,v:1},
+  tap:{src:"click",rate:1.18,v:0.42},
+  whoosh:{src:"click",rate:0.82,v:0.38},
+  reward:{src:"reward",rate:1,v:1.2},
+  success:{src:"reward",rate:1.12,v:1},
+  claim:{src:"reward",rate:1.08,v:1.1},
+  fanfare:{src:"reward",rate:0.94,v:1.15},
+  premiere:{src:"reward",rate:1.02,v:1.2},
+};
 function initAudio(){
   bgm=new Audio("https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_062744_f564f7ba-ec29-4a6e-a28b-023ff2c2f867.m4a"); bgm.loop=true;
   sfx.click=new Audio("https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_062745_f345d8e7-d3ee-47c5-b9c5-2474f060ee3d.mp3");
@@ -1439,7 +1480,18 @@ function applyAudioSettings(){
   if(sfx.click) sfx.click.volume=sv;
   if(sfx.reward) sfx.reward.volume=Math.min(1,sv*1.2);
 }
-function play(n){ if(S.muted||!sfx[n])return; try{ const a=sfx[n].cloneNode(); a.volume=sfx[n].volume; a.play().catch(()=>{}); }catch(e){} }
+function play(n){
+  if(S.muted) return;
+  const prof=SFX_PROFILES[n]||SFX_PROFILES.click;
+  const base=sfx[prof.src]||sfx.click;
+  if(!base) return;
+  try{
+    const a=base.cloneNode();
+    a.playbackRate=prof.rate||1;
+    a.volume=Math.min(1, base.volume*(prof.v||1));
+    a.play().catch(()=>{});
+  }catch(e){}
+}
 function updateMute(){
   $("#btn-mute").textContent = (S.muted?("🔇 "+STR.muteOff):("🔊 "+STR.muteOn));
   applyAudioSettings();
@@ -1513,7 +1565,9 @@ function load(){
     S.achievements=Array.isArray(d.achievements)?d.achievements:[];
     S.whatsnewSeen=!!d.whatsnewSeen;
     S.pityCount=+d.pityCount||0; S.merchLevel=+d.merchLevel||0; S.autoGreenlight=!!d.autoGreenlight;
-    S.rivalWins=+d.rivalWins||0; S.plusCollection50=!!d.plusCollection50;
+    S.rivalWins=+d.rivalWins||0; S.rivalWeek=d.rivalWeek||""; S.rivalTarget=d.rivalTarget||null;
+    S.rivalStartVal=+d.rivalStartVal||0; S.rivalGoal=+d.rivalGoal||0; S.rivalClaimed=!!d.rivalClaimed;
+    S.plusCollection50=!!d.plusCollection50;
     S.plusGoals=Array.isArray(d.plusGoals)?d.plusGoals:[]; S.plusGoalsDate=d.plusGoalsDate||"";
     S.plusGoalsBase=(d.plusGoalsBase&&typeof d.plusGoalsBase==="object")?d.plusGoalsBase:{};
     S.settings=(d.settings&&typeof d.settings==="object")?Object.assign({motion:true,ticker:true,musicVol:0.35,sfxVol:0.5,confirmGems:true},d.settings):{motion:true,ticker:true,musicVol:0.35,sfxVol:0.5,confirmGems:true};
@@ -1538,16 +1592,56 @@ function load(){
   }catch(e){ return false; }
 }
 
-/* ========================= TOASTS ========================= */
-function toast(msg, gold){
-  const t=document.createElement("div"); t.className="toast"+(gold?" gold":""); t.textContent=msg;
-  $("#toasts").appendChild(t); setTimeout(()=>t.remove(), 2600);
+/* ========================= TOASTS / FLOAT GAIN ========================= */
+function toastTierClass(tier){
+  if(tier===true||tier==="gold") return " gold";
+  if(tier==="special") return " special";
+  return "";
 }
-function floatGain(txt){
+function toast(msg, tier){
+  const t=document.createElement("div"); t.className="toast"+toastTierClass(tier); t.textContent=msg;
+  $("#toasts").appendChild(t); setTimeout(()=>t.remove(), tier==="special"?3200:2600);
+}
+function floatGain(txt, anchor){
   try{ if(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return; }catch(e){}
   const el=document.createElement("div"); el.className="floatgain"; el.textContent=txt;
   const app=document.getElementById("app"); if(!app) return;
+  if(anchor){
+    let x,y;
+    if(anchor instanceof Element){
+      const r=anchor.getBoundingClientRect(), ar=app.getBoundingClientRect();
+      x=r.left+r.width/2-ar.left; y=r.top+r.height*0.42-ar.top;
+    }else if(anchor&&anchor.x!=null){
+      const ar=app.getBoundingClientRect();
+      x=anchor.x-ar.left; y=anchor.y-ar.top;
+    }
+    if(x!=null&&y!=null){
+      el.classList.add("anchored");
+      el.style.setProperty("--fg-x", x+"px");
+      el.style.setProperty("--fg-y", y+"px");
+    }
+  }
   app.appendChild(el); setTimeout(()=>el.remove(), 1150);
+}
+function celebrateCollect(kind){
+  if(OFFLINE) return;
+  const app=document.getElementById("app");
+  if(app){
+    app.classList.remove("flash-gold"); void app.offsetWidth; app.classList.add("flash-gold");
+    setTimeout(()=>app.classList.remove("flash-gold"), 520);
+  }
+  const n=kind==="offline"?22:16;
+  const modal=document.getElementById(kind==="offline"?"offline":"daily");
+  if(modal&&window.__AST_FX__?.burst){
+    const card=modal.querySelector(".card-modal");
+    if(card){
+      const r=card.getBoundingClientRect();
+      window.__AST_FX__.burst(n, r.left+r.width/2, r.top+r.height*0.35);
+    }else window.__AST_FX__.burst(n);
+  }else window.__AST_FX__?.burst?.(n);
+  if(kind==="offline") window.__AST_FX__?.shake?.();
+  play(kind==="offline"?"fanfare":"claim");
+  toast(kind==="offline"?"✨ Welcome back — earnings collected!":"🎁 Daily reward collected!","special");
 }
 
 /* ========================= ACTIONS ========================= */
@@ -1669,12 +1763,18 @@ function showPremiere(pr,p,stars,yenGain,fansGain){
       <div class="kpi accent" style="flex:1"><div class="kl">Box office</div><div class="kv" id="prem-yen">¥0</div></div>
       <div class="kpi" style="flex:1"><div class="kl">New fans</div><div class="kv" id="prem-fans">0</div></div>
     </div>`;
-  const m=document.getElementById("premiere"); if(m) m.style.display="flex"; _premiereOpen=true; play("reward");
+  const m=document.getElementById("premiere"); if(m) m.style.display="flex"; _premiereOpen=true; play("premiere");
   window.__AST_FX__?.burst?.(stars>=5?36:stars>=4?24:16);
   if(stars>=4) window.__AST_FX__?.shake?.();
   setTimeout(()=>{ const y=document.getElementById("prem-yen"); const f=document.getElementById("prem-fans"); if(y) animateCount(y,yenGain,"¥"); if(f) animateCount(f,fansGain,""); },140);
 }
-function closePremiere(){ const m=document.getElementById("premiere"); if(m) m.style.display="none"; _premiereOpen=false; maybeDecision(); }
+function closePremiere(){
+  const m=document.getElementById("premiere"); if(m) m.style.display="none"; _premiereOpen=false;
+  if((S.releases||0)<2&&activeCount()===0){
+    _glMode=true; S.tab="produce"; render(); save(); return;
+  }
+  maybeDecision();
+}
 function estimatePremiere(pr,p){
   const stars=projectStars(p, pr.genre, pr);
   const mult=stars/3;
@@ -2125,7 +2225,30 @@ function simulateOffline(sec){
 }
 
 /* ========================= RENDER ========================= */
-function setTab(t){ S.tab=t; play("click"); render(); }
+function tabInDock(k){
+  if((S.releases||0)<5){
+    if(k==="research"||k==="market") return false;
+    return ["produce","quests","staff","stars","studio","store"].includes(k);
+  }
+  return true;
+}
+function tabLocked(k){
+  if(!tabInDock(k)) return true;
+  const u=UNLOCKS[k];
+  if(u && !u.test()) return true;
+  return false;
+}
+function tabLockLabel(k){
+  const u=UNLOCKS[k];
+  if(u && !u.test()) return "🔒 "+u.label+" — keep playing to unlock";
+  return "🔒 Keep producing to unlock this tab";
+}
+function tabAccessible(k){ return tabInDock(k)&&!tabLocked(k); }
+function tabVisible(k){ return tabAccessible(k); }
+function setTab(t){
+  if(tabLocked(t)){ toast(tabLockLabel(t)); play("click"); return; }
+  S.tab=t; play("click"); render();
+}
 
 /* ---- Live in-place updates: refresh only the moving numbers each tick/tap.
    Avoids rebuilding #main (which would reset scroll and make the screen jump). ---- */
@@ -2173,7 +2296,7 @@ function liveUpdate(){
 function ensurePlayable(){
   if(!started) return;
   if((S.releases||0)>0||activeCount()>0) return;
-  if(staffTotal()===0) bootstrapNewStudio();
+  if(isDemoMode()&&staffTotal()===0) bootstrapDemoStudio();
 }
 function isGreenlightView(){
   if(S.tab!=="produce") return false;
@@ -2188,17 +2311,10 @@ function syncMainViewState(){
   m.dataset.glView=gl?"1":"0";
   m.dataset.glBack=(gl&&activeCount()>0&&_glMode)?"1":"0";
 }
-function tabVisible(k){
-  if(!featureUnlocked(k)) return false;
-  if((S.releases||0)<3){ return k==="produce"||k==="quests"||k==="staff"||k==="studio"||k==="market"||k==="store"; }
-  if((S.releases||0)<5 && (k==="research"||k==="market")) return false;
-  return true;
-}
 function render(){
   ensurePlayable();
   checkUnlocks();
-  if(!tabVisible(S.tab)) S.tab="produce";
-  if(({stars:1,research:1,studio:1})[S.tab] && !featureUnlocked(S.tab)) S.tab="produce";
+  if(!tabAccessible(S.tab)) S.tab="produce";
   syncMainViewState();
   // top bar
   $("#r-yen").textContent=fmtHudRes("yen",hudDisplayValue("yen"));
@@ -2220,8 +2336,11 @@ function render(){
   // tabs
   const tabDefs=[["produce","🎬",STR.tab_produce],["quests","📋",STR.tab_quests],["staff","👥",STR.tab_staff],["stars","⭐",STR.tab_stars],["research","🔬",STR.tab_research],["studio","🏢",STR.tab_studio],["market","📣",STR.tab_market],["store","💎",STR.tab_store]];
   const tabOrder=(S.releases||0)<5?TAB_ORDER_EARLY:tabDefs.map(t=>t[0]);
-  const tabs=tabOrder.map(k=>tabDefs.find(t=>t[0]===k)).filter(t=>t&&tabVisible(t[0]));
-  $("#tabs").innerHTML=tabs.map(([k,ic,l])=>`<button class="tab ${S.tab===k?'active':''}" data-tab="${k}" aria-label="${l}"><span class="ic">${tabIcon(k,ic)}</span><span class="tab-lbl">${TAB_MOCKUP[k]||l}</span></button>`).join("");
+  const tabs=tabOrder.map(k=>tabDefs.find(t=>t[0]===k)).filter(t=>t&&tabInDock(t[0]));
+  $("#tabs").innerHTML=tabs.map(([k,ic,l])=>{
+    const locked=tabLocked(k);
+    return `<button class="tab ${S.tab===k&&!locked?"active":""}${locked?" tab-locked":""}" data-tab="${k}" aria-label="${l}${locked?" (locked)":""}" aria-disabled="${locked?"true":"false"}"><span class="ic">${tabIcon(k,ic)}</span><span class="tab-lbl">${TAB_MOCKUP[k]||l}</span>${locked?'<span class="tab-lock-ic" aria-hidden="true">🔒</span>':""}</button>`;
+  }).join("");
 
   if(S.tab==="produce") renderProduce();
   else if(S.tab==="quests") renderQuests();
@@ -2282,9 +2401,103 @@ function loginCalendarHTML(){
   h+=`</div></div>`;
   return h;
 }
+const HUD_DAILY_GOAL_POOL=[
+  {id:"rel2",label:"Premiere 2 anime",metric:"releases",need:2,gems:4},
+  {id:"rel5",label:"Premiere 5 anime",metric:"releases",need:5,gems:8},
+  {id:"hire3",label:"Hire 3 staff",metric:"hires",need:3,gems:3},
+  {id:"scout1",label:"Scout 1 talent",metric:"scouts",need:1,gems:4},
+  {id:"camp2",label:"Run 2 campaigns",metric:"campaigns",need:2,gems:3},
+  {id:"tap30",label:"Tap-boost 30 times",metric:"taps",need:30,gems:3},
+  {id:"green3",label:"Greenlight 3 projects",metric:"greenlit",need:3,gems:4},
+  {id:"hype20",label:"Spend 20 Hype",metric:"hypeSpent",need:20,gems:4},
+  {id:"yen50k",label:"Earn ¥50K",metric:"yen",need:50000,gems:5},
+];
+function ensureHudDailyGoals(){
+  S.plusGoals=S.plusGoals||[]; S.plusGoalsDate=S.plusGoalsDate||""; S.plusGoalsBase=S.plusGoalsBase||{};
+  if(S.plusGoalsDate!==todayStr()){
+    const shuffled=[...HUD_DAILY_GOAL_POOL].sort(()=>Math.random()-0.5);
+    S.plusGoals=shuffled.slice(0,3).map(g=>({...g,claimed:false}));
+    S.plusGoalsDate=todayStr();
+    S.plusGoalsBase={
+      releases:S.releases||0,hires:S.questProg?.hires||0,scouts:S.questProg?.scouts||0,
+      campaigns:S.questProg?.campaigns||0,taps:S.taps||0,greenlit:S.questProg?.greenlit||0,
+      hypeSpent:S.questProg?.hypeSpent||0,yen:S.totalEarned||0,
+    };
+  }
+}
+function hudDailyGoalProg(g){
+  const base=S.plusGoalsBase||{}, qp=S.questProg||{};
+  switch(g.metric){
+    case "releases": return (S.releases||0)-(base.releases||0);
+    case "hires": return (qp.hires||0)-(base.hires||0);
+    case "scouts": return (qp.scouts||0)-(base.scouts||0);
+    case "campaigns": return (qp.campaigns||0)-(base.campaigns||0);
+    case "taps": return (S.taps||0)-(base.taps||0);
+    case "greenlit": return (qp.greenlit||0)-(base.greenlit||0);
+    case "hypeSpent": return (qp.hypeSpent||0)-(base.hypeSpent||0);
+    case "yen": return (S.totalEarned||0)-(base.yen||0);
+    default: return 0;
+  }
+}
+function hudDailyGoalsHTML(){
+  ensureHudDailyGoals();
+  let h=`<div class="aaa-quest-block"><h3>🎯 Today's Goals · ${fmtDur(msToMidnight())}</h3>
+    <div class="muted" style="margin:-4px 0 8px;font-size:11px">3 quick wins — claim gem rewards before midnight!</div>`;
+  (S.plusGoals||[]).forEach((g,i)=>{
+    const prog=Math.min(g.need,hudDailyGoalProg(g)), done=prog>=g.need;
+    h+=`<div class="aaa-quest-card ${g.claimed?"done":done?"claimable":""}"><span class="aaa-quest-ic">🎯</span><div class="aaa-quest-meta"><b>${g.label}</b><span>${fmt(prog)}/${fmt(g.need)} · +${g.gems} 💎</span><div class="progress aaa-progress" style="margin-top:4px"><i style="width:${Math.min(100,prog/g.need*100)}%"></i></div></div>
+      <button class="btn-gold hirebtn" data-plus-goal="${i}" ${(done&&!g.claimed)?"":"disabled"}>${g.claimed?"✓":(done?STR.claim:"…")}</button></div>`;
+  });
+  return h+`</div>`;
+}
+function claimHudDailyGoal(i){
+  ensureHudDailyGoals();
+  const g=S.plusGoals[i]; if(!g||g.claimed||hudDailyGoalProg(g)<g.need) return;
+  g.claimed=true; S.gems+=g.gems; play("claim"); toast(`🎯 Daily Goal: +${g.gems} Gems!`,true);
+  window.__AST_FX__?.burst?.(12); save(); render();
+}
+function ensureHudRival(){
+  S.rivalWeek=S.rivalWeek||""; S.rivalTarget=S.rivalTarget||null;
+  S.rivalStartVal=S.rivalStartVal||0; S.rivalWins=S.rivalWins||0;
+  if(S.rivalWeek!==weekKeyStr()){
+    const st=industryStandings(), rivals=st.all.filter(r=>!r.me);
+    const pick=rivals[Math.floor(Math.random()*Math.min(rivals.length,8))]||rivals[0];
+    S.rivalWeek=weekKeyStr(); S.rivalTarget=pick?pick.name:"Neon Mirage";
+    S.rivalStartVal=studioValue();
+    S.rivalGoal=Math.floor(S.rivalStartVal*(1.15+Math.random()*0.25));
+    S.rivalClaimed=false;
+  }
+}
+function hudRivalHTML(){
+  ensureHudRival();
+  const cur=studioValue(), goal=S.rivalGoal||cur;
+  const pct=Math.min(100,Math.max(0,((cur-S.rivalStartVal)/Math.max(1,goal-S.rivalStartVal))*100));
+  const won=cur>=goal;
+  let h=`<div class="aaa-quest-block"><h3>⚔️ Weekly Rivalry · ${weekKeyStr().replace("-"," ")}</h3>
+    <div class="muted" style="margin:-4px 0 8px;font-size:11px">Outgrow <b>${S.rivalTarget}</b> — grow studio value to <b>${fmt(goal)}</b> this week!</div>
+    <div class="aaa-quest-card ${S.rivalClaimed?"done":won?"claimable":""}"><span class="aaa-quest-ic">⚔️</span><div class="aaa-quest-meta"><b>${S.rivalTarget}</b><span>${fmt(cur)} / ${fmt(goal)} · ${S.rivalWins||0} wins total</span><div class="progress aaa-progress" style="margin-top:4px"><i style="width:${pct.toFixed(0)}%"></i></div></div>`;
+  if(won&&!S.rivalClaimed){
+    h+=`<button class="btn-gold hirebtn" data-rival-claim>${STR.claim}</button>`;
+  }else if(S.rivalClaimed){
+    h+=`<span class="muted" style="font-size:11px">✓ Victory claimed</span>`;
+  }else{
+    h+=`<span class="muted" style="font-size:11px">…</span>`;
+  }
+  return h+`</div></div>`;
+}
+function claimHudRival(){
+  ensureHudRival();
+  if(S.rivalClaimed||studioValue()<S.rivalGoal) return;
+  S.rivalClaimed=true; S.rivalWins=(S.rivalWins||0)+1;
+  S.gems+=15; S.yen+=Math.floor(S.rivalGoal*0.05);
+  play("fanfare"); toast("⚔️ Rival defeated! +15💎","special");
+  window.__AST_FX__?.burst?.(18); save(); render();
+}
 function renderQuests(){
   let h=`<div class="aaa-tab-page"><div class="aaa-page-hero aaa-quest-hero"><h2>🎯 ${STR.h_rewards}</h2><p>Daily login, quests, and weekly challenges — all on timers.</p></div>`;
   h+=loginCalendarHTML();
+  h+=hudDailyGoalsHTML();
+  h+=hudRivalHTML();
   h+=dailyQuestHTML();
   h+=weeklyQuestHTML();
   h+=`</div>`;
@@ -2409,7 +2622,18 @@ function renderGreenlightPage(empties,showBack){
   const selCost=showcaseCost(selSc,selP);
   const usedShow=(S.showcaseGlUsed!=null&&(S.releases||0)<3)?S.showcaseGlUsed:used;
   const risk=greenlightRisk(selP,selSc.genre);
+  const slotLabel=`${empties} open slot${empties>1?"s":""}`;
+  const quickSc=GREENLIGHT_SHOWCASE.find(s=>s.editor&&!projectLockInfo(PROJECTS[s.pid]).locked)||GREENLIGHT_SHOWCASE[0];
   let h=`<div class="aaa-tab-page aaa-gl-page">`;
+  if(showBack) h+=`<button type="button" class="aaa-gl-back" data-act="greenlight-back" aria-label="Back to production">← Back to production</button>`;
+  if((S.releases||0)<2){
+    h+=`<div class="aaa-post-prem-cta">
+      <p class="aaa-post-prem-kicker">What's next?</p>
+      <h2 class="aaa-post-prem-title">Greenlight your next anime</h2>
+      <p class="aaa-post-prem-hint">One tap picks the editor's choice — or browse the full catalog below.</p>
+      <button type="button" class="btn-gold aaa-quick-gl-banner" data-act="quick-greenlight">🎬 Quick Greenlight · ${quickSc.titleEn}</button>
+    </div>`;
+  }
   h+=`<div class="aaa-gl-page-head">
     <div class="aaa-gl-page-titles">
       <h1 class="aaa-gl-title">${ultraEarly?"START PRODUCTION":"GREENLIGHT PROJECT"}</h1>
@@ -2455,7 +2679,7 @@ function renderGreenlightPage(empties,showBack){
       </div>
       <div class="aaa-gl-risk"><h5>RISK ASSESSMENT</h5><span class="aaa-gl-risk-level ${risk.level.toLowerCase()}">🛡 ${risk.level}</span><p>${risk.note}</p></div>
     </div>
-    <button type="button" class="btn-primary aaa-gl-confirm-banner" data-gl="${selP.id}" data-gl-genre="${selSc.genre}" ${lock.locked||!afford?"disabled":""}><span class="aaa-gl-confirm-main"><span class="aaa-gl-confirm-ic">🎬</span> ${ultraEarly?"START PRODUCTION":"GREENLIGHT PROJECT"}<span class="aaa-gl-confirm-cost">-1</span></span><span class="aaa-gl-confirm-sub">${selSc.titleEn}</span></button>
+    <button type="button" class="btn-primary aaa-gl-confirm-banner" data-gl="${selP.id}" data-gl-genre="${selSc.genre}" ${lock.locked||!afford?"disabled":""}><span class="aaa-gl-confirm-main"><span class="aaa-gl-confirm-ic">🎬</span> ${ultraEarly?"START PRODUCTION":"GREENLIGHT PROJECT"}<span class="aaa-gl-confirm-cost"><span class="aaa-gl-confirm-budget">${fmtYenCompact(selCost)}</span><span class="aaa-gl-confirm-slot">· uses 1 of ${empties} open</span></span></span><span class="aaa-gl-confirm-sub">${selSc.titleJa?selSc.titleJa+" · ":""}${selSc.titleEn} · ${slotLabel}</span></button>
   </div></div>`;
   return h;
 }
@@ -2503,10 +2727,11 @@ function renderProduce(){
         <div class="aaa-stat-line hype"><span class="aaa-stat-ic">📈</span><span>Hype</span><b>${fmtCompact(showHype)}</b><div class="aaa-mini-bar"><i style="width:${hypeBarPct(pr,p,pct)}%"></i></div><span class="aaa-rate">+${fmtCompact(hypeH)}/h</span></div>
         <div class="aaa-stat-line"><span class="aaa-stat-ic">📅</span><span>Premiere In</span><b class="slot-eta">${etaStr}</b></div>
         <div class="aaa-premiere-bonus"><span class="aaa-premiere-bonus-label">Global Premiere Bonus</span><div class="aaa-bonus-pills"><span class="aaa-bonus-pill gems"><img src="icons/hf/gems.png?v=${ASSET_V}" alt=""> ${fmtLocale(est.gems||0)}</span><span class="aaa-bonus-pill gold"><img src="icons/hf/yen.png?v=${ASSET_V}" alt=""> ${fmtYenCompact(est.yen)}</span></div></div>
-        <div class="aaa-actions">${done?`<button class="btn-gold aaa-cta aaa-premiere-ready" data-rel="${i}">🎬 ▶ Global Premiere</button>`:`<button class="btn-gold aaa-cta aaa-play-btn" data-act="tapboost" data-slot="${i}">🎬 ▶ Play</button>`}</div>
+        <div class="aaa-actions">${done?`<button class="btn-gold aaa-cta aaa-premiere-ready" data-rel="${i}">🎬 ▶ Global Premiere</button>`:`<button class="btn-gold aaa-cta aaa-play-btn" data-act="tapboost" data-slot="${i}">🎬 ▶ Boost</button>`}</div>
       </div></div>${productionTeamHTML()}</div></div>`;
   });
   if(empties>0) h+=`<button type="button" class="aaa-gl-open${empties>=2?" aaa-gl-open-hot":""}" data-act="greenlight-view">+ Greenlight new anime · ${empties} slot${empties>1?"s":""} open</button>`;
+  else if(hasActive) h+=`<div class="aaa-produce-slots-full"><span class="aaa-slots-full-ic" aria-hidden="true">🎬</span><div><b>All greenlight slots full</b><p>Premiere a finished show or expand your studio to start another project.</p></div></div>`;
   // anti-softlock freelance
   if(activeCount()===0 && S.yen<PROJECTS[0].cost){
     h+=`<div class="panel" style="border:2px solid var(--sakura)"><h2>🆘 Out of cash?</h2>
@@ -2738,6 +2963,8 @@ document.addEventListener("click", e=>{
   if(t.dataset.scout) return scout(t.dataset.scout);
   if(t.dataset.quest!=null) return claimQuest(+t.dataset.quest);
   if(t.dataset.week!=null) return claimWeekly(+t.dataset.week);
+  if(t.dataset.plusGoal!=null) return claimHudDailyGoal(+t.dataset.plusGoal);
+  if(t.dataset.rivalClaim!=null) return claimHudRival();
   if(t.dataset.act==="login-claim") return claimLoginDay();
   if(t.dataset.act==="greenlight-view"){ _glMode=true; play("click"); return render(); }
   if(t.dataset.act==="greenlight-back"){ _glMode=false; play("click"); return render(); }
@@ -2770,7 +2997,7 @@ document.addEventListener("click", e=>{
   if(t.dataset.act==="freegems") return claimFreeGems();
   if(t.dataset.act==="expand") return expandStudio();
   if(t.dataset.act==="share") return shareGame();
-  if(t.dataset.act==="daily-close"){ const m=document.getElementById("daily"); if(m) m.style.display="none"; return; }
+  if(t.dataset.act==="daily-close"){ celebrateCollect("daily"); const m=document.getElementById("daily"); if(m) m.style.display="none"; return; }
   if(t.dataset.act==="reveal-close"){ const m=document.getElementById("reveal"); if(m) m.style.display="none"; return; }
   if(t.dataset.act==="dec-yes") return resolveDecision(true);
   if(t.dataset.act==="dec-no") return resolveDecision(false);
@@ -2786,7 +3013,7 @@ document.addEventListener("click", e=>{
 });
 $("#btn-mute").onclick=()=>{ S.muted=!S.muted; updateMute(); save(); };
 $("#btn-save").onclick=()=>{ save(); toast("Game saved 💾"); };
-$("#btn-reset").onclick=()=>{ const reset=()=>{ S=freshState(); bootstrapNewStudio(); save(); render(); toast("🎬 Fresh studio ready — your anime is producing!",true); };
+$("#btn-reset").onclick=()=>{ const reset=()=>{ S=freshState(); if(isDemoMode()) S._demoMode=true; bootstrapNewStudio(); save(); render(); toast(isDemoMode()?"🎬 Demo studio ready — showcase anime is producing!":"🎬 Fresh studio — hire staff and greenlight your first anime!",true); };
   if(window.__AST_CONFIRM__) window.__AST_CONFIRM__("Reset ALL progress?","Every save wiped — cannot be undone.",reset);
   else if(confirm("Reset ALL progress? This cannot be undone.")) reset(); };
 
@@ -2861,11 +3088,17 @@ function begin(){
   initAudio(); updateMute();
   $("#start").style.display="none";
   pendingToasts.forEach(([m,g])=>toast(m,g)); pendingToasts=[];
-  if(!S.quests||!S.quests.length) rollQuests();
+  if((S.releases||0)<3){
+    const earlyIds=new Set(EARLY_QUEST_POOL.map(q=>q.id));
+    if(!S.quests?.length||S.quests.some(q=>!earlyIds.has(q.id))) rollQuests();
+  }else if(!S.quests||!S.quests.length) rollQuests();
   checkWeekly(); loginRefresh();
-  if(booted){
+  if(booted&&isDemoMode()){
     const pr=S.projects.find(Boolean);
     pendingToasts.push([`🎬 "${pr?.title||'Your anime'}" is in production! Tap the poster to speed it up.`,true]);
+  }else if(booted){
+    pendingToasts.push(["👋 Welcome! Hire staff on Recruit, then greenlight your first anime.",true]);
+    if(!S.tutorialSeen){ const h=document.getElementById("howto"); if(h) h.style.display="flex"; }
   }else{
     const had=S.lastSave&&(Date.now()-S.lastSave>60000);
     if(had){
@@ -2899,6 +3132,8 @@ function begin(){
   requestAnimationFrame(frame);
 }
 const loaded=load(); if(!loaded) S=freshState();
+if(isDemoMode()) S._demoMode=true;
+else if(S._bootstrapped||((S.yen||0)>5000000&&(S.releases||0)<3)) S._demoMode=true;
 // Web purchase delivery: production uses signed ?pt= tokens (api/grant/redeem). Dev/localhost keeps legacy ?grant=.
 function clearGrantParams(){
   try{ history.replaceState(null,"",location.pathname); }catch(_){}
@@ -2954,7 +3189,7 @@ if(MONETIZATION.supportUrl){
   if(foot) foot.appendChild(a);
 }
 $("#btn-start").onclick=begin;
-$("#btn-offclose").onclick=()=>{ $("#offline").style.display="none"; };
+$("#btn-offclose").onclick=()=>{ celebrateCollect("offline"); $("#offline").style.display="none"; };
 { const sl=document.getElementById("start-lang"); if(sl) sl.onchange=()=>{ setLang(sl.value); updateChrome(); render(); }; }
 // localize static chrome + build language picker, then render
 updateChrome();
@@ -3007,12 +3242,16 @@ window.__AST_HOOK__ = {
   hudHypeCap,
   fmtHudRes,
   isShowcaseDemo,
+  isDemoMode,
+  featureUnlocked,
+  tabLocked,
+  tabLockLabel,
   isGreenlightView,
   greenlightBack: ()=>{ _glMode=false; render(); },
   tapBoost,
 };
 </script>
-<script src="aaa-upgrade.js?v=88"></script>
+<script src="aaa-upgrade.js?v=89"></script>
 <script src="v5-slim-gate.js?v=88"></script>
 <script src="gameplay-plus.js?v=88"></script>
 <script src="gameplay-ultra.js?v=88"></script>

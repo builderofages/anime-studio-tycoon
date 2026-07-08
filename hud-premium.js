@@ -43,7 +43,14 @@
     return n;
   }
 
-  function analyzePathway(S, hook) {
+  function analyzePathway(S, hook, ctx) {
+    ctx = ctx || {};
+    const glView = !!ctx.glView;
+    const showcase = hook.isShowcaseDemo && hook.isShowcaseDemo();
+    const st = S.staff || {};
+    const staffed = staffTotal(S);
+    const wellStaffed = showcase || staffed >= 6 || ((st.director || 0) >= 1 && (st.animator || 0) >= 2);
+
     const ready = readySlot(S, hook);
     if (ready >= 0) {
       return {
@@ -51,26 +58,45 @@
         tab: "produce",
         cta: "Premiere",
         urgent: true,
+        showOnGreenlight: true,
         action: { type: "premiere", slot: ready },
       };
     }
-    if ((S.releases || 0) < 15 && activeCount(S) > 0) {
+
+    if (glView) {
+      const empties = Math.max(0, (S.slots || 1) - activeCount(S));
+      if (empties > 0) {
+        const trend = hook.trendGenre ? hook.trendGenre() : "Action";
+        return {
+          message: showcase
+            ? `Pick a project — 🔥 ${trend} is trending for bonus rewards`
+            : "Choose a project and greenlight to fill your open slot",
+          tab: "produce",
+          cta: "Greenlight",
+          urgent: !showcase,
+          showOnGreenlight: true,
+          action: { type: "gl-focus" },
+        };
+      }
+    }
+
+    if (!glView && (S.releases || 0) < 15 && activeCount(S) > 0) {
       const pr = (S.projects || []).find(Boolean);
       if (pr) {
         const p = hook.getProject(pr.pid);
         if (p && pr.progress < p.work) {
-          const st = S.staff || {};
-          if ((st.director || 0) > 0) {
+          if (!wellStaffed && (st.director || 0) < 1) {
             return {
-              message: "Assigning experienced directors increases final score!",
-              tab: "produce",
-              cta: "Team",
-              urgent: false,
+              message: "Hire a Director — they boost your production score",
+              tab: "staff",
+              cta: "Hire",
               action: { type: "tab", tab: "staff" },
             };
           }
           return {
-            message: "Tap the poster to boost speed — or wait for your team",
+            message: showcase
+              ? "Production is rolling — tap the poster to boost speed"
+              : "Tap the poster to boost speed — or wait for your team",
             tab: "produce",
             cta: "Boost",
             urgent: false,
@@ -142,7 +168,7 @@
         action: { type: "claim-reward" },
       };
     }
-    if ((S.staff?.director || 0) < 1 && activeCount(S) > 0 && (S.releases || 0) >= 1 && (S.releases || 0) < 12) {
+    if (!wellStaffed && (S.staff?.director || 0) < 1 && activeCount(S) > 0 && (S.releases || 0) >= 1 && (S.releases || 0) < 12) {
       return {
         message: "Hire a Director — they boost your production score",
         tab: "staff",
@@ -150,17 +176,9 @@
         action: { type: "tab", tab: "staff" },
       };
     }
-    if ((S.staff?.director || 0) >= 1 && activeCount(S) > 0 && (S.releases || 0) >= 2 && (S.releases || 0) < 15) {
-      return {
-        message: "Experienced directors increase your final production score",
-        tab: "produce",
-        cta: "Lines",
-        action: { type: "tab", tab: "produce" },
-      };
-    }
-    if ((S.releases || 0) < 8 && activeCount(S) > 0 && hook.hireCost && hook.ROLES) {
+    if (!wellStaffed && !showcase && (S.releases || 0) < 8 && activeCount(S) > 0 && hook.hireCost && hook.ROLES) {
       const priority = ["director", "animator", "writer", "producer", "voice"];
-      const afford = priority.find((k) => hook.ROLES[k] && S.yen >= hook.hireCost(k));
+      const afford = priority.find((k) => hook.ROLES[k] && S.yen >= hook.hireCost(k) && (S.staff[k] || 0) < 2);
       if (afford) {
         return {
           message: `Hire a ${hook.ROLES[afford].name} to speed up production`,
@@ -235,6 +253,12 @@
       hook.play("click");
       return;
     }
+    if (pw.action.type === "gl-focus") {
+      const btn = document.querySelector(".aaa-gl-confirm-banner, .aaa-gl-card.sel");
+      if (btn) btn.scrollIntoView({ behavior: "smooth", block: "center" });
+      hook.play("click");
+      return;
+    }
     if (pw.action.type === "tab") {
       hook.getState().tab = pw.action.tab;
       hook.render();
@@ -258,7 +282,10 @@
           <div class="hud-brand-line"><span class="hud-sakura-logo" aria-hidden="true">🌸</span><span class="hud-studio-name" id="hud-studio-name">Studio</span></div>
           <span class="hud-studio-rank-label" id="hud-studio-rank-label">Studio Rank C</span>
         </div>
+        <div class="hud-studio-rating jw-studio-rank" id="hud-studio-rating" role="button" tabindex="0" aria-label="Studio rating"></div>
+        <span class="hud-combo" id="hud-combo">COMBO x<span id="hud-combo-n">0</span></span>
         <div class="hud-brand-actions">
+          <button type="button" class="hud-menu-btn" id="hud-settings-btn" aria-label="Settings">⚙️</button>
           <button type="button" class="hud-mail-btn" id="hud-mail-btn" aria-label="Mail and rewards">✉️</button>
           <span class="hud-awards-chip" id="hud-awards" hidden title="Golden Anime Awards"><span class="hud-awards-ic">🏆</span><span class="hud-awards-copy"><small>年度最佳动画公司</small><b>Golden Anime Awards</b></span></span>
         </div>
@@ -352,8 +379,17 @@
       if (!hook) return;
       const main = document.getElementById("main");
       if (main?.dataset.glBack === "1" && hook.greenlightBack) hook.greenlightBack();
-      else if (main?.dataset.glView === "1") { hook.getState().tab = "quests"; hook.render(); }
+      else if (main?.dataset.glView === "1") {
+        hook.getState().tab = "produce";
+        if (hook.greenlightBack) hook.greenlightBack();
+        else hook.render();
+      }
       hook.play("click");
+    });
+    document.getElementById("hud-settings-btn").addEventListener("click", () => {
+      openDrawer();
+      const hook = window.__AST_HOOK__;
+      if (hook) hook.play("click");
     });
     document.getElementById("pathway-cta").addEventListener("click", runPathwayAction);
     document.getElementById("hud-mail-btn").addEventListener("click", () => {
@@ -380,9 +416,38 @@
     });
   }
 
+  function openDrawer() {
+    const d = document.getElementById("hud-drawer");
+    if (d) d.hidden = false;
+  }
+
   function closeDrawer() {
     const d = document.getElementById("hud-drawer");
     if (d) d.hidden = true;
+  }
+
+  function renderPathwaySteps(S, hook) {
+    const showcase = hook.isShowcaseDemo && hook.isShowcaseDemo();
+    const starsOk = hook.featureUnlocked ? hook.featureUnlocked("stars") : (S.releases || 0) >= 2;
+    const studioOk = hook.featureUnlocked ? hook.featureUnlocked("studio") : (S.releases || 0) >= 1;
+    const defs = [
+      { id: "hire", label: "Hire", done: staffTotal(S) > 0 },
+      { id: "gl", label: "Greenlight", done: activeCount(S) > 0 || (S.releases || 0) > 0 },
+      { id: "boost", label: "Boost", done: (S.taps || 0) > 2 || (S.releases || 0) > 0 },
+      { id: "premiere", label: "Premiere", done: (S.releases || 0) > 0 },
+      { id: "stars", label: "Stars", done: (S.stars || []).length > 0, locked: !starsOk },
+      { id: "studio", label: "Studio", done: (S.releases || 0) >= 2, locked: !studioOk },
+    ];
+    let current = defs.findIndex((d) => !d.done && !d.locked);
+    if (current < 0) current = Math.max(0, defs.filter((d) => !d.locked).length - 1);
+    return defs.map((d, i) => {
+      const cls = ["pathway-step"];
+      if (d.done) cls.push("done");
+      else if (d.locked) cls.push("locked");
+      else if (i === current) cls.push("current");
+      const mark = d.done ? "✓" : d.locked ? "🔒" : String(i + 1);
+      return `<span class="${cls.join(" ")}" title="${d.label}"><span class="pathway-step-n">${mark}</span><span class="pathway-step-lbl">${d.label}</span></span>`;
+    }).join("");
   }
 
   function ensureHudStats() {
@@ -444,9 +509,10 @@
     const demoDots = showcaseDemo && !glView;
     const mailBtn = document.getElementById("hud-mail-btn");
     if (mailBtn) {
+      mailBtn.hidden = glView;
       const today = new Date().toISOString().slice(0, 10);
       const loginPending = S.loginLastClaimDate !== today && (S.loginClaimedCount || 0) < 31;
-      mailBtn.classList.toggle("has-dot", claimableQuests(S) > 0 || loginPending || demoDots);
+      mailBtn.classList.toggle("has-dot", !glView && (claimableQuests(S) > 0 || loginPending || demoDots));
     }
     const lv = document.getElementById("hud-lv-badge");
     if (lv) lv.textContent = String(S.studioLevel || 1);
@@ -471,22 +537,32 @@
       } else combo.classList.remove("show");
     }
 
-    const pw = analyzePathway(S, hook);
+    const pw = analyzePathway(S, hook, { glView });
     window.__AST_PATHWAY__ = pw;
 
     const rail = document.getElementById("pathway-rail");
     if (rail) {
-      rail.classList.toggle("coach-hidden", glView);
-      if (!glView) delete rail.dataset.coachDismissed;
+      const showCoach = !glView || !!pw.showOnGreenlight;
+      rail.classList.toggle("coach-hidden", !showCoach);
+      if (showCoach) delete rail.dataset.coachDismissed;
     }
 
     const nowEl = document.getElementById("pathway-now");
     if (nowEl) nowEl.textContent = pw.message;
     const cta = document.getElementById("pathway-cta");
     if (cta) {
-      cta.textContent = "→";
-      cta.setAttribute("aria-label", pw.cta || "Go");
+      const label = pw.cta || "Go";
+      cta.textContent = label.length > 14 ? label.slice(0, 13) + "…" : label;
+      cta.setAttribute("aria-label", label);
       cta.classList.toggle("urgent", !!pw.urgent);
+      cta.hidden = !pw.action;
+    }
+
+    const stepsEl = document.getElementById("pathway-steps");
+    if (stepsEl) {
+      const showSteps = showcaseDemo || (S.releases || 0) < 15;
+      stepsEl.innerHTML = showSteps ? renderPathwaySteps(S, hook) : "";
+      stepsEl.hidden = !showSteps;
     }
 
     const today = new Date().toISOString().slice(0, 10);

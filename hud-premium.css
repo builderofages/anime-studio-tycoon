@@ -41,9 +41,10 @@ html.hud-v3-active #app {
   margin: 0 auto;
   display: grid !important;
   grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: auto auto 1fr var(--ui-dock-h);
+  grid-template-rows: auto auto auto 1fr var(--ui-dock-h);
   grid-template-areas:
     "hud"
+    "goal"
     "coach"
     "main"
     "dock";
@@ -54,13 +55,51 @@ html.hud-v3-active #app {
 }
 
 html.hud-v3-active #hud-shell { grid-area: hud; }
+html.hud-v3-active #goal { grid-area: goal; }
 html.hud-v3-active #pathway-rail { grid-area: coach; }
 html.hud-v3-active #main { grid-area: main; }
 html.hud-v3-active #command-dock { grid-area: dock; }
 html.hud-v3-active #top,
-html.hud-v3-active #goal,
 html.hud-v3-active #top.legacy-hidden,
 html.hud-v3-active .foot { display: none !important; }
+
+/* ---- North-star goal bar (progression milestone) ---- */
+html.hud-v3-active #goal {
+  display: flex !important;
+  flex-direction: column;
+  gap: 5px;
+  margin: 4px 10px 0;
+  padding: 8px 12px;
+  background: var(--ui-surface);
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-r);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ui-text);
+  line-height: 1.3;
+}
+
+html.hud-v3-active #goal #goal-txt {
+  display: block;
+  color: var(--ui-muted);
+  font-weight: 600;
+}
+
+html.hud-v3-active #goal .bar {
+  height: 6px;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+html.hud-v3-active #goal .bar i,
+html.hud-v3-active #goal #goal-bar {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--ui-accent-hot), var(--ui-gold));
+  border-radius: 4px;
+  transition: width 0.25s ease;
+}
 
 @media (min-width: 768px) {
   html.hud-v3-active #app { max-width: 720px; }
@@ -325,14 +364,31 @@ html.hud-v3-active .foot { display: none !important; }
 /* ---- Coach bar ---- */
 #pathway-rail.coach-bar {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 8px;
   margin: 0;
-  padding: 6px 10px;
+  padding: 6px 10px 8px;
   background: var(--ui-surface-2);
   border-bottom: 1px solid var(--ui-border);
   border-radius: 0;
   box-shadow: none;
+}
+
+.coach-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.coach-label {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ui-accent-hot);
 }
 
 #pathway-rail.coach-hidden {
@@ -351,14 +407,23 @@ html.hud-v3-active .foot { display: none !important; }
 
 .coach-cta {
   flex-shrink: 0;
-  padding: 6px 14px;
+  padding: 6px 12px;
   border: none;
   border-radius: 8px;
   background: var(--ui-accent);
   color: #fff;
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: 0.02em;
   cursor: pointer;
+  white-space: nowrap;
+  max-width: 108px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.coach-cta[hidden] {
+  display: none !important;
 }
 
 .coach-cta.urgent {
@@ -412,9 +477,65 @@ html.hud-v3-active .foot { display: none !important; }
   line-height: 1;
 }
 
-.pathway-steps,
 .pathway-header,
 .pathway-title { display: none !important; }
+
+.pathway-steps {
+  flex: 0 0 100%;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 2px 0 0;
+  padding: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.pathway-steps::-webkit-scrollbar { display: none; }
+
+.pathway-steps[hidden] {
+  display: none !important;
+}
+
+.pathway-step {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--ui-muted);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--ui-border);
+}
+
+.pathway-step-n {
+  font-size: 9px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.pathway-step-lbl {
+  white-space: nowrap;
+}
+
+.pathway-step.current {
+  color: var(--ui-text);
+  border-color: rgba(139, 92, 246, 0.45);
+  background: rgba(139, 92, 246, 0.16);
+}
+
+.pathway-step.done {
+  color: var(--ui-good);
+  border-color: rgba(34, 197, 94, 0.35);
+  background: rgba(34, 197, 94, 0.1);
+}
+
+.pathway-step.locked {
+  opacity: 0.55;
+}
 
 /* ---- Main ---- */
 html.hud-v3-active #main {
@@ -521,6 +642,25 @@ html.hud-v3-active .tab.active::after {
   height: 2px;
   background: var(--ui-accent);
   border-radius: 2px 2px 0 0;
+}
+
+html.hud-v3-active .tab.tab-locked {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+html.hud-v3-active .tab.tab-locked .tab-lbl,
+html.hud-v3-active .tab.tab-locked .ic {
+  filter: grayscale(0.6);
+}
+
+html.hud-v3-active .tab-lock-ic {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  font-size: 9px;
+  line-height: 1;
+  opacity: 0.9;
 }
 
 .tab-badge {
@@ -654,6 +794,21 @@ html.hud-v3-active .toast {
   border: 1px solid var(--ui-border) !important;
   font-size: 12px !important;
   border-radius: 10px !important;
+  color: var(--ui-text) !important;
+}
+
+html.hud-v3-active .toast.gold {
+  background: linear-gradient(180deg, #fcd34d, #f59e0b) !important;
+  border-color: rgba(255, 220, 120, 0.55) !important;
+  color: #3d2800 !important;
+  box-shadow: 0 8px 22px rgba(245, 158, 11, 0.35) !important;
+}
+
+html.hud-v3-active .toast.special {
+  background: linear-gradient(135deg, #ff5ca8, #a855f7) !important;
+  border-color: rgba(255, 255, 255, 0.35) !important;
+  color: #fff !important;
+  box-shadow: 0 10px 26px rgba(168, 85, 247, 0.45) !important;
 }
 
 html.hud-v3-active #toasts {
