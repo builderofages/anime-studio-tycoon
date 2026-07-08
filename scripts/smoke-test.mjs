@@ -141,9 +141,12 @@ assert(!html.includes('href="hf-design.css'), "hf-design.css disabled (ast-v5)")
 assert(!html.includes('href="aaa-ui.css'), "aaa-ui.css disabled (ast-v5)");
 assert(html.includes("legacy-fx.css"), "legacy-fx css linked");
 assert(html.includes("ast-v5.css"), "ast-v5 design css linked");
-assert(html.includes("build 70"), "build 70 tag");
+assert(html.includes("build 71"), "build 71 tag");
 assert(html.includes("Production Score"), "production score label");
-assert(html.includes("Ref Chrome"), "whatsnew build 70 changelog");
+assert(html.includes("Produce Hero"), "whatsnew build 71 changelog");
+assert(html.includes("aaa-hero-block"), "unified produce hero block");
+assert(html.includes("POSTER_META"), "poster overlay metadata");
+assert(html.includes("fmtYenCompact"), "compact yen formatting");
 assert(html.includes("scrollSelectedGlCard"), "greenlight carousel center snap");
 assert(html.includes("aaa-gl-slots-plus"), "greenlight slots expand button");
 assert(html.includes("TAB_ORDER_EARLY"), "mockup tab order");

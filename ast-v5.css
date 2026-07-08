@@ -34,7 +34,7 @@ html.hud-v3-active body {
 html.hud-v3-active body {
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.35) 0%, rgba(8, 6, 15, 0.82) 100%),
-    url('bg-v4.png?v=70') center top / cover no-repeat fixed !important;
+    url('bg-v4.png?v=71') center top / cover no-repeat fixed !important;
 }
 
 html.hud-v3-active button {
@@ -492,7 +492,7 @@ html.hud-v3-active .aaa-poster[data-act="tapboost"]:active {
 html.hud-v3-active .aaa-page-hero.aaa-gacha-hero {
   background:
     linear-gradient(135deg, rgba(107, 92, 255, 0.2), rgba(255, 92, 168, 0.14)),
-    url('assets/hf/gacha-bg.png?v=70') center/cover !important;
+    url('assets/hf/gacha-bg.png?v=71') center/cover !important;
   border: 1px solid rgba(180, 140, 255, 0.28) !important;
   overflow: hidden;
 }
@@ -1930,21 +1930,21 @@ html.hud-v3-active #premiere .premiere-card .btn-gold {
 html.hud-v3-active .aaa-page-hero.aaa-quest-hero {
   background:
     linear-gradient(135deg, rgba(255, 200, 69, 0.16), rgba(255, 92, 168, 0.12)),
-    url('assets/hf/greenlight-bg.png?v=70') center/cover !important;
+    url('assets/hf/greenlight-bg.png?v=71') center/cover !important;
   border: 1px solid rgba(255, 200, 69, 0.28) !important;
 }
 
 html.hud-v3-active .aaa-page-hero.aaa-staff-hero {
   background:
     linear-gradient(135deg, rgba(107, 92, 255, 0.18), rgba(255, 92, 168, 0.1)),
-    url('assets/hf/gacha-bg.png?v=70') center/cover !important;
+    url('assets/hf/gacha-bg.png?v=71') center/cover !important;
   border: 1px solid rgba(180, 140, 255, 0.28) !important;
 }
 
 html.hud-v3-active .aaa-page-hero.aaa-store-hero {
   background:
     linear-gradient(135deg, rgba(34, 211, 238, 0.14), rgba(255, 92, 168, 0.12)),
-    url('assets/hf/greenlight-bg.png?v=70') center/cover !important;
+    url('assets/hf/greenlight-bg.png?v=71') center/cover !important;
   border: 1px solid rgba(255, 92, 168, 0.28) !important;
 }
 
@@ -2158,21 +2158,21 @@ html.hud-v3-active .aaa-easy-mode .aaa-show-panel {
 html.hud-v3-active .aaa-page-hero.aaa-research-hero {
   background:
     linear-gradient(135deg, rgba(34, 211, 238, 0.16), rgba(107, 92, 255, 0.12)),
-    url('assets/hf/gacha-bg.png?v=70') center/cover !important;
+    url('assets/hf/gacha-bg.png?v=71') center/cover !important;
   border: 1px solid rgba(77, 212, 255, 0.28) !important;
 }
 
 html.hud-v3-active .aaa-page-hero.aaa-studio-hero {
   background:
     linear-gradient(135deg, rgba(255, 200, 69, 0.14), rgba(255, 92, 168, 0.1)),
-    url('assets/hf/greenlight-bg.png?v=70') center/cover !important;
+    url('assets/hf/greenlight-bg.png?v=71') center/cover !important;
   border: 1px solid rgba(255, 200, 69, 0.28) !important;
 }
 
 html.hud-v3-active .aaa-page-hero.aaa-market-hero {
   background:
     linear-gradient(135deg, rgba(255, 92, 168, 0.14), rgba(107, 92, 255, 0.1)),
-    url('assets/hf/gacha-bg.png?v=70') center/cover !important;
+    url('assets/hf/gacha-bg.png?v=71') center/cover !important;
   border: 1px solid rgba(255, 92, 168, 0.28) !important;
 }
 
@@ -2351,7 +2351,7 @@ html.hud-v3-active .aaa-greenlight-cinema-head {
   padding: 18px 16px 12px !important;
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.55) 0%, rgba(8, 6, 15, 0.85) 100%),
-    url('assets/hf/greenlight-bg.png?v=70') center/cover !important;
+    url('assets/hf/greenlight-bg.png?v=71') center/cover !important;
   border-bottom: 1px solid rgba(255, 200, 69, 0.15) !important;
 }
 
@@ -2946,7 +2946,7 @@ html.hud-v3-active .aaa-gl-page-head {
   padding: 14px 14px 10px !important;
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.4) 0%, rgba(8, 6, 15, 0.9) 100%),
-    url('assets/hf/greenlight-bg.png?v=70') center/cover !important;
+    url('assets/hf/greenlight-bg.png?v=71') center/cover !important;
   border-bottom: 1px solid rgba(255, 200, 69, 0.15) !important;
 }
 
@@ -3532,4 +3532,216 @@ html.hud-v3-active .aaa-team-head span::before {
 
 html.hud-v3-active .aaa-gl-back {
   display: none !important;
+}
+
+/* ========== BUILD 71 — Produce Hero (design-ref-v4 authority) ========== */
+
+html.hud-v3-active .aaa-produce-page {
+  padding: 6px !important;
+}
+
+html.hud-v3-active .aaa-hero-block {
+  border-radius: 22px !important;
+  border: 2px solid rgba(255, 200, 69, 0.28) !important;
+  background:
+    linear-gradient(165deg, rgba(22, 14, 34, 0.98) 0%, rgba(10, 7, 18, 0.99) 100%) !important;
+  box-shadow:
+    0 16px 40px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 0 24px rgba(255, 92, 168, 0.08) !important;
+  overflow: hidden !important;
+}
+
+html.hud-v3-active .aaa-show-panel {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  margin: 0 0 10px !important;
+  padding: 0 !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-show-card {
+  grid-template-columns: minmax(148px, 46%) 1fr !important;
+  gap: 12px !important;
+  padding: 14px 14px 10px !important;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-poster {
+  aspect-ratio: 3 / 4.2 !important;
+  min-height: 210px !important;
+  max-height: 280px !important;
+  border-radius: 16px !important;
+  border: 2px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.6) !important;
+}
+
+html.hud-v3-active .aaa-poster-tagline {
+  position: absolute !important;
+  top: 12px !important;
+  left: 8px !important;
+  writing-mode: vertical-rl !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.12em !important;
+  color: rgba(255, 255, 255, 0.82) !important;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8) !important;
+  z-index: 2 !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-poster-ja {
+  bottom: 42px !important;
+  font-size: 15px !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-title {
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  margin: 2px 0 6px !important;
+  line-height: 1.15 !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-score-val {
+  font-size: 22px !important;
+  font-weight: 900 !important;
+  color: #fff !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-stat-line {
+  display: grid !important;
+  grid-template-columns: 18px 1fr auto auto !important;
+  align-items: center !important;
+  gap: 4px 6px !important;
+  font-size: 10px !important;
+  margin: 3px 0 !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-stat-line b {
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  color: #fff !important;
+  white-space: nowrap !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-stat-line.hype {
+  grid-template-columns: 18px 1fr auto 52px auto !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-mini-bar {
+  width: 52px !important;
+  height: 6px !important;
+  border-radius: 999px !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  overflow: hidden !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-mini-bar i {
+  display: block !important;
+  height: 100% !important;
+  background: linear-gradient(90deg, var(--ast-pink), var(--ast-pink-2)) !important;
+  border-radius: 999px !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-rate {
+  font-size: 9px !important;
+  font-weight: 700 !important;
+  color: var(--ast-pink) !important;
+  white-space: nowrap !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-premiere-bonus {
+  margin-top: 6px !important;
+  padding-top: 6px !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-play-btn,
+html.hud-v3-active .aaa-show-panel .aaa-premiere-ready {
+  width: 100% !important;
+  margin-top: 8px !important;
+  padding: 12px 14px !important;
+  font-size: 14px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.04em !important;
+  border-radius: 14px !important;
+  border: none !important;
+  background: linear-gradient(135deg, #ff5ca8 0%, #ff3b8d 45%, #e91e7a 100%) !important;
+  color: #fff !important;
+  box-shadow: 0 8px 24px rgba(255, 59, 141, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-team {
+  margin: 0 !important;
+  padding: 10px 14px 14px !important;
+  border-top: 1px solid rgba(255, 200, 69, 0.15) !important;
+  background: rgba(0, 0, 0, 0.2) !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-team-head {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  margin-bottom: 8px !important;
+  font-size: 10px !important;
+  letter-spacing: 0.08em !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-team-card {
+  position: relative !important;
+  flex: 0 0 88px !important;
+  min-width: 88px !important;
+  padding: 10px 8px 8px !important;
+  border-radius: 14px !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  text-align: center !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-team-card .aaa-team-avatar {
+  width: 54px !important;
+  height: 54px !important;
+  border-radius: 12px !important;
+  object-fit: cover !important;
+  margin: 4px auto 6px !important;
+  display: block !important;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.12) !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-team-rank {
+  position: absolute !important;
+  top: 6px !important;
+  left: 6px !important;
+  width: 18px !important;
+  height: 18px !important;
+  border-radius: 6px !important;
+  font-size: 9px !important;
+  font-weight: 900 !important;
+  line-height: 18px !important;
+  text-align: center !important;
+  z-index: 2 !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-team-role {
+  font-size: 8px !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+  color: var(--ast-muted) !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-team-lv {
+  font-size: 8px !important;
+  font-weight: 800 !important;
+  color: var(--ast-gold) !important;
+  margin-top: 2px !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-team-card.aaa-rank-S {
+  border-color: rgba(255, 200, 69, 0.45) !important;
+  box-shadow: 0 0 16px rgba(255, 200, 69, 0.15) !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-team-card.aaa-rank-A {
+  border-color: rgba(77, 212, 255, 0.35) !important;
 }
