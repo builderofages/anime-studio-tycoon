@@ -236,11 +236,12 @@
     shell.className = "hud-v3";
     shell.innerHTML = `
       <div class="hud-brand-row">
-        <div class="hud-avatar-wrap"><img class="hud-avatar" src="start-hero.png?v=65" alt=""><span class="hud-lv-badge" id="hud-lv-badge">1</span></div>
+        <div class="hud-avatar-wrap"><img class="hud-avatar" src="start-hero.png?v=66" alt=""><span class="hud-lv-badge" id="hud-lv-badge">1</span></div>
         <div class="hud-identity">
-          <span class="hud-studio-name" id="hud-studio-name">Studio</span>
+          <div class="hud-brand-line"><span class="hud-sakura-logo" aria-hidden="true">🌸</span><span class="hud-studio-name" id="hud-studio-name">Studio</span></div>
           <span class="hud-studio-rank-label" id="hud-studio-rank-label">Studio Rank C</span>
         </div>
+        <span class="hud-awards-chip" id="hud-awards" hidden title="Golden Anime Awards">🏆</span>
         <div class="hud-stats" id="hud-resources"></div>
       </div>
       <div class="hud-drawer" id="hud-drawer" hidden>
@@ -287,7 +288,7 @@
       rail.id = "pathway-rail";
       rail.className = "coach-bar";
       rail.innerHTML = `
-        <img class="coach-avatar" src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg?v=65" alt="" width="40" height="40">
+        <img class="coach-avatar" src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg?v=66" alt="" width="40" height="40">
         <div class="coach-body">
           <span class="coach-label">Coach's Tip</span>
           <p class="coach-msg" id="pathway-now"></p>
@@ -360,6 +361,8 @@
       const letter = stars >= 5 ? "S+" : stars >= 4 ? "S" : stars >= 3 ? "A" : stars >= 2 ? "B" : "C";
       rankLbl.textContent = "Studio Rank " + letter;
     }
+    const awards = document.getElementById("hud-awards");
+    if (awards) awards.hidden = (S.releases || 0) < 8;
     const lv = document.getElementById("hud-lv-badge");
     if (lv) lv.textContent = String(S.studioLevel || 1);
 
