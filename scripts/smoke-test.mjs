@@ -141,9 +141,11 @@ assert(!html.includes('href="hf-design.css'), "hf-design.css disabled (ast-v5)")
 assert(!html.includes('href="aaa-ui.css'), "aaa-ui.css disabled (ast-v5)");
 assert(html.includes("legacy-fx.css"), "legacy-fx css linked");
 assert(html.includes("ast-v5.css"), "ast-v5 design css linked");
-assert(html.includes("build 73"), "build 73 tag");
+assert(html.includes("build 74"), "build 74 tag");
 assert(html.includes("Production Score"), "production score label");
-assert(html.includes("CSS Prune"), "whatsnew build 73 changelog");
+assert(html.includes("Secure Deps"), "whatsnew build 74 changelog");
+assert(readFileSync(join(root, "package.json"), "utf8").includes('"overrides"'), "npm overrides");
+assert(existsSync(join(root, "scripts/audit-check.mjs")), "audit check script");
 const astCss = readFileSync(join(root, "ast-v5.css"), "utf8");
 const astLines = astCss.split("\n").length;
 assert(astLines < 3200, "ast-v5.css pruned under 3200 lines", `${astLines} lines`);

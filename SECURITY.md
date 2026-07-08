@@ -11,28 +11,24 @@ plus thin native wrappers. **No `node_modules` are shipped to end users** — np
 packages are used only at *build time* (Capacitor CLI for iOS/Android, Electron +
 electron-builder for the desktop/Steam build).
 
-The currently-flagged advisories are all in those **build-time toolchains** and
-have **no upstream fix available**:
+**Build 74 (2026-07):** Root `package.json` uses npm `overrides` for patched
+`tar`, `minimatch`, and `uuid`. Both mobile/Capacitor and desktop `npm audit`
+report **0 vulnerabilities** (desktop bumped to Electron 43+).
 
-| Advisory | Where | Shipped to users? | Fixable now? |
+| Advisory | Where | Shipped to users? | Status |
 |---|---|---|---|
-| `node-tar` (GHSA-r6q2-hw4h-h46w, GHSA-vmf3-w455-68vh) | `@capacitor/cli`, `@capacitor/assets`, `electron-builder` → `app-builder-lib` / `dmg-builder` | No (build only) | No upstream fix |
-| `uuid` <11.1.1 (GHSA-w5hq-g745-h8pq) | `@capacitor/cli` → `xcode` → `uuid` | No (build only) | Constrained by `xcode`; no clean bump |
+| `node-tar`, `minimatch`, `uuid` | Capacitor / assets toolchain | No (build only) | **Patched via overrides** (root) |
+| Electron GHSA-* | `desktop/` devDependency | No (Steam build only) | **Patched** (Electron ^43.1.0) |
 
-These are tracked and will be picked up automatically when Capacitor /
-electron-builder release patched transitive deps. They do **not** affect the
-runtime security of the game, which:
+These do **not** affect the runtime security of the game, which:
 
 - collects no personal data and has no backend (see `privacy.html`),
 - stores progress only in local storage / app storage,
 - renders only first-party, controlled strings (no user-generated content is
   interpolated into the DOM).
 
-Lockfiles are intentionally **not** committed: pinning the full transitive tree
-only multiplies the visible (unfixable, build‑only) advisories without reducing
-real risk. The build uses `npm ci || npm install`, so it resolves fine without a
-committed lockfile. We'll commit one once the upstream toolchains ship patched
-transitive deps.
+Lockfiles remain **gitignored**; `overrides` pin patched transitive versions at
+install time. Run `npm run audit:check` after dependency changes.
 
 ## IAP & web purchase validation
 
