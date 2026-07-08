@@ -34,7 +34,7 @@ html.hud-v3-active body {
 html.hud-v3-active body {
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.35) 0%, rgba(8, 6, 15, 0.82) 100%),
-    url('bg-v4.png?v=57') center top / cover no-repeat fixed !important;
+    url('bg-v4.png?v=58') center top / cover no-repeat fixed !important;
 }
 
 html.hud-v3-active button {
@@ -492,7 +492,7 @@ html.hud-v3-active .aaa-poster[data-act="tapboost"]:active {
 html.hud-v3-active .aaa-page-hero.aaa-gacha-hero {
   background:
     linear-gradient(135deg, rgba(107, 92, 255, 0.2), rgba(255, 92, 168, 0.14)),
-    url('assets/hf/gacha-bg.png?v=57') center/cover !important;
+    url('assets/hf/gacha-bg.png?v=58') center/cover !important;
   border: 1px solid rgba(180, 140, 255, 0.28) !important;
   overflow: hidden;
 }
@@ -1768,4 +1768,103 @@ html.hud-v3-active .aaa-title {
   font-weight: 900 !important;
   letter-spacing: -0.03em !important;
   line-height: 1.1 !important;
+}
+
+/* ========== BUILD 58 — one-tap flow + gacha/premiere polish ========== */
+
+html.hud-v3-active .tab-badge {
+  position: absolute !important;
+  right: calc(50% - 18px) !important;
+  border-radius: 50% !important;
+  animation: ast-badge-pulse 2s ease-in-out infinite !important;
+}
+
+@keyframes ast-badge-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.15); opacity: 0.85; }
+}
+
+html.hud-v3-active .coach-mail {
+  position: relative !important;
+}
+
+html.hud-v3-active .coach-mail-dot {
+  position: absolute !important;
+  top: 2px !important;
+  right: 2px !important;
+  width: 7px !important;
+  height: 7px !important;
+  border-radius: 50% !important;
+  background: #ff3b6b !important;
+  box-shadow: 0 0 10px rgba(255, 59, 107, 0.85) !important;
+}
+
+html.hud-v3-active .coach-mail-dot[hidden] {
+  display: none !important;
+}
+
+html.hud-v3-active .aaa-greenlight-simple {
+  text-align: center !important;
+  border: 1px solid rgba(255, 92, 168, 0.35) !important;
+  background:
+    linear-gradient(160deg, rgba(255, 92, 168, 0.12), rgba(107, 92, 255, 0.08)),
+    var(--ast-glass) !important;
+}
+
+html.hud-v3-active .aaa-greenlight-simple .aaa-quick-gl {
+  width: 100% !important;
+  margin-top: 10px !important;
+  padding: 14px 16px !important;
+  font-size: 15px !important;
+  letter-spacing: 0.02em !important;
+  animation: ast-ready-pulse 2.2s ease-in-out infinite !important;
+}
+
+html.hud-v3-active .aaa-gacha-btn {
+  border-radius: 16px !important;
+  padding: 14px 12px !important;
+  font-weight: 800 !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35) !important;
+}
+
+html.hud-v3-active .aaa-gacha-btn.standard {
+  background: linear-gradient(135deg, rgba(34, 211, 238, 0.22), rgba(107, 92, 255, 0.18)) !important;
+}
+
+html.hud-v3-active .aaa-gacha-btn.premium {
+  background: linear-gradient(135deg, rgba(255, 200, 69, 0.28), rgba(255, 92, 168, 0.2)) !important;
+  border-color: rgba(255, 200, 69, 0.35) !important;
+}
+
+html.hud-v3-active .aaa-gacha-btn small {
+  display: block !important;
+  margin-top: 4px !important;
+  font-size: 10px !important;
+  opacity: 0.9 !important;
+}
+
+html.hud-v3-active #premiere .prem-tag {
+  font-size: 11px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+}
+
+html.hud-v3-active #premiere .prem-stars {
+  font-size: 22px !important;
+  letter-spacing: 0.08em !important;
+  text-shadow: 0 0 18px rgba(255, 200, 69, 0.55) !important;
+}
+
+html.hud-v3-active #premiere .prem-title {
+  font-size: 20px !important;
+  font-weight: 900 !important;
+  line-height: 1.15 !important;
+}
+
+html.hud-v3-active #premiere .premiere-card .btn-gold {
+  font-size: 15px !important;
+  letter-spacing: 0.03em !important;
+  box-shadow: 0 8px 28px rgba(255, 200, 69, 0.35) !important;
 }

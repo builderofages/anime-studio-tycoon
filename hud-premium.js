@@ -47,11 +47,11 @@
     const ready = readySlot(S, hook);
     if (ready >= 0) {
       return {
-        message: "Production ready — hit Global Premiere!",
+        message: "Production ready — premiere now!",
         tab: "produce",
         cta: "Premiere",
         urgent: true,
-        action: { type: "tab", tab: "produce" },
+        action: { type: "premiere", slot: ready },
       };
     }
     if ((S.releases || 0) < 5 && activeCount(S) > 0) {
@@ -96,10 +96,11 @@
         };
       }
       return {
-        message: "Greenlight your first anime",
+        message: "One tap to greenlight your first anime",
         tab: "produce",
         cta: "Greenlight",
-        action: { type: "tab", tab: "produce" },
+        urgent: true,
+        action: { type: "quick-greenlight" },
       };
     }
     if (activeCount(S) > 0 && (S.releases || 0) < 5) {
@@ -147,12 +148,24 @@
     const hook = window.__AST_HOOK__;
     if (!hook) return;
     const pw = window.__AST_PATHWAY__;
-    if (pw && pw.action && pw.action.type === "rating") {
+    if (!pw || !pw.action) return;
+    if (pw.action.type === "premiere" && typeof hook.releaseProject === "function") {
+      hook.releaseProject(pw.action.slot);
+      hook.play("click");
+      return;
+    }
+    if (pw.action.type === "quick-greenlight" && typeof hook.quickGreenlight === "function") {
+      hook.getState().tab = "produce";
+      hook.quickGreenlight();
+      hook.play("click");
+      return;
+    }
+    if (pw.action.type === "rating") {
       (document.getElementById("hud-studio-rating") || document.getElementById("studio-rank"))?.click();
       hook.play("click");
       return;
     }
-    if (pw && pw.action && pw.action.type === "tab") {
+    if (pw.action.type === "tab") {
       hook.getState().tab = pw.action.tab;
       hook.render();
       hook.play("click");
@@ -170,7 +183,7 @@
     shell.innerHTML = `
       <div class="hud-top">
         <button type="button" class="hud-menu-btn" id="hud-menu-btn" aria-label="Menu">☰</button>
-        <div class="hud-avatar-wrap"><img class="hud-avatar" src="start-hero.png?v=57" alt=""><span class="hud-lv-badge" id="hud-lv-badge">1</span></div>
+        <div class="hud-avatar-wrap"><img class="hud-avatar" src="start-hero.png?v=58" alt=""><span class="hud-lv-badge" id="hud-lv-badge">1</span></div>
         <div class="hud-identity">
           <span class="hud-studio-name" id="hud-studio-name">Studio</span>
           <div id="hud-studio-rating" class="hud-rating-chip" title="Studio rating"></div>
@@ -223,13 +236,13 @@
       rail.id = "pathway-rail";
       rail.className = "coach-bar";
       rail.innerHTML = `
-        <img class="coach-avatar" src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg?v=57" alt="" width="40" height="40">
+        <img class="coach-avatar" src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg?v=58" alt="" width="40" height="40">
         <div class="coach-body">
           <span class="coach-label">Coach's Tip</span>
           <p class="coach-msg" id="pathway-now"></p>
         </div>
         <button type="button" class="coach-cta" id="pathway-cta">→</button>
-        <button type="button" class="coach-mail" id="coach-mail" aria-label="Messages">✉️</button>
+        <button type="button" class="coach-mail" id="coach-mail" aria-label="Messages"><span class="coach-mail-ic">✉️</span><span class="coach-mail-dot" id="coach-mail-dot" hidden></span></button>
         <button type="button" class="coach-gift" id="coach-gift" aria-label="Rewards"><span class="coach-gift-ic">🎁</span><span class="coach-gift-dot" id="coach-gift-dot" hidden></span></button>
         <button type="button" class="coach-dismiss" id="coach-dismiss" aria-label="Dismiss">×</button>
         <div class="pathway-steps" id="pathway-steps" hidden></div>`;
@@ -344,6 +357,8 @@
     const rewardPending = claimableQuests(S) > 0 || loginPending;
     const giftDot = document.getElementById("coach-gift-dot");
     if (giftDot) giftDot.hidden = !rewardPending;
+    const mailDot = document.getElementById("coach-mail-dot");
+    if (mailDot) mailDot.hidden = !(claimableQuests(S) > 0 || loginPending);
   }
 
   function updateTabBadges(S, hook) {
