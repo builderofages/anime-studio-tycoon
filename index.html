@@ -22,16 +22,16 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%233a2b4d'/%3E%3Ccircle cx='32' cy='32' r='30' fill='none' stroke='%23ffc845' stroke-width='3'/%3E%3Cg fill='%23ff9bc4'%3E%3Cellipse cx='32' cy='15' rx='5' ry='8'/%3E%3Cellipse cx='32' cy='49' rx='5' ry='8'/%3E%3Cellipse cx='15' cy='32' rx='8' ry='5'/%3E%3Cellipse cx='49' cy='32' rx='8' ry='5'/%3E%3C/g%3E%3Ccircle cx='32' cy='32' r='7' fill='%23ffc845'/%3E%3C/svg%3E">
 <link rel="manifest" href="manifest.json">
 <!-- Legacy gameplay-*.css disabled — aaa-ui + game-skin + hud-premium own chrome -->
-<link rel="stylesheet" href="hud-premium.css?v=53">
+<link rel="stylesheet" href="hud-premium.css?v=54">
 <!-- ui-complete.css disabled — v5 uses aaa-tab-page heroes -->
-<link rel="stylesheet" href="gameplay-studio-rating.css?v=53">
-<link rel="stylesheet" href="studio-premium.css?v=53">
-<link rel="stylesheet" href="gameplay-plus.css?v=53">
+<link rel="stylesheet" href="gameplay-studio-rating.css?v=54">
+<link rel="stylesheet" href="studio-premium.css?v=54">
+<link rel="stylesheet" href="gameplay-plus.css?v=54">
 <!-- game-skin.css disabled — fought ast-v5 (animation:none, flat panels) -->
-<link rel="stylesheet" href="hf-design.css?v=53">
-<link rel="stylesheet" href="aaa-ui.css?v=53">
-<link rel="stylesheet" href="legacy-fx.css?v=53">
-<link rel="stylesheet" href="ast-v5.css?v=53">
+<link rel="stylesheet" href="hf-design.css?v=54">
+<link rel="stylesheet" href="aaa-ui.css?v=54">
+<link rel="stylesheet" href="legacy-fx.css?v=54">
+<link rel="stylesheet" href="ast-v5.css?v=54">
 <script>document.documentElement.classList.add("premium-hud","hud-v3-active")</script>
 <meta name="theme-color" content="#08050f">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -74,10 +74,10 @@ html.hud-v3-active #goal{display:none !important}
 <div id="app">
   <div id="top">
     <div id="studio-rank"><span>🎬</span><span class="rank-tier">Garage Studio</span></div>
-    <div class="res yen"><img src="icons/hf/yen.png?v=53" alt="Yen"><span><span class="v" id="r-yen">0</span> <small>¥</small></span></div>
-    <div class="res fans"><img src="icons/hf/fans.png?v=53" alt="Fans"><span class="v" id="r-fans">0</span></div>
-    <div class="res hype"><img src="icons/hf/hype.png?v=53" alt="Hype"><span class="v" id="r-hype">0</span></div>
-    <div class="res gems"><img src="icons/hf/gems.png?v=53" alt="Gems"><span class="v" id="r-gems">0</span></div>
+    <div class="res yen"><img src="icons/hf/yen.png?v=54" alt="Yen"><span><span class="v" id="r-yen">0</span> <small>¥</small></span></div>
+    <div class="res fans"><img src="icons/hf/fans.png?v=54" alt="Fans"><span class="v" id="r-fans">0</span></div>
+    <div class="res hype"><img src="icons/hf/hype.png?v=54" alt="Hype"><span class="v" id="r-hype">0</span></div>
+    <div class="res gems"><img src="icons/hf/gems.png?v=54" alt="Gems"><span class="v" id="r-gems">0</span></div>
     <div id="trendbar"><span class="spark">📈</span> Trending: <b id="trend">Action</b></div>
   </div>
   <div id="goal"><span id="goal-txt">🎯 Reach 50 Fans for Web Series</span><div class="bar"><i id="goal-bar" style="width:0%"></i></div></div>
@@ -95,11 +95,11 @@ html.hud-v3-active #goal{display:none !important}
 
 <div class="overlay" id="start" style="display: none;">
   <div class="card-modal">
-    <img class="start-hero" src="start-hero.png?v=53" width="140" height="140" alt="Anime Studio Tycoon">
+    <img class="start-hero" src="start-hero.png?v=54" width="140" height="140" alt="Anime Studio Tycoon">
     <h1>Anime Studio Tycoon</h1>
     <p id="start-tagline">From a one-room studio to a global anime empire</p>
     <label style="display:block;font-size:12px;font-weight:800;color:var(--plum);margin:4px 0 4px">🏢 Studio Name</label>
-    <input id="start-studio" class="ast-input" maxlength="40" placeholder="My Studio">
+    <input id="start-studio" class="ast-input" maxlength="40" placeholder="Sakura Studio" value="Sakura Studio">
     <label id="start-lang-label" style="display:block;margin:4px 0 4px">🌐 Language</label>
     <select id="start-lang" class="ast-input">
       <option value="en">English</option>
@@ -109,7 +109,8 @@ html.hud-v3-active #goal{display:none !important}
       <option value="de">Deutsch</option>
       <option value="ja">日本語</option>
     </select>
-    <button class="btn-primary" id="btn-start" style="font-size:17px;width:100%">▶ Enter the Studio</button>
+    <button class="btn-primary" id="btn-start" style="font-size:18px;width:100%;padding:16px">▶ Play Now</button>
+    <p class="muted" style="text-align:center;margin:8px 0 0;font-size:11px">Your first anime starts automatically — no setup required.</p>
     <p id="start-legal" style="font-size:11px;opacity:.72;margin:12px 0 0;line-height:1.5">By entering, you agree to our <a href="terms.html" target="_blank" rel="noopener">Terms &amp; EULA</a> and <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>. Includes optional in-app purchases and items with randomized rewards (odds shown in-game).</p>
   </div>
 </div>
@@ -163,15 +164,15 @@ html.hud-v3-active #goal{display:none !important}
 
 <div class="overlay" id="whatsnew" style="display:none">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <img src="start-hero.png?v=53" alt="" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
-    <h1 style="font-size:22px;text-align:center">✨ Build 53 — Store &amp; Rewards Polish</h1>
+    <img src="start-hero.png?v=54" alt="" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
+    <h1 style="font-size:22px;text-align:center">✨ Build 54 — AAA Easy Mode</h1>
     <div class="offlist" style="margin:12px 0">
-      <div><span>💎 Store shelf</span><b>Glass gem grid · balance card glow</b></div>
-      <div><span>🎯 Quest highlights</span><b>Claimable quests pulse gold · login panel glow</b></div>
-      <div><span>🌙 Daily / offline</span><b>Dark glass modals match premiere style</b></div>
-      <div><span>🖼️ Splash sync</span><b>Loading screen assets cache-busted to v53</b></div>
-      <div><span>⭐ S-rank laurel</span><b>Gold glow on top-tier staff cards</b></div>
-      <div><span>⏱️ Live ETA</span><b>Produce timer ticks in days/hours format</b></div>
+      <div><span>▶ Play Now</span><b>First anime auto-starts — starter team included</b></div>
+      <div><span>⚡ Quick Greenlight</span><b>One tap picks the best show in trending genre</b></div>
+      <div><span>🎬 Mockup match</span><b>Hero poster · S-rank laurel · team strip polish</b></div>
+      <div><span>🧹 Less friction</span><b>No modal spam on first launch</b></div>
+      <div><span>👥 Production Team</span><b>Role icons · bigger portraits · rank badges</b></div>
+      <div><span>🎁 Coach guides</span><b>Smart tips until you hit release #3</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
   </div>
@@ -211,8 +212,9 @@ const STORE_PAYMENTS = true; // store always visible; buyReal routes web→check
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 53 · Design v5+";
-const ASSET_V = "53";
+const BUILD_TAG = "build 54 · AAA Easy";
+const ASSET_V = "54";
+const COACH_AVATAR = "https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg";
 const TAB_ICON_IMG = {
   produce:"icons/tabs/produce.png", quests:"icons/tabs/quests.png", staff:"icons/tabs/staff.png",
   stars:"icons/tabs/stars.png", research:"icons/tabs/research.png", studio:"icons/tabs/studio.png",
@@ -231,17 +233,45 @@ const TAB_ICONS = {
 };
 function starRankLetter(stars){ return stars>=5?"S":stars>=4?"A":stars>=3?"B":stars>=2?"C":"D"; }
 function productionScore(stars,p,pr){ return Math.round(4200+stars*1100+Math.min(800,(pr.progress||0)/Math.max(1,p.work)*800)); }
+const ROLE_ICONS={director:"🎬",writer:"✒️",animator:"🎨",voice:"🎵",producer:"📋"};
 function productionTeamHTML(){
   const order=["director","writer","animator","voice","producer"];
   const labels={director:"Director",writer:"Scriptwriter",animator:"Character Design",voice:"Music",producer:"Producer"};
-  let h=`<div class="aaa-team"><div class="aaa-team-head"><span>Production Team</span><button type="button" class="aaa-team-add" data-tab="staff">+</button></div><div class="aaa-team-scroll">`;
+  let h=`<div class="aaa-team"><div class="aaa-team-head"><span>👥 Production Team</span><button type="button" class="aaa-team-add" data-tab="staff">+</button></div><div class="aaa-team-scroll">`;
   order.forEach(role=>{
     const n=(S.staff||{})[role]||0; const lv=Math.min(60,18+n*6+studioLevel());
     const rank=lv>=55?"S":lv>=45?"A":"B";
     const r=ROLES[role];
-    h+=`<div class="aaa-team-card aaa-rank-${rank}"><span class="aaa-team-rank">${rank}</span><img class="aaa-team-avatar" src="${r.img}" alt="${labels[role]}"><div class="aaa-team-role">${labels[role]}</div><div class="aaa-team-lv">LV.${lv}</div></div>`;
+    const empty=n===0;
+    h+=`<div class="aaa-team-card aaa-rank-${rank}${empty?" empty":""}"><span class="aaa-team-rank">${rank}</span><span class="aaa-team-icon">${ROLE_ICONS[role]}</span><img class="aaa-team-avatar" src="${r.img}" alt="${labels[role]}"><div class="aaa-team-role">${labels[role]}</div><div class="aaa-team-lv">LV.${empty?"—":lv}</div></div>`;
   });
   return h+`</div></div>`;
+}
+function staffTotal(){ let n=0; for(const k in ROLES) n+=S.staff[k]||0; return n; }
+function hypePerHour(){ return Math.floor((S.fans||0)*0.04+(S.upgrades.marketing||0)*600+activeCount()*900+powerPerTick()*360); }
+function bootstrapNewStudio(){
+  if((S.releases||0)>0||staffTotal()>0||activeCount()>0) return false;
+  try{ const sn=document.getElementById("start-studio"); if(sn&&sn.value) S.studioName=cleanName(sn.value); }catch(e){}
+  if(!S.studioName) S.studioName="Sakura Studio";
+  S.staff.animator=1; S.staff.writer=1; S.staff.director=1;
+  S.autoGreenlight=true; S.tutorialSeen=true;
+  const g=trendGenre();
+  _selGenre=Math.max(0,GENRES.indexOf(g));
+  const slot=firstEmptySlot();
+  if(slot<0||S.yen<PROJECTS[0].cost) return false;
+  S.yen-=PROJECTS[0].cost;
+  S.projects[slot]={pid:0,genre:g,progress:0,title:"Sakura no Yakusoku",poster:HERO_POSTER,cast:[],base:null,seq:0};
+  S._bootstrapped=true;
+  questAdd("greenlit",1);
+  return true;
+}
+function quickGreenlight(){
+  const g=trendGenre();
+  const opts=unlockedProjects().filter(p=>S.yen>=p.cost);
+  if(!opts.length){ toast("💰 Need more ¥ — wait for royalties or tap Freelance"); return; }
+  const pick=opts.reduce((best,p)=>(!best||p.fans/p.cost>best.fans/best.cost)?p:best,null);
+  greenlight(pick.id,g,[],null);
+  toast(`🎬 Greenlit ${pick.name} · ${g} genre`,true);
 }
 const OFFLINE_CAP = 8*3600; // seconds
 
@@ -297,6 +327,7 @@ for(const g in POSTER_POOL) POSTER_POOL[g]=POSTER_POOL[g].map(f=>_PCDN+f);
 function pickPoster(genre){ const a=POSTER_POOL[genre]; return (a&&a.length)?a[Math.floor(Math.random()*a.length)]:DEFAULT_POSTER; }
 const GENRE_POSTER=Object.fromEntries(Object.keys(POSTER_POOL).map(g=>[g,POSTER_POOL[g][0]]));
 const DEFAULT_POSTER="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_062729_7bbe33da-ecf7-41a5-ac40-4b8270468fd8.jpeg";
+const HERO_POSTER=(POSTER_POOL["Romance"]||[])[0]||DEFAULT_POSTER;
 const DASHBOARD_BG=_PCDN+"hf_20260615_090333_353ef636-ad49-44bb-9447-8653a12f9eae.png";
 const GEMS_ICON=_PCDN+"hf_20260615_090332_3e1dbb67-bab0-488a-abd4-5c9b12bc2740.png";
 
@@ -2107,20 +2138,23 @@ function dashboardHTML(){
   return h;
 }
 function renderProduce(){
-  let h=`<div class="aaa-tab-page">`;
+  const isEarly=(S.releases||0)<3;
+  let h=`<div class="aaa-tab-page${isEarly?" aaa-easy-mode":""}">`;
   const dp=dimPowerForQuality();
   const standings=industryStandings();
   let boostN=0;
   if(S.producerPass||goldenActive()||rewardedActive()||Date.now()<S.overdriveUntil) boostN=1;
-  h+=`<div class="aaa-produce-strip">
-    <button type="button" class="aaa-strip-chip" data-act="studio-name">🏢 ${studioName()}</button>
-    <span class="aaa-strip-chip">Lv.${studioLevel()}</span>
-    <span class="aaa-strip-chip">🏆 #${standings.rank}</span>
-    ${boostN?`<span class="aaa-strip-chip boost">⚡ Active</span>`:""}
-    <button type="button" class="aaa-strip-link" data-tab="studio">Stats →</button>
-  </div>`;
-  const ev=currentEvent();
-  h+=`<div class="eventbar"><span class="ev-ic">${ev.ic}</span><div class="ev-meta"><b>${ev.name}</b><div class="muted">${ev.desc}</div></div><span class="qtimer">⏳ ${fmtDur(msToMidnight())}</span></div>`;
+  if(!isEarly){
+    h+=`<div class="aaa-produce-strip">
+      <button type="button" class="aaa-strip-chip" data-act="studio-name">🏢 ${studioName()}</button>
+      <span class="aaa-strip-chip">Lv.${studioLevel()}</span>
+      <span class="aaa-strip-chip">🏆 #${standings.rank}</span>
+      ${boostN?`<span class="aaa-strip-chip boost">⚡ Active</span>`:""}
+      <button type="button" class="aaa-strip-link" data-tab="studio">Stats →</button>
+    </div>`;
+    const ev=currentEvent();
+    h+=`<div class="eventbar"><span class="ev-ic">${ev.ic}</span><div class="ev-meta"><b>${ev.name}</b><div class="muted">${ev.desc}</div></div><span class="qtimer">⏳ ${fmtDur(msToMidnight())}</span></div>`;
+  }
   // (Daily quests live on the Quests tab — not duplicated here, so tapping a poster never shifts the layout.)
   // active production lines
   S.projects.forEach((pr,i)=>{
@@ -2131,23 +2165,26 @@ function renderProduce(){
     const stars=projectStars(p, pr.genre, pr);
     const eta = done?0:Math.ceil((p.work-pr.progress)/Math.max(0.0001,powerPerTick()));
     const etaStr=done?"Ready!":(eta>=86400?Math.floor(eta/86400)+"D "+Math.floor((eta%86400)/3600)+"H":eta>=3600?Math.floor(eta/3600)+"H "+Math.floor((eta%3600)/60)+"M":eta+"s");
+    const hypeH=hypePerHour();
     const royH=Math.floor((S.catalogIncome||0)*3600);
     const rank=starRankLetter(stars), score=productionScore(stars,p,pr);
     const epN=Math.min(12,Math.max(1,Math.floor(pct/8.5)+1));
     const est=estimatePremiere(pr,p);
+    const laurel=rank==="S"?" aaa-rank-laurel":"";
     h+=`<div class="panel slotpanel aaa-show-panel${done?' slot-ready':''}" id="slot-${i}" data-done="${done?'1':'0'}"><div class="aaa-show-card">
       <div class="aaa-poster-col"><div class="aaa-poster" ${done?'':`data-act="tapboost" data-slot="${i}"`} style="background-image:url(${pr.poster||GENRE_POSTER[pr.genre]||DEFAULT_POSTER})" title="${done?'':'Tap to boost!'}"><span class="aaa-ep">EP ${epN}/12</span>${pr.genre===trendGenre()?'<span class="aaa-trend">🔥</span>':''}</div></div>
       <div class="aaa-meta-col">
-        <h2 class="aaa-title">${pr.title?pr.title:p.name} <button class="btn-ghost" data-act="rename-show" data-slot="${i}" style="padding:2px 6px;font-size:10px;min-height:0;vertical-align:middle" title="Rename">✏️</button></h2>
-        <div class="aaa-chips">${(pr.seq||0)>1?`<span class="aaa-chip">📺 Sequel ${pr.seq}</span>`:`<span class="aaa-chip">🌸 Original</span>`}<span class="aaa-chip gold">${pr.genre}</span>${pr.genre===trendGenre()?`<span class="aaa-chip">🔥 Trending</span>`:""}</div>
+        <h2 class="aaa-title">${pr.title?pr.title:p.name}<button class="aaa-rename" data-act="rename-show" data-slot="${i}" title="Rename">✏️</button></h2>
+        <div class="aaa-chips">${(pr.seq||0)>1?`<span class="aaa-chip">📺 Sequel ${pr.seq}</span>`:`<span class="aaa-chip">🌸 Original</span>`}<span class="aaa-chip gold">⭐ ${pr.genre}</span>${pr.genre===trendGenre()?`<span class="aaa-chip hot">🔥 Trending</span>`:""}</div>
         <div class="aaa-score-label">⭐ Production Score</div>
-        <div class="aaa-score-row"><span class="aaa-score-val">${fmt(score)}</span><span class="aaa-rank aaa-rank-${rank}">${rank}</span></div>
+        <div class="aaa-score-row"><span class="aaa-score-val">${fmt(score)}</span><span class="aaa-rank-wrap${laurel}"><span class="aaa-rank aaa-rank-${rank}">${rank}</span></span></div>
         <div class="aaa-stat-line"><span>🎬 Budget</span><b>¥${fmt(Math.round(p.cost*pct/100))} / ¥${fmt(Math.round(p.cost*1.15))}</b></div>
-        <div class="aaa-stat-line"><span>📣 Hype</span><b>${fmt(S.hype)}</b><div class="aaa-mini-bar"><i style="width:${Math.min(100,S.hype/3)}%"></i></div>${royH>0?`<span class="aaa-rate">+¥${fmt(royH)}/h</span>`:""}</div>
+        <div class="aaa-stat-line hype"><span>📣 Hype</span><b>${fmt(S.hype)}</b><div class="aaa-mini-bar"><i style="width:${Math.min(100,S.hype/3)}%"></i></div><span class="aaa-rate">+${fmt(hypeH)}/h</span></div>
         <div class="aaa-stat-line"><span>📅 Premiere In</span><b class="slot-eta">${etaStr}</b></div>
-        ${(pr.cast&&pr.cast.length)?`<div class="aaa-stat-line"><span>🎭 Cast</span><b style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${pr.cast.map(id=>STAR_BY_ID[id]?STAR_BY_ID[id].name.replace(' ☆',''):"").filter(Boolean).join(", ")}</b></div>`:""}
+        ${royH>0?`<div class="aaa-stat-line subtle"><span>💰 Royalties</span><b class="aaa-rate">+¥${fmt(royH)}/h</b></div>`:""}
+        ${(pr.cast&&pr.cast.length)?`<div class="aaa-stat-line"><span>🎭 Cast</span><b class="aaa-cast-names">${pr.cast.map(id=>STAR_BY_ID[id]?STAR_BY_ID[id].name.replace(' ☆',''):"").filter(Boolean).join(", ")}</b></div>`:""}
         <div class="progress aaa-progress"><i class="slot-bar" style="width:${pct}%"></i></div>
-        <div class="aaa-premiere-bonus"><span>🌍 Global Premiere Bonus</span><b>⚡${fmt(est.hype)} · ¥${fmt(est.yen)} · +${fmt(est.fans)} fans</b></div>
+        <div class="aaa-premiere-bonus"><span>🌍 Global Premiere Bonus</span><div class="aaa-bonus-pills"><span class="aaa-bonus-pill">⚡${fmt(est.hype)}</span><span class="aaa-bonus-pill gold">¥${fmt(est.yen)}</span><span class="aaa-bonus-pill">+${fmt(est.fans)} fans</span></div></div>
         <div class="aaa-actions">${done?`<button class="btn-gold aaa-cta" data-rel="${i}">🎬 Global Premiere</button>`:`<button class="btn-cyan" data-rush="${i}">⚡ Rush</button><button class="btn-gold" data-act="instant" data-slot="${i}">⏩ · 💎${instantCost(p,pr)}</button>`}</div>
       </div></div>${productionTeamHTML()}</div>`;
   });
@@ -2155,7 +2192,8 @@ function renderProduce(){
   const empties=S.slots-activeCount();
   if(empties>0){
     const selG=GENRES[_selGenre]||GENRES[0];
-    h+=`<div class="panel aaa-greenlight"><div class="aaa-greenlight-head"><h2>🎬 ${t("h_greenlight","Greenlight a Project")}</h2><div class="muted" style="font-size:12px">${empties}/${S.slots} slots free · Trending <b>${trendGenre()}</b> for 1.5× bonus</div></div>`;
+    h+=`<div class="panel aaa-greenlight"><div class="aaa-greenlight-head"><h2>🎬 ${t("h_greenlight","Greenlight a Project")}</h2><div class="muted" style="font-size:12px">${empties}/${S.slots} slots free · Trending <b>${trendGenre()}</b> for 1.5× bonus</div></div>
+    <button type="button" class="btn-primary aaa-quick-gl" data-act="quick-greenlight">⚡ Quick Greenlight — ${trendGenre()} genre</button>`;
     h+=`<div class="aaa-genre-row" id="genres">`+GENRES.map((g,i)=>`<span class="chip ${i===_selGenre?'sel':''} ${g===trendGenre()?'trend':''}" data-g="${i}">${g}${g===trendGenre()?" 🔥":""}${S.mastery[g]?` L${S.mastery[g]}`:""}</span>`).join("")+`</div>`;
     // ---- Casting: choose which stars to feature on this show (energy permitting) ----
     const roster=(S.stars||[]).map(st=>({st,t:STAR_BY_ID[st.sid]})).filter(x=>x.t);
@@ -2430,6 +2468,7 @@ document.addEventListener("click", e=>{
   if(t.dataset.buy) return buyReal(t.dataset.buy);
   if(t.dataset.act==="redeem-submit"){ const sk=document.getElementById("redeem-sku"), ky=document.getElementById("redeem-key"); return redeemLicenseKey(sk&&sk.value, ky&&ky.value); }
   if(t.dataset.gem) return spendGem(t.dataset.gem);
+  if(t.dataset.act==="quick-greenlight") return quickGreenlight();
   if(t.dataset.act==="freelance") return freelance();
   if(t.dataset.act==="rewarded") return rewardedBoost();
   if(t.dataset.act==="tapboost") return tapBoost(+t.dataset.slot);
@@ -2522,44 +2561,45 @@ function updateComboMeter(){
 let started=false;
 function begin(){
   if(started) return; started=true;
-  // adopt the studio name chosen on the intro screen (if any)
-  try{ const sn=document.getElementById("start-studio"); if(sn && sn.value && !S.studioName){ S.studioName=cleanName(sn.value); } }catch(e){}
+  try{ const sn=document.getElementById("start-studio"); if(sn&&sn.value&&!S.studioName) S.studioName=cleanName(sn.value); }catch(e){}
+  const booted=bootstrapNewStudio();
   initAudio(); updateMute();
   $("#start").style.display="none";
-  // flush any grant/redeem messages queued before start
   pendingToasts.forEach(([m,g])=>toast(m,g)); pendingToasts=[];
-  // offline progress
-  const had = S.lastSave && (Date.now()-S.lastSave>60000);
-  if(had){
-    const sec=Math.min(offlineCap(), (Date.now()-S.lastSave)/1000);
-    const r=simulateOffline(sec);
-    if(r.yen>0||r.fans>0||r.releases>0){
-      $("#offlist").innerHTML=
-        `<div><span>Time away</span><b>${Math.floor(sec/60)} min</b></div>
-         <div><span>Anime released</span><b>${r.releases}</b></div>
-         <div><span>Yen earned</span><b>¥${fmt(r.yen)}</b></div>
-         <div><span>Fans gained</span><b>${fmt(r.fans)}</b></div>`;
-      $("#offline").style.display="flex";
-    }
-  }
-  // daily reward + ensure quests exist
-  const dr=checkDaily();
-  if(!S.quests || !S.quests.length) rollQuests();
+  if(!S.quests||!S.quests.length) rollQuests();
   checkWeekly(); loginRefresh();
-  if(dr){
-    $("#daily-body").innerHTML=
-      `<div class="offlist">
-         <div><span>Login streak</span><b>Day ${dr.streak} 🔥</b></div>
-         <div><span>Gems</span><b>+${dr.gems} 💎</b></div>
-         <div><span>Cash bonus</span><b>+¥${fmt(dr.yenBonus)}</b></div>
-       </div>
-       <div class="muted">Come back tomorrow to grow your streak — bigger rewards every day!</div>`;
-    $("#daily").style.display="flex";
+  if(booted){
+    const pr=S.projects.find(Boolean);
+    pendingToasts.push([`🎬 "${pr?.title||'Your anime'}" is in production! Tap the poster to speed it up.`,true]);
+  }else{
+    const had=S.lastSave&&(Date.now()-S.lastSave>60000);
+    if(had){
+      const sec=Math.min(offlineCap(),(Date.now()-S.lastSave)/1000);
+      const r=simulateOffline(sec);
+      if(r.yen>0||r.fans>0||r.releases>0){
+        $("#offlist").innerHTML=
+          `<div><span>Time away</span><b>${Math.floor(sec/60)} min</b></div>
+           <div><span>Anime released</span><b>${r.releases}</b></div>
+           <div><span>Yen earned</span><b>¥${fmt(r.yen)}</b></div>
+           <div><span>Fans gained</span><b>${fmt(r.fans)}</b></div>`;
+        $("#offline").style.display="flex";
+      }
+    }
+    const dr=checkDaily();
+    if(dr){
+      $("#daily-body").innerHTML=
+        `<div class="offlist">
+           <div><span>Login streak</span><b>Day ${dr.streak} 🔥</b></div>
+           <div><span>Gems</span><b>+${dr.gems} 💎</b></div>
+           <div><span>Cash bonus</span><b>+¥${fmt(dr.yenBonus)}</b></div>
+         </div>
+         <div class="muted">Come back tomorrow to grow your streak — bigger rewards every day!</div>`;
+      $("#daily").style.display="flex";
+    }
+    if(!S.whatsnewSeen||S.lastWhatsNewBuild!==BUILD_TAG){ S.whatsnewSeen=false; S.lastWhatsNewBuild=BUILD_TAG; const wn=document.getElementById("whatsnew"); if(wn) wn.style.display="flex"; }
+    else if(!S.tutorialSeen){ $("#howto").style.display="flex"; }
   }
-  // Gameplay+ changelog — show once per major version (reset whatsnewSeen on build bump)
-  if(!S.whatsnewSeen || S.lastWhatsNewBuild !== BUILD_TAG){ S.whatsnewSeen=false; S.lastWhatsNewBuild=BUILD_TAG; const wn=document.getElementById("whatsnew"); if(wn) wn.style.display="flex"; }
-  else if(!S.tutorialSeen){ $("#howto").style.display="flex"; }
-  track("game_start",{slots:S.slots,fans:S.fans});
+  track("game_start",{slots:S.slots,fans:S.fans,bootstrapped:!!booted});
   render(); save();
   requestAnimationFrame(frame);
 }
@@ -2667,20 +2707,20 @@ window.__AST_HOOK__ = {
   canClaimLogin,
 };
 </script>
-<script src="aaa-upgrade.js?v=53"></script>
-<script src="gameplay-plus.js?v=53"></script>
-<script src="gameplay-ultra.js?v=53"></script>
-<script src="gameplay-endless.js?v=53"></script>
-<script src="gameplay-empire.js?v=53"></script>
-<script src="gameplay-studio.js?v=53"></script>
-<script src="gameplay-final.js?v=53"></script>
-<script src="gameplay-aaa.js?v=53"></script>
-<script src="gameplay-legend.js?v=53"></script>
-<script src="hud-premium.js?v=53"></script>
-<script src="ui-complete.js?v=53"></script>
-<script src="gameplay-studio-rating.js?v=53"></script>
-<script src="gameplay-polish.js?v=53"></script>
-<script src="hook-bridge.js?v=53"></script>
+<script src="aaa-upgrade.js?v=54"></script>
+<script src="gameplay-plus.js?v=54"></script>
+<script src="gameplay-ultra.js?v=54"></script>
+<script src="gameplay-endless.js?v=54"></script>
+<script src="gameplay-empire.js?v=54"></script>
+<script src="gameplay-studio.js?v=54"></script>
+<script src="gameplay-final.js?v=54"></script>
+<script src="gameplay-aaa.js?v=54"></script>
+<script src="gameplay-legend.js?v=54"></script>
+<script src="hud-premium.js?v=54"></script>
+<script src="ui-complete.js?v=54"></script>
+<script src="gameplay-studio-rating.js?v=54"></script>
+<script src="gameplay-polish.js?v=54"></script>
+<script src="hook-bridge.js?v=54"></script>
 <!-- studio-premium.css loaded in head -->
 
 

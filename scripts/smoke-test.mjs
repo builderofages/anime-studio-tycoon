@@ -138,9 +138,11 @@ assert(!html.includes('href="game-skin.css'), "game-skin.css not linked (ast-v5 
 assert(html.includes("hf-design.css"), "higgsfield design css linked");
 assert(html.includes("legacy-fx.css"), "legacy-fx css linked");
 assert(html.includes("ast-v5.css"), "ast-v5 design css linked");
-assert(html.includes("build 53"), "build 53 tag");
+assert(html.includes("build 54"), "build 54 tag");
 assert(html.includes("⭐ Production Score"), "production score star label");
-assert(html.includes("Build 53") && html.includes("Rewards Polish"), "whatsnew build 53 changelog");
+assert(html.includes("AAA Easy Mode"), "whatsnew build 54 changelog");
+assert(html.includes("bootstrapNewStudio"), "new player bootstrap");
+assert(html.includes("quick-greenlight"), "quick greenlight button");
 assert(html.includes("hireCost,"), "hireCost on hook for tab badges");
 assert(html.includes("estimatePremiere"), "premiere bonus estimator");
 assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("coach-gift"), "coach gift button");
