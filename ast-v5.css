@@ -38,7 +38,7 @@ html.hud-v3-active body {
 html.hud-v3-active body {
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.35) 0%, rgba(8, 6, 15, 0.82) 100%),
-    url('bg-v4.png?v=86') center top / cover no-repeat fixed !important;
+    url('bg-v4.png?v=87') center top / cover no-repeat fixed !important;
 }
 
 html.hud-v3-active button {
@@ -437,7 +437,7 @@ html.hud-v3-active .aaa-poster[data-act="tapboost"]:active {
 html.hud-v3-active .aaa-page-hero.aaa-gacha-hero {
   background:
     linear-gradient(135deg, rgba(107, 92, 255, 0.2), rgba(255, 92, 168, 0.14)),
-    url('assets/hf/gacha-bg.png?v=86') center/cover !important;
+    url('assets/hf/gacha-bg.png?v=87') center/cover !important;
   border: 1px solid rgba(180, 140, 255, 0.28) !important;
   overflow: hidden;
 }
@@ -1897,7 +1897,7 @@ html.hud-v3-active .aaa-gl-page-head {
   padding: 14px 14px 10px !important;
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.4) 0%, rgba(8, 6, 15, 0.9) 100%),
-    url('assets/hf/greenlight-bg.png?v=86') center/cover !important;
+    url('assets/hf/greenlight-bg.png?v=87') center/cover !important;
   border-bottom: 1px solid rgba(255, 200, 69, 0.15) !important;
 }
 
@@ -2305,18 +2305,6 @@ html.hud-v3-active .aaa-gl-back {
 
 html.hud-v3-active .aaa-produce-page {
   padding: 6px !important;
-}
-
-html.hud-v3-active .aaa-hero-block {
-  border-radius: 22px !important;
-  border: 2px solid rgba(255, 200, 69, 0.28) !important;
-  background:
-    linear-gradient(165deg, rgba(22, 14, 34, 0.98) 0%, rgba(10, 7, 18, 0.99) 100%) !important;
-  box-shadow:
-    0 16px 40px rgba(0, 0, 0, 0.55),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06),
-    0 0 24px rgba(255, 92, 168, 0.08) !important;
-  overflow: hidden !important;
 }
 
 html.hud-v3-active .aaa-show-panel {
@@ -2763,27 +2751,6 @@ html.hud-v3-active .aaa-gl-page .aaa-gl-confirm-sub {
   white-space: nowrap !important;
 }
 
-html.hud-v3-active .aaa-gl-page .aaa-gl-slots-widget {
-  flex-direction: row !important;
-  flex-wrap: wrap !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 4px 6px !important;
-  min-width: 108px !important;
-}
-
-html.hud-v3-active .aaa-gl-page .aaa-gl-slots-widget > span:not(.aaa-gl-slots-ic) {
-  font-size: 7px !important;
-  width: 100% !important;
-  text-align: center !important;
-}
-
-html.hud-v3-active .aaa-gl-page .aaa-gl-slots-widget b {
-  font-size: 13px !important;
-  width: 100% !important;
-  text-align: center !important;
-}
-
 /* ========== BUILD 78 (canonical) ========== */
 
 html.hud-v3-active {
@@ -2916,23 +2883,6 @@ html.hud-v3-active .aaa-show-panel .aaa-team-add {
   font-weight: 900 !important;
   line-height: 1 !important;
   cursor: pointer !important;
-}
-
-html.hud-v3-active .aaa-gl-open-hot {
-  border-style: solid !important;
-  border-color: rgba(255, 92, 168, 0.55) !important;
-  background: linear-gradient(135deg, rgba(255, 92, 168, 0.16), rgba(107, 92, 255, 0.12)) !important;
-  box-shadow: 0 8px 24px rgba(255, 92, 168, 0.25) !important;
-  animation: ast-ready-pulse 3s ease-in-out infinite !important;
-}
-
-html.hud-v3-active .aaa-show-panel .aaa-premiere-bonus-label {
-  font-size: 8px !important;
-  font-weight: 800 !important;
-  letter-spacing: 0.08em !important;
-  text-transform: uppercase !important;
-  color: var(--ast-muted) !important;
-  width: 100% !important;
 }
 
 /* ========== BUILD 81 (canonical) ========== */
@@ -3202,11 +3152,6 @@ html.hud-v3-active .aaa-show-panel .aaa-meta-col {
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.38) !important;
 }
 
-html.hud-v3-active .aaa-show-panel .aaa-show-card {
-  gap: 12px !important;
-  align-items: stretch !important;
-}
-
 html.hud-v3-active .aaa-show-panel .aaa-premiere-bonus-label {
   font-size: 8px !important;
   font-weight: 800 !important;
@@ -3300,4 +3245,108 @@ html.hud-v3-active .aaa-show-panel .aaa-premiere-ready {
   box-shadow:
     0 8px 22px rgba(255, 92, 168, 0.42),
     inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+}
+
+/* ========== BUILD 87 (canonical) ========== */
+
+html.hud-v3-active .aaa-hero-block {
+  border-radius: 22px !important;
+  border: 2px solid rgba(255, 200, 69, 0.42) !important;
+  background: linear-gradient(165deg, rgba(22, 14, 34, 0.98) 0%, rgba(10, 7, 18, 0.99) 100%) !important;
+  box-shadow:
+    0 18px 44px rgba(0, 0, 0, 0.58),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 32px rgba(255, 92, 168, 0.14),
+    0 0 18px rgba(255, 200, 69, 0.12) !important;
+  overflow: hidden !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-score-row {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  margin: 2px 0 8px !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-score-val {
+  font-size: 24px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.02em !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-rank-wrap.aaa-rank-laurel .aaa-rank {
+  width: 40px !important;
+  height: 40px !important;
+  font-size: 18px !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-chips {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 6px !important;
+  margin-bottom: 4px !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-chip {
+  padding: 4px 10px !important;
+  border-radius: 999px !important;
+  font-size: 9px !important;
+  font-weight: 800 !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-chip-ic {
+  font-size: 10px !important;
+  margin-right: 3px !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-page-titles {
+  flex: 1 !important;
+  min-width: 0 !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-slots-widget {
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 6px !important;
+  min-width: 112px !important;
+  padding: 10px 12px !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-slots-label {
+  display: block !important;
+  width: 100% !important;
+  text-align: center !important;
+  font-size: 7px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  color: var(--ast-muted) !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-slots-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  width: 100% !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-slots-widget > span:not(.aaa-gl-slots-ic):not(.aaa-gl-slots-label) {
+  width: auto !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-slots-count {
+  width: auto !important;
+  flex: 0 0 auto !important;
+}
+
+html.hud-v3-active .aaa-gl-open-hot {
+  color: #fff !important;
+  border-style: solid !important;
+  background: linear-gradient(135deg, rgba(255, 92, 168, 0.28), rgba(255, 200, 69, 0.14)) !important;
+  border-color: rgba(255, 200, 69, 0.45) !important;
+  box-shadow:
+    0 10px 28px rgba(255, 92, 168, 0.32),
+    0 0 16px rgba(255, 200, 69, 0.15) !important;
+  animation: ast-ready-pulse 3s ease-in-out infinite !important;
 }
