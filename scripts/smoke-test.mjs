@@ -134,14 +134,15 @@ assert(html.includes("hire,") && html.includes("expandStudio,"), "hire/expand on
 assert(/src="gameplay-polish\.js(\?v=\d+)?"/.test(html), "gameplay-polish.js linked");
 assert(html.includes("crisisSnoozeUntil"), "crisis snooze state");
 assert(html.includes('id:"rat5"'), "studio rating achievements");
-assert(html.includes("studio-premium.css"), "studio premium css linked");
+assert(!html.includes('href="studio-premium.css'), "studio-premium.css disabled (ast-v5)");
+assert(!html.includes('href="gameplay-plus.css'), "gameplay-plus.css disabled (ast-v5)");
 assert(!html.includes('href="game-skin.css'), "game-skin.css not linked (ast-v5 authority)");
 assert(html.includes("hf-design.css"), "higgsfield design css linked");
 assert(html.includes("legacy-fx.css"), "legacy-fx css linked");
 assert(html.includes("ast-v5.css"), "ast-v5 design css linked");
-assert(html.includes("build 56"), "build 56 tag");
+assert(html.includes("build 57"), "build 57 tag");
 assert(html.includes("⭐ Production Score"), "production score star label");
-assert(html.includes("AAA Clean"), "whatsnew build 56 changelog");
+assert(html.includes("AAA Mockup"), "whatsnew build 57 changelog");
 assert(html.includes("v5-render-guard.js"), "v5 render guard linked");
 assert(readFileSync(join(root, "hook-bridge.js"), "utf8").includes("__v5GuardInstalled"), "v5 guard in hook bridge");
 assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("coach-mail"), "coach mail button");

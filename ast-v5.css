@@ -34,7 +34,7 @@ html.hud-v3-active body {
 html.hud-v3-active body {
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.35) 0%, rgba(8, 6, 15, 0.82) 100%),
-    url('bg-v4.png?v=56') center top / cover no-repeat fixed !important;
+    url('bg-v4.png?v=57') center top / cover no-repeat fixed !important;
 }
 
 html.hud-v3-active button {
@@ -492,7 +492,7 @@ html.hud-v3-active .aaa-poster[data-act="tapboost"]:active {
 html.hud-v3-active .aaa-page-hero.aaa-gacha-hero {
   background:
     linear-gradient(135deg, rgba(107, 92, 255, 0.2), rgba(255, 92, 168, 0.14)),
-    url('assets/hf/gacha-bg.png?v=56') center/cover !important;
+    url('assets/hf/gacha-bg.png?v=57') center/cover !important;
   border: 1px solid rgba(180, 140, 255, 0.28) !important;
   overflow: hidden;
 }
@@ -1704,4 +1704,68 @@ html.hud-v3-active .hud-studio-rating {
 html.hud-v3-active .hud-studio-rating .rank-tier {
   font-size: 9px !important;
   color: var(--ast-gold) !important;
+}
+
+/* ========== BUILD 57 — mockup HUD + faster fun ========== */
+
+html.hud-v3-active .hud-trend-chip,
+html.hud-v3-active .hud-combo {
+  display: none !important;
+}
+
+html.hud-v3-active #hud-shell {
+  border-radius: 20px !important;
+  margin-bottom: 4px !important;
+}
+
+html.hud-v3-active .hud-top {
+  gap: 6px !important;
+}
+
+html.hud-v3-active .hud-identity {
+  flex: 1 !important;
+  min-width: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+}
+
+html.hud-v3-active .hud-studio-name {
+  font-size: 14px !important;
+  line-height: 1.1 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+html.hud-v3-active .aaa-poster.aaa-poster-pulse {
+  animation: ast-poster-boost 0.35s ease-out !important;
+  box-shadow: 0 0 28px rgba(255, 92, 168, 0.55), 0 8px 24px rgba(0, 0, 0, 0.5) !important;
+}
+
+@keyframes ast-poster-boost {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+html.hud-v3-active .aaa-premiere-ready {
+  font-size: 15px !important;
+  padding: 14px 16px !important;
+  letter-spacing: 0.03em !important;
+  animation: ast-ready-pulse 2s ease-in-out infinite !important;
+}
+
+html.hud-v3-active .aaa-rush-main {
+  flex: 1 !important;
+  width: 100% !important;
+  padding: 12px !important;
+  font-size: 13px !important;
+}
+
+html.hud-v3-active .aaa-title {
+  font-size: 18px !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.03em !important;
+  line-height: 1.1 !important;
 }
