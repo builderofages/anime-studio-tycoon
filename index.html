@@ -23,7 +23,7 @@
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icons/icon-512.png">
 <!-- Legacy gameplay-*.css disabled — aaa-ui + game-skin + hud-premium own chrome -->
-<link rel="stylesheet" href="hud-premium.css?v=94">
+<link rel="stylesheet" href="hud-premium.css?v=95">
 <!-- ui-complete.css disabled — v5 uses aaa-tab-page heroes -->
 <!-- gameplay-studio-rating.css disabled — ast-v5 authority -->
 <!-- studio-premium.css disabled — ast-v5 authority -->
@@ -31,8 +31,8 @@
 <!-- game-skin.css disabled — fought ast-v5 (animation:none, flat panels) -->
 <!-- hf-design.css disabled — ast-v5 authority -->
 <!-- aaa-ui.css disabled — ast-v5 authority -->
-<link rel="stylesheet" href="legacy-fx.css?v=94">
-<link rel="stylesheet" href="ast-v5.css?v=94">
+<link rel="stylesheet" href="legacy-fx.css?v=95">
+<link rel="stylesheet" href="ast-v5.css?v=95">
 <script>document.documentElement.classList.add("premium-hud","hud-v3-active")</script>
 <meta name="theme-color" content="#08050f">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -75,10 +75,10 @@
 <div id="app">
   <div id="top">
     <div id="studio-rank"><span>🎬</span><span class="rank-tier">Garage Studio</span></div>
-    <div class="res yen"><img src="icons/hf/yen.png?v=94" alt="Yen"><span><span class="v" id="r-yen">0</span> <small>¥</small></span></div>
-    <div class="res fans"><img src="icons/hf/fans.png?v=94" alt="Fans"><span class="v" id="r-fans">0</span></div>
-    <div class="res hype"><img src="icons/hf/hype.png?v=94" alt="Hype"><span class="v" id="r-hype">0</span></div>
-    <div class="res gems"><img src="icons/hf/gems.png?v=94" alt="Gems"><span class="v" id="r-gems">0</span></div>
+    <div class="res yen"><img src="icons/hf/yen.png?v=95" alt="Yen"><span><span class="v" id="r-yen">0</span> <small>¥</small></span></div>
+    <div class="res fans"><img src="icons/hf/fans.png?v=95" alt="Fans"><span class="v" id="r-fans">0</span></div>
+    <div class="res hype"><img src="icons/hf/hype.png?v=95" alt="Hype"><span class="v" id="r-hype">0</span></div>
+    <div class="res gems"><img src="icons/hf/gems.png?v=95" alt="Gems"><span class="v" id="r-gems">0</span></div>
     <div id="trendbar"><span class="spark">📈</span> Trending: <b id="trend">Action</b></div>
   </div>
   <div id="goal"><span id="goal-txt">🎯 Reach 50 Fans for Web Series</span><div class="bar"><i id="goal-bar" style="width:0%"></i></div></div>
@@ -90,7 +90,7 @@
     <button class="btn-ghost" id="btn-mute">🔊 Sound: On</button>
     <button class="btn-ghost" id="btn-save" style="display:none">💾 Save</button>
     <button class="btn-ghost" id="btn-reset">↺ Reset</button>
-  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 94 · Legend</span></div>
+  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 95 · AAA</span></div>
   <div id="toasts"></div>
   <div id="pwa-install-banner" class="aaa-pwa-install-banner" hidden>
     <div class="aaa-pwa-install-inner">
@@ -105,10 +105,10 @@
   </div>
 </div>
 
-<div class="overlay" id="start" style="display: none;">
+<div class="overlay" id="start" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="start-title">
   <div class="card-modal">
-    <img class="start-hero" src="start-hero.png?v=94" width="140" height="140" alt="Anime Studio Tycoon">
-    <h1>Anime Studio Tycoon</h1>
+    <img class="start-hero" src="start-hero.png?v=95" width="140" height="140" alt="Anime Studio Tycoon logo">
+    <h1 id="start-title">Anime Studio Tycoon</h1>
     <p id="start-tagline">From a one-room studio to a global anime empire</p>
     <label style="display:block;font-size:12px;font-weight:800;color:var(--plum);margin:4px 0 4px">🏢 Studio Name</label>
     <input id="start-studio" class="ast-input" maxlength="40" placeholder="Sakura Films" value="Sakura Films">
@@ -131,7 +131,7 @@
   </div>
 </div>
 
-<div class="overlay" id="offline" style="display:none">
+<div class="overlay" id="offline" style="display:none" role="dialog" aria-modal="true" aria-labelledby="offline-title">
   <div class="card-modal aaa-offline-modal">
     <h1 style="font-size:20px" id="offline-title">While you were away…</h1>
     <p class="aaa-offline-lead muted" id="offline-lead"></p>
@@ -143,47 +143,47 @@
   </div>
 </div>
 
-<div class="overlay" id="daily" style="display:none">
+<div class="overlay" id="daily" style="display:none" role="dialog" aria-modal="true" aria-labelledby="daily-title">
   <div class="card-modal">
-    <h1 style="font-size:22px">🎁 Daily Reward</h1>
+    <h1 id="daily-title" style="font-size:22px">🎁 Daily Reward</h1>
     <div id="daily-body"></div>
     <button class="btn-gold" data-act="daily-close" style="width:100%;margin-top:8px">Claim &amp; Play</button>
   </div>
 </div>
 
-<div class="overlay aaa-reveal-overlay" id="reveal" style="display:none">
+<div class="overlay aaa-reveal-overlay" id="reveal" style="display:none" role="dialog" aria-modal="true" aria-label="Star scout reveal">
   <div class="card-modal aaa-reveal-modal">
     <div id="reveal-body"></div>
     <button class="btn-primary aaa-cta" data-act="reveal-close" style="width:100%;margin-top:12px">✨ Sign Contract</button>
   </div>
 </div>
 
-<div class="overlay" id="premiere" style="display:none">
+<div class="overlay" id="premiere" style="display:none" role="dialog" aria-modal="true" aria-label="Premiere results">
   <div class="card-modal premiere-card">
     <div id="premiere-body"></div>
     <button class="btn-gold" data-act="premiere-close" style="margin:14px;width:calc(100% - 28px);font-size:16px">🎬 To the red carpet!</button>
   </div>
 </div>
 
-<div class="overlay" id="decision" style="display:none">
+<div class="overlay" id="decision" style="display:none" role="dialog" aria-modal="true" aria-label="Studio crisis decision">
   <div class="card-modal aaa-festival-decision-modal">
     <div id="decision-body"></div>
   </div>
 </div>
 
-<div class="overlay aaa-festival-win-overlay" id="festival-win" style="display:none">
+<div class="overlay aaa-festival-win-overlay" id="festival-win" style="display:none" role="dialog" aria-modal="true" aria-labelledby="festival-win-title">
   <div class="card-modal aaa-festival-win-modal">
     <div class="aaa-festival-win-hero" aria-hidden="true">🏆</div>
-    <h1 style="font-size:22px;text-align:center">🎪 Festival Darling!</h1>
+    <h1 id="festival-win-title" style="font-size:22px;text-align:center">🎪 Festival Darling!</h1>
     <p class="aaa-festival-win-lead">Your premiere took home its first festival award — dynasty points and gems are yours.</p>
     <div class="aaa-festival-win-stats" id="festival-win-stats"></div>
     <button class="btn-gold aaa-festival-win-cta" data-act="festival-win-close" style="width:100%;font-size:16px;margin-top:10px">✨ Back to the studio</button>
   </div>
 </div>
 
-<div class="overlay" id="settings" style="display:none">
+<div class="overlay" id="settings" style="display:none" role="dialog" aria-modal="true" aria-labelledby="settings-title">
   <div class="card-modal" id="settings-panel" style="max-width:400px;text-align:left">
-    <h1 style="font-size:22px;text-align:center">⚙️ Settings</h1>
+    <h1 id="settings-title" style="font-size:22px;text-align:center">⚙️ Settings</h1>
     <div class="setting-row"><span>🌸 Sakura particles</span><input type="checkbox" data-settings-motion checked></div>
     <div class="setting-row"><span>📰 News ticker</span><input type="checkbox" data-settings-ticker checked></div>
     <div class="setting-row"><span>⚡ Auto-greenlight</span><input type="checkbox" data-settings-autogl></div>
@@ -192,10 +192,10 @@
   </div>
 </div>
 
-<div class="overlay aaa-stars-unlock-overlay" id="stars-unlock" style="display:none">
+<div class="overlay aaa-stars-unlock-overlay" id="stars-unlock" style="display:none" role="dialog" aria-modal="true" aria-labelledby="stars-unlock-title">
   <div class="card-modal aaa-stars-unlock-modal">
     <div class="aaa-stars-unlock-hero" aria-hidden="true">⭐</div>
-    <h1 style="font-size:22px;text-align:center">⭐ Star Talent Unlocked!</h1>
+    <h1 id="stars-unlock-title" style="font-size:22px;text-align:center">⭐ Star Talent Unlocked!</h1>
     <p class="aaa-stars-unlock-lead">Scout famous creators to boost premiere quality. Rarer stars mean bigger box office.</p>
     <div class="aaa-stars-unlock-perks">
       <div><span>🎁</span><b>First scout is FREE</b><small>Premium odds — one-time welcome bonus</small></div>
@@ -206,10 +206,10 @@
   </div>
 </div>
 
-<div class="overlay aaa-studio-unlock-overlay" id="studio-unlock" style="display:none">
+<div class="overlay aaa-studio-unlock-overlay" id="studio-unlock" style="display:none" role="dialog" aria-modal="true" aria-labelledby="studio-unlock-title">
   <div class="card-modal aaa-studio-unlock-modal">
     <div class="aaa-studio-unlock-hero" aria-hidden="true">🏢</div>
-    <h1 style="font-size:22px;text-align:center">🏢 Studio Upgrades Unlocked!</h1>
+    <h1 id="studio-unlock-title" style="font-size:22px;text-align:center">🏢 Studio Upgrades Unlocked!</h1>
     <p class="aaa-studio-unlock-lead">Expand production lines and buy permanent multipliers — scale beyond one hit anime.</p>
     <div class="aaa-studio-unlock-perks">
       <div><span>🏗️</span><b>Studio Expansion</b><small>Unlock line 2 for ¥15,000 — run two shows at once</small></div>
@@ -220,10 +220,10 @@
   </div>
 </div>
 
-<div class="overlay aaa-research-unlock-overlay" id="research-unlock" style="display:none">
+<div class="overlay aaa-research-unlock-overlay" id="research-unlock" style="display:none" role="dialog" aria-modal="true" aria-labelledby="research-unlock-title">
   <div class="card-modal aaa-research-unlock-modal">
     <div class="aaa-research-unlock-hero" aria-hidden="true">🔬</div>
-    <h1 style="font-size:22px;text-align:center">🔬 Genre Lab Unlocked!</h1>
+    <h1 id="research-unlock-title" style="font-size:22px;text-align:center">🔬 Genre Lab Unlocked!</h1>
     <p class="aaa-research-unlock-lead">Research genres for permanent +6% premiere quality per level. Stack mastery on the 🔥 trending genre for maximum impact.</p>
     <div class="aaa-research-unlock-perks">
       <div><span>🔥</span><b>Trending synergy</b><small>Level the hot genre — then match it on greenlight for bonus fans & yen</small></div>
@@ -234,10 +234,10 @@
   </div>
 </div>
 
-<div class="overlay aaa-market-unlock-overlay" id="market-unlock" style="display:none">
+<div class="overlay aaa-market-unlock-overlay" id="market-unlock" style="display:none" role="dialog" aria-modal="true" aria-labelledby="market-unlock-title">
   <div class="card-modal aaa-market-unlock-modal">
     <div class="aaa-market-unlock-hero" aria-hidden="true">📣</div>
-    <h1 style="font-size:22px;text-align:center">📣 Marketing Unlocked!</h1>
+    <h1 id="market-unlock-title" style="font-size:22px;text-align:center">📣 Marketing Unlocked!</h1>
     <p class="aaa-market-unlock-lead">Spend ¥ on ad campaigns to buy fans fast — unlock bigger projects and multiply premiere revenue.</p>
     <div class="aaa-market-unlock-perks">
       <div><span>📈</span><b>ROI preview</b><small>See fans per ¥1,000 before you spend</small></div>
@@ -248,10 +248,10 @@
   </div>
 </div>
 
-<div class="overlay aaa-share-milestone-overlay" id="share-milestone" style="display:none">
+<div class="overlay aaa-share-milestone-overlay" id="share-milestone" style="display:none" role="dialog" aria-modal="true" aria-labelledby="share-milestone-title">
   <div class="card-modal aaa-share-milestone-modal">
     <div class="aaa-share-milestone-hero" aria-hidden="true">🔥</div>
-    <h1 style="font-size:22px;text-align:center">100 Fans — Local Hit!</h1>
+    <h1 id="share-milestone-title" style="font-size:22px;text-align:center">100 Fans — Local Hit!</h1>
     <p class="aaa-share-milestone-lead">You're a local sensation. Brag about your studio and grab <b>+25💎</b> on your first share.</p>
     <div class="aaa-share-milestone-stats">
       <div><span>🎬</span><b id="share-milestone-rel">0</b><small>Premieres</small></div>
@@ -263,10 +263,10 @@
   </div>
 </div>
 
-<div class="overlay aaa-chaos-unlock-overlay" id="chaos-unlock" style="display:none">
+<div class="overlay aaa-chaos-unlock-overlay" id="chaos-unlock" style="display:none" role="dialog" aria-modal="true" aria-labelledby="chaos-unlock-title">
   <div class="card-modal aaa-chaos-unlock-modal">
     <div class="aaa-chaos-unlock-hero" aria-hidden="true">🌪️</div>
-    <h1 style="font-size:22px;text-align:center">🌪️ Chaos Mode Unlocked!</h1>
+    <h1 id="chaos-unlock-title" style="font-size:22px;text-align:center">🌪️ Chaos Mode Unlocked!</h1>
     <p class="aaa-chaos-unlock-lead">Veteran studios can flip Chaos Mode ON for bigger premieres — but the crisis meter rises faster and random disasters strike more often.</p>
     <div class="aaa-chaos-unlock-perks">
       <div><span>💰</span><b>+50% premiere rewards</b><small>¥, fans, and hype scale up on every release while Chaos is ON</small></div>
@@ -277,11 +277,11 @@
   </div>
 </div>
 
-<div class="overlay aaa-studio-award-overlay" id="studio-award" style="display:none">
+<div class="overlay aaa-studio-award-overlay" id="studio-award" style="display:none" role="dialog" aria-modal="true" aria-labelledby="studio-award-title">
   <div class="card-modal aaa-studio-award-modal">
     <div class="aaa-studio-award-hero" aria-hidden="true">🏆</div>
     <div class="aaa-studio-award-ribbon" aria-hidden="true">Studio Awards Night</div>
-    <h1 style="font-size:22px;text-align:center">🎬 50 Premieres — Legendary Night!</h1>
+    <h1 id="studio-award-title" style="font-size:22px;text-align:center">🎬 50 Premieres — Legendary Night!</h1>
     <p class="aaa-studio-award-lead">The industry rolls out the red carpet. Accept your trophy, gem bonus, and a <b>3× income</b> golden hour.</p>
     <div class="aaa-studio-award-stats">
       <div><span>🏆</span><b id="studio-award-num">#1</b><small>Award night</small></div>
@@ -296,24 +296,24 @@
   </div>
 </div>
 
-<div class="overlay" id="whatsnew" style="display:none">
+<div class="overlay" id="whatsnew" style="display:none" role="dialog" aria-modal="true" aria-labelledby="whatsnew-title">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <img src="start-hero.png?v=94" alt="" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
-    <h1 style="font-size:22px;text-align:center">✨ Build 94 — Franchise Loop</h1>
+    <img src="start-hero.png?v=95" alt="Anime Studio Tycoon logo" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
+    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 95 — AAA Audit</h1>
     <div class="offlist" style="margin:12px 0">
-      <div><span>📺 Sequel suggest</span><b>4★+ premieres prompt a sequel — built-in audience boosts fans &amp; yen</b></div>
-      <div><span>🎬 Greenlight badge</span><b>Franchise titles show a SEQUEL badge in the carousel</b></div>
-      <div><span>📊 Dashboard</span><b>Studio tab tracks your active franchise count</b></div>
-      <div><span>🧭 Coach</span><b>"Your hit deserves a sequel" when a franchise opportunity is waiting</b></div>
-      <div><span>🎉 First franchise</span><b>Celebration when your first hit becomes franchise-ready</b></div>
+      <div><span>🎨 Mockup fidelity</span><b>Greenlight theater stage, per-metric stat bars, produce bonus row — ~85% ref match</b></div>
+      <div><span>🧭 Playtest fixes</span><b>Unlock modal queue drains correctly; Research tab visible at 120 fans; coach won't route to locked tabs</b></div>
+      <div><span>♿ Accessibility</span><b>Dialog roles, tab ARIA, 44px touch targets, reduced-motion support</b></div>
+      <div><span>🎪 Late-game</span><b>Festival/award modals no longer stack on premiere; dynasty rank-up pops</b></div>
+      <div><span>📱 HUD polish</span><b>Rival race grid fix, safe-area trim, rating chip keyboard, GL back routing</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
   </div>
 </div>
 
-<div class="overlay" id="push-notify-stub" style="display:none">
+<div class="overlay" id="push-notify-stub" style="display:none" role="dialog" aria-modal="true" aria-labelledby="push-notify-title">
   <div class="card-modal aaa-push-notify-modal" style="max-width:360px;text-align:left">
-    <h1 style="font-size:20px;text-align:center">🔔 Premiere alerts</h1>
+    <h1 id="push-notify-title" style="font-size:20px;text-align:center">🔔 Premiere alerts</h1>
     <p class="muted" style="text-align:center;margin:8px 0 12px">Get notified when productions finish, daily rewards reset, or a premiere is ready.</p>
     <div class="aaa-push-coming-soon">
       <span aria-hidden="true">🚧</span>
@@ -361,8 +361,8 @@ const STORE_PAYMENTS = true; // store always visible; buyReal routes web→check
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 94 · Legend";
-const ASSET_V = "94";
+const BUILD_TAG = "build 95 · AAA";
+const ASSET_V = "95";
 const OFFLINE_PREVIEW_CAP = 4*3600; // "while away" preview when return is under 4h
 const SHARE_PLAY_URL = "https://anime-studio-tycoon.vercel.app/play";
 const PITY_EPIC = 25;
@@ -551,7 +551,8 @@ function greenlightBudgetSlices(p){
   ];
 }
 function greenlightStatBar(label,val){
-  return `<div class="aaa-gl-stat"><span>${label}</span><div class="aaa-gl-bar"><i style="width:${val}%"></i></div><b>${val}</b></div>`;
+  const key=label.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/(^-|-$)/g,"");
+  return `<div class="aaa-gl-stat" data-stat="${key}"><span>${label}</span><div class="aaa-gl-bar"><i style="width:${val}%"></i></div><b>${val}</b></div>`;
 }
 function staffTotal(){ let n=0; for(const k in ROLES) n+=S.staff[k]||0; return n; }
 function hypePerHour(){ return Math.floor((S.fans||0)*0.04+(S.upgrades.marketing||0)*600+activeCount()*900+powerPerTick()*360); }
@@ -926,9 +927,10 @@ function checkFanMilestoneToasts(){
 }
 function queueShareMilestoneModal(){
   if(OFFLINE||S.shareMilestoneSeen) return;
-  S.shareMilestoneSeen=true;
-  save();
-  setTimeout(()=>{
+  const show=()=>{
+    if(unlockModalPending()||_premiereOpen){ setTimeout(show, 800); return; }
+    S.shareMilestoneSeen=true;
+    save();
     const m=document.getElementById("share-milestone");
     if(!m) return;
     const rel=document.getElementById("share-milestone-rel");
@@ -940,7 +942,8 @@ function queueShareMilestoneModal(){
     m.style.display="flex";
     const shareBtn=document.querySelector('[data-act="share"]');
     if(shareBtn) shareBtn.classList.add("ast-share-nudge");
-  },2000);
+  };
+  setTimeout(show, 2000);
 }
 function closeShareMilestoneModal(goShare){
   const m=document.getElementById("share-milestone");
@@ -1194,6 +1197,11 @@ function awardMilestoneGems(){
 }
 /* Studio Awards — a celebration every 50 premieres: Gems + a 3× income window. */
 let _studioAwardQueued=null;
+let _festivalWinQueued=null;
+const CELEBRATION_OVERLAY_IDS=["festival-win","studio-award","stars-unlock","studio-unlock","market-unlock","research-unlock","chaos-unlock","share-milestone"];
+function celebrationOverlayOpen(){
+  return CELEBRATION_OVERLAY_IDS.some(id=>{const m=document.getElementById(id);return m&&m.style.display==="flex";});
+}
 function celebrateStudioAward(num, gems){
   const m=document.getElementById("studio-award");
   if(!m){ toastSafe("🏆 Studio Awards Night #"+num+"! +"+gems+" 💎 · 3× income for 2 min",true); return; }
@@ -1223,7 +1231,7 @@ function queueStudioAwardModal(num, gems){
 function closeStudioAwardModal(){
   const m=document.getElementById("studio-award");
   if(m) m.style.display="none";
-  maybeDecision();
+  if(!drainUnlockModalQueue()) maybeDecision();
 }
 function studioAwards(){
   S.awardsWon=(S.awardsWon||0)+1;
@@ -1539,6 +1547,7 @@ function resetDecisionModalChrome(){
   if(modal) modal.className="card-modal";
   syncCrisisHudPulse(false);
 }
+window.resetDecisionModalChrome=resetDecisionModalChrome;
 function renderFestivalDecisionModal(d,danger){
   const body=document.getElementById("decision-body");
   if(!body){ _pendingDecision=null; window.__AST_CRISIS_OPEN__=false; return false; }
@@ -1634,6 +1643,8 @@ function crisisModalOpen(){
   if(jwR&&jwR.style.display==="flex") return true;
   const recap=document.getElementById("crisis-recap");
   if(recap&&recap.style.display==="flex") return true;
+  if(celebrationOverlayOpen()) return true;
+  if(_festivalWinQueued) return true;
   return false;
 }
 window.crisisModalOpen=crisisModalOpen;
@@ -2285,9 +2296,7 @@ function celebrateFirstResearch(genre){
     setTimeout(()=>card.classList.remove("aaa-mastery-first-hit"), 1200);
   }
 }
-function celebrateFirstFestivalWin(win){
-  if(OFFLINE||S.firstFestivalWinSeen) return;
-  S.firstFestivalWinSeen=true; save();
+function showFestivalWinModal(win){
   const app=document.getElementById("app");
   if(app){
     app.classList.remove("flash-gold"); void app.offsetWidth; app.classList.add("flash-gold");
@@ -2305,6 +2314,17 @@ function celebrateFirstFestivalWin(win){
   play("fanfare");
   window.__AST_FX__?.burst?.(28);
   showAchievePop("🎪 Festival Darling");
+}
+function celebrateFirstFestivalWin(win){
+  if(OFFLINE||S.firstFestivalWinSeen) return;
+  S.firstFestivalWinSeen=true; save();
+  if(unlockModalPending()){ _festivalWinQueued=win; return; }
+  showFestivalWinModal(win);
+}
+function closeFestivalWinModal(){
+  const m=document.getElementById("festival-win"); if(m) m.style.display="none";
+  if(drainUnlockModalQueue()) return;
+  maybeDecision();
 }
 
 /* ========================= ACTIONS ========================= */
@@ -2414,7 +2434,19 @@ function freeScoutAvailable(){ return (S.releases||0)===2 && !S.freeScoutUsed; }
 let _starsUnlockQueued=false;
 let _studioUnlockQueued=false;
 let _researchUnlockQueued=false;
-function unlockModalPending(){ return _premiereOpen||_premiereWillShow; }
+function unlockModalPending(){ return _premiereOpen||_premiereWillShow||celebrationOverlayOpen(); }
+function drainUnlockModalQueue(){
+  if(_premiereOpen||_premiereWillShow) return false;
+  if(_studioUnlockQueued){ showStudioUnlockModal(); save(); return true; }
+  if(_starsUnlockQueued){ showStarsUnlockModal(); save(); return true; }
+  if(_marketUnlockQueued){ showMarketUnlockModal(); save(); return true; }
+  if(_researchUnlockQueued){ showResearchUnlockModal(); save(); return true; }
+  if(_chaosUnlockQueued){ showChaosUnlockModal(); save(); return true; }
+  if(_festivalWinQueued){ const w=_festivalWinQueued; _festivalWinQueued=null; showFestivalWinModal(w); save(); return true; }
+  if(_studioAwardQueued){ celebrateStudioAward(_studioAwardQueued.num, _studioAwardQueued.gems); save(); return true; }
+  return false;
+}
+function flushPostPremiereQueue(){ return drainUnlockModalQueue(); }
 function showStarsUnlockModal(){
   if(S.starsUnlockModalSeen||!featureUnlocked("stars")) return;
   const m=document.getElementById("stars-unlock"); if(!m) return;
@@ -2428,7 +2460,11 @@ function queueStarsUnlockModal(){
 function closeStarsUnlockModal(goScout){
   const m=document.getElementById("stars-unlock"); if(m) m.style.display="none";
   S.starsUnlockModalSeen=true; save();
-  if(goScout){ S.tab="stars"; render(); if(freeScoutAvailable()) setTimeout(()=>scout("free"),280); }
+  if(goScout){
+    S.tab="stars"; render();
+    if(freeScoutAvailable()) setTimeout(()=>scout("free"),280);
+    setTimeout(()=>{ if(!drainUnlockModalQueue()) maybeDecision(); }, goScout?520:0);
+  }else if(!drainUnlockModalQueue()) maybeDecision();
 }
 function showStudioUnlockModal(){
   if(S.studioUnlockModalSeen||!featureUnlocked("studio")) return;
@@ -2449,7 +2485,8 @@ function closeStudioUnlockModal(goExpand){
       const btn=document.querySelector(".aaa-studio-expand-btn,[data-act='expand']");
       if(btn) btn.scrollIntoView({behavior:"smooth",block:"center"});
     },280);
-  }
+    setTimeout(()=>{ if(!drainUnlockModalQueue()) maybeDecision(); }, 600);
+  }else if(!drainUnlockModalQueue()) maybeDecision();
 }
 let _chaosUnlockQueued=false;
 function showChaosUnlockModal(){
@@ -2469,7 +2506,8 @@ function closeChaosUnlockModal(goEnable){
     S.chaosMode=true; S.tab="produce";
     toastSafe("🌪️ CHAOS MODE ON — +50% rewards, but disasters loom…", true);
     play("reward"); render();
-  }
+    setTimeout(()=>{ if(!drainUnlockModalQueue()) maybeDecision(); }, 400);
+  }else if(!drainUnlockModalQueue()) maybeDecision();
 }
 let _marketUnlockQueued=false;
 function showMarketUnlockModal(){
@@ -2485,7 +2523,12 @@ function queueMarketUnlockModal(){
 function closeMarketUnlockModal(goMarket){
   const m=document.getElementById("market-unlock"); if(m) m.style.display="none";
   S.marketUnlockModalSeen=true; save();
-  if(goMarket){ S.tab="market"; render(); }
+  if(goMarket){
+    S.tab="market"; render();
+    const idx=CAMPAIGNS.findIndex(c=>S.yen>=c.cost);
+    if(idx>=0) setTimeout(()=>campaign(idx), 320);
+    else setTimeout(()=>{ if(!drainUnlockModalQueue()) maybeDecision(); }, 400);
+  }else if(!drainUnlockModalQueue()) maybeDecision();
 }
 function showResearchUnlockModal(){
   if(S.researchUnlockModalSeen||!featureUnlocked("research")) return;
@@ -2500,7 +2543,14 @@ function queueResearchUnlockModal(){
 function closeResearchUnlockModal(goLab){
   const m=document.getElementById("research-unlock"); if(m) m.style.display="none";
   S.researchUnlockModalSeen=true; save();
-  if(goLab){ S.tab="research"; render(); }
+  if(goLab){
+    S.tab="research"; render();
+    setTimeout(()=>{
+      const card=document.querySelector(".aaa-mastery-afford,[data-res]");
+      if(card) card.scrollIntoView({behavior:"smooth",block:"center"});
+    }, 280);
+    setTimeout(()=>{ if(!drainUnlockModalQueue()) maybeDecision(); }, 520);
+  }else if(!drainUnlockModalQueue()) maybeDecision();
 }
 function checkUnlocks(){
   for(const k in UNLOCKS){
@@ -2678,13 +2728,8 @@ function showPremiere(pr,p,stars,yenGain,fansGain){
   setTimeout(()=>{ const y=document.getElementById("prem-yen"); const f=document.getElementById("prem-fans"); if(y) animateCount(y,yenGain,"¥"); if(f) animateCount(f,fansGain,"+"); },140);
 }
 function closePremiere(){
-  const m=document.getElementById("premiere"); if(m){ m.style.display="none"; m.classList.remove("prem-first","prem-second"); } _premiereOpen=false;
-  if(_studioUnlockQueued){ showStudioUnlockModal(); save(); return; }
-  if(_starsUnlockQueued){ showStarsUnlockModal(); save(); return; }
-  if(_marketUnlockQueued){ showMarketUnlockModal(); save(); return; }
-  if(_researchUnlockQueued){ showResearchUnlockModal(); save(); return; }
-  if(_chaosUnlockQueued){ showChaosUnlockModal(); save(); return; }
-  if(_studioAwardQueued){ celebrateStudioAward(_studioAwardQueued.num, _studioAwardQueued.gems); save(); return; }
+  const m=document.getElementById("premiere"); if(m){ m.style.display="none"; m.classList.remove("prem-first","prem-second","prem-franchise"); } _premiereOpen=false; _premiereWillShow=false;
+  if(drainUnlockModalQueue()) return;
   if((S.releases||0)<2&&activeCount()===0){
     _glMode=true; S.tab="produce"; render(); save(); return;
   }
@@ -2750,7 +2795,6 @@ function releaseProject(slot){
   if(studioValue()>S.bestValue) S.bestValue=studioValue();
   awardMilestoneGems(); checkFanMilestoneToasts(); checkAchievements(); checkStudioLevel();
   if(S.releases % 25 === 0){ S.gems+=3; toastSafe("💎 +3 Gems — 25 releases!",true); }
-  if(S.releases % 50 === 0) studioAwards();
   track("release",{tier:p.tier,stars});
   if(!OFFLINE){
     play("reward"); floatGain("+¥"+fmt(yenGain));
@@ -2758,11 +2802,11 @@ function releaseProject(slot){
     if(stars===5 && p.tier>=3 && !S.sharedOnce){ setTimeout(()=>toast("🎉 Masterpiece! Tap 📣 Share to brag — and grab +25💎",true), 1600); }
     const bigPremiere = (p.tier>=2 || stars>=5) || S.releases<=3;
     if(bigPremiere) _premiereWillShow=true;
+    if(S.releases % 50 === 0) studioAwards();
     render(); save();
-    _premiereWillShow=false;
     if(bigPremiere && !_premiereOpen){ showPremiere(pr, p, stars, yenGain, fansGain); }
-    else { maybeDecision(); }
-  }
+    else { _premiereWillShow=false; maybeDecision(); }
+  } else if(S.releases % 50 === 0) studioAwards();
 }
 function releaseFirstFinished(){
   for(let i=0;i<S.projects.length;i++){ const pr=S.projects[i]; if(pr && pr.progress>=PROJECTS[pr.pid].work){ releaseProject(i); return true; } }
@@ -2779,6 +2823,7 @@ function instantPremiere(slot){
   pr.progress=p.work; releaseProject(slot);
 }
 function expandStudio(){
+  if(!featureUnlocked("studio")){ toast(tabLockLabel("studio")); play("click"); return; }
   if(S.slots>=MAX_SLOTS){ toast("Studio is at maximum slots"); return; }
   const c=expandCost();
   if(S.yen<c){ toast("Not enough Yen to expand"); return; }
@@ -3342,7 +3387,7 @@ function simulateOffline(sec){
 /* ========================= RENDER ========================= */
 function tabInDock(k){
   if((S.releases||0)<5){
-    if(k==="research") return false;
+    if(k==="research") return featureUnlocked("research");
     return ["produce","quests","staff","stars","market","studio","store"].includes(k);
   }
   return true;
@@ -3472,7 +3517,7 @@ function render(){
   const tabs=tabOrder.map(k=>tabDefs.find(t=>t[0]===k)).filter(t=>t&&tabInDock(t[0]));
   $("#tabs").innerHTML=tabs.map(([k,ic,l])=>{
     const locked=tabLocked(k);
-    return `<button class="tab ${S.tab===k&&!locked?"active":""}${locked?" tab-locked":""}" data-tab="${k}" aria-label="${l}${locked?" (locked)":""}" aria-disabled="${locked?"true":"false"}"><span class="ic">${tabIcon(k,ic)}</span><span class="tab-lbl">${TAB_MOCKUP[k]||l}</span>${locked?'<span class="tab-lock-ic" aria-hidden="true">🔒</span>':""}</button>`;
+    return `<button type="button" class="tab ${S.tab===k&&!locked?"active":""}${locked?" tab-locked":""}" data-tab="${k}" role="tab" aria-selected="${S.tab===k&&!locked?"true":"false"}" aria-label="${l}${locked?" (locked)":""}" aria-disabled="${locked?"true":"false"}"><span class="ic" aria-hidden="true">${tabIcon(k,ic)}</span><span class="tab-lbl" aria-hidden="true">${TAB_MOCKUP[k]||l}</span>${locked?'<span class="tab-lock-ic" aria-hidden="true">🔒</span>':""}</button>`;
   }).join("");
 
   if(S.tab==="produce") renderProduce();
@@ -3936,7 +3981,7 @@ function renderGreenlightPage(empties,showBack){
   }
   h+=`<div class="aaa-gl-page-head">
     <div class="aaa-gl-page-titles">
-      <h1 class="aaa-gl-title">${ultraEarly?"START PRODUCTION":"GREENLIGHT PROJECT"}</h1>
+      <h1 class="aaa-gl-title"><span class="aaa-gl-title-spark" aria-hidden="true">✦</span>${ultraEarly?"START PRODUCTION":"GREENLIGHT PROJECT"}<span class="aaa-gl-title-spark" aria-hidden="true">✦</span></h1>
       <p class="aaa-gl-jp">次のヒット作を生み出そう。</p>
       <p class="aaa-gl-sub">Choose the next project to bring your studio to new heights.</p>
     </div>
@@ -3955,7 +4000,7 @@ function renderGreenlightPage(empties,showBack){
       <button type="button" class="btn-cyan aaa-gl-trend-suggest-btn" data-act="gl-suggest-trend"${matchGenre?" disabled":""}>${matchGenre?"Selected ✓":"Use pick"}</button>
     </div>`;
   }
-  h+=`<div class="aaa-gl-carousel">`;
+  h+=`<div class="aaa-gl-carousel-stage" aria-label="Project carousel"><div class="aaa-gl-carousel">`;
   h+=list.map(sc=>{
     if(sc.sequelBase){
       const sel=_selGlSequel===sc.sequelBase;
@@ -3992,7 +4037,7 @@ function renderGreenlightPage(empties,showBack){
       ${lk.locked?`<div class="aaa-gl-lock">🔒 ${lk.reason}</div>`:""}
     </div>`;
   }).join("");
-  h+=`</div><div class="aaa-gl-detail">
+  h+=`</div></div><div class="aaa-gl-detail">
     <div class="aaa-gl-detail-grid">
       <div class="aaa-gl-summary"><h5>${isSequel?"📺 FRANCHISE SEQUEL":"🌸 PROJECT SUMMARY"}</h5><p>${isSequel?"Established audience returns for season "+(selSc.season||2)+". Franchise bonus stacks on every premiere.":(PITCH_SUMMARIES[selSc.genre]||PITCH_SUMMARIES["Romance"])}</p><div class="aaa-gl-tags">${isSequel?`<span class="aaa-gl-tag">Franchise</span><span class="aaa-gl-tag">${selSc.genre}</span><span class="aaa-gl-tag">★${selSc.stars||4} hit</span>`:(PITCH_TAGS[selSc.genre]||[]).map(t=>`<span class="aaa-gl-tag">${t}</span>`).join("")}</div></div>
       <div class="aaa-gl-budget"><h5>BUDGET ALLOCATION</h5>${greenlightPieHTML(selCost)}</div>
@@ -4087,7 +4132,7 @@ function renderProduceSlotPanel(i,pr){
         <div class="aaa-stat-line"><span class="aaa-stat-ic">🎬</span><span>Budget</span><b>${fmtYenCompact(spent)} / ${fmtYenCompact(budgetCap)}</b></div>
         <div class="aaa-stat-line hype"><span class="aaa-stat-ic">📈</span><span>Hype</span><b>${fmtCompact(showHype)}</b><div class="aaa-mini-bar"><i style="width:${hypeBarPct(pr,p,pct)}%"></i></div><span class="aaa-rate">+${fmtCompact(hypeH)}/h</span></div>
         <div class="aaa-stat-line"><span class="aaa-stat-ic">📅</span><span>Premiere In</span><b class="slot-eta">${etaStr}</b></div>
-        <div class="aaa-premiere-bonus"><span class="aaa-premiere-bonus-label">Global Premiere Bonus</span><div class="aaa-bonus-pills"><span class="aaa-bonus-pill gems"><img src="icons/hf/gems.png?v=${ASSET_V}" alt=""> ${fmtLocale(est.gems||0)}</span><span class="aaa-bonus-pill gold"><img src="icons/hf/yen.png?v=${ASSET_V}" alt=""> ${fmtYenCompact(est.yen)}</span></div></div>
+        <div class="aaa-premiere-bonus"><span class="aaa-premiere-bonus-label">Global Premiere Bonus</span><div class="aaa-bonus-pills" role="group" aria-label="Estimated premiere rewards"><span class="aaa-bonus-pill gems"><img src="icons/hf/gems.png?v=${ASSET_V}" alt=""> ${fmtLocale(est.gems||0)}</span><span class="aaa-bonus-pill gold"><img src="icons/hf/yen.png?v=${ASSET_V}" alt=""> ${fmtYenCompact(est.yen)}</span></div></div>
         <div class="aaa-actions">${done?`<button class="btn-gold aaa-cta aaa-premiere-ready${glow}" data-rel="${i}">🎬 ▶ Global Premiere</button>`:`<button class="btn-gold aaa-cta aaa-play-btn" data-act="tapboost" data-slot="${i}">🎬 ▶ Boost</button>`}</div>
       </div></div>${productionTeamHTML()}</div></div></div>`;
 }
@@ -4582,7 +4627,7 @@ document.addEventListener("click", e=>{
   if(t.dataset.act==="reveal-close"){ const m=document.getElementById("reveal"); if(m){ m.style.display="none"; m.classList.remove("aaa-reveal-opening"); } return; }
   if(t.dataset.act==="dec-yes") return resolveDecision(true);
   if(t.dataset.act==="dec-no") return resolveDecision(false);
-  if(t.dataset.act==="festival-win-close"){ const m=document.getElementById("festival-win"); if(m) m.style.display="none"; return; }
+  if(t.dataset.act==="festival-win-close") return closeFestivalWinModal();
   if(t.dataset.act==="dynasty-scroll-perks"){ const el=document.getElementById("dynasty-perk-shop"); if(el) el.scrollIntoView({behavior:"smooth",block:"start"}); play("click"); return; }
   if(t.dataset.act==="premiere-close") return closePremiere();
   if(t.dataset.act==="stars-unlock-close") return closeStarsUnlockModal(false);
@@ -4900,12 +4945,15 @@ window.__AST_HOOK__ = {
   totalMasteryLevels,
   celebrateFirstResearch,
   celebrateFirstFestivalWin,
+  unlockModalPending,
+  flushPostPremiereQueue,
   dynastyAvailable,
   festivalEntryCost,
   festivalInvitePending,
   freeScoutAvailable,
   tabLocked,
   tabLockLabel,
+  tabAccessible,
   isGreenlightView,
   greenlightBack: ()=>{ _glMode=false; render(); },
   focusProduceSlot,
@@ -4925,22 +4973,22 @@ window.__AST_HOOK__ = {
   showReturnPlayerWelcomeToast,
 };
 </script>
-<script src="aaa-upgrade.js?v=94"></script>
-<script src="v5-slim-gate.js?v=94"></script>
-<script src="gameplay-plus.js?v=94"></script>
-<script src="gameplay-ultra.js?v=94"></script>
-<script src="gameplay-endless.js?v=94"></script>
-<script src="gameplay-empire.js?v=94"></script>
-<script src="gameplay-studio.js?v=94"></script>
-<script src="gameplay-final.js?v=94"></script>
-<script src="gameplay-aaa.js?v=94"></script>
-<script src="gameplay-legend.js?v=94"></script>
-<script src="hud-premium.js?v=94"></script>
-<script src="ui-complete.js?v=94"></script>
-<script src="gameplay-studio-rating.js?v=94"></script>
-<script src="gameplay-polish.js?v=94"></script>
-<script src="hook-bridge.js?v=94"></script>
-<script src="v5-render-guard.js?v=94"></script>
+<script src="aaa-upgrade.js?v=95"></script>
+<script src="v5-slim-gate.js?v=95"></script>
+<script src="gameplay-plus.js?v=95"></script>
+<script src="gameplay-ultra.js?v=95"></script>
+<script src="gameplay-endless.js?v=95"></script>
+<script src="gameplay-empire.js?v=95"></script>
+<script src="gameplay-studio.js?v=95"></script>
+<script src="gameplay-final.js?v=95"></script>
+<script src="gameplay-aaa.js?v=95"></script>
+<script src="gameplay-legend.js?v=95"></script>
+<script src="hud-premium.js?v=95"></script>
+<script src="ui-complete.js?v=95"></script>
+<script src="gameplay-studio-rating.js?v=95"></script>
+<script src="gameplay-polish.js?v=95"></script>
+<script src="hook-bridge.js?v=95"></script>
+<script src="v5-render-guard.js?v=95"></script>
 <!-- studio-premium.css loaded in head -->
 
 

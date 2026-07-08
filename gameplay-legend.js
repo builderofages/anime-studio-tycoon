@@ -155,6 +155,11 @@
         S.gems += m.g === "S" ? 20 : m.g === "A" ? 10 : 5;
         h.toast(m.msg + " +" + (m.g === "S" ? 25 : m.g === "A" ? 15 : 8) + " dynasty", true);
         h.play("reward");
+        const pending = typeof h.unlockModalPending === "function" && h.unlockModalPending();
+        if (!pending && typeof window.showAchievePop === "function") {
+          const pop = m.g === "S" ? "👑 S-TIER LEGEND" : m.g === "A" ? "🔥 A-TIER ELITE" : "📈 B-RANK RISING";
+          window.showAchievePop(pop);
+        }
         try { if (window.STEAM_ACHIEVE && m.g === "S") window.STEAM_ACHIEVE("dynastyS"); } catch (e) {}
       }
     }

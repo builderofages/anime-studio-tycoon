@@ -31,20 +31,30 @@
   /* ---- Loading splash ---- */
   const splash = document.createElement("div");
   splash.id = "loading-splash";
+  splash.setAttribute("role", "status");
+  splash.setAttribute("aria-live", "polite");
+  splash.setAttribute("aria-busy", "true");
+  splash.setAttribute("aria-label", "Loading Anime Studio Tycoon");
   splash.innerHTML = `
-    <img class="splash-hero" src="start-hero.png?v=88" width="96" height="96" alt="">
-    <h1>Anime Studio Tycoon</h1>
-    <div class="splash-tag">Loading your empire…</div>
-    <div id="loading-bar"><i></i></div>`;
+    <img class="splash-hero" src="start-hero.png?v=88" width="96" height="96" alt="Anime Studio Tycoon logo">
+    <h1 id="splash-title">Anime Studio Tycoon</h1>
+    <div class="splash-tag" id="splash-status">Loading your empire…</div>
+    <div id="loading-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-labelledby="splash-status"><i></i></div>`;
   document.body.prepend(splash);
   let loadPct = 0;
   const loadIv = setInterval(() => {
     loadPct = Math.min(100, loadPct + 8 + Math.random() * 12);
     const bar = splash.querySelector("#loading-bar i");
+    const progress = splash.querySelector("#loading-bar");
     if (bar) bar.style.width = loadPct + "%";
+    if (progress) progress.setAttribute("aria-valuenow", String(Math.round(loadPct)));
     if (loadPct >= 100) {
       clearInterval(loadIv);
-      setTimeout(() => splash.classList.add("hide"), 300);
+      setTimeout(() => {
+        splash.classList.add("hide");
+        splash.setAttribute("aria-hidden", "true");
+        splash.setAttribute("aria-busy", "false");
+      }, 300);
     }
   }, 120);
 
@@ -136,6 +146,7 @@
   }
 
   function updateComboPill(S) {
+    if (document.documentElement.classList.contains("hud-v3-active")) return;
     const el = ensureComboPill();
     if (!el) return;
     const combo = S.combo || 0;

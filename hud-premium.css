@@ -45,6 +45,7 @@ html.hud-v3-active #app {
   grid-template-areas:
     "hud"
     "goal"
+    "race"
     "coach"
     "main"
     "dock";
@@ -56,6 +57,36 @@ html.hud-v3-active #app {
 
 html.hud-v3-active #hud-shell { grid-area: hud; }
 html.hud-v3-active #goal { grid-area: goal; }
+html.hud-v3-active #rival-race {
+  grid-area: race;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 10px 0;
+  padding: 6px 12px;
+  border-radius: 12px;
+  background: var(--ui-surface-2);
+  border: 1px solid var(--ui-border);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ui-muted);
+  line-height: 1.3;
+}
+
+html.hud-v3-active #rival-race .rival-race-rank b {
+  color: var(--ui-gold);
+  font-size: 14px;
+}
+
+html.hud-v3-active #rival-race .rival-race-copy {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+html.hud-v3-active #rival-race[hidden] { display: none !important; }
 html.hud-v3-active #pathway-rail { grid-area: coach; }
 html.hud-v3-active #main { grid-area: main; }
 html.hud-v3-active #command-dock { grid-area: dock; }
@@ -116,7 +147,7 @@ html.hud-v3-active #goal #goal-bar {
 
 /* ---- HUD shell ---- */
 #hud-shell {
-  padding: calc(6px + var(--safe-t, 0px)) 10px 6px;
+  padding: 6px 10px;
   background: var(--ui-surface);
   border-bottom: 1px solid var(--ui-border);
 }
@@ -152,8 +183,8 @@ html.hud-v3-active #goal #goal-bar {
 }
 
 .hud-identity {
-  flex: 1;
-  min-width: 0;
+  flex: 1 1 72px;
+  min-width: 56px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -178,6 +209,15 @@ html.hud-v3-active #goal #goal-bar {
   border: 1px solid rgba(245, 158, 11, 0.25);
   position: relative;
   overflow: hidden;
+}
+
+#hud-studio-rating:focus-visible {
+  outline: 2px solid var(--ui-gold);
+  outline-offset: 2px;
+}
+
+html.hud-v3-active #hud-shell.hud-gl-view #hud-combo {
+  display: none !important;
 }
 
 #hud-studio-rating .jw-stars-sm {

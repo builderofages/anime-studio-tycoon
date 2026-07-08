@@ -141,9 +141,12 @@ assert(!html.includes('href="hf-design.css'), "hf-design.css disabled (ast-v5)")
 assert(!html.includes('href="aaa-ui.css'), "aaa-ui.css disabled (ast-v5)");
 assert(html.includes("legacy-fx.css"), "legacy-fx css linked");
 assert(html.includes("ast-v5.css"), "ast-v5 design css linked");
-assert(html.includes("build 94"), "build 94 tag");
+assert(html.includes("build 95"), "build 95 tag");
 assert(html.includes("Production Score"), "production score label");
-assert(html.includes("Legend"), "build 94 legend tag");
+assert(html.includes("AAA"), "build 95 aaa tag");
+assert(html.includes("drainUnlockModalQueue"), "unlock modal queue drain");
+assert(html.includes("tabAccessible"), "tab accessible guard on hook");
+assert(html.includes("aaa-gl-carousel-stage"), "greenlight theater carousel stage");
 assert(html.includes("registerFranchiseHit"), "franchise hit registration");
 assert(html.includes("celebrateFirstFranchise"), "first franchise celebration");
 assert(html.includes("sequelShowcaseEntries"), "sequel greenlight carousel entries");
@@ -239,9 +242,9 @@ assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("guided-tutor
 assert(html.includes('id="btn-start-play"'), "start play cta");
 assert(html.includes('id="btn-start-demo"'), "start demo cta");
 assert(html.includes("start-cta-group"), "start cta group");
-assert(html.includes("Build 94"), "what's new build 94");
-assert(html.includes("Franchise Loop"), "what's new franchise headline");
-assert(html.includes("Sequel suggest"), "what's new sequel suggest");
+assert(html.includes("Build 95"), "what's new build 95");
+assert(html.includes("AAA Audit"), "what's new aaa audit headline");
+assert(html.includes("Mockup fidelity"), "what's new mockup fidelity");
 assert(html.includes("Awards Night"), "what's new awards night");
 assert(html.includes('id="studio-award"'), "studio awards overlay");
 assert(html.includes("celebrateStudioAward"), "studio awards celebration helper");
@@ -311,7 +314,9 @@ assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("glView ? fal
 assert(readFileSync(join(root, "package.json"), "utf8").includes('"overrides"'), "npm overrides");
 assert(existsSync(join(root, "scripts/audit-check.mjs")), "audit check script");
 const astCss = readFileSync(join(root, "ast-v5.css"), "utf8");
-assert(astCss.includes("BUILD 94"), "build 94 css marker");
+assert(astCss.includes("BUILD 95"), "build 95 css marker");
+assert(astCss.includes("prefers-reduced-motion"), "reduced motion support in ast-v5");
+assert(astCss.includes("aaa-gl-carousel-stage"), "theater carousel stage css");
 assert(astCss.includes("aaa-franchise-suggest"), "franchise suggest banner css");
 assert(astCss.includes("aaa-pwa-install-banner"), "pwa install banner css");
 assert(astCss.includes("aaa-push-coming-soon"), "push notify coming soon css");

@@ -285,6 +285,7 @@
     const pct = next ? pillarProgress(S, NEXT_REQ[next]).pct : 100;
     el.className = "hud-studio-rating jw-studio-rank" + (stars >= 5 ? " jw-max" : "");
     el.title = "Tap for Studio Rating";
+    el.setAttribute("aria-label", `${stars}-star studio rating — tap for details`);
     el.innerHTML = `<span class="jw-rank-icon">${ti.icon}</span>
       <span class="jw-rank-stars">${starsHTML(stars, "sm")}</span>
       <span class="rank-tier">${ti.name}</span>

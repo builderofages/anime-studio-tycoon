@@ -568,7 +568,8 @@
     }
 
     const researchUnlocked = hook.featureUnlocked ? hook.featureUnlocked("research") : (S.totalFansEver || 0) >= 120;
-    if (researchUnlocked && typeof hook.researchCost === "function" && hook.trendGenre) {
+    const researchTabOk = researchUnlocked && (!hook.tabAccessible || hook.tabAccessible("research"));
+    if (researchTabOk && typeof hook.researchCost === "function" && hook.trendGenre) {
       const trend = hook.trendGenre();
       const { cost, hypeCost } = hook.researchCost(trend);
       const totalMastery = hook.totalMasteryLevels ? hook.totalMasteryLevels() : 0;
@@ -716,14 +717,16 @@
         action: { type: "tab", tab: "produce" },
       };
     }
-    if ((S.stars || []).length === 0 && S.fans >= 50 && !starsUnlocked) {
+    if (!starsUnlocked && (S.releases || 0) >= 1 && (S.releases || 0) < 2) {
       const prog = hook.starsUnlockProgress ? hook.starsUnlockProgress() : null;
-      return {
-        message: prog || "Scout star talent for bigger premieres",
-        tab: "stars",
-        cta: "Stars",
-        action: { type: "tab", tab: "stars" },
-      };
+      if (prog) {
+        return {
+          message: prog,
+          tab: "produce",
+          cta: "Play",
+          action: { type: "tab", tab: "produce" },
+        };
+      }
     }
     const today = new Date().toISOString().slice(0, 10);
     const loginPending = S.loginLastClaimDate !== today && (S.loginClaimedCount || 0) < 31;
@@ -921,14 +924,19 @@
       return;
     }
     if (pw.action.type === "tab") {
-      hook.getState().tab = pw.action.tab;
-      hook.render();
-      hook.play("click");
-      if (pw.action.focus === "freegems") {
-        requestAnimationFrame(() => {
-          document.querySelector(".aaa-free-gems-btn:not([disabled])")?.scrollIntoView({ behavior: "smooth", block: "center" });
-        });
+      const dest = pw.action.tab;
+      if (hook.tabLocked?.(dest)) {
+        hook.toast?.(hook.tabLockLabel?.(dest) || "🔒 Keep playing to unlock this tab");
+      } else {
+        hook.getState().tab = dest;
+        hook.render();
+        if (pw.action.focus === "freegems") {
+          requestAnimationFrame(() => {
+            document.querySelector(".aaa-free-gems-btn:not([disabled])")?.scrollIntoView({ behavior: "smooth", block: "center" });
+          });
+        }
       }
+      hook.play("click");
     }
   }
 
@@ -957,7 +965,7 @@
         </div>
         <div class="hud-stats" id="hud-resources"></div>
       </div>
-      <div class="hud-drawer" id="hud-drawer" hidden>
+      <div class="hud-drawer" id="hud-drawer" hidden aria-hidden="true">
         <div class="hud-drawer-inner">
           <div class="hud-drawer-label">⚙️ Settings</div>
           <div id="hud-drawer-slot"></div>
@@ -967,7 +975,8 @@
     top.parentNode.insertBefore(shell, top);
 
     const resWrap = document.getElementById("hud-resources");
-    const plusTab = { yen: "market", fans: "market", gems: "store", hype: "produce" };
+    const marketTab = (hook) => (hook.featureUnlocked?.("market") ? "market" : "produce");
+    const plusTab = (hook) => ({ yen: marketTab(hook), fans: marketTab(hook), gems: "store", hype: "produce" });
     ["yen", "fans", "gems", "hype"].forEach((k) => {
       const el = top.querySelector(".res." + k);
       if (!el) return;
@@ -983,8 +992,9 @@
       plus.addEventListener("click", () => {
         const hook = window.__AST_HOOK__;
         if (!hook) return;
-        hook.getState().tab = plusTab[k];
-        hook.render();
+        const dest = plusTab(hook)[k];
+        if (hook.tabLocked?.(dest)) hook.toast?.(hook.tabLockLabel?.(dest) || "🔒 Keep playing to unlock this tab");
+        else { hook.getState().tab = dest; hook.render(); }
         hook.play("click");
         closeDrawer();
       });
@@ -1000,14 +1010,16 @@
       const rail = document.createElement("div");
       rail.id = "pathway-rail";
       rail.className = "coach-bar";
+      rail.setAttribute("role", "region");
+      rail.setAttribute("aria-label", "Coach tips");
       rail.innerHTML = `
-        <img class="coach-avatar" src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg?v=88" alt="" width="40" height="40">
+        <img class="coach-avatar" src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg?v=88" alt="Coach avatar" width="40" height="40">
         <div class="coach-body">
-          <span class="coach-label">Coach's Tip</span>
-          <p class="coach-msg" id="pathway-now"></p>
+          <span class="coach-label" id="coach-label">Coach's Tip</span>
+          <p class="coach-msg" id="pathway-now" aria-live="polite" aria-labelledby="coach-label"></p>
         </div>
-        <button type="button" class="coach-cta" id="pathway-cta" aria-label="Go">→</button>
-        <button type="button" class="coach-gift" id="coach-gift" aria-label="Rewards"><span class="coach-gift-ic">🎁</span><span class="coach-gift-dot" id="coach-gift-dot" hidden></span></button>
+        <button type="button" class="coach-cta" id="pathway-cta" aria-label="Go to next action">→</button>
+        <button type="button" class="coach-gift" id="coach-gift" aria-label="Rewards and quests"><span class="coach-gift-ic" aria-hidden="true">🎁</span><span class="coach-gift-dot" id="coach-gift-dot" hidden></span></button>
         <div class="pathway-steps" id="pathway-steps" hidden></div>`;
       const goal = document.getElementById("goal");
       if (goal && !document.getElementById("rival-race")) {
@@ -1030,6 +1042,10 @@
       dock.id = "command-dock";
       tabs.parentNode.insertBefore(dock, tabs);
       dock.appendChild(tabs);
+    }
+    if (tabs) {
+      tabs.setAttribute("role", "tablist");
+      tabs.setAttribute("aria-label", "Studio navigation");
     }
 
     const foot = document.querySelector(".foot");
@@ -1057,14 +1073,16 @@
       const hook = window.__AST_HOOK__;
       if (!hook) return;
       const main = document.getElementById("main");
-      if (main?.dataset.glBack === "1" && hook.greenlightBack) hook.greenlightBack();
-      else if (main?.dataset.glView === "1") {
+      if (main?.dataset.glView === "1") {
         hook.getState().tab = "produce";
         if (hook.greenlightBack) hook.greenlightBack();
         else hook.render();
+      } else if (main?.dataset.glBack === "1" && hook.greenlightBack) {
+        hook.greenlightBack();
       }
       hook.play("click");
     });
+    wireRatingChip();
     document.getElementById("hud-settings-btn").addEventListener("click", () => {
       openDrawer();
       const hook = window.__AST_HOOK__;
@@ -1088,21 +1106,46 @@
     });
     const drawer = document.getElementById("hud-drawer");
     drawer.addEventListener("click", (e) => {
-      if (e.target.id === "hud-drawer") e.currentTarget.hidden = true;
+      if (e.target.id === "hud-drawer") closeDrawer();
     });
     drawerSlot.addEventListener("click", (e) => {
-      if (e.target.closest("button, select, a")) drawer.hidden = true;
+      if (e.target.closest("button, select, a")) closeDrawer();
+    });
+    if (!document.body.dataset.hudDrawerEscWired) {
+      document.body.dataset.hudDrawerEscWired = "1";
+      document.addEventListener("keydown", (e) => {
+        if (e.key !== "Escape") return;
+        const d = document.getElementById("hud-drawer");
+        if (d && !d.hidden) closeDrawer();
+      });
+    }
+  }
+
+  function wireRatingChip() {
+    const chip = document.getElementById("hud-studio-rating");
+    if (!chip || chip.dataset.hudRatingWired) return;
+    chip.dataset.hudRatingWired = "1";
+    chip.addEventListener("keydown", (e) => {
+      if (e.key !== "Enter" && e.key !== " ") return;
+      e.preventDefault();
+      chip.click();
     });
   }
 
   function openDrawer() {
     const d = document.getElementById("hud-drawer");
-    if (d) d.hidden = false;
+    if (d) {
+      d.hidden = false;
+      d.setAttribute("aria-hidden", "false");
+    }
   }
 
   function closeDrawer() {
     const d = document.getElementById("hud-drawer");
-    if (d) d.hidden = true;
+    if (d) {
+      d.hidden = true;
+      d.setAttribute("aria-hidden", "true");
+    }
   }
 
   function enterDemoFromDrawer() {
@@ -1285,9 +1328,22 @@
       }
     }
 
+    if (hook.tabAccessible && !hook.tabAccessible(tab)) {
+      tab = "produce";
+      selectors = [".aaa-play-btn", ".aaa-poster", ".aaa-gl-open", '[data-act="greenlight-view"]', ".slotpanel", ".aaa-premiere-ready"];
+    } else if (hook.tabLocked?.(tab)) {
+      hook.toast?.(hook.tabLockLabel?.(tab) || "🔒 Keep playing to unlock this tab");
+      tab = "produce";
+      selectors = [".aaa-play-btn", ".aaa-poster", ".aaa-gl-open", '[data-act="greenlight-view"]', ".slotpanel", ".aaa-premiere-ready"];
+    }
     hook.getState().tab = tab;
     hook.render();
     hook.play("click");
+    const goalEl = document.getElementById("goal");
+    if (goalEl) {
+      goalEl.classList.add("goal-milestone-hit");
+      window.setTimeout(() => goalEl.classList.remove("goal-milestone-hit"), 1400);
+    }
     requestAnimationFrame(() => {
       const main = document.getElementById("main");
       for (let i = 0; i < selectors.length; i++) {
@@ -1369,9 +1425,12 @@
   function ensureHudStats() {
     const resWrap = document.getElementById("hud-resources");
     const top = document.getElementById("top");
-    if (!resWrap || !top || resWrap.querySelector(".hud-stat-wrap.fans")) return;
-    const plusTab = { yen: "market", fans: "market", gems: "store", hype: "produce" };
-    ["fans"].forEach((k) => {
+    if (!resWrap || !top) return;
+    const marketTab = (h) => (h.featureUnlocked?.("market") ? "market" : "produce");
+    const plusTab = (h) => ({ yen: marketTab(h), fans: marketTab(h), gems: "store", hype: "produce" });
+    const order = ["yen", "fans", "gems", "hype"];
+    order.forEach((k) => {
+      if (resWrap.querySelector(".hud-stat-wrap." + k)) return;
       const el = top.querySelector(".res." + k);
       if (!el) return;
       el.classList.add("hud-stat", k);
@@ -1386,14 +1445,15 @@
       plus.addEventListener("click", () => {
         const hook = window.__AST_HOOK__;
         if (!hook) return;
-        hook.getState().tab = plusTab[k];
-        hook.render();
+        const dest = plusTab(hook)[k];
+        if (hook.tabLocked?.(dest)) hook.toast?.(hook.tabLockLabel?.(dest) || "🔒 Keep playing to unlock this tab");
+        else { hook.getState().tab = dest; hook.render(); }
         hook.play("click");
         closeDrawer();
       });
       wrap.appendChild(plus);
-      const gemsWrap = resWrap.querySelector(".hud-stat-wrap.gems");
-      if (gemsWrap) resWrap.insertBefore(wrap, gemsWrap);
+      const next = order.slice(order.indexOf(k) + 1).map((key) => resWrap.querySelector(".hud-stat-wrap." + key)).find(Boolean);
+      if (next) resWrap.insertBefore(wrap, next);
       else resWrap.appendChild(wrap);
     });
   }
@@ -1506,15 +1566,19 @@
     const combo = document.getElementById("hud-combo");
     const comboN = document.getElementById("hud-combo-n");
     if (combo && comboN) {
-      const active = (S.combo || 0) >= 2;
-      const left = 60000 - (Date.now() - (S.lastReleaseAt || 0));
-      const pct = active && left > 0 ? Math.max(0, Math.min(100, (left / 60000) * 100)) : 0;
-      combo.style.setProperty("--combo-pct", pct + "%");
-      if (active && left > 0) {
-        combo.classList.add("show");
-        comboN.textContent = S.combo;
-      } else if (!combo.classList.contains("hud-combo-tap")) {
+      if (glView) {
         combo.classList.remove("show");
+      } else {
+        const active = (S.combo || 0) >= 2;
+        const left = 60000 - (Date.now() - (S.lastReleaseAt || 0));
+        const pct = active && left > 0 ? Math.max(0, Math.min(100, (left / 60000) * 100)) : 0;
+        combo.style.setProperty("--combo-pct", pct + "%");
+        if (active && left > 0) {
+          combo.classList.add("show");
+          comboN.textContent = S.combo;
+        } else if (!combo.classList.contains("hud-combo-tap")) {
+          combo.classList.remove("show");
+        }
       }
     }
 
@@ -1568,7 +1632,13 @@
 
     if (window.__AST_STUDIO_RATING__?.refreshHud) {
       window.__AST_STUDIO_RATING__.refreshHud(S, hook);
+      const ratingChip = document.getElementById("hud-studio-rating");
+      if (ratingChip) {
+        const stars = S.studioStars || 1;
+        ratingChip.setAttribute("aria-label", `${stars}-star studio rating — tap for details`);
+      }
     }
+    wireRatingChip();
 
     if (shouldRunGuidedTutorial(S, hook)) {
       const gStep = getGuidedStep(S, hook);
