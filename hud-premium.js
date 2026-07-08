@@ -296,6 +296,55 @@
     return n;
   }
 
+  function studioRankUpCoach(S, hook) {
+    const prog = hook.studioRankProgress ? hook.studioRankProgress(S) : null;
+    if (prog && (S.studioStars || 1) < 5) {
+      if (prog.ready) {
+        return {
+          message: `⭐ Ready for ${prog.tier?.name || "studio rank up"}!`,
+          tab: "studio",
+          cta: "Promote",
+          urgent: true,
+          action: { type: "rating" },
+        };
+      }
+      if (prog.pct >= 50) {
+        const weak = (prog.pillars || []).filter((p) => !p.done).sort((a, b) => a.pct - b.pct)[0];
+        if (weak) {
+          const cur = hook.fmt ? hook.fmt(weak.cur) : String(weak.cur);
+          const need = hook.fmt ? hook.fmt(weak.need) : String(weak.need);
+          const tab =
+            weak.id === "team" ? "staff"
+              : weak.id === "talent" ? "stars"
+                : weak.id === "share" ? "market"
+                  : "produce";
+          return {
+            message: `${prog.pct}% to ${prog.tier?.name || "next rank"} — ${weak.label} ${cur}/${need}`,
+            tab,
+            cta: "Rank up",
+            urgent: prog.pct >= 80,
+            action: { type: "rating" },
+          };
+        }
+      }
+    }
+    const nextRank = hook.nextContentRank ? hook.nextContentRank(S.fans || 0) : null;
+    if (nextRank) {
+      const gap = nextRank.fans - (S.fans || 0);
+      if (gap > 0 && gap <= Math.max(3, Math.round(nextRank.fans * 0.12))) {
+        const gapTxt = hook.fmt ? hook.fmt(gap) : String(gap);
+        const marketOk = hook.featureUnlocked ? hook.featureUnlocked("market") : (S.fans || 0) >= 50;
+        return {
+          message: `${gapTxt} fans to unlock ${nextRank.unlock}!`,
+          tab: marketOk ? "market" : "produce",
+          cta: "Grow",
+          action: { type: "tab", tab: marketOk ? "market" : "produce" },
+        };
+      }
+    }
+    return null;
+  }
+
   function fanMilestoneMarketCoach(S, hook) {
     const milestones = hook.FAN_TOAST_MILESTONES || [{ fans: 10 }, { fans: 50 }, { fans: 100 }];
     const target = milestones.map((m) => m.fans).find((f) => S.fans < f);
@@ -343,14 +392,31 @@
 
     const ready = readySlot(S, hook);
     if (ready >= 0) {
+      const multi = (S.slots || 1) > 1;
       return {
-        message: "Production ready — premiere now!",
+        message: multi ? `Line ${ready + 1} ready — premiere now!` : "Production ready — premiere now!",
         tab: "produce",
         cta: "Premiere",
         urgent: true,
         showOnGreenlight: true,
-        action: { type: "premiere", slot: ready },
+        action: multi
+          ? { type: "produce-slot-focus", slot: ready, thenPremiere: true }
+          : { type: "premiere", slot: ready },
       };
+    }
+
+    if (!glView && (S.slots || 1) > 1) {
+      const empties = Math.max(0, (S.slots || 1) - activeCount(S));
+      if (empties === 1 && activeCount(S) > 0) {
+        const emptyIx = (S.projects || []).findIndex((p) => !p);
+        return {
+          message: "You have an open production line — fill your open slot!",
+          tab: "produce",
+          cta: "Greenlight",
+          urgent: true,
+          action: emptyIx >= 0 ? { type: "produce-slot-empty", slot: emptyIx } : { type: "gl-focus" },
+        };
+      }
     }
 
     const marketUnlocked = hook.featureUnlocked ? hook.featureUnlocked("market") : (S.fans || 0) >= 50;
@@ -370,6 +436,32 @@
 
     const fanMarketCoach = fanMilestoneMarketCoach(S, hook);
     if (fanMarketCoach) return fanMarketCoach;
+
+    const rankCoach = studioRankUpCoach(S, hook);
+    if (rankCoach) return rankCoach;
+
+    const chaosUnlocked = hook.featureUnlocked ? hook.featureUnlocked("chaos") : (S.releases || 0) >= 10;
+    if (chaosUnlocked && !S.chaosMode && (S.releases || 0) >= 10 && (S.releases || 0) <= 25) {
+      return {
+        message: "Chaos Mode unlocked — enable for +50% rewards (crises rise faster)",
+        tab: "produce",
+        cta: "Chaos",
+        urgent: (S.chaos || 0) < 35,
+        action: { type: "chaos-enable" },
+      };
+    }
+
+    const rel = S.releases || 0;
+    if (!chaosUnlocked && rel >= 5 && rel < 10) {
+      const need = 10 - rel;
+      const needTxt = hook.fmt ? hook.fmt(need) : String(need);
+      return {
+        message: `${needTxt} left — 10 premieres to unlock Chaos Mode`,
+        tab: "produce",
+        cta: "Play",
+        action: { type: "tab", tab: "produce" },
+      };
+    }
 
     const starsUnlocked = hook.featureUnlocked ? hook.featureUnlocked("stars") : (S.releases || 0) >= 2;
     if (starsUnlocked && (S.stars || []).length === 0 && (S.releases || 0) >= 2 && (S.releases || 0) <= 8) {
@@ -413,7 +505,9 @@
             ? `🔥 ${trend} trending — tap Use pick for bonus fans & yen`
             : showcase
               ? `Pick a project — 🔥 ${trend} is trending for bonus rewards`
-              : "Choose a project and greenlight to fill your open slot",
+              : empties === 1
+                ? "Choose a project — greenlight to fill your open slot"
+                : "Choose a project and greenlight to fill your open slots",
           tab: "produce",
           cta: midGame ? "Trending" : "Greenlight",
           urgent: !showcase,
@@ -421,6 +515,31 @@
           action: midGame && typeof hook.applyTrendingGenreSuggest === "function"
             ? { type: "gl-suggest-trend" }
             : { type: "gl-focus" },
+        };
+      }
+    }
+
+    if (!glView && (S.slots || 1) > 1 && activeCount(S) > 1) {
+      let best = -1;
+      let bestPct = 2;
+      (S.projects || []).forEach((pr, i) => {
+        if (!pr) return;
+        const p = hook.getProject(pr.pid);
+        if (!p || pr.progress >= p.work) return;
+        const pct = pr.progress / p.work;
+        if (pct < bestPct) {
+          bestPct = pct;
+          best = i;
+        }
+      });
+      if (best >= 0) {
+        const hud = hook.produceSlotHud ? hook.produceSlotHud() : null;
+        const lines = hud ? `${hud.active}/${hud.total} lines active` : "Multiple lines active";
+        return {
+          message: `${lines} — boost your slowest show`,
+          tab: "produce",
+          cta: "Boost",
+          action: { type: "produce-slot-focus", slot: best },
         };
       }
     }
@@ -632,6 +751,21 @@
       hook.play("click");
       return;
     }
+    if (pw.action.type === "produce-slot-empty" || pw.action.type === "produce-slot-focus") {
+      const needRender = hook.getState().tab !== "produce";
+      hook.getState().tab = "produce";
+      if (needRender) hook.render();
+      if (typeof hook.focusProduceSlot === "function") {
+        requestAnimationFrame(() => hook.focusProduceSlot(pw.action.slot ?? hook.firstEmptySlot?.() ?? 0, true));
+      } else if (!needRender) hook.render();
+      if (pw.action.thenPremiere && typeof hook.releaseProject === "function") {
+        requestAnimationFrame(() => hook.releaseProject(pw.action.slot));
+      } else if (pw.action.thenBoost && typeof hook.tapBoost === "function") {
+        requestAnimationFrame(() => hook.tapBoost(pw.action.slot));
+      }
+      hook.play("click");
+      return;
+    }
     if (pw.action.type === "studio-expand") {
       hook.getState().tab = "studio";
       hook.render();
@@ -639,6 +773,20 @@
       requestAnimationFrame(() => {
         const btn = document.querySelector(".aaa-studio-expand-btn,[data-act='expand']");
         if (btn) btn.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+      return;
+    }
+    if (pw.action.type === "chaos-enable") {
+      if (typeof hook.toggleChaosMode === "function" && !hook.getState().chaosMode) hook.toggleChaosMode();
+      else {
+        hook.getState().chaosMode = true;
+        hook.getState().tab = "produce";
+        hook.render();
+        hook.save?.();
+      }
+      hook.play("click");
+      requestAnimationFrame(() => {
+        document.getElementById("hud-chaos-pill")?.scrollIntoView({ behavior: "smooth", block: "nearest" });
       });
       return;
     }
@@ -1110,6 +1258,12 @@
     }
     const main = document.getElementById("main");
     const glView = main?.dataset.glView === "1";
+    if (main) {
+      if (S.tab === "produce" && !glView && (S.slots || 1) > 1 && hook.produceSlotHud) {
+        const ph = hook.produceSlotHud();
+        main.dataset.produceLines = `${ph.active}/${ph.total}`;
+      } else delete main.dataset.produceLines;
+    }
     const shell = document.getElementById("hud-shell");
     if (shell) shell.classList.toggle("hud-gl-view", glView);
     const backBtn = document.getElementById("hud-back-btn");
@@ -1173,6 +1327,52 @@
       } else if (!combo.classList.contains("hud-combo-tap")) {
         combo.classList.remove("show");
       }
+    }
+
+    const chaosOk = hook.featureUnlocked ? hook.featureUnlocked("chaos") : (S.releases || 0) >= 10;
+    let chaosPill = document.getElementById("hud-chaos-pill");
+    if (chaosOk && shell) {
+      if (!chaosPill) {
+        chaosPill = document.createElement("button");
+        chaosPill.type = "button";
+        chaosPill.id = "hud-chaos-pill";
+        chaosPill.className = "hud-chaos-pill";
+        chaosPill.setAttribute("aria-label", "Chaos meter — tap to toggle Chaos Mode");
+        chaosPill.addEventListener("click", () => {
+          const h = window.__AST_HOOK__;
+          if (!h) return;
+          if (typeof h.toggleChaosMode === "function") h.toggleChaosMode();
+          else {
+            const st = h.getState();
+            st.chaosMode = !st.chaosMode;
+            h.render();
+            h.save?.();
+          }
+          h.play?.("click");
+        });
+        const comboEl = document.getElementById("hud-combo");
+        if (comboEl && comboEl.parentNode) comboEl.parentNode.insertBefore(chaosPill, comboEl.nextSibling);
+        else shell.querySelector(".hud-brand-row")?.appendChild(chaosPill);
+      }
+      const ch = Math.round(S.chaos || 0);
+      const on = !!S.chaosMode;
+      chaosPill.hidden = !!glView;
+      chaosPill.classList.toggle("hud-chaos-on", on);
+      chaosPill.classList.toggle("hud-chaos-warn", ch >= 55);
+      chaosPill.style.setProperty("--chaos-pct", ch + "%");
+      chaosPill.innerHTML = `<span class="hud-chaos-ic" aria-hidden="true">🌪️</span><span class="hud-chaos-lbl">${on ? "ON" : "Chaos"}</span><span class="hud-chaos-val">${ch}%</span><i class="hud-chaos-fill" aria-hidden="true"></i>`;
+      chaosPill.title = on
+        ? `Chaos ${ch}% — Mode ON (+50% rewards, more crises)`
+        : `Chaos ${ch}% — tap to enable Chaos Mode`;
+    } else if (chaosPill) {
+      chaosPill.hidden = true;
+    }
+
+    if (hook.idleIncomeTooltip) {
+      const idleTip = hook.idleIncomeTooltip();
+      document.querySelectorAll(".hud-stat-wrap.yen .res.yen, .hud-stat-wrap.yen").forEach((el) => {
+        el.title = idleTip;
+      });
     }
 
     if (window.__AST_STUDIO_RATING__?.refreshHud) {

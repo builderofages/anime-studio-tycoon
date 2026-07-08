@@ -3770,56 +3770,15 @@ html.hud-v3-active .aaa-market-card .aaa-campaign-run {
   35% { transform: scale(1.04); filter: brightness(1.15); }
   100% { transform: scale(1); }
 }
-html.hud-v3-active .aaa-market-unlock-modal {
-  max-width: 400px !important;
-  text-align: center !important;
-  background: var(--ast-glass) !important;
-  backdrop-filter: blur(16px) saturate(1.35) !important;
-  -webkit-backdrop-filter: blur(16px) saturate(1.35) !important;
-  border: 1px solid rgba(74, 222, 128, 0.35) !important;
-  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.55), 0 0 32px rgba(74, 222, 128, 0.18) !important;
-}
-html.hud-v3-active .aaa-market-unlock-hero {
-  font-size: 48px !important;
-  line-height: 1 !important;
-  margin: 4px auto 10px !important;
-  filter: drop-shadow(0 4px 16px rgba(74, 222, 128, 0.45));
-}
-html.hud-v3-active .aaa-market-unlock-lead {
-  margin: 8px 0 12px !important;
-  font-size: 13px !important;
-  line-height: 1.45 !important;
-  color: var(--ast-muted) !important;
-}
-html.hud-v3-active .aaa-market-unlock-perks {
-  display: grid !important;
-  gap: 8px !important;
-  margin: 10px 0 4px !important;
-  text-align: left !important;
-}
-html.hud-v3-active .aaa-market-unlock-perks > div {
-  display: grid !important;
-  grid-template-columns: 28px 1fr !important;
-  gap: 2px 8px !important;
-  padding: 10px 12px !important;
-  border-radius: 12px !important;
-  background: rgba(255, 255, 255, 0.04) !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-}
-html.hud-v3-active .aaa-market-unlock-perks > div > span:first-child {
-  grid-row: span 2 !important;
-  font-size: 20px !important;
-  align-self: center !important;
-}
-html.hud-v3-active .aaa-market-unlock-perks b { font-size: 12px !important; color: #fff !important; }
-html.hud-v3-active .aaa-market-unlock-perks small {
-  grid-column: 2 !important;
-  font-size: 10px !important;
-  color: var(--ast-muted) !important;
-}
-html.hud-v3-active .aaa-market-unlock-cta {
-  box-shadow: 0 10px 28px rgba(74, 222, 128, 0.32) !important;
-}
+html.hud-v3-active .aaa-market-unlock-modal { max-width:400px!important; text-align:center!important; background:var(--ast-glass)!important; backdrop-filter:blur(16px) saturate(1.35)!important; -webkit-backdrop-filter:blur(16px) saturate(1.35)!important; border:1px solid rgba(74,222,128,.35)!important; box-shadow:0 20px 48px rgba(0,0,0,.55),0 0 32px rgba(74,222,128,.18)!important; }
+html.hud-v3-active .aaa-market-unlock-hero { font-size:48px!important; line-height:1!important; margin:4px auto 10px!important; filter:drop-shadow(0 4px 16px rgba(74,222,128,.45)); }
+html.hud-v3-active .aaa-market-unlock-lead { margin:8px 0 12px!important; font-size:13px!important; line-height:1.45!important; color:var(--ast-muted)!important; }
+html.hud-v3-active .aaa-market-unlock-perks { display:grid!important; gap:8px!important; margin:10px 0 4px!important; text-align:left!important; }
+html.hud-v3-active .aaa-market-unlock-perks > div { display:grid!important; grid-template-columns:28px 1fr!important; gap:2px 8px!important; padding:10px 12px!important; border-radius:12px!important; background:rgba(255,255,255,.04)!important; border:1px solid rgba(255,255,255,.08)!important; }
+html.hud-v3-active .aaa-market-unlock-perks > div > span:first-child { grid-row:span 2!important; font-size:20px!important; align-self:center!important; }
+html.hud-v3-active .aaa-market-unlock-perks b { font-size:12px!important; color:#fff!important; }
+html.hud-v3-active .aaa-market-unlock-perks small { grid-column:2!important; font-size:10px!important; color:var(--ast-muted)!important; }
+html.hud-v3-active .aaa-market-unlock-cta { box-shadow:0 10px 28px rgba(74,222,128,.32)!important; }
 
 /* BUILD 92 — research unlock modal + genre lab mastery */
 html.hud-v3-active .aaa-research-unlock-modal { max-width:400px!important; text-align:center!important; background:var(--ast-glass)!important; backdrop-filter:blur(16px) saturate(1.35)!important; -webkit-backdrop-filter:blur(16px) saturate(1.35)!important; border:1px solid rgba(77,212,255,.35)!important; box-shadow:0 20px 48px rgba(0,0,0,.55),0 0 32px rgba(77,212,255,.18)!important; }
@@ -3863,3 +3822,245 @@ html.hud-v3-active .aaa-studio-expand-bar > i { display:block!important; height:
 html.hud-v3-active .aaa-studio-expand-afford { border-color:rgba(255,200,69,.5)!important; box-shadow:0 0 0 1px rgba(255,200,69,.28),0 8px 28px rgba(255,200,69,.16)!important; }
 html.hud-v3-active .aaa-studio-expand-afford .aaa-studio-expand-btn:not(:disabled) { animation:ast-studio-expand-pulse 2.2s ease-in-out infinite!important; box-shadow:0 8px 24px rgba(255,200,69,.4),0 0 20px rgba(255,92,168,.22)!important; }
 @keyframes ast-studio-expand-pulse { 0%,100%{box-shadow:0 6px 18px rgba(255,200,69,.32)} 50%{box-shadow:0 10px 28px rgba(255,92,168,.42)} }
+
+/* BUILD 93 — Multi-slot produce, Chaos unlock, HUD pill, scout reveal, batch hire */
+html.hud-v3-active .aaa-produce-slot-hud { display:flex!important; flex-wrap:wrap!important; align-items:center!important; justify-content:space-between!important; gap:8px!important; margin:0 0 10px!important; padding:10px 12px!important; border-radius:14px!important; background:linear-gradient(135deg,rgba(107,92,255,.14),rgba(255,92,168,.1))!important; border:1px solid rgba(180,140,255,.28)!important; }
+html.hud-v3-active .aaa-produce-slot-count { font:700 11px/1.35 system-ui!important; color:var(--ast-muted)!important; }
+html.hud-v3-active .aaa-produce-slot-count b { color:#fff!important; font-size:13px!important; }
+html.hud-v3-active .aaa-produce-slot-ready-pill { font:800 10px/1 system-ui!important; padding:5px 10px!important; border-radius:999px!important; color:#1a0a14!important; background:linear-gradient(135deg,#ffc845,#ff9b2e)!important; box-shadow:0 6px 18px rgba(255,200,69,.35)!important; }
+html.hud-v3-active .aaa-slot-tabs { display:flex!important; gap:6px!important; overflow-x:auto!important; margin:0 0 10px!important; padding-bottom:2px!important; scrollbar-width:none!important; }
+html.hud-v3-active .aaa-slot-tabs::-webkit-scrollbar { display:none!important; }
+html.hud-v3-active .aaa-slot-tab { flex:0 0 auto!important; display:flex!important; flex-direction:column!important; align-items:flex-start!important; gap:2px!important; min-width:72px!important; max-width:120px!important; padding:8px 10px!important; border-radius:12px!important; border:1px solid rgba(255,255,255,.1)!important; background:rgba(255,255,255,.04)!important; color:var(--ast-muted)!important; font:700 10px/1.2 system-ui!important; cursor:pointer!important; }
+html.hud-v3-active .aaa-slot-tab.active { border-color:rgba(255,92,168,.45)!important; background:rgba(255,92,168,.12)!important; color:#fff!important; box-shadow:0 6px 18px rgba(255,92,168,.2)!important; }
+html.hud-v3-active .aaa-slot-tab.ready { border-color:rgba(255,200,69,.42)!important; }
+html.hud-v3-active .aaa-slot-tab.ready.active { box-shadow:0 8px 22px rgba(255,200,69,.28)!important; }
+html.hud-v3-active .aaa-slot-tab.empty { border-style:dashed!important; border-color:rgba(255,92,168,.35)!important; }
+html.hud-v3-active .aaa-slot-tab-lbl { font-weight:800!important; color:inherit!important; }
+html.hud-v3-active .aaa-slot-tab-sub { font-size:9px!important; opacity:.82!important; white-space:nowrap!important; overflow:hidden!important; text-overflow:ellipsis!important; max-width:100%!important; }
+html.hud-v3-active .aaa-slot-carousel { display:flex!important; gap:10px!important; overflow-x:auto!important; scroll-snap-type:x mandatory!important; -webkit-overflow-scrolling:touch!important; padding:0 2px 8px!important; margin:0 -2px!important; }
+html.hud-v3-active .aaa-slot-card { flex:0 0 calc(100% - 8px)!important; scroll-snap-align:center!important; min-width:calc(100% - 8px)!important; }
+html.hud-v3-active .aaa-slot-empty .aaa-slot-empty-inner { display:flex!important; flex-direction:column!important; align-items:center!important; text-align:center!important; gap:8px!important; padding:28px 18px 22px!important; border-radius:18px!important; border:2px dashed rgba(255,92,168,.38)!important; background:linear-gradient(160deg,rgba(255,92,168,.08),rgba(107,92,255,.06))!important; }
+html.hud-v3-active .aaa-slot-empty-ic { font-size:36px!important; line-height:1!important; filter:drop-shadow(0 4px 12px rgba(255,92,168,.35)); }
+html.hud-v3-active .aaa-slot-empty-title { margin:0!important; font:800 16px/1.2 system-ui!important; color:#fff!important; }
+html.hud-v3-active .aaa-slot-empty-copy { margin:0!important; font:600 11px/1.45 system-ui!important; color:var(--ast-muted)!important; max-width:260px!important; }
+html.hud-v3-active .aaa-slot-empty-cta { width:100%!important; max-width:280px!important; margin-top:4px!important; }
+html.hud-v3-active .aaa-line-pill { margin-left:6px!important; font:800 9px/1 system-ui!important; padding:3px 7px!important; border-radius:999px!important; background:rgba(107,92,255,.2)!important; color:#d4c8ff!important; }
+html.hud-v3-active .aaa-produce-multi-page .aaa-show-panel:not(.slot-ready) { animation:none!important; box-shadow:0 14px 40px rgba(0,0,0,.45)!important; border-color:rgba(255,255,255,.1)!important; }
+html.hud-v3-active .aaa-produce-slots-full-compact { margin-top:8px!important; padding:10px 12px!important; font-size:11px!important; }
+html.hud-v3-active .aaa-chaos-unlock-modal { max-width:400px!important; text-align:center!important; background:var(--ast-glass)!important; backdrop-filter:blur(16px) saturate(1.35)!important; -webkit-backdrop-filter:blur(16px) saturate(1.35)!important; border:1px solid rgba(248,113,113,.4)!important; box-shadow:0 20px 48px rgba(0,0,0,.55),0 0 32px rgba(248,113,113,.2)!important; }
+html.hud-v3-active .aaa-chaos-unlock-hero { font-size:48px!important; line-height:1!important; margin:4px auto 10px!important; filter:drop-shadow(0 4px 16px rgba(248,113,113,.5)); }
+html.hud-v3-active .aaa-chaos-unlock-lead { margin:8px 0 12px!important; font-size:13px!important; line-height:1.45!important; color:var(--ast-muted)!important; }
+html.hud-v3-active .aaa-chaos-unlock-perks { display:grid!important; gap:8px!important; margin:10px 0 4px!important; text-align:left!important; }
+html.hud-v3-active .aaa-chaos-unlock-perks > div { display:grid!important; grid-template-columns:28px 1fr!important; gap:2px 8px!important; padding:10px 12px!important; border-radius:12px!important; background:rgba(255,255,255,.04)!important; border:1px solid rgba(255,255,255,.08)!important; }
+html.hud-v3-active .aaa-chaos-unlock-perks > div > span:first-child { grid-row:span 2!important; font-size:20px!important; align-self:center!important; }
+html.hud-v3-active .aaa-chaos-unlock-perks b { font-size:12px!important; color:#fff!important; }
+html.hud-v3-active .aaa-chaos-unlock-perks small { grid-column:2!important; font-size:10px!important; color:var(--ast-muted)!important; }
+html.hud-v3-active .aaa-chaos-unlock-cta { box-shadow:0 10px 28px rgba(248,113,113,.35)!important; }
+html.hud-v3-active .hud-chaos-pill { display:inline-flex!important; align-items:center!important; gap:4px!important; position:relative!important; overflow:hidden!important; padding:4px 8px 4px 6px!important; border-radius:999px!important; border:1px solid rgba(248,113,113,.35)!important; background:rgba(30,10,18,.72)!important; font:800 9px/1 system-ui!important; letter-spacing:.04em!important; color:#fecaca!important; cursor:pointer!important; flex-shrink:0!important; max-width:88px!important; }
+html.hud-v3-active .hud-chaos-pill .hud-chaos-ic { font-size:11px!important; line-height:1!important; }
+html.hud-v3-active .hud-chaos-pill .hud-chaos-lbl { text-transform:uppercase!important; opacity:.85!important; }
+html.hud-v3-active .hud-chaos-pill .hud-chaos-val { margin-left:auto!important; color:#fff!important; font-size:10px!important; }
+html.hud-v3-active .hud-chaos-pill .hud-chaos-fill { position:absolute!important; left:0!important; bottom:0!important; height:2px!important; width:var(--chaos-pct,0%)!important; background:linear-gradient(90deg,#f87171,#fb923c)!important; border-radius:0 2px 2px 0!important; pointer-events:none!important; transition:width .35s ease!important; }
+html.hud-v3-active .hud-chaos-pill.hud-chaos-on { border-color:rgba(251,146,60,.55)!important; box-shadow:0 0 14px rgba(248,113,113,.28)!important; color:#fed7aa!important; }
+html.hud-v3-active .hud-chaos-pill.hud-chaos-warn { animation:ast-chaos-warn-pulse 2s ease-in-out infinite!important; }
+html.hud-v3-active .hud-chaos-pill.hud-chaos-pill-hit { animation:ast-chaos-pill-hit .9s ease-out!important; }
+@keyframes ast-chaos-warn-pulse { 0%,100%{box-shadow:0 0 0 rgba(248,113,113,0)} 50%{box-shadow:0 0 16px rgba(248,113,113,.45)} }
+@keyframes ast-chaos-pill-hit { 0%,100%{transform:scale(1)} 40%{transform:scale(1.08);filter:brightness(1.2)} }
+html.hud-v3-active #app.flash-chaos { animation:ast-flash-chaos .62s ease-out!important; }
+@keyframes ast-flash-chaos { 0%,100%{filter:none} 35%{filter:brightness(1.08) saturate(1.15)} }
+
+html.hud-v3-active #reveal.aaa-reveal-overlay { background:rgba(4,2,10,.92)!important; backdrop-filter:blur(10px)!important; -webkit-backdrop-filter:blur(10px)!important; }
+html.hud-v3-active #reveal.aaa-reveal-opening { animation:ast-reveal-overlay-in .42s cubic-bezier(.22,1,.36,1) both!important; }
+@keyframes ast-reveal-overlay-in { from{opacity:0} to{opacity:1} }
+html.hud-v3-active #reveal .aaa-reveal-modal { background:transparent!important; border:none!important; box-shadow:none!important; max-width:340px!important; text-align:center!important; }
+html.hud-v3-active .aaa-reveal-wrap.aaa-reveal-staged { position:relative!important; padding:20px 16px!important; border-radius:20px!important; background:linear-gradient(180deg,rgba(12,10,24,.75),rgba(12,10,24,.94)),url('assets/hf/gacha-bg.png?v=93') center/cover!important; border:1px solid rgba(255,200,69,.28)!important; box-shadow:0 24px 60px rgba(255,92,168,.28)!important; overflow:hidden!important; }
+html.hud-v3-active .aaa-reveal-shimmer { position:absolute!important; inset:-50%!important; background:conic-gradient(from 0deg,transparent,rgba(255,200,69,.12),transparent 35%)!important; opacity:0!important; pointer-events:none!important; }
+html.hud-v3-active .aaa-reveal-staged.aaa-reveal-active .aaa-reveal-shimmer { animation:ast-reveal-shimmer 1.1s ease-out .15s both!important; }
+@keyframes ast-reveal-shimmer { from{opacity:0;transform:rotate(0deg)} 30%{opacity:1} to{opacity:0;transform:rotate(120deg)} }
+html.hud-v3-active .aaa-reveal-stage-rarity, html.hud-v3-active .aaa-reveal-stage-portrait, html.hud-v3-active .aaa-reveal-stage-details { opacity:0!important; transform:translateY(12px)!important; }
+html.hud-v3-active .aaa-reveal-staged.aaa-reveal-active .aaa-reveal-stage-rarity { animation:ast-reveal-stage-in .38s cubic-bezier(.22,1,.36,1) .12s both!important; }
+html.hud-v3-active .aaa-reveal-staged.aaa-reveal-active .aaa-reveal-stage-portrait { animation:ast-reveal-flip .58s cubic-bezier(.34,1.45,.64,1) .32s both!important; }
+html.hud-v3-active .aaa-reveal-staged.aaa-reveal-active .aaa-reveal-stage-details { animation:ast-reveal-stage-in .42s cubic-bezier(.22,1,.36,1) .55s both!important; }
+@keyframes ast-reveal-stage-in { from{opacity:0;transform:translateY(14px) scale(.96)} to{opacity:1;transform:translateY(0) scale(1)} }
+html.hud-v3-active .aaa-reveal-portrait-wrap { position:relative!important; margin:0 auto 12px!important; width:160px!important; }
+html.hud-v3-active .aaa-reveal-portrait { width:160px!important; height:160px!important; border-radius:50%!important; object-fit:cover!important; display:block!important; margin:0 auto!important; }
+html.hud-v3-active .aaa-reveal-rarity { font:900 12px/1 system-ui!important; letter-spacing:.2em!important; margin-bottom:8px!important; position:relative!important; }
+html.hud-v3-active .aaa-reveal-name { font-size:24px!important; font-weight:800!important; color:#fff!important; margin:0 0 6px!important; }
+html.hud-v3-active .aaa-reveal-sub { font-size:12px!important; color:#b8b0c8!important; }
+html.hud-v3-active .aaa-staff-batch-suggest { display:flex!important; flex-direction:column!important; gap:8px!important; margin-top:12px!important; padding:12px 14px!important; border-radius:16px!important; background:linear-gradient(135deg,rgba(255,200,69,.12),rgba(107,92,255,.1))!important; border:1px solid rgba(255,200,69,.38)!important; box-shadow:0 8px 24px rgba(255,200,69,.14)!important; }
+html.hud-v3-active .aaa-staff-batch-badge { align-self:center!important; padding:4px 10px!important; border-radius:999px!important; font:900 10px/1 system-ui!important; letter-spacing:.08em!important; text-transform:uppercase!important; color:#1a0a14!important; background:linear-gradient(135deg,#ffc845,#ff9b2e)!important; }
+html.hud-v3-active .aaa-staff-batch-lead { margin:0!important; font:700 12px/1.45 system-ui!important; color:#efe6ff!important; text-align:center!important; }
+html.hud-v3-active .aaa-staff-batch-lead b { color:var(--ast-gold)!important; }
+html.hud-v3-active .aaa-staff-batch-cta { width:100%!important; font-size:14px!important; font-weight:800!important; padding:12px 14px!important; border-radius:14px!important; animation:ast-staff-batch-pulse 2.4s ease-in-out infinite!important; }
+@keyframes ast-staff-batch-pulse { 0%,100%{box-shadow:0 8px 22px rgba(255,200,69,.32)} 50%{box-shadow:0 10px 30px rgba(107,92,255,.38)} }
+
+/* BUILD 93 — studio dashboard stat cards, rank path, quests mini-dash, share milestone */
+html.hud-v3-active .aaa-stat-cards {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 8px !important;
+  margin: 10px 0 12px !important;
+}
+html.hud-v3-active .aaa-stat-card {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding: 10px 12px !important;
+  border-radius: 14px !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid var(--ast-border-soft) !important;
+}
+html.hud-v3-active .aaa-stat-card .aaa-stat-ic { font-size: 22px !important; line-height: 1 !important; }
+html.hud-v3-active .aaa-stat-card .aaa-stat-body { display: flex !important; flex-direction: column !important; gap: 2px !important; min-width: 0 !important; }
+html.hud-v3-active .aaa-stat-card .aaa-stat-val { font: 800 16px/1.1 system-ui !important; color: var(--ast-text) !important; }
+html.hud-v3-active .aaa-stat-card .aaa-stat-lbl { font: 700 9px/1.2 system-ui !important; letter-spacing: 0.06em !important; text-transform: uppercase !important; color: var(--ast-muted) !important; }
+html.hud-v3-active .aaa-stat-rel { border-color: rgba(255, 92, 168, 0.28) !important; background: linear-gradient(135deg, rgba(255, 92, 168, 0.12), rgba(107, 92, 255, 0.08)) !important; }
+html.hud-v3-active .aaa-stat-fans { border-color: rgba(77, 212, 255, 0.28) !important; background: linear-gradient(135deg, rgba(77, 212, 255, 0.12), rgba(107, 92, 255, 0.06)) !important; }
+html.hud-v3-active .aaa-stat-share { border-color: rgba(107, 92, 255, 0.3) !important; }
+html.hud-v3-active .aaa-stat-awards { border-color: rgba(255, 200, 69, 0.32) !important; background: linear-gradient(135deg, rgba(255, 200, 69, 0.14), rgba(255, 92, 168, 0.06)) !important; }
+html.hud-v3-active .aaa-rank-strip {
+  margin: 0 0 12px !important;
+  padding: 12px !important;
+  border-radius: 14px !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid var(--ast-border-soft) !important;
+}
+html.hud-v3-active .aaa-rank-strip-head {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin-bottom: 10px !important;
+  font: 700 10px/1.3 system-ui !important;
+  color: var(--ast-muted) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.06em !important;
+}
+html.hud-v3-active .aaa-rank-now { color: var(--ast-cyan) !important; text-transform: none !important; letter-spacing: 0 !important; font-size: 11px !important; }
+html.hud-v3-active .aaa-rank-ladder {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 0 !important;
+  overflow-x: auto !important;
+  padding-bottom: 6px !important;
+  margin-bottom: 8px !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+html.hud-v3-active .aaa-rank-step {
+  flex: 0 0 auto !important;
+  min-width: 64px !important;
+  text-align: center !important;
+  padding: 6px 4px !important;
+  border-radius: 10px !important;
+  opacity: 0.55 !important;
+}
+html.hud-v3-active .aaa-rank-step.current {
+  opacity: 1 !important;
+  background: linear-gradient(135deg, rgba(255, 92, 168, 0.18), rgba(77, 212, 255, 0.12)) !important;
+  border: 1px solid rgba(255, 92, 168, 0.35) !important;
+  box-shadow: 0 4px 16px rgba(255, 92, 168, 0.2) !important;
+}
+html.hud-v3-active .aaa-rank-step.done { opacity: 0.85 !important; }
+html.hud-v3-active .aaa-rank-step .aaa-rank-ic { display: block !important; font-size: 18px !important; margin-bottom: 2px !important; }
+html.hud-v3-active .aaa-rank-step .aaa-rank-name { display: block !important; font: 800 9px/1.2 system-ui !important; color: var(--ast-text) !important; }
+html.hud-v3-active .aaa-rank-step small { display: block !important; font: 700 8px/1.2 system-ui !important; color: var(--ast-muted) !important; margin-top: 2px !important; }
+html.hud-v3-active .aaa-rank-connector {
+  flex: 0 0 12px !important;
+  height: 2px !important;
+  margin-top: 18px !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-radius: 999px !important;
+}
+html.hud-v3-active .aaa-rank-connector.done { background: linear-gradient(90deg, var(--ast-pink), var(--ast-cyan)) !important; }
+html.hud-v3-active .aaa-mini-dash {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 8px !important;
+  margin-bottom: 10px !important;
+  padding: 10px !important;
+  border-radius: 16px !important;
+  background: linear-gradient(135deg, rgba(107, 92, 255, 0.14), rgba(255, 92, 168, 0.1)) !important;
+  border: 1px solid rgba(180, 140, 255, 0.28) !important;
+}
+html.hud-v3-active .aaa-mini-stat {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  min-width: 0 !important;
+}
+html.hud-v3-active .aaa-mini-stat .aaa-mini-ic { font-size: 18px !important; flex-shrink: 0 !important; }
+html.hud-v3-active .aaa-mini-stat b { display: block !important; font: 800 13px/1.2 system-ui !important; color: var(--ast-text) !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; }
+html.hud-v3-active .aaa-mini-stat small { display: block !important; font: 700 9px/1.2 system-ui !important; color: var(--ast-muted) !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; }
+html.hud-v3-active .aaa-mini-mile { grid-column: span 1 !important; }
+html.hud-v3-active .aaa-share-milestone-modal { max-width: 400px !important; text-align: center !important; }
+html.hud-v3-active .aaa-share-milestone-hero { font-size: 48px !important; margin: 4px auto 10px !important; filter: drop-shadow(0 4px 16px rgba(255, 92, 168, 0.45)); }
+html.hud-v3-active .aaa-share-milestone-lead { margin: 8px 0 12px !important; font-size: 13px !important; color: var(--ast-muted) !important; }
+html.hud-v3-active .aaa-share-milestone-stats {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 8px !important;
+  margin: 10px 0 !important;
+}
+html.hud-v3-active .aaa-share-milestone-stats > div {
+  padding: 10px 8px !important;
+  border-radius: 12px !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid var(--ast-border-soft) !important;
+}
+html.hud-v3-active .aaa-share-milestone-stats span { display: block !important; font-size: 20px !important; margin-bottom: 4px !important; }
+html.hud-v3-active .aaa-share-milestone-stats b { display: block !important; font-size: 16px !important; color: var(--ast-text) !important; }
+html.hud-v3-active .aaa-share-milestone-stats small { display: block !important; font-size: 9px !important; color: var(--ast-muted) !important; text-transform: uppercase !important; }
+html.hud-v3-active .aaa-share-milestone-cta { box-shadow: 0 10px 28px rgba(255, 92, 168, 0.35) !important; }
+html.hud-v3-active [data-act="share"].ast-share-nudge { animation: ast-share-nudge-pulse 1.8s ease-in-out infinite !important; box-shadow: 0 0 0 2px rgba(255, 200, 69, 0.5), 0 8px 24px rgba(255, 92, 168, 0.35) !important; }
+@keyframes ast-share-nudge-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.04); } }
+
+/* BUILD 93 — Offline + idle clarity: breakdown modal, while-away preview, produce footer */
+html.hud-v3-active .aaa-offline-modal { max-width: 400px !important; text-align: left !important; }
+html.hud-v3-active .aaa-offline-lead { margin: 4px 0 10px !important; font-size: 13px !important; text-align: center !important; }
+html.hud-v3-active .aaa-offline-preview {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 8px !important;
+  margin: 0 0 10px !important;
+  padding: 10px 12px !important;
+  border-radius: 12px !important;
+  background: linear-gradient(135deg, rgba(107, 92, 255, 0.14), rgba(255, 92, 168, 0.1)) !important;
+  border: 1px solid rgba(107, 92, 255, 0.35) !important;
+  font-size: 12px !important;
+  line-height: 1.45 !important;
+  color: var(--ast-text) !important;
+}
+html.hud-v3-active .aaa-offline-preview-ic { font-size: 18px !important; line-height: 1 !important; flex-shrink: 0 !important; }
+html.hud-v3-active .aaa-offline-sub { padding-left: 10px !important; font-size: 12px !important; opacity: 0.92 !important; }
+html.hud-v3-active .aaa-offline-pass {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 8px !important;
+  margin: 10px 0 6px !important;
+  padding: 10px 12px !important;
+  border-radius: 12px !important;
+  background: linear-gradient(135deg, rgba(255, 200, 69, 0.16), rgba(255, 92, 168, 0.08)) !important;
+  border: 1px solid rgba(255, 200, 69, 0.42) !important;
+  font-size: 12px !important;
+  line-height: 1.45 !important;
+  color: var(--ast-text) !important;
+}
+html.hud-v3-active .aaa-offline-pass-ic { font-size: 18px !important; flex-shrink: 0 !important; }
+html.hud-v3-active .aaa-offline-cap { margin: 8px 0 12px !important; font-size: 11px !important; text-align: center !important; line-height: 1.45 !important; }
+html.hud-v3-active .aaa-produce-idle-footer {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 6px 10px !important;
+  margin-top: 12px !important;
+  padding: 10px 12px !important;
+  border-radius: 14px !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid var(--ast-border-soft) !important;
+  font-size: 12px !important;
+  color: var(--ast-muted) !important;
+  cursor: help !important;
+}
+html.hud-v3-active .aaa-produce-idle-footer .aaa-idle-ic { font-size: 16px !important; }
+html.hud-v3-active .aaa-produce-idle-footer .aaa-idle-copy b { color: var(--ast-gold) !important; font-weight: 800 !important; }
+html.hud-v3-active .aaa-produce-idle-footer .aaa-idle-hint { margin-left: auto !important; font-size: 11px !important; }

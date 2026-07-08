@@ -313,6 +313,13 @@
 
     hook.studioStars = () => hook.getState().studioStars || 1;
     hook.studioRatingMult = () => premiereMult(hook.getState());
+    hook.studioRankProgress = (S) => {
+      S = S || hook.getState();
+      const next = (S.studioStars || 1) + 1;
+      if (next > 5) return { next: 5, pct: 100, ready: false, pillars: [], tier: tierInfo(5) };
+      const pp = pillarProgress(S, NEXT_REQ[next]);
+      return { next, ...pp, tier: tierInfo(next) };
+    };
     hook.projectStarLock = (p) => {
       const S = hook.getState();
       return (S.studioStars || 1) < (p.starUnlock || 1);

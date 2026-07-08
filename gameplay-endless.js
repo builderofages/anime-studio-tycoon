@@ -310,6 +310,10 @@
           const delta = (S.chaos || 0) - chaos0;
           S.chaos = Math.max(0, Math.min(100, chaos0 + delta * diff.chaos));
         }
+        if (S.chaosMode && S.chaos != null && chaos0 != null) {
+          const rise = (S.chaos || 0) - chaos0;
+          if (rise > 0) S.chaos = Math.max(0, Math.min(100, chaos0 + rise * 1.35));
+        }
         if (S.stamina != null && diff.stamina !== 1) {
           const st0 = 100 - (S.stamina || 100);
           S.stamina = Math.max(0, Math.min(100, 100 - st0 * diff.stamina));

@@ -22,7 +22,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%233a2b4d'/%3E%3Ccircle cx='32' cy='32' r='30' fill='none' stroke='%23ffc845' stroke-width='3'/%3E%3Cg fill='%23ff9bc4'%3E%3Cellipse cx='32' cy='15' rx='5' ry='8'/%3E%3Cellipse cx='32' cy='49' rx='5' ry='8'/%3E%3Cellipse cx='15' cy='32' rx='8' ry='5'/%3E%3Cellipse cx='49' cy='32' rx='8' ry='5'/%3E%3C/g%3E%3Ccircle cx='32' cy='32' r='7' fill='%23ffc845'/%3E%3C/svg%3E">
 <link rel="manifest" href="manifest.json">
 <!-- Legacy gameplay-*.css disabled — aaa-ui + game-skin + hud-premium own chrome -->
-<link rel="stylesheet" href="hud-premium.css?v=92">
+<link rel="stylesheet" href="hud-premium.css?v=93">
 <!-- ui-complete.css disabled — v5 uses aaa-tab-page heroes -->
 <!-- gameplay-studio-rating.css disabled — ast-v5 authority -->
 <!-- studio-premium.css disabled — ast-v5 authority -->
@@ -30,8 +30,8 @@
 <!-- game-skin.css disabled — fought ast-v5 (animation:none, flat panels) -->
 <!-- hf-design.css disabled — ast-v5 authority -->
 <!-- aaa-ui.css disabled — ast-v5 authority -->
-<link rel="stylesheet" href="legacy-fx.css?v=92">
-<link rel="stylesheet" href="ast-v5.css?v=92">
+<link rel="stylesheet" href="legacy-fx.css?v=93">
+<link rel="stylesheet" href="ast-v5.css?v=93">
 <script>document.documentElement.classList.add("premium-hud","hud-v3-active")</script>
 <meta name="theme-color" content="#08050f">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -74,10 +74,10 @@
 <div id="app">
   <div id="top">
     <div id="studio-rank"><span>🎬</span><span class="rank-tier">Garage Studio</span></div>
-    <div class="res yen"><img src="icons/hf/yen.png?v=92" alt="Yen"><span><span class="v" id="r-yen">0</span> <small>¥</small></span></div>
-    <div class="res fans"><img src="icons/hf/fans.png?v=92" alt="Fans"><span class="v" id="r-fans">0</span></div>
-    <div class="res hype"><img src="icons/hf/hype.png?v=92" alt="Hype"><span class="v" id="r-hype">0</span></div>
-    <div class="res gems"><img src="icons/hf/gems.png?v=92" alt="Gems"><span class="v" id="r-gems">0</span></div>
+    <div class="res yen"><img src="icons/hf/yen.png?v=93" alt="Yen"><span><span class="v" id="r-yen">0</span> <small>¥</small></span></div>
+    <div class="res fans"><img src="icons/hf/fans.png?v=93" alt="Fans"><span class="v" id="r-fans">0</span></div>
+    <div class="res hype"><img src="icons/hf/hype.png?v=93" alt="Hype"><span class="v" id="r-hype">0</span></div>
+    <div class="res gems"><img src="icons/hf/gems.png?v=93" alt="Gems"><span class="v" id="r-gems">0</span></div>
     <div id="trendbar"><span class="spark">📈</span> Trending: <b id="trend">Action</b></div>
   </div>
   <div id="goal"><span id="goal-txt">🎯 Reach 50 Fans for Web Series</span><div class="bar"><i id="goal-bar" style="width:0%"></i></div></div>
@@ -89,13 +89,13 @@
     <button class="btn-ghost" id="btn-mute">🔊 Sound: On</button>
     <button class="btn-ghost" id="btn-save" style="display:none">💾 Save</button>
     <button class="btn-ghost" id="btn-reset">↺ Reset</button>
-  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 92 · Expand</span></div>
+  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 93 · Empire</span></div>
   <div id="toasts"></div>
 </div>
 
 <div class="overlay" id="start" style="display: none;">
   <div class="card-modal">
-    <img class="start-hero" src="start-hero.png?v=92" width="140" height="140" alt="Anime Studio Tycoon">
+    <img class="start-hero" src="start-hero.png?v=93" width="140" height="140" alt="Anime Studio Tycoon">
     <h1>Anime Studio Tycoon</h1>
     <p id="start-tagline">From a one-room studio to a global anime empire</p>
     <label style="display:block;font-size:12px;font-weight:800;color:var(--plum);margin:4px 0 4px">🏢 Studio Name</label>
@@ -120,9 +120,13 @@
 </div>
 
 <div class="overlay" id="offline" style="display:none">
-  <div class="card-modal">
-    <h1 style="font-size:20px">While you were away…</h1>
+  <div class="card-modal aaa-offline-modal">
+    <h1 style="font-size:20px" id="offline-title">While you were away…</h1>
+    <p class="aaa-offline-lead muted" id="offline-lead"></p>
+    <div class="aaa-offline-preview" id="offline-preview" hidden></div>
     <div class="offlist" id="offlist"></div>
+    <div class="aaa-offline-pass" id="offline-pass" hidden></div>
+    <p class="aaa-offline-cap muted" id="offline-cap"></p>
     <button class="btn-gold" id="btn-offclose" style="width:100%">Collect &amp; Continue</button>
   </div>
 </div>
@@ -222,16 +226,45 @@
   </div>
 </div>
 
+<div class="overlay aaa-share-milestone-overlay" id="share-milestone" style="display:none">
+  <div class="card-modal aaa-share-milestone-modal">
+    <div class="aaa-share-milestone-hero" aria-hidden="true">🔥</div>
+    <h1 style="font-size:22px;text-align:center">100 Fans — Local Hit!</h1>
+    <p class="aaa-share-milestone-lead">You're a local sensation. Brag about your studio and grab <b>+25💎</b> on your first share.</p>
+    <div class="aaa-share-milestone-stats">
+      <div><span>🎬</span><b id="share-milestone-rel">0</b><small>Premieres</small></div>
+      <div><span>👥</span><b id="share-milestone-fans">0</b><small>Fans</small></div>
+      <div><span>🏆</span><b id="share-milestone-rank">#—</b><small>Industry rank</small></div>
+    </div>
+    <button class="btn-gold aaa-share-milestone-cta" data-act="share-milestone-go" style="width:100%;font-size:16px;margin-top:10px">📣 Share Your Studio</button>
+    <button class="btn-ghost" data-act="share-milestone-close" style="width:100%;margin-top:8px;font-size:13px">Maybe later</button>
+  </div>
+</div>
+
+<div class="overlay aaa-chaos-unlock-overlay" id="chaos-unlock" style="display:none">
+  <div class="card-modal aaa-chaos-unlock-modal">
+    <div class="aaa-chaos-unlock-hero" aria-hidden="true">🌪️</div>
+    <h1 style="font-size:22px;text-align:center">🌪️ Chaos Mode Unlocked!</h1>
+    <p class="aaa-chaos-unlock-lead">Veteran studios can flip Chaos Mode ON for bigger premieres — but the crisis meter rises faster and random disasters strike more often.</p>
+    <div class="aaa-chaos-unlock-perks">
+      <div><span>💰</span><b>+50% premiere rewards</b><small>¥, fans, and hype scale up on every release while Chaos is ON</small></div>
+      <div><span>⚠️</span><b>Rising crisis meter</b><small>High chaos triggers studio disasters — pick your response wisely</small></div>
+    </div>
+    <button class="btn-gold aaa-chaos-unlock-cta" data-act="chaos-unlock-enable" style="width:100%;font-size:16px;margin-top:10px">🌪️ Enable Chaos Mode</button>
+    <button class="btn-ghost" data-act="chaos-unlock-close" style="width:100%;margin-top:8px;font-size:13px">Maybe later</button>
+  </div>
+</div>
+
 <div class="overlay" id="whatsnew" style="display:none">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <img src="start-hero.png?v=92" alt="" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
-    <h1 style="font-size:22px;text-align:center">✨ Build 92 — Market Retention</h1>
+    <img src="start-hero.png?v=93" alt="" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
+    <h1 style="font-size:22px;text-align:center">✨ Build 93 — Studio Dashboard</h1>
     <div class="offlist" style="margin:12px 0">
-      <div><span>📣 Marketing unlock</span><b>50 fans opens the Market tab — modal + coach tip</b></div>
-      <div><span>📊 Campaign ROI</span><b>Glass hero with fans-per-¥ preview and afford glow</b></div>
-      <div><span>🎉 First campaign</span><b>Celebration toast, fan float, and Buzz Builder achievement</b></div>
-      <div><span>🎯 Fan milestones</span><b>Coach nudges Market when stuck on 10 · 50 · 100 fans</b></div>
-      <div><span>💎 Store polish</span><b>Gem balance hero, free daily gems pulse, and next-trophy card</b></div>
+      <div><span>📊 Stat cards</span><b>Studio tab shows premieres, fans, market share &amp; awards at a glance</b></div>
+      <div><span>🎯 Quests strip</span><b>Mini dashboard on Home — releases, fans &amp; next milestone</b></div>
+      <div><span>🎬 Rank path</span><b>Garage → Web Series → TV → OVA progression ladder on Studio</b></div>
+      <div><span>⭐ Coach rank-up</span><b>Coach nudges when you're close to studio rating promotion</b></div>
+      <div><span>📣 100-fan share</span><b>Auto-prompt to share your local-hit milestone (+25💎)</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
   </div>
@@ -271,8 +304,9 @@ const STORE_PAYMENTS = true; // store always visible; buyReal routes web→check
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 92 · Expand";
-const ASSET_V = "92";
+const BUILD_TAG = "build 93 · Empire";
+const ASSET_V = "93";
+const OFFLINE_PREVIEW_CAP = 4*3600; // "while away" preview when return is under 4h
 const SHARE_PLAY_URL = "https://anime-studio-tycoon.vercel.app/play";
 const PITY_EPIC = 25;
 const PITY_LEG = 80;
@@ -829,8 +863,33 @@ function checkFanMilestoneToasts(){
       window.__AST_FX__?.burst?.(10);
       const goal=document.getElementById("goal");
       if(goal){ goal.classList.add("goal-milestone-hit"); setTimeout(()=>goal.classList.remove("goal-milestone-hit"),1400); }
+      if(m.fans===100) queueShareMilestoneModal();
     }
   }
+}
+function queueShareMilestoneModal(){
+  if(OFFLINE||S.shareMilestoneSeen) return;
+  S.shareMilestoneSeen=true;
+  save();
+  setTimeout(()=>{
+    const m=document.getElementById("share-milestone");
+    if(!m) return;
+    const rel=document.getElementById("share-milestone-rel");
+    const fans=document.getElementById("share-milestone-fans");
+    const rank=document.getElementById("share-milestone-rank");
+    if(rel) rel.textContent=fmt(S.releases||0);
+    if(fans) fans.textContent=fmt(S.fans||0);
+    if(rank) rank.textContent="#"+industryStandings().rank;
+    m.style.display="flex";
+    const shareBtn=document.querySelector('[data-act="share"]');
+    if(shareBtn) shareBtn.classList.add("ast-share-nudge");
+  },2000);
+}
+function closeShareMilestoneModal(goShare){
+  const m=document.getElementById("share-milestone");
+  if(m) m.style.display="none";
+  document.querySelectorAll('[data-act="share"]').forEach(el=>el.classList.remove("ast-share-nudge"));
+  if(goShare) shareGame();
 }
 function suggestedGreenlightGenre(){ return trendGenre(); }
 function applyTrendingGenreSuggest(){
@@ -851,6 +910,24 @@ function currentLoginStreak(){
   return 0;
 }
 
+const CONTENT_RANK_LADDER = [
+  { fans:0,    icon:"🎬", name:"Garage",      unlock:"Short Film" },
+  { fans:20,   icon:"📱", name:"Buzz",        unlock:"Web Series" },
+  { fans:120,  icon:"📺", name:"Broadcast",   unlock:"TV Series" },
+  { fans:500,  icon:"💿", name:"Premium",     unlock:"OVA" },
+  { fans:2200, icon:"🎥", name:"Cinema",      unlock:"Feature Film" },
+  { fans:9000, icon:"🌟", name:"Blockbuster", unlock:"Mega Hit" },
+  { fans:25000,icon:"👑", name:"Legend",      unlock:"Mythic" },
+];
+function contentRankIndex(fans){
+  let idx=0;
+  for(let i=0;i<CONTENT_RANK_LADDER.length;i++){ if(fans>=CONTENT_RANK_LADDER[i].fans) idx=i; }
+  return idx;
+}
+function nextContentRank(fans){
+  const idx=contentRankIndex(fans);
+  return idx<CONTENT_RANK_LADDER.length-1?CONTENT_RANK_LADDER[idx+1]:null;
+}
 const MILESTONES = [
   { fans:20,    label:"Earn 20 Fans to unlock Web Series" },
   { fans:120,   label:"Reach 120 Fans for your own TV Series" },
@@ -975,7 +1052,7 @@ function freshState(){
     stamina:100, chaos:0, chaosMode:false, lastChaos:0, lastStarDemand:0,
     items:{}, entitlements:[], purchaseLog:[], firstPurchaseDone:false, noAds:false, wheelDate:"", scratchDate:"",
     studioName:"", hallOfFame:[], bestRank:99,
-    unlockedSeen:[], franchises:{}, ageOk:false, freeScoutUsed:false, starsUnlockModalSeen:false, studioUnlockModalSeen:false, marketUnlockModalSeen:false, campaignsRun:0, researchUnlockModalSeen:false,
+    unlockedSeen:[], franchises:{}, ageOk:false, freeScoutUsed:false, starsUnlockModalSeen:false, studioUnlockModalSeen:false, marketUnlockModalSeen:false, campaignsRun:0, researchUnlockModalSeen:false, chaosUnlockModalSeen:false, firstChaosToastSeen:false, awaitFirstChaosSurvival:false,
     gems:0, producerPass:false, bundleBought:false, goldenUntil:0, rewardedUntil:0, rewardedCdUntil:0,
     milestonesClaimed:[], seasonClaimed:[],
     slots:1, projects:[null],   // each slot: {pid, genre, progress} or null
@@ -990,7 +1067,7 @@ function freshState(){
     weekKey:"", weeklyQuests:[], weekProg:{releases:0,yen:0,campaigns:0,hires:0,hypeSpent:0,scouts:0,greenlit:0,taps:0},
     loginMonth:"", loginClaimedCount:0, loginLastClaimDate:"", loginStreak:0, loginStreakBest:0, fanMilestonesToast:[],
     lastDecision:0, studioLevel:1, starterSeen:false, combo:0, comboBest:0, lastReleaseAt:0, flashDealDay:"", flashSeen:false,
-    lastDailyDate:"", dailyStreak:0, bestValue:0, freeGemsDate:"", taps:0, sharedOnce:false,
+    lastDailyDate:"", dailyStreak:0, bestValue:0, freeGemsDate:"", taps:0, sharedOnce:false, shareMilestoneSeen:false,
     tutorialSeen:false, whatsnewSeen:false, achievements:[],
     pityCount:0, merchLevel:0, autoGreenlight:false, rivalWins:0,
     rivalWeek:"", rivalTarget:null, rivalStartVal:0, rivalGoal:0, rivalClaimed:false,
@@ -1214,17 +1291,29 @@ function showReveal(t, rar, leveled){
   const R=STAR_RARITY[rar];
   const el=document.getElementById('reveal-body'); if(!el) return;
   const rKey=rar.toLowerCase();
-  el.innerHTML=`<div class="aaa-reveal-wrap aaa-reveal-${rKey}">
-    <div class="aaa-reveal-burst" aria-hidden="true"></div>
-    <div class="aaa-reveal-rarity" style="color:${R.color}">${rar.toUpperCase()}${rar==='Legendary'?' 🌟':(rar==='Epic'?' ✨':'')}</div>
-    <img class="aaa-reveal-portrait" src="${t.img}" alt="" style="box-shadow:0 0 32px ${R.color}99, inset 0 0 0 3px ${R.color}">
-    <h2 class="aaa-reveal-name">${t.name.replace(' ☆','')}</h2>
-    <div class="aaa-reveal-sub">${ROLES[t.role].name} · ${leveled?'⬆ Contract renewed — leveled up!':'✨ New talent signed!'} · +${fmt(R.power)}/level</div></div>`;
   const modal=document.getElementById('reveal');
   if(modal){
     modal.className='overlay aaa-reveal-overlay aaa-reveal-'+rKey;
     modal.style.display='flex';
+    modal.classList.remove('aaa-reveal-opening');
+    void modal.offsetWidth;
+    modal.classList.add('aaa-reveal-opening');
   }
+  el.innerHTML=`<div class="aaa-reveal-wrap aaa-reveal-${rKey} aaa-reveal-staged">
+    <div class="aaa-reveal-burst" aria-hidden="true"></div>
+    <div class="aaa-reveal-shimmer" aria-hidden="true"></div>
+    <div class="aaa-reveal-rarity aaa-reveal-stage-rarity" style="color:${R.color}">${rar.toUpperCase()}${rar==='Legendary'?' 🌟':(rar==='Epic'?' ✨':'')}</div>
+    <div class="aaa-reveal-portrait-wrap aaa-reveal-stage-portrait">
+      <img class="aaa-reveal-portrait" src="${t.img}" alt="" style="box-shadow:0 0 32px ${R.color}99, inset 0 0 0 3px ${R.color}">
+    </div>
+    <div class="aaa-reveal-stage-details">
+      <h2 class="aaa-reveal-name">${t.name.replace(' ☆','')}</h2>
+      <div class="aaa-reveal-sub">${ROLES[t.role].name} · ${leveled?'⬆ Contract renewed — leveled up!':'✨ New talent signed!'} · +${fmt(R.power)}/level</div>
+    </div></div>`;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    const wrap=el.querySelector('.aaa-reveal-staged');
+    if(wrap){ wrap.classList.remove('aaa-reveal-active'); void wrap.offsetWidth; wrap.classList.add('aaa-reveal-active'); }
+  }));
   const burst={Legendary:48,Epic:32,Rare:20,Common:14}[rar]||14;
   window.__AST_FX__?.burst?.(burst);
   if(rar==='Legendary'||rar==='Epic') window.__AST_FX__?.shake?.();
@@ -1442,7 +1531,7 @@ function resolveDecision(yes){
   window.__AST_PENDING_WARROOM__=null;
   const m=document.getElementById("decision"); if(m) m.style.display="none";
   if(!d) return;
-  if(d.chaos) S.lastChaos=Date.now();
+  if(d.chaos){ S.lastChaos=Date.now(); celebrateChaosSurvival(); }
   else S.lastDecision=Date.now();
   const msg=(yes?d.yes[1]:d.no[1])();
   track("decision",{id:d.id,yes,chaos:!!d.chaos}); play("reward");
@@ -1487,7 +1576,10 @@ function showChaosDecision(){
   if(!document.getElementById("decision-body")) return;
   _pendingDecision=Object.assign({chaos:true}, CHAOS[Math.floor(Math.random()*CHAOS.length)]);
   window.__AST_CRISIS_OPEN__=true;
-  if(renderDecisionModal(_pendingDecision, true)) S.lastChaos=Date.now();
+  if(renderDecisionModal(_pendingDecision, true)){
+    S.lastChaos=Date.now();
+    celebrateFirstChaosEvent();
+  }
   else { _pendingDecision=null; window.__AST_CRISIS_OPEN__=false; }
 }
 function maybeChaos(){
@@ -1810,7 +1902,7 @@ function load(){
     S.items=(d.items&&typeof d.items==="object")?d.items:{}; S.entitlements=Array.isArray(d.entitlements)?d.entitlements:[];
     S.hallOfFame=Array.isArray(d.hallOfFame)?d.hallOfFame:[]; S.studioName=d.studioName||"";
     S.unlockedSeen=Array.isArray(d.unlockedSeen)?d.unlockedSeen:[]; S.franchises=(d.franchises&&typeof d.franchises==="object")?d.franchises:{}; S.ageOk=!!d.ageOk;
-    S.freeScoutUsed=!!d.freeScoutUsed; S.starsUnlockModalSeen=!!d.starsUnlockModalSeen; S.studioUnlockModalSeen=!!d.studioUnlockModalSeen; S.marketUnlockModalSeen=!!d.marketUnlockModalSeen; S.campaignsRun=+d.campaignsRun||0; S.researchUnlockModalSeen=!!d.researchUnlockModalSeen;
+    S.freeScoutUsed=!!d.freeScoutUsed; S.starsUnlockModalSeen=!!d.starsUnlockModalSeen; S.studioUnlockModalSeen=!!d.studioUnlockModalSeen; S.marketUnlockModalSeen=!!d.marketUnlockModalSeen; S.campaignsRun=+d.campaignsRun||0; S.researchUnlockModalSeen=!!d.researchUnlockModalSeen; S.chaosUnlockModalSeen=!!d.chaosUnlockModalSeen; S.firstChaosToastSeen=!!d.firstChaosToastSeen; S.awaitFirstChaosSurvival=!!d.awaitFirstChaosSurvival;
     S.quests=Array.isArray(d.quests)?d.quests:[];
     S.questProg=Object.assign({releases:0,yen:0,campaigns:0,hires:0,hypeSpent:0,scouts:0}, d.questProg||{});
     S.bestValue=+d.bestValue||0; S.freeGemsDate=d.freeGemsDate||""; S.taps=+d.taps||0;
@@ -1888,7 +1980,7 @@ function celebrateCollect(kind){
     app.classList.remove("flash-gold"); void app.offsetWidth; app.classList.add("flash-gold");
     setTimeout(()=>app.classList.remove("flash-gold"), 520);
   }
-  const n=kind==="offline"?22:16;
+  const n=kind==="offline"?28:16;
   const modal=document.getElementById(kind==="offline"?"offline":"daily");
   if(modal&&window.__AST_FX__?.burst){
     const card=modal.querySelector(".card-modal");
@@ -1899,7 +1991,16 @@ function celebrateCollect(kind){
   }else window.__AST_FX__?.burst?.(n);
   if(kind==="offline") window.__AST_FX__?.shake?.();
   play(kind==="offline"?"fanfare":"claim");
-  toast(kind==="offline"?"✨ Welcome back — earnings collected!":"🎁 Daily reward collected!","special");
+  if(kind==="offline"){
+    const off=window.__AST_OFFLINE_COLLECT__;
+    window.__AST_OFFLINE_COLLECT__=null;
+    const bits=[];
+    if(off?.yen>0) bits.push(`¥${fmt(off.yen)} banked`);
+    if(off?.fans>0) bits.push(`+${fmt(off.fans)} fans`);
+    if(off?.releases>0) bits.push(`${off.releases} premiere${off.releases>1?"s":""}`);
+    else if(off?.progressShows>0) bits.push(`+${Math.round(off.progressPct||0)}% progress`);
+    toast(bits.length?`✨ Collected! ${bits.join(" · ")} — your studio kept buzzing!`:"✨ Welcome back — earnings collected!","special");
+  }else toast("🎁 Daily reward collected!","special");
 }
 function celebrateFirstHire(role){
   if(OFFLINE) return;
@@ -1937,6 +2038,33 @@ function celebrateCampaignRun(i){
     }
   }else window.__AST_FX__?.burst?.(18);
   play("reward");
+}
+function celebrateFirstChaosEvent(){
+  if(OFFLINE||S.firstChaosToastSeen) return;
+  S.firstChaosToastSeen=true; S.awaitFirstChaosSurvival=true; save();
+  const app=document.getElementById("app");
+  if(app){
+    app.classList.remove("flash-chaos"); void app.offsetWidth; app.classList.add("flash-chaos");
+    setTimeout(()=>app.classList.remove("flash-chaos"), 620);
+  }
+  const pill=document.getElementById("hud-chaos-pill");
+  if(pill){
+    pill.classList.add("hud-chaos-pill-hit");
+    setTimeout(()=>pill.classList.remove("hud-chaos-pill-hit"), 900);
+    if(window.__AST_FX__?.burst){
+      const r=pill.getBoundingClientRect();
+      window.__AST_FX__.burst(20, r.left+r.width/2, r.top+r.height/2);
+    }
+  }else window.__AST_FX__?.burst?.(16);
+  play("reward");
+  toastSafe("🌪️ First chaos event! Pick wisely — crisis choices shape your studio.", true);
+}
+function celebrateChaosSurvival(){
+  if(OFFLINE||!S.awaitFirstChaosSurvival) return;
+  S.awaitFirstChaosSurvival=false; save();
+  play("reward");
+  toastSafe("🛡️ Crisis survived! You handled your first chaos event.", true);
+  showAchievePop("🌪️ Chaos survivor");
 }
 function celebrateFirstExpand(){
   if(OFFLINE) return;
@@ -2057,6 +2185,12 @@ function researchUnlockProgress(){
   const need=120-fans;
   return need===1?"1 more fan to unlock Research":fmt(need)+" more fans to unlock Research";
 }
+function chaosUnlockProgress(){
+  const rel=S.releases||0;
+  if(rel>=10) return null;
+  const need=10-rel;
+  return need===1?"1 more premiere to unlock Chaos":fmt(need)+" more premieres to unlock Chaos";
+}
 function researchCost(genre){
   const lvl=S.mastery[genre]||0;
   return { lvl, cost:Math.ceil(1200*Math.pow(1.9,lvl)), hypeCost:2+lvl };
@@ -2103,6 +2237,26 @@ function closeStudioUnlockModal(goExpand){
     },280);
   }
 }
+let _chaosUnlockQueued=false;
+function showChaosUnlockModal(){
+  if(S.chaosUnlockModalSeen||!featureUnlocked("chaos")) return;
+  const m=document.getElementById("chaos-unlock"); if(!m) return;
+  m.style.display="flex"; _chaosUnlockQueued=false; play("reward");
+}
+function queueChaosUnlockModal(){
+  if(S.chaosUnlockModalSeen||!featureUnlocked("chaos")) return;
+  if(unlockModalPending()){ _chaosUnlockQueued=true; return; }
+  showChaosUnlockModal();
+}
+function closeChaosUnlockModal(goEnable){
+  const m=document.getElementById("chaos-unlock"); if(m) m.style.display="none";
+  S.chaosUnlockModalSeen=true; save();
+  if(goEnable){
+    S.chaosMode=true; S.tab="produce";
+    toastSafe("🌪️ CHAOS MODE ON — +50% rewards, but disasters loom…", true);
+    play("reward"); render();
+  }
+}
 let _marketUnlockQueued=false;
 function showMarketUnlockModal(){
   if(S.marketUnlockModalSeen||!featureUnlocked("market")) return;
@@ -2142,6 +2296,7 @@ function checkUnlocks(){
       else if(k==="stars" && started && !OFFLINE) queueStarsUnlockModal();
       else if(k==="market" && started && !OFFLINE) queueMarketUnlockModal();
       else if(k==="research" && started && !OFFLINE) queueResearchUnlockModal();
+      else if(k==="chaos" && started && !OFFLINE) queueChaosUnlockModal();
       else if(started && !OFFLINE) toastSafe("🔓 Unlocked: "+UNLOCKS[k].label,true);
     }
   }
@@ -2228,6 +2383,7 @@ function closePremiere(){
   if(_starsUnlockQueued){ showStarsUnlockModal(); save(); return; }
   if(_marketUnlockQueued){ showMarketUnlockModal(); save(); return; }
   if(_researchUnlockQueued){ showResearchUnlockModal(); save(); return; }
+  if(_chaosUnlockQueued){ showChaosUnlockModal(); save(); return; }
   if((S.releases||0)<2&&activeCount()===0){
     _glMode=true; S.tab="produce"; render(); save(); return;
   }
@@ -2680,9 +2836,91 @@ function tick(seconds){
 
 /* offline earning cap (seconds): base 8h, ×2 with Producer Pass, +1h per offline perk level */
 function offlineCap(){ return OFFLINE_CAP*(S.producerPass?2:1) + (((S.perks&&S.perks.offline)||0)*3600); }
+function formatAwayTime(sec){
+  sec=Math.max(0,Math.floor(sec));
+  if(sec<60) return sec+"s";
+  if(sec<3600) return Math.floor(sec/60)+" min";
+  const h=Math.floor(sec/3600), m=Math.floor((sec%3600)/60);
+  return m?`${h}h ${m}m`:`${h}h`;
+}
+function formatOfflineCapHours(){
+  return Math.floor(offlineCap()/3600)+"h";
+}
+function idleIncomeTooltip(){
+  const rate=royaltyPerSec();
+  if(rate<=0) return "Premiere anime to earn idle royalties while you play or are away";
+  let tip=`Idle royalties: ¥${fmt(rate)}/s (¥${fmt(rate*60)}/min) — offline cap ${formatOfflineCapHours()}`;
+  if(S.producerPass) tip+=" · Producer Pass: 2× offline cap";
+  return tip;
+}
+function updateIdleIncomeHudTip(){
+  const tip=idleIncomeTooltip();
+  document.querySelectorAll(".res.yen, .hud-stat-wrap.yen").forEach(el=>{ el.title=tip; });
+}
+function offlineHadMeaningfulReturn(r){
+  return (r.yen||0)>0||(r.fans||0)>0||(r.releases||0)>0||(r.progressShows||0)>0;
+}
+function renderOfflineBreakdown(sec,r){
+  const productionYen=Math.max(0,Math.floor((r.yen||0)-(r.royaltyYen||0)));
+  let progressLine="—";
+  if(r.releases>0) progressLine=`${r.releases} released${r.progressShows>0?` · ${r.progressShows} advanced (+${Math.round(r.progressPct||0)}%)`:""}`;
+  else if(r.progressShows>0) progressLine=`${r.progressShows} show${r.progressShows>1?"s":""} · +${Math.round(r.progressPct||0)}% progress`;
+  return `<div><span>Time away</span><b>${formatAwayTime(sec)}</b></div>
+    <div><span>Yen earned</span><b>¥${fmt(r.yen||0)}</b></div>
+    ${(r.royaltyYen||0)>0?`<div class="aaa-offline-sub"><span>Royalties (idle)</span><b>¥${fmt(r.royaltyYen)}</b></div>`:""}
+    ${productionYen>0?`<div class="aaa-offline-sub"><span>Production</span><b>¥${fmt(productionYen)}</b></div>`:""}
+    <div><span>Fans gained</span><b>+${fmt(r.fans||0)}</b></div>
+    <div><span>Projects progressed</span><b>${progressLine}</b></div>`;
+}
+function showWhileAwayPreviewToast(sec,r){
+  const parts=[];
+  if(r.yen>0) parts.push(`+¥${fmt(r.yen)}`);
+  if(r.fans>0) parts.push(`+${fmt(r.fans)} fans`);
+  if(r.releases>0) parts.push(`${r.releases} release${r.releases>1?"s":""}`);
+  else if(r.progressShows>0) parts.push(`+${Math.round(r.progressPct||0)}% progress`);
+  toast(`👋 While away (${formatAwayTime(sec)}): ${parts.join(" · ")}`,true);
+}
+function showOfflineModal(sec,r,opts={}){
+  if(!offlineHadMeaningfulReturn(r)) return false;
+  window.__AST_OFFLINE_COLLECT__=r;
+  const preview=!!opts.preview || (sec>0 && sec<OFFLINE_PREVIEW_CAP);
+  const titleEl=document.getElementById("offline-title");
+  const leadEl=document.getElementById("offline-lead");
+  const previewEl=document.getElementById("offline-preview");
+  const passEl=document.getElementById("offline-pass");
+  const capEl=document.getElementById("offline-cap");
+  if(titleEl) titleEl.textContent=t("offlineTitle","While you were away")+"…";
+  if(leadEl) leadEl.textContent=`Your studio kept working for ${formatAwayTime(sec)}.`;
+  if(previewEl){
+    if(preview){
+      previewEl.hidden=false;
+      const idle=royaltyPerSec();
+      previewEl.innerHTML=`<span class="aaa-offline-preview-ic" aria-hidden="true">⏱️</span><span><b>While away preview</b> — under 4h tracked${idle>0?` at ¥${fmt(idle)}/s idle`:" (premiere to unlock royalties)"}</span>`;
+    }else previewEl.hidden=true;
+  }
+  const offlist=document.getElementById("offlist");
+  if(offlist) offlist.innerHTML=renderOfflineBreakdown(sec,r);
+  if(passEl){
+    if(S.producerPass){
+      passEl.hidden=false;
+      passEl.innerHTML=`<span class="aaa-offline-pass-ic" aria-hidden="true">🎬</span><span><b>Producer Pass</b> — 2× offline cap active (${formatOfflineCapHours()} max vs 8h base)</span>`;
+    }else passEl.hidden=true;
+  }
+  if(capEl){
+    const capped=sec>=offlineCap()-30;
+    capEl.textContent=capped
+      ?`Cap reached (${formatOfflineCapHours()}) — grow royalties to boost idle income.`
+      :`Offline earnings cap: ${formatOfflineCapHours()}${S.producerPass?" (Producer Pass 2×)":""}`;
+  }
+  const overlay=document.getElementById("offline");
+  if(overlay) overlay.style.display="flex";
+  return true;
+}
 /* offline simulation: advance time, auto-release & auto re-greenlight same project */
 function simulateOffline(sec){
   let yen0=S.yen, fans0=S.fans, rel0=S.releases;
+  let royaltyYen=0;
+  const snap=S.projects.map(pr=>pr?{progress:pr.progress,pid:pr.pid}:null);
   let guard=0; OFFLINE=true;
   while(sec>0 && guard++<40000){
     // fill empty slots with best affordable unlocked project
@@ -2701,13 +2939,19 @@ function simulateOffline(sec){
     if(dt<=0) dt=Math.min(sec,0.001);
     for(const pr of S.projects){ if(pr) pr.progress=Math.min(PROJECTS[pr.pid].work, pr.progress+power*dt); }
     S.yen=Math.max(0, S.yen - salaryPerTick()*dt);
-    if(S.catalogIncome>0) S.yen += royaltyPerSec()*dt;
+    if(S.catalogIncome>0){ const ry=royaltyPerSec()*dt; S.yen+=ry; royaltyYen+=ry; }
     sec-=dt;
     for(let i=0;i<S.projects.length;i++){ const pr=S.projects[i]; if(pr && pr.progress>=PROJECTS[pr.pid].work) releaseProject(i); }
   }
-  if(S.catalogIncome>0 && sec>0) S.yen += royaltyPerSec()*sec; // credit idle royalties for any leftover offline time
+  if(S.catalogIncome>0 && sec>0){ const ry=royaltyPerSec()*sec; S.yen+=ry; royaltyYen+=ry; }
+  let progressPct=0, progressShows=0;
+  S.projects.forEach((pr,i)=>{
+    if(!pr||!snap[i]) return;
+    const delta=pr.progress-snap[i].progress;
+    if(delta>0.001){ progressShows++; progressPct+=(delta/PROJECTS[pr.pid].work)*100; }
+  });
   OFFLINE=false;
-  return { yen:S.yen-yen0, fans:S.fans-fans0, releases:S.releases-rel0 };
+  return { yen:S.yen-yen0, fans:S.fans-fans0, releases:S.releases-rel0, royaltyYen:Math.floor(royaltyYen), progressPct, progressShows };
 }
 
 /* ========================= RENDER ========================= */
@@ -2759,6 +3003,7 @@ function updateTopBar(){
   set("r-yen","yen"); set("r-fans","fans"); set("r-gems","gems");
   const hypeEl=document.getElementById("r-hype"); if(hypeEl) hypeEl.textContent=fmt(hudDisplayValue("hype"))+"/"+fmt(hudHypeCap());
   const tr=document.getElementById("trend"); if(tr) tr.textContent=trendGenre();
+  updateIdleIncomeHudTip();
 }
 /* returns true if the slot's *structure* changed (done/empty) and a full render is needed */
 function updateSlotLive(i){
@@ -2823,6 +3068,7 @@ function render(){
   $("#r-hype").textContent=fmt(hudDisplayValue("hype"))+"/"+fmt(hudHypeCap());
   $("#r-gems").textContent=fmtHudRes("gems",hudDisplayValue("gems"));
   $("#trend").textContent=trendGenre();
+  updateIdleIncomeHudTip();
   { const sb=document.getElementById("share-bonus"); if(sb) sb.style.display=S.sharedOnce?"none":""; }
 
   // goal — early fan toasts (10/50/100) sync with the north-star bar
@@ -3008,7 +3254,7 @@ function claimHudRival(){
   window.__AST_FX__?.burst?.(18); save(); render();
 }
 function renderQuests(){
-  let h=`<div class="aaa-tab-page"><div class="aaa-page-hero aaa-quest-hero"><h2>🎯 ${STR.h_rewards}</h2><p>Daily login, quests, and weekly challenges — all on timers.</p></div>`;
+  let h=`<div class="aaa-tab-page">${miniDashStripHTML()}<div class="aaa-page-hero aaa-quest-hero"><h2>🎯 ${STR.h_rewards}</h2><p>Daily login, quests, and weekly challenges — all on timers.</p></div>`;
   h+=loginCalendarHTML();
   h+=hudDailyGoalsHTML();
   h+=hudRivalHTML();
@@ -3070,6 +3316,51 @@ function hallOfFameHTML(){
 function aaaMeterHead(label, right, pct, fill){
   return `<div class="aaa-meter"><div class="aaa-meter-head"><span>${label}</span><span>${right}</span></div><div class="aaa-meter-track"><div class="aaa-meter-fill ${fill}" style="width:${Math.max(0,Math.min(100,pct))}%"></div></div></div>`;
 }
+function studioStatCardsHTML(){
+  const fans=S.totalFansEver||S.fans||0;
+  const share=S.marketShare||5;
+  const awards=S.awardsWon||0;
+  const rel=S.releases||0;
+  return `<div class="aaa-stat-cards" aria-label="Studio highlights">
+    <div class="aaa-stat-card aaa-stat-rel"><span class="aaa-stat-ic">🎬</span><div class="aaa-stat-body"><span class="aaa-stat-val">${fmt(rel)}</span><span class="aaa-stat-lbl">Premieres</span></div></div>
+    <div class="aaa-stat-card aaa-stat-fans"><span class="aaa-stat-ic">👥</span><div class="aaa-stat-body"><span class="aaa-stat-val">${fmt(fans)}</span><span class="aaa-stat-lbl">Total fans</span></div></div>
+    <div class="aaa-stat-card aaa-stat-share"><span class="aaa-stat-ic">📊</span><div class="aaa-stat-body"><span class="aaa-stat-val">${share}%</span><span class="aaa-stat-lbl">Market share</span></div></div>
+    <div class="aaa-stat-card aaa-stat-awards"><span class="aaa-stat-ic">🏆</span><div class="aaa-stat-body"><span class="aaa-stat-val">${fmt(awards)}</span><span class="aaa-stat-lbl">Awards</span></div></div>
+  </div>`;
+}
+function studioRankStripHTML(){
+  const fans=S.totalFansEver||S.fans||0;
+  const curIdx=contentRankIndex(fans);
+  const next=nextContentRank(fans);
+  const cur=CONTENT_RANK_LADDER[curIdx];
+  const pct=next?Math.max(0,Math.min(100,Math.round((fans-cur.fans)/(next.fans-cur.fans)*100))):100;
+  const windowStart=Math.max(0,curIdx-1);
+  const windowEnd=Math.min(CONTENT_RANK_LADDER.length,curIdx+4);
+  let steps="";
+  for(let i=windowStart;i<windowEnd;i++){
+    const r=CONTENT_RANK_LADDER[i];
+    const state=i<curIdx?"done":i===curIdx?"current":"up";
+    steps+=`<div class="aaa-rank-step ${state}" title="${r.unlock}"><span class="aaa-rank-ic">${r.icon}</span><span class="aaa-rank-name">${r.name}</span><small>${r.unlock}</small></div>`;
+    if(i<windowEnd-1) steps+=`<div class="aaa-rank-connector${i<curIdx?" done":""}"></div>`;
+  }
+  const nextTxt=next?`${fmt(next.fans-fans)} fans to ${next.unlock}`:"Top tier unlocked";
+  return `<div class="aaa-rank-strip"><div class="aaa-rank-strip-head"><span>Studio path</span><span class="aaa-rank-now">${cur.icon} ${cur.name} · ${cur.unlock}</span></div>
+    <div class="aaa-rank-ladder">${steps}</div>
+    ${aaaMeterHead("Rank progress",nextTxt,pct,"cyan")}
+  </div>`;
+}
+function miniDashStripHTML(){
+  const fans=S.fans||0;
+  const rel=S.releases||0;
+  const next=allGoalMilestones().find(m=>fans<m.fans);
+  const mileTxt=next?`${fmt(next.fans-fans)} to next`:"Goals cleared!";
+  const mileLbl=next?next.label.replace(/^Reach |^Hit |^Earn /,"").split(" —")[0].split(" for")[0]:"Keep growing";
+  return `<div class="aaa-mini-dash" aria-label="Quick stats">
+    <div class="aaa-mini-stat"><span class="aaa-mini-ic">🎬</span><div><b>${fmt(rel)}</b><small>Premieres</small></div></div>
+    <div class="aaa-mini-stat"><span class="aaa-mini-ic">👥</span><div><b>${fmt(fans)}</b><small>Fans</small></div></div>
+    <div class="aaa-mini-stat aaa-mini-mile"><span class="aaa-mini-ic">🎯</span><div><b>${mileTxt}</b><small>${mileLbl}</small></div></div>
+  </div>`;
+}
 function dashboardHTML(){
   const boosts=[];
   if(S.producerPass) boosts.push("Producer Pass");
@@ -3078,6 +3369,8 @@ function dashboardHTML(){
   if(Date.now()<S.overdriveUntil) boosts.push("Overdrive");
   const standings=industryStandings();
   let h=`<div class="panel dash-panel aaa-dash-compact"><h2 class="aaa-dash-title">🏢 ${studioName()} <button class="btn-ghost aaa-dash-edit" data-act="studio-name" title="Rename">✏️</button> <span class="pill aaa-dash-rank">🏆 #${standings.rank} / ${standings.total}</span></h2>
+     ${studioStatCardsHTML()}
+     ${studioRankStripHTML()}
      <div class="kpis">
        <div class="kpi accent"><div class="kl">Studio Lv.</div><div class="kv">${studioLevel()} <small>+${studioLevel()*2}%</small></div></div>
        <div class="kpi accent"><div class="kl">Value</div><div class="kv">${fmt(studioValue())}</div></div>
@@ -3222,35 +3515,59 @@ function scrollSelectedGlCard(){
   };
   requestAnimationFrame(()=>requestAnimationFrame(run));
 }
-function renderProduce(){
-  const empties=S.slots-activeCount();
-  const hasActive=activeCount()>0;
-  if((!hasActive&&empties>0)||(_glMode&&empties>0)){
-    main.innerHTML=renderGreenlightPage(empties,hasActive&&_glMode);
-    scrollSelectedGlCard();
-    return;
+let _produceSlotIx=0;
+function produceSlotReady(i){
+  const pr=S.projects[i];
+  if(!pr) return false;
+  const p=PROJECTS[pr.pid];
+  return pr.progress>=p.work;
+}
+function produceReadyCount(){
+  let n=0;
+  for(let i=0;i<S.slots;i++) if(produceSlotReady(i)) n++;
+  return n;
+}
+function normalizeProduceSlotIx(){
+  const max=Math.max(0,(S.slots||1)-1);
+  _produceSlotIx=Math.max(0,Math.min(max,_produceSlotIx|0));
+  if(!S._produceSlotManual){
+    for(let i=0;i<S.slots;i++) if(produceSlotReady(i)){ _produceSlotIx=i; return; }
+    for(let i=0;i<S.slots;i++) if(S.projects[i]){ _produceSlotIx=i; return; }
+    _produceSlotIx=firstEmptySlot()>=0?firstEmptySlot():0;
   }
-  let h=`<div class="aaa-tab-page aaa-produce-page">`;
-  S.projects.forEach((pr,i)=>{
-    if(!pr) return;
-    const p=PROJECTS[pr.pid];
-    const pct=Math.min(100, pr.progress/p.work*100);
-    const done=pr.progress>=p.work;
-    const stars=projectStars(p, pr.genre, pr);
-    const etaStr=fmtEta(slotEtaSeconds(pr,p));
-    const hypeH=pr.showcaseHypeRate!=null?pr.showcaseHypeRate:hypePerHour();
-    const showHype=projectHypeDisplay(p,pr);
-    const rank=pr.showcaseRank||starRankLetter(stars), score=pr.showcaseScore!=null?pr.showcaseScore:productionScore(stars,p,pr);
-    const epN=pr.showcaseEp!=null?pr.showcaseEp:Math.min(12,Math.max(1,Math.floor(pct/8.5)+1));
-    const est=pr.showcasePremiere||estimatePremiere(pr,p);
-    const laurel=rank==="S"?" aaa-rank-laurel":"";
-    const showTitle=pr.title||p.name;
-    const pm=posterMetaFor(showTitle);
-    const [spent,budgetCap]=showcaseBudget(pr,p,pct);
-    h+=`<div class="panel slotpanel aaa-show-panel${done?' slot-ready':''}" id="slot-${i}" data-done="${done?'1':'0'}"><div class="aaa-hero-block"><div class="aaa-show-card">
+}
+function focusProduceSlot(ix,manual){
+  _produceSlotIx=Math.max(0,Math.min((S.slots||1)-1,ix|0));
+  if(manual) S._produceSlotManual=true;
+  const car=document.getElementById("produce-slot-carousel");
+  const card=car?.querySelector(`[data-slot-ix="${_produceSlotIx}"]`);
+  if(card) card.scrollIntoView({behavior:"smooth",block:"nearest",inline:"center"});
+  document.querySelectorAll(".aaa-slot-tab").forEach(t=>{
+    const on=+t.dataset.slotIx===_produceSlotIx;
+    t.classList.toggle("active",on);
+    t.setAttribute("aria-selected",on?"true":"false");
+  });
+}
+function renderProduceSlotPanel(i,pr){
+  const p=PROJECTS[pr.pid];
+  const pct=Math.min(100, pr.progress/p.work*100);
+  const done=pr.progress>=p.work;
+  const stars=projectStars(p, pr.genre, pr);
+  const etaStr=fmtEta(slotEtaSeconds(pr,p));
+  const hypeH=pr.showcaseHypeRate!=null?pr.showcaseHypeRate:hypePerHour();
+  const showHype=projectHypeDisplay(p,pr);
+  const rank=pr.showcaseRank||starRankLetter(stars), score=pr.showcaseScore!=null?pr.showcaseScore:productionScore(stars,p,pr);
+  const epN=pr.showcaseEp!=null?pr.showcaseEp:Math.min(12,Math.max(1,Math.floor(pct/8.5)+1));
+  const est=pr.showcasePremiere||estimatePremiere(pr,p);
+  const laurel=rank==="S"?" aaa-rank-laurel":"";
+  const showTitle=pr.title||p.name;
+  const pm=posterMetaFor(showTitle);
+  const [spent,budgetCap]=showcaseBudget(pr,p,pct);
+  const glow=done?" aaa-premiere-ready-glow":"";
+  return `<div class="aaa-slot-card" data-slot-ix="${i}"><div class="panel slotpanel aaa-show-panel${done?' slot-ready':''}" id="slot-${i}" data-done="${done?'1':'0'}" data-slot-ix="${i}"><div class="aaa-hero-block"><div class="aaa-show-card">
       <div class="aaa-poster-col"><div class="aaa-poster${done?'':' aaa-tap-hint'}" ${done?'':`data-act="tapboost" data-slot="${i}"`} style="background-image:url(${pr.poster||GENRE_POSTER[pr.genre]||DEFAULT_POSTER})" title="${done?'':'Tap poster to boost'}">${pr.genre===trendGenre()?'<span class="aaa-trend">TRENDING</span>':''}${pm?.tagline?`<span class="aaa-poster-tagline">${pm.tagline}</span>`:""}${pm?`<span class="aaa-poster-ja">${pm.ja}</span><span class="aaa-poster-en">${pm.en}</span>`:""}</div></div>
       <div class="aaa-meta-col">
-        <div class="aaa-meta-head"><span class="aaa-ep-pill">EP ${epN}/12</span></div>
+        <div class="aaa-meta-head"><span class="aaa-ep-pill">EP ${epN}/12</span>${S.slots>1?`<span class="aaa-line-pill">Line ${i+1}</span>`:""}</div>
         <h2 class="aaa-title">${showTitle}</h2>
         <div class="aaa-chips">${(pr.seq||0)>1?`<span class="aaa-chip"><span class="aaa-chip-ic">📺</span>Sequel ${pr.seq}</span>`:`<span class="aaa-chip"><span class="aaa-chip-ic">🌸</span>Original</span>`}<span class="aaa-chip gold"><span class="aaa-chip-ic">⭐</span>${pr.showcaseChip||pr.genre}</span></div>
         <div class="aaa-score-label">Production Score</div>
@@ -3259,19 +3576,109 @@ function renderProduce(){
         <div class="aaa-stat-line hype"><span class="aaa-stat-ic">📈</span><span>Hype</span><b>${fmtCompact(showHype)}</b><div class="aaa-mini-bar"><i style="width:${hypeBarPct(pr,p,pct)}%"></i></div><span class="aaa-rate">+${fmtCompact(hypeH)}/h</span></div>
         <div class="aaa-stat-line"><span class="aaa-stat-ic">📅</span><span>Premiere In</span><b class="slot-eta">${etaStr}</b></div>
         <div class="aaa-premiere-bonus"><span class="aaa-premiere-bonus-label">Global Premiere Bonus</span><div class="aaa-bonus-pills"><span class="aaa-bonus-pill gems"><img src="icons/hf/gems.png?v=${ASSET_V}" alt=""> ${fmtLocale(est.gems||0)}</span><span class="aaa-bonus-pill gold"><img src="icons/hf/yen.png?v=${ASSET_V}" alt=""> ${fmtYenCompact(est.yen)}</span></div></div>
-        <div class="aaa-actions">${done?`<button class="btn-gold aaa-cta aaa-premiere-ready aaa-premiere-ready-glow" data-rel="${i}">🎬 ▶ Global Premiere</button>`:`<button class="btn-gold aaa-cta aaa-play-btn" data-act="tapboost" data-slot="${i}">🎬 ▶ Boost</button>`}</div>
-      </div></div>${productionTeamHTML()}</div></div>`;
-  });
-  if(empties>0) h+=`<button type="button" class="aaa-gl-open${empties>=2?" aaa-gl-open-hot":""}" data-act="greenlight-view">+ Greenlight new anime · ${empties} slot${empties>1?"s":""} open</button>`;
-  else if(hasActive) h+=`<div class="aaa-produce-slots-full"><span class="aaa-slots-full-ic" aria-hidden="true">🎬</span><div><b>All greenlight slots full</b><p>Premiere a finished show or expand your studio to start another project.</p></div></div>`;
-  // anti-softlock freelance
+        <div class="aaa-actions">${done?`<button class="btn-gold aaa-cta aaa-premiere-ready${glow}" data-rel="${i}">🎬 ▶ Global Premiere</button>`:`<button class="btn-gold aaa-cta aaa-play-btn" data-act="tapboost" data-slot="${i}">🎬 ▶ Boost</button>`}</div>
+      </div></div>${productionTeamHTML()}</div></div></div>`;
+}
+function renderProduceEmptySlotCard(i){
+  return `<div class="aaa-slot-card aaa-slot-card-empty" data-slot-ix="${i}"><div class="panel slotpanel aaa-show-panel aaa-slot-empty" id="slot-${i}" data-slot-ix="${i}">
+    <div class="aaa-slot-empty-inner">
+      <span class="aaa-slot-empty-ic" aria-hidden="true">🎬</span>
+      <p class="aaa-slot-empty-kicker">Line ${i+1} · Open</p>
+      <h3 class="aaa-slot-empty-title">Greenlight new project</h3>
+      <p class="aaa-slot-empty-copy">This production line is idle — pick a genre and start your next hit anime.</p>
+      <button type="button" class="btn-gold aaa-gl-open aaa-slot-empty-cta" data-act="greenlight-view">+ Greenlight new project</button>
+    </div></div></div>`;
+}
+function renderProduceSlotTab(i){
+  const pr=S.projects[i];
+  const ready=!!pr&&produceSlotReady(i);
+  const cls=["aaa-slot-tab"];
+  if(i===_produceSlotIx) cls.push("active");
+  if(!pr) cls.push("empty");
+  if(ready) cls.push("ready");
+  const sub=pr?((pr.title||PROJECTS[pr.pid]?.name||"Show").slice(0,16)):"Open slot";
+  return `<button type="button" class="${cls.join(" ")}" role="tab" aria-selected="${i===_produceSlotIx?"true":"false"}" data-act="produce-slot-tab" data-slot-ix="${i}">${ready?'<span class="aaa-slot-tab-ready" aria-hidden="true">✨</span>':""}<span class="aaa-slot-tab-lbl">Line ${i+1}</span><span class="aaa-slot-tab-sub">${sub}</span></button>`;
+}
+function bindProduceCarousel(){
+  const car=document.getElementById("produce-slot-carousel");
+  if(!car||car.dataset.bound) return;
+  car.dataset.bound="1";
+  let scrollTimer;
+  car.addEventListener("scroll",()=>{
+    clearTimeout(scrollTimer);
+    scrollTimer=setTimeout(()=>{
+      const cards=[...car.querySelectorAll(".aaa-slot-card")];
+      if(!cards.length) return;
+      const mid=car.scrollLeft+car.clientWidth/2;
+      let best=0,bestDist=1e9;
+      cards.forEach(el=>{
+        const ix=+el.dataset.slotIx;
+        const cx=el.offsetLeft+el.offsetWidth/2;
+        const d=Math.abs(cx-mid);
+        if(d<bestDist){ bestDist=d; best=ix; }
+      });
+      if(best!==_produceSlotIx){
+        _produceSlotIx=best;
+        S._produceSlotManual=true;
+        document.querySelectorAll(".aaa-slot-tab").forEach(t=>{
+          const on=+t.dataset.slotIx===best;
+          t.classList.toggle("active",on);
+          t.setAttribute("aria-selected",on?"true":"false");
+        });
+      }
+    },80);
+  },{passive:true});
+}
+function renderProduce(){
+  const empties=S.slots-activeCount();
+  const hasActive=activeCount()>0;
+  if((!hasActive&&empties>0)||(_glMode&&empties>0)){
+    main.innerHTML=renderGreenlightPage(empties,hasActive&&_glMode);
+    scrollSelectedGlCard();
+    return;
+  }
+  const multi=S.slots>1;
+  const active=activeCount();
+  const readyN=produceReadyCount();
+  if(multi) normalizeProduceSlotIx();
+  let h=`<div class="aaa-tab-page aaa-produce-page${multi?" aaa-produce-multi-page":""}">`;
+  if(multi){
+    h+=`<div class="aaa-produce-slot-hud" aria-live="polite"><span class="aaa-produce-slot-count"><span class="aaa-produce-slot-ic" aria-hidden="true">🎬</span><b>${active}/${S.slots}</b> lines active</span>${readyN>0?`<span class="aaa-produce-slot-ready-pill">${readyN} ready to premiere</span>`:""}</div>`;
+    h+=`<div class="aaa-slot-tabs" role="tablist">`;
+    for(let i=0;i<S.slots;i++) h+=renderProduceSlotTab(i);
+    h+=`</div><div class="aaa-slot-carousel" id="produce-slot-carousel">`;
+    for(let i=0;i<S.slots;i++){
+      const pr=S.projects[i];
+      h+=pr?renderProduceSlotPanel(i,pr):renderProduceEmptySlotCard(i);
+    }
+    h+=`</div>`;
+  }else{
+    S.projects.forEach((pr,i)=>{
+      if(!pr) return;
+      h+=renderProduceSlotPanel(i,pr);
+    });
+    if(empties>0) h+=`<button type="button" class="aaa-gl-open${empties>=2?" aaa-gl-open-hot":""}" data-act="greenlight-view">+ Greenlight new anime · ${empties} slot${empties>1?"s":""} open</button>`;
+    else if(hasActive) h+=`<div class="aaa-produce-slots-full"><span class="aaa-slots-full-ic" aria-hidden="true">🎬</span><div><b>All greenlight slots full</b><p>Premiere a finished show or expand your studio to start another project.</p></div></div>`;
+  }
+  if(multi&&empties===0&&hasActive) h+=`<div class="aaa-produce-slots-full aaa-produce-slots-full-compact"><span class="aaa-slots-full-ic" aria-hidden="true">🎬</span><div><b>All lines full</b><p>Premiere a finished show or expand for another slot.</p></div></div>`;
   if(activeCount()===0 && S.yen<PROJECTS[0].cost){
     h+=`<div class="panel" style="border:2px solid var(--sakura)"><h2>🆘 Out of cash?</h2>
       <div class="muted" style="margin-bottom:8px">Take a quick freelance job to get back on your feet.</div>
       <button class="btn-primary" data-act="freelance" style="width:100%">🖌️ Freelance commission · +¥150</button></div>`;
   }
+  const idleRate=royaltyPerSec();
+  const idleTip=idleIncomeTooltip();
+  h+=`<div class="aaa-produce-idle-footer" title="${idleTip}">
+    <span class="aaa-idle-ic" aria-hidden="true">💤</span>
+    <span class="aaa-idle-copy">${idleRate>0?`Idle income <b>¥${fmt(idleRate)}/s</b>`:`No idle income yet — premiere to earn royalties while away`}</span>
+    ${idleRate>0?`<span class="aaa-idle-hint muted">+¥${fmt(idleRate*60)}/min · cap ${formatOfflineCapHours()}</span>`:""}
+  </div>`;
   h+=`</div>`;
   main.innerHTML=h;
+  if(multi){
+    bindProduceCarousel();
+    requestAnimationFrame(()=>focusProduceSlot(_produceSlotIx));
+  }
 }
 let _selGenre=-1;
 let _selGlPid=null;
@@ -3291,6 +3698,43 @@ function firstAffordableStaffRole(){
   const order=["animator","writer","director","voice","producer"];
   for(const key of order) if(S.yen>=hireCost(key)) return key;
   return null;
+}
+const STAFF_HIRE_ORDER=["animator","writer","director","voice","producer"];
+function affordableStaffRoles(){
+  return STAFF_HIRE_ORDER.filter(key=>S.yen>=hireCost(key));
+}
+function batchHireSuggestion(){
+  const affordable=affordableStaffRoles();
+  if(affordable.length<2) return null;
+  const vacant=affordable.filter(key=>(S.staff[key]||0)===0);
+  const pool=vacant.length>=2?vacant:affordable;
+  return pool.length>=2?pool.slice(0,2):null;
+}
+function batchHireTotal(roles){
+  const staffCopy={...S.staff};
+  let total=0;
+  for(const role of roles){
+    const r=ROLES[role]; const n=staffCopy[role]||0;
+    const disc=Math.max(0.4, 1 - S.upgrades.agency*0.05);
+    total+=Math.ceil(r.base*Math.pow(r.growth,n)*disc);
+    staffCopy[role]=n+1;
+  }
+  return total;
+}
+function hireBatch(){
+  const roles=batchHireSuggestion();
+  if(!roles||roles.length<2){ toast("Need budget for two hires"); return; }
+  const total=batchHireTotal(roles);
+  if(S.yen<total){ toast("Not enough Yen for batch hire"); return; }
+  const wasFirst=staffTotal()===0;
+  for(const role of roles){
+    const c=hireCost(role);
+    S.yen-=c; S.staff[role]++; questAdd("hires",1);
+  }
+  if(wasFirst) celebrateFirstHire(roles[0]);
+  else play("reward");
+  toast("🎉 Hired "+roles.map(r=>ROLES[r].name).join(" + ")+" — empire crew growing!",true);
+  checkAchievements(); render(); save();
 }
 function renderStaff(){
   const total=staffTotal();
@@ -3314,6 +3758,15 @@ function renderStaff(){
     <p>${empty?"Each role speeds a part of production — tap a glowing hire when you can afford it.":"Balanced teams make higher-rated anime — Directors boost your premiere score."}</p>
     <div class="aaa-staff-hero-meta"><span class="pill">${total} hired</span>${bestAfford?`<span class="pill aaa-staff-pill-afford">Ready to hire</span>`:""}</div>
     ${heroCta}
+    ${(()=>{ const batch=batchHireSuggestion(); if(!batch) return "";
+      const batchTotal=batchHireTotal(batch);
+      const names=batch.map(r=>ROLES[r].name).join(" + ");
+      return `<div class="aaa-staff-batch-suggest">
+        <span class="aaa-staff-batch-badge">Team boost</span>
+        <p class="aaa-staff-batch-lead">You can afford <b>2 hires</b> — lock in ${names} for a balanced empire.</p>
+        <button type="button" class="btn-gold aaa-staff-batch-cta hirebtn" data-act="batch-hire">Hire both<small>¥${fmt(batchTotal)} total</small></button>
+      </div>`;
+    })()}
   </div><div class="aaa-staff-list">`;
   for(const key in ROLES){ const r=ROLES[key]; const c=hireCost(key); const rank=staffRankFor(key); const afford=S.yen>=c; const nextRank=staffRankAfterHire(key); const count=S.staff[key]||0;
     h+=`<div class="aaa-staff-row aaa-rank-${rank}${afford?" aaa-staff-afford":""}${count===0?" aaa-staff-vacant":""}">
@@ -3571,6 +4024,7 @@ document.addEventListener("click", e=>{
   if(t.dataset.plusGoal!=null) return claimHudDailyGoal(+t.dataset.plusGoal);
   if(t.dataset.rivalClaim!=null) return claimHudRival();
   if(t.dataset.act==="login-claim") return claimLoginDay();
+  if(t.dataset.act==="produce-slot-tab"){ focusProduceSlot(+t.dataset.slotIx,true); play("click"); return; }
   if(t.dataset.act==="greenlight-view"){ _glMode=true; play("click"); return render(); }
   if(t.dataset.act==="greenlight-back"){ _glMode=false; play("click"); return render(); }
   if(t.dataset.act==="gl-suggest-trend") return applyTrendingGenreSuggest();
@@ -3602,9 +4056,10 @@ document.addEventListener("click", e=>{
   if(t.dataset.act==="tapboost") return tapBoost(+t.dataset.slot);
   if(t.dataset.act==="freegems") return claimFreeGems();
   if(t.dataset.act==="expand") return expandStudio();
+  if(t.dataset.act==="batch-hire") return hireBatch();
   if(t.dataset.act==="share") return shareGame();
   if(t.dataset.act==="daily-close"){ celebrateCollect("daily"); const m=document.getElementById("daily"); if(m) m.style.display="none"; return; }
-  if(t.dataset.act==="reveal-close"){ const m=document.getElementById("reveal"); if(m) m.style.display="none"; return; }
+  if(t.dataset.act==="reveal-close"){ const m=document.getElementById("reveal"); if(m){ m.style.display="none"; m.classList.remove("aaa-reveal-opening"); } return; }
   if(t.dataset.act==="dec-yes") return resolveDecision(true);
   if(t.dataset.act==="dec-no") return resolveDecision(false);
   if(t.dataset.act==="premiere-close") return closePremiere();
@@ -3616,6 +4071,10 @@ document.addEventListener("click", e=>{
   if(t.dataset.act==="studio-unlock-expand") return closeStudioUnlockModal(true);
   if(t.dataset.act==="research-unlock-close") return closeResearchUnlockModal(false);
   if(t.dataset.act==="research-unlock-go") return closeResearchUnlockModal(true);
+  if(t.dataset.act==="chaos-unlock-close") return closeChaosUnlockModal(false);
+  if(t.dataset.act==="chaos-unlock-enable") return closeChaosUnlockModal(true);
+  if(t.dataset.act==="share-milestone-close") return closeShareMilestoneModal(false);
+  if(t.dataset.act==="share-milestone-go") return closeShareMilestoneModal(true);
   if(t.dataset.act==="instant") return instantPremiere(+t.dataset.slot);
   if(t.dataset.act==="whatsnew-close"){ S.whatsnewSeen=true; save(); const m=document.getElementById("whatsnew"); if(m) m.style.display="none"; if(!S.tutorialSeen&&!isGuidedTutorialEligible()){ const h=document.getElementById("howto"); if(h) h.style.display="flex"; } return; }
   if(t.dataset.act==="howto-close"){ completeTutorial(); const m=document.getElementById("howto"); if(m) m.style.display="none"; return; }
@@ -3676,7 +4135,14 @@ document.addEventListener("visibilitychange", ()=>{
   // credit time spent away/backgrounded
   const cap=offlineCap();
   const sec=Math.min(cap,(Date.now()-S.lastSave)/1000);
-  if(sec>60){ const r=simulateOffline(sec); if(r.yen>0||r.fans>0){ toast(`👋 Welcome back: +¥${fmt(r.yen)} · +${fmt(r.fans)} fans`,true); } save(); render(); }
+  if(sec>60){
+    const r=simulateOffline(sec);
+    if(offlineHadMeaningfulReturn(r)){
+      if(sec<OFFLINE_PREVIEW_CAP) showWhileAwayPreviewToast(sec,r);
+      else showOfflineModal(sec,r,{preview:false});
+    }
+    save(); render();
+  }
   last=performance.now();
 });
 setInterval(()=>{ if(started) save(); }, 8000);
@@ -3730,14 +4196,7 @@ function begin(forceDemo){
     if(had){
       const sec=Math.min(offlineCap(),(Date.now()-S.lastSave)/1000);
       const r=simulateOffline(sec);
-      if(r.yen>0||r.fans>0||r.releases>0){
-        $("#offlist").innerHTML=
-          `<div><span>Time away</span><b>${Math.floor(sec/60)} min</b></div>
-           <div><span>Anime released</span><b>${r.releases}</b></div>
-           <div><span>Yen earned</span><b>¥${fmt(r.yen)}</b></div>
-           <div><span>Fans gained</span><b>${fmt(r.fans)}</b></div>`;
-        $("#offline").style.display="flex";
-      }
+      showOfflineModal(sec,r,{preview:sec<OFFLINE_PREVIEW_CAP});
     }
     const dr=checkDaily();
     if(dr){
@@ -3852,6 +4311,10 @@ window.__AST_HOOK__ = {
   MILESTONES,
   FAN_TOAST_MILESTONES,
   allGoalMilestones,
+  CONTENT_RANK_LADDER,
+  contentRankIndex,
+  nextContentRank,
+  queueShareMilestoneModal,
   suggestedGreenlightGenre,
   applyTrendingGenreSuggest,
   spendGem,
@@ -3863,6 +4326,8 @@ window.__AST_HOOK__ = {
   ROLES,
   studioLevel,
   hireCost,
+  batchHireSuggestion,
+  hireBatch,
   castingCost,
   SCOUT_GEMS,
   canClaimLogin,
@@ -3872,6 +4337,9 @@ window.__AST_HOOK__ = {
   hudDisplayValue,
   hudHypeCap,
   fmtHudRes,
+  royaltyPerSec,
+  idleIncomeTooltip,
+  offlineCap,
   isShowcaseDemo,
   isDemoMode,
   restartAsDemo: () => {
@@ -3886,7 +4354,11 @@ window.__AST_HOOK__ = {
   featureUnlocked,
   starsUnlockProgress,
   marketUnlockProgress,
+  chaosUnlockProgress,
+  toggleChaosMode,
   CAMPAIGNS,
+  celebrateFirstChaosEvent,
+  celebrateChaosSurvival,
   campaignRoiPer1k,
   studioUnlockProgress,
   expandCost,
@@ -3899,27 +4371,29 @@ window.__AST_HOOK__ = {
   tabLockLabel,
   isGreenlightView,
   greenlightBack: ()=>{ _glMode=false; render(); },
+  focusProduceSlot,
+  produceSlotHud: ()=>({active:activeCount(),total:S.slots,ready:produceReadyCount()}),
   tapBoost,
   isGuidedTutorialEligible,
   completeTutorial,
 };
 </script>
-<script src="aaa-upgrade.js?v=92"></script>
-<script src="v5-slim-gate.js?v=92"></script>
-<script src="gameplay-plus.js?v=92"></script>
-<script src="gameplay-ultra.js?v=92"></script>
-<script src="gameplay-endless.js?v=92"></script>
-<script src="gameplay-empire.js?v=92"></script>
-<script src="gameplay-studio.js?v=92"></script>
-<script src="gameplay-final.js?v=92"></script>
-<script src="gameplay-aaa.js?v=92"></script>
-<script src="gameplay-legend.js?v=92"></script>
-<script src="hud-premium.js?v=92"></script>
-<script src="ui-complete.js?v=92"></script>
-<script src="gameplay-studio-rating.js?v=92"></script>
-<script src="gameplay-polish.js?v=92"></script>
-<script src="hook-bridge.js?v=92"></script>
-<script src="v5-render-guard.js?v=92"></script>
+<script src="aaa-upgrade.js?v=93"></script>
+<script src="v5-slim-gate.js?v=93"></script>
+<script src="gameplay-plus.js?v=93"></script>
+<script src="gameplay-ultra.js?v=93"></script>
+<script src="gameplay-endless.js?v=93"></script>
+<script src="gameplay-empire.js?v=93"></script>
+<script src="gameplay-studio.js?v=93"></script>
+<script src="gameplay-final.js?v=93"></script>
+<script src="gameplay-aaa.js?v=93"></script>
+<script src="gameplay-legend.js?v=93"></script>
+<script src="hud-premium.js?v=93"></script>
+<script src="ui-complete.js?v=93"></script>
+<script src="gameplay-studio-rating.js?v=93"></script>
+<script src="gameplay-polish.js?v=93"></script>
+<script src="hook-bridge.js?v=93"></script>
+<script src="v5-render-guard.js?v=93"></script>
 <!-- studio-premium.css loaded in head -->
 
 
