@@ -21,8 +21,9 @@
 <meta name="twitter:image" content="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_062706_8cb8f42c-84b2-45b0-8c27-96e8ffc01bb7.jpeg">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%233a2b4d'/%3E%3Ccircle cx='32' cy='32' r='30' fill='none' stroke='%23ffc845' stroke-width='3'/%3E%3Cg fill='%23ff9bc4'%3E%3Cellipse cx='32' cy='15' rx='5' ry='8'/%3E%3Cellipse cx='32' cy='49' rx='5' ry='8'/%3E%3Cellipse cx='15' cy='32' rx='8' ry='5'/%3E%3Cellipse cx='49' cy='32' rx='8' ry='5'/%3E%3C/g%3E%3Ccircle cx='32' cy='32' r='7' fill='%23ffc845'/%3E%3C/svg%3E">
 <link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-512.png">
 <!-- Legacy gameplay-*.css disabled — aaa-ui + game-skin + hud-premium own chrome -->
-<link rel="stylesheet" href="hud-premium.css?v=93">
+<link rel="stylesheet" href="hud-premium.css?v=94">
 <!-- ui-complete.css disabled — v5 uses aaa-tab-page heroes -->
 <!-- gameplay-studio-rating.css disabled — ast-v5 authority -->
 <!-- studio-premium.css disabled — ast-v5 authority -->
@@ -30,8 +31,8 @@
 <!-- game-skin.css disabled — fought ast-v5 (animation:none, flat panels) -->
 <!-- hf-design.css disabled — ast-v5 authority -->
 <!-- aaa-ui.css disabled — ast-v5 authority -->
-<link rel="stylesheet" href="legacy-fx.css?v=93">
-<link rel="stylesheet" href="ast-v5.css?v=93">
+<link rel="stylesheet" href="legacy-fx.css?v=94">
+<link rel="stylesheet" href="ast-v5.css?v=94">
 <script>document.documentElement.classList.add("premium-hud","hud-v3-active")</script>
 <meta name="theme-color" content="#08050f">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -74,10 +75,10 @@
 <div id="app">
   <div id="top">
     <div id="studio-rank"><span>🎬</span><span class="rank-tier">Garage Studio</span></div>
-    <div class="res yen"><img src="icons/hf/yen.png?v=93" alt="Yen"><span><span class="v" id="r-yen">0</span> <small>¥</small></span></div>
-    <div class="res fans"><img src="icons/hf/fans.png?v=93" alt="Fans"><span class="v" id="r-fans">0</span></div>
-    <div class="res hype"><img src="icons/hf/hype.png?v=93" alt="Hype"><span class="v" id="r-hype">0</span></div>
-    <div class="res gems"><img src="icons/hf/gems.png?v=93" alt="Gems"><span class="v" id="r-gems">0</span></div>
+    <div class="res yen"><img src="icons/hf/yen.png?v=94" alt="Yen"><span><span class="v" id="r-yen">0</span> <small>¥</small></span></div>
+    <div class="res fans"><img src="icons/hf/fans.png?v=94" alt="Fans"><span class="v" id="r-fans">0</span></div>
+    <div class="res hype"><img src="icons/hf/hype.png?v=94" alt="Hype"><span class="v" id="r-hype">0</span></div>
+    <div class="res gems"><img src="icons/hf/gems.png?v=94" alt="Gems"><span class="v" id="r-gems">0</span></div>
     <div id="trendbar"><span class="spark">📈</span> Trending: <b id="trend">Action</b></div>
   </div>
   <div id="goal"><span id="goal-txt">🎯 Reach 50 Fans for Web Series</span><div class="bar"><i id="goal-bar" style="width:0%"></i></div></div>
@@ -89,13 +90,24 @@
     <button class="btn-ghost" id="btn-mute">🔊 Sound: On</button>
     <button class="btn-ghost" id="btn-save" style="display:none">💾 Save</button>
     <button class="btn-ghost" id="btn-reset">↺ Reset</button>
-  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 93 · Empire</span></div>
+  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 94 · Legend</span></div>
   <div id="toasts"></div>
+  <div id="pwa-install-banner" class="aaa-pwa-install-banner" hidden>
+    <div class="aaa-pwa-install-inner">
+      <span class="aaa-pwa-install-ic" aria-hidden="true">📲</span>
+      <div class="aaa-pwa-install-copy">
+        <b>Install Anime Studio</b>
+        <small>Offline play &amp; one-tap launch from your home screen</small>
+      </div>
+      <button type="button" class="btn-primary aaa-pwa-install-btn" data-act="pwa-install">Install</button>
+      <button type="button" class="btn-ghost aaa-pwa-install-dismiss" data-act="pwa-install-dismiss" aria-label="Dismiss install prompt">✕</button>
+    </div>
+  </div>
 </div>
 
 <div class="overlay" id="start" style="display: none;">
   <div class="card-modal">
-    <img class="start-hero" src="start-hero.png?v=93" width="140" height="140" alt="Anime Studio Tycoon">
+    <img class="start-hero" src="start-hero.png?v=94" width="140" height="140" alt="Anime Studio Tycoon">
     <h1>Anime Studio Tycoon</h1>
     <p id="start-tagline">From a one-room studio to a global anime empire</p>
     <label style="display:block;font-size:12px;font-weight:800;color:var(--plum);margin:4px 0 4px">🏢 Studio Name</label>
@@ -154,8 +166,18 @@
 </div>
 
 <div class="overlay" id="decision" style="display:none">
-  <div class="card-modal">
+  <div class="card-modal aaa-festival-decision-modal">
     <div id="decision-body"></div>
+  </div>
+</div>
+
+<div class="overlay aaa-festival-win-overlay" id="festival-win" style="display:none">
+  <div class="card-modal aaa-festival-win-modal">
+    <div class="aaa-festival-win-hero" aria-hidden="true">🏆</div>
+    <h1 style="font-size:22px;text-align:center">🎪 Festival Darling!</h1>
+    <p class="aaa-festival-win-lead">Your premiere took home its first festival award — dynasty points and gems are yours.</p>
+    <div class="aaa-festival-win-stats" id="festival-win-stats"></div>
+    <button class="btn-gold aaa-festival-win-cta" data-act="festival-win-close" style="width:100%;font-size:16px;margin-top:10px">✨ Back to the studio</button>
   </div>
 </div>
 
@@ -255,18 +277,53 @@
   </div>
 </div>
 
+<div class="overlay aaa-studio-award-overlay" id="studio-award" style="display:none">
+  <div class="card-modal aaa-studio-award-modal">
+    <div class="aaa-studio-award-hero" aria-hidden="true">🏆</div>
+    <div class="aaa-studio-award-ribbon" aria-hidden="true">Studio Awards Night</div>
+    <h1 style="font-size:22px;text-align:center">🎬 50 Premieres — Legendary Night!</h1>
+    <p class="aaa-studio-award-lead">The industry rolls out the red carpet. Accept your trophy, gem bonus, and a <b>3× income</b> golden hour.</p>
+    <div class="aaa-studio-award-stats">
+      <div><span>🏆</span><b id="studio-award-num">#1</b><small>Award night</small></div>
+      <div><span>💎</span><b id="studio-award-gems">+12</b><small>Gem bonus</small></div>
+      <div><span>🎬</span><b id="studio-award-rel">50</b><small>Premieres</small></div>
+    </div>
+    <div class="aaa-studio-award-perks">
+      <div><span>🌟</span><b>3× income for 2 min</b><small>Golden hour stacks with Producer Pass</small></div>
+      <div><span>✨</span><b>Dynasty prestige</b><small>Every 50 releases — bigger gem rewards</small></div>
+    </div>
+    <button class="btn-gold aaa-studio-award-cta" data-act="studio-award-close" style="width:100%;font-size:16px;margin-top:10px">🏆 Accept the Trophy!</button>
+  </div>
+</div>
+
 <div class="overlay" id="whatsnew" style="display:none">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <img src="start-hero.png?v=93" alt="" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
-    <h1 style="font-size:22px;text-align:center">✨ Build 93 — Studio Dashboard</h1>
+    <img src="start-hero.png?v=94" alt="" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
+    <h1 style="font-size:22px;text-align:center">✨ Build 94 — Franchise Loop</h1>
     <div class="offlist" style="margin:12px 0">
-      <div><span>📊 Stat cards</span><b>Studio tab shows premieres, fans, market share &amp; awards at a glance</b></div>
-      <div><span>🎯 Quests strip</span><b>Mini dashboard on Home — releases, fans &amp; next milestone</b></div>
-      <div><span>🎬 Rank path</span><b>Garage → Web Series → TV → OVA progression ladder on Studio</b></div>
-      <div><span>⭐ Coach rank-up</span><b>Coach nudges when you're close to studio rating promotion</b></div>
-      <div><span>📣 100-fan share</span><b>Auto-prompt to share your local-hit milestone (+25💎)</b></div>
+      <div><span>📺 Sequel suggest</span><b>4★+ premieres prompt a sequel — built-in audience boosts fans &amp; yen</b></div>
+      <div><span>🎬 Greenlight badge</span><b>Franchise titles show a SEQUEL badge in the carousel</b></div>
+      <div><span>📊 Dashboard</span><b>Studio tab tracks your active franchise count</b></div>
+      <div><span>🧭 Coach</span><b>"Your hit deserves a sequel" when a franchise opportunity is waiting</b></div>
+      <div><span>🎉 First franchise</span><b>Celebration when your first hit becomes franchise-ready</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
+  </div>
+</div>
+
+<div class="overlay" id="push-notify-stub" style="display:none">
+  <div class="card-modal aaa-push-notify-modal" style="max-width:360px;text-align:left">
+    <h1 style="font-size:20px;text-align:center">🔔 Premiere alerts</h1>
+    <p class="muted" style="text-align:center;margin:8px 0 12px">Get notified when productions finish, daily rewards reset, or a premiere is ready.</p>
+    <div class="aaa-push-coming-soon">
+      <span aria-hidden="true">🚧</span>
+      <div><b>Coming soon</b><small>Push notifications arrive in a future update — opt in now to be first!</small></div>
+    </div>
+    <label class="aaa-push-opt-row">
+      <input type="checkbox" id="push-notify-opt" data-act="push-notify-opt">
+      <span>Notify me when alerts launch</span>
+    </label>
+    <button class="btn-primary" data-act="push-notify-close" style="width:100%;font-size:16px;margin-top:10px">Got it</button>
   </div>
 </div>
 
@@ -304,8 +361,8 @@ const STORE_PAYMENTS = true; // store always visible; buyReal routes web→check
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 93 · Empire";
-const ASSET_V = "93";
+const BUILD_TAG = "build 94 · Legend";
+const ASSET_V = "94";
 const OFFLINE_PREVIEW_CAP = 4*3600; // "while away" preview when return is under 4h
 const SHARE_PLAY_URL = "https://anime-studio-tycoon.vercel.app/play";
 const PITY_EPIC = 25;
@@ -1052,7 +1109,7 @@ function freshState(){
     stamina:100, chaos:0, chaosMode:false, lastChaos:0, lastStarDemand:0,
     items:{}, entitlements:[], purchaseLog:[], firstPurchaseDone:false, noAds:false, wheelDate:"", scratchDate:"",
     studioName:"", hallOfFame:[], bestRank:99,
-    unlockedSeen:[], franchises:{}, ageOk:false, freeScoutUsed:false, starsUnlockModalSeen:false, studioUnlockModalSeen:false, marketUnlockModalSeen:false, campaignsRun:0, researchUnlockModalSeen:false, chaosUnlockModalSeen:false, firstChaosToastSeen:false, awaitFirstChaosSurvival:false,
+    unlockedSeen:[], franchises:{}, franchiseOpportunity:null, firstFranchiseCelebrated:false, ageOk:false, freeScoutUsed:false, starsUnlockModalSeen:false, studioUnlockModalSeen:false, marketUnlockModalSeen:false, campaignsRun:0, researchUnlockModalSeen:false, chaosUnlockModalSeen:false, firstChaosToastSeen:false, awaitFirstChaosSurvival:false,
     gems:0, producerPass:false, bundleBought:false, goldenUntil:0, rewardedUntil:0, rewardedCdUntil:0,
     milestonesClaimed:[], seasonClaimed:[],
     slots:1, projects:[null],   // each slot: {pid, genre, progress} or null
@@ -1073,6 +1130,7 @@ function freshState(){
     rivalWeek:"", rivalTarget:null, rivalStartVal:0, rivalGoal:0, rivalClaimed:false,
     plusGoals:[], plusGoalsDate:"", plusGoalsBase:{}, plusCollection50:false,
     settings:{motion:true,ticker:true,musicVol:0.35,sfxVol:0.5,confirmGems:true}, lastWhatsNewBuild:"",
+    pwaInstallDismissed:false, pwaInstalled:false, pwaCoachSeen:false, pushNotifyOptIn:false,
     marketShare:5, bidsWon:0, bidWeek:"", bidResolved:false,
     endlessRisk:"balanced", endlessDiff:"standard", endlessCourMode:false, endlessEvents:0,
     namedStaff:[], empireSource:"original", empireBlendGenre:-1, scoutBannerWeek:"", scoutBannerStar:"",
@@ -1087,6 +1145,7 @@ function freshState(){
     studioStars:1, studioStarBest:1, premiereStats:{fourPlus:0,five:0}, studioStarPerks:{},
     crisisSnoozeUntil:0, ratingGuideSeen:false, peakDynasty:0,
     dynastyRankUps:[], festivalLosses:0, legendSlotDiscount:0, careerYen:0, careerFans:0,
+    firstFestivalWinSeen:false,
     lastSave:Date.now(),
     muted:false,
     tab:"produce",
@@ -1134,13 +1193,46 @@ function awardMilestoneGems(){
   }
 }
 /* Studio Awards — a celebration every 50 premieres: Gems + a 3× income window. */
+let _studioAwardQueued=null;
+function celebrateStudioAward(num, gems){
+  const m=document.getElementById("studio-award");
+  if(!m){ toastSafe("🏆 Studio Awards Night #"+num+"! +"+gems+" 💎 · 3× income for 2 min",true); return; }
+  const numEl=document.getElementById("studio-award-num");
+  const gemsEl=document.getElementById("studio-award-gems");
+  const relEl=document.getElementById("studio-award-rel");
+  if(numEl) numEl.textContent="#"+num;
+  if(gemsEl) gemsEl.textContent="+"+gems;
+  if(relEl) relEl.textContent=fmt(S.releases||0);
+  m.style.display="flex";
+  _studioAwardQueued=null;
+  if(!OFFLINE){
+    const app=document.getElementById("app");
+    if(app){
+      app.classList.remove("flash-gold"); void app.offsetWidth; app.classList.add("flash-gold");
+      setTimeout(()=>app.classList.remove("flash-gold"),720);
+    }
+    window.__AST_FX__?.burst?.(44);
+    window.__AST_FX__?.shake?.();
+    play("fanfare");
+  }
+}
+function queueStudioAwardModal(num, gems){
+  if(unlockModalPending()){ _studioAwardQueued={num, gems}; return; }
+  celebrateStudioAward(num, gems);
+}
+function closeStudioAwardModal(){
+  const m=document.getElementById("studio-award");
+  if(m) m.style.display="none";
+  maybeDecision();
+}
 function studioAwards(){
   S.awardsWon=(S.awardsWon||0)+1;
   const gems=10+S.awardsWon*2;
   S.gems+=gems;
   S.goldenUntil=Math.max(S.goldenUntil||0, Date.now()+120000);
+  save();
+  queueStudioAwardModal(S.awardsWon, gems);
   toastSafe("🏆 Studio Awards Night #"+S.awardsWon+"! +"+gems+" 💎 · 3× income for 2 min",true);
-  if(!OFFLINE) play("reward");
 }
 /* multi-slot helpers */
 function activeCount(){ let n=0; for(const p of S.projects) if(p) n++; return n; }
@@ -1423,6 +1515,57 @@ function eventYenMult(){ return currentEvent().yenMult||1; }
 let _pendingDecision=null;
 function bigYen(){ return Math.max(800, Math.floor(studioValue()*0.04)); }
 function bigFans(){ return Math.max(8, Math.floor((S.fans||0)*0.06)+5); }
+const DYNASTY_PERKS_SHOP=[
+  {k:"income",ic:"💰",name:"Studio Empire",desc:"+3% all income per level",max:5,costs:[12,20,32,48,70]},
+  {k:"premiere",ic:"⭐",name:"Critics Circle",desc:"+2% premiere stars per level",max:4,costs:[15,25,40,60]},
+  {k:"festival",ic:"🏆",name:"Festival Prestige",desc:"+8% festival win chance per level",max:3,costs:[18,30,45]},
+];
+function dynastyAvailable(){ return Math.max(0,(S.dynastyPoints||0)-(S.dynastySpent||0)); }
+function dynastyPerkCost(k){
+  const def=DYNASTY_PERKS_SHOP.find(p=>p.k===k); if(!def) return 999;
+  const lvl=(S.dynastyPerks||{})[k]||0; return def.costs[lvl]||999;
+}
+function festivalEntryCost(){ return bigYen(); }
+function festivalInvitePending(){ return !!(_pendingDecision&&_pendingDecision.id==="festival"); }
+function eligibleDecisions(){ return DECISIONS.filter(d=>d.id!=="festival"||(S.releases||0)>=5); }
+function festivalStakesPreview(){
+  const cost=festivalEntryCost();
+  return {cost,afford:S.yen>=cost,fans:bigFans()*3,hype:12};
+}
+function resetDecisionModalChrome(){
+  const overlay=document.getElementById("decision");
+  const modal=overlay?.querySelector(".card-modal");
+  if(overlay) overlay.className="overlay";
+  if(modal) modal.className="card-modal";
+  syncCrisisHudPulse(false);
+}
+function renderFestivalDecisionModal(d,danger){
+  const body=document.getElementById("decision-body");
+  if(!body){ _pendingDecision=null; window.__AST_CRISIS_OPEN__=false; return false; }
+  const overlay=document.getElementById("decision");
+  const modal=overlay?.querySelector(".card-modal");
+  if(overlay) overlay.className="overlay aaa-festival-decision-overlay";
+  if(modal) modal.className="card-modal aaa-festival-decision-modal";
+  const st=festivalStakesPreview();
+  const costTxt=fmt(st.cost);
+  body.innerHTML=`<div class="aaa-festival-decision-hero" aria-hidden="true">${d.ic}</div>
+    <h2 class="aaa-festival-decision-title">${danger?"⚠️ ":""}${d.title}</h2>
+    <p class="aaa-festival-decision-lead">${d.text}</p>
+    <div class="aaa-festival-stakes" aria-label="Festival stakes">
+      <div class="aaa-festival-stake${st.afford?" afford":""}"><span>💴</span><b>−¥${costTxt}</b><small>Entry fee</small></div>
+      <div class="aaa-festival-stake win"><span>👥</span><b>+${fmt(st.fans)}</b><small>Fans if you enter</small></div>
+      <div class="aaa-festival-stake win"><span>⚡</span><b>+${st.hype}</b><small>Hype boost</small></div>
+      <div class="aaa-festival-stake info"><span>👑</span><b>4★+ shows</b><small>Can win circuit awards on premiere</small></div>
+    </div>
+    ${!st.afford?`<p class="aaa-festival-stakes-warn muted">Need ¥${costTxt} — you have ¥${fmt(S.yen)}</p>`:""}
+    <div class="row aaa-festival-decision-actions" style="gap:10px;margin-top:16px">
+      <button class="btn-primary" data-act="dec-yes" style="flex:1"${st.afford?"":" disabled"}>${d.yes[0]}</button>
+      <button class="btn-ghost" data-act="dec-no" style="flex:1">${d.no[0]}</button>
+    </div>`;
+  if(overlay) overlay.style.display="flex";
+  play("reward");
+  return true;
+}
 const DECISIONS=[
   {id:"stream", ic:"📺", title:"Streaming Deal",
    text:"A streaming giant wants exclusive rights to your latest hit. Big money now — but some fans dislike paywalls.",
@@ -1494,11 +1637,19 @@ function crisisModalOpen(){
   return false;
 }
 window.crisisModalOpen=crisisModalOpen;
+function syncCrisisHudPulse(on){
+  const pill=document.getElementById("hud-chaos-pill");
+  if(pill) pill.classList.toggle("hud-chaos-crisis",!!on);
+  document.documentElement.classList.toggle("ast-crisis-open",!!on);
+}
+window.syncCrisisHudPulse=syncCrisisHudPulse;
+function clearDecisionCrisisChrome(){ resetDecisionModalChrome(); }
 function dismissCrisisModal(){
   _pendingDecision=null;
   window.__AST_CRISIS_OPEN__=false;
   window.__AST_PENDING_WARROOM__=null;
   const m=document.getElementById("decision"); if(m) m.style.display="none";
+  clearDecisionCrisisChrome();
 }
 window.dismissCrisisModal=dismissCrisisModal;
 function crisesSnoozed(){ return S.crisisSnoozeUntil&&Date.now()<S.crisisSnoozeUntil; }
@@ -1513,10 +1664,14 @@ function maybeDecision(){
 }
 function showDecision(){
   if(crisisModalOpen()) return;
-  _pendingDecision=DECISIONS[Math.floor(Math.random()*DECISIONS.length)];
+  const pool=eligibleDecisions();
+  if(!pool.length) return;
+  _pendingDecision=pool[Math.floor(Math.random()*pool.length)];
   S.lastDecision=Date.now();
   const d=_pendingDecision, body=document.getElementById("decision-body");
   if(!body){ _pendingDecision=null; return; }
+  if(d.id==="festival"){ renderFestivalDecisionModal(d,false); return; }
+  resetDecisionModalChrome();
   body.innerHTML=`<div style="font-size:42px">${d.ic}</div><h2 style="margin:6px 0;color:var(--plum)">${d.title}</h2>
     <p style="color:var(--slate);font-size:14px;margin:6px 0 0">${d.text}</p>
     <div class="row" style="gap:10px;margin-top:16px">
@@ -1530,8 +1685,9 @@ function resolveDecision(yes){
   window.__AST_CRISIS_OPEN__=false;
   window.__AST_PENDING_WARROOM__=null;
   const m=document.getElementById("decision"); if(m) m.style.display="none";
+  clearDecisionCrisisChrome();
   if(!d) return;
-  if(d.chaos){ S.lastChaos=Date.now(); celebrateChaosSurvival(); }
+  if(d.chaos){ S.lastChaos=Date.now(); S.crisesSurvived=(S.crisesSurvived||0)+1; celebrateChaosSurvival(); }
   else S.lastDecision=Date.now();
   const msg=(yes?d.yes[1]:d.no[1])();
   track("decision",{id:d.id,yes,chaos:!!d.chaos}); play("reward");
@@ -1540,16 +1696,48 @@ function resolveDecision(yes){
   if(window.__AST_TRY_RANKUP__) window.__AST_TRY_RANKUP__();
 }
 /* ========================= CHAOS & STAR-RISK SYSTEMS ========================= */
+function chaosDangerTier(ch){
+  if(ch>=70) return {cls:"critical",lbl:"Critical — disaster imminent"};
+  if(ch>=50) return {cls:"high",lbl:"High risk — next event likely"};
+  if(ch>=40) return {cls:"elevated",lbl:"Elevated — consider a Calm Orb"};
+  return {cls:"moderate",lbl:"Moderate — watch the meter"};
+}
 function renderDecisionModal(d, danger){
   const body=document.getElementById("decision-body");
+  const overlay=document.getElementById("decision");
+  const card=overlay?.querySelector(".card-modal");
   if(!body){ _pendingDecision=null; window.__AST_CRISIS_OPEN__=false; return false; }
-  body.innerHTML=`<div style="font-size:42px">${d.ic}</div><h2 style="margin:6px 0;color:${danger?'var(--bad)':'var(--plum)'}">${danger?'⚠️ ':''}${d.title}</h2>
-    <p style="color:var(--slate);font-size:14px;margin:6px 0 0">${d.text}</p>
-    <div class="row" style="gap:10px;margin-top:16px">
-      <button class="btn-primary" data-act="dec-yes" style="flex:1">${d.yes[0]}</button>
-      <button class="btn-ghost" data-act="dec-no" style="flex:1">${d.no[0]}</button>
-    </div>`;
-  const m=document.getElementById("decision"); if(m) m.style.display="flex"; play("reward");
+  if(d.id==="festival") return renderFestivalDecisionModal(d,danger);
+  if(danger){
+    if(overlay) overlay.className="overlay aaa-decision-overlay aaa-crisis-overlay";
+    if(card) card.className="card-modal aaa-crisis-decision-card";
+    const ch=Math.round(S.chaos||0);
+    const tier=chaosDangerTier(ch);
+    body.innerHTML=`<div class="aaa-decision-inner aaa-decision-inner--crisis">
+      <div class="aaa-decision-hero" aria-hidden="true">${d.ic}</div>
+      <h2 class="aaa-decision-title aaa-decision-title--danger">⚠️ ${d.title}</h2>
+      <p class="aaa-decision-text">${d.text}</p>
+      <div class="aaa-decision-danger aaa-decision-danger--${tier.cls}" aria-label="Chaos danger ${ch} percent">
+        <div class="aaa-decision-danger-head"><span class="aaa-decision-danger-lbl">🌪️ Chaos danger</span><b>${ch}%</b></div>
+        <div class="aaa-decision-danger-track"><i style="width:${ch}%"></i></div>
+        <small class="aaa-decision-danger-hint">${tier.lbl}</small>
+      </div>
+      <div class="aaa-decision-actions">
+        <button class="btn-primary" data-act="dec-yes">${d.yes[0]}</button>
+        <button class="btn-ghost" data-act="dec-no">${d.no[0]}</button>
+      </div></div>`;
+    syncCrisisHudPulse(true);
+  }else{
+    resetDecisionModalChrome();
+    body.innerHTML=`<div style="font-size:42px">${d.ic}</div><h2 style="margin:6px 0;color:var(--plum)">${d.title}</h2>
+      <p style="color:var(--slate);font-size:14px;margin:6px 0 0">${d.text}</p>
+      <div class="row" style="gap:10px;margin-top:16px">
+        <button class="btn-primary" data-act="dec-yes" style="flex:1">${d.yes[0]}</button>
+        <button class="btn-ghost" data-act="dec-no" style="flex:1">${d.no[0]}</button>
+      </div>`;
+  }
+  if(overlay) overlay.style.display="flex";
+  play("reward");
   return true;
 }
 /* Jurassic-style crises — the price of pushing your studio too hard. yes = pay to mitigate, no = take the hit. */
@@ -1901,7 +2089,7 @@ function load(){
     if(S.stamina==null) S.stamina=100; if(S.chaos==null) S.chaos=0;
     S.items=(d.items&&typeof d.items==="object")?d.items:{}; S.entitlements=Array.isArray(d.entitlements)?d.entitlements:[];
     S.hallOfFame=Array.isArray(d.hallOfFame)?d.hallOfFame:[]; S.studioName=d.studioName||"";
-    S.unlockedSeen=Array.isArray(d.unlockedSeen)?d.unlockedSeen:[]; S.franchises=(d.franchises&&typeof d.franchises==="object")?d.franchises:{}; S.ageOk=!!d.ageOk;
+    S.unlockedSeen=Array.isArray(d.unlockedSeen)?d.unlockedSeen:[]; S.franchises=(d.franchises&&typeof d.franchises==="object")?d.franchises:{}; S.franchiseOpportunity=(d.franchiseOpportunity&&typeof d.franchiseOpportunity==="object")?d.franchiseOpportunity:null; S.firstFranchiseCelebrated=!!d.firstFranchiseCelebrated; S.ageOk=!!d.ageOk;
     S.freeScoutUsed=!!d.freeScoutUsed; S.starsUnlockModalSeen=!!d.starsUnlockModalSeen; S.studioUnlockModalSeen=!!d.studioUnlockModalSeen; S.marketUnlockModalSeen=!!d.marketUnlockModalSeen; S.campaignsRun=+d.campaignsRun||0; S.researchUnlockModalSeen=!!d.researchUnlockModalSeen; S.chaosUnlockModalSeen=!!d.chaosUnlockModalSeen; S.firstChaosToastSeen=!!d.firstChaosToastSeen; S.awaitFirstChaosSurvival=!!d.awaitFirstChaosSurvival;
     S.quests=Array.isArray(d.quests)?d.quests:[];
     S.questProg=Object.assign({releases:0,yen:0,campaigns:0,hires:0,hypeSpent:0,scouts:0}, d.questProg||{});
@@ -2097,6 +2285,27 @@ function celebrateFirstResearch(genre){
     setTimeout(()=>card.classList.remove("aaa-mastery-first-hit"), 1200);
   }
 }
+function celebrateFirstFestivalWin(win){
+  if(OFFLINE||S.firstFestivalWinSeen) return;
+  S.firstFestivalWinSeen=true; save();
+  const app=document.getElementById("app");
+  if(app){
+    app.classList.remove("flash-gold"); void app.offsetWidth; app.classList.add("flash-gold");
+    setTimeout(()=>app.classList.remove("flash-gold"), 620);
+  }
+  const stats=document.getElementById("festival-win-stats");
+  const modal=document.getElementById("festival-win");
+  if(stats&&win){
+    const stars="★".repeat(win.stars||4);
+    stats.innerHTML=`<div><span>${win.ic||"🏆"}</span><b>${win.fest||"Festival"}</b><small>Award</small></div>
+      <div><span>🎬</span><b>"${win.title||"Your hit"}"</b><small>Show</small></div>
+      <div><span>⭐</span><b>${stars}</b><small>Premiere rating</small></div>`;
+  }
+  if(modal) modal.style.display="flex";
+  play("fanfare");
+  window.__AST_FX__?.burst?.(28);
+  showAchievePop("🎪 Festival Darling");
+}
 
 /* ========================= ACTIONS ========================= */
 function greenlight(pid, genre, cast, sequel){
@@ -2112,7 +2321,12 @@ function greenlight(pid, genre, cast, sequel){
   const sc=showcaseEntry(pid,genre);
   let title=sc?(sc.titleEn||sc.titleJa):makeTitle(genre), base=null, seq=0;
   let poster=sc?sc.poster:pickPoster(genre);
-  if(sequel&&sequel.base){ base=sequel.base; seq=(S.franchises[base]||1)+1; title=sequelTitle(base, seq); genre=sequel.genre||genre; poster=pickPoster(genre); }
+  if(sequel&&sequel.base){
+    base=sequel.base; seq=(S.franchises[base]||1)+1; title=sequelTitle(base, seq); genre=sequel.genre||genre;
+    poster=(S.franchiseOpportunity?.poster&&S.franchiseOpportunity.base===base)?S.franchiseOpportunity.poster:pickPoster(genre);
+    if(S.franchiseOpportunity?.base===base) delete S.franchiseOpportunity;
+    _selGlSequel=null;
+  }
   S.projects[slot]={ pid, genre, progress:0, title, poster, cast:ok, base, seq };
   _castSel=[];
   questAdd("greenlit",1);
@@ -2313,14 +2527,92 @@ function franchiseBase(t){ return String(t||"").replace(/\s+(II|III|IV|V|VI|\d+)
 function sequelTitle(base,n){ const r=["","","II","III","IV","V","VI"]; return base+" "+(r[n]||n); }
 function franchiseList(){
   const seen={}; const out=[];
-  for(const s of (S.hallOfFame||[])){ const b=franchiseBase(s.title); if(b && !seen[b]){ seen[b]=1; out.push({base:b, genre:s.genre, season:(S.franchises[b]||1)}); } }
+  for(const s of (S.hallOfFame||[])){ const b=franchiseBase(s.title); if(b && !seen[b] && (s.stars||0)>=4){ seen[b]=1; out.push({base:b, genre:s.genre, season:(S.franchises[b]||1), stars:s.stars}); } }
   return out.slice(0,6);
+}
+function franchiseCount(){ return Object.keys(S.franchises||{}).length; }
+function sequelGreenlightInfo(){
+  const opts=unlockedProjects().filter(p=>S.yen>=p.cost);
+  const p=opts.length?opts[opts.length-1]:unlockedProjects().slice(-1)[0]||PROJECTS[0];
+  return { p, afford: opts.length>0, cost: p?p.cost:0 };
+}
+function sequelShowcaseEntries(){
+  const seen={}, out=[];
+  const push=(base,genre,stars,poster)=>{
+    if(!base||seen[base]) return;
+    seen[base]=1;
+    const season=(S.franchises[base]||1)+1;
+    const seqInfo=sequelGreenlightInfo();
+    out.push({
+      sequelBase:base, titleJa:"続編", titleEn:sequelTitle(base,season),
+      genre, genres:[genre,"Franchise"], poster:poster||pickPoster(genre),
+      appeal:Math.min(98,72+(stars||4)*5), trend:90, orig:65,
+      pot:(stars||4)>=5?"S":"A+", stars:stars||4, season,
+      pid:seqInfo.p?.id, seqCost:seqInfo.cost, seqAfford:seqInfo.afford,
+    });
+  };
+  const opp=S.franchiseOpportunity;
+  if(opp?.base) push(opp.base,opp.genre,opp.stars,opp.poster);
+  for(const fr of franchiseList()){
+    if(seen[fr.base]) continue;
+    push(fr.base,fr.genre,fr.stars,null);
+  }
+  return out;
+}
+function greenlightCarouselList(){
+  const sequels=sequelShowcaseEntries().filter(sc=>{
+    if(_selGenre===6) return (sc.genres||[]).includes("Drama");
+    const g=_selGenre===-1?null:GENRES[_selGenre];
+    if(g&&sc.genre!==g) return false;
+    return true;
+  });
+  return [...sequels,...showcaseForGreenlight()];
+}
+function focusFranchiseSequel(base, genre){
+  _glMode=true;
+  _selGlSequel=base;
+  _selGlGenre=genre||null;
+  _selGlPid=null;
+  S.tab="produce";
+  render();
+  requestAnimationFrame(()=>{
+    const cards=[...document.querySelectorAll(".aaa-gl-card[data-gl-sequel]")];
+    const card=cards.find(el=>decodeURIComponent(el.dataset.glSequel||"")===base);
+    if(card) card.scrollIntoView({behavior:"smooth",block:"nearest",inline:"center"});
+  });
 }
 function makeSequel(base, genre){
   const opts=unlockedProjects().filter(p=>S.yen>=p.cost);
   if(!opts.length){ toast("Not enough Yen to fund a sequel"); return; }
   const p=opts[opts.length-1];
+  _glMode=false;
   greenlight(p.id, genre, _castSel.slice(), {base, genre});
+  if(S.franchiseOpportunity?.base===base) delete S.franchiseOpportunity;
+  _selGlSequel=null;
+}
+function celebrateFirstFranchise(base){
+  if(OFFLINE||S.firstFranchiseCelebrated) return;
+  S.firstFranchiseCelebrated=true; save();
+  showAchievePop("📺 First franchise!");
+  toastSafe("📺 "+base+" is franchise-ready — greenlight a sequel for bonus fans & yen!",true);
+  play("fanfare");
+  window.__AST_FX__?.burst?.(28);
+  window.__AST_FX__?.shake?.();
+  const app=document.getElementById("app");
+  if(app){
+    app.classList.remove("flash-gold"); void app.offsetWidth; app.classList.add("flash-gold");
+    setTimeout(()=>app.classList.remove("flash-gold"),520);
+  }
+}
+function registerFranchiseHit(pr,stars){
+  if(stars<4) return;
+  const base=franchiseBase(pr.title||"");
+  if(!base) return;
+  const isFirst=franchiseCount()===0;
+  if(!S.franchises[base]) S.franchises[base]=1;
+  S.franchiseOpportunity={base,genre:pr.genre,stars,title:pr.title||base,poster:pr.poster,t:Date.now()};
+  if(isFirst) celebrateFirstFranchise(base);
+  else if(!OFFLINE) toastSafe("📺 "+base+" — sequel opportunity! Greenlight for franchise bonus.",true);
 }
 /* ---- Age gate for randomized (loot-box) features ---- */
 function ageGate(then){
@@ -2346,6 +2638,13 @@ function showPremiere(pr,p,stars,yenGain,fansGain){
   const rv=REVIEWS[stars]||REVIEWS[3]; const review=rv[Math.floor(Math.random()*rv.length)];
   const ev=currentEvent();
   const est=estimatePremiere(pr,p);
+  const franBase=stars>=4?franchiseBase(pr.title||p.name):"";
+  const nextSeason=franBase?(S.franchises[franBase]||1)+1:0;
+  const sequelBlock=stars>=4&&franBase?`<div class="prem-franchise-suggest">
+      <p class="prem-franchise-kicker">📺 Franchise opportunity!</p>
+      <p class="prem-franchise-copy">Your hit deserves a sequel — built-in audience boosts fans &amp; yen on premiere.</p>
+      <button type="button" class="btn-gold prem-franchise-btn" data-act="sequel-from-premiere" data-seq="${encodeURIComponent(franBase)}" data-seqg="${encodeURIComponent(pr.genre)}">📺 Greenlight ${sequelTitle(franBase,nextSeason)}</button>
+    </div>`:"";
   body.innerHTML=`
     ${isFirst?`<div class="prem-first-ribbon" aria-hidden="true"><span class="prem-first-spark">✨</span><span>YOUR FIRST PREMIERE!</span><span class="prem-first-spark">✨</span></div>`:""}
     ${isSecond?`<div class="prem-second-ribbon" aria-hidden="true">🎬 Hit #2 — back on the red carpet!</div>`:""}
@@ -2367,11 +2666,12 @@ function showPremiere(pr,p,stars,yenGain,fansGain){
       <div class="kpi" style="flex:1"><div class="kl">New fans</div><div class="kv" id="prem-fans">0</div></div>
       ${isFirst?`<div class="kpi prem-kpi-gems" style="flex:1"><div class="kl">Quest gems waiting</div><div class="kv">+${est.gems||0} 💎</div></div>`:""}
     </div>
-    ${isFirst?`<p class="prem-first-next">Greenlight your next hit — daily &amp; weekly quests pay 💎</p>`:""}`;
+    ${isFirst?`<p class="prem-first-next">Greenlight your next hit — daily &amp; weekly quests pay 💎</p>`:""}
+    ${sequelBlock}`;
   const m=document.getElementById("premiere");
   const closeBtn=m?.querySelector("[data-act='premiere-close']");
-  if(closeBtn) closeBtn.textContent=isFirst?"🎬 Greenlight the next one!":isSecond?"🎬 Scout stars & keep rolling!":"🎬 To the red carpet!";
-  if(m){ m.classList.toggle("prem-first",isFirst); m.classList.toggle("prem-second",isSecond); m.style.display="flex"; }
+  if(closeBtn) closeBtn.textContent=stars>=4&&!isFirst?"📺 Greenlight the sequel!":isFirst?"🎬 Greenlight the next one!":isSecond?"🎬 Scout stars & keep rolling!":"🎬 To the red carpet!";
+  if(m){ m.classList.toggle("prem-first",isFirst); m.classList.toggle("prem-second",isSecond); m.classList.toggle("prem-franchise",stars>=4); m.style.display="flex"; }
   _premiereOpen=true; play("premiere");
   window.__AST_FX__?.burst?.(isFirst?32:isSecond?14:stars>=5?36:stars>=4?24:16);
   if(isFirst||(stars>=4&&!isSecond)) window.__AST_FX__?.shake?.();
@@ -2384,9 +2684,11 @@ function closePremiere(){
   if(_marketUnlockQueued){ showMarketUnlockModal(); save(); return; }
   if(_researchUnlockQueued){ showResearchUnlockModal(); save(); return; }
   if(_chaosUnlockQueued){ showChaosUnlockModal(); save(); return; }
+  if(_studioAwardQueued){ celebrateStudioAward(_studioAwardQueued.num, _studioAwardQueued.gems); save(); return; }
   if((S.releases||0)<2&&activeCount()===0){
     _glMode=true; S.tab="produce"; render(); save(); return;
   }
+  if((S.releases||0)>=2) maybeShowPwaInstallBanner();
   maybeDecision();
 }
 function estimatePremiere(pr,p){
@@ -2442,6 +2744,7 @@ function releaseProject(slot){
     (S.hallOfFame=S.hallOfFame||[]).unshift({title:pr.title||p.name, genre:pr.genre, stars, yen:yenGain, fans:fansGain, tier:p.tier, t:Date.now()});
     if(S.hallOfFame.length>40) S.hallOfFame.length=40;
   }
+  registerFranchiseHit(pr,stars);
   S.projects[slot]=null;
   questAdd("releases",1); questAdd("yen",yenGain);
   if(studioValue()>S.bestValue) S.bestValue=studioValue();
@@ -2872,13 +3175,95 @@ function renderOfflineBreakdown(sec,r){
     <div><span>Fans gained</span><b>+${fmt(r.fans||0)}</b></div>
     <div><span>Projects progressed</span><b>${progressLine}</b></div>`;
 }
-function showWhileAwayPreviewToast(sec,r){
-  const parts=[];
-  if(r.yen>0) parts.push(`+¥${fmt(r.yen)}`);
-  if(r.fans>0) parts.push(`+${fmt(r.fans)} fans`);
-  if(r.releases>0) parts.push(`${r.releases} release${r.releases>1?"s":""}`);
-  else if(r.progressShows>0) parts.push(`+${Math.round(r.progressPct||0)}% progress`);
-  toast(`👋 While away (${formatAwayTime(sec)}): ${parts.join(" · ")}`,true);
+function showReturnPlayerWelcomeToast(sec,r,dr){
+  const name=S.studioName||"Director";
+  const streak=(dr&&dr.streak)||S.dailyStreak||0;
+  const idle=royaltyPerSec();
+  const bits=[`👋 Welcome back, ${name}!`];
+  if(streak>1) bits.push(`Day ${streak} streak 🔥`);
+  else if(streak===1&&dr) bits.push("Day 1 streak started");
+  if(idle>0) bits.push(`Idle ¥${fmt(idle)}/s`);
+  if(sec>60&&r&&offlineHadMeaningfulReturn(r)){
+    if(r.yen>0) bits.push(`Away +¥${fmt(r.yen)}`);
+    if(r.fans>0) bits.push(`+${fmt(r.fans)} fans`);
+    else if(r.releases>0) bits.push(`${r.releases} premiere${r.releases>1?"s":""}`);
+    else if(r.progressShows>0) bits.push(`+${Math.round(r.progressPct||0)}% progress`);
+  }
+  toast(bits.join(" · "),"special");
+}
+function showWhileAwayPreviewToast(sec,r){ showReturnPlayerWelcomeToast(sec,r,null); }
+let _deferredInstallPrompt=null;
+function isStandalonePwa(){
+  try{
+    if(window.matchMedia("(display-mode: standalone)").matches) return true;
+    if(window.navigator.standalone) return true;
+  }catch(e){}
+  return false;
+}
+function isMobilePlayDevice(){
+  if(NATIVE) return false;
+  try{
+    const coarse=window.matchMedia("(pointer: coarse)").matches;
+    const narrow=window.matchMedia("(max-width: 768px)").matches;
+    const ua=/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent||"");
+    return (coarse&&narrow)||ua;
+  }catch(e){ return false; }
+}
+function pwaInstallEligible(){
+  if(NATIVE||isStandalonePwa()||S.pwaInstallDismissed||S.pwaInstalled) return false;
+  return !!_deferredInstallPrompt;
+}
+function hidePwaInstallBanner(){
+  const el=document.getElementById("pwa-install-banner");
+  if(el) el.hidden=true;
+}
+function maybeShowPwaInstallBanner(){
+  if(!pwaInstallEligible()) return;
+  if((S.releases||0)<2) return;
+  const el=document.getElementById("pwa-install-banner");
+  if(el) el.hidden=false;
+}
+function dismissPwaInstallBanner(){
+  S.pwaInstallDismissed=true;
+  hidePwaInstallBanner();
+  save();
+}
+async function triggerPwaInstall(){
+  if(_deferredInstallPrompt){
+    try{
+      _deferredInstallPrompt.prompt();
+      const choice=await _deferredInstallPrompt.userChoice;
+      if(choice.outcome==="accepted"){ S.pwaInstalled=true; hidePwaInstallBanner(); toastSafe("📲 Installed — launch from your home screen!",true); }
+      else dismissPwaInstallBanner();
+      _deferredInstallPrompt=null;
+      save();
+    }catch(e){ dismissPwaInstallBanner(); }
+    return;
+  }
+  if(isMobilePlayDevice()){
+    toastSafe("📲 Tap Share → Add to Home Screen to install",true);
+    S.pwaCoachSeen=false;
+    save();
+    render();
+  }
+}
+function initPwaInstall(){
+  if(NATIVE) return;
+  window.addEventListener("beforeinstallprompt",(e)=>{
+    e.preventDefault();
+    _deferredInstallPrompt=e;
+    if((S.releases||0)>=2) maybeShowPwaInstallBanner();
+  });
+  window.addEventListener("appinstalled",()=>{
+    S.pwaInstalled=true;
+    hidePwaInstallBanner();
+    save();
+    toastSafe("📲 Installed — launch from your home screen!",true);
+  });
+}
+function syncPushNotifyOptUi(){
+  const cb=document.getElementById("push-notify-opt");
+  if(cb) cb.checked=!!S.pushNotifyOptIn;
 }
 function showOfflineModal(sec,r,opts={}){
   if(!offlineHadMeaningfulReturn(r)) return false;
@@ -3253,8 +3638,48 @@ function claimHudRival(){
   play("fanfare"); toast("⚔️ Rival defeated! +15💎","special");
   window.__AST_FX__?.burst?.(18); save(); render();
 }
+const SEASON_TIERS=[
+  {releases:3,gems:5},{releases:8,gems:8},{releases:15,gems:12},{releases:25,gems:18},
+  {releases:40,gems:25},{releases:60,gems:35},{releases:90,gems:50},{releases:130,gems:70},
+  {releases:180,gems:95},{releases:250,gems:150},
+];
+function seasonPassNextTier(){
+  const rel=S.releases||0, claimed=S.seasonClaimed||[];
+  for(let i=0;i<SEASON_TIERS.length;i++){
+    if(!claimed.includes(i)) return {idx:i, tier:SEASON_TIERS[i], prev:SEASON_TIERS[i-1]?.releases||0};
+  }
+  return null;
+}
+function seasonPassProgressHTML(){
+  const rel=S.releases||0, claimed=S.seasonClaimed||[], total=SEASON_TIERS.length;
+  const claimedN=claimed.length;
+  const next=seasonPassNextTier();
+  if(!next){
+    return `<div class="aaa-season-progress aaa-season-done" aria-label="Season pass complete">
+      <div class="aaa-season-progress-head"><span class="aaa-season-ic">🎫</span><div><b>Season Pass</b><small>${claimedN}/${total} tiers claimed — track complete!</small></div><span class="aaa-season-done-pill">✓ MAX</span></div>
+    </div>`;
+  }
+  const {tier, prev, idx}=next;
+  const pct=Math.min(100, Math.max(0, ((rel-prev)/Math.max(1, tier.releases-prev))*100));
+  const ready=rel>=tier.releases;
+  const dots=SEASON_TIERS.map((t,i)=>{
+    const done=claimed.includes(i);
+    const cur=!done && i===idx;
+    return `<span class="aaa-season-dot ${done?"done":cur?"cur":""}" title="${t.releases} shows · +${t.gems}💎"></span>`;
+  }).join("");
+  return `<div class="aaa-season-progress ${ready?"aaa-season-ready":""}" ${ready?'data-act="season-pass-scroll"':''} aria-label="Season pass progress">
+    <div class="aaa-season-progress-head">
+      <span class="aaa-season-ic">🎫</span>
+      <div><b>Season Pass</b><small>${claimedN}/${total} tiers · next at ${fmt(tier.releases)} premieres</small></div>
+      <span class="aaa-season-next-gem">+${tier.gems}💎</span>
+    </div>
+    ${aaaMeterHead(`${fmt(rel)} / ${fmt(tier.releases)} premieres`, ready?"Ready to claim!":`${fmt(Math.max(0,tier.releases-rel))} to go`, pct, ready?"gold":"cyan")}
+    <div class="aaa-season-tier-dots">${dots}</div>
+    ${ready?'<div class="aaa-season-claim-hint">Tap to claim your tier ↓</div>':""}
+  </div>`;
+}
 function renderQuests(){
-  let h=`<div class="aaa-tab-page">${miniDashStripHTML()}<div class="aaa-page-hero aaa-quest-hero"><h2>🎯 ${STR.h_rewards}</h2><p>Daily login, quests, and weekly challenges — all on timers.</p></div>`;
+  let h=`<div class="aaa-tab-page">${miniDashStripHTML()}${seasonPassProgressHTML()}<div class="aaa-page-hero aaa-quest-hero"><h2>🎯 ${STR.h_rewards}</h2><p>Daily login, quests, and weekly challenges — all on timers.</p></div>`;
   h+=loginCalendarHTML();
   h+=hudDailyGoalsHTML();
   h+=hudRivalHTML();
@@ -3321,11 +3746,59 @@ function studioStatCardsHTML(){
   const share=S.marketShare||5;
   const awards=S.awardsWon||0;
   const rel=S.releases||0;
-  return `<div class="aaa-stat-cards" aria-label="Studio highlights">
+  const fest=(S.festivalWins||[]).length;
+  const dyn=dynastyAvailable();
+  const crises=S.crisesSurvived||0;
+  const showCrisis=featureUnlocked("chaos")||crises>0;
+  const fran=franchiseCount();
+  let h=`<div class="aaa-stat-cards" aria-label="Studio highlights">
     <div class="aaa-stat-card aaa-stat-rel"><span class="aaa-stat-ic">🎬</span><div class="aaa-stat-body"><span class="aaa-stat-val">${fmt(rel)}</span><span class="aaa-stat-lbl">Premieres</span></div></div>
     <div class="aaa-stat-card aaa-stat-fans"><span class="aaa-stat-ic">👥</span><div class="aaa-stat-body"><span class="aaa-stat-val">${fmt(fans)}</span><span class="aaa-stat-lbl">Total fans</span></div></div>
+    <div class="aaa-stat-card aaa-stat-franchise"><span class="aaa-stat-ic">📺</span><div class="aaa-stat-body"><span class="aaa-stat-val">${fmt(fran)}</span><span class="aaa-stat-lbl">Franchises</span></div></div>
     <div class="aaa-stat-card aaa-stat-share"><span class="aaa-stat-ic">📊</span><div class="aaa-stat-body"><span class="aaa-stat-val">${share}%</span><span class="aaa-stat-lbl">Market share</span></div></div>
-    <div class="aaa-stat-card aaa-stat-awards"><span class="aaa-stat-ic">🏆</span><div class="aaa-stat-body"><span class="aaa-stat-val">${fmt(awards)}</span><span class="aaa-stat-lbl">Awards</span></div></div>
+    <div class="aaa-stat-card aaa-stat-awards"><span class="aaa-stat-ic">🏆</span><div class="aaa-stat-body"><span class="aaa-stat-val">${fmt(awards)}</span><span class="aaa-stat-lbl">Awards</span></div></div>`;
+  if(showCrisis){
+    h+=`<div class="aaa-stat-card aaa-stat-crisis"><span class="aaa-stat-ic">🛡️</span><div class="aaa-stat-body"><span class="aaa-stat-val">${fmt(crises)}</span><span class="aaa-stat-lbl">Crises survived</span></div></div>`;
+  }
+  if(rel>=5){
+    h+=`<div class="aaa-stat-card aaa-stat-fest"><span class="aaa-stat-ic">🎪</span><div class="aaa-stat-body"><span class="aaa-stat-val">${fmt(fest)}</span><span class="aaa-stat-lbl">Festivals won</span></div></div>
+    <div class="aaa-stat-card aaa-stat-dynasty"><span class="aaa-stat-ic">👑</span><div class="aaa-stat-body"><span class="aaa-stat-val">${fmt(dyn)}</span><span class="aaa-stat-lbl">Dynasty pts</span></div></div>`;
+  }
+  return h+`</div>`;
+}
+function festivalCircuitHTML(){
+  const wins=S.festivalWins||[];
+  if(!wins.length) return "";
+  const recent=wins.slice(-3).reverse().map(w=>
+    `<div class="aaa-festival-win-row">${w.ic} <b>${w.fest}</b> — "${w.title}" ${"★".repeat(w.stars||0)}</div>`
+  ).join("");
+  return `<div class="aaa-festival-circuit"><div class="aaa-festival-circuit-head"><span>🎪 Festival Circuit</span><span class="pill">${wins.length} won</span></div>${recent}</div>`;
+}
+function dynastyStudioHTML(){
+  if((S.releases||0)<5) return "";
+  const avail=dynastyAvailable();
+  const earned=S.dynastyPoints||0;
+  const pct=earned>0?Math.min(100,Math.round(avail/earned*100)):0;
+  const rows=DYNASTY_PERKS_SHOP.map(p=>{
+    const lvl=(S.dynastyPerks||{})[p.k]||0;
+    const cost=dynastyPerkCost(p.k);
+    const maxed=lvl>=p.max;
+    return `<div class="aaa-upgrade-row aaa-dynasty-perk-row"><div class="meta">
+      <h4>${p.ic} ${p.name} <span class="pill">Lv ${lvl}/${p.max}</span></h4>
+      <div class="muted">${p.desc}</div></div>
+      <button class="btn-gold hirebtn" data-legend-perk="${p.k}" ${maxed?"disabled":""} style="font-size:11px;min-width:88px">${maxed?"MAX":cost+" pts"}</button></div>`;
+  }).join("");
+  return `<div class="panel aaa-dynasty-panel">
+    <h2>👑 Dynasty Points</h2>
+    <div class="aaa-dynasty-bar-wrap">
+      <div class="aaa-dynasty-bar-head"><span><b>${avail}</b> available</span><span class="muted">${earned} earned total</span></div>
+      <div class="aaa-dynasty-bar"><i style="width:${pct}%"></i></div>
+    </div>
+    <button class="btn-cyan aaa-dynasty-shop-cta" data-act="dynasty-scroll-perks" style="width:100%;margin:10px 0 6px">Open Perk Shop →</button>
+    <div class="aaa-dynasty-perks" id="dynasty-perk-shop">
+      <div class="muted" style="font-size:11px;margin-bottom:8px">Permanent upgrades — spend dynasty points earned from festivals &amp; achievements.</div>
+      ${rows}
+    </div>
   </div>`;
 }
 function studioRankStripHTML(){
@@ -3386,6 +3859,7 @@ function dashboardHTML(){
      ${(()=>{const L=studioLevel(),lo=fansForLevel(L),hi=fansForLevel(L+1),f=Math.max(0,Math.min(100,(S.totalFansEver-lo)/(hi-lo)*100));return aaaMeterHead(`Lv. ${L} → ${L+1}`, `${fmt(Math.max(0,hi-S.totalFansEver))} fans`, f, "gold");})()}
      ${boosts.length?`<div class="aaa-boosts">⚡ ${boosts.join(" · ")}</div>`:""}
      ${(()=>{const st=Math.round(S.stamina==null?100:S.stamina), ch=Math.round(S.chaos||0);return aaaMeterHead("Stamina", st+"%", st, "stamina")+aaaMeterHead("Chaos", ch+"%", ch, "chaos");})()}
+     ${festivalCircuitHTML()}
      ${featureUnlocked("chaos")?`<button class="btn-ghost" data-act="chaos-toggle" style="margin-top:8px;width:100%">${S.chaosMode?"🌪️ Chaos ON":"🌪️ Chaos Mode"}</button>`:""}
      ${activeCount()>0?`<button class="btn-cyan" id="a-over" style="margin-top:8px;width:100%">🚀 Overdrive · 15 Hype</button>`:""}
      ${S.fans>=PRESTIGE_FANS?`<button class="btn-cyan" id="a-prestige" style="margin-top:8px;width:100%">🌸 Reboot Studio</button>`:""}
@@ -3418,19 +3892,30 @@ function greenlightPieHTML(cost){
 function renderGreenlightPage(empties,showBack){
   const ultraEarly=(S.releases||0)<1;
   const used=S.slots-empties;
-  const list=showcaseForGreenlight();
-  const match=list.find(s=>s.pid===_selGlPid&&(!_selGlGenre||s.genre===_selGlGenre));
-  if(!match){ const f=list[0]||GREENLIGHT_SHOWCASE[0]; _selGlPid=f.pid; _selGlGenre=f.genre; }
-  const selSc=list.find(s=>s.pid===_selGlPid&&s.genre===_selGlGenre)||list[0]||GREENLIGHT_SHOWCASE[0];
-  const selP=PROJECTS[selSc.pid];
-  const lock=projectLockInfo(selP);
-  const afford=S.yen>=selP.cost;
-  const rewards=showcaseRewardsFor(selSc,selP,selSc.genre);
-  const selCost=showcaseCost(selSc,selP);
+  const list=greenlightCarouselList();
+  const seqSel=_selGlSequel?list.find(s=>s.sequelBase===_selGlSequel):null;
+  if(seqSel){ _selGlGenre=seqSel.genre; _selGlPid=null; }
+  else{
+    const match=list.find(s=>!s.sequelBase&&s.pid===_selGlPid&&(!_selGlGenre||s.genre===_selGlGenre));
+    if(!match){
+      const f=list.find(s=>!s.sequelBase)||list[0]||GREENLIGHT_SHOWCASE[0];
+      if(f?.sequelBase){ _selGlSequel=f.sequelBase; _selGlPid=null; _selGlGenre=f.genre; }
+      else if(f){ _selGlPid=f.pid; _selGlGenre=f.genre; _selGlSequel=null; }
+    }else _selGlSequel=null;
+  }
+  const selSeq=_selGlSequel?list.find(s=>s.sequelBase===_selGlSequel):null;
+  const selSc=selSeq||list.find(s=>!s.sequelBase&&s.pid===_selGlPid&&s.genre===_selGlGenre)||list.find(s=>!s.sequelBase)||list[0]||GREENLIGHT_SHOWCASE[0];
+  const isSequel=!!selSc.sequelBase;
+  const selP=isSequel?PROJECTS[selSc.pid!=null?selSc.pid:sequelGreenlightInfo().p.id]:PROJECTS[selSc.pid];
+  const lock=isSequel?{locked:false,reason:""}:projectLockInfo(selP);
+  const afford=isSequel?!!selSc.seqAfford:S.yen>=selP.cost;
+  const rewards=isSequel?{revenue:Math.floor(selP.base*1.4),profit:Math.floor(selP.base*0.5),exp:Math.floor(selP.tier*400),fans:Math.floor(selP.fans*1.3)}:showcaseRewardsFor(selSc,selP,selSc.genre);
+  const selCost=isSequel?(selSc.seqCost||selP.cost):showcaseCost(selSc,selP);
   const usedShow=(S.showcaseGlUsed!=null&&(S.releases||0)<3)?S.showcaseGlUsed:used;
-  const risk=greenlightRisk(selP,selSc.genre);
+  const risk=isSequel?{level:"LOW",note:"Franchise sequel — built-in audience lowers risk. +8% fans & yen per season."}:greenlightRisk(selP,selSc.genre);
   const slotLabel=`${empties} open slot${empties>1?"s":""}`;
   const quickSc=GREENLIGHT_SHOWCASE.find(s=>s.editor&&!projectLockInfo(PROJECTS[s.pid]).locked)||GREENLIGHT_SHOWCASE[0];
+  const opp=S.franchiseOpportunity;
   let h=`<div class="aaa-tab-page aaa-gl-page">`;
   if(showBack) h+=`<button type="button" class="aaa-gl-back" data-act="greenlight-back" aria-label="Back to production">← Back to production</button>`;
   if((S.releases||0)<2){
@@ -3439,6 +3924,14 @@ function renderGreenlightPage(empties,showBack){
       <h2 class="aaa-post-prem-title">Greenlight your next anime</h2>
       <p class="aaa-post-prem-hint">One tap picks the editor's choice — or browse the full catalog below.</p>
       <button type="button" class="btn-gold aaa-quick-gl-banner" data-act="quick-greenlight">🎬 Quick Greenlight · ${quickSc.titleEn}</button>
+    </div>`;
+  }
+  if(opp?.base){
+    const nxt=sequelTitle(opp.base,(S.franchises[opp.base]||1)+1);
+    h+=`<div class="aaa-franchise-suggest">
+      <span class="aaa-franchise-suggest-ic" aria-hidden="true">📺</span>
+      <div class="aaa-franchise-suggest-body"><b>Your hit deserves a sequel</b><span>Greenlight <em>${nxt}</em> for franchise bonus fans &amp; yen</span></div>
+      <button type="button" class="btn-gold aaa-franchise-suggest-btn" data-act="franchise-sequel-focus" data-seq="${encodeURIComponent(opp.base)}" data-seqg="${encodeURIComponent(opp.genre)}">Sequel</button>
     </div>`;
   }
   h+=`<div class="aaa-gl-page-head">
@@ -3453,7 +3946,7 @@ function renderGreenlightPage(empties,showBack){
   h+=GENRES.map((g,i)=>`<span class="chip ${i===_selGenre?'sel':''} ${g===trendGenre()?'trend':''}" data-g="${i}"><span class="aaa-genre-ic">${GENRE_ICONS[g]||""}</span>${genreChipLabel(g)}</span>`).join("");
   h+=`<span class="chip ${_selGenre===6?'sel':''}" data-g="6"><span class="aaa-genre-ic">🎭</span>DRAMA</span>`;
   h+=`</div><span class="aaa-genre-more" aria-hidden="true">▼</span></div>`;
-  if((S.releases||0)>=2&&(S.releases||0)<=10){
+  if((S.releases||0)>=2&&(S.releases||0)<=10&&!isSequel){
     const trend=suggestedGreenlightGenre();
     const matchGenre=selSc.genre===trend;
     h+=`<div class="aaa-gl-trend-suggest${matchGenre?" match":""}">
@@ -3464,9 +3957,26 @@ function renderGreenlightPage(empties,showBack){
   }
   h+=`<div class="aaa-gl-carousel">`;
   h+=list.map(sc=>{
+    if(sc.sequelBase){
+      const sel=_selGlSequel===sc.sequelBase;
+      return `<div class="aaa-gl-card aaa-gl-card-sequel${sel?' sel':''}${!sc.seqAfford?' lock':''}" data-gl-sequel="${encodeURIComponent(sc.sequelBase)}" data-gl-genre="${sc.genre}" role="button" tabindex="0">
+      <div class="aaa-gl-poster" style="background-image:url(${sc.poster})">
+        <span class="aaa-gl-badge sequel">SEQUEL</span>
+        <span class="aaa-gl-badge sequel-season">S${sc.season}</span>
+      </div>
+      ${sc.titleJa?`<h4 class="aaa-gl-name-ja">${sc.titleJa}</h4>`:""}
+      <p class="aaa-gl-name">${sc.titleEn}</p>
+      <div class="aaa-gl-genres">${sc.genres.join(" • ").toUpperCase()}</div>
+      ${greenlightStatBar("Audience Appeal",sc.appeal)}
+      ${greenlightStatBar("Market Trend",sc.trend)}
+      ${greenlightStatBar("Franchise Pull",Math.min(99,80+(sc.stars||4)*3))}
+      <div class="aaa-gl-foot"><span class="aaa-gl-budget">${fmtYenCompact(sc.seqCost||0)}</span><span class="aaa-gl-potential pot-${sc.pot.replace('+','p')}">${sc.pot}</span></div>
+      ${!sc.seqAfford?`<div class="aaa-gl-lock">🔒 Need more ¥</div>`:""}
+    </div>`;
+    }
     const p=PROJECTS[sc.pid];
     const lk=projectLockInfo(p);
-    const sel=sc.pid===_selGlPid&&sc.genre===_selGlGenre;
+    const sel=!_selGlSequel&&sc.pid===_selGlPid&&sc.genre===_selGlGenre;
     return `<div class="aaa-gl-card${sel?' sel':''}${lk.locked?' lock':''}" data-gl-select="${sc.pid}" data-gl-genre="${sc.genre}" role="button" tabindex="0">
       <div class="aaa-gl-poster" style="background-image:url(${sc.poster})">
         ${sc.trending?`<span class="aaa-gl-badge trend">TRENDING ${sc.trend}</span>`:""}
@@ -3484,7 +3994,7 @@ function renderGreenlightPage(empties,showBack){
   }).join("");
   h+=`</div><div class="aaa-gl-detail">
     <div class="aaa-gl-detail-grid">
-      <div class="aaa-gl-summary"><h5>🌸 PROJECT SUMMARY</h5><p>${PITCH_SUMMARIES[selSc.genre]||PITCH_SUMMARIES["Romance"]}</p><div class="aaa-gl-tags">${(PITCH_TAGS[selSc.genre]||[]).map(t=>`<span class="aaa-gl-tag">${t}</span>`).join("")}</div></div>
+      <div class="aaa-gl-summary"><h5>${isSequel?"📺 FRANCHISE SEQUEL":"🌸 PROJECT SUMMARY"}</h5><p>${isSequel?"Established audience returns for season "+(selSc.season||2)+". Franchise bonus stacks on every premiere.":(PITCH_SUMMARIES[selSc.genre]||PITCH_SUMMARIES["Romance"])}</p><div class="aaa-gl-tags">${isSequel?`<span class="aaa-gl-tag">Franchise</span><span class="aaa-gl-tag">${selSc.genre}</span><span class="aaa-gl-tag">★${selSc.stars||4} hit</span>`:(PITCH_TAGS[selSc.genre]||[]).map(t=>`<span class="aaa-gl-tag">${t}</span>`).join("")}</div></div>
       <div class="aaa-gl-budget"><h5>BUDGET ALLOCATION</h5>${greenlightPieHTML(selCost)}</div>
     </div>
     <div class="aaa-gl-detail-grid aaa-gl-analytics">
@@ -3496,17 +4006,19 @@ function renderGreenlightPage(empties,showBack){
       </div>
       <div class="aaa-gl-risk"><h5>RISK ASSESSMENT</h5><span class="aaa-gl-risk-level ${risk.level.toLowerCase()}">🛡 ${risk.level}</span><p>${risk.note}</p></div>
     </div>
-    <button type="button" class="btn-primary aaa-gl-confirm-banner" data-gl="${selP.id}" data-gl-genre="${selSc.genre}" ${lock.locked||!afford?"disabled":""}><span class="aaa-gl-confirm-main"><span class="aaa-gl-confirm-ic">🎬</span> ${ultraEarly?"START PRODUCTION":"GREENLIGHT PROJECT"}<span class="aaa-gl-confirm-cost"><span class="aaa-gl-confirm-budget">${fmtYenCompact(selCost)}</span><span class="aaa-gl-confirm-slot">· uses 1 of ${empties} open</span></span></span><span class="aaa-gl-confirm-sub">${selSc.titleJa?selSc.titleJa+" · ":""}${selSc.titleEn} · ${slotLabel}</span></button>
+    ${isSequel?`<button type="button" class="btn-primary aaa-gl-confirm-banner aaa-gl-confirm-sequel" data-seq="${encodeURIComponent(selSc.sequelBase)}" data-seqg="${encodeURIComponent(selSc.genre)}" ${!afford?"disabled":""}><span class="aaa-gl-confirm-main"><span class="aaa-gl-confirm-ic">📺</span> GREENLIGHT SEQUEL<span class="aaa-gl-confirm-cost"><span class="aaa-gl-confirm-budget">${fmtYenCompact(selCost)}</span><span class="aaa-gl-confirm-slot">· uses 1 of ${empties} open</span></span></span><span class="aaa-gl-confirm-sub">${selSc.titleEn} · ${slotLabel}</span></button>`:`<button type="button" class="btn-primary aaa-gl-confirm-banner" data-gl="${selP.id}" data-gl-genre="${selSc.genre}" ${lock.locked||!afford?"disabled":""}><span class="aaa-gl-confirm-main"><span class="aaa-gl-confirm-ic">🎬</span> ${ultraEarly?"START PRODUCTION":"GREENLIGHT PROJECT"}<span class="aaa-gl-confirm-cost"><span class="aaa-gl-confirm-budget">${fmtYenCompact(selCost)}</span><span class="aaa-gl-confirm-slot">· uses 1 of ${empties} open</span></span></span><span class="aaa-gl-confirm-sub">${selSc.titleJa?selSc.titleJa+" · ":""}${selSc.titleEn} · ${slotLabel}</span></button>`}
   </div></div>`;
   return h;
 }
 function syncGlSelectionAfterGenreFilter(){
-  const list=showcaseForGreenlight();
-  const keep=list.find(s=>s.pid===_selGlPid&&s.genre===(_selGlGenre||s.genre));
-  if(keep) return;
-  const f=list[0];
-  if(f){ _selGlPid=f.pid; _selGlGenre=f.genre; }
-  else { _selGlPid=null; _selGlGenre=null; }
+  const list=greenlightCarouselList();
+  if(_selGlSequel&&list.find(s=>s.sequelBase===_selGlSequel)) return;
+  const keep=list.find(s=>!s.sequelBase&&s.pid===_selGlPid&&s.genre===(_selGlGenre||s.genre));
+  if(keep){ _selGlSequel=null; return; }
+  const f=list.find(s=>!s.sequelBase)||list[0];
+  if(f?.sequelBase){ _selGlSequel=f.sequelBase; _selGlPid=null; _selGlGenre=f.genre; }
+  else if(f){ _selGlPid=f.pid; _selGlGenre=f.genre; _selGlSequel=null; }
+  else { _selGlPid=null; _selGlGenre=null; _selGlSequel=null; }
 }
 function scrollSelectedGlCard(){
   const run=()=>{
@@ -3683,6 +4195,7 @@ function renderProduce(){
 let _selGenre=-1;
 let _selGlPid=null;
 let _selGlGenre=null;
+let _selGlSequel=null;
 let _glMode=false;
 let _castSel=[];   // sids the player has selected to feature on the next greenlight
 
@@ -3842,7 +4355,7 @@ function renderResearch(){
 }
 
 function renderStudio(){
-  let h=`<div class="aaa-tab-page">`+dashboardHTML()+`<div class="aaa-page-hero aaa-studio-hero"><h2>🏢 ${t("h_upgrades","Studio Upgrades")}</h2><p>Permanent multipliers — reinvest profits to scale your empire.</p></div><div class="aaa-upgrade-list">`;
+  let h=`<div class="aaa-tab-page">`+dashboardHTML()+dynastyStudioHTML()+`<div class="aaa-page-hero aaa-studio-hero"><h2>🏢 ${t("h_upgrades","Studio Upgrades")}</h2><p>Permanent multipliers — reinvest profits to scale your empire.</p></div><div class="aaa-upgrade-list">`;
   if(S.slots<MAX_SLOTS){
     const c=expandCost();
     const afford=S.yen>=c;
@@ -3997,7 +4510,8 @@ function renderStore(){
   // ----- Power Items shop + inventory -----
   h+=`<div class="panel listgrid"><h2>🧰 Power Items</h2><div class="muted" style="margin-bottom:8px">One-use props for an instant edge — buy with Gems, win from spins, or grab the Items Pack above.</div>`;
   Object.keys(ITEMS).forEach(id=>{ const it=ITEMS[id]; const have=itemCount(id);
-    h+=`<div class="uprow"><div class="meta"><h4>${it.ic} ${it.name}${have?` <span class="pill">×${have}</span>`:""}${it.premium?` <span class="pill" style="background:#ffe39a;color:#7a5200">PREMIUM</span>`:""}</h4><div class="muted">${it.desc}</div></div>
+    const calmHot=id==="calm_orb"&&(S.chaos||0)>40;
+    h+=`<div class="uprow${calmHot?" aaa-calm-orb-hot":""}"${calmHot?' data-calm-orb-hot="1"':""}><div class="meta"><h4>${it.ic} ${it.name}${calmHot?` <span class="pill aaa-calm-orb-badge">Chaos high</span>`:""}${have?` <span class="pill">×${have}</span>`:""}${it.premium?` <span class="pill" style="background:#ffe39a;color:#7a5200">PREMIUM</span>`:""}</h4><div class="muted">${it.desc}${calmHot?" — resets chaos before the next disaster.":""}</div></div>
       <div class="row" style="gap:6px">${have?`<button class="btn-cyan hirebtn" data-itemuse="${id}">Use</button>`:""}<button class="btn-gold hirebtn" data-itembuy="${id}" ${S.gems>=it.gem?"":"disabled"}>Buy<small>${it.gem} 💎</small></button></div></div>`;
   });
   h+=`</div></div>`;
@@ -4006,7 +4520,7 @@ function renderStore(){
 
 /* ========================= EVENTS (delegated) ========================= */
 document.addEventListener("click", e=>{
-  const t=e.target.closest("[data-tab],[data-gl],[data-gl-select],[data-hire],[data-up],[data-res],[data-camp],[data-g],[data-buy],[data-gem],[data-act],[data-rel],[data-rush],[data-scout],[data-quest],[data-week],[data-perk],[data-cast],[data-sa],[data-itemuse],[data-itembuy],[data-seq],#a-over,#a-prestige");
+  const t=e.target.closest("[data-tab],[data-gl],[data-gl-select],[data-gl-sequel],[data-hire],[data-up],[data-res],[data-camp],[data-g],[data-buy],[data-gem],[data-act],[data-rel],[data-rush],[data-scout],[data-quest],[data-week],[data-perk],[data-cast],[data-sa],[data-itemuse],[data-itembuy],[data-seq],#a-over,#a-prestige");
   if(!t) return;
   if(t.dataset.itemuse) return useItem(t.dataset.itemuse);
   if(t.dataset.itembuy) return buyItem(t.dataset.itembuy);
@@ -4029,7 +4543,13 @@ document.addEventListener("click", e=>{
   if(t.dataset.act==="greenlight-back"){ _glMode=false; play("click"); return render(); }
   if(t.dataset.act==="gl-suggest-trend") return applyTrendingGenreSuggest();
   if(t.dataset.g!=null){ _selGenre=+t.dataset.g; syncGlSelectionAfterGenreFilter(); play("click"); return render(); }
-  if(t.dataset.glSelect!=null){ _selGlPid=+t.dataset.glSelect; _selGlGenre=t.dataset.glGenre||null; play("click"); return render(); }
+  if(t.dataset.glSequel!=null){ _selGlSequel=decodeURIComponent(t.dataset.glSequel); _selGlGenre=t.dataset.glGenre||null; _selGlPid=null; play("click"); return render(); }
+  if(t.dataset.glSelect!=null){ _selGlPid=+t.dataset.glSelect; _selGlGenre=t.dataset.glGenre||null; _selGlSequel=null; play("click"); return render(); }
+  if(t.dataset.act==="franchise-sequel-focus"||t.dataset.act==="sequel-from-premiere"){
+    if(t.dataset.act==="sequel-from-premiere") closePremiere();
+    focusFranchiseSequel(decodeURIComponent(t.dataset.seq||""), decodeURIComponent(t.dataset.seqg||""));
+    return;
+  }
   if(t.dataset.cast) return toggleCast(t.dataset.cast);
   if(t.dataset.sa) return ({rest:toggleRest,level:levelStar,promote:promoteStar,fame:investFame,fire:fireStar}[t.dataset.sa]||(()=>{}))(t.dataset.sid);
   if(t.dataset.act==="chaos-toggle") return toggleChaosMode();
@@ -4062,6 +4582,8 @@ document.addEventListener("click", e=>{
   if(t.dataset.act==="reveal-close"){ const m=document.getElementById("reveal"); if(m){ m.style.display="none"; m.classList.remove("aaa-reveal-opening"); } return; }
   if(t.dataset.act==="dec-yes") return resolveDecision(true);
   if(t.dataset.act==="dec-no") return resolveDecision(false);
+  if(t.dataset.act==="festival-win-close"){ const m=document.getElementById("festival-win"); if(m) m.style.display="none"; return; }
+  if(t.dataset.act==="dynasty-scroll-perks"){ const el=document.getElementById("dynasty-perk-shop"); if(el) el.scrollIntoView({behavior:"smooth",block:"start"}); play("click"); return; }
   if(t.dataset.act==="premiere-close") return closePremiere();
   if(t.dataset.act==="stars-unlock-close") return closeStarsUnlockModal(false);
   if(t.dataset.act==="stars-unlock-scout") return closeStarsUnlockModal(true);
@@ -4075,11 +4597,18 @@ document.addEventListener("click", e=>{
   if(t.dataset.act==="chaos-unlock-enable") return closeChaosUnlockModal(true);
   if(t.dataset.act==="share-milestone-close") return closeShareMilestoneModal(false);
   if(t.dataset.act==="share-milestone-go") return closeShareMilestoneModal(true);
+  if(t.dataset.act==="studio-award-close") return closeStudioAwardModal();
+  if(t.dataset.act==="season-pass-scroll"){ const p=document.getElementById("season-pass-panel"); if(p) p.scrollIntoView({behavior:"smooth",block:"center"}); return; }
   if(t.dataset.act==="instant") return instantPremiere(+t.dataset.slot);
   if(t.dataset.act==="whatsnew-close"){ S.whatsnewSeen=true; save(); const m=document.getElementById("whatsnew"); if(m) m.style.display="none"; if(!S.tutorialSeen&&!isGuidedTutorialEligible()){ const h=document.getElementById("howto"); if(h) h.style.display="flex"; } return; }
   if(t.dataset.act==="howto-close"){ completeTutorial(); const m=document.getElementById("howto"); if(m) m.style.display="none"; return; }
   if(t.dataset.act==="tutorial-skip"){ completeTutorial(); render(); return; }
   if(t.dataset.act==="whatsnew-show"){ const m=document.getElementById("whatsnew"); if(m) m.style.display="flex"; return; }
+  if(t.dataset.act==="pwa-install"){ triggerPwaInstall(); return; }
+  if(t.dataset.act==="pwa-install-dismiss"){ dismissPwaInstallBanner(); return; }
+  if(t.dataset.act==="push-notify-show"){ syncPushNotifyOptUi(); const m=document.getElementById("push-notify-stub"); if(m) m.style.display="flex"; return; }
+  if(t.dataset.act==="push-notify-close"){ const m=document.getElementById("push-notify-stub"); if(m) m.style.display="none"; return; }
+  if(t.dataset.act==="push-notify-opt"){ S.pushNotifyOptIn=!!t.checked; save(); if(S.pushNotifyOptIn) toastSafe("🔔 You're on the list — alerts coming soon!",true); return; }
   if(t.dataset.act==="restore"){ if(typeof window.IAPRestore==="function"){ window.IAPRestore(); toast("Restoring purchases…"); } else toast("Nothing to restore here."); return; }
   if(t.dataset.act==="redeem"){ const el=document.getElementById("redeemcode"); return redeem(el?el.value:""); }
   if(t.id==="a-over") return overdrive();
@@ -4138,7 +4667,7 @@ document.addEventListener("visibilitychange", ()=>{
   if(sec>60){
     const r=simulateOffline(sec);
     if(offlineHadMeaningfulReturn(r)){
-      if(sec<OFFLINE_PREVIEW_CAP) showWhileAwayPreviewToast(sec,r);
+      if(sec<OFFLINE_PREVIEW_CAP) showReturnPlayerWelcomeToast(sec,r,null);
       else showOfflineModal(sec,r,{preview:false});
     }
     save(); render();
@@ -4193,12 +4722,15 @@ function begin(forceDemo){
     }
   }else{
     const had=S.lastSave&&(Date.now()-S.lastSave>60000);
+    let returnSec=0, returnR=null;
     if(had){
-      const sec=Math.min(offlineCap(),(Date.now()-S.lastSave)/1000);
-      const r=simulateOffline(sec);
-      showOfflineModal(sec,r,{preview:sec<OFFLINE_PREVIEW_CAP});
+      returnSec=Math.min(offlineCap(),(Date.now()-S.lastSave)/1000);
+      returnR=simulateOffline(returnSec);
+      showOfflineModal(returnSec,returnR,{preview:returnSec<OFFLINE_PREVIEW_CAP});
     }
     const dr=checkDaily();
+    if(had) showReturnPlayerWelcomeToast(returnSec,returnR,dr);
+    if((S.releases||0)>=2) maybeShowPwaInstallBanner();
     if(dr){
       $("#daily-body").innerHTML=
         `<div class="offlist">
@@ -4279,6 +4811,7 @@ $("#btn-offclose").onclick=()=>{ celebrateCollect("offline"); $("#offline").styl
 { const sl=document.getElementById("start-lang"); if(sl) sl.onchange=()=>{ setLang(sl.value); updateChrome(); render(); }; }
 // localize static chrome + build language picker, then render
 updateChrome();
+initPwaInstall();
 /* Always run the simulation. Returning players auto-resume (no tap needed to "start" the loop —
    productions count down on their own); brand-new players see the intro gate once. */
 if(loaded){ begin(); }
@@ -4366,6 +4899,10 @@ window.__AST_HOOK__ = {
   researchCost,
   totalMasteryLevels,
   celebrateFirstResearch,
+  celebrateFirstFestivalWin,
+  dynastyAvailable,
+  festivalEntryCost,
+  festivalInvitePending,
   freeScoutAvailable,
   tabLocked,
   tabLockLabel,
@@ -4376,24 +4913,34 @@ window.__AST_HOOK__ = {
   tapBoost,
   isGuidedTutorialEligible,
   completeTutorial,
+  franchiseCount,
+  sequelTitle,
+  makeSequel,
+  focusFranchiseSequel,
+  celebrateFirstFranchise,
+  isMobilePlayDevice,
+  isStandalonePwa,
+  maybeShowPwaInstallBanner,
+  triggerPwaInstall,
+  showReturnPlayerWelcomeToast,
 };
 </script>
-<script src="aaa-upgrade.js?v=93"></script>
-<script src="v5-slim-gate.js?v=93"></script>
-<script src="gameplay-plus.js?v=93"></script>
-<script src="gameplay-ultra.js?v=93"></script>
-<script src="gameplay-endless.js?v=93"></script>
-<script src="gameplay-empire.js?v=93"></script>
-<script src="gameplay-studio.js?v=93"></script>
-<script src="gameplay-final.js?v=93"></script>
-<script src="gameplay-aaa.js?v=93"></script>
-<script src="gameplay-legend.js?v=93"></script>
-<script src="hud-premium.js?v=93"></script>
-<script src="ui-complete.js?v=93"></script>
-<script src="gameplay-studio-rating.js?v=93"></script>
-<script src="gameplay-polish.js?v=93"></script>
-<script src="hook-bridge.js?v=93"></script>
-<script src="v5-render-guard.js?v=93"></script>
+<script src="aaa-upgrade.js?v=94"></script>
+<script src="v5-slim-gate.js?v=94"></script>
+<script src="gameplay-plus.js?v=94"></script>
+<script src="gameplay-ultra.js?v=94"></script>
+<script src="gameplay-endless.js?v=94"></script>
+<script src="gameplay-empire.js?v=94"></script>
+<script src="gameplay-studio.js?v=94"></script>
+<script src="gameplay-final.js?v=94"></script>
+<script src="gameplay-aaa.js?v=94"></script>
+<script src="gameplay-legend.js?v=94"></script>
+<script src="hud-premium.js?v=94"></script>
+<script src="ui-complete.js?v=94"></script>
+<script src="gameplay-studio-rating.js?v=94"></script>
+<script src="gameplay-polish.js?v=94"></script>
+<script src="hook-bridge.js?v=94"></script>
+<script src="v5-render-guard.js?v=94"></script>
 <!-- studio-premium.css loaded in head -->
 
 

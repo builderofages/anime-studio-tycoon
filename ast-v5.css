@@ -3873,7 +3873,7 @@ html.hud-v3-active #reveal.aaa-reveal-overlay { background:rgba(4,2,10,.92)!impo
 html.hud-v3-active #reveal.aaa-reveal-opening { animation:ast-reveal-overlay-in .42s cubic-bezier(.22,1,.36,1) both!important; }
 @keyframes ast-reveal-overlay-in { from{opacity:0} to{opacity:1} }
 html.hud-v3-active #reveal .aaa-reveal-modal { background:transparent!important; border:none!important; box-shadow:none!important; max-width:340px!important; text-align:center!important; }
-html.hud-v3-active .aaa-reveal-wrap.aaa-reveal-staged { position:relative!important; padding:20px 16px!important; border-radius:20px!important; background:linear-gradient(180deg,rgba(12,10,24,.75),rgba(12,10,24,.94)),url('assets/hf/gacha-bg.png?v=93') center/cover!important; border:1px solid rgba(255,200,69,.28)!important; box-shadow:0 24px 60px rgba(255,92,168,.28)!important; overflow:hidden!important; }
+html.hud-v3-active .aaa-reveal-wrap.aaa-reveal-staged { position:relative!important; padding:20px 16px!important; border-radius:20px!important; background:linear-gradient(180deg,rgba(12,10,24,.75),rgba(12,10,24,.94)),url('assets/hf/gacha-bg.png?v=94') center/cover!important; border:1px solid rgba(255,200,69,.28)!important; box-shadow:0 24px 60px rgba(255,92,168,.28)!important; overflow:hidden!important; }
 html.hud-v3-active .aaa-reveal-shimmer { position:absolute!important; inset:-50%!important; background:conic-gradient(from 0deg,transparent,rgba(255,200,69,.12),transparent 35%)!important; opacity:0!important; pointer-events:none!important; }
 html.hud-v3-active .aaa-reveal-staged.aaa-reveal-active .aaa-reveal-shimmer { animation:ast-reveal-shimmer 1.1s ease-out .15s both!important; }
 @keyframes ast-reveal-shimmer { from{opacity:0;transform:rotate(0deg)} 30%{opacity:1} to{opacity:0;transform:rotate(120deg)} }
@@ -4064,3 +4064,214 @@ html.hud-v3-active .aaa-produce-idle-footer {
 html.hud-v3-active .aaa-produce-idle-footer .aaa-idle-ic { font-size: 16px !important; }
 html.hud-v3-active .aaa-produce-idle-footer .aaa-idle-copy b { color: var(--ast-gold) !important; font-weight: 800 !important; }
 html.hud-v3-active .aaa-produce-idle-footer .aaa-idle-hint { margin-left: auto !important; font-size: 11px !important; }
+
+/* BUILD 94 — PWA install banner + push notify stub */
+html.hud-v3-active .aaa-pwa-install-banner { position: fixed !important; left: max(12px,var(--safe-l,0px)) !important; right: max(12px,var(--safe-r,0px)) !important; bottom: calc(72px + var(--safe-b,0px)) !important; z-index: 12050 !important; pointer-events: none !important; }
+html.hud-v3-active .aaa-pwa-install-banner:not([hidden]) { pointer-events: auto !important; }
+html.hud-v3-active .aaa-pwa-install-inner { display: flex !important; align-items: center !important; gap: 10px !important; padding: 12px 14px !important; border-radius: 16px !important; background: linear-gradient(135deg,rgba(16,11,26,.98),rgba(58,43,77,.96)) !important; border: 1px solid rgba(107,92,255,.45) !important; box-shadow: 0 14px 36px rgba(0,0,0,.55) !important; }
+html.hud-v3-active .aaa-pwa-install-ic { font-size: 26px !important; flex-shrink: 0 !important; }
+html.hud-v3-active .aaa-pwa-install-copy { flex: 1 !important; min-width: 0 !important; }
+html.hud-v3-active .aaa-pwa-install-copy b { display: block !important; font-size: 13px !important; color: var(--ast-text) !important; }
+html.hud-v3-active .aaa-pwa-install-copy small { display: block !important; font-size: 11px !important; color: var(--ast-muted) !important; }
+html.hud-v3-active .aaa-pwa-install-btn { flex-shrink: 0 !important; padding: 8px 14px !important; font-size: 12px !important; white-space: nowrap !important; }
+html.hud-v3-active .aaa-pwa-install-dismiss { flex-shrink: 0 !important; min-width: 36px !important; padding: 6px 8px !important; opacity: .75 !important; }
+html.hud-v3-active .aaa-push-coming-soon { display: flex !important; gap: 10px !important; margin: 10px 0 !important; padding: 12px 14px !important; border-radius: 14px !important; background: rgba(255,200,69,.12) !important; border: 1px dashed rgba(255,200,69,.45) !important; font-size: 12px !important; }
+html.hud-v3-active .aaa-push-coming-soon b { display: block !important; color: var(--ast-gold) !important; }
+html.hud-v3-active .aaa-push-coming-soon small { display: block !important; color: var(--ast-muted) !important; }
+html.hud-v3-active .aaa-push-opt-row { display: flex !important; align-items: center !important; gap: 10px !important; margin-top: 12px !important; padding: 10px 12px !important; border-radius: 12px !important; background: rgba(255,255,255,.04) !important; border: 1px solid var(--ast-border-soft) !important; font-size: 13px !important; font-weight: 700 !important; cursor: pointer !important; }
+html.hud-v3-active .aaa-push-opt-row input { width: 18px !important; height: 18px !important; accent-color: var(--ast-sakura) !important; }
+
+/* BUILD 94 — Crisis decision modal, chaos HUD pulse, calm orb highlight */
+html.hud-v3-active .aaa-crisis-overlay {
+  background: rgba(8, 2, 14, 0.88) !important;
+  backdrop-filter: blur(12px) saturate(1.2) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(1.2) !important;
+}
+html.hud-v3-active .aaa-crisis-decision-card {
+  max-width: 400px !important;
+  text-align: center !important;
+  background: var(--ast-glass) !important;
+  backdrop-filter: blur(18px) saturate(1.4) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(1.4) !important;
+  border: 1px solid rgba(248, 113, 113, 0.42) !important;
+  box-shadow: 0 22px 52px rgba(0, 0, 0, 0.58), 0 0 36px rgba(248, 113, 113, 0.22) !important;
+}
+html.hud-v3-active .aaa-decision-inner--crisis { padding: 4px 2px 2px !important; }
+html.hud-v3-active .aaa-decision-hero { font-size: 48px !important; line-height: 1 !important; margin: 2px auto 8px !important; filter: drop-shadow(0 4px 16px rgba(248, 113, 113, 0.45)); }
+html.hud-v3-active .aaa-decision-title { margin: 6px 0 !important; font-size: 20px !important; font-weight: 800 !important; color: var(--ast-text) !important; }
+html.hud-v3-active .aaa-decision-title--danger { color: #fecaca !important; }
+html.hud-v3-active .aaa-decision-text { margin: 0 0 12px !important; font-size: 13px !important; line-height: 1.45 !important; color: var(--ast-muted) !important; }
+html.hud-v3-active .aaa-decision-danger {
+  margin: 0 0 14px !important;
+  padding: 10px 12px !important;
+  border-radius: 14px !important;
+  text-align: left !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+html.hud-v3-active .aaa-decision-danger-head { display: flex !important; justify-content: space-between !important; align-items: center !important; gap: 8px !important; margin-bottom: 8px !important; font: 700 11px/1.2 system-ui !important; color: #fecaca !important; }
+html.hud-v3-active .aaa-decision-danger-head b { font-size: 14px !important; color: #fff !important; }
+html.hud-v3-active .aaa-decision-danger-track { height: 8px !important; border-radius: 999px !important; background: rgba(0, 0, 0, 0.35) !important; overflow: hidden !important; }
+html.hud-v3-active .aaa-decision-danger-track i { display: block !important; height: 100% !important; border-radius: 999px !important; transition: width 0.35s ease !important; }
+html.hud-v3-active .aaa-decision-danger-hint { display: block !important; margin-top: 6px !important; font: 600 10px/1.3 system-ui !important; color: var(--ast-muted) !important; }
+html.hud-v3-active .aaa-decision-danger--moderate .aaa-decision-danger-track i { background: linear-gradient(90deg, #4ade80, #22d3ee) !important; }
+html.hud-v3-active .aaa-decision-danger--elevated .aaa-decision-danger-track i { background: linear-gradient(90deg, #facc15, #fb923c) !important; }
+html.hud-v3-active .aaa-decision-danger--high .aaa-decision-danger-track i { background: linear-gradient(90deg, #fb923c, #f87171) !important; }
+html.hud-v3-active .aaa-decision-danger--critical { border-color: rgba(248, 113, 113, 0.55) !important; box-shadow: 0 0 20px rgba(248, 113, 113, 0.25) !important; animation: ast-crisis-danger-pulse 2s ease-in-out infinite !important; }
+html.hud-v3-active .aaa-decision-danger--critical .aaa-decision-danger-track i { background: linear-gradient(90deg, #ef4444, #dc2626) !important; }
+@keyframes ast-crisis-danger-pulse { 0%, 100% { box-shadow: 0 0 0 rgba(248, 113, 113, 0) } 50% { box-shadow: 0 0 18px rgba(248, 113, 113, 0.45) } }
+html.hud-v3-active .aaa-decision-actions { display: flex !important; gap: 10px !important; margin-top: 4px !important; }
+html.hud-v3-active .aaa-decision-actions .btn-primary,
+html.hud-v3-active .aaa-decision-actions .btn-ghost { flex: 1 !important; }
+html.hud-v3-active .aaa-decision-actions.warroom-actions { flex-direction: column !important; }
+html.hud-v3-active .hud-chaos-pill.hud-chaos-crisis { animation: ast-chaos-crisis-pulse 1.1s ease-in-out infinite !important; border-color: rgba(248, 113, 113, 0.75) !important; }
+@keyframes ast-chaos-crisis-pulse { 0%, 100% { transform: scale(1); box-shadow: 0 0 0 rgba(248, 113, 113, 0) } 50% { transform: scale(1.06); box-shadow: 0 0 20px rgba(248, 113, 113, 0.55) } }
+html.hud-v3-active .aaa-stat-crisis { border-color: rgba(248, 113, 113, 0.32) !important; background: linear-gradient(135deg, rgba(248, 113, 113, 0.14), rgba(107, 92, 255, 0.06)) !important; }
+html.hud-v3-active .aaa-calm-orb-hot { border: 1px solid rgba(167, 139, 250, 0.55) !important; border-radius: 14px !important; background: linear-gradient(135deg, rgba(167, 139, 250, 0.16), rgba(77, 212, 255, 0.08)) !important; box-shadow: 0 8px 28px rgba(167, 139, 250, 0.22) !important; animation: ast-calm-orb-pulse 2.4s ease-in-out infinite !important; }
+html.hud-v3-active .aaa-calm-orb-badge { background: linear-gradient(135deg, #a78bfa, #6b5cff) !important; color: #fff !important; }
+@keyframes ast-calm-orb-pulse { 0%, 100% { box-shadow: 0 8px 28px rgba(167, 139, 250, 0.18) } 50% { box-shadow: 0 10px 34px rgba(167, 139, 250, 0.38) } }
+
+/* BUILD 94 — Studio Awards Night modal + Season Pass progress on Quests */
+html.hud-v3-active .aaa-studio-award-modal { max-width: 400px !important; text-align: center !important; overflow: hidden !important; }
+html.hud-v3-active .aaa-studio-award-hero { font-size: 56px !important; margin: 4px auto 6px !important; filter: drop-shadow(0 6px 20px rgba(255, 200, 69, 0.55)); animation: ast-award-trophy-bob 2.4s ease-in-out infinite !important; }
+@keyframes ast-award-trophy-bob { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-6px) scale(1.06); } }
+html.hud-v3-active .aaa-studio-award-ribbon { display: inline-block !important; margin: 0 auto 8px !important; padding: 5px 14px !important; border-radius: 999px !important; font: 800 10px/1 system-ui !important; letter-spacing: .1em !important; text-transform: uppercase !important; color: var(--ast-gold) !important; background: rgba(255, 200, 69, 0.14) !important; border: 1px solid rgba(255, 200, 69, 0.38) !important; }
+html.hud-v3-active .aaa-studio-award-lead { margin: 8px 0 12px !important; font-size: 13px !important; color: var(--ast-muted) !important; line-height: 1.45 !important; }
+html.hud-v3-active .aaa-studio-award-stats { display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: 8px !important; margin: 10px 0 !important; }
+html.hud-v3-active .aaa-studio-award-stats > div { padding: 10px 8px !important; border-radius: 12px !important; background: rgba(255, 255, 255, 0.05) !important; border: 1px solid var(--ast-border-soft) !important; }
+html.hud-v3-active .aaa-studio-award-stats span { display: block !important; font-size: 20px !important; margin-bottom: 4px !important; }
+html.hud-v3-active .aaa-studio-award-stats b { display: block !important; font-size: 16px !important; color: var(--ast-text) !important; }
+html.hud-v3-active .aaa-studio-award-stats small { display: block !important; font-size: 9px !important; color: var(--ast-muted) !important; text-transform: uppercase !important; }
+html.hud-v3-active .aaa-studio-award-perks { display: grid !important; gap: 8px !important; margin: 10px 0 4px !important; text-align: left !important; }
+html.hud-v3-active .aaa-studio-award-perks > div { display: flex !important; gap: 10px !important; align-items: flex-start !important; padding: 10px 12px !important; border-radius: 12px !important; background: linear-gradient(135deg, rgba(255, 200, 69, 0.12), rgba(255, 92, 168, 0.08)) !important; border: 1px solid rgba(255, 200, 69, 0.28) !important; }
+html.hud-v3-active .aaa-studio-award-perks span { font-size: 18px !important; flex-shrink: 0 !important; }
+html.hud-v3-active .aaa-studio-award-perks b { display: block !important; font-size: 12px !important; color: var(--ast-text) !important; }
+html.hud-v3-active .aaa-studio-award-perks small { display: block !important; font-size: 10px !important; color: var(--ast-muted) !important; margin-top: 2px !important; }
+html.hud-v3-active .aaa-studio-award-cta { box-shadow: 0 12px 32px rgba(255, 200, 69, 0.42) !important; }
+html.hud-v3-active .aaa-season-progress { margin: 10px 0 12px !important; padding: 12px 14px !important; border-radius: 16px !important; background: linear-gradient(135deg, rgba(107, 92, 255, 0.12), rgba(255, 92, 168, 0.08)) !important; border: 1px solid rgba(107, 92, 255, 0.32) !important; }
+html.hud-v3-active .aaa-season-progress.aaa-season-ready { border-color: rgba(255, 200, 69, 0.48) !important; box-shadow: 0 0 0 1px rgba(255, 200, 69, 0.2), 0 10px 28px rgba(255, 200, 69, 0.18) !important; cursor: pointer !important; }
+html.hud-v3-active .aaa-season-progress-head { display: flex !important; align-items: center !important; gap: 10px !important; margin-bottom: 8px !important; }
+html.hud-v3-active .aaa-season-ic { font-size: 22px !important; line-height: 1 !important; }
+html.hud-v3-active .aaa-season-progress-head b { display: block !important; font-size: 14px !important; color: var(--ast-text) !important; }
+html.hud-v3-active .aaa-season-progress-head small { display: block !important; font-size: 10px !important; color: var(--ast-muted) !important; margin-top: 2px !important; }
+html.hud-v3-active .aaa-season-next-gem, html.hud-v3-active .aaa-season-done-pill { margin-left: auto !important; font: 800 11px/1 system-ui !important; padding: 4px 10px !important; border-radius: 999px !important; background: rgba(255, 200, 69, 0.16) !important; color: var(--ast-gold) !important; border: 1px solid rgba(255, 200, 69, 0.35) !important; white-space: nowrap !important; }
+html.hud-v3-active .aaa-season-tier-dots { display: flex !important; gap: 5px !important; margin-top: 8px !important; flex-wrap: wrap !important; }
+html.hud-v3-active .aaa-season-dot { width: 8px !important; height: 8px !important; border-radius: 50% !important; background: rgba(255, 255, 255, 0.14) !important; border: 1px solid rgba(255, 255, 255, 0.2) !important; }
+html.hud-v3-active .aaa-season-dot.done { background: rgba(74, 222, 128, 0.75) !important; border-color: rgba(74, 222, 128, 0.9) !important; }
+html.hud-v3-active .aaa-season-dot.cur { background: var(--ast-gold) !important; border-color: rgba(255, 200, 69, 0.9) !important; box-shadow: 0 0 8px rgba(255, 200, 69, 0.55) !important; }
+html.hud-v3-active .aaa-season-claim-hint { margin-top: 6px !important; font: 700 10px/1.3 system-ui !important; color: var(--ast-gold) !important; text-align: center !important; letter-spacing: .04em !important; text-transform: uppercase !important; }
+
+/* BUILD 94 — festival invites, dynasty bar, circuit wins, first-win celebration */
+html.hud-v3-active .aaa-festival-decision-overlay { background: rgba(4, 2, 12, 0.88) !important; backdrop-filter: blur(12px) !important; -webkit-backdrop-filter: blur(12px) !important; }
+html.hud-v3-active .aaa-festival-decision-modal {
+  max-width: 400px !important;
+  text-align: center !important;
+  background: var(--ast-glass) !important;
+  backdrop-filter: blur(16px) saturate(1.35) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.35) !important;
+  border: 1px solid rgba(255, 200, 69, 0.38) !important;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.55), 0 0 32px rgba(255, 200, 69, 0.18) !important;
+}
+html.hud-v3-active .aaa-festival-decision-hero { font-size: 48px !important; line-height: 1 !important; margin: 4px auto 8px !important; filter: drop-shadow(0 4px 16px rgba(255, 200, 69, 0.45)); }
+html.hud-v3-active .aaa-festival-decision-title { margin: 6px 0 !important; font-size: 20px !important; color: var(--ast-gold) !important; }
+html.hud-v3-active .aaa-festival-decision-lead { margin: 0 0 12px !important; font-size: 13px !important; line-height: 1.45 !important; color: var(--ast-muted) !important; }
+html.hud-v3-active .aaa-festival-stakes {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 8px !important;
+  margin: 10px 0 4px !important;
+  text-align: left !important;
+}
+html.hud-v3-active .aaa-festival-stake {
+  display: grid !important;
+  grid-template-columns: 28px 1fr !important;
+  gap: 2px 8px !important;
+  padding: 10px 12px !important;
+  border-radius: 12px !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+html.hud-v3-active .aaa-festival-stake > span:first-child { grid-row: span 2 !important; font-size: 20px !important; align-self: center !important; }
+html.hud-v3-active .aaa-festival-stake b { font-size: 12px !important; color: #fff !important; }
+html.hud-v3-active .aaa-festival-stake small { grid-column: 2 !important; font-size: 10px !important; color: var(--ast-muted) !important; }
+html.hud-v3-active .aaa-festival-stake.afford { border-color: rgba(74, 222, 128, 0.35) !important; background: linear-gradient(135deg, rgba(74, 222, 128, 0.1), rgba(255, 255, 255, 0.03)) !important; }
+html.hud-v3-active .aaa-festival-stake.win { border-color: rgba(77, 212, 255, 0.28) !important; }
+html.hud-v3-active .aaa-festival-stakes-warn { margin: 8px 0 0 !important; font-size: 11px !important; color: #fca5a5 !important; }
+html.hud-v3-active .hud-festival-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  padding: 4px 8px 4px 6px !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(255, 200, 69, 0.35) !important;
+  background: rgba(30, 22, 8, 0.72) !important;
+  font: 800 9px/1 system-ui !important;
+  letter-spacing: 0.04em !important;
+  color: #fde68a !important;
+  cursor: pointer !important;
+  flex-shrink: 0 !important;
+  animation: ast-festival-badge-pulse 2.4s ease-in-out infinite !important;
+}
+html.hud-v3-active .hud-festival-badge.hud-festival-afford { border-color: rgba(74, 222, 128, 0.45) !important; box-shadow: 0 0 14px rgba(255, 200, 69, 0.28) !important; color: #bbf7d0 !important; }
+@keyframes ast-festival-badge-pulse { 0%, 100% { box-shadow: 0 0 0 rgba(255, 200, 69, 0); } 50% { box-shadow: 0 0 16px rgba(255, 200, 69, 0.35); } }
+html.hud-v3-active .aaa-stat-fest { border-color: rgba(255, 200, 69, 0.32) !important; background: linear-gradient(135deg, rgba(255, 200, 69, 0.12), rgba(255, 92, 168, 0.06)) !important; }
+html.hud-v3-active .aaa-stat-dynasty { border-color: rgba(236, 72, 153, 0.32) !important; background: linear-gradient(135deg, rgba(236, 72, 153, 0.12), rgba(107, 92, 255, 0.08)) !important; }
+html.hud-v3-active .aaa-stat-cards { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important; }
+html.hud-v3-active .aaa-festival-circuit {
+  margin: 10px 0 0 !important;
+  padding: 10px 12px !important;
+  border-radius: 14px !important;
+  background: rgba(255, 200, 69, 0.06) !important;
+  border: 1px solid rgba(255, 200, 69, 0.22) !important;
+}
+html.hud-v3-active .aaa-festival-circuit-head { display: flex !important; align-items: center !important; justify-content: space-between !important; font: 800 11px/1.2 system-ui !important; margin-bottom: 8px !important; color: var(--ast-gold) !important; }
+html.hud-v3-active .aaa-festival-win-row { font-size: 11px !important; line-height: 1.45 !important; color: var(--ast-muted) !important; padding: 4px 0 !important; border-top: 1px solid rgba(255, 255, 255, 0.06) !important; }
+html.hud-v3-active .aaa-festival-win-row:first-of-type { border-top: none !important; }
+html.hud-v3-active .aaa-dynasty-panel {
+  margin-bottom: 12px !important;
+  padding: 14px !important;
+  border-radius: 16px !important;
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.1), rgba(107, 92, 255, 0.08)) !important;
+  border: 1px solid rgba(236, 72, 153, 0.28) !important;
+}
+html.hud-v3-active .aaa-dynasty-bar-wrap { margin: 8px 0 4px !important; }
+html.hud-v3-active .aaa-dynasty-bar-head { display: flex !important; justify-content: space-between !important; font-size: 11px !important; margin-bottom: 6px !important; }
+html.hud-v3-active .aaa-dynasty-bar { height: 10px !important; border-radius: 999px !important; background: rgba(255, 255, 255, 0.08) !important; overflow: hidden !important; }
+html.hud-v3-active .aaa-dynasty-bar i { display: block !important; height: 100% !important; background: linear-gradient(90deg, #ec4899, #fbbf24) !important; border-radius: 999px !important; transition: width 0.35s ease !important; }
+html.hud-v3-active .aaa-dynasty-shop-cta { font-weight: 800 !important; }
+html.hud-v3-active .aaa-festival-win-overlay { background: rgba(4, 2, 12, 0.9) !important; backdrop-filter: blur(12px) !important; -webkit-backdrop-filter: blur(12px) !important; }
+html.hud-v3-active .aaa-festival-win-modal {
+  max-width: 400px !important;
+  text-align: center !important;
+  background: var(--ast-glass) !important;
+  backdrop-filter: blur(16px) saturate(1.35) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.35) !important;
+  border: 1px solid rgba(255, 200, 69, 0.42) !important;
+  box-shadow: 0 24px 56px rgba(0, 0, 0, 0.55), 0 0 36px rgba(255, 200, 69, 0.22) !important;
+}
+html.hud-v3-active .aaa-festival-win-hero { font-size: 52px !important; margin: 4px auto 10px !important; filter: drop-shadow(0 4px 18px rgba(255, 200, 69, 0.5)); }
+html.hud-v3-active .aaa-festival-win-lead { margin: 8px 0 12px !important; font-size: 13px !important; line-height: 1.45 !important; color: var(--ast-muted) !important; }
+html.hud-v3-active .aaa-festival-win-stats { display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: 8px !important; margin: 10px 0 4px !important; }
+html.hud-v3-active .aaa-festival-win-stats > div { padding: 10px 8px !important; border-radius: 12px !important; background: rgba(255, 255, 255, 0.05) !important; border: 1px solid rgba(255, 255, 255, 0.08) !important; }
+html.hud-v3-active .aaa-festival-win-stats span { display: block !important; font-size: 20px !important; margin-bottom: 4px !important; }
+html.hud-v3-active .aaa-festival-win-stats b { display: block !important; font-size: 11px !important; color: #fff !important; line-height: 1.3 !important; }
+html.hud-v3-active .aaa-festival-win-stats small { font-size: 9px !important; color: var(--ast-muted) !important; text-transform: uppercase !important; letter-spacing: 0.06em !important; }
+
+/* BUILD 94 — Franchise / sequel retention */
+html.hud-v3-active .aaa-stat-franchise { border-color: rgba(77,212,255,.32) !important; background: linear-gradient(135deg,rgba(77,212,255,.14),rgba(107,92,255,.08)) !important; }
+html.hud-v3-active .aaa-gl-page .aaa-gl-badge.sequel { background: linear-gradient(135deg,rgba(77,212,255,.95),rgba(107,92,255,.9)) !important; color: #fff !important; font-weight: 800 !important; letter-spacing: .08em !important; box-shadow: 0 4px 14px rgba(77,212,255,.35) !important; }
+html.hud-v3-active .aaa-gl-page .aaa-gl-badge.sequel-season { top: auto !important; bottom: 8px !important; left: 8px !important; right: auto !important; background: rgba(0,0,0,.55) !important; font-size: 9px !important; padding: 3px 7px !important; }
+html.hud-v3-active .aaa-gl-card-sequel.sel { border-color: rgba(77,212,255,.55) !important; box-shadow: 0 0 0 2px rgba(77,212,255,.25),0 12px 32px rgba(77,212,255,.18) !important; }
+html.hud-v3-active .aaa-gl-confirm-sequel { background: linear-gradient(135deg,rgba(77,212,255,.95),rgba(107,92,255,.92)) !important; }
+html.hud-v3-active .aaa-franchise-suggest { display: flex !important; align-items: center !important; gap: 10px !important; margin: 0 0 12px !important; padding: 12px 14px !important; border-radius: 14px !important; background: linear-gradient(135deg,rgba(77,212,255,.14),rgba(107,92,255,.1)) !important; border: 1px solid rgba(77,212,255,.38) !important; }
+html.hud-v3-active .aaa-franchise-suggest-ic { font-size: 24px !important; flex-shrink: 0 !important; }
+html.hud-v3-active .aaa-franchise-suggest-body { flex: 1 !important; min-width: 0 !important; }
+html.hud-v3-active .aaa-franchise-suggest-body b { display: block !important; font-size: 13px !important; color: var(--ast-text) !important; }
+html.hud-v3-active .aaa-franchise-suggest-body span { display: block !important; font-size: 11px !important; color: var(--ast-muted) !important; margin-top: 2px !important; }
+html.hud-v3-active .aaa-franchise-suggest-body em { font-style: normal !important; color: var(--ast-cyan) !important; font-weight: 800 !important; }
+html.hud-v3-active .aaa-franchise-suggest-btn { flex-shrink: 0 !important; padding: 8px 14px !important; font-size: 12px !important; }
+html.hud-v3-active .prem-franchise-suggest { margin-top: 12px !important; padding: 12px 14px !important; border-radius: 14px !important; background: linear-gradient(135deg,rgba(77,212,255,.16),rgba(255,92,168,.1)) !important; border: 1px solid rgba(77,212,255,.4) !important; text-align: center !important; }
+html.hud-v3-active .prem-franchise-kicker { margin: 0 0 4px !important; font: 800 13px/1.3 system-ui !important; color: var(--ast-cyan) !important; }
+html.hud-v3-active .prem-franchise-copy { margin: 0 0 10px !important; font-size: 12px !important; color: var(--ast-muted) !important; line-height: 1.45 !important; }
+html.hud-v3-active .prem-franchise-btn { width: 100% !important; font-size: 14px !important; }
+html.hud-v3-active #premiere.prem-franchise .prem-banner { box-shadow: inset 0 0 0 2px rgba(77,212,255,.35) !important; }

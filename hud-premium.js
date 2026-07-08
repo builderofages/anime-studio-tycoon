@@ -345,6 +345,69 @@
     return null;
   }
 
+  function pwaHomeScreenCoach(S, hook) {
+    if (hook.isStandalonePwa && hook.isStandalonePwa()) return null;
+    if (!hook.isMobilePlayDevice || !hook.isMobilePlayDevice()) return null;
+    if ((S.releases || 0) < 2) return null;
+    if (S.pwaInstalled || S.pwaCoachSeen) return null;
+    if (!S.pwaInstallDismissed && hook.maybeShowPwaInstallBanner) {
+      const banner = document.getElementById("pwa-install-banner");
+      if (banner && !banner.hidden) return null;
+    }
+    return {
+      message: "📲 Add to Home Screen — play offline & launch like an app",
+      tab: "produce",
+      cta: "Install",
+      urgent: false,
+      action: { type: "pwa-coach" },
+    };
+  }
+
+  function franchiseOpportunityCoach(S, hook) {
+    const opp = S.franchiseOpportunity;
+    if (!opp?.base) return null;
+    const empties = Math.max(0, (S.slots || 1) - activeCount(S));
+    if (empties <= 0) return null;
+    const season = (S.franchises?.[opp.base] || 1) + 1;
+    const title = hook.sequelTitle ? hook.sequelTitle(opp.base, season) : `${opp.base} II`;
+    return {
+      message: `Your hit deserves a sequel — greenlight ${title}`,
+      tab: "produce",
+      cta: "Sequel",
+      urgent: true,
+      showOnGreenlight: true,
+      action: { type: "franchise-sequel", base: opp.base, genre: opp.genre },
+    };
+  }
+
+  function festivalInviteCoach(S, hook) {
+    if ((S.releases || 0) < 5) return null;
+    const pending = hook.festivalInvitePending && hook.festivalInvitePending();
+    const cost = hook.festivalEntryCost ? hook.festivalEntryCost() : 0;
+    const afford = S.yen >= cost;
+    if (pending) {
+      const costTxt = hook.fmt ? hook.fmt(cost) : String(cost);
+      return {
+        message: afford
+          ? "🎪 Festival invite — enter for fans, hype & circuit prestige!"
+          : `🎪 Festival invite — save ¥${costTxt} for entry`,
+        tab: "produce",
+        cta: afford ? "Enter" : "Save",
+        urgent: afford,
+        action: { type: "festival-decision" },
+      };
+    }
+    if (afford && (S.festivalWins || []).length < 5 && (hook.dynastyAvailable?.() || 0) < 30) {
+      return {
+        message: "🎪 You can afford festival entry — watch for invites!",
+        tab: "produce",
+        cta: "Play",
+        action: { type: "tab", tab: "produce" },
+      };
+    }
+    return null;
+  }
+
   function fanMilestoneMarketCoach(S, hook) {
     const milestones = hook.FAN_TOAST_MILESTONES || [{ fans: 10 }, { fans: 50 }, { fans: 100 }];
     const target = milestones.map((m) => m.fans).find((f) => S.fans < f);
@@ -377,6 +440,24 @@
       cta: "Campaign",
       urgent: gap <= afford.fans,
       action: { type: "tab", tab: "market" },
+    };
+  }
+
+  function chaosDisasterCoach(S, hook) {
+    const chaosOk = hook.featureUnlocked ? hook.featureUnlocked("chaos") : (S.releases || 0) >= 10;
+    if (!chaosOk) return null;
+    const ch = S.chaos || 0;
+    if (ch <= 50) return null;
+    const chR = Math.round(ch);
+    const affordCalm = (S.gems || 0) >= 6;
+    return {
+      message: `Chaos at ${chR}% — disaster looming! ${affordCalm ? "Grab a Calm Orb or" : ""} ease production pressure.`,
+      tab: affordCalm && ch >= 55 ? "store" : "produce",
+      cta: affordCalm && ch >= 55 ? "Calm Orb" : "Produce",
+      urgent: ch >= 60,
+      action: affordCalm && ch >= 55
+        ? { type: "tab", tab: "store" }
+        : { type: "tab", tab: "produce" },
     };
   }
 
@@ -419,6 +500,12 @@
       }
     }
 
+    const franchiseCoach = franchiseOpportunityCoach(S, hook);
+    if (franchiseCoach) return franchiseCoach;
+
+    const chaosWarn = chaosDisasterCoach(S, hook);
+    if (chaosWarn) return chaosWarn;
+
     const marketUnlocked = hook.featureUnlocked ? hook.featureUnlocked("market") : (S.fans || 0) >= 50;
     if (marketUnlocked && (S.campaignsRun || 0) === 0 && (S.releases || 0) < 15) {
       const camps = hook.CAMPAIGNS || [];
@@ -439,6 +526,9 @@
 
     const rankCoach = studioRankUpCoach(S, hook);
     if (rankCoach) return rankCoach;
+
+    const festivalCoach = festivalInviteCoach(S, hook);
+    if (festivalCoach) return festivalCoach;
 
     const chaosUnlocked = hook.featureUnlocked ? hook.featureUnlocked("chaos") : (S.releases || 0) >= 10;
     if (chaosUnlocked && !S.chaosMode && (S.releases || 0) >= 10 && (S.releases || 0) <= 25) {
@@ -681,12 +771,15 @@
     }
     if ((S.dynastyPoints || 0) - (S.dynastySpent || 0) >= 12 && (S.releases || 0) >= 15) {
       return {
-        message: "Dynasty perks available in Studio",
+        message: "Dynasty perks available — open the perk shop in Studio",
         tab: "studio",
-        cta: "Studio",
-        action: { type: "tab", tab: "studio" },
+        cta: "Perks",
+        urgent: true,
+        action: { type: "dynasty-perks" },
       };
     }
+    const pwaCoach = pwaHomeScreenCoach(S, hook);
+    if (pwaCoach) return pwaCoach;
     return {
       message: "Trending: " + (hook.trendGenre ? hook.trendGenre() : "Action"),
       tab: "produce",
@@ -773,6 +866,43 @@
       requestAnimationFrame(() => {
         const btn = document.querySelector(".aaa-studio-expand-btn,[data-act='expand']");
         if (btn) btn.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+      return;
+    }
+    if (pw.action.type === "franchise-sequel" && typeof hook.focusFranchiseSequel === "function") {
+      hook.getState().tab = "produce";
+      hook.focusFranchiseSequel(pw.action.base, pw.action.genre);
+      hook.play("click");
+      return;
+    }
+    if (pw.action.type === "pwa-coach") {
+      const S = hook.getState();
+      S.pwaCoachSeen = true;
+      hook.save?.();
+      if (typeof hook.triggerPwaInstall === "function") hook.triggerPwaInstall();
+      else hook.toast?.("📲 Tap Share → Add to Home Screen to install", true);
+      hook.render();
+      hook.play("click");
+      return;
+    }
+    if (pw.action.type === "festival-decision") {
+      hook.play("click");
+      const modal = document.getElementById("decision");
+      if (modal && modal.style.display === "flex") {
+        modal.scrollIntoView({ behavior: "smooth", block: "center" });
+        const yes = modal.querySelector("[data-act='dec-yes']:not([disabled])");
+        if (yes) yes.focus();
+      } else {
+        hook.toast?.("🎪 Festival invite will pop up during play — keep producing!");
+      }
+      return;
+    }
+    if (pw.action.type === "dynasty-perks") {
+      hook.getState().tab = "studio";
+      hook.render();
+      hook.play("click");
+      requestAnimationFrame(() => {
+        document.getElementById("dynasty-perk-shop")?.scrollIntoView({ behavior: "smooth", block: "start" });
       });
       return;
     }
@@ -1020,6 +1150,27 @@
       return g;
     }
 
+    let notifyG = slot.querySelector('.hud-drawer-group[data-drawer-group="notify"]');
+    if (!notifyG) {
+      notifyG = document.createElement("div");
+      notifyG.className = "hud-drawer-group";
+      notifyG.dataset.drawerGroup = "notify";
+      const lbl = document.createElement("div");
+      lbl.className = "hud-drawer-sublabel";
+      lbl.textContent = "Alerts";
+      notifyG.appendChild(lbl);
+    }
+    let pushBtn = document.getElementById("btn-push-notify");
+    if (!pushBtn) {
+      pushBtn = document.createElement("button");
+      pushBtn.type = "button";
+      pushBtn.id = "btn-push-notify";
+      pushBtn.className = "btn-ghost hud-drawer-owned";
+      pushBtn.dataset.act = "push-notify-show";
+      pushBtn.textContent = "🔔 Premiere Alerts";
+    }
+    if (pushBtn.parentNode !== notifyG) notifyG.appendChild(pushBtn);
+
     const resetG = group("Reset", "reset");
     const soundG = group("Sound", "sound");
     const langG = group("Language", "language");
@@ -1076,11 +1227,14 @@
 
     if (!slot.dataset.organized) {
       slot.innerHTML = "";
+      slot.appendChild(notifyG);
       slot.appendChild(resetG);
       slot.appendChild(soundG);
       slot.appendChild(langG);
       slot.appendChild(moreG);
       slot.dataset.organized = "1";
+    } else if (notifyG.parentNode !== slot) {
+      slot.insertBefore(notifyG, slot.firstChild);
     }
   }
 
@@ -1282,6 +1436,41 @@
       const loginPending = S.loginLastClaimDate !== today && (S.loginClaimedCount || 0) < 31;
       mailBtn.classList.toggle("has-dot", !glView && (claimableQuests(S) > 0 || loginPending || demoDots));
     }
+    const festPending = hook.festivalInvitePending && hook.festivalInvitePending();
+    let festBadge = document.getElementById("hud-festival-badge");
+    if (festPending && shell) {
+      if (!festBadge) {
+        festBadge = document.createElement("button");
+        festBadge.type = "button";
+        festBadge.id = "hud-festival-badge";
+        festBadge.className = "hud-festival-badge";
+        festBadge.setAttribute("aria-label", "Festival invite pending");
+        festBadge.addEventListener("click", () => {
+          const h = window.__AST_HOOK__;
+          if (!h) return;
+          h.play?.("click");
+          const modal = document.getElementById("decision");
+          if (modal && modal.style.display === "flex") {
+            modal.scrollIntoView({ behavior: "smooth", block: "center" });
+          } else if (h.toast) {
+            h.toast("🎪 Festival invite is open — check the decision modal");
+          }
+        });
+        const mail = document.getElementById("hud-mail-btn");
+        if (mail && mail.parentNode) mail.parentNode.insertBefore(festBadge, mail);
+        else shell.querySelector(".hud-brand-actions")?.appendChild(festBadge);
+      }
+      const cost = hook.festivalEntryCost ? hook.festivalEntryCost() : 0;
+      const afford = S.yen >= cost;
+      festBadge.hidden = !!glView;
+      festBadge.classList.toggle("hud-festival-afford", afford);
+      festBadge.innerHTML = `<span class="hud-festival-ic" aria-hidden="true">🎪</span><span class="hud-festival-lbl">Invite</span>`;
+      festBadge.title = afford
+        ? "Festival invite — you can afford entry!"
+        : `Festival invite — need ¥${hook.fmt ? hook.fmt(cost) : cost}`;
+    } else if (festBadge) {
+      festBadge.hidden = true;
+    }
     const lv = document.getElementById("hud-lv-badge");
     if (lv) lv.textContent = String(S.studioLevel || 1);
 
@@ -1359,6 +1548,8 @@
       chaosPill.hidden = !!glView;
       chaosPill.classList.toggle("hud-chaos-on", on);
       chaosPill.classList.toggle("hud-chaos-warn", ch >= 55);
+      const crisisPulse = !!(window.__AST_CRISIS_OPEN__ || window.__AST_PENDING_WARROOM__);
+      chaosPill.classList.toggle("hud-chaos-crisis", crisisPulse);
       chaosPill.style.setProperty("--chaos-pct", ch + "%");
       chaosPill.innerHTML = `<span class="hud-chaos-ic" aria-hidden="true">🌪️</span><span class="hud-chaos-lbl">${on ? "ON" : "Chaos"}</span><span class="hud-chaos-val">${ch}%</span><i class="hud-chaos-fill" aria-hidden="true"></i>`;
       chaosPill.title = on
@@ -1450,13 +1641,16 @@
     const marketUnlocked = hook.featureUnlocked ? hook.featureUnlocked("market") : (S.fans || 0) >= 50;
     const marketAfford = marketUnlocked && hook.CAMPAIGNS && hook.CAMPAIGNS.some((c) => S.yen >= c.cost);
     const freeGems = S.freeGemsDate !== today;
+    const festPending = hook.festivalInvitePending && hook.festivalInvitePending();
+    const dynastyAvail = hook.dynastyAvailable ? hook.dynastyAvailable() : 0;
     const badges = {
-      produce: readySlot(S, hook) >= 0,
+      produce: readySlot(S, hook) >= 0 || !!festPending,
       quests: claimable > 0 || loginPending,
       staff: !!hireAfford,
       stars: starsUnlocked && scoutAfford,
       market: !!marketAfford,
       research: researchAfford,
+      studio: dynastyAvail >= 12 && (S.releases || 0) >= 15,
       store: freeGems,
     };
     document.querySelectorAll(".tab").forEach((tab) => {

@@ -136,11 +136,25 @@
     const opts = d.opts.map((o, i) =>
       `<button class="btn-ghost warroom-opt" data-empire-war="${i}">${o.label}</button>`
     ).join("");
-    body.innerHTML = `<div style="font-size:42px">${d.ic}</div>
-      <h2 style="margin:6px 0;color:var(--bad)">⚠️ ${d.title}</h2>
-      <p style="color:var(--slate);font-size:14px;margin:6px 0 0">${d.text}</p>
-      <div style="margin-top:14px">${opts}</div>`;
-    document.getElementById("decision").style.display = "flex";
+    const overlay = document.getElementById("decision");
+    const card = overlay?.querySelector(".card-modal");
+    const ch = Math.round((h.getState().chaos || 0));
+    const tier = ch >= 70 ? "critical" : ch >= 50 ? "high" : ch >= 40 ? "elevated" : "moderate";
+    const tierLbl = ch >= 70 ? "Critical — disaster imminent" : ch >= 50 ? "High risk — next event likely" : ch >= 40 ? "Elevated — consider a Calm Orb" : "Moderate — watch the meter";
+    if (overlay) overlay.className = "overlay aaa-decision-overlay aaa-crisis-overlay";
+    if (card) card.className = "card-modal aaa-crisis-decision-card";
+    body.innerHTML = `<div class="aaa-decision-inner aaa-decision-inner--crisis">
+      <div class="aaa-decision-hero" aria-hidden="true">${d.ic}</div>
+      <h2 class="aaa-decision-title aaa-decision-title--danger">⚠️ ${d.title}</h2>
+      <p class="aaa-decision-text">${d.text}</p>
+      <div class="aaa-decision-danger aaa-decision-danger--${tier}" aria-label="Chaos danger ${ch} percent">
+        <div class="aaa-decision-danger-head"><span class="aaa-decision-danger-lbl">🌪️ Chaos danger</span><b>${ch}%</b></div>
+        <div class="aaa-decision-danger-track"><i style="width:${ch}%"></i></div>
+        <small class="aaa-decision-danger-hint">${tierLbl}</small>
+      </div>
+      <div class="aaa-decision-actions warroom-actions">${opts}</div></div>`;
+    if (overlay) overlay.style.display = "flex";
+    window.syncCrisisHudPulse?.(true);
     h.play("reward");
     window.__AST_PENDING_WARROOM__ = d;
     return true;
@@ -151,6 +165,7 @@
     window.__AST_PENDING_WARROOM__ = null;
     window.__AST_CRISIS_OPEN__ = false;
     document.getElementById("decision").style.display = "none";
+    window.syncCrisisHudPulse?.(false);
     if (!d || !d.opts[idx]) return;
     const S = h.getState();
     S.lastChaos = Date.now();
@@ -309,7 +324,9 @@
         const bm = blendMult(pr);
         const fm = sourceMult(pr, "fans");
         const ym = sourceMult(pr, "yen");
-        S._empireReleaseMult = (S._empireReleaseMult || 1) * bm * ((fm + ym) / 2);
+        let empireM = bm * ((fm + ym) / 2);
+        if (pr.base && (pr.seq || 0) >= 2) empireM *= 1.04;
+        S._empireReleaseMult = (S._empireReleaseMult || 1) * empireM;
         S._empireStarAdj = (S._empireStarAdj || 1) * (bm > 1 ? 1.04 : 1);
       }
       origRelease(slot);

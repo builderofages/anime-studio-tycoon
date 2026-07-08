@@ -133,6 +133,9 @@
     S.gems += fest.gems;
     S.dynastyPoints = (S.dynastyPoints || 0) + fest.dynasty;
     h.toast(fest.ic + " " + fest.name + " — WON! +" + fest.gems + "💎 +" + fest.dynasty + " dynasty", true);
+    if (S.festivalWins.length === 1 && typeof h.celebrateFirstFestivalWin === "function") {
+      h.celebrateFirstFestivalWin(S.festivalWins[0]);
+    }
     try { if (window.STEAM_ACHIEVE) window.STEAM_ACHIEVE("festival1"); } catch (e) {}
   }
 
