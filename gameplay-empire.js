@@ -368,6 +368,7 @@
       origRender();
       const S = hook.getState();
       S._empireRoleBonus = computeRoleBonus(S, hook);
+      if (document.documentElement.classList.contains("hud-v3-active")) return;
       injectStaffUI(S, hook);
       injectStarsBanner(S, hook);
       injectGreenlightExtras(S, hook);

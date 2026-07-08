@@ -170,7 +170,7 @@
     shell.innerHTML = `
       <div class="hud-top">
         <button type="button" class="hud-menu-btn" id="hud-menu-btn" aria-label="Menu">☰</button>
-        <div class="hud-avatar-wrap"><img class="hud-avatar" src="start-hero.png?v=55" alt=""><span class="hud-lv-badge" id="hud-lv-badge">1</span></div>
+        <div class="hud-avatar-wrap"><img class="hud-avatar" src="start-hero.png?v=56" alt=""><span class="hud-lv-badge" id="hud-lv-badge">1</span></div>
         <div class="hud-identity">
           <span class="hud-studio-name" id="hud-studio-name">Studio</span>
           <div id="hud-studio-rating" class="hud-rating-chip" title="Studio rating"></div>
@@ -223,12 +223,13 @@
       rail.id = "pathway-rail";
       rail.className = "coach-bar";
       rail.innerHTML = `
-        <img class="coach-avatar" src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg?v=55" alt="" width="40" height="40">
+        <img class="coach-avatar" src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg?v=56" alt="" width="40" height="40">
         <div class="coach-body">
           <span class="coach-label">Coach's Tip</span>
           <p class="coach-msg" id="pathway-now"></p>
         </div>
         <button type="button" class="coach-cta" id="pathway-cta">→</button>
+        <button type="button" class="coach-mail" id="coach-mail" aria-label="Messages">✉️</button>
         <button type="button" class="coach-gift" id="coach-gift" aria-label="Rewards"><span class="coach-gift-ic">🎁</span><span class="coach-gift-dot" id="coach-gift-dot" hidden></span></button>
         <button type="button" class="coach-dismiss" id="coach-dismiss" aria-label="Dismiss">×</button>
         <div class="pathway-steps" id="pathway-steps" hidden></div>`;
@@ -254,6 +255,14 @@
     document.documentElement.classList.add("premium-hud", "hud-v3-active");
 
     document.getElementById("pathway-cta").addEventListener("click", runPathwayAction);
+    document.getElementById("coach-mail").addEventListener("click", () => {
+      const hook = window.__AST_HOOK__;
+      if (!hook) return;
+      hook.getState().tab = "quests";
+      hook.render();
+      hook.play("click");
+      closeDrawer();
+    });
     document.getElementById("coach-gift").addEventListener("click", () => {
       const hook = window.__AST_HOOK__;
       if (!hook) return;

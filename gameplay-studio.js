@@ -290,6 +290,7 @@
     hook.render = function () {
       const S = hook.getState();
       origRender();
+      if (document.documentElement.classList.contains("hud-v3-active")) return;
       injectStarsUI(S, hook);
       injectStaffMorale(S, hook);
       injectProduceTemplates(S, hook);

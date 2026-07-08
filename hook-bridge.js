@@ -17,6 +17,7 @@
     "__uiCompleteInstalled",
     "__jwRatingInstalled",
     "__polishInstalled",
+    "__v5GuardInstalled",
   ];
 
   function ready(h) {

@@ -57,6 +57,7 @@ const required = [
   "gameplay-studio-rating.css",
   "hook-bridge.js",
   "gameplay-polish.js",
+  "v5-render-guard.js",
   "studio-premium.css",
   "game-skin.css",
   "hf-design.css",
@@ -138,9 +139,12 @@ assert(!html.includes('href="game-skin.css'), "game-skin.css not linked (ast-v5 
 assert(html.includes("hf-design.css"), "higgsfield design css linked");
 assert(html.includes("legacy-fx.css"), "legacy-fx css linked");
 assert(html.includes("ast-v5.css"), "ast-v5 design css linked");
-assert(html.includes("build 55"), "build 55 tag");
+assert(html.includes("build 56"), "build 56 tag");
 assert(html.includes("⭐ Production Score"), "production score star label");
-assert(html.includes("Fix All"), "whatsnew build 55 changelog");
+assert(html.includes("AAA Clean"), "whatsnew build 56 changelog");
+assert(html.includes("v5-render-guard.js"), "v5 render guard linked");
+assert(readFileSync(join(root, "hook-bridge.js"), "utf8").includes("__v5GuardInstalled"), "v5 guard in hook bridge");
+assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("coach-mail"), "coach mail button");
 assert(html.includes("bootstrapNewStudio"), "new player bootstrap");
 assert(html.includes("ensurePlayable"), "stuck save repair");
 assert(html.includes("quick-greenlight"), "quick greenlight button");
@@ -158,7 +162,7 @@ assert(html.includes("whatsnew"), "what's new modal");
 const rawCount = (html.match(/__raw/g) || []).length;
 assert(rawCount <= 2, "single __raw redirect script", `found ${rawCount}`);
 
-for (const f of ["strings.js", "logic.js", "aaa-upgrade.js", "gameplay-plus.js", "gameplay-ultra.js", "gameplay-endless.js", "gameplay-empire.js", "gameplay-studio.js", "gameplay-final.js", "gameplay-aaa.js", "gameplay-legend.js", "hud-premium.js", "ui-complete.js", "gameplay-studio-rating.js", "gameplay-polish.js", "hook-bridge.js"]) {
+for (const f of ["strings.js", "logic.js", "aaa-upgrade.js", "gameplay-plus.js", "gameplay-ultra.js", "gameplay-endless.js", "gameplay-empire.js", "gameplay-studio.js", "gameplay-final.js", "gameplay-aaa.js", "gameplay-legend.js", "hud-premium.js", "ui-complete.js", "gameplay-studio-rating.js", "gameplay-polish.js", "v5-render-guard.js", "hook-bridge.js"]) {
   const r = spawnSync("node", ["--check", join(root, f)], { encoding: "utf8" });
   assert(r.status === 0, `syntax OK: ${f}`, r.stderr?.trim());
 }

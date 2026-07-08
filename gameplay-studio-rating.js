@@ -324,7 +324,7 @@
       const S = hook.getState();
       initState(S);
       updateHud(S, hook);
-      if (S.tab === "produce") injectProduceBanner(S, hook);
+      if (S.tab === "produce" && !document.documentElement.classList.contains("hud-v3-active")) injectProduceBanner(S, hook);
     };
 
     function afterProgressCheck(hook) {

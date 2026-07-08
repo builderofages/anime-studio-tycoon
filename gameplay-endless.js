@@ -331,6 +331,7 @@
       origRender();
       const S = hook.getState();
       extendSettings(S);
+      if (document.documentElement.classList.contains("hud-v3-active")) return;
       injectProduceUI(S, hook);
       injectStarsMoods(S, hook);
     };

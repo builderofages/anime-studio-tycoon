@@ -443,6 +443,7 @@
       const S = hook.getState();
       initState(S);
       origRender();
+      if (document.documentElement.classList.contains("hud-v3-active")) return;
       injectProduceAAA(S, hook);
       injectStarsAAA(S, hook);
       injectStudioAAA(S, hook);

@@ -405,12 +405,14 @@
       const tab = S.tab;
       if (main) scrollByTab[tab] = main.scrollTop;
       origRender();
-      injectProduceExtras(S, hook);
-      injectStudioInfluence(S, hook);
+      if (!document.documentElement.classList.contains("hud-v3-active")) {
+        injectProduceExtras(S, hook);
+        injectStudioInfluence(S, hook);
+        maybeShowGuide(S, hook);
+      }
       if (main && scrollByTab[tab] != null) {
         requestAnimationFrame(() => { main.scrollTop = scrollByTab[tab]; });
       }
-      maybeShowGuide(S, hook);
     };
 
     document.addEventListener("click", (e) => {

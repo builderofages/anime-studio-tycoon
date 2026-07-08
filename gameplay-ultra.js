@@ -277,6 +277,7 @@
       origRender();
       const S = hook.getState();
       syncSettingsUI(S);
+      if (document.documentElement.classList.contains("hud-v3-active")) return;
       if (S.tab === "produce") {
         injectStageMinigames(S, hook);
         const main = document.getElementById("main");

@@ -306,6 +306,7 @@
       const S = hook.getState();
       initState(S);
       origRender();
+      if (document.documentElement.classList.contains("hud-v3-active")) return;
       injectProduceLegend(S, hook);
       injectStudioLegend(S, hook);
     };

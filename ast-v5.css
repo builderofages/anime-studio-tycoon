@@ -34,7 +34,7 @@ html.hud-v3-active body {
 html.hud-v3-active body {
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.35) 0%, rgba(8, 6, 15, 0.82) 100%),
-    url('bg-v4.png?v=55') center top / cover no-repeat fixed !important;
+    url('bg-v4.png?v=56') center top / cover no-repeat fixed !important;
 }
 
 html.hud-v3-active button {
@@ -492,7 +492,7 @@ html.hud-v3-active .aaa-poster[data-act="tapboost"]:active {
 html.hud-v3-active .aaa-page-hero.aaa-gacha-hero {
   background:
     linear-gradient(135deg, rgba(107, 92, 255, 0.2), rgba(255, 92, 168, 0.14)),
-    url('assets/hf/gacha-bg.png?v=55') center/cover !important;
+    url('assets/hf/gacha-bg.png?v=56') center/cover !important;
   border: 1px solid rgba(180, 140, 255, 0.28) !important;
   overflow: hidden;
 }
@@ -1624,4 +1624,84 @@ html.hud-v3-active #main {
   padding: 0 var(--ast-gutter) 8px !important;
   overflow-y: auto !important;
   -webkit-overflow-scrolling: touch !important;
+}
+
+/* ========== BUILD 56 — mockup EP row + coach mail + tap hint ========== */
+
+html.hud-v3-active .aaa-ep-row {
+  display: flex !important;
+  justify-content: flex-end !important;
+  margin-bottom: 4px !important;
+}
+
+html.hud-v3-active .aaa-ep-badge {
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.04em !important;
+  padding: 4px 10px !important;
+  border-radius: 999px !important;
+  background: linear-gradient(135deg, var(--ast-pink), var(--ast-pink-2)) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 14px rgba(255, 92, 168, 0.4) !important;
+}
+
+html.hud-v3-active .aaa-tap-badge {
+  position: absolute !important;
+  bottom: 8px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  font-size: 9px !important;
+  font-weight: 800 !important;
+  padding: 3px 10px !important;
+  border-radius: 999px !important;
+  background: rgba(0, 0, 0, 0.65) !important;
+  color: #fff !important;
+  border: 1px solid rgba(255, 92, 168, 0.5) !important;
+  animation: ast-tap-pulse 1.8s ease-in-out infinite !important;
+}
+
+@keyframes ast-tap-pulse {
+  0%, 100% { opacity: 0.85; transform: translateX(-50%) scale(1); }
+  50% { opacity: 1; transform: translateX(-50%) scale(1.05); }
+}
+
+html.hud-v3-active .aaa-poster.aaa-tap-hint {
+  cursor: pointer !important;
+}
+
+html.hud-v3-active .coach-mail {
+  flex-shrink: 0 !important;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 10px !important;
+  border: 1px solid rgba(255, 92, 168, 0.3) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: var(--ast-text) !important;
+  font-size: 14px !important;
+  cursor: pointer !important;
+  display: grid !important;
+  place-items: center !important;
+}
+
+html.hud-v3-active .hud-studio-rating {
+  display: flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  color: var(--ast-muted) !important;
+  cursor: pointer !important;
+  padding: 4px 8px !important;
+  border-radius: 8px !important;
+  background: rgba(255, 200, 69, 0.1) !important;
+  border: 1px solid rgba(255, 200, 69, 0.2) !important;
+  max-width: 140px !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+html.hud-v3-active .hud-studio-rating .rank-tier {
+  font-size: 9px !important;
+  color: var(--ast-gold) !important;
 }
