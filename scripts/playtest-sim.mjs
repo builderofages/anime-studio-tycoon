@@ -29,6 +29,7 @@ function assert(cond, name, msg = "failed") {
 
 function mockEl() {
   const kids = [];
+  const cls = new Set();
   return {
     style: { display: "none" },
     textContent: "",
@@ -36,7 +37,15 @@ function mockEl() {
     onclick: null,
     onchange: null,
     value: "",
-    classList: { add() {}, remove() {} },
+    hidden: false,
+    classList: {
+      add(...c) {
+        c.forEach((x) => cls.add(x));
+      },
+      remove(...c) {
+        c.forEach((x) => cls.delete(x));
+      },
+    },
     offsetWidth: 0,
     removeAttribute() {},
     remove() {},
@@ -53,7 +62,9 @@ function mockEl() {
 
 function buildSandbox() {
   const store = {};
+  const docEl = mockEl();
   const doc = {
+    documentElement: docEl,
     querySelector: () => mockEl(),
     getElementById: () => mockEl(),
     createElement: () => mockEl(),
@@ -185,6 +196,11 @@ studioAwards = function(){};
 `;
 
 const STUBS = STUBS_BASE + `
+drainUnlockModalQueue = function(){ return false; };
+`;
+
+/** Stubs that keep real save/load and franchise registration. */
+const STUBS_PERSIST = STUBS_BASE.replace("registerFranchiseHit = function(){};\n", "") + `
 drainUnlockModalQueue = function(){ return false; };
 `;
 
@@ -359,6 +375,267 @@ function runDrainQueueSimulation() {
   return sandbox.__DRAIN_QUEUE__;
 }
 
+const RIVAL_GOAL_RUNNER = `
+S = freshState();
+S.rivalWeek = weekKeyStr();
+S.rivalStartVal = studioValue();
+S.rivalGoal = 0;
+S.rivalClaimed = false;
+ensureHudRival();
+__RIVAL_GOAL__ = {
+  goal: S.rivalGoal,
+  start: S.rivalStartVal,
+  claimable: studioValue() < S.rivalGoal,
+};
+`;
+
+function runRivalGoalSimulation() {
+  const sandbox = buildSandbox();
+  vm.runInNewContext(extractGameLogic() + STUBS_BASE + RIVAL_GOAL_RUNNER, sandbox, { timeout: 20000 });
+  return sandbox.__RIVAL_GOAL__;
+}
+
+const PREMIERE_QUEUE_RUNNER = `
+S = freshState();
+_premiereOpen = true;
+_premiereQueue = [];
+const pr = { title: "Test Hit", genre: "Action", poster: "" };
+const p = PROJECTS[0];
+showPremiere(pr, p, 4, 1000, 50);
+__PREMIERE_QUEUE__ = {
+  len: _premiereQueue.length,
+  held: _premiereQueue[0] && _premiereQueue[0].yenGain === 1000,
+};
+`;
+
+const STUBS_NO_PREMIERE = STUBS_BASE.replace("showPremiere = function(){};\n", "");
+
+function runPremiereQueueSimulation() {
+  const sandbox = buildSandbox();
+  vm.runInNewContext(extractGameLogic() + STUBS_NO_PREMIERE + PREMIERE_QUEUE_RUNNER, sandbox, { timeout: 20000 });
+  return sandbox.__PREMIERE_QUEUE__;
+}
+
+const TUTORIAL_RUNNER = `
+S = freshState();
+bootstrapHonestStudio();
+const tut = {
+  eligibleBefore: isGuidedTutorialEligible(),
+  guidedFresh: S._guidedFresh,
+};
+completeTutorial();
+tut.eligibleAfter = isGuidedTutorialEligible();
+tut.tutorialSeen = S.tutorialSeen;
+tut.guidedAfter = S._guidedFresh;
+__TUTORIAL__ = tut;
+`;
+
+function runTutorialSimulation() {
+  const sandbox = buildSandbox();
+  vm.runInNewContext(extractGameLogic() + STUBS + TUTORIAL_RUNNER, sandbox, { timeout: 20000 });
+  return sandbox.__TUTORIAL__;
+}
+
+const SAVE_LOAD_RUNNER = `
+S = freshState();
+bootstrapHonestStudio();
+hire("animator");
+S.releases = 3;
+S.fans = 250;
+S.catalogIncome = 500;
+S.questProg.greenlit = 2;
+S.weekProg.taps = 7;
+S.chaosMode = true;
+S.franchises = { "Sakura Hit": 2 };
+save();
+const before = JSON.stringify(S);
+S = freshState();
+const loaded = load();
+__SAVE_LOAD__ = {
+  loaded,
+  releases: S.releases,
+  fans: S.fans,
+  catalogIncome: S.catalogIncome,
+  questGreenlit: S.questProg.greenlit,
+  weekTaps: S.weekProg.taps,
+  chaosMode: S.chaosMode,
+  franchiseSeason: S.franchises["Sakura Hit"],
+  staffAnimator: S.staff.animator,
+  roundtrip: loaded && before.length > 100,
+};
+`;
+
+function runSaveLoadSimulation() {
+  const sandbox = buildSandbox();
+  const code = extractGameLogic() + STUBS_PERSIST.replace(/^save = function\(\)\{\};\n/m, "") + SAVE_LOAD_RUNNER;
+  vm.runInNewContext(code, sandbox, { timeout: 20000 });
+  return sandbox.__SAVE_LOAD__;
+}
+
+const REDEEM_RUNNER = `
+S = freshState();
+const gems0 = S.gems;
+redeem("WELCOME");
+const after1 = { gems: S.gems, codes: (S.redeemedCodes || []).slice() };
+redeem("WELCOME");
+const after2 = { gems: S.gems, codes: (S.redeemedCodes || []).slice() };
+redeem("NOTREAL");
+const grant0 = S.gems;
+const g1 = grantEntitlement("bundle");
+const g2 = grantEntitlement("bundle");
+__REDEEM__ = {
+  gemsGain: after1.gems - gems0,
+  codesAfterFirst: after1.codes,
+  noDoubleRedeem: after2.gems === after1.gems,
+  grantOnce: g1 === true && g2 === false,
+  grantGems: S.gems - grant0,
+};
+`;
+
+function runRedeemSimulation() {
+  const sandbox = buildSandbox();
+  vm.runInNewContext(extractGameLogic() + STUBS + REDEEM_RUNNER, sandbox, { timeout: 20000 });
+  return sandbox.__REDEEM__;
+}
+
+const MODAL_STORM_RUNNER = `
+S = freshState();
+S.releases = 2;
+S.studioUnlockModalSeen = true;
+_studioUnlockQueued = true;
+_starsUnlockQueued = true;
+const storm = {};
+storm.drain1 = drainUnlockModalQueue();
+storm.studioCleared = !_studioUnlockQueued;
+storm.starsStillQueued = _starsUnlockQueued;
+S.starsUnlockModalSeen = false;
+storm.drain2 = drainUnlockModalQueue();
+storm.starsCleared = !_starsUnlockQueued;
+__MODAL_STORM__ = storm;
+`;
+
+function runModalStormSimulation() {
+  const sandbox = buildSandbox();
+  vm.runInNewContext(extractGameLogic() + STUBS_BASE + MODAL_STORM_RUNNER, sandbox, { timeout: 20000 });
+  return sandbox.__MODAL_STORM__;
+}
+
+const CHAOS_RUNNER = `
+S = freshState();
+const chaos = {
+  bonusOff: chaosBonus(),
+  unlock9: featureUnlocked("chaos"),
+};
+S.chaosMode = true;
+chaos.bonusOn = chaosBonus();
+S.releases = 10;
+chaos.unlock10 = featureUnlocked("chaos");
+__CHAOS__ = chaos;
+`;
+
+function runChaosSimulation() {
+  const sandbox = buildSandbox();
+  vm.runInNewContext(extractGameLogic() + STUBS + CHAOS_RUNNER, sandbox, { timeout: 20000 });
+  return sandbox.__CHAOS__;
+}
+
+const RESEARCH_UNLOCK_RUNNER = `
+S = freshState();
+const researchGate = {
+  fans119: featureUnlocked("research"),
+};
+S.totalFansEver = 120;
+researchGate.fans120 = featureUnlocked("research");
+__RESEARCH_UNLOCK__ = researchGate;
+`;
+
+function runResearchUnlockSimulation() {
+  const sandbox = buildSandbox();
+  vm.runInNewContext(extractGameLogic() + STUBS + RESEARCH_UNLOCK_RUNNER, sandbox, { timeout: 20000 });
+  return sandbox.__RESEARCH_UNLOCK__;
+}
+
+const FRANCHISE_RUNNER = `
+S = freshState();
+S.yen = 50000;
+S.releases = 4;
+S.fans = 8000;
+S.franchises = { "Sakura Hit": 1 };
+const p = PROJECTS[0];
+greenlight(p.id, "Action", [], { base: "Sakura Hit", genre: "Action" }, null);
+const pr = S.projects[0];
+const fran = {
+  seq: pr ? pr.seq : 0,
+  base: pr ? pr.base : null,
+};
+registerFranchiseHit({ title: "Sakura Hit", genre: "Action", poster: "x" }, 4);
+fran.opportunity = S.franchiseOpportunity ? S.franchiseOpportunity.base : null;
+fran.franchiseCount = franchiseCount();
+__FRANCHISE__ = fran;
+`;
+
+function runFranchiseSimulation() {
+  const sandbox = buildSandbox();
+  vm.runInNewContext(extractGameLogic() + STUBS_PERSIST + FRANCHISE_RUNNER, sandbox, { timeout: 20000 });
+  return sandbox.__FRANCHISE__;
+}
+
+const OFFLINE_RUNNER = `
+S = freshState();
+bootstrapHonestStudio();
+hire("animator");
+hire("writer");
+hire("director");
+S.yen = 200000;
+const p = PROJECTS[0];
+greenlight(p.id, "Action", [], null);
+const pr = S.projects[0];
+const progress0 = pr.progress;
+const off = simulateOffline(120);
+__OFFLINE__ = {
+  progressGain: pr.progress - progress0,
+  yen: off.yen,
+  releases: off.releases,
+  progressShows: off.progressShows,
+};
+S.catalogIncome = 2000;
+const royalty = simulateOffline(60);
+__OFFLINE__.royaltyYen = royalty.royaltyYen;
+__OFFLINE__.royaltyTotal = royalty.yen;
+`;
+
+function runOfflineSimulation() {
+  const sandbox = buildSandbox();
+  vm.runInNewContext(extractGameLogic() + STUBS + OFFLINE_RUNNER, sandbox, { timeout: 20000 });
+  return sandbox.__OFFLINE__;
+}
+
+const LATE_GAME_RUNNER = `
+S = freshState();
+S.releases = 10;
+S.fans = 50000;
+S.totalFansEver = 120000;
+S.catalogIncome = 5000;
+S.slots = 2;
+S.staff = { animator: 10, writer: 8, director: 6, voice: 4, producer: 3 };
+const late = {
+  chaos: featureUnlocked("chaos"),
+  research: featureUnlocked("research"),
+  market: featureUnlocked("market"),
+  stars: featureUnlocked("stars"),
+  studio: featureUnlocked("studio"),
+  ppt: powerPerTick(),
+  expandCost: expandCost(),
+};
+__LATE_GAME__ = late;
+`;
+
+function runLateGameSimulation() {
+  const sandbox = buildSandbox();
+  vm.runInNewContext(extractGameLogic() + STUBS + LATE_GAME_RUNNER, sandbox, { timeout: 20000 });
+  return sandbox.__LATE_GAME__;
+}
+
 function assertHonestFlow(snap) {
   assert(snap.yen0 === 1500, "fresh honest yen", `got ${snap.yen0}`);
   assert(snap.releases0 === 0, "fresh releases zero");
@@ -423,6 +700,88 @@ function assertDrainQueue(drain) {
   assert(drain.studioQueued === true, "drainUnlockModalQueue true when studio unlock queued");
 }
 
+function assertRivalGoal(rival) {
+  assert(rival.goal > rival.start, "rival goal repaired above start value", `goal=${rival.goal} start=${rival.start}`);
+  assert(rival.claimable === true, "rival not instantly claimable after goal repair");
+}
+
+function assertPremiereQueue(pq) {
+  assert(pq.len === 1, "second premiere queued while modal open", `len=${pq.len}`);
+  assert(pq.held === true, "queued premiere retains reward payload");
+}
+
+function assertTutorial(tut) {
+  assert(tut.eligibleBefore === true, "guided tutorial eligible on honest bootstrap");
+  assert(tut.guidedFresh === true, "honest bootstrap sets _guidedFresh");
+  assert(tut.tutorialSeen === true, "completeTutorial sets tutorialSeen");
+  assert(tut.guidedAfter === false, "completeTutorial clears _guidedFresh");
+  assert(tut.eligibleAfter === false, "tutorial not eligible after completeTutorial");
+}
+
+function assertSaveLoad(sl) {
+  assert(sl.loaded === true, "load() succeeds after save()");
+  assert(sl.roundtrip === true, "save serializes non-trivial state");
+  assert(sl.releases === 3, "load restores releases", `got ${sl.releases}`);
+  assert(sl.fans === 250, "load restores fans", `got ${sl.fans}`);
+  assert(sl.catalogIncome === 500, "load restores catalogIncome", `got ${sl.catalogIncome}`);
+  assert(sl.questGreenlit === 2, "load merges questProg.greenlit", `got ${sl.questGreenlit}`);
+  assert(sl.weekTaps === 7, "load merges weekProg.taps", `got ${sl.weekTaps}`);
+  assert(sl.chaosMode === true, "load restores chaosMode");
+  assert(sl.franchiseSeason === 2, "load restores franchises", `got ${sl.franchiseSeason}`);
+  assert(sl.staffAnimator === 1, "load restores staff", `got ${sl.staffAnimator}`);
+}
+
+function assertRedeem(r) {
+  assert(r.gemsGain === 25, "redeem WELCOME grants 25 gems", `got +${r.gemsGain}`);
+  assert(r.codesAfterFirst.includes("WELCOME"), "redeem records code in redeemedCodes");
+  assert(r.noDoubleRedeem === true, "redeem rejects duplicate code");
+  assert(r.grantOnce === true, "grantEntitlement bundle idempotent");
+  assert(r.grantGems === 250, "bundle grants 200 gems + first-purchase bonus once", `got ${r.grantGems}`);
+}
+
+function assertModalStorm(storm) {
+  assert(storm.drain1 === true, "modal storm drain processes studio queue slot");
+  assert(storm.studioCleared === true, "seen studio modal clears studio queue flag");
+  assert(storm.starsStillQueued === true, "stars queue survives studio skip");
+  assert(storm.drain2 === true, "second drain processes stars queue");
+  assert(storm.starsCleared === true, "stars queue cleared after drain");
+}
+
+function assertChaos(chaos) {
+  assert(chaos.bonusOff === 1, "chaosBonus off is 1×");
+  assert(chaos.bonusOn === 1.5, "chaosBonus on is 1.5×");
+  assert(chaos.unlock9 === false, "chaos locked at 9 releases");
+  assert(chaos.unlock10 === true, "chaos unlocked at 10 releases");
+}
+
+function assertResearchUnlock(research) {
+  assert(research.fans119 === false, "research locked at 119 totalFansEver");
+  assert(research.fans120 === true, "research unlocked at 120 totalFansEver");
+}
+
+function assertFranchise(fran) {
+  assert(fran.seq === 2, "sequel greenlight sets seq from franchise table", `seq=${fran.seq}`);
+  assert(fran.base === "Sakura Hit", "sequel greenlight keeps franchise base");
+  assert(fran.opportunity === "Sakura Hit", "registerFranchiseHit sets opportunity");
+  assert(fran.franchiseCount >= 1, "franchise registry non-empty");
+}
+
+function assertOffline(off) {
+  assert(off.progressGain > 0 || off.releases > 0, "simulateOffline advances production", `gain=${off.progressGain}`);
+  assert(off.royaltyYen > 0, "simulateOffline accrues catalog royalties", `royalty=${off.royaltyYen}`);
+  assert(off.royaltyTotal >= off.royaltyYen, "offline yen includes royalties");
+}
+
+function assertLateGame(late) {
+  assert(late.studio === true, "late-game studio unlocked");
+  assert(late.stars === true, "late-game stars unlocked");
+  assert(late.market === true, "late-game market unlocked");
+  assert(late.research === true, "late-game research unlocked");
+  assert(late.chaos === true, "late-game chaos unlocked");
+  assert(late.ppt > 0, "late-game powerPerTick positive", `ppt=${late.ppt}`);
+  assert(late.expandCost > 0, "late-game expand cost available for slot 2");
+}
+
 function assertUnlockGates(gates) {
   assert(gates.release0.studio === false, "studio locked at release 0");
   assert(
@@ -453,6 +812,7 @@ function staticSaveSchemaAudit() {
     "_guidedFresh: false",
     "_demoMode: false",
     "catalogIncome: 0",
+    "redeemedCodes: []",
     "mastery: Object.fromEntries(genres.map",
   ];
   for (const key of requiredKeys) {
@@ -526,6 +886,94 @@ try {
   assertDrainQueue(drain);
 } catch (e) {
   fail("vm drain-queue sim", e.message || String(e));
+}
+
+console.log("\nTutorial complete + eligibility:\n");
+try {
+  const tut = runTutorialSimulation();
+  assertTutorial(tut);
+} catch (e) {
+  fail("vm tutorial sim", e.message || String(e));
+}
+
+console.log("\nSave/load roundtrip (questProg, weekProg, chaos, franchises):\n");
+try {
+  const sl = runSaveLoadSimulation();
+  assertSaveLoad(sl);
+} catch (e) {
+  fail("vm save-load sim", e.message || String(e));
+}
+
+console.log("\nRedeem code + grantEntitlement idempotency:\n");
+try {
+  const r = runRedeemSimulation();
+  assertRedeem(r);
+} catch (e) {
+  fail("vm redeem sim", e.message || String(e));
+}
+
+console.log("\nModal storm queue (seen studio → drain stars):\n");
+try {
+  const storm = runModalStormSimulation();
+  assertModalStorm(storm);
+} catch (e) {
+  fail("vm modal-storm sim", e.message || String(e));
+}
+
+console.log("\nChaos mode bonus + unlock @ 10 releases:\n");
+try {
+  const chaos = runChaosSimulation();
+  assertChaos(chaos);
+} catch (e) {
+  fail("vm chaos sim", e.message || String(e));
+}
+
+console.log("\nResearch unlock @ 120 totalFansEver:\n");
+try {
+  const research = runResearchUnlockSimulation();
+  assertResearchUnlock(research);
+} catch (e) {
+  fail("vm research-unlock sim", e.message || String(e));
+}
+
+console.log("\nFranchise sequel greenlight + opportunity:\n");
+try {
+  const fran = runFranchiseSimulation();
+  assertFranchise(fran);
+} catch (e) {
+  fail("vm franchise sim", e.message || String(e));
+}
+
+console.log("\nOffline simulateOffline (production + royalties):\n");
+try {
+  const off = runOfflineSimulation();
+  assertOffline(off);
+} catch (e) {
+  fail("vm offline sim", e.message || String(e));
+}
+
+console.log("\nLate-game unlock matrix + power:\n");
+try {
+  const late = runLateGameSimulation();
+  assertLateGame(late);
+} catch (e) {
+  fail("vm late-game sim", e.message || String(e));
+}
+
+console.log("\nRival goal repair (corrupt save):\n");
+try {
+  const rival = runRivalGoalSimulation();
+  assertRivalGoal(rival);
+} catch (e) {
+  fail("vm rival-goal sim", e.message || String(e));
+}
+
+console.log("\nPremiere queue while modal open:\n");
+try {
+  const pq = runPremiereQueueSimulation();
+  assertPremiereQueue(pq);
+} catch (e) {
+  fail("vm premiere-queue sim", e.message || String(e));
 }
 
 console.log("\nStatic save schema + unlock order:\n");

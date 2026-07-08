@@ -175,8 +175,10 @@ html.hud-v3-active #goal #goal-bar {
 }
 
 .hud-menu-btn {
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
   border: 1px solid var(--ui-border);
   border-radius: 10px;
   background: var(--ui-surface-2);
@@ -337,8 +339,9 @@ html.hud-v3-active #hud-shell.hud-gl-view #hud-combo {
 
 .hud-stat-plus {
   flex-shrink: 0;
-  width: 28px;
-  min-height: 32px;
+  width: 44px;
+  min-width: 44px;
+  min-height: 44px;
   padding: 0;
   border: none;
   border-radius: 10px;
@@ -361,7 +364,7 @@ html.hud-v3-active #hud-shell.hud-gl-view #hud-combo {
   justify-content: center !important;
   gap: 4px !important;
   padding: 5px 4px !important;
-  min-height: 32px !important;
+  min-height: 44px !important;
   border-radius: 10px !important;
   background: var(--ui-surface-2) !important;
   border: 1px solid var(--ui-border) !important;
@@ -427,7 +430,7 @@ html.hud-v3-active #hud-shell.hud-gl-view #hud-combo {
   padding: 10px 12px !important;
   border-radius: 10px !important;
   font-size: 13px !important;
-  min-height: 40px !important;
+  min-height: 44px !important;
   background: var(--ui-surface-2) !important;
   color: var(--ui-text) !important;
   border: 1px solid var(--ui-border) !important;
@@ -540,7 +543,9 @@ html.hud-v3-active #app > .foot {
 
 .coach-cta {
   flex-shrink: 0;
-  padding: 6px 12px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 10px 14px;
   border: none;
   border-radius: 8px;
   background: var(--ui-accent);
@@ -566,8 +571,10 @@ html.hud-v3-active #app > .foot {
 .coach-gift {
   flex-shrink: 0;
   position: relative;
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
   padding: 0;
   border: none;
   border-radius: 12px;
@@ -599,8 +606,10 @@ html.hud-v3-active #app > .foot {
 
 .coach-dismiss {
   flex-shrink: 0;
-  width: 28px;
-  height: 28px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
   border: none;
   border-radius: 8px;
   background: transparent;
@@ -722,7 +731,7 @@ html.hud-v3-active #tabs {
   display: flex !important;
   gap: 0 !important;
   margin: 0 !important;
-  padding: 0 calc(2px + var(--safe-b, 0px)) !important;
+  padding: 0 2px !important;
   background: transparent !important;
   overflow-x: auto;
   scrollbar-width: none;
@@ -946,7 +955,33 @@ html.hud-v3-active .toast.special {
 }
 
 html.hud-v3-active #toasts {
-  bottom: calc(var(--ui-dock-h) + 12px) !important;
+  bottom: calc(var(--ui-dock-h) + var(--safe-b, 0px) + 12px) !important;
+}
+
+/* ---- Focus rings + reduced motion (HUD chrome) ---- */
+.hud-menu-btn:focus-visible,
+.hud-mail-btn:focus-visible,
+.hud-back-btn:focus-visible,
+.hud-stat-plus:focus-visible,
+.hud-festival-badge:focus-visible,
+.hud-chaos-pill:focus-visible,
+.coach-cta:focus-visible,
+.coach-gift:focus-visible,
+.coach-dismiss:focus-visible,
+#hud-studio-rating:focus-visible,
+.hud-drawer-inner button:focus-visible,
+.hud-drawer-inner a:focus-visible {
+  outline: 2px solid var(--ui-gold);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.28);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hud-combo.hud-combo-pulse,
+  .tab-badge,
+  #sakura-petals .petal {
+    animation: none !important;
+  }
 }
 
 @media (max-width: 380px) {

@@ -170,7 +170,7 @@ html.hud-v3-active #command-dock {
 
 html.hud-v3-active #tabs {
   height: var(--ast-dock) !important;
-  padding-bottom: var(--safe-b, 0px) !important;
+  padding-bottom: 0 !important;
 }
 
 html.hud-v3-active .tab .ic img.tab-ic {
@@ -1821,8 +1821,10 @@ html.hud-v3-active .coach-avatar {
 
 html.hud-v3-active .hud-mail-btn {
   flex-shrink: 0 !important;
-  width: 32px !important;
-  height: 32px !important;
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
   padding: 0 !important;
   border-radius: 10px !important;
   border: 1px solid rgba(255, 92, 168, 0.25) !important;
@@ -1907,8 +1909,10 @@ html.hud-v3-active .aaa-gl-slots-plus:disabled {
 
 html.hud-v3-active .hud-back-btn {
   flex-shrink: 0 !important;
-  width: 32px !important;
-  height: 32px !important;
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
   padding: 0 !important;
   border-radius: 10px !important;
   border: 1px solid rgba(255, 255, 255, 0.12) !important;
@@ -3167,7 +3171,7 @@ html.hud-v3-active .aaa-show-panel .aaa-poster.aaa-tap-hint::before {
 
 /* ========== BUILD 90 — Discover + v4/GL ref polish ========== */
 html.hud-v3-active { --ast-type-title: clamp(14px, 3.8vw, 16px); --ast-type-score: clamp(20px, 5.5vw, 26px); }
-html.hud-v3-active #app { padding-top: max(2px, var(--safe-t)) !important; padding-bottom: max(0px, var(--safe-b)) !important; }
+html.hud-v3-active #app { padding-top: max(2px, var(--safe-t)) !important; }
 html.hud-v3-active #command-dock { padding-left: max(6px, var(--safe-l)) !important; padding-right: max(6px, var(--safe-r)) !important; }
 html.hud-v3-active #hud-shell.hud-gl-view ~ #goal { margin-top: 2px !important; padding: 5px 10px !important; gap: 3px !important; border-radius: 12px !important; }
 html.hud-v3-active #hud-shell.hud-gl-view ~ #goal #goal-txt { font-size: 10px !important; line-height: 1.2 !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; }
@@ -4308,7 +4312,7 @@ html.hud-v3-active #pathway-rail.coach-bar:focus-within { box-shadow: inset 0 0 
   html.hud-v3-active .aaa-gl-confirm-banner, html.hud-v3-active .btn-primary, html.hud-v3-active .btn-gold, html.hud-v3-active .start-cta-demo, html.hud-v3-active .aaa-franchise-suggest-btn, html.hud-v3-active .aaa-decision-btn, html.hud-v3-active [data-act="dec-yes"], html.hud-v3-active [data-act="dec-no"] { min-height: 44px !important; }
 }
 @media (prefers-reduced-motion: reduce) {
-  html.hud-v3-active *, #loading-splash, #loading-splash *, #loading-bar i, .achieve-pop, .toast, .toast.special { animation: none !important; }
+  html.hud-v3-active *, #loading-splash, #loading-splash *, #loading-bar i, .achieve-pop, .toast, .toast.special, .aaa-poster-idle, .coach-gift-unclaimed, .aaa-premiere-ready, .aaa-slot-empty-inner, .hud-chaos-warn, .hud-chaos-crisis { animation: none !important; }
   html.hud-v3-active button, html.hud-v3-active .aaa-gl-card, html.hud-v3-active .progress i, #loading-splash, #loading-bar i { transition-duration: 0.01ms !important; }
   html.hud-v3-active .aaa-show-panel .aaa-poster.aaa-tap-hint::before { opacity: 0.92 !important; transform: translateX(-50%) !important; }
   html.hud-v3-active #app.flash-chaos, html.hud-v3-active #reveal.aaa-reveal-opening { filter: none !important; }
@@ -4402,7 +4406,7 @@ html.hud-v3-active .aaa-gl-page .aaa-gl-carousel {
   }
 }
 /* BUILD 97 — Mobile tab dock + safe-area (icon-only narrow, haptic bump) */
-@media (max-width: 599px) { html.hud-v3-active { --ast-dock: 50px !important; } html.hud-v3-active #command-dock { --ui-dock-h: 50px !important; padding: 2px 4px calc(var(--safe-b, 0px) + 2px) !important; } html.hud-v3-active .tab .tab-lbl { display: none !important; } html.hud-v3-active .tab { gap: 0 !important; padding: 6px 2px calc(var(--safe-b, 0px) + 4px) !important; } html.hud-v3-active .tab .ic img.tab-ic { width: 26px !important; height: 26px !important; } }
+@media (max-width: 599px) { html.hud-v3-active { --ast-dock: 50px !important; } html.hud-v3-active #command-dock { --ui-dock-h: 50px !important; padding: 2px 4px calc(var(--safe-b, 0px) + 2px) !important; } html.hud-v3-active .tab .tab-lbl { display: none !important; } html.hud-v3-active .tab { gap: 0 !important; padding: 6px 2px 4px !important; } html.hud-v3-active .tab .ic img.tab-ic { width: 26px !important; height: 26px !important; } }
 @media (min-width: 600px) { html.hud-v3-active .tab .tab-lbl { display: block !important; } }
 
 /* BUILD 97 — produce/GL polish → 95% mockup fidelity */
@@ -4486,3 +4490,4 @@ html.hud-v3-active .start-share-link:hover, html.hud-v3-active .start-share-link
 html.hud-v3-active .start-share-hint { margin-top:0!important; }
 
 /* BUILD 100 — Ship: idle-feel wired */
+/* BUILD 101 — Audit: premiere queue, modal drain, HUD a11y */

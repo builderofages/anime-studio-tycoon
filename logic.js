@@ -106,6 +106,7 @@ export function createFreshState(genres) {
     items: {},
     entitlements: [],
     purchaseLog: [],
+    redeemedCodes: [],
     firstPurchaseDone: false,
     noAds: false,
     wheelDate: "",

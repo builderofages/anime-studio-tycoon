@@ -124,6 +124,7 @@
 
   let _gtHighlight = null;
   let _renderMain = null;
+  let _drawerPrevFocus = null;
 
   function staffHireTutorialTarget(S, hook) {
     const priority = ["animator", "writer", "director", "voice", "producer"];
@@ -1044,8 +1045,8 @@
         </div>
         <div class="hud-stats" id="hud-resources"></div>
       </div>
-      <div class="hud-drawer" id="hud-drawer" hidden aria-hidden="true">
-        <div class="hud-drawer-inner">
+      <div class="hud-drawer" id="hud-drawer" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-label="Settings">
+        <div class="hud-drawer-inner" tabindex="-1">
           <div class="hud-drawer-label">⚙️ Settings</div>
           <div id="hud-drawer-slot"></div>
         </div>
@@ -1132,6 +1133,7 @@
     if (tabs) {
       tabs.setAttribute("role", "tablist");
       tabs.setAttribute("aria-label", "Studio navigation");
+      wireTabKeyboardNav();
     }
 
     const foot = document.querySelector(".foot");
@@ -1218,20 +1220,56 @@
     });
   }
 
+  function wireTabKeyboardNav() {
+    const tabs = document.getElementById("tabs");
+    if (!tabs || tabs.dataset.hudTabKeysWired) return;
+    tabs.dataset.hudTabKeysWired = "1";
+    tabs.addEventListener("keydown", (e) => {
+      const tabEls = [...tabs.querySelectorAll('.tab[role="tab"]:not([aria-disabled="true"])')];
+      if (!tabEls.length) return;
+      const idx = tabEls.indexOf(document.activeElement);
+      let next = -1;
+      if (e.key === "ArrowRight") next = idx < 0 ? 0 : (idx + 1) % tabEls.length;
+      else if (e.key === "ArrowLeft") next = idx < 0 ? tabEls.length - 1 : (idx - 1 + tabEls.length) % tabEls.length;
+      else if (e.key === "Home") next = 0;
+      else if (e.key === "End") next = tabEls.length - 1;
+      else return;
+      e.preventDefault();
+      tabEls[next]?.focus();
+    });
+  }
+
+  function wireHudChipKeyboard(el) {
+    if (!el || el.dataset.hudChipKeysWired) return;
+    el.dataset.hudChipKeysWired = "1";
+    el.addEventListener("keydown", (e) => {
+      if (e.key !== "Enter" && e.key !== " ") return;
+      e.preventDefault();
+      el.click();
+    });
+  }
+
   function openDrawer() {
     const d = document.getElementById("hud-drawer");
-    if (d) {
-      d.hidden = false;
-      d.setAttribute("aria-hidden", "false");
-    }
+    if (!d) return;
+    _drawerPrevFocus = document.activeElement;
+    d.hidden = false;
+    d.setAttribute("aria-hidden", "false");
+    requestAnimationFrame(() => {
+      const first = d.querySelector(".hud-drawer-inner button:not([disabled]), .hud-drawer-inner select, .hud-drawer-inner a");
+      (first || d.querySelector(".hud-drawer-inner"))?.focus?.();
+    });
   }
 
   function closeDrawer() {
     const d = document.getElementById("hud-drawer");
-    if (d) {
-      d.hidden = true;
-      d.setAttribute("aria-hidden", "true");
+    if (!d) return;
+    d.hidden = true;
+    d.setAttribute("aria-hidden", "true");
+    if (_drawerPrevFocus && typeof _drawerPrevFocus.focus === "function") {
+      try { _drawerPrevFocus.focus(); } catch (_e) {}
     }
+    _drawerPrevFocus = null;
   }
 
   function enterDemoFromDrawer() {
@@ -1591,6 +1629,7 @@
         festBadge.id = "hud-festival-badge";
         festBadge.className = "hud-festival-badge";
         festBadge.setAttribute("aria-label", "Festival invite pending");
+        wireHudChipKeyboard(festBadge);
         festBadge.addEventListener("click", () => {
           const h = window.__AST_HOOK__;
           if (!h) return;
@@ -1721,6 +1760,7 @@
         chaosPill.id = "hud-chaos-pill";
         chaosPill.className = "hud-chaos-pill";
         chaosPill.setAttribute("aria-label", "Chaos meter — tap to toggle Chaos Mode");
+        wireHudChipKeyboard(chaosPill);
         chaosPill.addEventListener("click", () => {
           const h = window.__AST_HOOK__;
           if (!h) return;

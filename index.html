@@ -96,7 +96,7 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available}
     <button class="btn-ghost" id="btn-mute">🔊 Sound: On</button>
     <button class="btn-ghost" id="btn-save" style="display:none">💾 Save</button>
     <button class="btn-ghost" id="btn-reset">↺ Reset</button>
-  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 100 · Ship</span></div>
+  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 101 · Audit</span></div>
   <div id="toasts"></div>
   <div id="pwa-install-banner" class="aaa-pwa-install-banner" hidden>
     <div class="aaa-pwa-install-inner">
@@ -338,14 +338,14 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available}
 
 <div class="overlay" id="whatsnew" style="display:none" role="dialog" aria-modal="true" aria-labelledby="whatsnew-title">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <img src="start-hero.png?v=100" alt="Anime Studio Tycoon logo" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
-    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 100 — Ship</h1>
+    <img src="start-hero.png?v=101" alt="Anime Studio Tycoon logo" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
+    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 101 — Audit</h1>
     <div class="offlist whatsnew-list" style="margin:12px 0">
-      <div><span>✨ Idle feel</span><b>Poster sparkles, boost cooldown ring, premiere CTA pulse — now wired in</b></div>
-      <div><span>🚀 Launch ready</span><b>555 tests, TestFlight checklist, native bundle preflight green</b></div>
-      <div><span>🧪 CI sim</span><b>72-playthrough VM sim — honest + demo + unlock gates</b></div>
-      <div><span>📱 iOS</span><b>Capacitor status bar, splash, IAP routing, viewport-fit=cover</b></div>
-      <div><span>🎮 Core</span><b>logic.js extracted — testable unlock math + fresh state</b></div>
+      <div><span>🧪 122-check sim</span><b>Tutorial, save/load, IAP grants, chaos, franchise & offline — all VM-tested</b></div>
+      <div><span>🎬 Premiere queue</span><b>Multi-slot finishes no longer drop celebrations</b></div>
+      <div><span>🔓 Modal drain</span><b>Unlock queues clear after offline, daily & what's new</b></div>
+      <div><span>♿ HUD a11y</span><b>44px targets, tab keyboard nav, reduced-motion idle loops</b></div>
+      <div><span>🛡️ Anti-farm</span><b>Promo codes one-time; rival goals repair corrupt saves</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
   </div>
@@ -448,7 +448,7 @@ document.addEventListener("deviceready", initNativeChrome, false);
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 100 · Ship";
+const BUILD_TAG = "build 101 · Audit";
 const ASSET_V = "100";
 const OFFLINE_PREVIEW_CAP = 4*3600; // "while away" preview when return is under 4h
 const SHARE_PLAY_URL = "https://anime-studio-tycoon.vercel.app/play";
@@ -1245,7 +1245,7 @@ function celebrateStudioAward(num, gems){
   }
 }
 function queueStudioAwardModal(num, gems){
-  if(unlockModalPending()){ _studioAwardQueued={num, gems}; return; }
+  if(OFFLINE||unlockModalPending()){ _studioAwardQueued={num, gems}; return; }
   celebrateStudioAward(num, gems);
 }
 function closeStudioAwardModal(){
@@ -2290,7 +2290,11 @@ function load(){
     S.unlockedSeen=Array.isArray(d.unlockedSeen)?d.unlockedSeen:[]; S.franchises=(d.franchises&&typeof d.franchises==="object")?d.franchises:{}; S.franchiseOpportunity=(d.franchiseOpportunity&&typeof d.franchiseOpportunity==="object")?d.franchiseOpportunity:null; S.firstFranchiseCelebrated=!!d.firstFranchiseCelebrated; S.ageOk=!!d.ageOk;
     S.freeScoutUsed=!!d.freeScoutUsed; S.starsUnlockModalSeen=!!d.starsUnlockModalSeen; S.studioUnlockModalSeen=!!d.studioUnlockModalSeen; S.marketUnlockModalSeen=!!d.marketUnlockModalSeen; S.campaignsRun=+d.campaignsRun||0; S.researchUnlockModalSeen=!!d.researchUnlockModalSeen; S.chaosUnlockModalSeen=!!d.chaosUnlockModalSeen; S.firstChaosToastSeen=!!d.firstChaosToastSeen; S.awaitFirstChaosSurvival=!!d.awaitFirstChaosSurvival;
     S.quests=Array.isArray(d.quests)?d.quests:[];
-    S.questProg=Object.assign({releases:0,yen:0,campaigns:0,hires:0,hypeSpent:0,scouts:0}, d.questProg||{});
+    S.questProg=Object.assign({releases:0,yen:0,campaigns:0,hires:0,hypeSpent:0,scouts:0,greenlit:0,taps:0}, d.questProg||{});
+    S.weekProg=Object.assign({releases:0,yen:0,campaigns:0,hires:0,hypeSpent:0,scouts:0,greenlit:0,taps:0}, d.weekProg||{});
+    S.weeklyQuests=Array.isArray(d.weeklyQuests)?d.weeklyQuests:(S.weeklyQuests||[]);
+    S.weekKey=d.weekKey||S.weekKey||"";
+    S.redeemedCodes=Array.isArray(d.redeemedCodes)?d.redeemedCodes:[];
     S.bestValue=+d.bestValue||0; S.freeGemsDate=d.freeGemsDate||""; S.taps=+d.taps||0;
     S.achievements=Array.isArray(d.achievements)?d.achievements:[];
     S.whatsnewSeen=!!d.whatsnewSeen;
@@ -2665,9 +2669,10 @@ function drainUnlockModalQueue(){
 }
 function flushPostPremiereQueue(){ return drainUnlockModalQueue(); }
 function showStarsUnlockModal(){
+  _starsUnlockQueued=false;
   if(S.starsUnlockModalSeen||!featureUnlocked("stars")) return;
   const m=document.getElementById("stars-unlock"); if(!m) return;
-  m.style.display="flex"; _starsUnlockQueued=false; play("reward");
+  m.style.display="flex"; play("reward");
 }
 function queueStarsUnlockModal(){
   if(S.starsUnlockModalSeen||!featureUnlocked("stars")) return;
@@ -2684,9 +2689,10 @@ function closeStarsUnlockModal(goScout){
   }else if(!drainUnlockModalQueue()) maybeDecision();
 }
 function showStudioUnlockModal(){
+  _studioUnlockQueued=false;
   if(S.studioUnlockModalSeen||!featureUnlocked("studio")) return;
   const m=document.getElementById("studio-unlock"); if(!m) return;
-  m.style.display="flex"; _studioUnlockQueued=false; play("reward");
+  m.style.display="flex"; play("reward");
 }
 function queueStudioUnlockModal(){
   if(S.studioUnlockModalSeen||!featureUnlocked("studio")) return;
@@ -2707,9 +2713,10 @@ function closeStudioUnlockModal(goExpand){
 }
 let _chaosUnlockQueued=false;
 function showChaosUnlockModal(){
+  _chaosUnlockQueued=false;
   if(S.chaosUnlockModalSeen||!featureUnlocked("chaos")) return;
   const m=document.getElementById("chaos-unlock"); if(!m) return;
-  m.style.display="flex"; _chaosUnlockQueued=false; play("reward");
+  m.style.display="flex"; play("reward");
 }
 function queueChaosUnlockModal(){
   if(S.chaosUnlockModalSeen||!featureUnlocked("chaos")) return;
@@ -2728,9 +2735,10 @@ function closeChaosUnlockModal(goEnable){
 }
 let _marketUnlockQueued=false;
 function showMarketUnlockModal(){
+  _marketUnlockQueued=false;
   if(S.marketUnlockModalSeen||!featureUnlocked("market")) return;
   const m=document.getElementById("market-unlock"); if(!m) return;
-  m.style.display="flex"; _marketUnlockQueued=false; play("reward");
+  m.style.display="flex"; play("reward");
 }
 function queueMarketUnlockModal(){
   if(S.marketUnlockModalSeen||!featureUnlocked("market")) return;
@@ -2748,9 +2756,10 @@ function closeMarketUnlockModal(goMarket){
   }else if(!drainUnlockModalQueue()) maybeDecision();
 }
 function showResearchUnlockModal(){
+  _researchUnlockQueued=false;
   if(S.researchUnlockModalSeen||!featureUnlocked("research")) return;
   const m=document.getElementById("research-unlock"); if(!m) return;
-  m.style.display="flex"; _researchUnlockQueued=false; play("reward");
+  m.style.display="flex"; play("reward");
 }
 function queueResearchUnlockModal(){
   if(S.researchUnlockModalSeen||!featureUnlocked("research")) return;
@@ -2890,13 +2899,14 @@ function ageGate(then){
 }
 let _premiereOpen=false;
 let _premiereWillShow=false;
+let _premiereQueue=[];
 function animateCount(el,to,prefix){
   const dur=1000, t0=performance.now();
   function step(t){ let k=Math.min(1,(t-t0)/dur); const e=1-Math.pow(1-k,3); el.textContent=(prefix||"")+fmt(Math.floor(to*e)); if(k<1) requestAnimationFrame(step); else el.textContent=(prefix||"")+fmt(to); }
   requestAnimationFrame(step);
 }
 function showPremiere(pr,p,stars,yenGain,fansGain){
-  if(_premiereOpen) return;
+  if(_premiereOpen){ _premiereQueue.push({pr,p,stars,yenGain,fansGain}); return; }
   const body=document.getElementById("premiere-body"); if(!body) return;
   const isFirst=(S.releases||0)===1;
   const isSecond=(S.releases||0)===2;
@@ -2947,6 +2957,11 @@ function showPremiere(pr,p,stars,yenGain,fansGain){
 function closePremiere(){
   play("premiere",{close:true});
   const m=document.getElementById("premiere"); if(m){ m.style.display="none"; m.classList.remove("prem-first","prem-second","prem-franchise"); } _premiereOpen=false; _premiereWillShow=false;
+  if(_premiereQueue.length){
+    const next=_premiereQueue.shift();
+    showPremiere(next.pr,next.p,next.stars,next.yenGain,next.fansGain);
+    return;
+  }
   if(drainUnlockModalQueue()) return;
   if((S.releases||0)<2&&activeCount()===0){
     _glMode=true; S.tab="produce"; render(); save(); return;
@@ -3019,10 +3034,9 @@ function releaseProject(slot){
     toast(`${"★".repeat(stars)} “${pr.title||p.name}” premieres! +¥${fmt(yenGain)}  +${fmt(fansGain)} fans`+(trendBonus>1?"  🔥TREND":"")+((S.combo||0)>=2?`  🔗COMBO x${S.combo} (+${Math.round((comboMult-1)*100)}%)`:"")+(globalIncomeMult()>1?"  ⚡BOOST":"")+"  "+currentEvent().ic, true);
     if(stars===5 && p.tier>=3 && !S.sharedOnce){ setTimeout(()=>toast("🎉 Masterpiece! Tap 📣 Share to brag — and grab +25💎",true), 1600); }
     const bigPremiere = (p.tier>=2 || stars>=5) || S.releases<=3;
-    if(bigPremiere) _premiereWillShow=true;
     if(S.releases % 50 === 0) studioAwards();
     render(); save();
-    if(bigPremiere && !_premiereOpen){ showPremiere(pr, p, stars, yenGain, fansGain); }
+    if(bigPremiere){ _premiereWillShow=true; showPremiere(pr, p, stars, yenGain, fansGain); }
     else { _premiereWillShow=false; maybeDecision(); }
   } else if(S.releases % 50 === 0) studioAwards();
 }
@@ -3210,8 +3224,8 @@ function grantStar(id){ const t=STAR_BY_ID[id]; if(!t) return false;
   return true; }
 function grantEntitlement(kind, amount, extra){
   extra=extra||{}; let delivered=false;
-  if(kind==="pass"){ S.producerPass=true; delivered=true; toast("🎬 Producer Pass unlocked — thank you!",true); }
-  else if(kind==="bundle"){ S.producerPass=true; if(addEntitlement("bundle")) S.gems+=200; S.bundleBought=true; delivered=true; toast("🌟 Starter Bundle: Pass + 200 💎!",true); }
+  if(kind==="pass"){ S.producerPass=true; if(addEntitlement("pass")){ delivered=true; toast("🎬 Producer Pass unlocked — thank you!",true); } }
+  else if(kind==="bundle"){ S.producerPass=true; S.bundleBought=true; if(addEntitlement("bundle")){ S.gems+=200; delivered=true; toast("🌟 Starter Bundle: Pass + 200 💎!",true); } }
   else if(kind==="bundle_legend"){ S.producerPass=true; if(addEntitlement("bundle_legend")){ S.gems+=400; grantStar("x_aurora"); } delivered=true; toast("🏆 Legend Bundle delivered — thank you!",true); }
   else if(kind==="bundle_mogul"){ S.producerPass=true; if(addEntitlement("bundle_mogul")){ S.gems+=1500; grantStar("x_phoenix"); grantStar("x_shogun"); S.noAds=true; } delivered=true; toast("👑 Mogul Bundle delivered — thank you!",true); }
   else if(kind==="items_pack"){ ["megaphone","power_glove","time_pendant","stardust","espresso"].forEach(i=>addItem(i,1)); S.gems+=50; delivered=true; toast("🧰 Power Items Pack delivered!",true); }
@@ -3325,8 +3339,11 @@ function redeem(code){
   if(!code) return;
   const r=(MONETIZATION.codes||{})[code];
   if(!r){ toast("Invalid code"); return; }
+  if(!S.redeemedCodes) S.redeemedCodes=[];
+  if(S.redeemedCodes.includes(code)){ toast("Code already redeemed"); return; }
   if(r.gems){ S.gems+=r.gems; }
   if(r.pass){ S.producerPass=true; }
+  S.redeemedCodes.push(code);
   toast("✅ Code redeemed!"+(r.gems?(" +"+r.gems+" 💎"):"")+(r.pass?" Producer Pass!":""),true);
   play("reward"); render(); save();
 }
@@ -3736,13 +3753,13 @@ function simulateOffline(sec){
     if(activeCount()===0) break;
     // advance to the soonest finishing line (or remaining time)
     let dt=sec;
-    for(const pr of S.projects){ if(!pr) continue; const need=(PROJECTS[pr.pid].work-pr.progress)/power; if(need<dt) dt=need; }
+    for(const pr of S.projects){ if(!pr) continue; const op=PROJECTS[pr.pid]; if(!op) continue; const need=(op.work-pr.progress)/power; if(need<dt) dt=need; }
     if(dt<=0) dt=Math.min(sec,0.001);
-    for(const pr of S.projects){ if(pr) pr.progress=Math.min(PROJECTS[pr.pid].work, pr.progress+power*dt); }
+    for(const pr of S.projects){ if(!pr) continue; const op=PROJECTS[pr.pid]; if(!op) continue; pr.progress=Math.min(op.work, pr.progress+power*dt); }
     S.yen=Math.max(0, S.yen - salaryPerTick()*dt);
     if(S.catalogIncome>0){ const ry=royaltyPerSec()*dt; S.yen+=ry; royaltyYen+=ry; }
     sec-=dt;
-    for(let i=0;i<S.projects.length;i++){ const pr=S.projects[i]; if(pr && pr.progress>=PROJECTS[pr.pid].work) releaseProject(i); }
+    for(let i=0;i<S.projects.length;i++){ const pr=S.projects[i]; const op=pr&&PROJECTS[pr.pid]; if(pr&&op&&pr.progress>=op.work) releaseProject(i); }
   }
   if(S.catalogIncome>0 && sec>0){ const ry=royaltyPerSec()*sec; S.yen+=ry; royaltyYen+=ry; }
   let progressPct=0, progressShows=0;
@@ -4025,9 +4042,16 @@ function ensureHudRival(){
     const pick=rivals[Math.floor(Math.random()*Math.min(rivals.length,8))]||rivals[0];
     S.rivalWeek=weekKeyStr(); S.rivalTarget=pick?pick.name:"Neon Mirage";
     S.rivalStartVal=studioValue();
-    S.rivalGoal=Math.floor(S.rivalStartVal*(1.15+Math.random()*0.25));
+    S.rivalGoal=rivalGoalFromStart(S.rivalStartVal);
     S.rivalClaimed=false;
   }
+  if(!S.rivalGoal||S.rivalGoal<=S.rivalStartVal){
+    S.rivalGoal=rivalGoalFromStart(Math.max(S.rivalStartVal, studioValue(), 1));
+  }
+}
+function rivalGoalFromStart(start){
+  start=Math.max(0, Math.floor(start||0));
+  return Math.max(start+1, Math.floor(start*(1.15+Math.random()*0.25)));
 }
 function hudRivalHTML(){
   ensureHudRival();
@@ -5068,7 +5092,7 @@ document.addEventListener("click", e=>{
   if(t.dataset.act==="batch-hire") return hireBatch();
   if(t.dataset.act==="share") return shareGame();
   if(t.dataset.act==="return-hub-close"){ closeReturnHub(); return; }
-  if(t.dataset.act==="daily-close"){ celebrateCollect("daily"); const m=document.getElementById("daily"); if(m) m.style.display="none"; return; }
+  if(t.dataset.act==="daily-close"){ celebrateCollect("daily"); const m=document.getElementById("daily"); if(m) m.style.display="none"; if(!drainUnlockModalQueue()) maybeShowHowtoAfterReturnHub(); return; }
   if(t.dataset.act==="reveal-close"){ const m=document.getElementById("reveal"); if(m){ m.style.display="none"; m.classList.remove("aaa-reveal-opening"); } return; }
   if(t.dataset.act==="dec-yes") return resolveDecision(true);
   if(t.dataset.act==="dec-no") return resolveDecision(false);
@@ -5090,7 +5114,7 @@ document.addEventListener("click", e=>{
   if(t.dataset.act==="studio-award-close") return closeStudioAwardModal();
   if(t.dataset.act==="season-pass-scroll"){ const p=document.getElementById("season-pass-panel"); if(p) p.scrollIntoView({behavior:"smooth",block:"center"}); return; }
   if(t.dataset.act==="instant") return instantPremiere(+t.dataset.slot);
-  if(t.dataset.act==="whatsnew-close"){ S.whatsnewSeen=true; save(); const m=document.getElementById("whatsnew"); if(m) m.style.display="none"; if(!S.tutorialSeen&&!isGuidedTutorialEligible()){ const h=document.getElementById("howto"); if(h) h.style.display="flex"; } return; }
+  if(t.dataset.act==="whatsnew-close"){ S.whatsnewSeen=true; save(); const m=document.getElementById("whatsnew"); if(m) m.style.display="none"; if(!drainUnlockModalQueue()){ if(!S.tutorialSeen&&!isGuidedTutorialEligible()){ const h=document.getElementById("howto"); if(h) h.style.display="flex"; } else maybeShowHowtoAfterReturnHub(); } return; }
   if(t.dataset.act==="howto-close"){ completeTutorial(); const m=document.getElementById("howto"); if(m) m.style.display="none"; return; }
   if(t.dataset.act==="tutorial-skip"){ completeTutorial(); render(); return; }
   if(t.dataset.act==="whatsnew-show"){ const m=document.getElementById("whatsnew"); if(m) m.style.display="flex"; return; }
@@ -5304,7 +5328,7 @@ if(MONETIZATION.supportUrl){
 { const bp=document.getElementById("btn-start-play"); if(bp) bp.onclick=()=>begin(false); }
 { const bd=document.getElementById("btn-start-demo"); if(bd) bd.onclick=()=>begin(true); }
 { const bs=document.getElementById("btn-start-share"); if(bs) bs.onclick=()=>sharePlayInvite(); }
-$("#btn-offclose").onclick=()=>{ celebrateCollect("offline"); $("#offline").style.display="none"; };
+$("#btn-offclose").onclick=()=>{ celebrateCollect("offline"); $("#offline").style.display="none"; if(!drainUnlockModalQueue()) maybeShowHowtoAfterReturnHub(); };
 { const rh=document.getElementById("btn-return-hub-close"); if(rh) rh.onclick=()=>closeReturnHub(); }
 { const sl=document.getElementById("start-lang"); if(sl) sl.onchange=()=>{ setLang(sl.value); updateChrome(); render(); }; }
 // localize static chrome + build language picker, then render

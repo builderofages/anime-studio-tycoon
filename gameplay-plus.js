@@ -217,6 +217,11 @@
   }
 
   /* ---- Rival face-off ---- */
+  function rivalGoalFromStart(start) {
+    start = Math.max(0, Math.floor(start || 0));
+    return Math.max(start + 1, Math.floor(start * (1.15 + Math.random() * 0.25)));
+  }
+
   function ensureRival(S, hook) {
     S.rivalWeek = S.rivalWeek || "";
     S.rivalTarget = S.rivalTarget || null;
@@ -229,8 +234,11 @@
       S.rivalWeek = weekKey();
       S.rivalTarget = pick ? pick.name : "Neon Mirage";
       S.rivalStartVal = hook.studioValue();
-      S.rivalGoal = Math.floor(S.rivalStartVal * (1.15 + Math.random() * 0.25));
+      S.rivalGoal = rivalGoalFromStart(S.rivalStartVal);
       S.rivalClaimed = false;
+    }
+    if (!S.rivalGoal || S.rivalGoal <= S.rivalStartVal) {
+      S.rivalGoal = rivalGoalFromStart(Math.max(S.rivalStartVal, hook.studioValue(), 1));
     }
   }
 
