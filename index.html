@@ -22,7 +22,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%233a2b4d'/%3E%3Ccircle cx='32' cy='32' r='30' fill='none' stroke='%23ffc845' stroke-width='3'/%3E%3Cg fill='%23ff9bc4'%3E%3Cellipse cx='32' cy='15' rx='5' ry='8'/%3E%3Cellipse cx='32' cy='49' rx='5' ry='8'/%3E%3Cellipse cx='15' cy='32' rx='8' ry='5'/%3E%3Cellipse cx='49' cy='32' rx='8' ry='5'/%3E%3C/g%3E%3Ccircle cx='32' cy='32' r='7' fill='%23ffc845'/%3E%3C/svg%3E">
 <link rel="manifest" href="manifest.json">
 <!-- Legacy gameplay-*.css disabled — aaa-ui + game-skin + hud-premium own chrome -->
-<link rel="stylesheet" href="hud-premium.css?v=71">
+<link rel="stylesheet" href="hud-premium.css?v=72">
 <!-- ui-complete.css disabled — v5 uses aaa-tab-page heroes -->
 <!-- gameplay-studio-rating.css disabled — ast-v5 authority -->
 <!-- studio-premium.css disabled — ast-v5 authority -->
@@ -30,8 +30,8 @@
 <!-- game-skin.css disabled — fought ast-v5 (animation:none, flat panels) -->
 <!-- hf-design.css disabled — ast-v5 authority -->
 <!-- aaa-ui.css disabled — ast-v5 authority -->
-<link rel="stylesheet" href="legacy-fx.css?v=71">
-<link rel="stylesheet" href="ast-v5.css?v=71">
+<link rel="stylesheet" href="legacy-fx.css?v=72">
+<link rel="stylesheet" href="ast-v5.css?v=72">
 <script>document.documentElement.classList.add("premium-hud","hud-v3-active")</script>
 <meta name="theme-color" content="#08050f">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -74,10 +74,10 @@ html.hud-v3-active #goal{display:none !important}
 <div id="app">
   <div id="top">
     <div id="studio-rank"><span>🎬</span><span class="rank-tier">Garage Studio</span></div>
-    <div class="res yen"><img src="icons/hf/yen.png?v=71" alt="Yen"><span><span class="v" id="r-yen">0</span> <small>¥</small></span></div>
-    <div class="res fans"><img src="icons/hf/fans.png?v=71" alt="Fans"><span class="v" id="r-fans">0</span></div>
-    <div class="res hype"><img src="icons/hf/hype.png?v=71" alt="Hype"><span class="v" id="r-hype">0</span></div>
-    <div class="res gems"><img src="icons/hf/gems.png?v=71" alt="Gems"><span class="v" id="r-gems">0</span></div>
+    <div class="res yen"><img src="icons/hf/yen.png?v=72" alt="Yen"><span><span class="v" id="r-yen">0</span> <small>¥</small></span></div>
+    <div class="res fans"><img src="icons/hf/fans.png?v=72" alt="Fans"><span class="v" id="r-fans">0</span></div>
+    <div class="res hype"><img src="icons/hf/hype.png?v=72" alt="Hype"><span class="v" id="r-hype">0</span></div>
+    <div class="res gems"><img src="icons/hf/gems.png?v=72" alt="Gems"><span class="v" id="r-gems">0</span></div>
     <div id="trendbar"><span class="spark">📈</span> Trending: <b id="trend">Action</b></div>
   </div>
   <div id="goal"><span id="goal-txt">🎯 Reach 50 Fans for Web Series</span><div class="bar"><i id="goal-bar" style="width:0%"></i></div></div>
@@ -89,13 +89,13 @@ html.hud-v3-active #goal{display:none !important}
     <button class="btn-ghost" id="btn-mute">🔊 Sound: On</button>
     <button class="btn-ghost" id="btn-save" style="display:none">💾 Save</button>
     <button class="btn-ghost" id="btn-reset">↺ Reset</button>
-  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 71 · Produce Hero</span></div>
+  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 72 · GL Carousel</span></div>
   <div id="toasts"></div>
 </div>
 
 <div class="overlay" id="start" style="display: none;">
   <div class="card-modal">
-    <img class="start-hero" src="start-hero.png?v=71" width="140" height="140" alt="Anime Studio Tycoon">
+    <img class="start-hero" src="start-hero.png?v=72" width="140" height="140" alt="Anime Studio Tycoon">
     <h1>Anime Studio Tycoon</h1>
     <p id="start-tagline">From a one-room studio to a global anime empire</p>
     <label style="display:block;font-size:12px;font-weight:800;color:var(--plum);margin:4px 0 4px">🏢 Studio Name</label>
@@ -164,15 +164,15 @@ html.hud-v3-active #goal{display:none !important}
 
 <div class="overlay" id="whatsnew" style="display:none">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <img src="start-hero.png?v=71" alt="" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
-    <h1 style="font-size:22px;text-align:center">✨ Build 71 — Produce Hero</h1>
+    <img src="start-hero.png?v=72" alt="" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
+    <h1 style="font-size:22px;text-align:center">✨ Build 72 — GL Carousel</h1>
     <div class="offlist" style="margin:12px 0">
-      <div><span>🎬 Hero block</span><b>Unified produce card — poster + stats + team in one gold frame</b></div>
-      <div><span>🌸 Poster overlays</span><b>JP tagline + 桜色の約束 title stack like design-ref-v4</b></div>
-      <div><span>💴 Compact ¥</span><b>Budget and bonus show 78.4M / 90.0M style formatting</b></div>
-      <div><span>👥 Team cards</span><b>Larger portraits, rank badges, role icons polished</b></div>
-      <div><span>✨ Play CTA</span><b>Full-width pink gradient premiere/play button</b></div>
-      <div><span>📈 Hype bar</span><b>128.6K +8.2K/h inline progress on hero panel</b></div>
+      <div><span>🎠 Mobile carousel</span><b>Center-snap cards with 74vw width + scroll padding like the ref</b></div>
+      <div><span>📐 CSS canon</span><b>Layout tokens + .aaa-gl-page scoped rules beat BUILD 54–71 conflicts</b></div>
+      <div><span>✨ Selected glow</span><b>Editor's Choice card scales 1.05× with gold border</b></div>
+      <div><span>🏷 Genre row</span><b>Horizontal scroll with edge fade on narrow screens</b></div>
+      <div><span>🎯 Center snap</span><b>scrollIntoView inline center on card select</b></div>
+      <div><span>🎬 GL CTA</span><b>Full-width greenlight banner with stronger shadow</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
   </div>
@@ -212,8 +212,8 @@ const STORE_PAYMENTS = true; // store always visible; buyReal routes web→check
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 71 · Produce Hero";
-const ASSET_V = "71";
+const BUILD_TAG = "build 72 · GL Carousel";
+const ASSET_V = "72";
 const POSTER_META={
   "Sakura no Yakusoku":{ja:"桜色の約束",en:"SAKURA NO YAKUSOKU",tagline:"未来を、もう一度描け。"},
   "Promise of Sakura":{ja:"桜色の約束",en:"SAKURA NO YAKUSOKU",tagline:"未来を、もう一度描け。"},
@@ -2381,12 +2381,8 @@ function renderGreenlightPage(empties,showBack){
 }
 function scrollSelectedGlCard(){
   requestAnimationFrame(()=>{
-    const sel=document.querySelector(".aaa-gl-card.sel");
-    const car=document.querySelector(".aaa-gl-carousel");
-    if(sel&&car){
-      const left=sel.offsetLeft-(car.clientWidth-sel.clientWidth)/2;
-      car.scrollTo({left:Math.max(0,left),behavior:"smooth"});
-    }
+    const sel=document.querySelector(".aaa-gl-page .aaa-gl-card.sel");
+    if(sel) sel.scrollIntoView({behavior:"smooth",block:"nearest",inline:"center"});
   });
 }
 function renderProduce(){
@@ -2931,22 +2927,22 @@ window.__AST_HOOK__ = {
   tapBoost,
 };
 </script>
-<script src="aaa-upgrade.js?v=71"></script>
-<script src="v5-slim-gate.js?v=71"></script>
-<script src="gameplay-plus.js?v=71"></script>
-<script src="gameplay-ultra.js?v=71"></script>
-<script src="gameplay-endless.js?v=71"></script>
-<script src="gameplay-empire.js?v=71"></script>
-<script src="gameplay-studio.js?v=71"></script>
-<script src="gameplay-final.js?v=71"></script>
-<script src="gameplay-aaa.js?v=71"></script>
-<script src="gameplay-legend.js?v=71"></script>
-<script src="hud-premium.js?v=71"></script>
-<script src="ui-complete.js?v=71"></script>
-<script src="gameplay-studio-rating.js?v=71"></script>
-<script src="gameplay-polish.js?v=71"></script>
-<script src="hook-bridge.js?v=71"></script>
-<script src="v5-render-guard.js?v=71"></script>
+<script src="aaa-upgrade.js?v=72"></script>
+<script src="v5-slim-gate.js?v=72"></script>
+<script src="gameplay-plus.js?v=72"></script>
+<script src="gameplay-ultra.js?v=72"></script>
+<script src="gameplay-endless.js?v=72"></script>
+<script src="gameplay-empire.js?v=72"></script>
+<script src="gameplay-studio.js?v=72"></script>
+<script src="gameplay-final.js?v=72"></script>
+<script src="gameplay-aaa.js?v=72"></script>
+<script src="gameplay-legend.js?v=72"></script>
+<script src="hud-premium.js?v=72"></script>
+<script src="ui-complete.js?v=72"></script>
+<script src="gameplay-studio-rating.js?v=72"></script>
+<script src="gameplay-polish.js?v=72"></script>
+<script src="hook-bridge.js?v=72"></script>
+<script src="v5-render-guard.js?v=72"></script>
 <!-- studio-premium.css loaded in head -->
 
 

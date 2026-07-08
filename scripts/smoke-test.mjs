@@ -141,9 +141,12 @@ assert(!html.includes('href="hf-design.css'), "hf-design.css disabled (ast-v5)")
 assert(!html.includes('href="aaa-ui.css'), "aaa-ui.css disabled (ast-v5)");
 assert(html.includes("legacy-fx.css"), "legacy-fx css linked");
 assert(html.includes("ast-v5.css"), "ast-v5 design css linked");
-assert(html.includes("build 71"), "build 71 tag");
+assert(html.includes("build 72"), "build 72 tag");
 assert(html.includes("Production Score"), "production score label");
-assert(html.includes("Produce Hero"), "whatsnew build 71 changelog");
+assert(html.includes("GL Carousel"), "whatsnew build 72 changelog");
+assert(readFileSync(join(root, "ast-v5.css"), "utf8").includes("--gl-card-w"), "greenlight layout tokens");
+assert(readFileSync(join(root, "ast-v5.css"), "utf8").includes("aaa-gl-page .aaa-gl-carousel"), "scoped gl carousel canon");
+assert(html.includes("scrollIntoView"), "carousel center scrollIntoView");
 assert(html.includes("aaa-hero-block"), "unified produce hero block");
 assert(html.includes("POSTER_META"), "poster overlay metadata");
 assert(html.includes("fmtYenCompact"), "compact yen formatting");
