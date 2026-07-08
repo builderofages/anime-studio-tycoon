@@ -22,7 +22,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%233a2b4d'/%3E%3Ccircle cx='32' cy='32' r='30' fill='none' stroke='%23ffc845' stroke-width='3'/%3E%3Cg fill='%23ff9bc4'%3E%3Cellipse cx='32' cy='15' rx='5' ry='8'/%3E%3Cellipse cx='32' cy='49' rx='5' ry='8'/%3E%3Cellipse cx='15' cy='32' rx='8' ry='5'/%3E%3Cellipse cx='49' cy='32' rx='8' ry='5'/%3E%3C/g%3E%3Ccircle cx='32' cy='32' r='7' fill='%23ffc845'/%3E%3C/svg%3E">
 <link rel="manifest" href="manifest.json">
 <!-- Legacy gameplay-*.css disabled — aaa-ui + game-skin + hud-premium own chrome -->
-<link rel="stylesheet" href="hud-premium.css?v=79">
+<link rel="stylesheet" href="hud-premium.css?v=80">
 <!-- ui-complete.css disabled — v5 uses aaa-tab-page heroes -->
 <!-- gameplay-studio-rating.css disabled — ast-v5 authority -->
 <!-- studio-premium.css disabled — ast-v5 authority -->
@@ -30,8 +30,8 @@
 <!-- game-skin.css disabled — fought ast-v5 (animation:none, flat panels) -->
 <!-- hf-design.css disabled — ast-v5 authority -->
 <!-- aaa-ui.css disabled — ast-v5 authority -->
-<link rel="stylesheet" href="legacy-fx.css?v=79">
-<link rel="stylesheet" href="ast-v5.css?v=79">
+<link rel="stylesheet" href="legacy-fx.css?v=80">
+<link rel="stylesheet" href="ast-v5.css?v=80">
 <script>document.documentElement.classList.add("premium-hud","hud-v3-active")</script>
 <meta name="theme-color" content="#08050f">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -74,10 +74,10 @@ html.hud-v3-active #goal{display:none !important}
 <div id="app">
   <div id="top">
     <div id="studio-rank"><span>🎬</span><span class="rank-tier">Garage Studio</span></div>
-    <div class="res yen"><img src="icons/hf/yen.png?v=79" alt="Yen"><span><span class="v" id="r-yen">0</span> <small>¥</small></span></div>
-    <div class="res fans"><img src="icons/hf/fans.png?v=79" alt="Fans"><span class="v" id="r-fans">0</span></div>
-    <div class="res hype"><img src="icons/hf/hype.png?v=79" alt="Hype"><span class="v" id="r-hype">0</span></div>
-    <div class="res gems"><img src="icons/hf/gems.png?v=79" alt="Gems"><span class="v" id="r-gems">0</span></div>
+    <div class="res yen"><img src="icons/hf/yen.png?v=80" alt="Yen"><span><span class="v" id="r-yen">0</span> <small>¥</small></span></div>
+    <div class="res fans"><img src="icons/hf/fans.png?v=80" alt="Fans"><span class="v" id="r-fans">0</span></div>
+    <div class="res hype"><img src="icons/hf/hype.png?v=80" alt="Hype"><span class="v" id="r-hype">0</span></div>
+    <div class="res gems"><img src="icons/hf/gems.png?v=80" alt="Gems"><span class="v" id="r-gems">0</span></div>
     <div id="trendbar"><span class="spark">📈</span> Trending: <b id="trend">Action</b></div>
   </div>
   <div id="goal"><span id="goal-txt">🎯 Reach 50 Fans for Web Series</span><div class="bar"><i id="goal-bar" style="width:0%"></i></div></div>
@@ -89,13 +89,13 @@ html.hud-v3-active #goal{display:none !important}
     <button class="btn-ghost" id="btn-mute">🔊 Sound: On</button>
     <button class="btn-ghost" id="btn-save" style="display:none">💾 Save</button>
     <button class="btn-ghost" id="btn-reset">↺ Reset</button>
-  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 79 · Drama Filter</span></div>
+  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 80 · Gem HUD</span></div>
   <div id="toasts"></div>
 </div>
 
 <div class="overlay" id="start" style="display: none;">
   <div class="card-modal">
-    <img class="start-hero" src="start-hero.png?v=79" width="140" height="140" alt="Anime Studio Tycoon">
+    <img class="start-hero" src="start-hero.png?v=80" width="140" height="140" alt="Anime Studio Tycoon">
     <h1>Anime Studio Tycoon</h1>
     <p id="start-tagline">From a one-room studio to a global anime empire</p>
     <label style="display:block;font-size:12px;font-weight:800;color:var(--plum);margin:4px 0 4px">🏢 Studio Name</label>
@@ -164,15 +164,15 @@ html.hud-v3-active #goal{display:none !important}
 
 <div class="overlay" id="whatsnew" style="display:none">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <img src="start-hero.png?v=79" alt="" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
-    <h1 style="font-size:22px;text-align:center">✨ Build 79 — Drama Filter</h1>
+    <img src="start-hero.png?v=80" alt="" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
+    <h1 style="font-size:22px;text-align:center">✨ Build 80 — Gem HUD</h1>
     <div class="offlist" style="margin:12px 0">
-      <div><span>🎭 DRAMA chip</span><b>Greenlight genre row matches ref — filters drama-tagged projects</b></div>
-      <div><span>⭐ Produce chips</span><b>Original + Drama tags like design-ref-v4</b></div>
-      <div><span>🏆 S rank</span><b>Showcase laurel wreath locked on bootstrap hero</b></div>
-      <div><span>🧭 Nav</span><b>Build 78 labeled dock + purple active pill retained</b></div>
-      <div><span>📊 Stats</span><b>Build 77 showcase budget/ETA/hype/bonuses still locked</b></div>
-      <div><span>🌸 Greenlight</span><b>Tap + Greenlight new anime to open full picker</b></div>
+      <div><span>💎 Gem HUD</span><b>6,850 locale format in top bar (not 6.85K)</b></div>
+      <div><span>¥ Resources</span><b>Yen/fans use compact 23.8M / 128.6K display</b></div>
+      <div><span>🖼 Poster</span><b>Bottom vignette gradient for title overlay depth</b></div>
+      <div><span>➕ Greenlight CTA</span><b>Glow when 2+ slots open on produce screen</b></div>
+      <div><span>👥 Team +</span><b>Pink hire affordance on production team row</b></div>
+      <div><span>📦 Carry</span><b>Build 79 drama filter + builds 75–78 polish retained</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
   </div>
@@ -212,8 +212,8 @@ const STORE_PAYMENTS = true; // store always visible; buyReal routes web→check
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 79 · Drama Filter";
-const ASSET_V = "79";
+const BUILD_TAG = "build 80 · Gem HUD";
+const ASSET_V = "80";
 const POSTER_META={
   "Sakura no Yakusoku":{ja:"桜色の約束",en:"SAKURA NO YAKUSOKU",tagline:"未来を、もう一度描け。"},
   "Promise of Sakura":{ja:"桜色の約束",en:"SAKURA NO YAKUSOKU",tagline:"未来を、もう一度描け。"},
@@ -248,6 +248,11 @@ function fmtCompact(n){
 }
 function fmtYenCompact(n){ return "¥"+fmtCompact(n); }
 function fmtLocale(n){ n=Math.floor(n); if(!isFinite(n)) return "0"; return n.toLocaleString("en-US"); }
+function fmtHudRes(k,n){
+  if(k==="gems") return fmtLocale(n);
+  if(k==="yen"||k==="fans") return fmtCompact(n);
+  return fmt(n);
+}
 function fmtEta(sec){
   if(sec<=0) return "Ready!";
   if(sec>=86400) return Math.floor(sec/86400)+"D "+Math.floor((sec%86400)/3600)+"H";
@@ -2091,8 +2096,8 @@ function setTab(t){ S.tab=t; play("click"); render(); }
 /* ---- Live in-place updates: refresh only the moving numbers each tick/tap.
    Avoids rebuilding #main (which would reset scroll and make the screen jump). ---- */
 function updateTopBar(){
-  const set=(id,v)=>{ const el=document.getElementById(id); if(el) el.textContent=fmt(v); };
-  set("r-yen",S.yen); set("r-fans",S.fans); set("r-gems",S.gems);
+  const set=(id,v,k)=>{ const el=document.getElementById(id); if(el) el.textContent=fmtHudRes(k||id.replace("r-",""),v); };
+  set("r-yen",S.yen,"yen"); set("r-fans",S.fans,"fans"); set("r-gems",S.gems,"gems");
   const hypeEl=document.getElementById("r-hype"); if(hypeEl) hypeEl.textContent=fmt(S.hype)+"/"+fmt(hypeCap());
   const tr=document.getElementById("trend"); if(tr) tr.textContent=trendGenre();
 }
@@ -2162,10 +2167,10 @@ function render(){
   if(({stars:1,research:1,studio:1})[S.tab] && !featureUnlocked(S.tab)) S.tab="produce";
   syncMainViewState();
   // top bar
-  $("#r-yen").textContent=fmt(S.yen);
-  $("#r-fans").textContent=fmt(S.fans);
+  $("#r-yen").textContent=fmtHudRes("yen",S.yen);
+  $("#r-fans").textContent=fmtHudRes("fans",S.fans);
   $("#r-hype").textContent=fmt(S.hype)+"/"+fmt(hypeCap());
-  $("#r-gems").textContent=fmt(S.gems);
+  $("#r-gems").textContent=fmtHudRes("gems",S.gems);
   $("#trend").textContent=trendGenre();
   { const sb=document.getElementById("share-bonus"); if(sb) sb.style.display=S.sharedOnce?"none":""; }
 
@@ -2403,7 +2408,7 @@ function renderGreenlightPage(empties,showBack){
   h+=`</div><div class="aaa-gl-detail">
     <div class="aaa-gl-detail-grid">
       <div class="aaa-gl-summary"><h5>🌸 PROJECT SUMMARY</h5><p>${PITCH_SUMMARIES[selSc.genre]||PITCH_SUMMARIES["Romance"]}</p><div class="aaa-gl-tags">${(PITCH_TAGS[selSc.genre]||[]).map(t=>`<span class="aaa-gl-tag">${t}</span>`).join("")}</div></div>
-      <div class="aaa-gl-budget"><h5>Budget Allocation</h5>${greenlightPieHTML(selP.cost)}</div>
+      <div class="aaa-gl-budget"><h5>BUDGET ALLOCATION</h5>${greenlightPieHTML(selP.cost)}</div>
     </div>
     <div class="aaa-gl-detail-grid">
       <div class="aaa-gl-rewards"><h5>ESTIMATED REWARDS</h5>
@@ -2465,7 +2470,7 @@ function renderProduce(){
         <div class="aaa-actions">${done?`<button class="btn-gold aaa-cta aaa-premiere-ready" data-rel="${i}">🎬 ▶ Global Premiere</button>`:`<button class="btn-gold aaa-cta aaa-play-btn" data-act="tapboost" data-slot="${i}">🎬 ▶ Play</button>`}</div>
       </div></div>${productionTeamHTML()}</div></div>`;
   });
-  if(empties>0) h+=`<button type="button" class="aaa-gl-open" data-act="greenlight-view">+ Greenlight new anime · ${empties} slot${empties>1?"s":""} open</button>`;
+  if(empties>0) h+=`<button type="button" class="aaa-gl-open${empties>=2?" aaa-gl-open-hot":""}" data-act="greenlight-view">+ Greenlight new anime · ${empties} slot${empties>1?"s":""} open</button>`;
   // anti-softlock freelance
   if(activeCount()===0 && S.yen<PROJECTS[0].cost){
     h+=`<div class="panel" style="border:2px solid var(--sakura)"><h2>🆘 Out of cash?</h2>
@@ -2967,22 +2972,22 @@ window.__AST_HOOK__ = {
   tapBoost,
 };
 </script>
-<script src="aaa-upgrade.js?v=79"></script>
-<script src="v5-slim-gate.js?v=79"></script>
-<script src="gameplay-plus.js?v=79"></script>
-<script src="gameplay-ultra.js?v=79"></script>
-<script src="gameplay-endless.js?v=79"></script>
-<script src="gameplay-empire.js?v=79"></script>
-<script src="gameplay-studio.js?v=79"></script>
-<script src="gameplay-final.js?v=79"></script>
-<script src="gameplay-aaa.js?v=79"></script>
-<script src="gameplay-legend.js?v=79"></script>
-<script src="hud-premium.js?v=79"></script>
-<script src="ui-complete.js?v=79"></script>
-<script src="gameplay-studio-rating.js?v=79"></script>
-<script src="gameplay-polish.js?v=79"></script>
-<script src="hook-bridge.js?v=79"></script>
-<script src="v5-render-guard.js?v=79"></script>
+<script src="aaa-upgrade.js?v=80"></script>
+<script src="v5-slim-gate.js?v=80"></script>
+<script src="gameplay-plus.js?v=80"></script>
+<script src="gameplay-ultra.js?v=80"></script>
+<script src="gameplay-endless.js?v=80"></script>
+<script src="gameplay-empire.js?v=80"></script>
+<script src="gameplay-studio.js?v=80"></script>
+<script src="gameplay-final.js?v=80"></script>
+<script src="gameplay-aaa.js?v=80"></script>
+<script src="gameplay-legend.js?v=80"></script>
+<script src="hud-premium.js?v=80"></script>
+<script src="ui-complete.js?v=80"></script>
+<script src="gameplay-studio-rating.js?v=80"></script>
+<script src="gameplay-polish.js?v=80"></script>
+<script src="hook-bridge.js?v=80"></script>
+<script src="v5-render-guard.js?v=80"></script>
 <!-- studio-premium.css loaded in head -->
 
 

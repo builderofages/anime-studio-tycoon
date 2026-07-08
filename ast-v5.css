@@ -38,7 +38,7 @@ html.hud-v3-active body {
 html.hud-v3-active body {
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.35) 0%, rgba(8, 6, 15, 0.82) 100%),
-    url('bg-v4.png?v=79') center top / cover no-repeat fixed !important;
+    url('bg-v4.png?v=80') center top / cover no-repeat fixed !important;
 }
 
 html.hud-v3-active button {
@@ -496,7 +496,7 @@ html.hud-v3-active .aaa-poster[data-act="tapboost"]:active {
 html.hud-v3-active .aaa-page-hero.aaa-gacha-hero {
   background:
     linear-gradient(135deg, rgba(107, 92, 255, 0.2), rgba(255, 92, 168, 0.14)),
-    url('assets/hf/gacha-bg.png?v=79') center/cover !important;
+    url('assets/hf/gacha-bg.png?v=80') center/cover !important;
   border: 1px solid rgba(180, 140, 255, 0.28) !important;
   overflow: hidden;
 }
@@ -1983,7 +1983,7 @@ html.hud-v3-active .aaa-gl-page-head {
   padding: 14px 14px 10px !important;
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.4) 0%, rgba(8, 6, 15, 0.9) 100%),
-    url('assets/hf/greenlight-bg.png?v=79') center/cover !important;
+    url('assets/hf/greenlight-bg.png?v=80') center/cover !important;
   border-bottom: 1px solid rgba(255, 200, 69, 0.15) !important;
 }
 
@@ -2968,4 +2968,73 @@ html.hud-v3-active .aaa-show-panel .aaa-chip:not(.gold) {
 html.hud-v3-active .aaa-show-panel .aaa-rank-wrap.aaa-rank-laurel::before {
   border-color: rgba(255, 182, 220, 0.65) !important;
   box-shadow: 0 0 18px rgba(255, 92, 168, 0.35) !important;
+}
+
+/* ========== BUILD 80 (canonical) ========== */
+
+html.hud-v3-active .aaa-show-panel .aaa-poster {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-poster::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  border-radius: inherit !important;
+  background: linear-gradient(
+    180deg,
+    rgba(8, 6, 15, 0.05) 0%,
+    rgba(8, 6, 15, 0.15) 45%,
+    rgba(8, 6, 15, 0.82) 100%
+  ) !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-poster-ja,
+html.hud-v3-active .aaa-show-panel .aaa-poster-en,
+html.hud-v3-active .aaa-show-panel .aaa-poster-tagline,
+html.hud-v3-active .aaa-show-panel .aaa-trend {
+  z-index: 2 !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-score-label {
+  font-size: 9px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  color: var(--ast-muted) !important;
+  margin: 4px 0 2px !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-team-add {
+  width: 24px !important;
+  height: 24px !important;
+  padding: 0 !important;
+  border-radius: 8px !important;
+  border: 1px solid rgba(255, 92, 168, 0.45) !important;
+  background: rgba(255, 92, 168, 0.18) !important;
+  color: var(--ast-pink) !important;
+  font-size: 16px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+}
+
+html.hud-v3-active .aaa-gl-open-hot {
+  border-style: solid !important;
+  border-color: rgba(255, 92, 168, 0.55) !important;
+  background: linear-gradient(135deg, rgba(255, 92, 168, 0.16), rgba(107, 92, 255, 0.12)) !important;
+  box-shadow: 0 8px 24px rgba(255, 92, 168, 0.25) !important;
+  animation: ast-ready-pulse 3s ease-in-out infinite !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-premiere-bonus-label {
+  font-size: 8px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  color: var(--ast-muted) !important;
+  width: 100% !important;
 }
