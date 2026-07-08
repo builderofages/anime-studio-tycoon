@@ -38,7 +38,7 @@ html.hud-v3-active body {
 html.hud-v3-active body {
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.35) 0%, rgba(8, 6, 15, 0.82) 100%),
-    url('bg-v4.png?v=85') center top / cover no-repeat fixed !important;
+    url('bg-v4.png?v=86') center top / cover no-repeat fixed !important;
 }
 
 html.hud-v3-active button {
@@ -437,7 +437,7 @@ html.hud-v3-active .aaa-poster[data-act="tapboost"]:active {
 html.hud-v3-active .aaa-page-hero.aaa-gacha-hero {
   background:
     linear-gradient(135deg, rgba(107, 92, 255, 0.2), rgba(255, 92, 168, 0.14)),
-    url('assets/hf/gacha-bg.png?v=85') center/cover !important;
+    url('assets/hf/gacha-bg.png?v=86') center/cover !important;
   border: 1px solid rgba(180, 140, 255, 0.28) !important;
   overflow: hidden;
 }
@@ -1897,7 +1897,7 @@ html.hud-v3-active .aaa-gl-page-head {
   padding: 14px 14px 10px !important;
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.4) 0%, rgba(8, 6, 15, 0.9) 100%),
-    url('assets/hf/greenlight-bg.png?v=85') center/cover !important;
+    url('assets/hf/greenlight-bg.png?v=86') center/cover !important;
   border-bottom: 1px solid rgba(255, 200, 69, 0.15) !important;
 }
 
@@ -1988,10 +1988,6 @@ html.hud-v3-active .aaa-gl-open {
   background: rgba(255, 92, 168, 0.08) !important;
   color: var(--ast-pink) !important;
   cursor: pointer !important;
-}
-
-html.hud-v3-active .aaa-play-btn {
-  animation: ast-ready-pulse 2.5s ease-in-out infinite !important;
 }
 
 html.hud-v3-active .aaa-stat-ic {
@@ -2426,21 +2422,6 @@ html.hud-v3-active .aaa-show-panel .aaa-premiere-bonus {
   margin-top: 6px !important;
   padding-top: 6px !important;
   border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
-}
-
-html.hud-v3-active .aaa-show-panel .aaa-play-btn,
-html.hud-v3-active .aaa-show-panel .aaa-premiere-ready {
-  width: 100% !important;
-  margin-top: 8px !important;
-  padding: 12px 14px !important;
-  font-size: 14px !important;
-  font-weight: 900 !important;
-  letter-spacing: 0.04em !important;
-  border-radius: 14px !important;
-  border: none !important;
-  background: linear-gradient(135deg, #ff5ca8 0%, #ff3b8d 45%, #e91e7a 100%) !important;
-  color: #fff !important;
-  box-shadow: 0 8px 24px rgba(255, 59, 141, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
 }
 
 html.hud-v3-active .aaa-show-panel .aaa-team {
@@ -3159,11 +3140,6 @@ html.hud-v3-active .hud-mail-btn.has-dot::after {
   box-shadow: 0 0 8px rgba(255, 59, 107, 0.65) !important;
 }
 
-html.hud-v3-active .aaa-gl-page .aaa-gl-summary {
-  border: 1px solid rgba(255, 92, 168, 0.18) !important;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22) !important;
-}
-
 html.hud-v3-active .aaa-gl-page .aaa-gl-risk-level.medium {
   color: #ffc845 !important;
   text-shadow: 0 0 10px rgba(255, 200, 69, 0.35) !important;
@@ -3216,12 +3192,112 @@ html.hud-v3-active .aaa-gl-page .aaa-gl-pie-center b {
   font-size: 9px !important;
 }
 
+/* ========== BUILD 86 (canonical) ========== */
+
+html.hud-v3-active .aaa-show-panel .aaa-meta-col {
+  padding: 12px 14px !important;
+  border-radius: 16px !important;
+  background: rgba(12, 8, 22, 0.9) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.38) !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-show-card {
+  gap: 12px !important;
+  align-items: stretch !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-premiere-bonus-label {
+  font-size: 8px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  color: var(--ast-muted) !important;
+  width: 100% !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-bonus-pill {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  padding: 4px 10px !important;
+  border-radius: 999px !important;
+  font-size: 10px !important;
+  font-weight: 900 !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-bonus-pill img {
+  width: 14px !important;
+  height: 14px !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-bonus-pill.gems {
+  background: rgba(34, 211, 238, 0.14) !important;
+  border: 1px solid rgba(34, 211, 238, 0.38) !important;
+  color: #a5f3fc !important;
+  box-shadow: 0 0 12px rgba(34, 211, 238, 0.22) !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-bonus-pill.gold {
+  background: rgba(255, 200, 69, 0.16) !important;
+  border: 1px solid rgba(255, 200, 69, 0.42) !important;
+  color: var(--ast-gold) !important;
+  box-shadow: 0 0 10px rgba(255, 200, 69, 0.2) !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-jp {
+  font-size: 11px !important;
+  font-style: italic !important;
+  color: rgba(255, 182, 220, 0.92) !important;
+  margin: 0 0 2px !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-sub {
+  font-size: 10px !important;
+  color: var(--ast-muted) !important;
+  margin: 0 !important;
+  line-height: 1.35 !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-summary h5,
+html.hud-v3-active .aaa-gl-page .aaa-gl-budget h5,
+html.hud-v3-active .aaa-gl-page .aaa-gl-rewards h5,
+html.hud-v3-active .aaa-gl-page .aaa-gl-risk h5 {
+  color: var(--ast-gold) !important;
+  letter-spacing: 0.1em !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-detail-grid {
+  align-items: stretch !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-summary,
+html.hud-v3-active .aaa-gl-page .aaa-gl-budget,
+html.hud-v3-active .aaa-gl-page .aaa-gl-rewards,
+html.hud-v3-active .aaa-gl-page .aaa-gl-risk {
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 100% !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-summary {
+  border-color: rgba(255, 92, 168, 0.18) !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22) !important;
+}
+
 html.hud-v3-active .aaa-show-panel .aaa-play-btn,
 html.hud-v3-active .aaa-show-panel .aaa-premiere-ready {
+  width: 100% !important;
+  margin-top: 8px !important;
+  padding: 12px 14px !important;
+  font-size: 14px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.04em !important;
+  border-radius: 14px !important;
+  color: #fff !important;
   background: linear-gradient(135deg, #ff5ca8 0%, #ff4d9e 55%, #ff6b9d 100%) !important;
   border: 1px solid rgba(255, 255, 255, 0.16) !important;
   box-shadow:
     0 8px 22px rgba(255, 92, 168, 0.42),
     inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
-  letter-spacing: 0.04em !important;
 }
