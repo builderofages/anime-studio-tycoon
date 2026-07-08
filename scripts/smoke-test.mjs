@@ -140,12 +140,16 @@ assert(!html.includes('href="game-skin.css'), "game-skin.css not linked (ast-v5 
 assert(html.includes("hf-design.css"), "higgsfield design css linked");
 assert(html.includes("legacy-fx.css"), "legacy-fx css linked");
 assert(html.includes("ast-v5.css"), "ast-v5 design css linked");
-assert(html.includes("build 58"), "build 58 tag");
+assert(html.includes("build 59"), "build 59 tag");
 assert(html.includes("⭐ Production Score"), "production score star label");
-assert(html.includes("One-Tap Flow"), "whatsnew build 58 changelog");
+assert(html.includes("Mockup Match"), "whatsnew build 59 changelog");
 assert(html.includes("aaa-greenlight-simple"), "ultra-simple first greenlight");
 assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes('type: "premiere"'), "coach one-tap premiere");
+assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes('type: "claim-reward"'), "coach one-tap claim");
 assert(html.includes("quickGreenlight,"), "quickGreenlight on hook");
+assert(html.includes("claimFirstReward,"), "claimFirstReward on hook");
+assert(html.includes("aaa-staff-rank"), "staff rank badges");
+assert(html.includes("aaa-quest-hero"), "quests glass hero");
 assert(html.includes("v5-render-guard.js"), "v5 render guard linked");
 assert(readFileSync(join(root, "hook-bridge.js"), "utf8").includes("__v5GuardInstalled"), "v5 guard in hook bridge");
 assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("coach-mail"), "coach mail button");

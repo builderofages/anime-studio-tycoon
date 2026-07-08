@@ -119,13 +119,25 @@
         action: { type: "tab", tab: "stars" },
       };
     }
-    if (claimableQuests(S) > 0) {
+    const today = new Date().toISOString().slice(0, 10);
+    const loginPending = S.loginLastClaimDate !== today && (S.loginClaimedCount || 0) < 31;
+    if (claimableQuests(S) > 0 || loginPending) {
       return {
-        message: "Quest rewards ready to claim",
+        message: loginPending && claimableQuests(S) === 0
+          ? "Daily login reward is ready"
+          : "Rewards ready — tap to claim",
         tab: "quests",
         cta: "Claim",
         urgent: true,
-        action: { type: "tab", tab: "quests" },
+        action: { type: "claim-reward" },
+      };
+    }
+    if ((S.staff?.director || 0) < 1 && activeCount(S) > 0 && (S.releases || 0) >= 1 && (S.releases || 0) < 12) {
+      return {
+        message: "Hire a Director — they boost your production score",
+        tab: "staff",
+        cta: "Hire",
+        action: { type: "tab", tab: "staff" },
       };
     }
     if ((S.dynastyPoints || 0) - (S.dynastySpent || 0) >= 12 && (S.releases || 0) >= 15) {
@@ -160,6 +172,11 @@
       hook.play("click");
       return;
     }
+    if (pw.action.type === "claim-reward" && typeof hook.claimFirstReward === "function") {
+      hook.claimFirstReward();
+      hook.play("click");
+      return;
+    }
     if (pw.action.type === "rating") {
       (document.getElementById("hud-studio-rating") || document.getElementById("studio-rank"))?.click();
       hook.play("click");
@@ -183,7 +200,7 @@
     shell.innerHTML = `
       <div class="hud-top">
         <button type="button" class="hud-menu-btn" id="hud-menu-btn" aria-label="Menu">☰</button>
-        <div class="hud-avatar-wrap"><img class="hud-avatar" src="start-hero.png?v=58" alt=""><span class="hud-lv-badge" id="hud-lv-badge">1</span></div>
+        <div class="hud-avatar-wrap"><img class="hud-avatar" src="start-hero.png?v=59" alt=""><span class="hud-lv-badge" id="hud-lv-badge">1</span></div>
         <div class="hud-identity">
           <span class="hud-studio-name" id="hud-studio-name">Studio</span>
           <div id="hud-studio-rating" class="hud-rating-chip" title="Studio rating"></div>
@@ -236,7 +253,7 @@
       rail.id = "pathway-rail";
       rail.className = "coach-bar";
       rail.innerHTML = `
-        <img class="coach-avatar" src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg?v=58" alt="" width="40" height="40">
+        <img class="coach-avatar" src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg?v=59" alt="" width="40" height="40">
         <div class="coach-body">
           <span class="coach-label">Coach's Tip</span>
           <p class="coach-msg" id="pathway-now"></p>

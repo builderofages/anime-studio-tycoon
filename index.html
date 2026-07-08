@@ -22,16 +22,16 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%233a2b4d'/%3E%3Ccircle cx='32' cy='32' r='30' fill='none' stroke='%23ffc845' stroke-width='3'/%3E%3Cg fill='%23ff9bc4'%3E%3Cellipse cx='32' cy='15' rx='5' ry='8'/%3E%3Cellipse cx='32' cy='49' rx='5' ry='8'/%3E%3Cellipse cx='15' cy='32' rx='8' ry='5'/%3E%3Cellipse cx='49' cy='32' rx='8' ry='5'/%3E%3C/g%3E%3Ccircle cx='32' cy='32' r='7' fill='%23ffc845'/%3E%3C/svg%3E">
 <link rel="manifest" href="manifest.json">
 <!-- Legacy gameplay-*.css disabled — aaa-ui + game-skin + hud-premium own chrome -->
-<link rel="stylesheet" href="hud-premium.css?v=58">
+<link rel="stylesheet" href="hud-premium.css?v=59">
 <!-- ui-complete.css disabled — v5 uses aaa-tab-page heroes -->
-<link rel="stylesheet" href="gameplay-studio-rating.css?v=58">
+<link rel="stylesheet" href="gameplay-studio-rating.css?v=59">
 <!-- studio-premium.css disabled — ast-v5 authority -->
 <!-- gameplay-plus.css disabled — ast-v5 authority -->
 <!-- game-skin.css disabled — fought ast-v5 (animation:none, flat panels) -->
-<link rel="stylesheet" href="hf-design.css?v=58">
-<link rel="stylesheet" href="aaa-ui.css?v=58">
-<link rel="stylesheet" href="legacy-fx.css?v=58">
-<link rel="stylesheet" href="ast-v5.css?v=58">
+<link rel="stylesheet" href="hf-design.css?v=59">
+<link rel="stylesheet" href="aaa-ui.css?v=59">
+<link rel="stylesheet" href="legacy-fx.css?v=59">
+<link rel="stylesheet" href="ast-v5.css?v=59">
 <script>document.documentElement.classList.add("premium-hud","hud-v3-active")</script>
 <meta name="theme-color" content="#08050f">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -74,10 +74,10 @@ html.hud-v3-active #goal{display:none !important}
 <div id="app">
   <div id="top">
     <div id="studio-rank"><span>🎬</span><span class="rank-tier">Garage Studio</span></div>
-    <div class="res yen"><img src="icons/hf/yen.png?v=58" alt="Yen"><span><span class="v" id="r-yen">0</span> <small>¥</small></span></div>
-    <div class="res fans"><img src="icons/hf/fans.png?v=58" alt="Fans"><span class="v" id="r-fans">0</span></div>
-    <div class="res hype"><img src="icons/hf/hype.png?v=58" alt="Hype"><span class="v" id="r-hype">0</span></div>
-    <div class="res gems"><img src="icons/hf/gems.png?v=58" alt="Gems"><span class="v" id="r-gems">0</span></div>
+    <div class="res yen"><img src="icons/hf/yen.png?v=59" alt="Yen"><span><span class="v" id="r-yen">0</span> <small>¥</small></span></div>
+    <div class="res fans"><img src="icons/hf/fans.png?v=59" alt="Fans"><span class="v" id="r-fans">0</span></div>
+    <div class="res hype"><img src="icons/hf/hype.png?v=59" alt="Hype"><span class="v" id="r-hype">0</span></div>
+    <div class="res gems"><img src="icons/hf/gems.png?v=59" alt="Gems"><span class="v" id="r-gems">0</span></div>
     <div id="trendbar"><span class="spark">📈</span> Trending: <b id="trend">Action</b></div>
   </div>
   <div id="goal"><span id="goal-txt">🎯 Reach 50 Fans for Web Series</span><div class="bar"><i id="goal-bar" style="width:0%"></i></div></div>
@@ -89,13 +89,13 @@ html.hud-v3-active #goal{display:none !important}
     <button class="btn-ghost" id="btn-mute">🔊 Sound: On</button>
     <button class="btn-ghost" id="btn-save" style="display:none">💾 Save</button>
     <button class="btn-ghost" id="btn-reset">↺ Reset</button>
-  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 58 · One-Tap Flow</span></div>
+  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 59 · Mockup Match</span></div>
   <div id="toasts"></div>
 </div>
 
 <div class="overlay" id="start" style="display: none;">
   <div class="card-modal">
-    <img class="start-hero" src="start-hero.png?v=58" width="140" height="140" alt="Anime Studio Tycoon">
+    <img class="start-hero" src="start-hero.png?v=59" width="140" height="140" alt="Anime Studio Tycoon">
     <h1>Anime Studio Tycoon</h1>
     <p id="start-tagline">From a one-room studio to a global anime empire</p>
     <label style="display:block;font-size:12px;font-weight:800;color:var(--plum);margin:4px 0 4px">🏢 Studio Name</label>
@@ -164,15 +164,15 @@ html.hud-v3-active #goal{display:none !important}
 
 <div class="overlay" id="whatsnew" style="display:none">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <img src="start-hero.png?v=58" alt="" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
-    <h1 style="font-size:22px;text-align:center">✨ Build 58 — One-Tap Flow</h1>
+    <img src="start-hero.png?v=59" alt="" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
+    <h1 style="font-size:22px;text-align:center">✨ Build 59 — Mockup Match</h1>
     <div class="offlist" style="margin:12px 0">
-      <div><span>🎬 Coach Premiere</span><b>One tap on coach CTA releases your show</b></div>
-      <div><span>⚡ First Greenlight</span><b>Quick button only — no genre scroll before release #1</b></div>
-      <div><span>✉️ Mail dot</span><b>Red badge when quests or login rewards wait</b></div>
-      <div><span>🔴 Tab dots</span><b>Dock badges pulse when action is ready</b></div>
-      <div><span>⭐ Gacha polish</span><b>Glass scout buttons + reveal modal glow</b></div>
-      <div><span>🎉 Premiere FX</span><b>Star banner + gold box office on release</b></div>
+      <div><span>🎯 Coach Claim</span><b>One tap claims login + quest rewards</b></div>
+      <div><span>🎬 Director tip</span><b>Coach nudges you to hire a Director for score</b></div>
+      <div><span>👥 Staff ranks</span><b>S/A/B badges on hire roster like the mockup</b></div>
+      <div><span>📋 Quest hero</span><b>Glass rewards header + pulsing claim cards</b></div>
+      <div><span>💎 Store hero</span><b>Free gems row pulses when claimable</b></div>
+      <div><span>🏆 Team strip</span><b>Production team cards match design-ref layout</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
   </div>
@@ -212,8 +212,8 @@ const STORE_PAYMENTS = true; // store always visible; buyReal routes web→check
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 58 · One-Tap Flow";
-const ASSET_V = "58";
+const BUILD_TAG = "build 59 · Mockup Match";
+const ASSET_V = "59";
 const COACH_AVATAR = "https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg";
 const TAB_ICON_IMG = {
   produce:"icons/tabs/produce.png", quests:"icons/tabs/quests.png", staff:"icons/tabs/staff.png",
@@ -792,6 +792,20 @@ function claimQuest(i){
   if(prog<q.goal){ toast("Quest not complete yet"); return; }
   q.claimed=true; S.gems+=q.reward; track("quest_claim",{id:q.id});
   play("reward"); toast("✅ Quest complete! +"+q.reward+" 💎",true); render(); save();
+}
+function claimFirstReward(){
+  S.tab="quests";
+  if(canClaimLogin()){ claimLoginDay(); return; }
+  for(let i=0;i<(S.quests||[]).length;i++){
+    const q=S.quests[i]; if(q.claimed) continue;
+    if((S.questProg[questMetric(q.id)]||0)>=q.goal){ claimQuest(i); return; }
+  }
+  checkWeekly();
+  for(let i=0;i<(S.weeklyQuests||[]).length;i++){
+    const q=S.weeklyQuests[i]; if(q.claimed) continue;
+    if((S.weekProg[weeklyMetric(q.id)]||0)>=q.goal){ claimWeekly(i); return; }
+  }
+  render();
 }
 /* star scouting (gacha) */
 function pullStar(allowAll){
@@ -2072,7 +2086,7 @@ function loginCalendarHTML(){
   return h;
 }
 function renderQuests(){
-  let h=`<div class="aaa-tab-page"><div class="aaa-page-hero"><h2>🎯 ${STR.h_rewards}</h2><p>Daily login, quests, and weekly challenges — all on timers.</p></div>`;
+  let h=`<div class="aaa-tab-page"><div class="aaa-page-hero aaa-quest-hero"><h2>🎯 ${STR.h_rewards}</h2><p>Daily login, quests, and weekly challenges — all on timers.</p></div>`;
   h+=loginCalendarHTML();
   h+=dailyQuestHTML();
   h+=weeklyQuestHTML();
@@ -2270,11 +2284,15 @@ function renderProduce(){
 let _selGenre=0;
 let _castSel=[];   // sids the player has selected to feature on the next greenlight
 
+function staffRankFor(key){
+  const n=S.staff[key]||0; const lv=Math.min(60,18+n*6+studioLevel());
+  return lv>=55?"S":lv>=45?"A":"B";
+}
 function renderStaff(){
-  let h=`<div class="aaa-tab-page"><div class="aaa-page-hero"><h2>👥 ${t("h_hire","Hire Your Team")}</h2><p>Balanced teams make higher-rated anime.</p></div><div class="aaa-staff-list">`;
-  for(const key in ROLES){ const r=ROLES[key]; const c=hireCost(key);
-    h+=`<div class="aaa-staff-row">
-      <div class="aaa-staff-portrait"><img src="${r.img}" alt="${r.name}"></div>
+  let h=`<div class="aaa-tab-page"><div class="aaa-page-hero aaa-staff-hero"><h2>👥 ${t("h_hire","Hire Your Team")}</h2><p>Balanced teams make higher-rated anime — Directors boost your score.</p></div><div class="aaa-staff-list">`;
+  for(const key in ROLES){ const r=ROLES[key]; const c=hireCost(key); const rank=staffRankFor(key);
+    h+=`<div class="aaa-staff-row aaa-rank-${rank}">
+      <div class="aaa-staff-portrait"><span class="aaa-staff-rank">${rank}</span><img src="${r.img}" alt="${r.name}"></div>
       <div class="aaa-staff-body">
         <h4>${r.name} <span class="pill">×${S.staff[key]}</span></h4>
         <div class="muted">${r.dimName} · +${r.power}/s · ¥${r.salary}/s</div>
@@ -2366,7 +2384,8 @@ function renderMarket(){
 
 function renderStore(){
   const P=MONETIZATION.prices, packCfg=[["gems_s","Starter Pack"],["gems_m","Studio Pack"],["gems_l","Producer Pack"],["gems_mega","Mogul Pack"]];
-  let h=`<div class="aaa-tab-page"><div class="aaa-page-hero"><h2>💎 ${t("s_store","Studio Store")}</h2><p>Gems power scouts, skips, and boosts. Earn free or top up below.</p></div>
+  const fgClaimed=S.freeGemsDate===todayStr();
+  let h=`<div class="aaa-tab-page"><div class="aaa-page-hero aaa-store-hero"><h2>💎 ${t("s_store","Studio Store")}</h2><p>Gems power scouts, skips, and boosts. Earn free or top up below.</p></div>
     <div class="aaa-store-balance"><img src="icons/hf/gems.png?v=${ASSET_V}" alt=""><div><div class="muted" style="font-size:10px;margin:0">Your Balance</div><b>${fmt(S.gems)}</b></div></div>`;
   h+=`<div class="panel" style="padding:12px">`;
   // Producer Pass (owned state always shown)
@@ -2426,10 +2445,9 @@ function renderStore(){
     <div class="uprow"><div class="meta"><h4>🌟 Golden Hour</h4><div class="muted">3× income for 10 minutes</div></div><button class="btn-cyan hirebtn" data-gem="golden">Spend<small>12 💎</small></button></div>`;
   // Free rewarded boost + daily free gems
   const cd=Math.max(0,Math.ceil((S.rewardedCdUntil-Date.now())/1000));
-  const fgClaimed = S.freeGemsDate===todayStr();
   h+=`<div class="muted" style="margin:12px 0 6px;font-weight:800;color:var(--plum)">${t("s_free","Free Rewards")}</div>
-    <div class="uprow"><div class="meta"><h4>🎁 Daily Free Gems</h4><div class="muted">${fgClaimed?"Claimed — back tomorrow!":(typeof MONETIZATION.adProvider==="function"?"Watch a short ad and collect +10 💎":"Collect your free +10 💎 today")}</div></div>
-      <button class="btn-gold hirebtn" data-act="freegems" ${fgClaimed?"disabled":""}>Claim<small>+10 💎</small></button></div>
+    <div class="uprow aaa-free-gems-row${fgClaimed?"":" claimable"}"><div class="meta"><h4>🎁 Daily Free Gems</h4><div class="muted">${fgClaimed?"Claimed — back tomorrow!":(typeof MONETIZATION.adProvider==="function"?"Watch a short ad and collect +10 💎":"Collect your free +10 💎 today")}</div></div>
+      <button class="btn-gold hirebtn aaa-free-gems-btn" data-act="freegems" ${fgClaimed?"disabled":""}>Claim<small>+10 💎</small></button></div>
     <div class="uprow"><div class="meta"><h4>⚡ Free 2× Income</h4><div class="muted">${rewardedActive()?"Active now!":(cd>0?("Recharges in "+cd+"s"):(typeof MONETIZATION.adProvider==="function"?"Watch &amp; earn 2× income for 5 min":"Claim a free 2× income boost for 5 min"))}</div></div>
       <button class="btn-gold hirebtn" data-act="rewarded" ${cd>0?"disabled":""}>Boost<small>FREE</small></button></div>`;
   // Achievements
@@ -2737,23 +2755,24 @@ window.__AST_HOOK__ = {
   SCOUT_GEMS,
   canClaimLogin,
   quickGreenlight,
+  claimFirstReward,
 };
 </script>
-<script src="aaa-upgrade.js?v=58"></script>
-<script src="gameplay-plus.js?v=58"></script>
-<script src="gameplay-ultra.js?v=58"></script>
-<script src="gameplay-endless.js?v=58"></script>
-<script src="gameplay-empire.js?v=58"></script>
-<script src="gameplay-studio.js?v=58"></script>
-<script src="gameplay-final.js?v=58"></script>
-<script src="gameplay-aaa.js?v=58"></script>
-<script src="gameplay-legend.js?v=58"></script>
-<script src="hud-premium.js?v=58"></script>
-<script src="ui-complete.js?v=58"></script>
-<script src="gameplay-studio-rating.js?v=58"></script>
-<script src="gameplay-polish.js?v=58"></script>
-<script src="v5-render-guard.js?v=58"></script>
-<script src="hook-bridge.js?v=58"></script>
+<script src="aaa-upgrade.js?v=59"></script>
+<script src="gameplay-plus.js?v=59"></script>
+<script src="gameplay-ultra.js?v=59"></script>
+<script src="gameplay-endless.js?v=59"></script>
+<script src="gameplay-empire.js?v=59"></script>
+<script src="gameplay-studio.js?v=59"></script>
+<script src="gameplay-final.js?v=59"></script>
+<script src="gameplay-aaa.js?v=59"></script>
+<script src="gameplay-legend.js?v=59"></script>
+<script src="hud-premium.js?v=59"></script>
+<script src="ui-complete.js?v=59"></script>
+<script src="gameplay-studio-rating.js?v=59"></script>
+<script src="gameplay-polish.js?v=59"></script>
+<script src="v5-render-guard.js?v=59"></script>
+<script src="hook-bridge.js?v=59"></script>
 <!-- studio-premium.css loaded in head -->
 
 

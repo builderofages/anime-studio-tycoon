@@ -34,7 +34,7 @@ html.hud-v3-active body {
 html.hud-v3-active body {
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.35) 0%, rgba(8, 6, 15, 0.82) 100%),
-    url('bg-v4.png?v=58') center top / cover no-repeat fixed !important;
+    url('bg-v4.png?v=59') center top / cover no-repeat fixed !important;
 }
 
 html.hud-v3-active button {
@@ -492,7 +492,7 @@ html.hud-v3-active .aaa-poster[data-act="tapboost"]:active {
 html.hud-v3-active .aaa-page-hero.aaa-gacha-hero {
   background:
     linear-gradient(135deg, rgba(107, 92, 255, 0.2), rgba(255, 92, 168, 0.14)),
-    url('assets/hf/gacha-bg.png?v=58') center/cover !important;
+    url('assets/hf/gacha-bg.png?v=59') center/cover !important;
   border: 1px solid rgba(180, 140, 255, 0.28) !important;
   overflow: hidden;
 }
@@ -1867,4 +1867,95 @@ html.hud-v3-active #premiere .premiere-card .btn-gold {
   font-size: 15px !important;
   letter-spacing: 0.03em !important;
   box-shadow: 0 8px 28px rgba(255, 200, 69, 0.35) !important;
+}
+
+/* ========== BUILD 59 — mockup match: quests, staff, store ========== */
+
+html.hud-v3-active .aaa-page-hero.aaa-quest-hero {
+  background:
+    linear-gradient(135deg, rgba(255, 200, 69, 0.16), rgba(255, 92, 168, 0.12)),
+    url('assets/hf/greenlight-bg.png?v=59') center/cover !important;
+  border: 1px solid rgba(255, 200, 69, 0.28) !important;
+}
+
+html.hud-v3-active .aaa-page-hero.aaa-staff-hero {
+  background:
+    linear-gradient(135deg, rgba(107, 92, 255, 0.18), rgba(255, 92, 168, 0.1)),
+    url('assets/hf/gacha-bg.png?v=59') center/cover !important;
+  border: 1px solid rgba(180, 140, 255, 0.28) !important;
+}
+
+html.hud-v3-active .aaa-page-hero.aaa-store-hero {
+  background:
+    linear-gradient(135deg, rgba(34, 211, 238, 0.14), rgba(255, 92, 168, 0.12)),
+    url('assets/hf/greenlight-bg.png?v=59') center/cover !important;
+  border: 1px solid rgba(255, 92, 168, 0.28) !important;
+}
+
+html.hud-v3-active .aaa-page-hero.aaa-quest-hero h2,
+html.hud-v3-active .aaa-page-hero.aaa-staff-hero h2,
+html.hud-v3-active .aaa-page-hero.aaa-store-hero h2,
+html.hud-v3-active .aaa-page-hero.aaa-quest-hero p,
+html.hud-v3-active .aaa-page-hero.aaa-staff-hero p,
+html.hud-v3-active .aaa-page-hero.aaa-store-hero p {
+  position: relative;
+  z-index: 1;
+}
+
+html.hud-v3-active .aaa-staff-portrait {
+  position: relative !important;
+}
+
+html.hud-v3-active .aaa-staff-rank {
+  position: absolute !important;
+  top: -4px !important;
+  left: -4px !important;
+  z-index: 2 !important;
+  font-size: 9px !important;
+  font-weight: 900 !important;
+  padding: 2px 6px !important;
+  border-radius: 6px !important;
+  background: linear-gradient(135deg, var(--ast-gold), #e8a820) !important;
+  color: #1a1028 !important;
+  box-shadow: 0 2px 8px rgba(255, 200, 69, 0.45) !important;
+}
+
+html.hud-v3-active .aaa-staff-row.aaa-rank-S {
+  border-color: rgba(255, 200, 69, 0.35) !important;
+  box-shadow: 0 0 16px rgba(255, 200, 69, 0.1) !important;
+}
+
+html.hud-v3-active .aaa-staff-row.aaa-rank-S .aaa-staff-rank {
+  background: linear-gradient(135deg, #ffe39a, var(--ast-gold)) !important;
+}
+
+html.hud-v3-active .aaa-staff-row.aaa-rank-A .aaa-staff-rank {
+  background: linear-gradient(135deg, #c8d4ff, #8b9dff) !important;
+  color: #1a2040 !important;
+}
+
+html.hud-v3-active .aaa-staff-row.aaa-rank-B .aaa-staff-rank {
+  background: linear-gradient(135deg, #ffd6e7, #ff9bc4) !important;
+  color: #4a1830 !important;
+}
+
+html.hud-v3-active .aaa-free-gems-row.claimable {
+  border: 1px solid rgba(255, 200, 69, 0.35) !important;
+  border-radius: 14px !important;
+  padding: 10px !important;
+  background: linear-gradient(135deg, rgba(255, 200, 69, 0.08), rgba(255, 92, 168, 0.05)) !important;
+  animation: ast-claim-pulse 2s ease-in-out infinite !important;
+}
+
+html.hud-v3-active .aaa-free-gems-row.claimable .aaa-free-gems-btn:not(:disabled) {
+  animation: ast-ready-pulse 2s ease-in-out infinite !important;
+}
+
+html.hud-v3-active .aaa-team-card.aaa-rank-S {
+  border-color: rgba(255, 200, 69, 0.45) !important;
+  box-shadow: 0 0 14px rgba(255, 200, 69, 0.18) !important;
+}
+
+html.hud-v3-active .aaa-team-card.aaa-rank-A {
+  border-color: rgba(139, 157, 255, 0.35) !important;
 }
