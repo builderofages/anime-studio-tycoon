@@ -253,7 +253,7 @@
     shell.innerHTML = `
       <div class="hud-brand-row">
         <button type="button" class="hud-back-btn" id="hud-back-btn" aria-label="Back" hidden>←</button>
-        <div class="hud-avatar-wrap" id="hud-avatar-wrap"><img class="hud-avatar" src="start-hero.png?v=72" alt=""><span class="hud-lv-badge" id="hud-lv-badge">1</span></div>
+        <div class="hud-avatar-wrap" id="hud-avatar-wrap"><img class="hud-avatar" src="start-hero.png?v=73" alt=""><span class="hud-lv-badge" id="hud-lv-badge">1</span></div>
         <div class="hud-identity">
           <div class="hud-brand-line"><span class="hud-sakura-logo" aria-hidden="true">🌸</span><span class="hud-studio-name" id="hud-studio-name">Studio</span></div>
           <span class="hud-studio-rank-label" id="hud-studio-rank-label">Studio Rank C</span>
@@ -308,7 +308,7 @@
       rail.id = "pathway-rail";
       rail.className = "coach-bar";
       rail.innerHTML = `
-        <img class="coach-avatar" src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg?v=72" alt="" width="40" height="40">
+        <img class="coach-avatar" src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg?v=73" alt="" width="40" height="40">
         <div class="coach-body">
           <span class="coach-label">Coach's Tip</span>
           <p class="coach-msg" id="pathway-now"></p>

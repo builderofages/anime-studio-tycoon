@@ -141,9 +141,15 @@ assert(!html.includes('href="hf-design.css'), "hf-design.css disabled (ast-v5)")
 assert(!html.includes('href="aaa-ui.css'), "aaa-ui.css disabled (ast-v5)");
 assert(html.includes("legacy-fx.css"), "legacy-fx css linked");
 assert(html.includes("ast-v5.css"), "ast-v5 design css linked");
-assert(html.includes("build 72"), "build 72 tag");
+assert(html.includes("build 73"), "build 73 tag");
 assert(html.includes("Production Score"), "production score label");
-assert(html.includes("GL Carousel"), "whatsnew build 72 changelog");
+assert(html.includes("CSS Prune"), "whatsnew build 73 changelog");
+const astCss = readFileSync(join(root, "ast-v5.css"), "utf8");
+const astLines = astCss.split("\n").length;
+assert(astLines < 3200, "ast-v5.css pruned under 3200 lines", `${astLines} lines`);
+assert(astCss.includes("BUILD 73 — CSS Prune"), "build 73 css marker");
+assert(!astCss.includes("BUILD 55 —"), "dead build 55 section removed");
+assert(existsSync(join(root, "scripts/prune-ast-v5.mjs")), "prune script exists");
 assert(readFileSync(join(root, "ast-v5.css"), "utf8").includes("--gl-card-w"), "greenlight layout tokens");
 assert(readFileSync(join(root, "ast-v5.css"), "utf8").includes("aaa-gl-page .aaa-gl-carousel"), "scoped gl carousel canon");
 assert(html.includes("scrollIntoView"), "carousel center scrollIntoView");
