@@ -8,7 +8,8 @@
     "#jw-produce-rating,#empire-recruit-panel,.prod-stage,.pity-meter,.merch-panel," +
     ".scout-banner,.empire-recruit,.legend-glass,.legend-perks,.legend-ledger," +
     ".influence-panel,.template-bar,.morale-heat,.records-grid,.collection-bar," +
-    ".trend-forecast,.stage-minigame,.polish-btn,.aaa-smart-cast-bar";
+    ".trend-forecast,.stage-minigame,.polish-btn,.aaa-smart-cast-bar,.smart-cast-bar," +
+    "#combo-meter,.template-bar,.morale-heat,.records-grid,.collection-bar";
 
   function stripLegacyInjections() {
     if (!document.documentElement.classList.contains("hud-v3-active")) return;

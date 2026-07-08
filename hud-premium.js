@@ -237,7 +237,7 @@
     shell.innerHTML = `
       <div class="hud-top">
         <button type="button" class="hud-menu-btn" id="hud-menu-btn" aria-label="Menu">☰</button>
-        <div class="hud-avatar-wrap"><img class="hud-avatar" src="start-hero.png?v=61" alt=""><span class="hud-lv-badge" id="hud-lv-badge">1</span></div>
+        <div class="hud-avatar-wrap"><img class="hud-avatar" src="start-hero.png?v=63" alt=""><span class="hud-lv-badge" id="hud-lv-badge">1</span></div>
         <div class="hud-identity">
           <span class="hud-studio-name" id="hud-studio-name">Studio</span>
           <div id="hud-studio-rating" class="hud-rating-chip" title="Studio rating"></div>
@@ -290,15 +290,13 @@
       rail.id = "pathway-rail";
       rail.className = "coach-bar";
       rail.innerHTML = `
-        <img class="coach-avatar" src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg?v=61" alt="" width="40" height="40">
+        <img class="coach-avatar" src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg?v=63" alt="" width="40" height="40">
         <div class="coach-body">
           <span class="coach-label">Coach's Tip</span>
           <p class="coach-msg" id="pathway-now"></p>
         </div>
-        <button type="button" class="coach-cta" id="pathway-cta">→</button>
-        <button type="button" class="coach-mail" id="coach-mail" aria-label="Messages"><span class="coach-mail-ic">✉️</span><span class="coach-mail-dot" id="coach-mail-dot" hidden></span></button>
+        <button type="button" class="coach-cta" id="pathway-cta" aria-label="Go">→</button>
         <button type="button" class="coach-gift" id="coach-gift" aria-label="Rewards"><span class="coach-gift-ic">🎁</span><span class="coach-gift-dot" id="coach-gift-dot" hidden></span></button>
-        <button type="button" class="coach-dismiss" id="coach-dismiss" aria-label="Dismiss">×</button>
         <div class="pathway-steps" id="pathway-steps" hidden></div>`;
       const goal = document.getElementById("goal");
       goal.parentNode.insertBefore(rail, goal.nextSibling);
@@ -322,14 +320,6 @@
     document.documentElement.classList.add("premium-hud", "hud-v3-active");
 
     document.getElementById("pathway-cta").addEventListener("click", runPathwayAction);
-    document.getElementById("coach-mail").addEventListener("click", () => {
-      const hook = window.__AST_HOOK__;
-      if (!hook) return;
-      hook.getState().tab = "quests";
-      hook.render();
-      hook.play("click");
-      closeDrawer();
-    });
     document.getElementById("coach-gift").addEventListener("click", () => {
       const hook = window.__AST_HOOK__;
       if (!hook) return;
@@ -337,13 +327,6 @@
       hook.render();
       hook.play("click");
       closeDrawer();
-    });
-    document.getElementById("coach-dismiss").addEventListener("click", () => {
-      const rail = document.getElementById("pathway-rail");
-      if (rail) {
-        rail.classList.add("coach-hidden");
-        rail.dataset.coachDismissed = "1";
-      }
     });
     document.getElementById("hud-menu-btn").addEventListener("click", () => {
       const d = document.getElementById("hud-drawer");
@@ -388,21 +371,17 @@
     window.__AST_PATHWAY__ = pw;
 
     const rail = document.getElementById("pathway-rail");
-    const showCoach = !!pw.urgent || (S.releases || 0) < 3;
     if (rail) {
-      if (showCoach) {
-        rail.classList.remove("coach-hidden");
-        delete rail.dataset.coachDismissed;
-      } else if (!rail.dataset.coachDismissed) {
-        rail.classList.add("coach-hidden");
-      }
+      rail.classList.remove("coach-hidden");
+      delete rail.dataset.coachDismissed;
     }
 
     const nowEl = document.getElementById("pathway-now");
     if (nowEl) nowEl.textContent = pw.message;
     const cta = document.getElementById("pathway-cta");
     if (cta) {
-      cta.textContent = pw.cta;
+      cta.textContent = "→";
+      cta.setAttribute("aria-label", pw.cta || "Go");
       cta.classList.toggle("urgent", !!pw.urgent);
     }
 
@@ -411,8 +390,6 @@
     const rewardPending = claimableQuests(S) > 0 || loginPending;
     const giftDot = document.getElementById("coach-gift-dot");
     if (giftDot) giftDot.hidden = !rewardPending;
-    const mailDot = document.getElementById("coach-mail-dot");
-    if (mailDot) mailDot.hidden = !(claimableQuests(S) > 0 || loginPending);
   }
 
   function updateTabBadges(S, hook) {

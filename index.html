@@ -22,16 +22,16 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%233a2b4d'/%3E%3Ccircle cx='32' cy='32' r='30' fill='none' stroke='%23ffc845' stroke-width='3'/%3E%3Cg fill='%23ff9bc4'%3E%3Cellipse cx='32' cy='15' rx='5' ry='8'/%3E%3Cellipse cx='32' cy='49' rx='5' ry='8'/%3E%3Cellipse cx='15' cy='32' rx='8' ry='5'/%3E%3Cellipse cx='49' cy='32' rx='8' ry='5'/%3E%3C/g%3E%3Ccircle cx='32' cy='32' r='7' fill='%23ffc845'/%3E%3C/svg%3E">
 <link rel="manifest" href="manifest.json">
 <!-- Legacy gameplay-*.css disabled — aaa-ui + game-skin + hud-premium own chrome -->
-<link rel="stylesheet" href="hud-premium.css?v=61">
+<link rel="stylesheet" href="hud-premium.css?v=63">
 <!-- ui-complete.css disabled — v5 uses aaa-tab-page heroes -->
-<link rel="stylesheet" href="gameplay-studio-rating.css?v=61">
+<!-- gameplay-studio-rating.css disabled — ast-v5 authority -->
 <!-- studio-premium.css disabled — ast-v5 authority -->
 <!-- gameplay-plus.css disabled — ast-v5 authority -->
 <!-- game-skin.css disabled — fought ast-v5 (animation:none, flat panels) -->
 <!-- hf-design.css disabled — ast-v5 authority -->
 <!-- aaa-ui.css disabled — ast-v5 authority -->
-<link rel="stylesheet" href="legacy-fx.css?v=61">
-<link rel="stylesheet" href="ast-v5.css?v=61">
+<link rel="stylesheet" href="legacy-fx.css?v=63">
+<link rel="stylesheet" href="ast-v5.css?v=63">
 <script>document.documentElement.classList.add("premium-hud","hud-v3-active")</script>
 <meta name="theme-color" content="#08050f">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -74,10 +74,10 @@ html.hud-v3-active #goal{display:none !important}
 <div id="app">
   <div id="top">
     <div id="studio-rank"><span>🎬</span><span class="rank-tier">Garage Studio</span></div>
-    <div class="res yen"><img src="icons/hf/yen.png?v=61" alt="Yen"><span><span class="v" id="r-yen">0</span> <small>¥</small></span></div>
-    <div class="res fans"><img src="icons/hf/fans.png?v=61" alt="Fans"><span class="v" id="r-fans">0</span></div>
-    <div class="res hype"><img src="icons/hf/hype.png?v=61" alt="Hype"><span class="v" id="r-hype">0</span></div>
-    <div class="res gems"><img src="icons/hf/gems.png?v=61" alt="Gems"><span class="v" id="r-gems">0</span></div>
+    <div class="res yen"><img src="icons/hf/yen.png?v=63" alt="Yen"><span><span class="v" id="r-yen">0</span> <small>¥</small></span></div>
+    <div class="res fans"><img src="icons/hf/fans.png?v=63" alt="Fans"><span class="v" id="r-fans">0</span></div>
+    <div class="res hype"><img src="icons/hf/hype.png?v=63" alt="Hype"><span class="v" id="r-hype">0</span></div>
+    <div class="res gems"><img src="icons/hf/gems.png?v=63" alt="Gems"><span class="v" id="r-gems">0</span></div>
     <div id="trendbar"><span class="spark">📈</span> Trending: <b id="trend">Action</b></div>
   </div>
   <div id="goal"><span id="goal-txt">🎯 Reach 50 Fans for Web Series</span><div class="bar"><i id="goal-bar" style="width:0%"></i></div></div>
@@ -89,13 +89,13 @@ html.hud-v3-active #goal{display:none !important}
     <button class="btn-ghost" id="btn-mute">🔊 Sound: On</button>
     <button class="btn-ghost" id="btn-save" style="display:none">💾 Save</button>
     <button class="btn-ghost" id="btn-reset">↺ Reset</button>
-  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 61 · Mockup Polish</span></div>
+  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 63 · Mockup Match</span></div>
   <div id="toasts"></div>
 </div>
 
 <div class="overlay" id="start" style="display: none;">
   <div class="card-modal">
-    <img class="start-hero" src="start-hero.png?v=61" width="140" height="140" alt="Anime Studio Tycoon">
+    <img class="start-hero" src="start-hero.png?v=63" width="140" height="140" alt="Anime Studio Tycoon">
     <h1>Anime Studio Tycoon</h1>
     <p id="start-tagline">From a one-room studio to a global anime empire</p>
     <label style="display:block;font-size:12px;font-weight:800;color:var(--plum);margin:4px 0 4px">🏢 Studio Name</label>
@@ -164,15 +164,15 @@ html.hud-v3-active #goal{display:none !important}
 
 <div class="overlay" id="whatsnew" style="display:none">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <img src="start-hero.png?v=61" alt="" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
-    <h1 style="font-size:22px;text-align:center">✨ Build 61 — Mockup Polish</h1>
+    <img src="start-hero.png?v=63" alt="" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
+    <h1 style="font-size:22px;text-align:center">✨ Build 63 — Mockup Match</h1>
     <div class="offlist" style="margin:12px 0">
-      <div><span>🌍 Premiere bonus</span><b>Horizontal mockup row — 💎 hype + ¥ box office</b></div>
-      <div><span>👥 Coach hire</span><b>One tap hires Director/Animator when you can afford</b></div>
-      <div><span>🎬 Director tip</span><b>Mockup-style score advice when you have a director</b></div>
-      <div><span>🎉 Early premieres</span><b>Celebration modal for your first 3 releases</b></div>
-      <div><span>🖼️ More posters</span><b>Expanded Romance + Sci-Fi HF art pools</b></div>
-      <div><span>✨ Modal glass</span><b>Start, offline, and daily rewards dark glass styling</b></div>
+      <div><span>🎥 Greenlight rebuilt</span><b>Carousel cards with appeal/trend bars + analytics deck</b></div>
+      <div><span>🎬 Produce polished</span><b>Pink premiere CTA, gem+yen bonus pills, gold S-rank ring</b></div>
+      <div><span>🧹 Less clutter</span><b>Cast/sequels collapsed, progress bar hidden, emoji stripped</b></div>
+      <div><span>📊 Project intel</span><b>Budget breakdown, rewards, risk assessment per pick</b></div>
+      <div><span>🎨 Genre filters</span><b>ALL + uppercase tabs like the design mockup</b></div>
+      <div><span>💬 Coach</span><b>Arrow + gift — one-tap premiere, hire, greenlight</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
   </div>
@@ -212,8 +212,8 @@ const STORE_PAYMENTS = true; // store always visible; buyReal routes web→check
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 61 · Mockup Polish";
-const ASSET_V = "61";
+const BUILD_TAG = "build 63 · Mockup Match";
+const ASSET_V = "63";
 const COACH_AVATAR = "https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg";
 const TAB_ICON_IMG = {
   produce:"icons/tabs/produce.png", quests:"icons/tabs/quests.png", staff:"icons/tabs/staff.png",
@@ -237,15 +237,80 @@ const ROLE_ICONS={director:"🎬",writer:"✒️",animator:"🎨",voice:"🎵",p
 function productionTeamHTML(){
   const order=["director","writer","animator","voice","producer"];
   const labels={director:"Director",writer:"Scriptwriter",animator:"Character Design",voice:"Music",producer:"Producer"};
-  let h=`<div class="aaa-team"><div class="aaa-team-head"><span>👥 Production Team</span><button type="button" class="aaa-team-add" data-tab="staff">+</button></div><div class="aaa-team-scroll">`;
+  let h=`<div class="aaa-team"><div class="aaa-team-head"><span>Production Team</span><button type="button" class="aaa-team-add" data-tab="staff" aria-label="Hire staff">+</button></div><div class="aaa-team-scroll">`;
   order.forEach(role=>{
     const n=(S.staff||{})[role]||0; const lv=Math.min(60,18+n*6+studioLevel());
     const rank=lv>=55?"S":lv>=45?"A":"B";
     const r=ROLES[role];
     const empty=n===0;
-    h+=`<div class="aaa-team-card aaa-rank-${rank}${empty?" empty":""}"><span class="aaa-team-rank">${rank}</span><span class="aaa-team-icon">${ROLE_ICONS[role]}</span><img class="aaa-team-avatar" src="${r.img}" alt="${labels[role]}"><div class="aaa-team-role">${labels[role]}</div><div class="aaa-team-lv">LV.${empty?"—":lv}</div></div>`;
+    h+=`<div class="aaa-team-card aaa-rank-${rank}${empty?" empty":""}"><span class="aaa-team-rank">${rank}</span><img class="aaa-team-avatar" src="${r.img}" alt="${labels[role]}"><div class="aaa-team-role">${labels[role]}</div><div class="aaa-team-lv">LV.${empty?"—":lv}</div></div>`;
   });
   return h+`</div></div>`;
+}
+const PITCH_SUMMARIES={
+  "Action":"High-octane battles and impossible odds — audiences crave the rush.",
+  "Romance":"When spring comes, a promise made under cherry blossoms will change everything.",
+  "Fantasy":"Ancient magic awakens as a young heir steps into a realm beyond imagination.",
+  "Sci-Fi":"Neon horizons and quantum secrets collide in a pulse-pounding future.",
+  "Comedy":"Chaos, snacks, and unlikely friends — laughter guaranteed every episode.",
+  "Slice of Life":"Quiet mornings, warm cafes, and the beauty found in everyday moments.",
+};
+const PITCH_TAGS={
+  "Action":["High Stakes","Rivalry","Epic Battles"],
+  "Romance":["High School","Coming of Age","Emotional"],
+  "Fantasy":["Magic Academy","Adventure","Worldbuilding"],
+  "Sci-Fi":["Cyberpunk","Mystery","Space Opera"],
+  "Comedy":["School Life","Slapstick","Found Family"],
+  "Slice of Life":["Cozy","Healing","Seasonal"],
+};
+function greenlightPitchStats(p,genre){
+  const gi=Math.max(0,GENRES.indexOf(genre));
+  const seed=(p.id*17+gi*31+p.tier*7)%100;
+  const trendBoost=genre===trendGenre()?12:0;
+  const mastery=(S.mastery[genre]||0)*2;
+  return{
+    appeal:Math.min(99,72+p.tier*4+(seed%18)+mastery),
+    trend:Math.min(99,65+p.tier*3+((seed*3)%22)+trendBoost),
+    originality:Math.min(99,68+p.tier*3+((seed*5)%20)),
+  };
+}
+function greenlightPotential(p,genre){
+  const s=greenlightPitchStats(p,genre);
+  const avg=(s.appeal+s.trend+s.originality)/3;
+  if(avg>=90) return "S";
+  if(avg>=85) return "A+";
+  if(avg>=78) return "A";
+  if(avg>=70) return "B+";
+  return "B";
+}
+function greenlightRewards(p,genre){
+  const trendBonus=genre===trendGenre()?1.35:1;
+  const mult=1+p.tier*0.12;
+  return{
+    revenue:Math.floor(p.base*2.8*mult*trendBonus),
+    profit:Math.floor(p.base*0.95*mult*trendBonus),
+    exp:Math.floor(400+p.tier*250),
+    fans:Math.floor(p.fans*2.2*trendBonus),
+  };
+}
+function greenlightRisk(p,genre){
+  const s=greenlightPitchStats(p,genre);
+  const avg=(s.appeal+s.trend+s.originality)/3;
+  if(avg>=88) return {level:"LOW",note:"Strong concept with broad appeal and loyal genre fans."};
+  if(avg>=78) return {level:"MEDIUM",note:"Solid pitch — faces competition but has breakout potential."};
+  return {level:"HIGH",note:"Niche appeal — higher risk, but a hit could redefine your studio."};
+}
+function greenlightBudgetSlices(p){
+  return[
+    {l:"Production",pct:40,c:"#fbbf24"},
+    {l:"Animation",pct:30,c:"#ec4899"},
+    {l:"Marketing",pct:15,c:"#4ade80"},
+    {l:"VFX & Music",pct:10,c:"#a78bfa"},
+    {l:"Contingency",pct:5,c:"#6b7280"},
+  ];
+}
+function greenlightStatBar(label,val){
+  return `<div class="aaa-gl-stat"><span>${label}</span><div class="aaa-gl-bar"><i style="width:${val}%"></i></div><b>${val}</b></div>`;
 }
 function staffTotal(){ let n=0; for(const k in ROLES) n+=S.staff[k]||0; return n; }
 function hypePerHour(){ return Math.floor((S.fans||0)*0.04+(S.upgrades.marketing||0)*600+activeCount()*900+powerPerTick()*360); }
@@ -1512,7 +1577,8 @@ function estimatePremiere(pr,p){
   yenGain=Math.floor(yenGain*endlessM*empireM*studioM*finalM*aaaM*legendM*jwM);
   fansGain=Math.max(1,Math.floor(fansGain*endlessM*empireM*studioM*finalM*aaaM*legendM*jwM));
   const hypeGain=Math.max(1,Math.floor((p.tier+1)*mult*2));
-  return {yen:yenGain,fans:fansGain,hype:hypeGain};
+  const gemsGain=Math.max(1,Math.floor((p.tier+1)*mult*80+stars*20));
+  return {yen:yenGain,fans:fansGain,hype:hypeGain,gems:gemsGain};
 }
 function releaseProject(slot){
   const pr=S.projects[slot]; if(!pr) return; const p=PROJECTS[pr.pid];
@@ -2179,25 +2245,7 @@ function dashboardHTML(){
   return h;
 }
 function renderProduce(){
-  const isEarly=(S.releases||0)<3;
-  let h=`<div class="aaa-tab-page${isEarly?" aaa-easy-mode":""}">`;
-  const dp=dimPowerForQuality();
-  const standings=industryStandings();
-  let boostN=0;
-  if(S.producerPass||goldenActive()||rewardedActive()||Date.now()<S.overdriveUntil) boostN=1;
-  if(!isEarly){
-    h+=`<div class="aaa-produce-strip">
-      <button type="button" class="aaa-strip-chip" data-act="studio-name">🏢 ${studioName()}</button>
-      <span class="aaa-strip-chip">Lv.${studioLevel()}</span>
-      <span class="aaa-strip-chip">🏆 #${standings.rank}</span>
-      ${boostN?`<span class="aaa-strip-chip boost">⚡ Active</span>`:""}
-      <button type="button" class="aaa-strip-link" data-tab="studio">Stats →</button>
-    </div>`;
-    const ev=currentEvent();
-    h+=`<div class="eventbar"><span class="ev-ic">${ev.ic}</span><div class="ev-meta"><b>${ev.name}</b><div class="muted">${ev.desc}</div></div><span class="qtimer">⏳ ${fmtDur(msToMidnight())}</span></div>`;
-  }
-  // (Daily quests live on the Quests tab — not duplicated here, so tapping a poster never shifts the layout.)
-  // active production lines
+  let h=`<div class="aaa-tab-page">`;
   S.projects.forEach((pr,i)=>{
     if(!pr) return;
     const p=PROJECTS[pr.pid];
@@ -2207,27 +2255,25 @@ function renderProduce(){
     const eta = done?0:Math.ceil((p.work-pr.progress)/Math.max(0.0001,powerPerTick()));
     const etaStr=done?"Ready!":(eta>=86400?Math.floor(eta/86400)+"D "+Math.floor((eta%86400)/3600)+"H":eta>=3600?Math.floor(eta/3600)+"H "+Math.floor((eta%3600)/60)+"M":eta+"s");
     const hypeH=hypePerHour();
-    const royH=Math.floor((S.catalogIncome||0)*3600);
     const rank=starRankLetter(stars), score=productionScore(stars,p,pr);
     const epN=Math.min(12,Math.max(1,Math.floor(pct/8.5)+1));
     const est=estimatePremiere(pr,p);
     const laurel=rank==="S"?" aaa-rank-laurel":"";
+    const showTitle=pr.title||p.name;
+    const jaSub=showTitle==="Sakura no Yakusoku"?"桜色の約束":"";
     h+=`<div class="panel slotpanel aaa-show-panel${done?' slot-ready':''}" id="slot-${i}" data-done="${done?'1':'0'}"><div class="aaa-show-card">
-      <div class="aaa-poster-col"><div class="aaa-poster${done?'':' aaa-tap-hint'}" ${done?'':`data-act="tapboost" data-slot="${i}"`} style="background-image:url(${pr.poster||GENRE_POSTER[pr.genre]||DEFAULT_POSTER})" title="${done?'':'Tap to boost!'}">${pr.genre===trendGenre()?'<span class="aaa-trend">🔥</span>':''}${!done&&(S.releases||0)<3?'<span class="aaa-tap-badge">Tap!</span>':''}</div></div>
+      <div class="aaa-poster-col"><div class="aaa-poster${done?'':' aaa-tap-hint'}" ${done?'':`data-act="tapboost" data-slot="${i}"`} style="background-image:url(${pr.poster||GENRE_POSTER[pr.genre]||DEFAULT_POSTER})" title="${done?'':'Tap poster to boost'}">${pr.genre===trendGenre()?'<span class="aaa-trend">🔥</span>':''}<span class="aaa-ep-badge">EP ${epN}/12</span>${jaSub?`<span class="aaa-poster-ja">${jaSub}</span>`:""}</div></div>
       <div class="aaa-meta-col">
-        <div class="aaa-ep-row"><span class="aaa-ep-badge">EP ${epN}/12</span></div>
-        <h2 class="aaa-title">${pr.title?pr.title:p.name}<button class="aaa-rename" data-act="rename-show" data-slot="${i}" title="Rename">✏️</button></h2>
-        <div class="aaa-chips">${(pr.seq||0)>1?`<span class="aaa-chip">📺 Sequel ${pr.seq}</span>`:`<span class="aaa-chip">🌸 Original</span>`}<span class="aaa-chip gold">⭐ ${pr.genre}</span>${pr.genre===trendGenre()?`<span class="aaa-chip hot">🔥 Trending</span>`:""}</div>
-        <div class="aaa-score-label">⭐ Production Score</div>
+        <h2 class="aaa-title">${showTitle}</h2>
+        <div class="aaa-chips">${(pr.seq||0)>1?`<span class="aaa-chip">Sequel ${pr.seq}</span>`:`<span class="aaa-chip">Original</span>`}<span class="aaa-chip gold">${pr.genre}</span>${pr.genre===trendGenre()?`<span class="aaa-chip hot">Trending</span>`:""}</div>
+        <div class="aaa-score-label">Production Score</div>
         <div class="aaa-score-row"><span class="aaa-score-val">${fmt(score)}</span><span class="aaa-rank-wrap${laurel}"><span class="aaa-rank aaa-rank-${rank}">${rank}</span></span></div>
-        ${!isEarly?`<div class="aaa-stat-line"><span>🎬 Budget</span><b>¥${fmt(Math.round(p.cost*pct/100))} / ¥${fmt(Math.round(p.cost*1.15))}</b></div>
-        <div class="aaa-stat-line hype"><span>📣 Hype</span><b>${fmt(S.hype)}</b><div class="aaa-mini-bar"><i style="width:${Math.min(100,S.hype/3)}%"></i></div><span class="aaa-rate">+${fmt(hypeH)}/h</span></div>`:""}
-        <div class="aaa-stat-line"><span>📅 Premiere In</span><b class="slot-eta">${etaStr}</b></div>
-        ${!isEarly&&royH>0?`<div class="aaa-stat-line subtle"><span>💰 Royalties</span><b class="aaa-rate">+¥${fmt(royH)}/h</b></div>`:""}
-        ${!isEarly&&(pr.cast&&pr.cast.length)?`<div class="aaa-stat-line"><span>🎭 Cast</span><b class="aaa-cast-names">${pr.cast.map(id=>STAR_BY_ID[id]?STAR_BY_ID[id].name.replace(' ☆',''):"").filter(Boolean).join(", ")}</b></div>`:""}
+        <div class="aaa-stat-line"><span>Budget</span><b>¥${fmt(Math.round(p.cost*pct/100))} / ¥${fmt(Math.round(p.cost*1.15))}</b></div>
+        <div class="aaa-stat-line hype"><span>Hype</span><b>${fmt(S.fans)}</b><div class="aaa-mini-bar"><i style="width:${Math.min(100,pct)}%"></i></div><span class="aaa-rate">+${fmt(hypeH)}/h</span></div>
+        <div class="aaa-stat-line"><span>Premiere In</span><b class="slot-eta">${etaStr}</b></div>
         <div class="progress aaa-progress"><i class="slot-bar" style="width:${pct}%"></i></div>
-        <div class="aaa-premiere-bonus"><span class="aaa-premiere-bonus-label">🌍 Global Premiere Bonus</span><div class="aaa-bonus-pills"><span class="aaa-bonus-pill hype">💎 ${fmt(est.hype)}</span><span class="aaa-bonus-pill gold">¥${fmt(est.yen)}</span>${!isEarly?`<span class="aaa-bonus-pill fans">+${fmt(est.fans)}</span>`:""}</div></div>
-        <div class="aaa-actions">${done?`<button class="btn-gold aaa-cta aaa-premiere-ready" data-rel="${i}">✨ 🎬 Global Premiere</button>`:(isEarly?`<button class="btn-cyan aaa-rush-main" data-rush="${i}">⚡ Rush Production</button>`:`<button class="btn-cyan" data-rush="${i}">⚡ Rush</button><button class="btn-gold" data-act="instant" data-slot="${i}">⏩ · 💎${instantCost(p,pr)}</button>`)}</div>
+        <div class="aaa-premiere-bonus"><span class="aaa-premiere-bonus-label">Global Premiere Bonus</span><div class="aaa-bonus-pills"><span class="aaa-bonus-pill gems"><img src="icons/hf/gems.png?v=${ASSET_V}" alt=""> ${fmt(est.gems||0)}</span><span class="aaa-bonus-pill gold"><img src="icons/hf/yen.png?v=${ASSET_V}" alt=""> ¥${fmt(est.yen)}</span></div></div>
+        <div class="aaa-actions">${done?`<button class="btn-gold aaa-cta aaa-premiere-ready" data-rel="${i}">▶ Global Premiere</button>`:""}</div>
       </div></div>${productionTeamHTML()}</div>`;
   });
   // greenlight picker when a slot is free
@@ -2235,42 +2281,90 @@ function renderProduce(){
   const ultraEarly=(S.releases||0)<1;
   if(empties>0){
     const selG=GENRES[_selGenre]||GENRES[0];
-    h+=`<div class="panel aaa-greenlight${ultraEarly?" aaa-greenlight-simple":""}"><div class="aaa-greenlight-head"><h2>🎬 ${ultraEarly?"Start Your First Anime":t("h_greenlight","Greenlight a Project")}</h2><div class="muted" style="font-size:12px">${ultraEarly?"Your team is ready — one tap to begin.":`${empties}/${S.slots} slots free · Trending <b>${trendGenre()}</b> for 1.5× bonus`}</div></div>
-    <button type="button" class="btn-primary aaa-quick-gl" data-act="quick-greenlight">⚡ ${ultraEarly?"Start Production":"Quick Greenlight — "+trendGenre()+" genre"}</button>`;
+    h+=`<div class="panel aaa-greenlight aaa-greenlight-cinema${ultraEarly?" aaa-greenlight-simple":""}">
+    <div class="aaa-greenlight-cinema-head">
+      <h2 class="aaa-gl-title">${ultraEarly?"START PRODUCTION":"GREENLIGHT PROJECT"}</h2>
+      ${ultraEarly?`<p class="aaa-gl-sub">Your team is ready — one tap to begin.</p>`:`<p class="aaa-gl-jp">次のヒット作を生み出そう。</p><p class="aaa-gl-sub">Choose your next anime · Trending <b>${trendGenre()}</b></p><div class="aaa-gl-slots"><span>${S.slots-empties}</span> / ${S.slots} slots</div>`}
+    </div>
+    <button type="button" class="btn-primary aaa-quick-gl" data-act="quick-greenlight">${ultraEarly?"Start Production":"Quick Greenlight — "+trendGenre()}</button>`;
     if(!ultraEarly){
-    h+=`<div class="aaa-genre-row" id="genres">`+GENRES.map((g,i)=>`<span class="chip ${i===_selGenre?'sel':''} ${g===trendGenre()?'trend':''}" data-g="${i}">${g}${g===trendGenre()?" 🔥":""}${S.mastery[g]?` L${S.mastery[g]}`:""}</span>`).join("")+`</div>`;
-    // ---- Casting (unlocks after first release) ----
+    const isEarly=(S.releases||0)<3;
+    h+=`<div class="aaa-genre-row" id="genres"><span class="chip ${_selGenre===-1?'sel':''}" data-g="-1">ALL</span>`+GENRES.map((g,i)=>`<span class="chip ${i===_selGenre?'sel':''} ${g===trendGenre()?'trend':''}" data-g="${i}">${g.toUpperCase()}</span>`).join("")+`</div>`;
     const roster=!isEarly?(S.stars||[]).map(st=>({st,t:STAR_BY_ID[st.sid]})).filter(x=>x.t):[];
-    if(roster.length){
-      _castSel=_castSel.filter(id=>{ const st=findStar(id); return st && !st.resting && starEnergy(st)>=15; });
-      const order=["Legendary","Epic","Rare","Common"];
-      roster.sort((a,b)=>order.indexOf(effRarity(a.st))-order.indexOf(effRarity(b.st)));
-      h+=`<div class="aaa-cast-row"><div class="muted" style="margin:0 0 6px;font-weight:800;font-size:11px">🎭 Cast stars <span class="pill">${_castSel.length}/${castCap()}</span></div>
-        <div class="genrepick">`+roster.map(({st,t})=>{
-          const R=STAR_RARITY[effRarity(st)]; const sel=_castSel.includes(st.sid); const tired=st.resting||starEnergy(st)<15;
-          return `<span class="chip ${sel?'sel':''}" data-cast="${st.sid}" style="border-color:${R.color};${tired?'opacity:.45':''}" title="Energy ${Math.round(starEnergy(st))}%">${sel?'✓ ':''}${t.name.replace(' ☆','')} <span class="pill" style="background:${R.color}22;color:${R.color}">L${st.level}${(st.fame||0)?' ★'+st.fame:''}</span></span>`;
-        }).join("")+`</div>
-        <div class="muted" style="margin:6px 0 0;font-size:10px">Featured stars boost rating &amp; box office.</div></div>`;
-    }
     const fr=!isEarly?franchiseList():[];
-    if(fr.length){
-      h+=`<div class="aaa-cast-row"><div class="muted" style="margin:0 0 6px;font-weight:800;font-size:11px">📺 Sequels</div>
-        <div class="genrepick">`+fr.map(f=>`<span class="chip" data-seq="${encodeURIComponent(f.base)}" data-seqg="${encodeURIComponent(f.genre)}" title="Continue the ${f.base} franchise">▶ ${f.base} ${["","","II","III","IV","V","VI"][(f.season||1)+1]||((f.season||1)+1)}</span>`).join("")+`</div></div>`;
+    if(roster.length||fr.length){
+      h+=`<details class="aaa-gl-advanced"><summary>Cast &amp; sequels</summary>`;
+      if(roster.length){
+        _castSel=_castSel.filter(id=>{ const st=findStar(id); return st && !st.resting && starEnergy(st)>=15; });
+        const order=["Legendary","Epic","Rare","Common"];
+        roster.sort((a,b)=>order.indexOf(effRarity(a.st))-order.indexOf(effRarity(b.st)));
+        h+=`<div class="aaa-cast-row"><div class="muted" style="margin:0 0 6px;font-weight:800;font-size:11px">Cast stars <span class="pill">${_castSel.length}/${castCap()}</span></div>
+          <div class="genrepick">`+roster.map(({st,t})=>{
+            const R=STAR_RARITY[effRarity(st)]; const sel=_castSel.includes(st.sid); const tired=st.resting||starEnergy(st)<15;
+            return `<span class="chip ${sel?'sel':''}" data-cast="${st.sid}" style="border-color:${R.color};${tired?'opacity:.45':''}" title="Energy ${Math.round(starEnergy(st))}%">${sel?'✓ ':''}${t.name.replace(' ☆','')} <span class="pill" style="background:${R.color}22;color:${R.color}">L${st.level}</span></span>`;
+          }).join("")+`</div></div>`;
+      }
+      if(fr.length){
+        h+=`<div class="aaa-cast-row"><div class="muted" style="margin:0 0 6px;font-weight:800;font-size:11px">Sequels</div>
+          <div class="genrepick">`+fr.map(f=>`<span class="chip" data-seq="${encodeURIComponent(f.base)}" data-seqg="${encodeURIComponent(f.genre)}" title="Continue ${f.base}">▶ ${f.base} ${["","","II","III","IV","V","VI"][(f.season||1)+1]||((f.season||1)+1)}</span>`).join("")+`</div></div>`;
+      }
+      h+=`</details>`;
     }
-    const posterPool=POSTER_POOL[selG]||[DEFAULT_POSTER];
-    const pickList=isEarly?PROJECTS.filter(p=>!projectLockInfo(p).locked).slice(0,4):PROJECTS;
-    h+=`<div class="aaa-pick-scroll${isEarly?" aaa-pick-easy":""}">`+pickList.map((p,idx)=>{
-      const lock=projectLockInfo(p); const afford=S.yen>=p.cost;
+    const pickList=_selGenre===-1
+      ?unlockedProjects().slice(0,8)
+      :(isEarly?PROJECTS.filter(p=>!projectLockInfo(p).locked).slice(0,4):unlockedProjects());
+    const validPick=pickList.find(p=>p.id===_selGlPid&&!projectLockInfo(p).locked);
+    if(!validPick) _selGlPid=(pickList.find(p=>!projectLockInfo(p).locked&&S.yen>=p.cost)||pickList.find(p=>!projectLockInfo(p).locked)||pickList[0]||{id:0}).id;
+    h+=`<div class="aaa-gl-carousel">`+pickList.map((p,idx)=>{
+      const lock=projectLockInfo(p);
+      const cardG=_selGenre===-1?GENRES[p.id%GENRES.length]:selG;
+      const posterPool=POSTER_POOL[cardG]||[DEFAULT_POSTER];
       const poster=posterPool[idx%posterPool.length];
-      return `<div class="aaa-pick-card ${lock.locked?'lock':''}">
-        <div class="aaa-pick-poster" style="background-image:url(${poster})"><span class="aaa-pick-genre">${selG}</span></div>
-        <h4>${p.name}</h4>
-        <div class="stat">¥${fmt(p.cost)} · +${fmt(p.fans)} fans</div>
-        <div class="stat">${fmt(p.work)} workload</div>
-        ${lock.locked?`<div class="stat" style="color:var(--bad)">🔒 ${lock.reason}</div>`
-          :`<button class="btn-primary" data-gl="${p.id}" ${afford?"":"disabled"}>${STR.greenlight}</button>`}
+      const stats=greenlightPitchStats(p,cardG);
+      const pot=greenlightPotential(p,cardG);
+      const trending=cardG===trendGenre();
+      const sel=p.id===_selGlPid;
+      const editor=idx===1&&!lock.locked;
+      return `<div class="aaa-gl-card${sel?' sel':''}${lock.locked?' lock':''}" data-gl-select="${p.id}" role="button" tabindex="0">
+        <div class="aaa-gl-poster" style="background-image:url(${poster})">
+          ${trending?`<span class="aaa-gl-badge trend">TRENDING ${stats.trend}</span>`:""}
+          ${editor?`<span class="aaa-gl-badge editor">EDITOR'S CHOICE</span>`:""}
+        </div>
+        <h4 class="aaa-gl-name">${p.name}</h4>
+        <div class="aaa-gl-genres">${cardG.toUpperCase()}</div>
+        ${greenlightStatBar("Audience Appeal",stats.appeal)}
+        ${greenlightStatBar("Market Trend",stats.trend)}
+        ${greenlightStatBar("Originality",stats.originality)}
+        <div class="aaa-gl-foot"><span class="aaa-gl-budget">¥${fmt(p.cost)}</span><span class="aaa-gl-potential pot-${pot.replace('+','p')}">${pot}</span></div>
+        ${lock.locked?`<div class="aaa-gl-lock">🔒 ${lock.reason}</div>`:""}
       </div>`;
     }).join("")+`</div>`;
+    const selP=PROJECTS.find(p=>p.id===_selGlPid)||pickList[0];
+    if(selP){
+      const cardG=_selGenre===-1?GENRES[selP.id%GENRES.length]:selG;
+      const stats=greenlightPitchStats(selP,cardG);
+      const rewards=greenlightRewards(selP,cardG);
+      const risk=greenlightRisk(selP,cardG);
+      const slices=greenlightBudgetSlices(selP);
+      const lock=projectLockInfo(selP);
+      const afford=S.yen>=selP.cost;
+      h+=`<div class="aaa-gl-detail">
+        <div class="aaa-gl-detail-grid">
+          <div class="aaa-gl-summary"><h5>Project Summary</h5><p>${PITCH_SUMMARIES[cardG]||PITCH_SUMMARIES["Action"]}</p><div class="aaa-gl-tags">${(PITCH_TAGS[cardG]||[]).map(t=>`<span class="aaa-gl-tag">${t}</span>`).join("")}</div></div>
+          <div class="aaa-gl-budget"><h5>Budget Allocation</h5><div class="aaa-gl-budget-total">¥${fmt(selP.cost)} Total</div><div class="aaa-gl-slices">${slices.map(s=>`<div class="aaa-gl-slice"><span class="aaa-gl-slice-dot" style="background:${s.c}"></span><span>${s.l}</span><b>${s.pct}%</b></div>`).join("")}</div></div>
+        </div>
+        <div class="aaa-gl-detail-grid">
+          <div class="aaa-gl-rewards"><h5>Estimated Rewards</h5>
+            <div class="aaa-gl-reward-row"><span>Revenue</span><b>¥${fmt(rewards.revenue)}+</b></div>
+            <div class="aaa-gl-reward-row"><span>Profit</span><b>¥${fmt(rewards.profit)}+</b></div>
+            <div class="aaa-gl-reward-row"><span>Studio EXP</span><b>+${fmt(rewards.exp)}</b></div>
+            <div class="aaa-gl-reward-row"><span>Fan Growth</span><b>+${fmt(rewards.fans)}</b></div>
+          </div>
+          <div class="aaa-gl-risk"><h5>Risk Assessment</h5><span class="aaa-gl-risk-level ${risk.level.toLowerCase()}">${risk.level}</span><p>${risk.note}</p><div class="aaa-gl-risk-stats">${greenlightStatBar("Appeal",stats.appeal)}</div></div>
+        </div>
+        <button type="button" class="btn-primary aaa-gl-confirm" data-gl="${selP.id}" ${lock.locked||!afford?"disabled":""}>${STR.greenlight} — ${selP.name}</button>
+      </div>`;
+    }
     }
     h+=`</div>`;
   }
@@ -2284,6 +2378,7 @@ function renderProduce(){
   main.innerHTML=h;
 }
 let _selGenre=0;
+let _selGlPid=null;
 let _castSel=[];   // sids the player has selected to feature on the next greenlight
 
 function staffRankFor(key){
@@ -2487,7 +2582,7 @@ function renderStore(){
 
 /* ========================= EVENTS (delegated) ========================= */
 document.addEventListener("click", e=>{
-  const t=e.target.closest("[data-tab],[data-gl],[data-hire],[data-up],[data-res],[data-camp],[data-g],[data-buy],[data-gem],[data-act],[data-rel],[data-rush],[data-scout],[data-quest],[data-week],[data-perk],[data-cast],[data-sa],[data-itemuse],[data-itembuy],[data-seq],#a-over,#a-prestige");
+  const t=e.target.closest("[data-tab],[data-gl],[data-gl-select],[data-hire],[data-up],[data-res],[data-camp],[data-g],[data-buy],[data-gem],[data-act],[data-rel],[data-rush],[data-scout],[data-quest],[data-week],[data-perk],[data-cast],[data-sa],[data-itemuse],[data-itembuy],[data-seq],#a-over,#a-prestige");
   if(!t) return;
   if(t.dataset.itemuse) return useItem(t.dataset.itemuse);
   if(t.dataset.itembuy) return buyItem(t.dataset.itembuy);
@@ -2503,11 +2598,16 @@ document.addEventListener("click", e=>{
   if(t.dataset.quest!=null) return claimQuest(+t.dataset.quest);
   if(t.dataset.week!=null) return claimWeekly(+t.dataset.week);
   if(t.dataset.act==="login-claim") return claimLoginDay();
-  if(t.dataset.g!=null){ _selGenre=+t.dataset.g; play("click"); return render(); }
+  if(t.dataset.g!=null){ _selGenre=+t.dataset.g; _selGlPid=null; play("click"); return render(); }
+  if(t.dataset.glSelect!=null){ _selGlPid=+t.dataset.glSelect; play("click"); return render(); }
   if(t.dataset.cast) return toggleCast(t.dataset.cast);
   if(t.dataset.sa) return ({rest:toggleRest,level:levelStar,promote:promoteStar,fame:investFame,fire:fireStar}[t.dataset.sa]||(()=>{}))(t.dataset.sid);
   if(t.dataset.act==="chaos-toggle") return toggleChaosMode();
-  if(t.dataset.gl!=null) return greenlight(+t.dataset.gl, GENRES[_selGenre], _castSel.slice());
+  if(t.dataset.gl!=null){
+    const pid=+t.dataset.gl;
+    const g=_selGenre===-1?GENRES[pid%GENRES.length]:(GENRES[_selGenre]||GENRES[0]);
+    return greenlight(pid,g,_castSel.slice());
+  }
   if(t.dataset.rel!=null) return releaseProject(+t.dataset.rel);
   if(t.dataset.rush!=null) return rush(+t.dataset.rush);
   if(t.dataset.hire) return hire(t.dataset.hire);
@@ -2760,21 +2860,21 @@ window.__AST_HOOK__ = {
   claimFirstReward,
 };
 </script>
-<script src="aaa-upgrade.js?v=61"></script>
-<script src="gameplay-plus.js?v=61"></script>
-<script src="gameplay-ultra.js?v=61"></script>
-<script src="gameplay-endless.js?v=61"></script>
-<script src="gameplay-empire.js?v=61"></script>
-<script src="gameplay-studio.js?v=61"></script>
-<script src="gameplay-final.js?v=61"></script>
-<script src="gameplay-aaa.js?v=61"></script>
-<script src="gameplay-legend.js?v=61"></script>
-<script src="hud-premium.js?v=61"></script>
-<script src="ui-complete.js?v=61"></script>
-<script src="gameplay-studio-rating.js?v=61"></script>
-<script src="gameplay-polish.js?v=61"></script>
-<script src="v5-render-guard.js?v=61"></script>
-<script src="hook-bridge.js?v=61"></script>
+<script src="aaa-upgrade.js?v=63"></script>
+<script src="gameplay-plus.js?v=63"></script>
+<script src="gameplay-ultra.js?v=63"></script>
+<script src="gameplay-endless.js?v=63"></script>
+<script src="gameplay-empire.js?v=63"></script>
+<script src="gameplay-studio.js?v=63"></script>
+<script src="gameplay-final.js?v=63"></script>
+<script src="gameplay-aaa.js?v=63"></script>
+<script src="gameplay-legend.js?v=63"></script>
+<script src="hud-premium.js?v=63"></script>
+<script src="ui-complete.js?v=63"></script>
+<script src="gameplay-studio-rating.js?v=63"></script>
+<script src="gameplay-polish.js?v=63"></script>
+<script src="v5-render-guard.js?v=63"></script>
+<script src="hook-bridge.js?v=63"></script>
 <!-- studio-premium.css loaded in head -->
 
 
