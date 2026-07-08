@@ -32,7 +32,7 @@
   const splash = document.createElement("div");
   splash.id = "loading-splash";
   splash.innerHTML = `
-    <img class="splash-hero" src="start-hero.png?v=67" width="96" height="96" alt="">
+    <img class="splash-hero" src="start-hero.png?v=68" width="96" height="96" alt="">
     <h1>Anime Studio Tycoon</h1>
     <div class="splash-tag">Loading your empire…</div>
     <div id="loading-bar"><i></i></div>`;
@@ -49,8 +49,10 @@
   }, 120);
 
   /* ---- Sakura particles ---- */
+  const slimHud = document.documentElement.classList.contains("hud-v3-active");
   const canvas = document.createElement("canvas");
   canvas.id = "fx-canvas";
+  if (slimHud) canvas.className = "fx-canvas-off";
   document.body.prepend(canvas);
   const ctx = canvas.getContext("2d");
   let petals = [];
@@ -97,7 +99,7 @@
     });
     requestAnimationFrame(drawPetals);
   }
-  requestAnimationFrame(drawPetals);
+  if (!slimHud) requestAnimationFrame(drawPetals);
 
   function burstParticles(n) {
     for (let i = 0; i < n; i++) {

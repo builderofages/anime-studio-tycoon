@@ -3402,3 +3402,31 @@ html.hud-v3-active #command-dock {
 html.hud-v3-active .tab .tab-lbl {
   font-size: 8px !important;
 }
+
+/* ========== BUILD 68 — Showcase First ========== */
+
+html.hud-v3-active #fx-canvas.fx-canvas-off,
+html.hud-v3-active .fx-canvas-off {
+  display: none !important;
+  pointer-events: none !important;
+}
+
+html.hud-v3-active .aaa-gl-slots-plus {
+  margin-top: 4px !important;
+  width: 24px !important;
+  height: 24px !important;
+  padding: 0 !important;
+  border-radius: 8px !important;
+  border: 1px solid rgba(255, 92, 168, 0.4) !important;
+  background: rgba(255, 92, 168, 0.15) !important;
+  color: var(--ast-pink) !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+}
+
+html.hud-v3-active .aaa-gl-slots-plus:disabled {
+  opacity: 0.35 !important;
+  cursor: not-allowed !important;
+}
