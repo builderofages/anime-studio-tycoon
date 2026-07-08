@@ -253,7 +253,7 @@
     shell.innerHTML = `
       <div class="hud-brand-row">
         <button type="button" class="hud-back-btn" id="hud-back-btn" aria-label="Back" hidden>←</button>
-        <div class="hud-avatar-wrap" id="hud-avatar-wrap"><img class="hud-avatar" src="start-hero.png?v=83" alt=""><span class="hud-lv-badge" id="hud-lv-badge">1</span></div>
+        <div class="hud-avatar-wrap" id="hud-avatar-wrap"><img class="hud-avatar" src="start-hero.png?v=84" alt=""><span class="hud-lv-badge" id="hud-lv-badge">1</span></div>
         <div class="hud-identity">
           <div class="hud-brand-line"><span class="hud-sakura-logo" aria-hidden="true">🌸</span><span class="hud-studio-name" id="hud-studio-name">Studio</span></div>
           <span class="hud-studio-rank-label" id="hud-studio-rank-label">Studio Rank C</span>
@@ -308,7 +308,7 @@
       rail.id = "pathway-rail";
       rail.className = "coach-bar";
       rail.innerHTML = `
-        <img class="coach-avatar" src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg?v=83" alt="" width="40" height="40">
+        <img class="coach-avatar" src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg?v=84" alt="" width="40" height="40">
         <div class="coach-body">
           <span class="coach-label">Coach's Tip</span>
           <p class="coach-msg" id="pathway-now"></p>
@@ -440,11 +440,13 @@
 
     const awards = document.getElementById("hud-awards");
     if (awards) awards.hidden = glView ? false : (S.releases || 0) < 8;
+    const showcaseDemo = hook.isShowcaseDemo && hook.isShowcaseDemo();
+    const demoDots = showcaseDemo && !glView;
     const mailBtn = document.getElementById("hud-mail-btn");
     if (mailBtn) {
       const today = new Date().toISOString().slice(0, 10);
       const loginPending = S.loginLastClaimDate !== today && (S.loginClaimedCount || 0) < 31;
-      mailBtn.classList.toggle("has-dot", claimableQuests(S) > 0 || loginPending);
+      mailBtn.classList.toggle("has-dot", claimableQuests(S) > 0 || loginPending || demoDots);
     }
     const lv = document.getElementById("hud-lv-badge");
     if (lv) lv.textContent = String(S.studioLevel || 1);
@@ -489,7 +491,7 @@
 
     const today = new Date().toISOString().slice(0, 10);
     const loginPending = S.loginLastClaimDate !== today && (S.loginClaimedCount || 0) < 31;
-    const rewardPending = claimableQuests(S) > 0 || loginPending;
+    const rewardPending = claimableQuests(S) > 0 || loginPending || demoDots;
     const giftDot = document.getElementById("coach-gift-dot");
     if (giftDot) giftDot.hidden = !rewardPending;
   }

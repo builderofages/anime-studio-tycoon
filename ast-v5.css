@@ -38,7 +38,7 @@ html.hud-v3-active body {
 html.hud-v3-active body {
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.35) 0%, rgba(8, 6, 15, 0.82) 100%),
-    url('bg-v4.png?v=83') center top / cover no-repeat fixed !important;
+    url('bg-v4.png?v=84') center top / cover no-repeat fixed !important;
 }
 
 html.hud-v3-active button {
@@ -496,7 +496,7 @@ html.hud-v3-active .aaa-poster[data-act="tapboost"]:active {
 html.hud-v3-active .aaa-page-hero.aaa-gacha-hero {
   background:
     linear-gradient(135deg, rgba(107, 92, 255, 0.2), rgba(255, 92, 168, 0.14)),
-    url('assets/hf/gacha-bg.png?v=83') center/cover !important;
+    url('assets/hf/gacha-bg.png?v=84') center/cover !important;
   border: 1px solid rgba(180, 140, 255, 0.28) !important;
   overflow: hidden;
 }
@@ -1983,7 +1983,7 @@ html.hud-v3-active .aaa-gl-page-head {
   padding: 14px 14px 10px !important;
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.4) 0%, rgba(8, 6, 15, 0.9) 100%),
-    url('assets/hf/greenlight-bg.png?v=83') center/cover !important;
+    url('assets/hf/greenlight-bg.png?v=84') center/cover !important;
   border-bottom: 1px solid rgba(255, 200, 69, 0.15) !important;
 }
 
@@ -3198,4 +3198,62 @@ html.hud-v3-active .aaa-show-panel .aaa-team-role {
 html.hud-v3-active .aaa-show-panel .aaa-team-role-ic {
   font-size: 9px !important;
   opacity: 0.9 !important;
+}
+
+/* ========== BUILD 84 (canonical) ========== */
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-card.sel {
+  position: relative !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-card.sel::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 4px !important;
+  border: 2px solid rgba(255, 200, 69, 0.6) !important;
+  border-radius: 14px !important;
+  pointer-events: none !important;
+  box-shadow:
+    inset 0 0 14px rgba(255, 200, 69, 0.12),
+    0 0 18px rgba(255, 200, 69, 0.2) !important;
+  z-index: 3 !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-confirm-banner:not(:disabled) {
+  background: linear-gradient(135deg, #ff5ca8 0%, #ff4d9e 42%, #ffc845 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  box-shadow:
+    0 10px 28px rgba(255, 92, 168, 0.38),
+    0 0 24px rgba(255, 200, 69, 0.18) !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-confirm-cost {
+  background: rgba(0, 0, 0, 0.28) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 8px !important;
+  padding: 2px 8px !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-mini-bar i {
+  box-shadow: 0 0 10px rgba(255, 92, 168, 0.55) !important;
+}
+
+html.hud-v3-active .coach-gift-dot {
+  box-shadow: 0 0 8px rgba(255, 59, 107, 0.65) !important;
+}
+
+html.hud-v3-active .hud-mail-btn.has-dot::after {
+  box-shadow: 0 0 8px rgba(255, 59, 107, 0.65) !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-summary {
+  border: 1px solid rgba(255, 92, 168, 0.18) !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22) !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-risk-level.medium {
+  color: #ffc845 !important;
+  text-shadow: 0 0 10px rgba(255, 200, 69, 0.35) !important;
 }
