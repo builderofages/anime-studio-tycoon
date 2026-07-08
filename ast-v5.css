@@ -34,7 +34,7 @@ html.hud-v3-active body {
 html.hud-v3-active body {
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.35) 0%, rgba(8, 6, 15, 0.82) 100%),
-    url('bg-v4.png?v=54') center top / cover no-repeat fixed !important;
+    url('bg-v4.png?v=55') center top / cover no-repeat fixed !important;
 }
 
 html.hud-v3-active button {
@@ -492,7 +492,7 @@ html.hud-v3-active .aaa-poster[data-act="tapboost"]:active {
 html.hud-v3-active .aaa-page-hero.aaa-gacha-hero {
   background:
     linear-gradient(135deg, rgba(107, 92, 255, 0.2), rgba(255, 92, 168, 0.14)),
-    url('assets/hf/gacha-bg.png?v=54') center/cover !important;
+    url('assets/hf/gacha-bg.png?v=55') center/cover !important;
   border: 1px solid rgba(180, 140, 255, 0.28) !important;
   overflow: hidden;
 }
@@ -1473,4 +1473,155 @@ html.hud-v3-active #btn-start {
   padding: 16px !important;
   box-shadow: 0 12px 36px rgba(255, 92, 168, 0.45) !important;
   letter-spacing: 0.01em !important;
+}
+
+/* ========== BUILD 55 — Fix All ========== */
+
+/* Kill gameplay-plus DOM clutter if it ever injects */
+html.hud-v3-active #quick-bar,
+html.hud-v3-active #daily-goals-panel,
+html.hud-v3-active #rival-panel,
+html.hud-v3-active .prod-stage,
+html.hud-v3-active .pity-meter,
+html.hud-v3-active .collection-bar,
+html.hud-v3-active .merch-panel,
+html.hud-v3-active .trend-forecast {
+  display: none !important;
+}
+
+/* Easy greenlight — bigger pick cards */
+html.hud-v3-active .aaa-pick-easy .aaa-pick-card {
+  flex: 0 0 160px !important;
+}
+
+html.hud-v3-active .aaa-pick-easy .aaa-pick-poster {
+  height: 120px !important;
+}
+
+/* Tab dock — icon-only, mockup clean */
+html.hud-v3-active #command-dock {
+  padding: 6px 8px calc(6px + var(--safe-b, 0px)) !important;
+  background: var(--ast-glass) !important;
+  backdrop-filter: blur(18px) saturate(1.3) !important;
+  border-top: 1px solid rgba(255, 92, 168, 0.2) !important;
+  box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.4) !important;
+}
+
+html.hud-v3-active #tabs {
+  display: flex !important;
+  gap: 4px !important;
+  justify-content: space-around !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+
+html.hud-v3-active #tabs .tab {
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+  max-width: 56px !important;
+  padding: 6px 4px !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 12px !important;
+  color: var(--ast-muted) !important;
+}
+
+html.hud-v3-active #tabs .tab.active {
+  background: rgba(255, 92, 168, 0.18) !important;
+  color: var(--ast-pink) !important;
+  box-shadow: 0 0 16px rgba(255, 92, 168, 0.2) !important;
+}
+
+html.hud-v3-active #tabs .tab .tab-ic {
+  width: 24px !important;
+  height: 24px !important;
+  display: block !important;
+  margin: 0 auto 2px !important;
+  object-fit: contain !important;
+}
+
+html.hud-v3-active #tabs .tab-lbl {
+  display: none !important;
+}
+
+html.hud-v3-active #tabs .tab .tab-dot {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ast-pink);
+  box-shadow: 0 0 8px rgba(255, 92, 168, 0.6);
+}
+
+/* Staff tab — full-width hire rows */
+html.hud-v3-active .aaa-staff-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  width: 100% !important;
+}
+
+html.hud-v3-active .aaa-staff-row {
+  display: grid !important;
+  grid-template-columns: 56px 1fr auto !important;
+  gap: 12px !important;
+  align-items: center !important;
+  width: 100% !important;
+  padding: 12px 14px !important;
+  border-radius: 16px !important;
+  background: var(--ast-glass) !important;
+  border: 1px solid var(--ast-border-soft) !important;
+}
+
+html.hud-v3-active .aaa-staff-row .aaa-staff-hire {
+  min-width: 96px !important;
+  white-space: nowrap !important;
+}
+
+/* Page heroes — consistent */
+html.hud-v3-active .aaa-page-hero {
+  padding: 14px 16px !important;
+  border-radius: 16px !important;
+  background: linear-gradient(135deg, rgba(255, 92, 168, 0.08), rgba(180, 140, 255, 0.06)) !important;
+  border: 1px solid var(--ast-border-soft) !important;
+}
+
+html.hud-v3-active .aaa-page-hero h2 {
+  font-size: 18px !important;
+  font-weight: 900 !important;
+  margin: 0 0 4px !important;
+  color: var(--ast-text) !important;
+}
+
+html.hud-v3-active .aaa-page-hero p {
+  font-size: 11px !important;
+  margin: 0 !important;
+  color: var(--ast-muted) !important;
+}
+
+/* Settings drawer build tag */
+html.hud-v3-active #hud-drawer-slot #buildtag {
+  display: block !important;
+  font-size: 10px !important;
+  color: var(--ast-muted) !important;
+  margin-top: 8px !important;
+  text-align: center !important;
+}
+
+/* Panel base — all tabs */
+html.hud-v3-active .aaa-tab-page .panel,
+html.hud-v3-active .aaa-greenlight {
+  background: var(--ast-glass) !important;
+  border: 1px solid var(--ast-border-soft) !important;
+  border-radius: 16px !important;
+  padding: 12px 14px !important;
+  box-shadow: none !important;
+}
+
+html.hud-v3-active #main {
+  padding: 0 var(--ast-gutter) 8px !important;
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch !important;
 }

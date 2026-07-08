@@ -412,6 +412,10 @@
       origRender();
       const S = hook.getState();
       applySettings(S);
+      if (document.documentElement.classList.contains("hud-v3-active")) {
+        updateTrendForecast(S, hook);
+        return;
+      }
       updateTrendForecast(S, hook);
 
       const main = document.getElementById("main");

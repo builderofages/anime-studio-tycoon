@@ -47,12 +47,27 @@
     const ready = readySlot(S, hook);
     if (ready >= 0) {
       return {
-        message: "Production ready — premiere now",
+        message: "Production ready — hit Global Premiere!",
         tab: "produce",
         cta: "Premiere",
         urgent: true,
         action: { type: "tab", tab: "produce" },
       };
+    }
+    if ((S.releases || 0) < 5 && activeCount(S) > 0) {
+      const pr = (S.projects || []).find(Boolean);
+      if (pr) {
+        const p = hook.getProject(pr.pid);
+        if (p && pr.progress < p.work) {
+          return {
+            message: "Tap the poster to boost speed — or wait for your team",
+            tab: "produce",
+            cta: "Boost",
+            urgent: false,
+            action: { type: "tab", tab: "produce" },
+          };
+        }
+      }
     }
     if ((S.studioStars || 1) < 3 && (S.releases || 0) >= 1 && (S.releases || 0) < 15) {
       return {
@@ -155,7 +170,7 @@
     shell.innerHTML = `
       <div class="hud-top">
         <button type="button" class="hud-menu-btn" id="hud-menu-btn" aria-label="Menu">☰</button>
-        <div class="hud-avatar-wrap"><img class="hud-avatar" src="start-hero.png?v=54" alt=""><span class="hud-lv-badge" id="hud-lv-badge">1</span></div>
+        <div class="hud-avatar-wrap"><img class="hud-avatar" src="start-hero.png?v=55" alt=""><span class="hud-lv-badge" id="hud-lv-badge">1</span></div>
         <div class="hud-identity">
           <span class="hud-studio-name" id="hud-studio-name">Studio</span>
           <div id="hud-studio-rating" class="hud-rating-chip" title="Studio rating"></div>
@@ -208,7 +223,7 @@
       rail.id = "pathway-rail";
       rail.className = "coach-bar";
       rail.innerHTML = `
-        <img class="coach-avatar" src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg?v=54" alt="" width="40" height="40">
+        <img class="coach-avatar" src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg?v=55" alt="" width="40" height="40">
         <div class="coach-body">
           <span class="coach-label">Coach's Tip</span>
           <p class="coach-msg" id="pathway-now"></p>
