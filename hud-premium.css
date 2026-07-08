@@ -51,8 +51,15 @@ html.hud-v3-active #app {
     "dock";
   height: 100%;
   min-height: 0;
+  max-height: 100vh;
+  max-height: -webkit-fill-available;
   background: var(--ui-bg);
   box-sizing: border-box;
+}
+@supports (height: 100dvh) {
+  html.hud-v3-active #app {
+    max-height: 100dvh;
+  }
 }
 
 html.hud-v3-active #hud-shell { grid-area: hud; }
@@ -726,6 +733,7 @@ html.hud-v3-active #tabs {
 html.hud-v3-active #tabs::-webkit-scrollbar { display: none; }
 
 html.hud-v3-active .tab {
+  touch-action: manipulation;
   flex: 1 1 0 !important;
   min-width: 44px !important;
   min-height: 0 !important;

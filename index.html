@@ -23,7 +23,7 @@
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icons/icon-512.png">
 <!-- Legacy gameplay-*.css disabled — aaa-ui + game-skin + hud-premium own chrome -->
-<link rel="stylesheet" href="hud-premium.css?v=96">
+<link rel="stylesheet" href="hud-premium.css?v=97">
 <!-- ui-complete.css disabled — v5 uses aaa-tab-page heroes -->
 <!-- gameplay-studio-rating.css disabled — ast-v5 authority -->
 <!-- studio-premium.css disabled — ast-v5 authority -->
@@ -31,8 +31,8 @@
 <!-- game-skin.css disabled — fought ast-v5 (animation:none, flat panels) -->
 <!-- hf-design.css disabled — ast-v5 authority -->
 <!-- aaa-ui.css disabled — ast-v5 authority -->
-<link rel="stylesheet" href="legacy-fx.css?v=96">
-<link rel="stylesheet" href="ast-v5.css?v=96">
+<link rel="stylesheet" href="legacy-fx.css?v=97">
+<link rel="stylesheet" href="ast-v5.css?v=97">
 <script>document.documentElement.classList.add("premium-hud","hud-v3-active")</script>
 <meta name="theme-color" content="#08050f">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -59,11 +59,13 @@
 .progress i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--sakura),var(--gold));transition:width .2s}
 @media (prefers-reduced-motion: reduce){ .progress i{transition:none} }
 
-/* Safe areas */
+/* Safe areas + iOS viewport (100vh fallback, 100dvh when supported) */
 :root{ --safe-t:env(safe-area-inset-top,0px); --safe-b:env(safe-area-inset-bottom,0px);
        --safe-l:env(safe-area-inset-left,0px); --safe-r:env(safe-area-inset-right,0px); }
-@supports(height:100dvh){ html,body{height:100dvh} }
-#app{padding-left:var(--safe-l);padding-right:var(--safe-r)}
+html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available}
+@supports(height:100dvh){ html,body{height:100dvh;min-height:100dvh} }
+#app{padding-left:var(--safe-l);padding-right:var(--safe-r);height:100%;min-height:0}
+@supports(height:100dvh){ #app{height:100dvh;max-height:100dvh} }
 
 .asd-topbar,.asd-mpanel,#asd-p-status,#asd-p-menu{display:none !important}
 #main{min-height:0 !important}
@@ -75,10 +77,10 @@
 <div id="app">
   <div id="top">
     <div id="studio-rank"><span>🎬</span><span class="rank-tier">Garage Studio</span></div>
-    <div class="res yen"><img src="icons/hf/yen.png?v=96" alt="Yen"><span><span class="v" id="r-yen">0</span> <small>¥</small></span></div>
-    <div class="res fans"><img src="icons/hf/fans.png?v=96" alt="Fans"><span class="v" id="r-fans">0</span></div>
-    <div class="res hype"><img src="icons/hf/hype.png?v=96" alt="Hype"><span class="v" id="r-hype">0</span></div>
-    <div class="res gems"><img src="icons/hf/gems.png?v=96" alt="Gems"><span class="v" id="r-gems">0</span></div>
+    <div class="res yen"><img src="icons/hf/yen.png?v=97" alt="Yen"><span><span class="v" id="r-yen">0</span> <small>¥</small></span></div>
+    <div class="res fans"><img src="icons/hf/fans.png?v=97" alt="Fans"><span class="v" id="r-fans">0</span></div>
+    <div class="res hype"><img src="icons/hf/hype.png?v=97" alt="Hype"><span class="v" id="r-hype">0</span></div>
+    <div class="res gems"><img src="icons/hf/gems.png?v=97" alt="Gems"><span class="v" id="r-gems">0</span></div>
     <div id="trendbar"><span class="spark">📈</span> Trending: <b id="trend">Action</b></div>
   </div>
   <div id="goal"><span id="goal-txt">🎯 Reach 50 Fans for Web Series</span><div class="bar"><i id="goal-bar" style="width:0%"></i></div></div>
@@ -90,7 +92,7 @@
     <button class="btn-ghost" id="btn-mute">🔊 Sound: On</button>
     <button class="btn-ghost" id="btn-save" style="display:none">💾 Save</button>
     <button class="btn-ghost" id="btn-reset">↺ Reset</button>
-  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 96 · Polish</span></div>
+  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 97 · Mobile</span></div>
   <div id="toasts"></div>
   <div id="pwa-install-banner" class="aaa-pwa-install-banner" hidden>
     <div class="aaa-pwa-install-inner">
@@ -107,7 +109,7 @@
 
 <div class="overlay" id="start" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="start-title">
   <div class="card-modal">
-    <img class="start-hero" src="start-hero.png?v=96" width="140" height="140" alt="Anime Studio Tycoon logo">
+    <img class="start-hero" src="start-hero.png?v=97" width="140" height="140" alt="Anime Studio Tycoon logo">
     <h1 id="start-title">Anime Studio Tycoon</h1>
     <p id="start-tagline">From a one-room studio to a global anime empire</p>
     <label style="display:block;font-size:12px;font-weight:800;color:var(--plum);margin:4px 0 4px">🏢 Studio Name</label>
@@ -330,15 +332,14 @@
 
 <div class="overlay" id="whatsnew" style="display:none" role="dialog" aria-modal="true" aria-labelledby="whatsnew-title">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <img src="start-hero.png?v=96" alt="Anime Studio Tycoon logo" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
-    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 96 — Return Hub</h1>
+    <img src="start-hero.png?v=97" alt="Anime Studio Tycoon logo" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
+    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 97 — Mobile</h1>
     <div class="offlist whatsnew-list" style="margin:12px 0">
-      <div><span>📬 Return hub</span><b>One modal on boot — welcome back, offline earnings, daily claim, what's new &amp; unlock teasers batched together</b></div>
-      <div><span>🎪 Festival coach</span><b>Pending invites open the decision modal directly — coach CTA and HUD badge included</b></div>
-      <div><span>♿ Decision buttons</span><b>Yes/No choices are 44px tall with gold focus rings</b></div>
-      <div><span>🔓 Early unlocks</span><b>Coach previews the next tab unlock during releases 0–1</b></div>
-      <div><span>🎨 Mockup fidelity</span><b>HUD sakura + awards, produce chips/team borders, GL carousel &amp; banner — ~92% ref match</b></div>
-      <div><span>📱 Tab dock</span><b>Compact icon-only mode on narrow screens; haptic micro-bump on tab switch</b></div>
+      <div><span>📱 iOS Safari</span><b>Audio unlock on first tap, 100dvh dock fix, no double-tap zoom on CTAs</b></div>
+      <div><span>⚡ Performance</span><b>Heavy layers (final/aaa/legend) defer until release 3 or 50 fans</b></div>
+      <div><span>🧪 Playtest sim</span><b>Automated honest-flow VM sim in CI — hire → greenlight → premiere</b></div>
+      <div><span>🎬 Produce/GL</span><b>Film grain, seat-row stage, coach pink glass, goal ticks — ~95% ref</b></div>
+      <div><span>👋 Return hub</span><b>One modal on boot — offline, daily, news, unlock teasers batched</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
   </div>
@@ -394,8 +395,8 @@ const STORE_PAYMENTS = true; // store always visible; buyReal routes web→check
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 96 · Polish";
-const ASSET_V = "96";
+const BUILD_TAG = "build 97 · Mobile";
+const ASSET_V = "97";
 const OFFLINE_PREVIEW_CAP = 4*3600; // "while away" preview when return is under 4h
 const SHARE_PLAY_URL = "https://anime-studio-tycoon.vercel.app/play";
 const PITY_EPIC = 25;
@@ -2070,6 +2071,23 @@ function resumeAudioCtx(){
   if(ctx.state==="suspended") ctx.resume().catch(()=>{});
   return ctx;
 }
+let _audioGestureBound=false;
+function bindAudioGestureUnlock(){
+  if(_audioGestureBound) return;
+  _audioGestureBound=true;
+  const unlock=()=>{
+    resumeAudioCtx();
+    try{ if(bgm&&S&&!S.muted) bgm.play().catch(()=>{}); }catch(e){}
+    document.removeEventListener("touchstart",unlock,true);
+    document.removeEventListener("touchend",unlock,true);
+    document.removeEventListener("pointerdown",unlock,true);
+    document.removeEventListener("click",unlock,true);
+  };
+  document.addEventListener("touchstart",unlock,{capture:true,passive:true});
+  document.addEventListener("touchend",unlock,{capture:true,passive:true});
+  document.addEventListener("pointerdown",unlock,{capture:true,passive:true});
+  document.addEventListener("click",unlock,true);
+}
 function sfxMasterVol(){ return (S.settings&&S.settings.sfxVol!=null)?S.settings.sfxVol:0.5; }
 function synthTone(ctx,t0,freq,dur,type,peak,vol){
   const o=ctx.createOscillator(), g=ctx.createGain();
@@ -2168,6 +2186,7 @@ function initAudio(){
   sfx.click=new Audio("https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_062745_f345d8e7-d3ee-47c5-b9c5-2474f060ee3d.mp3");
   sfx.reward=new Audio("https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_062746_9941319d-2b65-406d-a9d3-bb1010fb5616.mp3");
   applyAudioSettings();
+  bindAudioGestureUnlock();
 }
 function applyAudioSettings(){
   const mv=(S.settings&&S.settings.musicVol!=null)?S.settings.musicVol:0.35;
@@ -5123,6 +5142,7 @@ function begin(forceDemo){
   requestAnimationFrame(frame);
 }
 const loaded=load(); if(!loaded) S=freshState();
+bindAudioGestureUnlock();
 if(isDemoMode()) S._demoMode=true;
 else if(S._bootstrapped||((S.yen||0)>5000000&&(S.releases||0)<3)) S._demoMode=true;
 // Web purchase delivery: production uses signed ?pt= tokens (api/grant/redeem). Dev/localhost keeps legacy ?grant=.
@@ -5308,22 +5328,20 @@ window.__AST_HOOK__ = {
   pendingUnlockTeasers,
 };
 </script>
-<script src="aaa-upgrade.js?v=96"></script>
-<script src="v5-slim-gate.js?v=96"></script>
-<script src="gameplay-plus.js?v=96"></script>
-<script src="gameplay-ultra.js?v=96"></script>
-<script src="gameplay-endless.js?v=96"></script>
-<script src="gameplay-empire.js?v=96"></script>
-<script src="gameplay-studio.js?v=96"></script>
-<script src="gameplay-final.js?v=96"></script>
-<script src="gameplay-aaa.js?v=96"></script>
-<script src="gameplay-legend.js?v=96"></script>
-<script src="hud-premium.js?v=96"></script>
-<script src="ui-complete.js?v=96"></script>
-<script src="gameplay-studio-rating.js?v=96"></script>
-<script src="gameplay-polish.js?v=96"></script>
-<script src="hook-bridge.js?v=96"></script>
-<script src="v5-render-guard.js?v=96"></script>
+<script src="aaa-upgrade.js?v=97"></script>
+<script src="v5-slim-gate.js?v=97"></script>
+<script src="gameplay-plus.js?v=97"></script>
+<script src="gameplay-ultra.js?v=97"></script>
+<script src="gameplay-endless.js?v=97"></script>
+<script src="gameplay-empire.js?v=97"></script>
+<script src="gameplay-studio.js?v=97"></script>
+<!-- gameplay-final/aaa/legend deferred by v5-slim-gate.js until releases>=3 or totalFansEver>=50 -->
+<script src="hud-premium.js?v=97"></script>
+<script src="ui-complete.js?v=97"></script>
+<script src="gameplay-studio-rating.js?v=97"></script>
+<script src="gameplay-polish.js?v=97"></script>
+<script src="hook-bridge.js?v=97"></script>
+<script src="v5-render-guard.js?v=97"></script>
 <!-- studio-premium.css loaded in head -->
 
 

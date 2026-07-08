@@ -4333,5 +4333,90 @@ html.hud-v3-active .aaa-gl-page .aaa-gl-card:not(.sel) { transform: scale(0.86) 
 html.hud-v3-active .aaa-gl-page .aaa-gl-card.sel { transform: scale(1.08) !important; opacity: 1 !important; filter: none !important; z-index: 3 !important; }
 html.hud-v3-active .aaa-gl-page .aaa-gl-confirm-banner:not(:disabled) { background: linear-gradient(90deg, #ff5ca8 0%, #ff5a9e 24%, #ff7a6e 42%, #ffab4a 68%, #ffc845 88%, #ffe08a 100%) !important; border: 1px solid rgba(255, 255, 255, 0.16) !important; color: #fff !important; text-shadow: 0 1px 10px rgba(72, 18, 38, 0.38) !important; box-shadow: 0 10px 32px rgba(255, 92, 168, 0.42), 0 0 28px rgba(255, 200, 69, 0.28) !important; }
 html.hud-v3-active .aaa-gl-page .aaa-gl-confirm-cost { background: rgba(0, 0, 0, 0.32) !important; border: 1px solid rgba(255, 255, 255, 0.24) !important; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08) !important; }
+/* BUILD 97 — iOS Safari / mobile hardening */
+html.hud-v3-active,
+html.hud-v3-active body {
+  height: 100% !important;
+  min-height: 100vh !important;
+  min-height: -webkit-fill-available !important;
+}
+@supports (height: 100dvh) {
+  html.hud-v3-active,
+  html.hud-v3-active body {
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+  }
+}
+html.hud-v3-active #app {
+  height: 100% !important;
+  min-height: 0 !important;
+}
+@supports (height: 100dvh) {
+  html.hud-v3-active #app {
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+  }
+}
+html.hud-v3-active button,
+html.hud-v3-active .tab,
+html.hud-v3-active .coach-cta,
+html.hud-v3-active .coach-gift,
+html.hud-v3-active .coach-dismiss,
+html.hud-v3-active .aaa-gl-card,
+html.hud-v3-active .aaa-gl-confirm-banner,
+html.hud-v3-active .aaa-decision-btn,
+html.hud-v3-active .start-cta-group button,
+html.hud-v3-active .btn-primary,
+html.hud-v3-active .btn-gold,
+html.hud-v3-active .btn-cyan,
+html.hud-v3-active .chip,
+html.hud-v3-active [data-act] {
+  touch-action: manipulation !important;
+}
+html.hud-v3-active .aaa-return-hub-overlay {
+  padding: calc(var(--safe-t, 0px) + 10px) calc(var(--safe-r, 0px) + 10px) calc(var(--safe-b, 0px) + 10px) calc(var(--safe-l, 0px) + 10px) !important;
+  box-sizing: border-box !important;
+}
+html.hud-v3-active .aaa-return-hub-modal {
+  max-height: min(calc(100vh - var(--safe-t, 0px) - var(--safe-b, 0px) - 24px), 640px) !important;
+  padding-bottom: calc(8px + var(--safe-b, 0px)) !important;
+}
+@supports (height: 100dvh) {
+  html.hud-v3-active .aaa-return-hub-modal {
+    max-height: min(calc(100dvh - var(--safe-t, 0px) - var(--safe-b, 0px) - 24px), 640px) !important;
+  }
+}
+html.hud-v3-active #btn-return-hub-close {
+  margin-bottom: var(--safe-b, 0px) !important;
+}
+html.hud-v3-active .aaa-gl-page .aaa-gl-carousel {
+  -webkit-overflow-scrolling: touch !important;
+  overscroll-behavior-x: contain !important;
+}
+@media (max-width: 720px) {
+  html.hud-v3-active .aaa-gl-page .aaa-gl-confirm-banner {
+    bottom: calc(var(--safe-b, 0px) + 8px) !important;
+  }
+  html.hud-v3-active .aaa-gl-page .aaa-gl-detail {
+    padding-bottom: calc(var(--safe-b, 0px) + 72px) !important;
+  }
+}
+/* BUILD 97 — Mobile tab dock + safe-area (icon-only narrow, haptic bump) */
 @media (max-width: 599px) { html.hud-v3-active { --ast-dock: 50px !important; } html.hud-v3-active #command-dock { --ui-dock-h: 50px !important; padding: 2px 4px calc(var(--safe-b, 0px) + 2px) !important; } html.hud-v3-active .tab .tab-lbl { display: none !important; } html.hud-v3-active .tab { gap: 0 !important; padding: 6px 2px calc(var(--safe-b, 0px) + 4px) !important; } html.hud-v3-active .tab .ic img.tab-ic { width: 26px !important; height: 26px !important; } }
 @media (min-width: 600px) { html.hud-v3-active .tab .tab-lbl { display: block !important; } }
+
+/* BUILD 97 — produce/GL polish → 95% mockup fidelity */
+html.hud-v3-active .aaa-show-panel .aaa-poster::before { content:""!important; position:absolute!important; inset:0!important; border-radius:inherit!important; opacity:.2!important; mix-blend-mode:overlay!important; pointer-events:none!important; z-index:2!important; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.52'/%3E%3C/svg%3E")!important; background-size:160px 160px!important; }
+html.hud-v3-active .aaa-show-panel .aaa-poster::after { background:radial-gradient(ellipse 94% 90% at 50% 46%,transparent 44%,rgba(4,2,10,.68) 100%),linear-gradient(180deg,rgba(8,6,15,.05) 0%,rgba(8,6,15,.15) 45%,rgba(8,6,15,.82) 100%)!important; }
+html.hud-v3-active .aaa-show-panel .aaa-hero-block { position:relative!important; }
+html.hud-v3-active .aaa-show-panel .aaa-hero-block::after { content:""!important; position:absolute!important; inset:0!important; border-radius:inherit!important; pointer-events:none!important; z-index:6!important; background:radial-gradient(ellipse 90% 84% at 50% 40%,transparent 46%,rgba(2,1,8,.52) 100%)!important; }
+html.hud-v3-active .aaa-gl-page .aaa-gl-carousel-stage { padding-bottom:22px!important; background:repeating-radial-gradient(ellipse 10px 6px at 10px calc(100% - 3px),rgba(6,3,12,.92) 0 8px,transparent 8px 20px),linear-gradient(180deg,transparent 68%,rgba(6,3,12,.42) 84%,rgba(6,3,12,.78) 100%),linear-gradient(180deg,rgba(36,8,18,.72),rgba(10,7,18,.94)),radial-gradient(ellipse 85% 55% at 50% 0%,rgba(160,28,55,.38),transparent 68%)!important; }
+html.hud-v3-active .aaa-gl-page .aaa-gl-carousel-stage .aaa-gl-carousel::after { content:""!important; position:absolute!important; left:10px!important; right:10px!important; bottom:-12px!important; height:14px!important; pointer-events:none!important; z-index:1!important; opacity:.9!important; border-radius:0 0 12px 12px!important; background:repeating-linear-gradient(90deg,transparent 0 5px,rgba(10,5,16,.82) 5px 14px,transparent 14px 19px),linear-gradient(180deg,rgba(16,8,20,.45),rgba(6,3,12,.95))!important; -webkit-mask-image:linear-gradient(180deg,transparent,#000 42%)!important; mask-image:linear-gradient(180deg,transparent,#000 42%)!important; }
+html.hud-v3-active #pathway-rail.coach-bar { margin:6px var(--ast-gutter) 0!important; padding:7px 10px!important; background:linear-gradient(135deg,rgba(255,92,168,.14),rgba(18,14,32,.72))!important; backdrop-filter:blur(12px) saturate(1.15)!important; -webkit-backdrop-filter:blur(12px) saturate(1.15)!important; border:1px solid rgba(255,120,180,.18)!important; border-bottom:1px solid rgba(255,120,180,.18)!important; border-radius:14px!important; box-shadow:0 0 24px rgba(255,92,168,.15),0 4px 16px rgba(0,0,0,.28)!important; }
+html.hud-v3-active #goal .bar { position:relative!important; }
+html.hud-v3-active #goal .bar::before { content:""!important; position:absolute!important; inset:0!important; pointer-events:none!important; z-index:2!important; background-image:linear-gradient(to bottom,transparent 12%,var(--ast-gold) 12%,var(--ast-gold) 88%,transparent 88%),linear-gradient(to bottom,transparent 12%,var(--ast-gold) 12%,var(--ast-gold) 88%,transparent 88%),linear-gradient(to bottom,transparent 12%,var(--ast-gold) 12%,var(--ast-gold) 88%,transparent 88%)!important; background-size:2px 100%,2px 100%,2px 100%!important; background-position:10% 0,50% 0,calc(100% - 1px) 0!important; background-repeat:no-repeat!important; opacity:.92!important; }
+html.hud-v3-active #goal .bar i,html.hud-v3-active #goal #goal-bar { position:relative!important; z-index:1!important; }
+html.hud-v3-active #loading-splash { background:linear-gradient(180deg,rgba(12,10,24,.42) 0%,rgba(12,10,24,.9) 100%),url("bg-v4.png?v=97") center/cover no-repeat!important; }
+html.hud-v3-active #loading-splash h1 { background:linear-gradient(135deg,var(--ast-text),var(--ast-pink))!important; -webkit-background-clip:text!important; background-clip:text!important; color:transparent!important; }
+html.hud-v3-active .splash-hero { width:112px!important; height:112px!important; border-radius:28px!important; object-fit:cover!important; box-shadow:0 12px 40px rgba(255,92,168,.35),0 0 0 2px rgba(255,200,69,.28)!important; }
+html.hud-v3-active #loading-bar { width:220px!important; background:rgba(255,255,255,.06)!important; border:1px solid rgba(255,120,180,.18)!important; }

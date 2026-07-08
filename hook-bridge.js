@@ -42,5 +42,11 @@
     try { h.render(); } catch (e) { console.warn("hook-bridge render", e); }
   }
 
+  window.__AST_REBIND__ = function () {
+    const h = window.__AST_HOOK__;
+    if (h) h.__globalsRebound = false;
+    rebind();
+  };
+
   rebind();
 })();

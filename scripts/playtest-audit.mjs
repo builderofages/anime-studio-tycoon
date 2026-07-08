@@ -3,7 +3,7 @@
  * Honest-flow static audit — verifies core play hooks exist and overlay modals are wired.
  * Run: node scripts/playtest-audit.mjs
  */
-import { readFileSync } from "fs";
+import { existsSync, readFileSync } from "fs";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 
@@ -52,6 +52,8 @@ const HONEST_FLOW_FUNCTIONS = [
   "tabAccessible",
   "releaseProject",
   "showOfflineModal",
+  "maybeShowReturnHub",
+  "closeReturnHub",
   "maybeDecision",
   "queueStudioUnlockModal",
   "queueStarsUnlockModal",
@@ -74,6 +76,31 @@ for (const fn of HONEST_FLOW_FUNCTIONS) {
     html.includes(`${fn} = function`);
   assert(inHtml, `honest-flow: ${fn}`, `not defined in index.html`);
 }
+
+/** Mobile audio + return-hub boot batching. */
+const MOBILE_AUDIO_FUNCTIONS = ["resumeAudioCtx", "playSynth", "play"];
+for (const fn of MOBILE_AUDIO_FUNCTIONS) {
+  assert(
+    html.includes(`function ${fn}`) || html.includes(`function ${fn}(`),
+    `mobile-audio: ${fn}`,
+    `not defined in index.html`
+  );
+}
+assert(html.includes("SYNTH_SFX_KEYS"), "synth sfx registry");
+assert(html.includes('"tab-switch"'), "tab-switch synth profile");
+assert(html.includes('id="return-hub"'), "return-hub overlay in DOM");
+assert(
+  html.includes("maybeShowReturnHub({returnSec,returnR,dr,had})"),
+  "return-hub wired in boot flow"
+);
+assert(
+  bundle.includes('getElementById("return-hub")'),
+  "return-hub getElementById reference"
+);
+assert(
+  html.includes("celebrateCollect") && html.includes('"return-hub"'),
+  "return-hub collect celebration path"
+);
 
 assert(
   html.includes('featureUnlocked("studio")&&S.slots<MAX_SLOTS'),
@@ -110,6 +137,35 @@ for (const dynId of ["starter", "guided-tutorial", "aaa-achieve-pop"]) {
     `dynamic overlay wired: ${dynId}`
   );
 }
+
+/** Honest bootstrap + save schema anchors (complemented by playtest-sim.mjs vm run). */
+const SAVE_SCHEMA_KEYS = [
+  "yen:1500",
+  "releases:0",
+  "slots:1",
+  "staff:{ animator:0",
+  "projects:[null]",
+  "_guidedFresh:false",
+  "catalogIncome:0",
+];
+for (const key of SAVE_SCHEMA_KEYS) {
+  assert(html.includes(key), `honest save schema: ${key.split(":")[0]}`);
+}
+
+const UNLOCK_SNIPPETS = [
+  'studio:  { test:()=>(S.releases||0)>=1',
+  'stars:   { test:()=>(S.releases||0)>=2',
+  'market:  { test:()=>(S.fans||0)>=50',
+  'research:{ test:()=>(S.totalFansEver||0)>=120',
+  'chaos:   { test:()=>(S.releases||0)>=10',
+];
+for (const snippet of UNLOCK_SNIPPETS) {
+  assert(html.includes(snippet), `unlock order: ${snippet.split(":")[0].trim()}`);
+}
+
+assert(html.includes("tapBoost(slot)"), "tap boost production hook");
+assert(html.includes("if((S.releases||0)<1) amt=Math.min"), "first-release tap floor");
+assert(existsSync(join(root, "scripts/playtest-sim.mjs")), "playtest sim script present");
 
 console.log(`\n${passed} passed, ${failed} failed`);
 process.exit(failed > 0 ? 1 : 0);
