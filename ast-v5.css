@@ -38,7 +38,7 @@ html.hud-v3-active body {
 html.hud-v3-active body {
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.35) 0%, rgba(8, 6, 15, 0.82) 100%),
-    url('bg-v4.png?v=78') center top / cover no-repeat fixed !important;
+    url('bg-v4.png?v=79') center top / cover no-repeat fixed !important;
 }
 
 html.hud-v3-active button {
@@ -496,7 +496,7 @@ html.hud-v3-active .aaa-poster[data-act="tapboost"]:active {
 html.hud-v3-active .aaa-page-hero.aaa-gacha-hero {
   background:
     linear-gradient(135deg, rgba(107, 92, 255, 0.2), rgba(255, 92, 168, 0.14)),
-    url('assets/hf/gacha-bg.png?v=78') center/cover !important;
+    url('assets/hf/gacha-bg.png?v=79') center/cover !important;
   border: 1px solid rgba(180, 140, 255, 0.28) !important;
   overflow: hidden;
 }
@@ -1983,7 +1983,7 @@ html.hud-v3-active .aaa-gl-page-head {
   padding: 14px 14px 10px !important;
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.4) 0%, rgba(8, 6, 15, 0.9) 100%),
-    url('assets/hf/greenlight-bg.png?v=78') center/cover !important;
+    url('assets/hf/greenlight-bg.png?v=79') center/cover !important;
   border-bottom: 1px solid rgba(255, 200, 69, 0.15) !important;
 }
 
@@ -2943,4 +2943,29 @@ html.hud-v3-active .tab.active .tab-lbl {
 html.hud-v3-active .tab.active .ic img.tab-ic {
   opacity: 1 !important;
   filter: drop-shadow(0 0 10px rgba(255, 92, 168, 0.9)) !important;
+}
+
+/* ========== BUILD 79 (canonical) ========== */
+
+html.hud-v3-active .aaa-gl-page .aaa-genre-row .chip[data-g="6"].sel {
+  background: linear-gradient(135deg, rgba(255, 92, 168, 0.35), rgba(107, 92, 255, 0.25)) !important;
+  border-color: rgba(255, 92, 168, 0.55) !important;
+  color: #fff !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-chip.gold {
+  background: rgba(255, 200, 69, 0.14) !important;
+  border: 1px solid rgba(255, 200, 69, 0.35) !important;
+  color: var(--ast-gold) !important;
+  font-weight: 800 !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-chip:not(.gold) {
+  background: rgba(255, 92, 168, 0.1) !important;
+  border: 1px solid rgba(255, 92, 168, 0.22) !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-rank-wrap.aaa-rank-laurel::before {
+  border-color: rgba(255, 182, 220, 0.65) !important;
+  box-shadow: 0 0 18px rgba(255, 92, 168, 0.35) !important;
 }
