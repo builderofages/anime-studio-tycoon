@@ -2733,14 +2733,6 @@ html.hud-v3-active .aaa-gl-page .aaa-gl-card.sel::after {
   z-index: 3 !important;
 }
 
-html.hud-v3-active .aaa-gl-page .aaa-gl-confirm-banner:not(:disabled) {
-  background: linear-gradient(135deg, #ff5ca8 0%, #ff4d9e 42%, #ffc845 100%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.14) !important;
-  box-shadow:
-    0 10px 28px rgba(255, 92, 168, 0.38),
-    0 0 24px rgba(255, 200, 69, 0.18) !important;
-}
-
 html.hud-v3-active .aaa-gl-page .aaa-gl-confirm-cost {
   display: inline-flex !important;
   align-items: center !important;
@@ -2964,25 +2956,6 @@ html.hud-v3-active .aaa-show-panel .aaa-rank-wrap.aaa-rank-laurel .aaa-rank {
   font-size: 18px !important;
 }
 
-html.hud-v3-active .aaa-show-panel .aaa-chips {
-  display: flex !important;
-  flex-wrap: wrap !important;
-  gap: 6px !important;
-  margin-bottom: 4px !important;
-}
-
-html.hud-v3-active .aaa-show-panel .aaa-chip {
-  padding: 4px 10px !important;
-  border-radius: 999px !important;
-  font-size: 9px !important;
-  font-weight: 800 !important;
-}
-
-html.hud-v3-active .aaa-show-panel .aaa-chip-ic {
-  font-size: 10px !important;
-  margin-right: 3px !important;
-}
-
 html.hud-v3-active .aaa-gl-page .aaa-gl-page-titles {
   flex: 1 !important;
   min-width: 0 !important;
@@ -3204,8 +3177,7 @@ html.hud-v3-active .aaa-show-panel .aaa-show-card { grid-template-columns: minma
 html.hud-v3-active .aaa-show-panel .aaa-poster { aspect-ratio: 3 / 4 !important; min-height: 196px !important; max-height: 272px !important; }
 html.hud-v3-active .aaa-show-panel .aaa-title { font-size: var(--ast-type-title) !important; }
 html.hud-v3-active .aaa-show-panel .aaa-score-val { font-size: var(--ast-type-score) !important; }
-html.hud-v3-active .aaa-show-panel .aaa-chips { gap: 5px !important; margin: 0 0 6px !important; }
-html.hud-v3-active .aaa-show-panel .aaa-chip { padding: 4px 11px !important; font-size: 9.5px !important; letter-spacing: 0.04em !important; }
+
 html.hud-v3-active .aaa-show-panel .aaa-rank-wrap.aaa-rank-laurel { padding: 2px 12px !important; margin-left: 2px !important; }
 html.hud-v3-active .aaa-show-panel .aaa-rank-wrap.aaa-rank-laurel::before { inset: -8px -14px !important; border-width: 2.5px !important; border-color: rgba(255, 182, 220, 0.75) !important; border-radius: 42% 58% 55% 45% / 48% 42% 58% 52% !important; box-shadow: 0 0 20px rgba(255, 92, 168, 0.4) !important; }
 html.hud-v3-active .aaa-show-panel .aaa-rank-wrap.aaa-rank-laurel::after { content: "✦" !important; inset: auto !important; top: -10px !important; left: 50% !important; width: auto !important; height: auto !important; transform: translateX(-50%) !important; border: none !important; font-size: 8px !important; color: var(--ast-gold) !important; }
@@ -3562,16 +3534,6 @@ html.hud-v3-active .aaa-gl-page .aaa-genre-wrap::after {
 html.hud-v3-active .aaa-gl-page .aaa-gl-carousel {
   -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%) !important;
   mask-image: linear-gradient(90deg, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%) !important;
-}
-
-html.hud-v3-active .aaa-gl-page .aaa-gl-card:not(.sel) {
-  transform: scale(0.93) !important;
-  opacity: 0.9 !important;
-}
-
-html.hud-v3-active .aaa-gl-page .aaa-gl-card.sel {
-  transform: scale(1.05) !important;
-  opacity: 1 !important;
 }
 
 /* Greenlight: risk/rewards typography — design-ref-greenlight */
@@ -4025,6 +3987,66 @@ html.hud-v3-active .aaa-offline-pass {
 }
 html.hud-v3-active .aaa-offline-pass-ic { font-size: 18px !important; flex-shrink: 0 !important; }
 html.hud-v3-active .aaa-offline-cap { margin: 8px 0 12px !important; font-size: 11px !important; text-align: center !important; line-height: 1.45 !important; }
+
+/* BUILD 96 — Return hub (batched boot modals) */
+html.hud-v3-active .aaa-return-hub-modal {
+  max-width: 420px !important;
+  max-height: min(88vh, 640px) !important;
+  overflow-y: auto !important;
+  text-align: left !important;
+}
+html.hud-v3-active .aaa-return-hub-lead {
+  margin: 4px 0 12px !important;
+  font-size: 13px !important;
+  text-align: center !important;
+  line-height: 1.45 !important;
+}
+html.hud-v3-active .aaa-return-hub-section {
+  margin: 0 0 12px !important;
+  padding: 10px 12px !important;
+  border-radius: 14px !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid var(--ast-border-soft) !important;
+}
+html.hud-v3-active .aaa-return-hub-section[hidden] { display: none !important; }
+html.hud-v3-active .aaa-return-hub-section-title {
+  margin: 0 0 8px !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.02em !important;
+  color: var(--ast-gold) !important;
+}
+html.hud-v3-active .aaa-return-hub-unlocks-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+}
+html.hud-v3-active .aaa-return-hub-unlock-teaser {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 10px !important;
+  padding: 8px 10px !important;
+  border-radius: 12px !important;
+  background: rgba(255, 92, 168, 0.08) !important;
+  border: 1px solid rgba(255, 92, 168, 0.22) !important;
+}
+html.hud-v3-active .aaa-return-hub-unlock-ic {
+  font-size: 20px !important;
+  line-height: 1 !important;
+  flex-shrink: 0 !important;
+}
+html.hud-v3-active .aaa-return-hub-unlock-teaser b {
+  display: block !important;
+  font-size: 13px !important;
+  color: var(--ast-text) !important;
+}
+html.hud-v3-active .aaa-return-hub-unlock-teaser small {
+  display: block !important;
+  margin-top: 2px !important;
+  font-size: 11px !important;
+  color: var(--ast-muted) !important;
+  line-height: 1.35 !important;
+}
 html.hud-v3-active .aaa-produce-idle-footer {
   display: flex !important;
   flex-wrap: wrap !important;
@@ -4276,14 +4298,14 @@ html.hud-v3-active .splash-tag { font-size: 13px !important; font-weight: 600 !i
 html.hud-v3-active .overlay[role="dialog"] { overscroll-behavior: contain !important; }
 html.hud-v3-active .card-modal .muted, html.hud-v3-active .aaa-offline-lead, html.hud-v3-active .aaa-offline-cap { color: var(--ast-muted) !important; opacity: 1 !important; }
 html.hud-v3-active .tab .tab-lbl { color: var(--ast-muted) !important; }
-html.hud-v3-active .tab:focus-visible, html.hud-v3-active .coach-cta:focus-visible, html.hud-v3-active .coach-gift:focus-visible, html.hud-v3-active .coach-dismiss:focus-visible, html.hud-v3-active .card-modal button:focus-visible, html.hud-v3-active .card-modal .btn-primary:focus-visible, html.hud-v3-active .card-modal .btn-gold:focus-visible, html.hud-v3-active .card-modal .btn-ghost:focus-visible, html.hud-v3-active #goal:focus-visible { outline: 2px solid var(--ast-gold) !important; outline-offset: 2px !important; box-shadow: 0 0 0 4px rgba(255, 200, 69, 0.28) !important; }
+html.hud-v3-active .tab:focus-visible, html.hud-v3-active .coach-cta:focus-visible, html.hud-v3-active .coach-gift:focus-visible, html.hud-v3-active .coach-dismiss:focus-visible, html.hud-v3-active .card-modal button:focus-visible, html.hud-v3-active .card-modal .btn-primary:focus-visible, html.hud-v3-active .card-modal .btn-gold:focus-visible, html.hud-v3-active .card-modal .btn-ghost:focus-visible, html.hud-v3-active .aaa-decision-btn:focus-visible, html.hud-v3-active [data-act="dec-yes"]:focus-visible, html.hud-v3-active [data-act="dec-no"]:focus-visible, html.hud-v3-active #goal:focus-visible { outline: 2px solid var(--ast-gold) !important; outline-offset: 2px !important; box-shadow: 0 0 0 4px rgba(255, 200, 69, 0.28) !important; }
 html.hud-v3-active #pathway-rail.coach-bar:focus-within { box-shadow: inset 0 0 0 1px rgba(255, 200, 69, 0.35) !important; }
 @media (max-width: 720px) {
   html.hud-v3-active .coach-cta { min-height: 44px !important; min-width: 44px !important; padding: 10px 14px !important; }
   html.hud-v3-active .coach-gift, html.hud-v3-active .coach-dismiss { min-width: 44px !important; min-height: 44px !important; }
   html.hud-v3-active #tabs { min-height: max(var(--ast-dock, 64px), calc(44px + var(--safe-b, 0px))) !important; }
   html.hud-v3-active .tab { min-height: 44px !important; padding: 8px 4px !important; }
-  html.hud-v3-active .aaa-gl-confirm-banner, html.hud-v3-active .btn-primary, html.hud-v3-active .btn-gold, html.hud-v3-active .start-cta-demo, html.hud-v3-active .aaa-franchise-suggest-btn { min-height: 44px !important; }
+  html.hud-v3-active .aaa-gl-confirm-banner, html.hud-v3-active .btn-primary, html.hud-v3-active .btn-gold, html.hud-v3-active .start-cta-demo, html.hud-v3-active .aaa-franchise-suggest-btn, html.hud-v3-active .aaa-decision-btn, html.hud-v3-active [data-act="dec-yes"], html.hud-v3-active [data-act="dec-no"] { min-height: 44px !important; }
 }
 @media (prefers-reduced-motion: reduce) {
   html.hud-v3-active *, #loading-splash, #loading-splash *, #loading-bar i, .achieve-pop, .toast, .toast.special { animation: none !important; }
@@ -4291,3 +4313,25 @@ html.hud-v3-active #pathway-rail.coach-bar:focus-within { box-shadow: inset 0 0 
   html.hud-v3-active .aaa-show-panel .aaa-poster.aaa-tap-hint::before { opacity: 0.92 !important; transform: translateX(-50%) !important; }
   html.hud-v3-active #app.flash-chaos, html.hud-v3-active #reveal.aaa-reveal-opening { filter: none !important; }
 }
+/* BUILD 96 — mockup fidelity 85% → 92% (v4 + greenlight ref) */
+html.hud-v3-active .aaa-decision-btn, html.hud-v3-active .aaa-decision-actions [data-act="dec-yes"], html.hud-v3-active .aaa-decision-actions [data-act="dec-no"] { min-height: 44px !important; }
+html.hud-v3-active .coach-msg.coach-next-unlock { color: var(--ast-gold) !important; font-weight: 700 !important; }
+html.hud-v3-active .tab.tab-switch-bump .ic { animation: ast-tab-haptic 0.28s cubic-bezier(0.34, 1.4, 0.64, 1) !important; }
+@keyframes ast-tab-haptic { 0%, 100% { transform: scale(1); } 35% { transform: scale(0.9); } 65% { transform: scale(1.08); } }
+html.hud-v3-active body::after { content: "" !important; position: fixed !important; inset: 0 !important; pointer-events: none !important; z-index: 0 !important; background-image: radial-gradient(circle, rgba(255, 140, 190, 0.42) 0 2px, transparent 3px), radial-gradient(circle, rgba(255, 175, 215, 0.34) 0 1.5px, transparent 2.5px), radial-gradient(circle, rgba(255, 110, 170, 0.36) 0 2px, transparent 3px) !important; background-size: 88px 104px, 124px 148px, 156px 132px !important; background-position: 0 0, 42px 28px, 18px 62px !important; opacity: 0.58 !important; }
+html.hud-v3-active #sakura-petals .petal { width: 9px !important; height: 9px !important; opacity: 0.68 !important; }
+html.hud-v3-active #hud-shell:not(.hud-gl-view) .hud-awards-chip:not([hidden]) { display: flex !important; }
+html.hud-v3-active .aaa-show-panel .aaa-chips { gap: 4px !important; margin: 0 0 7px !important; }
+html.hud-v3-active .aaa-show-panel .aaa-chip { padding: 3px 9px !important; font-size: 9px !important; letter-spacing: 0.03em !important; line-height: 1.2 !important; }
+html.hud-v3-active .aaa-show-panel .aaa-chip-ic { margin-right: 2px !important; font-size: 9px !important; }
+html.hud-v3-active .aaa-show-panel .aaa-team-card.aaa-rank-S { border: 2px solid rgba(255, 200, 69, 0.72) !important; background: linear-gradient(180deg, rgba(255, 200, 69, 0.1), rgba(255, 92, 168, 0.06)) !important; box-shadow: 0 0 14px rgba(255, 200, 69, 0.22), inset 0 0 0 1px rgba(255, 182, 220, 0.28) !important; }
+html.hud-v3-active .aaa-show-panel .aaa-team-card.aaa-rank-A { border: 2px solid rgba(63, 169, 255, 0.58) !important; background: linear-gradient(180deg, rgba(63, 169, 255, 0.08), rgba(107, 92, 255, 0.05)) !important; box-shadow: 0 0 10px rgba(63, 169, 255, 0.18) !important; }
+html.hud-v3-active .aaa-show-panel .aaa-team-card.aaa-rank-S .aaa-team-rank { background: linear-gradient(135deg, #ffe9a8, #ffc845) !important; color: #1a1028 !important; }
+html.hud-v3-active .aaa-show-panel .aaa-team-card.aaa-rank-A .aaa-team-rank { background: linear-gradient(135deg, #7dd3fc, #3fa9ff) !important; color: #0c4a6e !important; }
+html.hud-v3-active .aaa-gl-page .aaa-gl-card { transform-origin: center center !important; }
+html.hud-v3-active .aaa-gl-page .aaa-gl-card:not(.sel) { transform: scale(0.86) !important; opacity: 0.76 !important; filter: brightness(0.9) saturate(0.9) !important; }
+html.hud-v3-active .aaa-gl-page .aaa-gl-card.sel { transform: scale(1.08) !important; opacity: 1 !important; filter: none !important; z-index: 3 !important; }
+html.hud-v3-active .aaa-gl-page .aaa-gl-confirm-banner:not(:disabled) { background: linear-gradient(90deg, #ff5ca8 0%, #ff5a9e 24%, #ff7a6e 42%, #ffab4a 68%, #ffc845 88%, #ffe08a 100%) !important; border: 1px solid rgba(255, 255, 255, 0.16) !important; color: #fff !important; text-shadow: 0 1px 10px rgba(72, 18, 38, 0.38) !important; box-shadow: 0 10px 32px rgba(255, 92, 168, 0.42), 0 0 28px rgba(255, 200, 69, 0.28) !important; }
+html.hud-v3-active .aaa-gl-page .aaa-gl-confirm-cost { background: rgba(0, 0, 0, 0.32) !important; border: 1px solid rgba(255, 255, 255, 0.24) !important; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08) !important; }
+@media (max-width: 599px) { html.hud-v3-active { --ast-dock: 50px !important; } html.hud-v3-active #command-dock { --ui-dock-h: 50px !important; padding: 2px 4px calc(var(--safe-b, 0px) + 2px) !important; } html.hud-v3-active .tab .tab-lbl { display: none !important; } html.hud-v3-active .tab { gap: 0 !important; padding: 6px 2px calc(var(--safe-b, 0px) + 4px) !important; } html.hud-v3-active .tab .ic img.tab-ic { width: 26px !important; height: 26px !important; } }
+@media (min-width: 600px) { html.hud-v3-active .tab .tab-lbl { display: block !important; } }

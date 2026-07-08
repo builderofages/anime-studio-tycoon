@@ -380,6 +380,29 @@
     };
   }
 
+  function nextUnlockPreviewCoach(S, hook) {
+    const rel = S.releases || 0;
+    if (rel > 1) return null;
+    const order = [
+      { key: "studio", label: "🏢 Studio", prog: () => hook.studioUnlockProgress?.() },
+      { key: "stars", label: "⭐ Stars", prog: () => hook.starsUnlockProgress?.() },
+      { key: "market", label: "📣 Marketing", prog: () => hook.marketUnlockProgress?.() },
+    ];
+    for (const item of order) {
+      if (hook.featureUnlocked?.(item.key)) continue;
+      const hint = item.prog?.();
+      if (!hint) continue;
+      return {
+        message: `🔓 Next unlock: ${item.label} — ${hint}`,
+        tab: "produce",
+        cta: rel === 0 ? "Start" : "Play",
+        action: { type: "tab", tab: "produce" },
+        nextUnlock: true,
+      };
+    }
+    return null;
+  }
+
   function festivalInviteCoach(S, hook) {
     if ((S.releases || 0) < 5) return null;
     const pending = hook.festivalInvitePending && hook.festivalInvitePending();
@@ -783,6 +806,8 @@
     }
     const pwaCoach = pwaHomeScreenCoach(S, hook);
     if (pwaCoach) return pwaCoach;
+    const nextUnlockCoach = nextUnlockPreviewCoach(S, hook);
+    if (nextUnlockCoach) return nextUnlockCoach;
     return {
       message: "Trending: " + (hook.trendGenre ? hook.trendGenre() : "Action"),
       tab: "produce",
@@ -891,10 +916,12 @@
     if (pw.action.type === "festival-decision") {
       hook.play("click");
       const modal = document.getElementById("decision");
-      if (modal && modal.style.display === "flex") {
+      if (modal && modal.style.display === "flex" && hook.festivalInvitePending?.()) {
         modal.scrollIntoView({ behavior: "smooth", block: "center" });
         const yes = modal.querySelector("[data-act='dec-yes']:not([disabled])");
         if (yes) yes.focus();
+      } else if (typeof hook.openFestivalDecisionModal === "function") {
+        hook.openFestivalDecisionModal();
       } else {
         hook.toast?.("🎪 Festival invite will pop up during play — keep producing!");
       }
@@ -1063,8 +1090,8 @@
       const petals = document.createElement("div");
       petals.id = "sakura-petals";
       petals.setAttribute("aria-hidden", "true");
-      petals.innerHTML = Array.from({ length: 12 }, (_, i) =>
-        `<i class="petal" style="--d:${(i * 0.7).toFixed(1)}s;--x:${(i * 8.3) % 100}%;--s:${0.6 + (i % 4) * 0.15}"></i>`
+      petals.innerHTML = Array.from({ length: 22 }, (_, i) =>
+        `<i class="petal" style="--d:${(i * 0.42).toFixed(1)}s;--x:${(i * 4.7 + (i % 3) * 11) % 100}%;--s:${0.55 + (i % 5) * 0.12}"></i>`
       ).join("");
       document.body.appendChild(petals);
     }
@@ -1486,7 +1513,7 @@
     if (avatarWrap) avatarWrap.hidden = !!glView;
 
     const awards = document.getElementById("hud-awards");
-    if (awards) awards.hidden = glView ? false : (S.releases || 0) < 8;
+    if (awards) awards.hidden = glView ? false : (S.tab === "produce" ? false : (S.releases || 0) < 8);
     const showcaseDemo = hook.isShowcaseDemo && hook.isShowcaseDemo();
     const demoDots = showcaseDemo && !glView;
     const mailBtn = document.getElementById("hud-mail-btn");
@@ -1509,6 +1536,10 @@
           const h = window.__AST_HOOK__;
           if (!h) return;
           h.play?.("click");
+          if (typeof h.openFestivalDecisionModal === "function") {
+            h.openFestivalDecisionModal();
+            return;
+          }
           const modal = document.getElementById("decision");
           if (modal && modal.style.display === "flex") {
             modal.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -1664,7 +1695,10 @@
     }
 
     const nowEl = document.getElementById("pathway-now");
-    if (nowEl) nowEl.textContent = pw.message;
+    if (nowEl) {
+      nowEl.textContent = pw.message;
+      nowEl.classList.toggle("coach-next-unlock", !!pw.nextUnlock);
+    }
     const cta = document.getElementById("pathway-cta");
     if (cta) {
       const label = pw.cta || "Go";
@@ -1747,6 +1781,21 @@
     });
   }
 
+  let _lastHudTab = null;
+
+  function pulseActiveTab(tabId) {
+    if (!tabId || tabId === _lastHudTab) return;
+    _lastHudTab = tabId;
+    requestAnimationFrame(() => {
+      document.querySelectorAll(".tab.tab-switch-bump").forEach((t) => t.classList.remove("tab-switch-bump"));
+      const tab = document.querySelector(`.tab[data-tab="${tabId}"].active`);
+      if (!tab) return;
+      void tab.offsetWidth;
+      tab.classList.add("tab-switch-bump");
+      window.setTimeout(() => tab.classList.remove("tab-switch-bump"), 320);
+    });
+  }
+
   function install() {
     const hook = window.__AST_HOOK__;
     if (!hook || hook.__hudPremiumInstalled) return false;
@@ -1762,6 +1811,7 @@
       organizeDrawerSlot();
       updateHud(hook.getState(), hook);
       updateTabBadges(hook.getState(), hook);
+      pulseActiveTab(hook.getState().tab);
     };
     const origUpdateTop = window.updateTopBar;
     if (typeof origUpdateTop === "function") {

@@ -23,7 +23,7 @@
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icons/icon-512.png">
 <!-- Legacy gameplay-*.css disabled — aaa-ui + game-skin + hud-premium own chrome -->
-<link rel="stylesheet" href="hud-premium.css?v=95">
+<link rel="stylesheet" href="hud-premium.css?v=96">
 <!-- ui-complete.css disabled — v5 uses aaa-tab-page heroes -->
 <!-- gameplay-studio-rating.css disabled — ast-v5 authority -->
 <!-- studio-premium.css disabled — ast-v5 authority -->
@@ -31,8 +31,8 @@
 <!-- game-skin.css disabled — fought ast-v5 (animation:none, flat panels) -->
 <!-- hf-design.css disabled — ast-v5 authority -->
 <!-- aaa-ui.css disabled — ast-v5 authority -->
-<link rel="stylesheet" href="legacy-fx.css?v=95">
-<link rel="stylesheet" href="ast-v5.css?v=95">
+<link rel="stylesheet" href="legacy-fx.css?v=96">
+<link rel="stylesheet" href="ast-v5.css?v=96">
 <script>document.documentElement.classList.add("premium-hud","hud-v3-active")</script>
 <meta name="theme-color" content="#08050f">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -75,10 +75,10 @@
 <div id="app">
   <div id="top">
     <div id="studio-rank"><span>🎬</span><span class="rank-tier">Garage Studio</span></div>
-    <div class="res yen"><img src="icons/hf/yen.png?v=95" alt="Yen"><span><span class="v" id="r-yen">0</span> <small>¥</small></span></div>
-    <div class="res fans"><img src="icons/hf/fans.png?v=95" alt="Fans"><span class="v" id="r-fans">0</span></div>
-    <div class="res hype"><img src="icons/hf/hype.png?v=95" alt="Hype"><span class="v" id="r-hype">0</span></div>
-    <div class="res gems"><img src="icons/hf/gems.png?v=95" alt="Gems"><span class="v" id="r-gems">0</span></div>
+    <div class="res yen"><img src="icons/hf/yen.png?v=96" alt="Yen"><span><span class="v" id="r-yen">0</span> <small>¥</small></span></div>
+    <div class="res fans"><img src="icons/hf/fans.png?v=96" alt="Fans"><span class="v" id="r-fans">0</span></div>
+    <div class="res hype"><img src="icons/hf/hype.png?v=96" alt="Hype"><span class="v" id="r-hype">0</span></div>
+    <div class="res gems"><img src="icons/hf/gems.png?v=96" alt="Gems"><span class="v" id="r-gems">0</span></div>
     <div id="trendbar"><span class="spark">📈</span> Trending: <b id="trend">Action</b></div>
   </div>
   <div id="goal"><span id="goal-txt">🎯 Reach 50 Fans for Web Series</span><div class="bar"><i id="goal-bar" style="width:0%"></i></div></div>
@@ -90,7 +90,7 @@
     <button class="btn-ghost" id="btn-mute">🔊 Sound: On</button>
     <button class="btn-ghost" id="btn-save" style="display:none">💾 Save</button>
     <button class="btn-ghost" id="btn-reset">↺ Reset</button>
-  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 95 · AAA</span></div>
+  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 96 · Polish</span></div>
   <div id="toasts"></div>
   <div id="pwa-install-banner" class="aaa-pwa-install-banner" hidden>
     <div class="aaa-pwa-install-inner">
@@ -107,7 +107,7 @@
 
 <div class="overlay" id="start" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="start-title">
   <div class="card-modal">
-    <img class="start-hero" src="start-hero.png?v=95" width="140" height="140" alt="Anime Studio Tycoon logo">
+    <img class="start-hero" src="start-hero.png?v=96" width="140" height="140" alt="Anime Studio Tycoon logo">
     <h1 id="start-title">Anime Studio Tycoon</h1>
     <p id="start-tagline">From a one-room studio to a global anime empire</p>
     <label style="display:block;font-size:12px;font-weight:800;color:var(--plum);margin:4px 0 4px">🏢 Studio Name</label>
@@ -148,6 +148,38 @@
     <h1 id="daily-title" style="font-size:22px">🎁 Daily Reward</h1>
     <div id="daily-body"></div>
     <button class="btn-gold" data-act="daily-close" style="width:100%;margin-top:8px">Claim &amp; Play</button>
+  </div>
+</div>
+
+<div class="overlay aaa-return-hub-overlay" id="return-hub" style="display:none" role="dialog" aria-modal="true" aria-labelledby="return-hub-title">
+  <div class="card-modal aaa-return-hub-modal">
+    <h1 id="return-hub-title" style="font-size:22px;text-align:center">👋 Welcome back</h1>
+    <p class="aaa-return-hub-lead muted" id="return-hub-lead"></p>
+    <section class="aaa-return-hub-section" id="return-hub-welcome" hidden>
+      <h2 class="aaa-return-hub-section-title">Your studio</h2>
+      <div class="aaa-return-hub-welcome-body" id="return-hub-welcome-body"></div>
+    </section>
+    <section class="aaa-return-hub-section" id="return-hub-offline" hidden>
+      <h2 class="aaa-return-hub-section-title" id="return-hub-offline-title">While you were away</h2>
+      <p class="aaa-offline-lead muted" id="return-hub-offline-lead"></p>
+      <div class="aaa-offline-preview" id="return-hub-offline-preview" hidden></div>
+      <div class="offlist" id="return-hub-offlist"></div>
+      <div class="aaa-offline-pass" id="return-hub-offline-pass" hidden></div>
+      <p class="aaa-offline-cap muted" id="return-hub-offline-cap"></p>
+    </section>
+    <section class="aaa-return-hub-section" id="return-hub-daily" hidden>
+      <h2 class="aaa-return-hub-section-title">🎁 Daily reward</h2>
+      <div id="return-hub-daily-body"></div>
+    </section>
+    <section class="aaa-return-hub-section" id="return-hub-whatsnew" hidden>
+      <h2 class="aaa-return-hub-section-title">✨ What's new</h2>
+      <div id="return-hub-whatsnew-body"></div>
+    </section>
+    <section class="aaa-return-hub-section" id="return-hub-unlocks" hidden>
+      <h2 class="aaa-return-hub-section-title">🔓 New unlocks</h2>
+      <div class="aaa-return-hub-unlocks-list" id="return-hub-unlocks-body"></div>
+    </section>
+    <button class="btn-gold" id="btn-return-hub-close" data-act="return-hub-close" style="width:100%;margin-top:10px;font-size:16px">Collect &amp; Continue</button>
   </div>
 </div>
 
@@ -298,14 +330,15 @@
 
 <div class="overlay" id="whatsnew" style="display:none" role="dialog" aria-modal="true" aria-labelledby="whatsnew-title">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <img src="start-hero.png?v=95" alt="Anime Studio Tycoon logo" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
-    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 95 — AAA Audit</h1>
-    <div class="offlist" style="margin:12px 0">
-      <div><span>🎨 Mockup fidelity</span><b>Greenlight theater stage, per-metric stat bars, produce bonus row — ~85% ref match</b></div>
-      <div><span>🧭 Playtest fixes</span><b>Unlock modal queue drains correctly; Research tab visible at 120 fans; coach won't route to locked tabs</b></div>
-      <div><span>♿ Accessibility</span><b>Dialog roles, tab ARIA, 44px touch targets, reduced-motion support</b></div>
-      <div><span>🎪 Late-game</span><b>Festival/award modals no longer stack on premiere; dynasty rank-up pops</b></div>
-      <div><span>📱 HUD polish</span><b>Rival race grid fix, safe-area trim, rating chip keyboard, GL back routing</b></div>
+    <img src="start-hero.png?v=96" alt="Anime Studio Tycoon logo" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
+    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 96 — Return Hub</h1>
+    <div class="offlist whatsnew-list" style="margin:12px 0">
+      <div><span>📬 Return hub</span><b>One modal on boot — welcome back, offline earnings, daily claim, what's new &amp; unlock teasers batched together</b></div>
+      <div><span>🎪 Festival coach</span><b>Pending invites open the decision modal directly — coach CTA and HUD badge included</b></div>
+      <div><span>♿ Decision buttons</span><b>Yes/No choices are 44px tall with gold focus rings</b></div>
+      <div><span>🔓 Early unlocks</span><b>Coach previews the next tab unlock during releases 0–1</b></div>
+      <div><span>🎨 Mockup fidelity</span><b>HUD sakura + awards, produce chips/team borders, GL carousel &amp; banner — ~92% ref match</b></div>
+      <div><span>📱 Tab dock</span><b>Compact icon-only mode on narrow screens; haptic micro-bump on tab switch</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
   </div>
@@ -361,8 +394,8 @@ const STORE_PAYMENTS = true; // store always visible; buyReal routes web→check
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 95 · AAA";
-const ASSET_V = "95";
+const BUILD_TAG = "build 96 · Polish";
+const ASSET_V = "96";
 const OFFLINE_PREVIEW_CAP = 4*3600; // "while away" preview when return is under 4h
 const SHARE_PLAY_URL = "https://anime-studio-tycoon.vercel.app/play";
 const PITY_EPIC = 25;
@@ -620,17 +653,17 @@ function quickGreenlight(){
   if((S.releases||0)<1){
     const sc=GREENLIGHT_SHOWCASE.find(s=>s.editor&&!projectLockInfo(PROJECTS[s.pid]).locked)||GREENLIGHT_SHOWCASE[0];
     const p=PROJECTS[sc.pid];
-    if(S.yen<p.cost){ toast("💰 Need more ¥ — wait for royalties or tap Freelance"); return; }
-    greenlight(sc.pid,sc.genre,[],null);
+    if(S.yen<p.cost){ toast("💰 Need more ¥ — wait for royalties or tap Freelance"); play("error"); return; }
+    greenlight(sc.pid,sc.genre,[],null,"greenlight");
     toast(`🎬 Greenlit ${sc.titleEn}`,true);
     _glMode=false;
     return;
   }
   const g=trendGenre();
   const opts=unlockedProjects().filter(p=>S.yen>=p.cost);
-  if(!opts.length){ toast("💰 Need more ¥ — wait for royalties or tap Freelance"); return; }
+  if(!opts.length){ toast("💰 Need more ¥ — wait for royalties or tap Freelance"); play("error"); return; }
   const pick=opts.reduce((best,p)=>(!best||p.fans/p.cost>best.fans/best.cost)?p:best,null);
-  greenlight(pick.id,g,[],null);
+  greenlight(pick.id,g,[],null,"greenlight");
   toast(`🎬 Greenlit ${pick.name} · ${g} genre`,true);
   _glMode=false;
 }
@@ -1332,7 +1365,7 @@ function claimQuest(i){
   const prog=S.questProg[questMetric(q.id)]||0;
   if(prog<q.goal){ toast("Quest not complete yet"); return; }
   q.claimed=true; S.gems+=q.reward; track("quest_claim",{id:q.id});
-  play("success"); toast("✅ Quest complete! +"+q.reward+" 💎",true); render(); save();
+  play("claim"); toast("✅ Quest complete! +"+q.reward+" 💎",true); render(); save();
 }
 function claimFirstReward(){
   S.tab="quests";
@@ -1535,6 +1568,18 @@ function dynastyPerkCost(k){
 }
 function festivalEntryCost(){ return bigYen(); }
 function festivalInvitePending(){ return !!(_pendingDecision&&_pendingDecision.id==="festival"); }
+function openFestivalDecisionModal(){
+  if(crisisModalOpen()) return false;
+  const fest=DECISIONS.find(d=>d.id==="festival");
+  if(!fest) return false;
+  _pendingDecision=fest;
+  if(renderFestivalDecisionModal(fest,false)){
+    render();
+    return true;
+  }
+  _pendingDecision=null;
+  return false;
+}
 function eligibleDecisions(){ return DECISIONS.filter(d=>d.id!=="festival"||(S.releases||0)>=5); }
 function festivalStakesPreview(){
   const cost=festivalEntryCost();
@@ -1567,9 +1612,9 @@ function renderFestivalDecisionModal(d,danger){
       <div class="aaa-festival-stake info"><span>👑</span><b>4★+ shows</b><small>Can win circuit awards on premiere</small></div>
     </div>
     ${!st.afford?`<p class="aaa-festival-stakes-warn muted">Need ¥${costTxt} — you have ¥${fmt(S.yen)}</p>`:""}
-    <div class="row aaa-festival-decision-actions" style="gap:10px;margin-top:16px">
-      <button class="btn-primary" data-act="dec-yes" style="flex:1"${st.afford?"":" disabled"}>${d.yes[0]}</button>
-      <button class="btn-ghost" data-act="dec-no" style="flex:1">${d.no[0]}</button>
+    <div class="row aaa-decision-actions aaa-festival-decision-actions" style="gap:10px;margin-top:16px">
+      <button class="btn-primary aaa-decision-btn" data-act="dec-yes" style="flex:1"${st.afford?"":" disabled"}>${d.yes[0]}</button>
+      <button class="btn-ghost aaa-decision-btn" data-act="dec-no" style="flex:1">${d.no[0]}</button>
     </div>`;
   if(overlay) overlay.style.display="flex";
   play("reward");
@@ -1685,9 +1730,9 @@ function showDecision(){
   resetDecisionModalChrome();
   body.innerHTML=`<div style="font-size:42px">${d.ic}</div><h2 style="margin:6px 0;color:var(--plum)">${d.title}</h2>
     <p style="color:var(--slate);font-size:14px;margin:6px 0 0">${d.text}</p>
-    <div class="row" style="gap:10px;margin-top:16px">
-      <button class="btn-primary" data-act="dec-yes" style="flex:1">${d.yes[0]}</button>
-      <button class="btn-ghost" data-act="dec-no" style="flex:1">${d.no[0]}</button>
+    <div class="row aaa-decision-actions" style="gap:10px;margin-top:16px">
+      <button class="btn-primary aaa-decision-btn" data-act="dec-yes" style="flex:1">${d.yes[0]}</button>
+      <button class="btn-ghost aaa-decision-btn" data-act="dec-no" style="flex:1">${d.no[0]}</button>
     </div>`;
   const m=document.getElementById("decision"); if(m) m.style.display="flex";
 }
@@ -1734,17 +1779,17 @@ function renderDecisionModal(d, danger){
         <small class="aaa-decision-danger-hint">${tier.lbl}</small>
       </div>
       <div class="aaa-decision-actions">
-        <button class="btn-primary" data-act="dec-yes">${d.yes[0]}</button>
-        <button class="btn-ghost" data-act="dec-no">${d.no[0]}</button>
+        <button class="btn-primary aaa-decision-btn" data-act="dec-yes">${d.yes[0]}</button>
+        <button class="btn-ghost aaa-decision-btn" data-act="dec-no">${d.no[0]}</button>
       </div></div>`;
     syncCrisisHudPulse(true);
   }else{
     resetDecisionModalChrome();
     body.innerHTML=`<div style="font-size:42px">${d.ic}</div><h2 style="margin:6px 0;color:var(--plum)">${d.title}</h2>
       <p style="color:var(--slate);font-size:14px;margin:6px 0 0">${d.text}</p>
-      <div class="row" style="gap:10px;margin-top:16px">
-        <button class="btn-primary" data-act="dec-yes" style="flex:1">${d.yes[0]}</button>
-        <button class="btn-ghost" data-act="dec-no" style="flex:1">${d.no[0]}</button>
+      <div class="row aaa-decision-actions" style="gap:10px;margin-top:16px">
+        <button class="btn-primary aaa-decision-btn" data-act="dec-yes" style="flex:1">${d.yes[0]}</button>
+        <button class="btn-ghost aaa-decision-btn" data-act="dec-no" style="flex:1">${d.no[0]}</button>
       </div>`;
   }
   if(overlay) overlay.style.display="flex";
@@ -1995,6 +2040,8 @@ function unlockedProjects(){ return PROJECTS.filter(p=>!projectLockInfo(p).locke
 
 /* ========================= AUDIO ========================= */
 let bgm=null; const sfx={};
+let _actx=null;
+const SYNTH_SFX_KEYS=new Set(["hire","greenlight","premiere","claim","tab-switch","error"]);
 const SFX_PROFILES={
   click:{src:"click",rate:1,v:1},
   tap:{src:"click",rate:1.18,v:0.42},
@@ -2004,7 +2051,118 @@ const SFX_PROFILES={
   claim:{src:"reward",rate:1.08,v:1.1},
   fanfare:{src:"reward",rate:0.94,v:1.15},
   premiere:{src:"reward",rate:1.02,v:1.2},
+  hire:{src:"click",rate:1.15,v:0.9},
+  greenlight:{src:"reward",rate:1.05,v:1},
+  "tab-switch":{src:"click",rate:0.88,v:0.5},
+  error:{src:"click",rate:0.72,v:0.65},
 };
+function audioCtx(){
+  try{
+    if(_actx) return _actx;
+    const AC=window.AudioContext||window.webkitAudioContext;
+    if(!AC) return null;
+    _actx=new AC();
+    return _actx;
+  }catch(e){ return null; }
+}
+function resumeAudioCtx(){
+  const ctx=audioCtx(); if(!ctx) return null;
+  if(ctx.state==="suspended") ctx.resume().catch(()=>{});
+  return ctx;
+}
+function sfxMasterVol(){ return (S.settings&&S.settings.sfxVol!=null)?S.settings.sfxVol:0.5; }
+function synthTone(ctx,t0,freq,dur,type,peak,vol){
+  const o=ctx.createOscillator(), g=ctx.createGain();
+  o.type=type||"sine"; o.frequency.setValueAtTime(freq,t0);
+  g.gain.setValueAtTime(0.0001,t0);
+  g.gain.exponentialRampToValueAtTime(Math.max(0.0001,peak*vol),t0+0.008);
+  g.gain.exponentialRampToValueAtTime(0.0001,t0+dur);
+  o.connect(g); g.connect(ctx.destination);
+  o.start(t0); o.stop(t0+dur+0.03);
+}
+function synthNoiseWhoosh(ctx,t0,dur,vol){
+  const len=Math.max(1,Math.floor(ctx.sampleRate*dur));
+  const buf=ctx.createBuffer(1,len,ctx.sampleRate), d=buf.getChannelData(0);
+  for(let i=0;i<len;i++) d[i]=Math.random()*2-1;
+  const src=ctx.createBufferSource(); src.buffer=buf;
+  const bp=ctx.createBiquadFilter(); bp.type="bandpass"; bp.Q.value=1.1;
+  bp.frequency.setValueAtTime(420,t0);
+  bp.frequency.exponentialRampToValueAtTime(2200,t0+dur);
+  const g=ctx.createGain();
+  g.gain.setValueAtTime(0.0001,t0);
+  g.gain.linearRampToValueAtTime(0.34*vol,t0+0.02);
+  g.gain.exponentialRampToValueAtTime(0.0001,t0+dur);
+  src.connect(bp); bp.connect(g); g.connect(ctx.destination);
+  src.start(t0); src.stop(t0+dur+0.03);
+}
+const SYNTH_SFX={
+  hire(ctx,vol){
+    const t=ctx.currentTime;
+    synthTone(ctx,t,523.25,0.12,"sine",0.5,vol);
+    synthTone(ctx,t+0.1,659.25,0.15,"sine",0.55,vol);
+    synthTone(ctx,t+0.2,783.99,0.2,"triangle",0.45,vol);
+  },
+  greenlight(ctx,vol){
+    const t=ctx.currentTime;
+    const o=ctx.createOscillator(), g=ctx.createGain(), f=ctx.createBiquadFilter();
+    o.type="sawtooth";
+    o.frequency.setValueAtTime(180,t);
+    o.frequency.exponentialRampToValueAtTime(1400,t+0.28);
+    f.type="lowpass"; f.frequency.value=2200;
+    g.gain.setValueAtTime(0.0001,t);
+    g.gain.linearRampToValueAtTime(0.22*vol,t+0.04);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+0.32);
+    o.connect(f); f.connect(g); g.connect(ctx.destination);
+    o.start(t); o.stop(t+0.35);
+    synthTone(ctx,t+0.05,880,0.08,"sine",0.35,vol);
+  },
+  premiere(ctx,vol,close){
+    const t=ctx.currentTime;
+    if(close){
+      synthTone(ctx,t,440,0.1,"sine",0.4,vol);
+      synthTone(ctx,t+0.08,554.37,0.12,"sine",0.35,vol);
+      synthTone(ctx,t+0.16,659.25,0.18,"triangle",0.3,vol);
+      return;
+    }
+    [392,493.88,587.33,783.99].forEach((f,i)=>synthTone(ctx,t+i*0.09,f,0.22-i*0.02,"triangle",0.5-i*0.05,vol));
+    synthNoiseWhoosh(ctx,t,0.15,vol*0.25);
+  },
+  claim(ctx,vol){
+    const t=ctx.currentTime;
+    synthTone(ctx,t,1046.5,0.09,"sine",0.55,vol);
+    synthTone(ctx,t+0.04,1318.5,0.12,"sine",0.4,vol);
+    synthTone(ctx,t+0.08,1567.98,0.15,"triangle",0.35,vol);
+  },
+  "tab-switch"(ctx,vol){
+    const t=ctx.currentTime;
+    synthNoiseWhoosh(ctx,t,0.12,vol*0.55);
+    synthTone(ctx,t+0.02,320,0.06,"sine",0.18,vol);
+  },
+  error(ctx,vol){
+    const t=ctx.currentTime;
+    synthTone(ctx,t,180,0.14,"sawtooth",0.35,vol);
+    synthTone(ctx,t+0.06,140,0.18,"square",0.28,vol);
+  },
+};
+function playSynth(n,opts){
+  const ctx=resumeAudioCtx(); if(!ctx||!SYNTH_SFX[n]) return false;
+  try{
+    const v=sfxMasterVol();
+    if(n==="premiere") SYNTH_SFX.premiere(ctx,v,!!(opts&&opts.close));
+    else SYNTH_SFX[n](ctx,v);
+    return true;
+  }catch(e){ return false; }
+}
+function playClip(prof){
+  const base=sfx[prof.src]||sfx.click;
+  if(!base) return;
+  try{
+    const a=base.cloneNode();
+    a.playbackRate=prof.rate||1;
+    a.volume=Math.min(1, base.volume*(prof.v||1));
+    a.play().catch(()=>{});
+  }catch(e){}
+}
 function initAudio(){
   bgm=new Audio("https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_062744_f564f7ba-ec29-4a6e-a28b-023ff2c2f867.m4a"); bgm.loop=true;
   sfx.click=new Audio("https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_062745_f345d8e7-d3ee-47c5-b9c5-2474f060ee3d.mp3");
@@ -2018,17 +2176,11 @@ function applyAudioSettings(){
   if(sfx.click) sfx.click.volume=sv;
   if(sfx.reward) sfx.reward.volume=Math.min(1,sv*1.2);
 }
-function play(n){
+function play(n,opts){
   if(S.muted) return;
   const prof=SFX_PROFILES[n]||SFX_PROFILES.click;
-  const base=sfx[prof.src]||sfx.click;
-  if(!base) return;
-  try{
-    const a=base.cloneNode();
-    a.playbackRate=prof.rate||1;
-    a.volume=Math.min(1, base.volume*(prof.v||1));
-    a.play().catch(()=>{});
-  }catch(e){}
+  if(SYNTH_SFX_KEYS.has(n)&&playSynth(n,opts)) return;
+  playClip(prof);
 }
 function updateMute(){
   $("#btn-mute").textContent = (S.muted?("🔇 "+STR.muteOff):("🔊 "+STR.muteOn));
@@ -2172,7 +2324,11 @@ function floatGain(txt, anchor){
   }
   app.appendChild(el); setTimeout(()=>el.remove(), 1150);
 }
-function celebrateCollect(kind){
+function returnHubOpen(){
+  const m=document.getElementById("return-hub");
+  return !!(m&&m.style.display==="flex");
+}
+function celebrateCollect(kind, source){
   if(OFFLINE) return;
   const app=document.getElementById("app");
   if(app){
@@ -2180,7 +2336,8 @@ function celebrateCollect(kind){
     setTimeout(()=>app.classList.remove("flash-gold"), 520);
   }
   const n=kind==="offline"?28:16;
-  const modal=document.getElementById(kind==="offline"?"offline":"daily");
+  const modalId=source==="return-hub"?"return-hub":(kind==="offline"?"offline":"daily");
+  const modal=document.getElementById(modalId);
   if(modal&&window.__AST_FX__?.burst){
     const card=modal.querySelector(".card-modal");
     if(card){
@@ -2201,6 +2358,37 @@ function celebrateCollect(kind){
     toast(bits.length?`✨ Collected! ${bits.join(" · ")} — your studio kept buzzing!`:"✨ Welcome back — earnings collected!","special");
   }else toast("🎁 Daily reward collected!","special");
 }
+function celebrateReturnHubCollect({offline,daily}){
+  if(OFFLINE) return;
+  const app=document.getElementById("app");
+  if(app){
+    app.classList.remove("flash-gold"); void app.offsetWidth; app.classList.add("flash-gold");
+    setTimeout(()=>app.classList.remove("flash-gold"), 520);
+  }
+  const modal=document.getElementById("return-hub");
+  if(modal&&window.__AST_FX__?.burst){
+    const card=modal.querySelector(".card-modal");
+    if(card){
+      const r=card.getBoundingClientRect();
+      window.__AST_FX__.burst(offline?28:16, r.left+r.width/2, r.top+r.height*0.35);
+    }else window.__AST_FX__.burst(offline?28:16);
+  }else window.__AST_FX__?.burst?.(offline?28:16);
+  if(offline) window.__AST_FX__?.shake?.();
+  play(offline?"fanfare":"claim");
+  const toastBits=[];
+  if(offline){
+    const off=window.__AST_OFFLINE_COLLECT__;
+    window.__AST_OFFLINE_COLLECT__=null;
+    const bits=[];
+    if(off?.yen>0) bits.push(`¥${fmt(off.yen)} banked`);
+    if(off?.fans>0) bits.push(`+${fmt(off.fans)} fans`);
+    if(off?.releases>0) bits.push(`${off.releases} premiere${off.releases>1?"s":""}`);
+    else if(off?.progressShows>0) bits.push(`+${Math.round(off.progressPct||0)}% progress`);
+    toastBits.push(bits.length?`✨ Collected! ${bits.join(" · ")} — your studio kept buzzing!`:"✨ Welcome back — earnings collected!");
+  }
+  if(daily) toastBits.push("🎁 Daily reward collected!");
+  if(toastBits.length) toast(toastBits.join(" · "),"special");
+}
 function celebrateFirstHire(role){
   if(OFFLINE) return;
   const app=document.getElementById("app");
@@ -2213,7 +2401,7 @@ function celebrateFirstHire(role){
     const r=btn.getBoundingClientRect();
     window.__AST_FX__.burst(20, r.left+r.width/2, r.top+r.height*0.45);
   }else window.__AST_FX__?.burst?.(18);
-  play("reward");
+  play("hire");
 }
 function campaignRoiPer1k(c){ return c.cost>0 ? (c.fans/(c.cost/1000)) : 0; }
 function fmtCampaignRoi(c){
@@ -2328,13 +2516,13 @@ function closeFestivalWinModal(){
 }
 
 /* ========================= ACTIONS ========================= */
-function greenlight(pid, genre, cast, sequel){
+function greenlight(pid, genre, cast, sequel, sfx){
   const p=PROJECTS[pid];
   const lock=projectLockInfo(p);
-  if(lock.locked){ toast("🔒 Need "+lock.reason+" for "+p.name); return; }
+  if(lock.locked){ toast("🔒 Need "+lock.reason+" for "+p.name); play("error"); return; }
   const slot=firstEmptySlot();
-  if(slot<0){ toast("All production slots are busy — expand your studio"); return; }
-  if(S.yen < p.cost){ toast("Not enough Yen to greenlight"); return; }
+  if(slot<0){ toast("All production slots are busy — expand your studio"); play("error"); return; }
+  if(S.yen < p.cost){ toast("Not enough Yen to greenlight"); play("error"); return; }
   // validate the featured cast — only working stars with enough energy, capped
   const ok=(cast||[]).filter(id=>{ const st=(S.stars||[]).find(x=>x.sid===id); return st && !st.resting && starEnergy(st)>=15; }).slice(0,castCap());
   S.yen -= p.cost;
@@ -2350,7 +2538,7 @@ function greenlight(pid, genre, cast, sequel){
   S.projects[slot]={ pid, genre, progress:0, title, poster, cast:ok, base, seq };
   _castSel=[];
   questAdd("greenlit",1);
-  track("greenlight",{tier:p.tier,genre,cast:ok.length,seq}); play("click"); render(); save();
+  track("greenlight",{tier:p.tier,genre,cast:ok.length,seq}); play(sfx||"click"); render(); save();
 }
 /* When a show premieres, the cast gains XP→levels, fame (from hits), drains energy, and earns loyalty for the work. */
 function processCast(pr, stars, p){
@@ -2434,7 +2622,7 @@ function freeScoutAvailable(){ return (S.releases||0)===2 && !S.freeScoutUsed; }
 let _starsUnlockQueued=false;
 let _studioUnlockQueued=false;
 let _researchUnlockQueued=false;
-function unlockModalPending(){ return _premiereOpen||_premiereWillShow||celebrationOverlayOpen(); }
+function unlockModalPending(){ return _premiereOpen||_premiereWillShow||celebrationOverlayOpen()||returnHubOpen(); }
 function drainUnlockModalQueue(){
   if(_premiereOpen||_premiereWillShow) return false;
   if(_studioUnlockQueued){ showStudioUnlockModal(); save(); return true; }
@@ -2728,6 +2916,7 @@ function showPremiere(pr,p,stars,yenGain,fansGain){
   setTimeout(()=>{ const y=document.getElementById("prem-yen"); const f=document.getElementById("prem-fans"); if(y) animateCount(y,yenGain,"¥"); if(f) animateCount(f,fansGain,"+"); },140);
 }
 function closePremiere(){
+  play("premiere",{close:true});
   const m=document.getElementById("premiere"); if(m){ m.style.display="none"; m.classList.remove("prem-first","prem-second","prem-franchise"); } _premiereOpen=false; _premiereWillShow=false;
   if(drainUnlockModalQueue()) return;
   if((S.releases||0)<2&&activeCount()===0){
@@ -2841,13 +3030,13 @@ function expandStudio(){
 }
 function hire(role){
   const c=hireCost(role);
-  if(S.yen<c){ toast("Not enough Yen to hire"); return; }
+  if(S.yen<c){ toast("Not enough Yen to hire"); play("error"); return; }
   const wasFirst=staffTotal()===0;
   S.yen-=c; S.staff[role]++; questAdd("hires",1);
   if(wasFirst){
     celebrateFirstHire(role);
     toast("🎉 "+ROLES[role].name+" hired — your studio is taking shape!",true);
-  } else play("click");
+  } else play("hire");
   checkAchievements(); render(); save();
 }
 function buyUpgrade(key){
@@ -3310,38 +3499,172 @@ function syncPushNotifyOptUi(){
   const cb=document.getElementById("push-notify-opt");
   if(cb) cb.checked=!!S.pushNotifyOptIn;
 }
-function showOfflineModal(sec,r,opts={}){
+function fillOfflineSection(els, sec, r, opts={}){
   if(!offlineHadMeaningfulReturn(r)) return false;
   window.__AST_OFFLINE_COLLECT__=r;
   const preview=!!opts.preview || (sec>0 && sec<OFFLINE_PREVIEW_CAP);
-  const titleEl=document.getElementById("offline-title");
-  const leadEl=document.getElementById("offline-lead");
-  const previewEl=document.getElementById("offline-preview");
-  const passEl=document.getElementById("offline-pass");
-  const capEl=document.getElementById("offline-cap");
-  if(titleEl) titleEl.textContent=t("offlineTitle","While you were away")+"…";
-  if(leadEl) leadEl.textContent=`Your studio kept working for ${formatAwayTime(sec)}.`;
-  if(previewEl){
+  if(els.leadEl) els.leadEl.textContent=`Your studio kept working for ${formatAwayTime(sec)}.`;
+  if(els.previewEl){
     if(preview){
-      previewEl.hidden=false;
+      els.previewEl.hidden=false;
       const idle=royaltyPerSec();
-      previewEl.innerHTML=`<span class="aaa-offline-preview-ic" aria-hidden="true">⏱️</span><span><b>While away preview</b> — under 4h tracked${idle>0?` at ¥${fmt(idle)}/s idle`:" (premiere to unlock royalties)"}</span>`;
-    }else previewEl.hidden=true;
+      els.previewEl.innerHTML=`<span class="aaa-offline-preview-ic" aria-hidden="true">⏱️</span><span><b>While away preview</b> — under 4h tracked${idle>0?` at ¥${fmt(idle)}/s idle`:" (premiere to unlock royalties)"}</span>`;
+    }else els.previewEl.hidden=true;
   }
-  const offlist=document.getElementById("offlist");
-  if(offlist) offlist.innerHTML=renderOfflineBreakdown(sec,r);
-  if(passEl){
+  if(els.offlistEl) els.offlistEl.innerHTML=renderOfflineBreakdown(sec,r);
+  if(els.passEl){
     if(S.producerPass){
-      passEl.hidden=false;
-      passEl.innerHTML=`<span class="aaa-offline-pass-ic" aria-hidden="true">🎬</span><span><b>Producer Pass</b> — 2× offline cap active (${formatOfflineCapHours()} max vs 8h base)</span>`;
-    }else passEl.hidden=true;
+      els.passEl.hidden=false;
+      els.passEl.innerHTML=`<span class="aaa-offline-pass-ic" aria-hidden="true">🎬</span><span><b>Producer Pass</b> — 2× offline cap active (${formatOfflineCapHours()} max vs 8h base)</span>`;
+    }else els.passEl.hidden=true;
   }
-  if(capEl){
+  if(els.capEl){
     const capped=sec>=offlineCap()-30;
-    capEl.textContent=capped
+    els.capEl.textContent=capped
       ?`Cap reached (${formatOfflineCapHours()}) — grow royalties to boost idle income.`
       :`Offline earnings cap: ${formatOfflineCapHours()}${S.producerPass?" (Producer Pass 2×)":""}`;
   }
+  return true;
+}
+function shouldShowWhatsNew(){ return !S.whatsnewSeen||S.lastWhatsNewBuild!==BUILD_TAG; }
+const UNLOCK_TEASER_KEYS=["studio","stars","market","research","chaos"];
+const UNLOCK_TEASER_SEEN={studio:"studioUnlockModalSeen",stars:"starsUnlockModalSeen",market:"marketUnlockModalSeen",research:"researchUnlockModalSeen",chaos:"chaosUnlockModalSeen"};
+function pendingUnlockTeasers(){ return UNLOCK_TEASER_KEYS.filter(k=>featureUnlocked(k)&&!S[UNLOCK_TEASER_SEEN[k]]); }
+function renderDailySectionHTML(dr){
+  return `<div class="offlist">
+     <div><span>Login streak</span><b>Day ${dr.streak} 🔥</b></div>
+     <div><span>Gems</span><b>+${dr.gems} 💎</b></div>
+     <div><span>Cash bonus</span><b>+¥${fmt(dr.yenBonus)}</b></div>
+   </div>
+   <div class="muted">Come back tomorrow to grow your streak — bigger rewards every day!</div>`;
+}
+function renderWelcomeSummaryHTML(sec,r,dr){
+  const name=S.studioName||"Director";
+  const idle=royaltyPerSec();
+  const bits=[`<div><span>Studio</span><b>${name}</b></div>`];
+  if(dr) bits.push(`<div><span>Login streak</span><b>Day ${dr.streak} 🔥</b></div>`);
+  else if((S.dailyStreak||0)>1) bits.push(`<div><span>Login streak</span><b>Day ${S.dailyStreak} 🔥</b></div>`);
+  if(idle>0) bits.push(`<div><span>Idle royalties</span><b>¥${fmt(idle)}/s</b></div>`);
+  bits.push(`<div><span>Fans</span><b>${fmt(S.fans||0)}</b></div>`);
+  if(sec>60&&r&&offlineHadMeaningfulReturn(r)){
+    if(r.yen>0) bits.push(`<div><span>Away earnings</span><b>+¥${fmt(r.yen)}</b></div>`);
+    if(r.fans>0) bits.push(`<div><span>Away fans</span><b>+${fmt(r.fans)}</b></div>`);
+  }
+  return `<div class="offlist">${bits.join("")}</div>`;
+}
+function renderUnlockTeasersHTML(keys){
+  return keys.map(k=>{
+    const u=UNLOCKS[k];
+    const ic=(u?.label||"🔓").split(" ")[0]||"🔓";
+    return `<div class="aaa-return-hub-unlock-teaser"><span class="aaa-return-hub-unlock-ic" aria-hidden="true">${ic}</span><div><b>${u?.label||k}</b><small>Tap Continue — full unlock guide opens next</small></div></div>`;
+  }).join("");
+}
+function renderWhatsnewSnippetHTML(){
+  const wn=document.getElementById("whatsnew");
+  const titleEl=wn?.querySelector("#whatsnew-title");
+  const list=wn?.querySelector(".offlist");
+  const title=titleEl?.textContent||`✨ ${BUILD_TAG}`;
+  const items=list?Array.from(list.children).slice(0,3).map(el=>{
+    const span=el.querySelector("span")?.textContent||"";
+    const b=el.querySelector("b")?.textContent||"";
+    return `<div><span>${span}</span><b>${b}</b></div>`;
+  }).join(""):"";
+  return `<p class="aaa-return-hub-whatsnew-title muted" style="text-align:center;margin:0 0 8px">${title}</p><div class="offlist">${items}</div>`;
+}
+function returnHubHasContent(ctx={}){
+  const {returnR=null,dr=null,had=false}=ctx;
+  return !!had||!!dr||!!(returnR&&offlineHadMeaningfulReturn(returnR))||shouldShowWhatsNew()||pendingUnlockTeasers().length>0;
+}
+function maybeShowHowtoAfterReturnHub(){
+  if(!S.tutorialSeen&&!isGuidedTutorialEligible()){
+    const h=document.getElementById("howto"); if(h) h.style.display="flex";
+  }
+}
+function closeReturnHub(){
+  const hub=document.getElementById("return-hub");
+  if(!hub||hub.style.display!=="flex") return;
+  const hadOffline=hub.dataset.hadOffline==="1";
+  const hadDaily=hub.dataset.hadDaily==="1";
+  const hadWhatsnew=hub.dataset.hadWhatsnew==="1";
+  if(hadOffline&&hadDaily) celebrateReturnHubCollect({offline:true,daily:true});
+  else if(hadOffline) celebrateCollect("offline","return-hub");
+  else if(hadDaily) celebrateCollect("daily","return-hub");
+  if(hadWhatsnew){ S.whatsnewSeen=true; save(); }
+  hub.style.display="none";
+  hub.dataset.hadOffline=""; hub.dataset.hadDaily=""; hub.dataset.hadWhatsnew="";
+  if(drainUnlockModalQueue()) return;
+  maybeShowHowtoAfterReturnHub();
+}
+function maybeShowReturnHub(ctx={}){
+  if(!returnHubHasContent(ctx)) return false;
+  const {returnSec=0,returnR=null,dr=null,had=false}=ctx;
+  const hub=document.getElementById("return-hub");
+  if(!hub) return false;
+  const name=S.studioName||"Director";
+  const showWelcome=!!had||!!dr;
+  const showOffline=!!(returnR&&fillOfflineSection({
+    leadEl:document.getElementById("return-hub-offline-lead"),
+    previewEl:document.getElementById("return-hub-offline-preview"),
+    offlistEl:document.getElementById("return-hub-offlist"),
+    passEl:document.getElementById("return-hub-offline-pass"),
+    capEl:document.getElementById("return-hub-offline-cap"),
+  }, returnSec, returnR, {preview:returnSec>0&&returnSec<OFFLINE_PREVIEW_CAP}));
+  const showDaily=!!dr;
+  const showWhatsnew=shouldShowWhatsNew();
+  if(showWhatsnew){ S.whatsnewSeen=false; S.lastWhatsNewBuild=BUILD_TAG; }
+  const unlocks=pendingUnlockTeasers();
+  const showUnlocks=unlocks.length>0;
+  const titleEl=document.getElementById("return-hub-title");
+  const leadEl=document.getElementById("return-hub-lead");
+  if(titleEl) titleEl.textContent=`👋 Welcome back, ${name}!`;
+  if(leadEl){
+    const bits=[];
+    if(showOffline) bits.push("offline earnings ready");
+    if(showDaily) bits.push("daily reward claimed");
+    if(showWhatsnew) bits.push("fresh build notes");
+    if(showUnlocks) bits.push(`${unlocks.length} new unlock${unlocks.length>1?"s":""}`);
+    leadEl.textContent=bits.length?`Everything in one place — ${bits.join(" · ")}.`:"Your studio is ready — tap Continue to jump back in.";
+  }
+  const setSection=(id,on,fill)=>{
+    const el=document.getElementById(id); if(!el) return;
+    el.hidden=!on; if(on&&fill) fill();
+  };
+  setSection("return-hub-welcome",showWelcome,()=>{
+    const body=document.getElementById("return-hub-welcome-body");
+    if(body) body.innerHTML=renderWelcomeSummaryHTML(returnSec,returnR,dr);
+  });
+  setSection("return-hub-offline",showOffline);
+  setSection("return-hub-daily",showDaily,()=>{
+    const body=document.getElementById("return-hub-daily-body");
+    if(body) body.innerHTML=renderDailySectionHTML(dr);
+  });
+  setSection("return-hub-whatsnew",showWhatsnew,()=>{
+    const body=document.getElementById("return-hub-whatsnew-body");
+    if(body) body.innerHTML=renderWhatsnewSnippetHTML();
+  });
+  setSection("return-hub-unlocks",showUnlocks,()=>{
+    const body=document.getElementById("return-hub-unlocks-body");
+    if(body) body.innerHTML=renderUnlockTeasersHTML(unlocks);
+  });
+  const btn=document.getElementById("btn-return-hub-close");
+  if(btn) btn.textContent=(showOffline||showDaily)?"Collect & Continue":"Continue ▶";
+  hub.dataset.hadOffline=showOffline?"1":"";
+  hub.dataset.hadDaily=showDaily?"1":"";
+  hub.dataset.hadWhatsnew=showWhatsnew?"1":"";
+  hub.style.display="flex";
+  play(showOffline?"fanfare":"reward");
+  return true;
+}
+function showOfflineModal(sec,r,opts={}){
+  if(!fillOfflineSection({
+    leadEl:document.getElementById("offline-lead"),
+    previewEl:document.getElementById("offline-preview"),
+    offlistEl:document.getElementById("offlist"),
+    passEl:document.getElementById("offline-pass"),
+    capEl:document.getElementById("offline-cap"),
+  }, sec, r, opts)) return false;
+  const titleEl=document.getElementById("offline-title");
+  if(titleEl) titleEl.textContent=t("offlineTitle","While you were away")+"…";
   const overlay=document.getElementById("offline");
   if(overlay) overlay.style.display="flex";
   return true;
@@ -3422,8 +3745,8 @@ function tabLockLabel(k){
 function tabAccessible(k){ return tabInDock(k)&&!tabLocked(k); }
 function tabVisible(k){ return tabAccessible(k); }
 function setTab(t){
-  if(tabLocked(t)){ toast(tabLockLabel(t)); play("click"); return; }
-  S.tab=t; play("click"); render();
+  if(tabLocked(t)){ toast(tabLockLabel(t)); play("error"); return; }
+  S.tab=t; play("tab-switch"); render();
 }
 
 /* ---- Live in-place updates: refresh only the moving numbers each tick/tap.
@@ -4623,6 +4946,7 @@ document.addEventListener("click", e=>{
   if(t.dataset.act==="expand") return expandStudio();
   if(t.dataset.act==="batch-hire") return hireBatch();
   if(t.dataset.act==="share") return shareGame();
+  if(t.dataset.act==="return-hub-close"){ closeReturnHub(); return; }
   if(t.dataset.act==="daily-close"){ celebrateCollect("daily"); const m=document.getElementById("daily"); if(m) m.style.display="none"; return; }
   if(t.dataset.act==="reveal-close"){ const m=document.getElementById("reveal"); if(m){ m.style.display="none"; m.classList.remove("aaa-reveal-opening"); } return; }
   if(t.dataset.act==="dec-yes") return resolveDecision(true);
@@ -4711,9 +5035,15 @@ document.addEventListener("visibilitychange", ()=>{
   const sec=Math.min(cap,(Date.now()-S.lastSave)/1000);
   if(sec>60){
     const r=simulateOffline(sec);
-    if(offlineHadMeaningfulReturn(r)){
-      if(sec<OFFLINE_PREVIEW_CAP) showReturnPlayerWelcomeToast(sec,r,null);
-      else showOfflineModal(sec,r,{preview:false});
+    const dr=checkDaily();
+    if(!maybeShowReturnHub({returnSec:sec,returnR:r,dr,had:true})){
+      if(offlineHadMeaningfulReturn(r)){
+        if(sec<OFFLINE_PREVIEW_CAP) showReturnPlayerWelcomeToast(sec,r,dr);
+        else showOfflineModal(sec,r,{preview:false});
+      }else if(dr){
+        $("#daily-body").innerHTML=renderDailySectionHTML(dr);
+        $("#daily").style.display="flex";
+      }
     }
     save(); render();
   }
@@ -4771,23 +5101,22 @@ function begin(forceDemo){
     if(had){
       returnSec=Math.min(offlineCap(),(Date.now()-S.lastSave)/1000);
       returnR=simulateOffline(returnSec);
-      showOfflineModal(returnSec,returnR,{preview:returnSec<OFFLINE_PREVIEW_CAP});
     }
     const dr=checkDaily();
-    if(had) showReturnPlayerWelcomeToast(returnSec,returnR,dr);
     if((S.releases||0)>=2) maybeShowPwaInstallBanner();
-    if(dr){
-      $("#daily-body").innerHTML=
-        `<div class="offlist">
-           <div><span>Login streak</span><b>Day ${dr.streak} 🔥</b></div>
-           <div><span>Gems</span><b>+${dr.gems} 💎</b></div>
-           <div><span>Cash bonus</span><b>+¥${fmt(dr.yenBonus)}</b></div>
-         </div>
-         <div class="muted">Come back tomorrow to grow your streak — bigger rewards every day!</div>`;
-      $("#daily").style.display="flex";
+    const hubShown=maybeShowReturnHub({returnSec,returnR,dr,had});
+    if(!hubShown){
+      if(had&&returnR&&offlineHadMeaningfulReturn(returnR)){
+        showOfflineModal(returnSec,returnR,{preview:returnSec<OFFLINE_PREVIEW_CAP});
+      }
+      if(had) showReturnPlayerWelcomeToast(returnSec,returnR,dr);
+      if(dr){
+        $("#daily-body").innerHTML=renderDailySectionHTML(dr);
+        $("#daily").style.display="flex";
+      }
+      if(shouldShowWhatsNew()){ S.whatsnewSeen=false; S.lastWhatsNewBuild=BUILD_TAG; const wn=document.getElementById("whatsnew"); if(wn) wn.style.display="flex"; }
+      else if(!S.tutorialSeen&&!isGuidedTutorialEligible()){ $("#howto").style.display="flex"; }
     }
-    if(!S.whatsnewSeen||S.lastWhatsNewBuild!==BUILD_TAG){ S.whatsnewSeen=false; S.lastWhatsNewBuild=BUILD_TAG; const wn=document.getElementById("whatsnew"); if(wn) wn.style.display="flex"; }
-    else if(!S.tutorialSeen&&!isGuidedTutorialEligible()){ $("#howto").style.display="flex"; }
   }
   track("game_start",{slots:S.slots,fans:S.fans,bootstrapped:!!booted});
   render(); save();
@@ -4853,6 +5182,7 @@ if(MONETIZATION.supportUrl){
 { const bp=document.getElementById("btn-start-play"); if(bp) bp.onclick=()=>begin(false); }
 { const bd=document.getElementById("btn-start-demo"); if(bd) bd.onclick=()=>begin(true); }
 $("#btn-offclose").onclick=()=>{ celebrateCollect("offline"); $("#offline").style.display="none"; };
+{ const rh=document.getElementById("btn-return-hub-close"); if(rh) rh.onclick=()=>closeReturnHub(); }
 { const sl=document.getElementById("start-lang"); if(sl) sl.onchange=()=>{ setLang(sl.value); updateChrome(); render(); }; }
 // localize static chrome + build language picker, then render
 updateChrome();
@@ -4950,6 +5280,7 @@ window.__AST_HOOK__ = {
   dynastyAvailable,
   festivalEntryCost,
   festivalInvitePending,
+  openFestivalDecisionModal,
   freeScoutAvailable,
   tabLocked,
   tabLockLabel,
@@ -4971,24 +5302,28 @@ window.__AST_HOOK__ = {
   maybeShowPwaInstallBanner,
   triggerPwaInstall,
   showReturnPlayerWelcomeToast,
+  returnHubOpen,
+  maybeShowReturnHub,
+  closeReturnHub,
+  pendingUnlockTeasers,
 };
 </script>
-<script src="aaa-upgrade.js?v=95"></script>
-<script src="v5-slim-gate.js?v=95"></script>
-<script src="gameplay-plus.js?v=95"></script>
-<script src="gameplay-ultra.js?v=95"></script>
-<script src="gameplay-endless.js?v=95"></script>
-<script src="gameplay-empire.js?v=95"></script>
-<script src="gameplay-studio.js?v=95"></script>
-<script src="gameplay-final.js?v=95"></script>
-<script src="gameplay-aaa.js?v=95"></script>
-<script src="gameplay-legend.js?v=95"></script>
-<script src="hud-premium.js?v=95"></script>
-<script src="ui-complete.js?v=95"></script>
-<script src="gameplay-studio-rating.js?v=95"></script>
-<script src="gameplay-polish.js?v=95"></script>
-<script src="hook-bridge.js?v=95"></script>
-<script src="v5-render-guard.js?v=95"></script>
+<script src="aaa-upgrade.js?v=96"></script>
+<script src="v5-slim-gate.js?v=96"></script>
+<script src="gameplay-plus.js?v=96"></script>
+<script src="gameplay-ultra.js?v=96"></script>
+<script src="gameplay-endless.js?v=96"></script>
+<script src="gameplay-empire.js?v=96"></script>
+<script src="gameplay-studio.js?v=96"></script>
+<script src="gameplay-final.js?v=96"></script>
+<script src="gameplay-aaa.js?v=96"></script>
+<script src="gameplay-legend.js?v=96"></script>
+<script src="hud-premium.js?v=96"></script>
+<script src="ui-complete.js?v=96"></script>
+<script src="gameplay-studio-rating.js?v=96"></script>
+<script src="gameplay-polish.js?v=96"></script>
+<script src="hook-bridge.js?v=96"></script>
+<script src="v5-render-guard.js?v=96"></script>
 <!-- studio-premium.css loaded in head -->
 
 
