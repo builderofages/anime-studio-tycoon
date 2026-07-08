@@ -58,6 +58,7 @@ const required = [
   "hook-bridge.js",
   "gameplay-polish.js",
   "v5-render-guard.js",
+  "v5-idle-feel.js",
   "studio-premium.css",
   "game-skin.css",
   "hf-design.css",
@@ -153,9 +154,10 @@ assert(!html.includes('href="hf-design.css'), "hf-design.css disabled (ast-v5)")
 assert(!html.includes('href="aaa-ui.css'), "aaa-ui.css disabled (ast-v5)");
 assert(html.includes("legacy-fx.css"), "legacy-fx css linked");
 assert(html.includes("ast-v5.css"), "ast-v5 design css linked");
-assert(html.includes("build 99"), "build 99 tag");
+assert(html.includes("build 100"), "build 100 tag");
 assert(html.includes("Production Score"), "production score label");
-assert(html.includes("Landing"), "build 99 landing tag");
+assert(html.includes("Ship"), "build 100 ship tag");
+assert(html.includes("v5-idle-feel.js"), "idle feel script linked");
 assert(html.includes("dynastyHeroHTML"), "dynasty hero on studio dashboard");
 assert(html.includes("franchisePanelHTML"), "franchise list panel on studio tab");
 assert(html.includes("chaosStudioToggleHTML"), "prominent chaos toggle on studio dashboard");
@@ -276,10 +278,10 @@ assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("guided-tutor
 assert(html.includes('id="btn-start-play"'), "start play cta");
 assert(html.includes('id="btn-start-demo"'), "start demo cta");
 assert(html.includes("start-cta-group"), "start cta group");
-assert(html.includes("Build 99"), "what's new build 99");
-assert(html.includes("Build 99 — Landing"), "what's new landing headline");
-assert(html.includes("play.html"), "what's new play redirect bullet");
-assert(html.includes("Open Graph"), "what's new share cards bullet");
+assert(html.includes("Build 100"), "what's new build 100");
+assert(html.includes("Build 100 — Ship"), "what's new ship headline");
+assert(html.includes("Idle feel"), "what's new idle feel bullet");
+assert(html.includes("Launch ready"), "what's new launch ready bullet");
 assert(html.includes("WebApplication"), "what's new seo bullet");
 assert(existsSync(join(root, "play.html")), "play.html redirect file");
 assert(html.includes('rel="canonical"'), "canonical link tag");
@@ -365,7 +367,7 @@ assert(existsSync(join(root, "scripts/audit-check.mjs")), "audit check script");
 assert(existsSync(join(root, "scripts/playtest-audit.mjs")), "playtest audit script");
 assert(existsSync(join(root, "scripts/playtest-sim.mjs")), "playtest sim script");
 const astCss = readFileSync(join(root, "ast-v5.css"), "utf8");
-assert(astCss.includes("BUILD 99"), "build 99 css marker");
+assert(astCss.includes("BUILD 100"), "build 100 css marker");
 assert(astCss.includes("start-share-link"), "start share link css");
 assert(astCss.includes("aaa-dynasty-hero"), "dynasty hero css");
 assert(astCss.includes("aaa-franchise-panel"), "franchise panel css");
@@ -544,7 +546,7 @@ assert(html.includes("whatsnew"), "what's new modal");
 const rawCount = (html.match(/__raw/g) || []).length;
 assert(rawCount <= 2, "single __raw redirect script", `found ${rawCount}`);
 
-for (const f of ["strings.js", "logic.js", "aaa-upgrade.js", "gameplay-plus.js", "gameplay-ultra.js", "gameplay-endless.js", "gameplay-empire.js", "gameplay-studio.js", "gameplay-final.js", "gameplay-aaa.js", "gameplay-legend.js", "hud-premium.js", "ui-complete.js", "gameplay-studio-rating.js", "gameplay-polish.js", "v5-render-guard.js", "hook-bridge.js"]) {
+for (const f of ["strings.js", "logic.js", "aaa-upgrade.js", "gameplay-plus.js", "gameplay-ultra.js", "gameplay-endless.js", "gameplay-empire.js", "gameplay-studio.js", "gameplay-final.js", "gameplay-aaa.js", "gameplay-legend.js", "hud-premium.js", "ui-complete.js", "gameplay-studio-rating.js", "gameplay-polish.js", "v5-render-guard.js", "v5-idle-feel.js", "hook-bridge.js"]) {
   const r = spawnSync("node", ["--check", join(root, f)], { encoding: "utf8" });
   assert(r.status === 0, `syntax OK: ${f}`, r.stderr?.trim());
 }

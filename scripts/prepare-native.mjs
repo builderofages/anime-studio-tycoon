@@ -46,6 +46,7 @@ const FILES = [
   "gameplay-polish.js",
   "v5-slim-gate.js",
   "v5-render-guard.js",
+  "v5-idle-feel.js",
   "studio-premium.css",
   "game-skin.css",
   "hf-design.css",

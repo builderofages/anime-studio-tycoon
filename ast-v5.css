@@ -4484,3 +4484,5 @@ html.hud-v3-active .coach-gift.coach-gift-unclaimed .coach-gift-ic { animation: 
 html.hud-v3-active .start-share-link { width:100%!important; font-size:13px!important; font-weight:800!important; padding:10px 14px!important; margin-top:6px!important; border-radius:14px!important; border:1px solid rgba(77,212,255,.28)!important; background:rgba(77,212,255,.08)!important; color:var(--ast-cyan)!important; }
 html.hud-v3-active .start-share-link:hover, html.hud-v3-active .start-share-link:focus-visible { background:rgba(77,212,255,.14)!important; border-color:rgba(77,212,255,.45)!important; transform:translateY(-1px)!important; }
 html.hud-v3-active .start-share-hint { margin-top:0!important; }
+
+/* BUILD 100 — Ship: idle-feel wired */

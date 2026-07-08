@@ -26,7 +26,7 @@
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icons/icon-512.png">
 <!-- Legacy gameplay-*.css disabled — aaa-ui + game-skin + hud-premium own chrome -->
-<link rel="stylesheet" href="hud-premium.css?v=99">
+<link rel="stylesheet" href="hud-premium.css?v=100">
 <!-- ui-complete.css disabled — v5 uses aaa-tab-page heroes -->
 <!-- gameplay-studio-rating.css disabled — ast-v5 authority -->
 <!-- studio-premium.css disabled — ast-v5 authority -->
@@ -34,8 +34,8 @@
 <!-- game-skin.css disabled — fought ast-v5 (animation:none, flat panels) -->
 <!-- hf-design.css disabled — ast-v5 authority -->
 <!-- aaa-ui.css disabled — ast-v5 authority -->
-<link rel="stylesheet" href="legacy-fx.css?v=99">
-<link rel="stylesheet" href="ast-v5.css?v=99">
+<link rel="stylesheet" href="legacy-fx.css?v=100">
+<link rel="stylesheet" href="ast-v5.css?v=100">
 <script>document.documentElement.classList.add("premium-hud","hud-v3-active")</script>
 <meta name="theme-color" content="#08050f">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -81,10 +81,10 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available}
 <div id="app">
   <div id="top">
     <div id="studio-rank"><span>🎬</span><span class="rank-tier">Garage Studio</span></div>
-    <div class="res yen"><img src="icons/hf/yen.png?v=99" alt="Yen"><span><span class="v" id="r-yen">0</span> <small>¥</small></span></div>
-    <div class="res fans"><img src="icons/hf/fans.png?v=99" alt="Fans"><span class="v" id="r-fans">0</span></div>
-    <div class="res hype"><img src="icons/hf/hype.png?v=99" alt="Hype"><span class="v" id="r-hype">0</span></div>
-    <div class="res gems"><img src="icons/hf/gems.png?v=99" alt="Gems"><span class="v" id="r-gems">0</span></div>
+    <div class="res yen"><img src="icons/hf/yen.png?v=100" alt="Yen"><span><span class="v" id="r-yen">0</span> <small>¥</small></span></div>
+    <div class="res fans"><img src="icons/hf/fans.png?v=100" alt="Fans"><span class="v" id="r-fans">0</span></div>
+    <div class="res hype"><img src="icons/hf/hype.png?v=100" alt="Hype"><span class="v" id="r-hype">0</span></div>
+    <div class="res gems"><img src="icons/hf/gems.png?v=100" alt="Gems"><span class="v" id="r-gems">0</span></div>
     <div id="trendbar"><span class="spark">📈</span> Trending: <b id="trend">Action</b></div>
   </div>
   <div id="goal"><span id="goal-txt">🎯 Reach 50 Fans for Web Series</span><div class="bar"><i id="goal-bar" style="width:0%"></i></div></div>
@@ -96,7 +96,7 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available}
     <button class="btn-ghost" id="btn-mute">🔊 Sound: On</button>
     <button class="btn-ghost" id="btn-save" style="display:none">💾 Save</button>
     <button class="btn-ghost" id="btn-reset">↺ Reset</button>
-  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 99 · Landing</span></div>
+  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 100 · Ship</span></div>
   <div id="toasts"></div>
   <div id="pwa-install-banner" class="aaa-pwa-install-banner" hidden>
     <div class="aaa-pwa-install-inner">
@@ -113,7 +113,7 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available}
 
 <div class="overlay" id="start" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="start-title">
   <div class="card-modal">
-    <img class="start-hero" src="start-hero.png?v=99" width="140" height="140" alt="Anime Studio Tycoon logo">
+    <img class="start-hero" src="start-hero.png?v=100" width="140" height="140" alt="Anime Studio Tycoon logo">
     <h1 id="start-title">Anime Studio Tycoon</h1>
     <p id="start-tagline">From a one-room studio to a global anime empire</p>
     <label style="display:block;font-size:12px;font-weight:800;color:var(--plum);margin:4px 0 4px">🏢 Studio Name</label>
@@ -338,14 +338,14 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available}
 
 <div class="overlay" id="whatsnew" style="display:none" role="dialog" aria-modal="true" aria-labelledby="whatsnew-title">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <img src="start-hero.png?v=99" alt="Anime Studio Tycoon logo" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
-    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 99 — Landing</h1>
+    <img src="start-hero.png?v=100" alt="Anime Studio Tycoon logo" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
+    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 100 — Ship</h1>
     <div class="offlist whatsnew-list" style="margin:12px 0">
-      <div><span>🔗 play.html</span><b>Legacy link redirects to /play with honest real-game start</b></div>
-      <div><span>📣 Share cards</span><b>Richer Open Graph + Twitter previews for social posts</b></div>
-      <div><span>📲 Start screen</span><b>Share button copies the canonical play link for invites</b></div>
-      <div><span>🔍 SEO</span><b>JSON-LD WebApplication schema + canonical /play URL</b></div>
-      <div><span>📦 PWA</span><b>Manifest short name + description tuned for install search</b></div>
+      <div><span>✨ Idle feel</span><b>Poster sparkles, boost cooldown ring, premiere CTA pulse — now wired in</b></div>
+      <div><span>🚀 Launch ready</span><b>555 tests, TestFlight checklist, native bundle preflight green</b></div>
+      <div><span>🧪 CI sim</span><b>72-playthrough VM sim — honest + demo + unlock gates</b></div>
+      <div><span>📱 iOS</span><b>Capacitor status bar, splash, IAP routing, viewport-fit=cover</b></div>
+      <div><span>🎮 Core</span><b>logic.js extracted — testable unlock math + fresh state</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
   </div>
@@ -448,8 +448,8 @@ document.addEventListener("deviceready", initNativeChrome, false);
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 99 · Landing";
-const ASSET_V = "99";
+const BUILD_TAG = "build 100 · Ship";
+const ASSET_V = "100";
 const OFFLINE_PREVIEW_CAP = 4*3600; // "while away" preview when return is under 4h
 const SHARE_PLAY_URL = "https://anime-studio-tycoon.vercel.app/play";
 const PITY_EPIC = 25;
@@ -5434,20 +5434,21 @@ window.__AST_HOOK__ = {
   pendingUnlockTeasers,
 };
 </script>
-<script src="aaa-upgrade.js?v=99"></script>
-<script src="v5-slim-gate.js?v=99"></script>
-<script src="gameplay-plus.js?v=99"></script>
-<script src="gameplay-ultra.js?v=99"></script>
-<script src="gameplay-endless.js?v=99"></script>
-<script src="gameplay-empire.js?v=99"></script>
-<script src="gameplay-studio.js?v=99"></script>
+<script src="aaa-upgrade.js?v=100"></script>
+<script src="v5-slim-gate.js?v=100"></script>
+<script src="gameplay-plus.js?v=100"></script>
+<script src="gameplay-ultra.js?v=100"></script>
+<script src="gameplay-endless.js?v=100"></script>
+<script src="gameplay-empire.js?v=100"></script>
+<script src="gameplay-studio.js?v=100"></script>
 <!-- gameplay-final/aaa/legend deferred by v5-slim-gate.js until releases>=3 or totalFansEver>=50 -->
-<script src="hud-premium.js?v=99"></script>
-<script src="ui-complete.js?v=99"></script>
-<script src="gameplay-studio-rating.js?v=99"></script>
-<script src="gameplay-polish.js?v=99"></script>
-<script src="hook-bridge.js?v=99"></script>
-<script src="v5-render-guard.js?v=99"></script>
+<script src="hud-premium.js?v=100"></script>
+<script src="ui-complete.js?v=100"></script>
+<script src="gameplay-studio-rating.js?v=100"></script>
+<script src="gameplay-polish.js?v=100"></script>
+<script src="hook-bridge.js?v=100"></script>
+<script src="v5-render-guard.js?v=100"></script>
+<script src="v5-idle-feel.js?v=100"></script>
 <!-- studio-premium.css loaded in head -->
 
 
