@@ -21,9 +21,10 @@ html.hud-v3-active {
   --ast-gutter: 10px;
   --ast-dock: 52px;
   /* Canonical layout tokens (BUILD 72+ overrides legacy BUILD sections) */
-  --gl-card-w: min(236px, 74vw);
+  --gl-card-w: min(212px, 66vw);
   --gl-poster-h: min(292px, 48vw);
-  --gl-carousel-pad: max(12px, calc(50% - var(--gl-card-w) / 2));
+  --gl-peek-inset: 22px;
+  --gl-carousel-pad: max(14px, calc(50% - var(--gl-card-w) / 2 - var(--gl-peek-inset)));
   font-family: 'Inter', system-ui, sans-serif !important;
 }
 
@@ -239,6 +240,7 @@ html.hud-v3-active .aaa-staff-row {
 }
 
 html.hud-v3-active .aaa-staff-row .aaa-staff-portrait {
+  position: relative;
   width: 56px;
   height: 56px;
   margin: 0;
@@ -265,13 +267,7 @@ html.hud-v3-active .aaa-staff-row .muted {
   text-align: left !important;
 }
 
-html.hud-v3-active .aaa-staff-row .aaa-staff-hire {
-  min-width: 88px !important;
-  width: auto !important;
-  padding: 10px 10px !important;
-  margin: 0 !important;
-}
-
+html.hud-v3-active .aaa-staff-row .aaa-staff-hire { min-width: 88px !important; width: auto !important; padding: 10px 10px !important; margin: 0 !important; }
 /* ---- Produce: hero card polish ---- */
 html.hud-v3-active .aaa-show-panel {
   border-radius: var(--ast-r) !important;
@@ -3258,6 +3254,165 @@ html.hud-v3-active .start-cta-demo { width: 100% !important; font-size: 14px !im
 html.hud-v3-active .start-cta-demo:hover, html.hud-v3-active .start-cta-demo:focus-visible { background: rgba(255, 200, 69, 0.14) !important; border-color: rgba(255, 200, 69, 0.5) !important; transform: translateY(-1px) !important; }
 html.hud-v3-active .start-cta-hint, html.hud-v3-active .start-cta-hint-demo { margin: 0 !important; font-size: 11px !important; line-height: 1.45 !important; text-align: center !important; color: var(--ast-muted) !important; opacity: 0.92 !important; }
 html.hud-v3-active .start-cta-hint code { font-size: 10px !important; padding: 1px 5px !important; border-radius: 6px !important; background: rgba(255, 255, 255, 0.06) !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; color: var(--ast-gold) !important; font-weight: 700 !important; }
+/* BUILD 91 — retain: achievements, staff afford, stars unlock */
+.achieve-pop { position: fixed; top: 72px; left: 50%; transform: translateX(-50%) translateY(-20px); z-index: 99998; padding: 14px 22px; border-radius: 16px; background: linear-gradient(135deg,#2c1538,#5a2d6e); color: #ffd700; font-weight: 900; font-size: 15px; box-shadow: 0 12px 40px rgba(0,0,0,.35); opacity: 0; pointer-events: none; transition: opacity .35s, transform .35s; }
+.achieve-pop.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+html.hud-v3-active .aaa-page-hero.aaa-staff-hero-empty, html.hud-v3-active .aaa-page-hero.aaa-staff-hero-low { border-color: rgba(255,92,168,.32) !important; background: linear-gradient(135deg,rgba(255,92,168,.14),rgba(255,200,69,.08)) !important; }
+html.hud-v3-active .aaa-staff-hero-meta { display: flex !important; flex-wrap: wrap !important; gap: 6px !important; justify-content: center !important; margin-top: 8px !important; }
+html.hud-v3-active .aaa-staff-pill-afford { color: var(--ast-gold) !important; background: rgba(255,200,69,.16) !important; border: 1px solid rgba(255,200,69,.35) !important; }
+html.hud-v3-active .aaa-staff-hero-cta-wrap { display: flex !important; flex-direction: column !important; gap: 8px !important; margin-top: 10px !important; padding-top: 10px !important; border-top: 1px dashed rgba(255,92,168,.28) !important; }
+html.hud-v3-active .aaa-staff-hero-badge { align-self: center !important; padding: 4px 10px !important; border-radius: 999px !important; font: 900 10px/1 system-ui !important; letter-spacing: .08em !important; text-transform: uppercase !important; color: #fff !important; background: linear-gradient(135deg,var(--ast-pink),var(--ast-pink-2)) !important; box-shadow: 0 6px 18px rgba(255,92,168,.35) !important; }
+html.hud-v3-active .aaa-staff-hero-lead { margin: 0 !important; font: 700 12px/1.45 system-ui !important; color: var(--ast-gold) !important; text-align: center !important; }
+html.hud-v3-active .aaa-staff-hero-cta { width: 100% !important; font-size: 14px !important; font-weight: 800 !important; padding: 12px 14px !important; border-radius: 14px !important; box-shadow: 0 8px 24px rgba(255,92,168,.35) !important; }
+html.hud-v3-active .aaa-staff-hero-cta small { display: block !important; margin-top: 3px !important; font-size: 10px !important; font-weight: 700 !important; opacity: .92 !important; }
+html.hud-v3-active .aaa-staff-rank { position: absolute !important; top: -4px !important; left: -4px !important; z-index: 2 !important; min-width: 20px !important; height: 20px !important; padding: 0 5px !important; border-radius: 8px !important; font: 900 10px/20px system-ui !important; text-align: center !important; color: #fff !important; background: rgba(8,6,15,.82) !important; border: 1px solid rgba(255,92,168,.4) !important; }
+html.hud-v3-active .aaa-staff-blurb { margin: 0 0 4px !important; font: 700 11px/1.35 system-ui !important; color: #e8e4f4 !important; text-align: left !important; }
+html.hud-v3-active .aaa-staff-stats { display: flex !important; flex-direction: column !important; gap: 2px !important; }
+html.hud-v3-active .aaa-staff-rank-line { font-size: 10px !important; }
+html.hud-v3-active .aaa-staff-rank-preview { display: inline-flex !important; align-items: center !important; justify-content: center !important; min-width: 18px !important; height: 18px !important; padding: 0 4px !important; border-radius: 6px !important; font: 900 10px/1 system-ui !important; color: #fff !important; background: rgba(255,92,168,.22) !important; border: 1px solid rgba(255,92,168,.35) !important; }
+html.hud-v3-active .aaa-staff-rank-preview.aaa-rank-A { background: linear-gradient(135deg,rgba(63,169,255,.35),rgba(107,92,255,.28)) !important; border-color: rgba(63,169,255,.45) !important; }
+html.hud-v3-active .aaa-staff-rank-preview.aaa-rank-S { background: linear-gradient(135deg,#ffd45a,#ff5ca8) !important; border-color: rgba(255,212,90,.55) !important; box-shadow: 0 0 12px rgba(255,200,69,.35) !important; }
+html.hud-v3-active .aaa-staff-row.aaa-staff-afford { border-color: rgba(255,200,69,.45) !important; box-shadow: 0 0 0 1px rgba(255,200,69,.25), 0 8px 24px rgba(255,200,69,.12) !important; }
+html.hud-v3-active .aaa-staff-hero-afford .aaa-staff-hero-cta:not(:disabled), html.hud-v3-active .aaa-staff-row.aaa-staff-afford .aaa-staff-hire-afford:not(:disabled), html.hud-v3-active .aaa-staff-hire-afford:not(:disabled) { animation: ast-staff-afford-pulse 2.2s ease-in-out infinite !important; box-shadow: 0 6px 20px rgba(255,200,69,.35), 0 0 16px rgba(255,92,168,.2) !important; }
+@keyframes ast-staff-afford-pulse { 0%,100% { box-shadow: 0 6px 18px rgba(255,200,69,.28); } 50% { box-shadow: 0 8px 26px rgba(255,92,168,.38); } }
+/* Stars unlock + gacha hero */
+html.hud-v3-active .aaa-stars-unlock-modal {
+  max-width: 400px !important;
+  text-align: center !important;
+  background: var(--ast-glass) !important;
+  backdrop-filter: blur(16px) saturate(1.35) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.35) !important;
+  border: 1px solid rgba(180, 140, 255, 0.35) !important;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.55), 0 0 32px rgba(107, 92, 255, 0.22) !important;
+}
+
+html.hud-v3-active .aaa-stars-unlock-hero {
+  font-size: 48px !important;
+  line-height: 1 !important;
+  margin: 4px auto 10px !important;
+  filter: drop-shadow(0 4px 16px rgba(255, 200, 69, 0.45));
+}
+
+html.hud-v3-active .aaa-stars-unlock-lead {
+  margin: 8px 0 12px !important;
+  font-size: 13px !important;
+  line-height: 1.45 !important;
+  color: var(--ast-muted) !important;
+}
+
+html.hud-v3-active .aaa-stars-unlock-perks {
+  display: grid !important;
+  gap: 8px !important;
+  margin: 10px 0 4px !important;
+  text-align: left !important;
+}
+
+html.hud-v3-active .aaa-stars-unlock-perks > div {
+  display: grid !important;
+  grid-template-columns: 28px 1fr !important;
+  gap: 2px 8px !important;
+  padding: 10px 12px !important;
+  border-radius: 12px !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+html.hud-v3-active .aaa-stars-unlock-perks > div > span:first-child {
+  grid-row: span 2 !important;
+  font-size: 20px !important;
+  align-self: center !important;
+}
+
+html.hud-v3-active .aaa-stars-unlock-perks b {
+  font-size: 12px !important;
+  color: #fff !important;
+}
+
+html.hud-v3-active .aaa-stars-unlock-perks small {
+  grid-column: 2 !important;
+  font-size: 10px !important;
+  color: var(--ast-muted) !important;
+}
+
+html.hud-v3-active .aaa-stars-unlock-cta {
+  box-shadow: 0 10px 28px rgba(255, 200, 69, 0.35) !important;
+}
+
+html.hud-v3-active .aaa-pity-hero {
+  margin: 10px 0 12px !important;
+  padding: 10px 12px !important;
+  border-radius: 14px !important;
+  background: rgba(8, 6, 18, 0.45) !important;
+  border: 1px solid rgba(180, 140, 255, 0.22) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+html.hud-v3-active .aaa-pity-head {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  margin-bottom: 6px !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+}
+
+html.hud-v3-active .aaa-pity-label {
+  color: var(--ast-gold) !important;
+  letter-spacing: 0.04em !important;
+}
+
+html.hud-v3-active .aaa-pity-count {
+  color: #e9d5ff !important;
+  font-variant-numeric: tabular-nums !important;
+}
+
+html.hud-v3-active .aaa-pity-hero .pity-bar {
+  height: 8px !important;
+  border-radius: 999px !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  overflow: hidden !important;
+}
+
+html.hud-v3-active .aaa-pity-hero .pity-bar i {
+  display: block !important;
+  height: 100% !important;
+  border-radius: inherit !important;
+  background: linear-gradient(90deg, #6b5cff, #ff5ca8, #ffc845) !important;
+  transition: width 0.25s ease !important;
+}
+
+html.hud-v3-active .aaa-pity-hints {
+  display: flex !important;
+  justify-content: space-between !important;
+  gap: 8px !important;
+  margin-top: 6px !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  color: var(--ast-muted) !important;
+}
+
+html.hud-v3-active .aaa-gacha-btn.free {
+  grid-column: 1 / -1 !important;
+  background: linear-gradient(135deg, rgba(255, 200, 69, 0.28), rgba(255, 92, 168, 0.22)) !important;
+  border: 1px solid rgba(255, 200, 69, 0.45) !important;
+  color: #fff !important;
+  box-shadow: 0 8px 24px rgba(255, 200, 69, 0.28) !important;
+}
+
+html.hud-v3-active .aaa-free-scout-pulse {
+  animation: ast-free-scout-pulse 2s ease-in-out infinite !important;
+}
+
+@keyframes ast-free-scout-pulse {
+  0%, 100% { box-shadow: 0 8px 24px rgba(255, 200, 69, 0.28); transform: scale(1); }
+  50% { box-shadow: 0 10px 32px rgba(255, 92, 168, 0.42); transform: scale(1.02); }
+}
+
+html.hud-v3-active .aaa-page-hero.aaa-gacha-hero .aaa-gacha-btns {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 8px !important;
+}
 
 /* BUILD 90 — guided tutorial */
 html.gt-tutorial-active::before { content: "" !important; position: fixed !important; inset: 0 !important; background: rgba(4,2,12,.68) !important; z-index: 9998 !important; pointer-events: none !important; }
@@ -3274,3 +3429,269 @@ html.gt-tutorial-active .gt-highlight { position: relative !important; z-index: 
 #guided-tutorial .gt-next { flex: 1 !important; max-width: 160px !important; font-size: 13px !important; padding: 10px 12px !important; }
 html.hud-v3-active #pathway-rail.coach-guided { box-shadow: 0 0 0 2px rgba(255,92,168,.35), 0 8px 24px rgba(255,92,168,.2) !important; z-index: 9999 !important; position: relative !important; }
 html.hud-v3-active #pathway-rail.coach-guided .coach-label::after { content: " · Guided" !important; color: var(--ast-gold) !important; font-weight: 800 !important; }
+
+/* ========== BUILD 91 — Produce + Greenlight mockup fidelity (v4 + GL ref) ========== */
+
+/* Produce: EP pill, meta chips, team strip — design-ref-v4 */
+html.hud-v3-active .aaa-show-panel .aaa-meta-col {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0 !important;
+  padding: 10px 12px !important;
+  border-radius: 14px !important;
+  background: rgba(10, 7, 18, 0.55) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04) !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-meta-head {
+  display: flex !important;
+  align-items: center !important;
+  margin: 0 0 6px !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-ep-pill {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 3px 10px !important;
+  font-size: 9px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.1em !important;
+  line-height: 1.25 !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-title {
+  margin: 0 0 5px !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-chips {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  gap: 5px !important;
+  margin: 0 0 8px !important;
+  overflow-x: auto !important;
+  scrollbar-width: none !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-chips::-webkit-scrollbar {
+  display: none !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-chip {
+  flex: 0 0 auto !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  white-space: nowrap !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-team {
+  padding: 10px 12px 12px !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-team-head {
+  align-items: center !important;
+  margin-bottom: 10px !important;
+  padding: 0 2px !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-team-head > span {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-team-scroll {
+  display: flex !important;
+  align-items: stretch !important;
+  justify-content: flex-start !important;
+  gap: 6px !important;
+  padding: 0 2px 4px !important;
+  scroll-padding-inline: 12px !important;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 10px, #000 calc(100% - 10px), transparent 100%) !important;
+  mask-image: linear-gradient(90deg, transparent 0, #000 10px, #000 calc(100% - 10px), transparent 100%) !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-team-card {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  flex: 0 0 76px !important;
+  min-width: 76px !important;
+  padding: 8px 6px 7px !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-team-card .aaa-team-avatar {
+  margin: 6px auto 5px !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-team-role {
+  width: 100% !important;
+  text-align: center !important;
+}
+
+/* Greenlight: sticky genre row + edge scroll shadows — design-ref-greenlight */
+html.hud-v3-active .aaa-gl-page {
+  overflow: visible !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-genre-wrap {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 9 !important;
+  margin: 0 !important;
+  padding: 6px 0 4px !important;
+  background: linear-gradient(180deg, rgba(8, 6, 15, 0.97) 0%, rgba(8, 6, 15, 0.9) 100%) !important;
+  backdrop-filter: blur(14px) saturate(1.2) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(1.2) !important;
+  border-bottom: 1px solid rgba(255, 200, 69, 0.14) !important;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.28) !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-genre-wrap .aaa-genre-row {
+  padding: 4px 14px 6px !important;
+  mask-image: linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 28px), transparent 100%) !important;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 28px), transparent 100%) !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-genre-wrap::before,
+html.hud-v3-active .aaa-gl-page .aaa-genre-wrap::after {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  width: 20px !important;
+  pointer-events: none !important;
+  z-index: 2 !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-genre-wrap::before {
+  left: 0 !important;
+  background: linear-gradient(90deg, rgba(8, 6, 15, 0.98), transparent) !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-genre-wrap::after {
+  right: 24px !important;
+  background: linear-gradient(270deg, rgba(8, 6, 15, 0.98), transparent) !important;
+}
+
+/* Greenlight: carousel edge peek cards */
+html.hud-v3-active .aaa-gl-page .aaa-gl-carousel {
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%) !important;
+  mask-image: linear-gradient(90deg, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%) !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-card:not(.sel) {
+  transform: scale(0.93) !important;
+  opacity: 0.9 !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-card.sel {
+  transform: scale(1.05) !important;
+  opacity: 1 !important;
+}
+
+/* Greenlight: risk/rewards typography — design-ref-greenlight */
+html.hud-v3-active .aaa-gl-page .aaa-gl-analytics .aaa-gl-rewards h5,
+html.hud-v3-active .aaa-gl-page .aaa-gl-analytics .aaa-gl-risk h5 {
+  font-size: 8px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  margin: 0 0 8px !important;
+  color: var(--ast-gold) !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-analytics .aaa-gl-reward-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 8px !important;
+  padding: 5px 0 !important;
+  font-size: 9px !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-analytics .aaa-gl-reward-row span {
+  font-size: 8px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.03em !important;
+  color: var(--ast-muted) !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-analytics .aaa-gl-reward-row b {
+  font-size: 12px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.02em !important;
+  color: var(--ast-gold) !important;
+  text-shadow: 0 0 10px rgba(255, 200, 69, 0.35) !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-analytics .aaa-gl-risk-level {
+  font-size: 8px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-analytics .aaa-gl-risk p {
+  margin: 6px 0 0 !important;
+  font-size: 8.5px !important;
+  font-weight: 600 !important;
+  line-height: 1.45 !important;
+  color: rgba(154, 146, 176, 0.95) !important;
+}
+
+/* Greenlight: sticky confirm CTA on mobile */
+@media (max-width: 720px) {
+  html.hud-v3-active .aaa-gl-page .aaa-gl-detail {
+    padding-bottom: calc(var(--safe-b, 0px) + 10px) !important;
+  }
+
+  html.hud-v3-active .aaa-gl-page .aaa-gl-confirm-banner {
+    position: sticky !important;
+    bottom: calc(var(--safe-b, 0px) + 4px) !important;
+    z-index: 11 !important;
+    margin-top: 12px !important;
+    margin-bottom: 2px !important;
+    box-shadow:
+      0 -10px 28px rgba(0, 0, 0, 0.42),
+      0 10px 28px rgba(255, 92, 168, 0.38),
+      0 0 24px rgba(255, 200, 69, 0.18) !important;
+  }
+}
+
+@media (max-width: 380px) {
+  html.hud-v3-active {
+    --gl-card-w: min(198px, 72vw);
+    --gl-peek-inset: 18px;
+  }
+}
+
+/* BUILD 91 — mid-game: prem #2, fan goal pulse, login streak, rival race, GL trend */
+html.hud-v3-active #premiere.prem-second .premiere-card { box-shadow: 0 18px 44px rgba(0,0,0,.5), 0 0 24px rgba(255,200,69,.18) !important; }
+html.hud-v3-active #premiere .prem-second-ribbon { display:block !important; margin:10px 14px 0 !important; padding:7px 12px !important; border-radius:999px !important; font:800 10px/1 system-ui !important; letter-spacing:.08em !important; text-transform:uppercase !important; text-align:center !important; color:var(--ast-gold) !important; background:rgba(255,200,69,.12) !important; border:1px solid rgba(255,200,69,.32) !important; }
+html.hud-v3-active #premiere .prem-banner-second { box-shadow:inset 0 0 0 1px rgba(255,200,69,.22) !important; }
+html.hud-v3-active #premiere .prem-second-kicker { margin:8px 16px 0 !important; font:700 11px/1.4 system-ui !important; color:var(--ast-muted) !important; text-align:center !important; }
+html.hud-v3-active #goal.goal-milestone-hit { animation:goal-milestone-pulse 1.2s ease-out !important; border-color:rgba(255,92,168,.55) !important; }
+@keyframes goal-milestone-pulse { 0%,100%{box-shadow:0 4px 18px rgba(0,0,0,.28)} 45%{box-shadow:0 0 0 2px rgba(255,92,168,.45),0 8px 28px rgba(255,200,69,.28)} }
+html.hud-v3-active .aaa-login-streak-hero { display:flex !important; align-items:center !important; gap:10px !important; margin:0 0 12px !important; padding:12px 14px !important; border-radius:16px !important; background:linear-gradient(135deg,rgba(255,92,168,.14),rgba(255,200,69,.1)) !important; border:1px solid rgba(255,200,69,.32) !important; }
+html.hud-v3-active .aaa-login-streak-hero.hot { border-color:rgba(255,92,168,.45) !important; box-shadow:0 0 20px rgba(255,92,168,.2) !important; }
+html.hud-v3-active .aaa-login-streak-hero.ready { outline:1px solid rgba(255,200,69,.35) !important; }
+html.hud-v3-active .aaa-login-streak-flame { font-size:28px !important; } html.hud-v3-active .aaa-login-streak-body { flex:1 !important; min-width:0 !important; }
+html.hud-v3-active .aaa-login-streak-n { display:block !important; font-size:18px !important; font-weight:900 !important; color:#fff !important; }
+html.hud-v3-active .aaa-login-streak-sub { display:block !important; font-size:11px !important; color:var(--ast-muted) !important; }
+html.hud-v3-active .aaa-login-streak-best { text-align:center !important; padding:4px 8px !important; border-radius:10px !important; background:rgba(0,0,0,.22) !important; }
+html.hud-v3-active .aaa-login-streak-best b { font-size:16px !important; color:var(--ast-gold) !important; }
+html.hud-v3-active .rival-race-widget { display:flex !important; align-items:center !important; gap:8px !important; margin:4px var(--ast-gutter) 0 !important; padding:6px 12px !important; border-radius:12px !important; background:rgba(8,6,18,.55) !important; border:1px solid rgba(255,255,255,.1) !important; font-size:11px !important; font-weight:700 !important; color:var(--ast-muted) !important; }
+html.hud-v3-active .rival-race-widget .rival-race-rank b { color:var(--ast-gold) !important; font-size:14px !important; }
+html.hud-v3-active .rival-race-widget .rival-race-copy { flex:1 !important; min-width:0 !important; overflow:hidden !important; text-overflow:ellipsis !important; white-space:nowrap !important; }
+html.hud-v3-active .aaa-gl-trend-suggest { display:flex !important; align-items:center !important; gap:10px !important; margin:8px var(--ast-gutter) 10px !important; padding:10px 12px !important; border-radius:14px !important; background:linear-gradient(90deg,rgba(255,92,168,.12),rgba(255,200,69,.1)) !important; border:1px solid rgba(255,200,69,.28) !important; }
+html.hud-v3-active .aaa-gl-trend-suggest.match { border-color:rgba(74,222,128,.4) !important; background:rgba(74,222,128,.08) !important; }
+html.hud-v3-active .aaa-gl-trend-suggest-body { flex:1 !important; min-width:0 !important; }
+html.hud-v3-active .aaa-gl-trend-suggest-body b { display:block !important; font-size:12px !important; color:#fff !important; }
+html.hud-v3-active .aaa-gl-trend-suggest-body span { display:block !important; font-size:10px !important; color:var(--ast-muted) !important; }
+html.hud-v3-active .aaa-gl-trend-suggest-btn { flex-shrink:0 !important; font-size:11px !important; padding:8px 12px !important; }

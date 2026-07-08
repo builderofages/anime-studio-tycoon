@@ -22,7 +22,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%233a2b4d'/%3E%3Ccircle cx='32' cy='32' r='30' fill='none' stroke='%23ffc845' stroke-width='3'/%3E%3Cg fill='%23ff9bc4'%3E%3Cellipse cx='32' cy='15' rx='5' ry='8'/%3E%3Cellipse cx='32' cy='49' rx='5' ry='8'/%3E%3Cellipse cx='15' cy='32' rx='8' ry='5'/%3E%3Cellipse cx='49' cy='32' rx='8' ry='5'/%3E%3C/g%3E%3Ccircle cx='32' cy='32' r='7' fill='%23ffc845'/%3E%3C/svg%3E">
 <link rel="manifest" href="manifest.json">
 <!-- Legacy gameplay-*.css disabled — aaa-ui + game-skin + hud-premium own chrome -->
-<link rel="stylesheet" href="hud-premium.css?v=90">
+<link rel="stylesheet" href="hud-premium.css?v=91">
 <!-- ui-complete.css disabled — v5 uses aaa-tab-page heroes -->
 <!-- gameplay-studio-rating.css disabled — ast-v5 authority -->
 <!-- studio-premium.css disabled — ast-v5 authority -->
@@ -30,8 +30,8 @@
 <!-- game-skin.css disabled — fought ast-v5 (animation:none, flat panels) -->
 <!-- hf-design.css disabled — ast-v5 authority -->
 <!-- aaa-ui.css disabled — ast-v5 authority -->
-<link rel="stylesheet" href="legacy-fx.css?v=90">
-<link rel="stylesheet" href="ast-v5.css?v=90">
+<link rel="stylesheet" href="legacy-fx.css?v=91">
+<link rel="stylesheet" href="ast-v5.css?v=91">
 <script>document.documentElement.classList.add("premium-hud","hud-v3-active")</script>
 <meta name="theme-color" content="#08050f">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -74,10 +74,10 @@
 <div id="app">
   <div id="top">
     <div id="studio-rank"><span>🎬</span><span class="rank-tier">Garage Studio</span></div>
-    <div class="res yen"><img src="icons/hf/yen.png?v=88" alt="Yen"><span><span class="v" id="r-yen">0</span> <small>¥</small></span></div>
-    <div class="res fans"><img src="icons/hf/fans.png?v=88" alt="Fans"><span class="v" id="r-fans">0</span></div>
-    <div class="res hype"><img src="icons/hf/hype.png?v=88" alt="Hype"><span class="v" id="r-hype">0</span></div>
-    <div class="res gems"><img src="icons/hf/gems.png?v=88" alt="Gems"><span class="v" id="r-gems">0</span></div>
+    <div class="res yen"><img src="icons/hf/yen.png?v=91" alt="Yen"><span><span class="v" id="r-yen">0</span> <small>¥</small></span></div>
+    <div class="res fans"><img src="icons/hf/fans.png?v=91" alt="Fans"><span class="v" id="r-fans">0</span></div>
+    <div class="res hype"><img src="icons/hf/hype.png?v=91" alt="Hype"><span class="v" id="r-hype">0</span></div>
+    <div class="res gems"><img src="icons/hf/gems.png?v=91" alt="Gems"><span class="v" id="r-gems">0</span></div>
     <div id="trendbar"><span class="spark">📈</span> Trending: <b id="trend">Action</b></div>
   </div>
   <div id="goal"><span id="goal-txt">🎯 Reach 50 Fans for Web Series</span><div class="bar"><i id="goal-bar" style="width:0%"></i></div></div>
@@ -89,13 +89,13 @@
     <button class="btn-ghost" id="btn-mute">🔊 Sound: On</button>
     <button class="btn-ghost" id="btn-save" style="display:none">💾 Save</button>
     <button class="btn-ghost" id="btn-reset">↺ Reset</button>
-  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 90 · Guided</span></div>
+  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 91 · Retain</span></div>
   <div id="toasts"></div>
 </div>
 
 <div class="overlay" id="start" style="display: none;">
   <div class="card-modal">
-    <img class="start-hero" src="start-hero.png?v=88" width="140" height="140" alt="Anime Studio Tycoon">
+    <img class="start-hero" src="start-hero.png?v=91" width="140" height="140" alt="Anime Studio Tycoon">
     <h1>Anime Studio Tycoon</h1>
     <p id="start-tagline">From a one-room studio to a global anime empire</p>
     <label style="display:block;font-size:12px;font-weight:800;color:var(--plum);margin:4px 0 4px">🏢 Studio Name</label>
@@ -166,17 +166,31 @@
   </div>
 </div>
 
+<div class="overlay aaa-stars-unlock-overlay" id="stars-unlock" style="display:none">
+  <div class="card-modal aaa-stars-unlock-modal">
+    <div class="aaa-stars-unlock-hero" aria-hidden="true">⭐</div>
+    <h1 style="font-size:22px;text-align:center">⭐ Star Talent Unlocked!</h1>
+    <p class="aaa-stars-unlock-lead">Scout famous creators to boost premiere quality. Rarer stars mean bigger box office.</p>
+    <div class="aaa-stars-unlock-perks">
+      <div><span>🎁</span><b>First scout is FREE</b><small>Premium odds — one-time welcome bonus</small></div>
+      <div><span>🍀</span><b>Pity counter</b><small>Epic+ guaranteed on premium scouts</small></div>
+    </div>
+    <button class="btn-gold aaa-stars-unlock-cta" data-act="stars-unlock-scout" style="width:100%;font-size:16px;margin-top:10px">🌟 Scout Your First Star — FREE</button>
+    <button class="btn-ghost" data-act="stars-unlock-close" style="width:100%;margin-top:8px;font-size:13px">Maybe later</button>
+  </div>
+</div>
+
 <div class="overlay" id="whatsnew" style="display:none">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <img src="start-hero.png?v=88" alt="" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
-    <h1 style="font-size:22px;text-align:center">✨ Build 90 — Discover + Ref Polish</h1>
+    <img src="start-hero.png?v=91" alt="" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
+    <h1 style="font-size:22px;text-align:center">✨ Build 91 — Mid-Game Loop</h1>
     <div class="offlist" style="margin:12px 0">
-      <div><span>🎮 Honest start</span><b>Two CTAs on the start screen — Play (real save) vs Try Demo (showcase)</b></div>
-      <div><span>🎬 Produce v4</span><b>Hero card proportions, laurel S badge, tighter chip row — closer to design-ref-v4</b></div>
-      <div><span>🌸 Greenlight</span><b>Carousel selected glow, trending pill, compact analytics deck — design-ref-greenlight</b></div>
-      <div><span>🎯 Goal bar</span><b>Slimmer milestone bar on greenlight view; safe-area padding on mobile</b></div>
-      <div><span>⚡ Boost</span><b>Tap the produce poster to speed episodes — TAP TO BOOST hint</b></div>
-      <div><span>🎬 Demo mode</span><b><code>?demo=1</code> or Try Demo — Sakura Films showcase for screenshots</b></div>
+      <div><span>🎬 Premiere #2</span><b>Lighter second-hit celebration — still special, not as big as your debut</b></div>
+      <div><span>📈 Fan milestones</span><b>Toasts at 10 · 50 · 100 fans with goal bar sync</b></div>
+      <div><span>🔥 Login streak</span><b>Bigger daily streak hero on the Quests tab</b></div>
+      <div><span>🏁 Rival race</span><b>Live industry rank widget — your position vs AI studios</b></div>
+      <div><span>🌸 Trending pick</span><b>Auto-suggest the hot genre on greenlight for bonus rewards</b></div>
+      <div><span>⭐ Stars unlock</span><b>Scout talent after 2 premieres — free first scout + pity counter</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
   </div>
@@ -216,8 +230,11 @@ const STORE_PAYMENTS = true; // store always visible; buyReal routes web→check
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 90 · Guided";
-const ASSET_V = "90";
+const BUILD_TAG = "build 91 · Retain";
+const ASSET_V = "91";
+const SHARE_PLAY_URL = "https://anime-studio-tycoon.vercel.app/play";
+const PITY_EPIC = 25;
+const PITY_LEG = 80;
 const SHOWCASE_TEAM={director:{lv:60,rank:"S"},writer:{lv:50,rank:"A"},animator:{lv:60,rank:"S"},voice:{lv:45,rank:"A"},producer:{lv:50,rank:"S"}};
 const POSTER_META={
   "Sakura no Yakusoku":{ja:"桜色の約束",en:"SAKURA NO YAKUSOKU",tagline:"未来を、もう一度描け。"},
@@ -557,11 +574,18 @@ const DASHBOARD_BG=_PCDN+"hf_20260615_090333_353ef636-ad49-44bb-9447-8653a12f9ea
 const GEMS_ICON=_PCDN+"hf_20260615_090332_3e1dbb67-bab0-488a-abd4-5c9b12bc2740.png";
 
 const ROLES = {
-  animator:{ name:"Animator",     img:"https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063641_548ffa02-f73f-497b-8207-eebf6795bd1b.jpeg",   dim:"anim",      dimName:"Animation", base:200, growth:1.17, power:3.0, salary:1.5 },
-  writer:  { name:"Writer",       img:"https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063647_02e8cae8-6ded-4196-a7b2-7898f2d68d3e.jpeg",     dim:"story",     dimName:"Story",     base:280, growth:1.17, power:2.6, salary:1.5 },
-  director:{ name:"Director",     img:"https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg",   dim:"direction", dimName:"Direction", base:520, growth:1.19, power:2.6, salary:2.6 },
-  voice:   { name:"Voice Actor",  img:"https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063650_01c844e6-d869-46ac-826d-ad45842583db.jpeg", dim:"voice",     dimName:"Voice",     base:380, growth:1.17, power:2.6, salary:2.0 },
-  producer:{ name:"Producer",     img:"https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063653_0cab503b-2e31-4345-99ff-ae5e7feaf8cf.jpeg", dim:"produce",   dimName:"Throughput", base:900, growth:1.20, power:4.2, salary:3.0, note:"Raw output — speeds every production. Doesn't change star rating." },
+  animator:{ name:"Animator",     img:"https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063641_548ffa02-f73f-497b-8207-eebf6795bd1b.jpeg",   dim:"anim",      dimName:"Animation", base:200, growth:1.17, power:3.0, salary:1.5, blurb:"Draws every frame — speeds Animation work" },
+  writer:  { name:"Writer",       img:"https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063647_02e8cae8-6ded-4196-a7b2-7898f2d68d3e.jpeg",     dim:"story",     dimName:"Story",     base:280, growth:1.17, power:2.6, salary:1.5, blurb:"Writes scripts — boosts Story quality" },
+  director:{ name:"Director",     img:"https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg",   dim:"direction", dimName:"Direction", base:520, growth:1.19, power:2.6, salary:2.6, blurb:"Shapes the vision — lifts Direction & premiere score" },
+  voice:   { name:"Voice Actor",  img:"https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063650_01c844e6-d869-46ac-826d-ad45842583db.jpeg", dim:"voice",     dimName:"Voice",     base:380, growth:1.17, power:2.6, salary:2.0, blurb:"Records dialogue — powers Voice acting" },
+  producer:{ name:"Producer",     img:"https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063653_0cab503b-2e31-4345-99ff-ae5e7feaf8cf.jpeg", dim:"produce",   dimName:"Throughput", base:900, growth:1.20, power:4.2, salary:3.0, note:"Raw output — speeds every production. Doesn't change star rating.", blurb:"Schedules throughput — raw speed on every show" },
+};
+const ROLE_BLURBS={
+  animator:"Keyframes & motion — boosts animation score.",
+  writer:"Scripts & story beats — fewer weak premieres.",
+  director:"Overall vision — biggest quality boost.",
+  voice:"Character performances — fan appeal.",
+  producer:"Throughput — speeds every production line.",
 };
 const DIMS = ["story","anim","direction","voice"];
 const DIM_OF_ROLE = Object.fromEntries(Object.entries(ROLES).map(([k,v])=>[v.dim,k]));
@@ -743,6 +767,49 @@ function industryStandings(){
   return { all, idx, rank:idx+1, total:all.length, me };
 }
 
+const FAN_TOAST_MILESTONES = [
+  { fans:10,  label:"Reach 10 Fans — first followers",  toast:"🌸 10 fans! Your studio has its first audience." },
+  { fans:50,  label:"Reach 50 Fans — growing buzz",     toast:"📈 50 fans! Word is spreading." },
+  { fans:100, label:"Reach 100 Fans — local hit",       toast:"🔥 100 fans! You're a local sensation." },
+];
+function allGoalMilestones(){
+  const merged=[...FAN_TOAST_MILESTONES.map(m=>({fans:m.fans,label:m.label})),...MILESTONES];
+  merged.sort((a,b)=>a.fans-b.fans);
+  const seen=new Set();
+  return merged.filter(m=>{ if(seen.has(m.fans)) return false; seen.add(m.fans); return true; });
+}
+function checkFanMilestoneToasts(){
+  if(OFFLINE) return;
+  S.fanMilestonesToast=S.fanMilestonesToast||[];
+  for(const m of FAN_TOAST_MILESTONES){
+    if(S.fans>=m.fans && !S.fanMilestonesToast.includes(m.fans)){
+      S.fanMilestonesToast.push(m.fans);
+      toastSafe(m.toast,true);
+      window.__AST_FX__?.burst?.(10);
+      const goal=document.getElementById("goal");
+      if(goal){ goal.classList.add("goal-milestone-hit"); setTimeout(()=>goal.classList.remove("goal-milestone-hit"),1400); }
+    }
+  }
+}
+function suggestedGreenlightGenre(){ return trendGenre(); }
+function applyTrendingGenreSuggest(){
+  const trend=suggestedGreenlightGenre();
+  const idx=GENRES.indexOf(trend);
+  _selGenre=idx>=0?idx:-1;
+  const list=showcaseForGreenlight();
+  const match=list.find(s=>s.genre===trend)||list.find(s=>s.trending)||list[0];
+  if(match){ _selGlPid=match.pid; _selGlGenre=match.genre; }
+  toastSafe(`🔥 Trending pick: ${trend} — bonus fans & yen!`,true);
+  play("click");
+  render();
+}
+function currentLoginStreak(){
+  const today=todayStr();
+  const y=new Date(Date.now()-86400000).toISOString().slice(0,10);
+  if(S.loginLastClaimDate===today||S.loginLastClaimDate===y) return S.loginStreak||0;
+  return 0;
+}
+
 const MILESTONES = [
   { fans:20,    label:"Earn 20 Fans to unlock Web Series" },
   { fans:120,   label:"Reach 120 Fans for your own TV Series" },
@@ -867,7 +934,7 @@ function freshState(){
     stamina:100, chaos:0, chaosMode:false, lastChaos:0, lastStarDemand:0,
     items:{}, entitlements:[], purchaseLog:[], firstPurchaseDone:false, noAds:false, wheelDate:"", scratchDate:"",
     studioName:"", hallOfFame:[], bestRank:99,
-    unlockedSeen:[], franchises:{}, ageOk:false,
+    unlockedSeen:[], franchises:{}, ageOk:false, freeScoutUsed:false, starsUnlockModalSeen:false,
     gems:0, producerPass:false, bundleBought:false, goldenUntil:0, rewardedUntil:0, rewardedCdUntil:0,
     milestonesClaimed:[], seasonClaimed:[],
     slots:1, projects:[null],   // each slot: {pid, genre, progress} or null
@@ -880,7 +947,8 @@ function freshState(){
     releases:0,
     quests:[], questProg:{releases:0,yen:0,campaigns:0,hires:0,hypeSpent:0,scouts:0,greenlit:0,taps:0},
     weekKey:"", weeklyQuests:[], weekProg:{releases:0,yen:0,campaigns:0,hires:0,hypeSpent:0,scouts:0,greenlit:0,taps:0},
-    loginMonth:"", loginClaimedCount:0, loginLastClaimDate:"", lastDecision:0, studioLevel:1, starterSeen:false, combo:0, comboBest:0, lastReleaseAt:0, flashDealDay:"", flashSeen:false,
+    loginMonth:"", loginClaimedCount:0, loginLastClaimDate:"", loginStreak:0, loginStreakBest:0, fanMilestonesToast:[],
+    lastDecision:0, studioLevel:1, starterSeen:false, combo:0, comboBest:0, lastReleaseAt:0, flashDealDay:"", flashSeen:false,
     lastDailyDate:"", dailyStreak:0, bestValue:0, freeGemsDate:"", taps:0, sharedOnce:false,
     tutorialSeen:false, whatsnewSeen:false, achievements:[],
     pityCount:0, merchLevel:0, autoGreenlight:false, rivalWins:0,
@@ -1020,9 +1088,13 @@ function canClaimLogin(){ loginRefresh(); return (S.loginLastClaimDate!==todaySt
 function claimLoginDay(){
   if(!canClaimLogin()){ toast("Come back tomorrow for your next day!"); return; }
   const r=LOGIN_REWARDS[S.loginClaimedCount];
+  const y=new Date(Date.now()-86400000).toISOString().slice(0,10);
+  if(S.loginLastClaimDate===y) S.loginStreak=(S.loginStreak||0)+1;
+  else S.loginStreak=1;
+  S.loginStreakBest=Math.max(S.loginStreakBest||0,S.loginStreak);
   S.gems+=r.gems; S.yen+=Math.floor(r.yen*legacyMult());
   S.loginClaimedCount++; S.loginLastClaimDate=todayStr();
-  play("claim"); toast(`📅 Day ${r.day} reward: +${r.gems}💎 +¥${fmt(r.yen)}`,true); track("login_claim",{day:r.day}); render(); save();
+  play("claim"); toast(`📅 Day ${r.day} reward: +${r.gems}💎 +¥${fmt(r.yen)} · 🔥 ${S.loginStreak} day streak`,true); track("login_claim",{day:r.day,streak:S.loginStreak}); render(); save();
 }
 /* ---- reset countdown helpers ---- */
 function msToMidnight(){ const n=new Date(); const m=new Date(n); m.setHours(24,0,0,0); return m-n; }
@@ -1078,9 +1150,13 @@ function pullStar(allowAll){
   return {t, rar, leveled};
 }
 function scout(kind){
-  if(kind==="gems" && !S.ageOk){ return ageGate(()=>scout(kind)); } // loot-box age gate
+  if((kind==="gems"||kind==="free") && !S.ageOk){ return ageGate(()=>scout(kind)); }
   let r;
-  if(kind==="gems"){
+  if(kind==="free"){
+    if(!freeScoutAvailable()){ toast("Free scout already used — try Open Casting or Premium Scout"); return; }
+    S.freeScoutUsed=true; r=pullStar(true);
+    toastSafe("🎁 Welcome scout — premium odds on the house!",true);
+  } else if(kind==="gems"){
     if(S.gems<SCOUT_GEMS){ toast("Need "+SCOUT_GEMS+" 💎 to scout — earn or buy more"); return; }
     S.gems-=SCOUT_GEMS; r=pullStar(true);
   } else {
@@ -1118,6 +1194,7 @@ function submitScore(){
 }
 /* ---- achievements (extra goals + gem rewards) ---- */
 const ACHIEVEMENTS=[
+  {id:"firsthire",name:"Dream Team",    desc:"Hire your first team member",     gems:2,  test:()=>staffTotal()>=1},
   {id:"first",   name:"Lights, Camera!", desc:"Release your first anime",        gems:3,  test:()=>S.releases>=1},
   {id:"rel25",   name:"Studio Machine",  desc:"Release 25 anime",                gems:5,  test:()=>S.releases>=25},
   {id:"rel100",  name:"Hit Factory",     desc:"Release 100 anime",               gems:10, test:()=>S.releases>=100},
@@ -1180,9 +1257,19 @@ const ACHIEVEMENTS=[
   }},
 ];
 window.ACHIEVEMENTS=ACHIEVEMENTS;
+function showAchievePop(name,gems){
+  let el=document.getElementById("aaa-achieve-pop");
+  if(!el){ el=document.createElement("div"); el.id="aaa-achieve-pop"; el.className="achieve-pop"; document.body.appendChild(el); }
+  el.textContent="🏆 "+name+(gems?" +"+gems+" 💎":"");
+  el.classList.add("show");
+  clearTimeout(el._t);
+  el._t=setTimeout(()=>el.classList.remove("show"),3200);
+}
+window.showAchievePop=showAchievePop;
 function checkAchievements(){
   for(const a of ACHIEVEMENTS){
     if(!S.achievements.includes(a.id) && a.test()){ S.achievements.push(a.id); S.gems+=a.gems; toastSafe("🏆 "+a.name+" — +"+a.gems+" 💎",true);
+      showAchievePop(a.name,a.gems);
       try{ if(window.STEAM_ACHIEVE) window.STEAM_ACHIEVE(a.id); }catch(e){} /* Steam desktop build hook (no-op on web) */ }
   }
 }
@@ -1605,6 +1692,7 @@ function load(){
     S.items=(d.items&&typeof d.items==="object")?d.items:{}; S.entitlements=Array.isArray(d.entitlements)?d.entitlements:[];
     S.hallOfFame=Array.isArray(d.hallOfFame)?d.hallOfFame:[]; S.studioName=d.studioName||"";
     S.unlockedSeen=Array.isArray(d.unlockedSeen)?d.unlockedSeen:[]; S.franchises=(d.franchises&&typeof d.franchises==="object")?d.franchises:{}; S.ageOk=!!d.ageOk;
+    S.freeScoutUsed=!!d.freeScoutUsed; S.starsUnlockModalSeen=!!d.starsUnlockModalSeen;
     S.quests=Array.isArray(d.quests)?d.quests:[];
     S.questProg=Object.assign({releases:0,yen:0,campaigns:0,hires:0,hypeSpent:0,scouts:0}, d.questProg||{});
     S.bestValue=+d.bestValue||0; S.freeGemsDate=d.freeGemsDate||""; S.taps=+d.taps||0;
@@ -1634,6 +1722,12 @@ function load(){
     S.crisisSnoozeUntil=+d.crisisSnoozeUntil||0;
     S.ratingGuideSeen=!!d.ratingGuideSeen;
     if(window.__AST_STUDIO_RATING__?.initState) window.__AST_STUDIO_RATING__.initState(S);
+    S.loginStreak=+d.loginStreak||0;
+    S.loginStreakBest=+d.loginStreakBest||S.loginStreak;
+    S.fanMilestonesToast=Array.isArray(d.fanMilestonesToast)?d.fanMilestonesToast:[];
+    for(const m of FAN_TOAST_MILESTONES){
+      if(S.fans>=m.fans&&!S.fanMilestonesToast.includes(m.fans)) S.fanMilestonesToast.push(m.fans);
+    }
     return true;
   }catch(e){ return false; }
 }
@@ -1688,6 +1782,20 @@ function celebrateCollect(kind){
   if(kind==="offline") window.__AST_FX__?.shake?.();
   play(kind==="offline"?"fanfare":"claim");
   toast(kind==="offline"?"✨ Welcome back — earnings collected!":"🎁 Daily reward collected!","special");
+}
+function celebrateFirstHire(role){
+  if(OFFLINE) return;
+  const app=document.getElementById("app");
+  if(app){
+    app.classList.remove("flash-gold"); void app.offsetWidth; app.classList.add("flash-gold");
+    setTimeout(()=>app.classList.remove("flash-gold"), 520);
+  }
+  const btn=document.querySelector(`[data-staff-hire="${role}"]`)||document.getElementById("staff-hero-cta");
+  if(btn&&window.__AST_FX__?.burst){
+    const r=btn.getBoundingClientRect();
+    window.__AST_FX__.burst(20, r.left+r.width/2, r.top+r.height*0.45);
+  }else window.__AST_FX__?.burst?.(18);
+  play("reward");
 }
 
 /* ========================= ACTIONS ========================= */
@@ -1751,13 +1859,46 @@ const UNLOCKS={
   chaos:   { test:()=>(S.releases||0)>=10, label:"🌪️ Chaos Mode (high risk / high reward)" },
 };
 function featureUnlocked(k){ const u=UNLOCKS[k]; return u?u.test():true; }
+function starsUnlockProgress(){
+  const rel=S.releases||0, fans=S.totalFansEver||0;
+  if(rel>=2||fans>=20) return null;
+  const needRel=Math.max(0,2-rel);
+  if(needRel>0) return needRel===1?"1 more premiere to unlock Stars":needRel+" more premieres to unlock Stars";
+  const needFans=Math.max(0,20-fans);
+  return needFans===1?"1 more fan to unlock Stars":fmt(needFans)+" more fans to unlock Stars";
+}
+function freeScoutAvailable(){ return (S.releases||0)===2 && !S.freeScoutUsed; }
+let _starsUnlockQueued=false;
+function showStarsUnlockModal(){
+  if(S.starsUnlockModalSeen||!featureUnlocked("stars")) return;
+  const m=document.getElementById("stars-unlock"); if(!m) return;
+  m.style.display="flex"; _starsUnlockQueued=false; play("reward");
+}
+function queueStarsUnlockModal(){
+  if(S.starsUnlockModalSeen||!featureUnlocked("stars")) return;
+  if(_premiereOpen){ _starsUnlockQueued=true; return; }
+  showStarsUnlockModal();
+}
+function closeStarsUnlockModal(goScout){
+  const m=document.getElementById("stars-unlock"); if(m) m.style.display="none";
+  S.starsUnlockModalSeen=true; save();
+  if(goScout){ S.tab="stars"; render(); if(freeScoutAvailable()) setTimeout(()=>scout("free"),280); }
+}
 function checkUnlocks(){
   for(const k in UNLOCKS){
     if(featureUnlocked(k) && !(S.unlockedSeen||[]).includes(k)){
       (S.unlockedSeen=S.unlockedSeen||[]).push(k);
-      if(started && !OFFLINE) toastSafe("🔓 Unlocked: "+UNLOCKS[k].label,true);
+      if(k==="stars" && started && !OFFLINE) queueStarsUnlockModal();
+      else if(started && !OFFLINE) toastSafe("🔓 Unlocked: "+UNLOCKS[k].label,true);
     }
   }
+}
+function starsPityHTML(){
+  const p=S.pityCount||0, pct=Math.min(100,(p/PITY_LEG)*100);
+  const epicLeft=Math.max(0,PITY_EPIC-p), legLeft=Math.max(0,PITY_LEG-p);
+  return `<div class="aaa-pity-hero pity-meter"><div class="aaa-pity-head"><span class="aaa-pity-label">🍀 Premium Pity</span><span class="aaa-pity-count">${p}/${PITY_LEG}</span></div>
+    <div class="pity-bar"><i style="width:${pct}%"></i></div>
+    <div class="aaa-pity-hints"><span>${epicLeft?`Epic+ in ${epicLeft}`:"Epic+ ready"}</span><span>${legLeft?`Legendary in ${legLeft}`:"Legendary ready"}</span></div></div>`;
 }
 /* ---- Sequels & franchises ---- */
 function franchiseBase(t){ return String(t||"").replace(/\s+(II|III|IV|V|VI|\d+)$/,"").replace(/[:].*$/,"").trim(); }
@@ -1790,22 +1931,25 @@ function showPremiere(pr,p,stars,yenGain,fansGain){
   if(_premiereOpen) return;
   const body=document.getElementById("premiere-body"); if(!body) return;
   const isFirst=(S.releases||0)===1;
+  const isSecond=(S.releases||0)===2;
   const src=(POSTER_POOL[pr.genre]||[]).slice(); const base=src.length?src:[pr.poster||DEFAULT_POSTER];
-  const scenes=[]; for(let i=0;i<8;i++) scenes.push(base[Math.floor(Math.random()*base.length)]);
+  const scenes=[]; for(let i=0;i<(isSecond?5:8);i++) scenes.push(base[Math.floor(Math.random()*base.length)]);
   const rv=REVIEWS[stars]||REVIEWS[3]; const review=rv[Math.floor(Math.random()*rv.length)];
   const ev=currentEvent();
   const est=estimatePremiere(pr,p);
   body.innerHTML=`
     ${isFirst?`<div class="prem-first-ribbon" aria-hidden="true"><span class="prem-first-spark">✨</span><span>YOUR FIRST PREMIERE!</span><span class="prem-first-spark">✨</span></div>`:""}
-    <div class="prem-banner${isFirst?" prem-banner-first":""}" style="background-image:url(${pr.poster||GENRE_POSTER[pr.genre]||DEFAULT_POSTER})">
+    ${isSecond?`<div class="prem-second-ribbon" aria-hidden="true">🎬 Hit #2 — back on the red carpet!</div>`:""}
+    <div class="prem-banner${isFirst?" prem-banner-first":isSecond?" prem-banner-second":""}" style="background-image:url(${pr.poster||GENRE_POSTER[pr.genre]||DEFAULT_POSTER})">
       <div class="prem-grad"></div>
-      <div class="prem-shine"></div>
-      <div class="prem-tag">${isFirst?"🌸 DEBUT NIGHT":"🎬 WORLD PREMIERE"}</div>
+      ${isFirst?`<div class="prem-shine"></div>`:""}
+      <div class="prem-tag">${isFirst?"🌸 DEBUT NIGHT":isSecond?"🎬 SOPHOMORE HIT":"🎬 WORLD PREMIERE"}</div>
       <div class="prem-stars">${"★".repeat(stars)}${"☆".repeat(5-stars)}</div>
       <div class="prem-title">“${pr.title||p.name}”</div>
       <div class="prem-sub">${p.name} · ${pr.genre} · ${ev.ic} ${ev.name}</div>
     </div>
     ${isFirst?`<p class="prem-first-kicker">The crowd goes wild — your studio is officially open for business!</p>`:""}
+    ${isSecond?`<p class="prem-second-kicker">Another premiere in the books — the industry is watching.</p>`:""}
     <div class="prem-now"><i></i> Now Showing · ${scenes.length} scenes</div>
     <div class="prem-review">“${review}”</div>
     <div class="prem-strip">${scenes.map(s=>`<div class="prem-scene" style="background-image:url(${s})"></div>`).join("")}</div>
@@ -1817,15 +1961,16 @@ function showPremiere(pr,p,stars,yenGain,fansGain){
     ${isFirst?`<p class="prem-first-next">Greenlight your next hit — daily &amp; weekly quests pay 💎</p>`:""}`;
   const m=document.getElementById("premiere");
   const closeBtn=m?.querySelector("[data-act='premiere-close']");
-  if(closeBtn) closeBtn.textContent=isFirst?"🎬 Greenlight the next one!":"🎬 To the red carpet!";
-  if(m){ m.classList.toggle("prem-first",isFirst); m.style.display="flex"; }
+  if(closeBtn) closeBtn.textContent=isFirst?"🎬 Greenlight the next one!":isSecond?"🎬 Scout stars & keep rolling!":"🎬 To the red carpet!";
+  if(m){ m.classList.toggle("prem-first",isFirst); m.classList.toggle("prem-second",isSecond); m.style.display="flex"; }
   _premiereOpen=true; play("premiere");
-  window.__AST_FX__?.burst?.(isFirst?32:stars>=5?36:stars>=4?24:16);
-  if(isFirst||stars>=4) window.__AST_FX__?.shake?.();
+  window.__AST_FX__?.burst?.(isFirst?32:isSecond?14:stars>=5?36:stars>=4?24:16);
+  if(isFirst||(stars>=4&&!isSecond)) window.__AST_FX__?.shake?.();
   setTimeout(()=>{ const y=document.getElementById("prem-yen"); const f=document.getElementById("prem-fans"); if(y) animateCount(y,yenGain,"¥"); if(f) animateCount(f,fansGain,"+"); },140);
 }
 function closePremiere(){
-  const m=document.getElementById("premiere"); if(m){ m.style.display="none"; m.classList.remove("prem-first"); } _premiereOpen=false;
+  const m=document.getElementById("premiere"); if(m){ m.style.display="none"; m.classList.remove("prem-first","prem-second"); } _premiereOpen=false;
+  if(_starsUnlockQueued){ showStarsUnlockModal(); save(); return; }
   if((S.releases||0)<2&&activeCount()===0){
     _glMode=true; S.tab="produce"; render(); save(); return;
   }
@@ -1887,7 +2032,7 @@ function releaseProject(slot){
   S.projects[slot]=null;
   questAdd("releases",1); questAdd("yen",yenGain);
   if(studioValue()>S.bestValue) S.bestValue=studioValue();
-  awardMilestoneGems(); checkAchievements(); checkStudioLevel();
+  awardMilestoneGems(); checkFanMilestoneToasts(); checkAchievements(); checkStudioLevel();
   if(S.releases % 25 === 0){ S.gems+=3; toastSafe("💎 +3 Gems — 25 releases!",true); }
   if(S.releases % 50 === 0) studioAwards();
   track("release",{tier:p.tier,stars});
@@ -1925,7 +2070,13 @@ function expandStudio(){
 function hire(role){
   const c=hireCost(role);
   if(S.yen<c){ toast("Not enough Yen to hire"); return; }
-  S.yen-=c; S.staff[role]++; questAdd("hires",1); play("click"); render(); save();
+  const wasFirst=staffTotal()===0;
+  S.yen-=c; S.staff[role]++; questAdd("hires",1);
+  if(wasFirst){
+    celebrateFirstHire(role);
+    toast("🎉 "+ROLES[role].name+" hired — your studio is taking shape!",true);
+  } else play("click");
+  checkAchievements(); render(); save();
 }
 function buyUpgrade(key){
   const c=upCost(key);
@@ -2115,9 +2266,10 @@ function checkDaily(){
 }
 /* share — viral brag with live stats + first-share gem reward */
 function shareUrl(){
-  let url="https://higgsfield.gg";
-  try{ url=window.top.location.href.split("?")[0]; }catch(e){ try{ url=location.href.split("?")[0]; }catch(_){} }
-  return url;
+  const ok=u=>/^https?:\/\//.test(u)&&!/localhost|127\.0\.0\.1|file:/.test(u);
+  try{ const base=location.href.split("?")[0].split("#")[0]; if(ok(base)) return base; }catch(e){}
+  try{ const top=window.top.location.href.split("?")[0].split("#")[0]; if(ok(top)) return top; }catch(e){}
+  return SHARE_PLAY_URL;
 }
 function shareText(){
   const fans=fmt(S.totalFansEver||S.fans||0), rel=S.releases||0, sn=studioName(), rank=industryStandings().rank;
@@ -2295,6 +2447,10 @@ function tabLocked(k){
   return false;
 }
 function tabLockLabel(k){
+  if(k==="stars"){
+    const prog=starsUnlockProgress();
+    if(prog) return "🔒 "+prog;
+  }
   const u=UNLOCKS[k];
   if(u && !u.test()) return "🔒 "+u.label+" — keep playing to unlock";
   return "🔒 Keep producing to unlock this tab";
@@ -2379,10 +2535,11 @@ function render(){
   $("#trend").textContent=trendGenre();
   { const sb=document.getElementById("share-bonus"); if(sb) sb.style.display=S.sharedOnce?"none":""; }
 
-  // goal
-  let nextM=MILESTONES.find(m=>S.fans<m.fans);
+  // goal — early fan toasts (10/50/100) sync with the north-star bar
+  const goals=allGoalMilestones();
+  let nextM=goals.find(m=>S.fans<m.fans);
   if(nextM){
-    const prev=[...MILESTONES].reverse().find(m=>m.fans<=nextM.fans && m.fans<=S.fans);
+    const prev=[...goals].reverse().find(m=>m.fans<=S.fans);
     const lo=prev?prev.fans:0; const pct=Math.max(0,Math.min(100,(S.fans-lo)/(nextM.fans-lo)*100));
     $("#goal-txt").textContent="🎯 "+nextM.label;
     $("#goal-bar").style.width=pct+"%";
@@ -2436,8 +2593,20 @@ function loginCalendarHTML(){
   loginRefresh();
   const canClaim=canClaimLogin();
   const next=S.loginClaimedCount;
-  let h=`<div class="panel aaa-login-panel${canClaim?" claimable":""}"><div class="qhead"><h2>📅 ${STR.h_login}</h2><span class="qtimer">${monthKeyStr().replace("-","/")}</span></div>
-    <div class="muted" style="margin-bottom:8px">Log in every day for bigger rewards. Resets at the start of each month.</div>`;
+  const streak=currentLoginStreak();
+  const best=S.loginStreakBest||streak;
+  const streakHot=streak>=7;
+  let h=`<div class="panel aaa-login-panel${canClaim?" claimable":""}">
+    <div class="aaa-login-streak-hero${streakHot?" hot":""}${canClaim?" ready":""}">
+      <span class="aaa-login-streak-flame" aria-hidden="true">${streakHot?"🔥":"✨"}</span>
+      <div class="aaa-login-streak-body">
+        <b class="aaa-login-streak-n">${streak} day streak</b>
+        <span class="aaa-login-streak-sub">${streakHot?"On fire — don't break the chain!":canClaim?"Claim today to keep your streak alive":"Log in daily for bigger rewards"}</span>
+      </div>
+      <div class="aaa-login-streak-best"><small>Best</small><b>${best}</b></div>
+    </div>
+    <div class="qhead"><h2>📅 ${STR.h_login}</h2><span class="qtimer">${monthKeyStr().replace("-","/")}</span></div>
+    <div class="muted" style="margin-bottom:8px">30-day calendar — resets each month. Streak counts consecutive claim days.</div>`;
   if(canClaim){
     const r=LOGIN_REWARDS[next];
     h+=`<button class="btn-gold" data-act="login-claim" style="width:100%;margin-bottom:10px">🎁 Claim Day ${r.day}: +${r.gems}💎 +¥${fmt(r.yen)}</button>`;
@@ -2700,7 +2869,17 @@ function renderGreenlightPage(empties,showBack){
   h+=`<div class="aaa-genre-wrap"><div class="aaa-genre-row" id="genres"><span class="chip ${_selGenre===-1?'sel':''}" data-g="-1">ALL</span>`;
   h+=GENRES.map((g,i)=>`<span class="chip ${i===_selGenre?'sel':''} ${g===trendGenre()?'trend':''}" data-g="${i}"><span class="aaa-genre-ic">${GENRE_ICONS[g]||""}</span>${genreChipLabel(g)}</span>`).join("");
   h+=`<span class="chip ${_selGenre===6?'sel':''}" data-g="6"><span class="aaa-genre-ic">🎭</span>DRAMA</span>`;
-  h+=`</div><span class="aaa-genre-more" aria-hidden="true">▼</span></div><div class="aaa-gl-carousel">`;
+  h+=`</div><span class="aaa-genre-more" aria-hidden="true">▼</span></div>`;
+  if((S.releases||0)>=2&&(S.releases||0)<=10){
+    const trend=suggestedGreenlightGenre();
+    const matchGenre=selSc.genre===trend;
+    h+=`<div class="aaa-gl-trend-suggest${matchGenre?" match":""}">
+      <span class="aaa-gl-trend-suggest-ic" aria-hidden="true">🔥</span>
+      <div class="aaa-gl-trend-suggest-body"><b>Trending: ${trend}</b><span>Match for +50% fans & yen on premiere</span></div>
+      <button type="button" class="btn-cyan aaa-gl-trend-suggest-btn" data-act="gl-suggest-trend"${matchGenre?" disabled":""}>${matchGenre?"Selected ✓":"Use pick"}</button>
+    </div>`;
+  }
+  h+=`<div class="aaa-gl-carousel">`;
   h+=list.map(sc=>{
     const p=PROJECTS[sc.pid];
     const lk=projectLockInfo(p);
@@ -2805,27 +2984,61 @@ function staffRankFor(key){
   const n=S.staff[key]||0; const lv=Math.min(60,18+n*6+studioLevel());
   return lv>=55?"S":lv>=45?"A":"B";
 }
+function staffRankAfterHire(key){
+  const n=(S.staff[key]||0)+1; const lv=Math.min(60,18+n*6+studioLevel());
+  return lv>=55?"S":lv>=45?"A":"B";
+}
+function firstAffordableStaffRole(){
+  const order=["animator","writer","director","voice","producer"];
+  for(const key of order) if(S.yen>=hireCost(key)) return key;
+  return null;
+}
 function renderStaff(){
-  let h=`<div class="aaa-tab-page"><div class="aaa-page-hero aaa-staff-hero"><h2>👥 ${t("h_hire","Hire Your Team")}</h2><p>Balanced teams make higher-rated anime — Directors boost your score.</p></div><div class="aaa-staff-list">`;
-  for(const key in ROLES){ const r=ROLES[key]; const c=hireCost(key); const rank=staffRankFor(key);
-    h+=`<div class="aaa-staff-row aaa-rank-${rank}">
-      <div class="aaa-staff-portrait"><span class="aaa-staff-rank">${rank}</span><img src="${r.img}" alt="${r.name}"></div>
+  const total=staffTotal();
+  const empty=total===0;
+  const lowStaff=total<2;
+  const bestAfford=firstAffordableStaffRole();
+  let heroCta="";
+  if(empty||lowStaff){
+    const ctaRole=bestAfford||"animator";
+    const ctaCost=hireCost(ctaRole);
+    const ctaRank=staffRankAfterHire(ctaRole);
+    const canHire=!!bestAfford;
+    heroCta=`<div class="aaa-staff-hero-cta-wrap${canHire?" aaa-staff-hero-afford":""}">
+      ${empty?`<span class="aaa-staff-hero-badge">Start here</span>`:""}
+      <p class="aaa-staff-hero-lead">${empty?"Your studio needs crew before productions scale — hire an Animator or Writer first.":"Add "+(2-total)+" more role"+(2-total>1?"s":"")+" to balance quality and speed."}</p>
+      <button type="button" id="staff-hero-cta" class="btn-primary aaa-staff-hero-cta hirebtn${canHire?" aaa-staff-hire-afford":""}" ${canHire?`data-hire="${ctaRole}" data-staff-hire="${ctaRole}"`:"disabled"}>${canHire?`${STR.hire} ${ROLES[ctaRole].name}`:"Earn ¥ from royalties"}<small>${canHire?`¥${fmt(ctaCost)} · Rank ${ctaRank} preview`:"Freelance on Play if broke"}</small></button>
+    </div>`;
+  }
+  let h=`<div class="aaa-tab-page"><div class="aaa-page-hero aaa-staff-hero${empty?" aaa-staff-hero-empty":""}${lowStaff?" aaa-staff-hero-low":""}">
+    <h2>👥 ${t("h_hire","Hire Your Team")}</h2>
+    <p>${empty?"Each role speeds a part of production — tap a glowing hire when you can afford it.":"Balanced teams make higher-rated anime — Directors boost your premiere score."}</p>
+    <div class="aaa-staff-hero-meta"><span class="pill">${total} hired</span>${bestAfford?`<span class="pill aaa-staff-pill-afford">Ready to hire</span>`:""}</div>
+    ${heroCta}
+  </div><div class="aaa-staff-list">`;
+  for(const key in ROLES){ const r=ROLES[key]; const c=hireCost(key); const rank=staffRankFor(key); const afford=S.yen>=c; const nextRank=staffRankAfterHire(key); const count=S.staff[key]||0;
+    h+=`<div class="aaa-staff-row aaa-rank-${rank}${afford?" aaa-staff-afford":""}${count===0?" aaa-staff-vacant":""}">
+      <div class="aaa-staff-portrait"><span class="aaa-staff-rank aaa-rank-${rank}">${rank}</span><img src="${r.img}" alt="${r.name}"></div>
       <div class="aaa-staff-body">
-        <h4>${r.name} <span class="pill">×${S.staff[key]}</span></h4>
-        <div class="muted">${r.dimName} · +${r.power}/s · ¥${r.salary}/s</div>
+        <h4>${r.name} <span class="pill">×${count}</span></h4>
+        <p class="aaa-staff-blurb">${ROLE_BLURBS[key]||r.blurb||r.dimName}</p>
+        <div class="aaa-staff-stats muted"><span>${r.dimName} · +${r.power}/s · ¥${r.salary}/s</span><span class="aaa-staff-rank-line">Next hire: <strong class="aaa-staff-rank-preview aaa-rank-${nextRank}">${nextRank}</strong> · <strong>¥${fmt(c)}</strong></span></div>
       </div>
-      <button type="button" class="btn-primary hirebtn aaa-staff-hire" data-hire="${key}" ${S.yen>=c?"":"disabled"}>${STR.hire}<small>¥${fmt(c)}</small></button>
+      <button type="button" class="btn-primary hirebtn aaa-staff-hire${afford?" aaa-staff-hire-afford":""}" data-hire="${key}" data-staff-hire="${key}" ${key==="animator"?'id="staff-hire-primary"':""} ${afford?"":"disabled"}>${STR.hire}<small>¥${fmt(c)}</small></button>
     </div>`;
   }
   h+=`</div></div>`; main.innerHTML=h;
 }
 
 function renderStars(){
+  const freeOn=freeScoutAvailable();
   let h=`<div class="aaa-tab-page"><div class="aaa-page-hero aaa-gacha-hero"><h2>⭐ ${t("h_stars","Star Talent")}</h2><p>Scout famous creators — rarer stars boost quality and output. Duplicates level up.</p>
+    ${starsPityHTML()}
     <div class="aaa-gacha-btns">
+      ${freeOn?`<button type="button" class="aaa-gacha-btn free hirebtn aaa-free-scout-pulse" data-scout="free">🎁 Free Scout<small>Premium odds · one-time bonus</small></button>`:""}
       <button type="button" class="aaa-gacha-btn standard hirebtn" data-scout="yen" ${S.yen>=castingCost()?"":"disabled"}>🎬 ${t("b_scoutOpen","Open Casting")}<small>¥${fmt(castingCost())} · Common/Rare</small></button>
       <button type="button" class="aaa-gacha-btn premium hirebtn" data-scout="gems" ${S.gems>=SCOUT_GEMS?"":"disabled"}>🌟 ${t("b_scoutPremium","Premium Scout")}<small>${SCOUT_GEMS} 💎 · Epic+ odds</small></button>
-    </div></div>`;
+    </div></div><div class="collection-bar" hidden aria-hidden="true"></div>`;
   h+=`<div class="aaa-store-section">🎭 ${t("h_yourstars","Your Roster")} <span class="pill">${(S.stars||[]).length}</span></div><div class="aaa-star-grid">`;
   if(!S.stars||!S.stars.length){ h+=`<div class="muted" style="padding:12px">No stars yet — run your first scout above!</div>`; }
   else{
@@ -3022,6 +3235,7 @@ document.addEventListener("click", e=>{
   if(t.dataset.act==="login-claim") return claimLoginDay();
   if(t.dataset.act==="greenlight-view"){ _glMode=true; play("click"); return render(); }
   if(t.dataset.act==="greenlight-back"){ _glMode=false; play("click"); return render(); }
+  if(t.dataset.act==="gl-suggest-trend") return applyTrendingGenreSuggest();
   if(t.dataset.g!=null){ _selGenre=+t.dataset.g; _selGlPid=null; _selGlGenre=null; play("click"); return render(); }
   if(t.dataset.glSelect!=null){ _selGlPid=+t.dataset.glSelect; _selGlGenre=t.dataset.glGenre||null; play("click"); return render(); }
   if(t.dataset.cast) return toggleCast(t.dataset.cast);
@@ -3056,6 +3270,8 @@ document.addEventListener("click", e=>{
   if(t.dataset.act==="dec-yes") return resolveDecision(true);
   if(t.dataset.act==="dec-no") return resolveDecision(false);
   if(t.dataset.act==="premiere-close") return closePremiere();
+  if(t.dataset.act==="stars-unlock-close") return closeStarsUnlockModal(false);
+  if(t.dataset.act==="stars-unlock-scout") return closeStarsUnlockModal(true);
   if(t.dataset.act==="instant") return instantPremiere(+t.dataset.slot);
   if(t.dataset.act==="whatsnew-close"){ S.whatsnewSeen=true; save(); const m=document.getElementById("whatsnew"); if(m) m.style.display="none"; if(!S.tutorialSeen&&!isGuidedTutorialEligible()){ const h=document.getElementById("howto"); if(h) h.style.display="flex"; } return; }
   if(t.dataset.act==="howto-close"){ completeTutorial(); const m=document.getElementById("howto"); if(m) m.style.display="none"; return; }
@@ -3290,6 +3506,10 @@ window.__AST_HOOK__ = {
   STAR_POOL,
   STAR_BY_ID,
   MILESTONES,
+  FAN_TOAST_MILESTONES,
+  allGoalMilestones,
+  suggestedGreenlightGenre,
+  applyTrendingGenreSuggest,
   spendGem,
   applyAudioSettings,
   projectStars,
@@ -3320,6 +3540,8 @@ window.__AST_HOOK__ = {
     toastSafe("🎬 Demo studio ready — showcase anime is producing!", true);
   },
   featureUnlocked,
+  starsUnlockProgress,
+  freeScoutAvailable,
   tabLocked,
   tabLockLabel,
   isGreenlightView,
@@ -3329,22 +3551,22 @@ window.__AST_HOOK__ = {
   completeTutorial,
 };
 </script>
-<script src="aaa-upgrade.js?v=90"></script>
-<script src="v5-slim-gate.js?v=88"></script>
-<script src="gameplay-plus.js?v=88"></script>
-<script src="gameplay-ultra.js?v=88"></script>
-<script src="gameplay-endless.js?v=88"></script>
-<script src="gameplay-empire.js?v=88"></script>
-<script src="gameplay-studio.js?v=88"></script>
-<script src="gameplay-final.js?v=88"></script>
-<script src="gameplay-aaa.js?v=88"></script>
-<script src="gameplay-legend.js?v=88"></script>
-<script src="hud-premium.js?v=90"></script>
-<script src="ui-complete.js?v=88"></script>
-<script src="gameplay-studio-rating.js?v=88"></script>
-<script src="gameplay-polish.js?v=88"></script>
-<script src="hook-bridge.js?v=88"></script>
-<script src="v5-render-guard.js?v=88"></script>
+<script src="aaa-upgrade.js?v=91"></script>
+<script src="v5-slim-gate.js?v=91"></script>
+<script src="gameplay-plus.js?v=91"></script>
+<script src="gameplay-ultra.js?v=91"></script>
+<script src="gameplay-endless.js?v=91"></script>
+<script src="gameplay-empire.js?v=91"></script>
+<script src="gameplay-studio.js?v=91"></script>
+<script src="gameplay-final.js?v=91"></script>
+<script src="gameplay-aaa.js?v=91"></script>
+<script src="gameplay-legend.js?v=91"></script>
+<script src="hud-premium.js?v=91"></script>
+<script src="ui-complete.js?v=91"></script>
+<script src="gameplay-studio-rating.js?v=91"></script>
+<script src="gameplay-polish.js?v=91"></script>
+<script src="hook-bridge.js?v=91"></script>
+<script src="v5-render-guard.js?v=91"></script>
 <!-- studio-premium.css loaded in head -->
 
 

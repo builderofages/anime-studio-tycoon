@@ -336,20 +336,30 @@
     </div>`;
   }
 
-  /* ---- Auto greenlight ---- */
+  /* ---- Auto greenlight (trending genre for mid-game bonus) ---- */
   function tryAutoGreenlight(S, hook) {
     if (!S.autoGreenlight) return;
     const slot = hook.firstEmptySlot();
     if (slot < 0) return;
     const opts = hook.unlockedProjects().filter((p) => S.yen >= p.cost);
     if (!opts.length) return;
-    const trend = hook.trendGenre();
-    let best = opts[opts.length - 1];
-    const trendMatch = opts.filter((p) => true);
-    best = trendMatch[trendMatch.length - 1] || best;
-    const genre = trend;
-    hook.greenlight(best.id, genre, [], null);
-    hook.toast(`⚡ Auto-greenlit: ${best.name} (${genre})`, true);
+    const trend = hook.suggestedGreenlightGenre ? hook.suggestedGreenlightGenre() : hook.trendGenre();
+    const best = opts[opts.length - 1];
+    hook.greenlight(best.id, trend, [], null);
+    hook.toast(`⚡ Auto-greenlit: ${best.name} (🔥 ${trend})`, true);
+  }
+
+  function wireTrendingSuggest(hook) {
+    if (hook.__plusTrendingSuggest) return;
+    hook.__plusTrendingSuggest = true;
+    if (!hook.suggestedGreenlightGenre) {
+      hook.suggestedGreenlightGenre = () => hook.trendGenre();
+    }
+    document.addEventListener("click", (e) => {
+      const t = e.target.closest("[data-act='gl-suggest-trend']");
+      if (!t || t.disabled) return;
+      if (typeof hook.applyTrendingGenreSuggest === "function") hook.applyTrendingGenreSuggest();
+    });
   }
 
   /* ---- Near-miss milestones ---- */
@@ -406,6 +416,7 @@
     hook.__plusInstalled = true;
 
     setupTicker();
+    wireTrendingSuggest(hook);
 
     const origRender = hook.render;
     hook.render = function () {

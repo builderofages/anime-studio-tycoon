@@ -33,18 +33,29 @@
       stepN: 2,
       title: "Hire your first staff",
       body: () => "Animators and writers speed up every production. Hire one on Recruit.",
-      target: () =>
-        document.querySelector('[data-hire="animator"]') ||
-        document.querySelector('[data-hire="writer"]') ||
-        document.querySelector('.tab[data-tab="staff"]'),
+      target: (S, hook) => staffHireTutorialTarget(S, hook),
       done: (S) => staffTotal(S) > 0,
-      coach: () => ({
-        message: "Open Recruit and hire your first team member",
-        tab: "staff",
-        cta: "Recruit",
-        urgent: true,
-        action: { type: "tab", tab: "staff" },
-      }),
+      coach: (S, hook) => {
+        const onStaff = S.tab === "staff";
+        const btn = staffHireTutorialTarget(S, hook);
+        const role = btn?.dataset?.hire || btn?.dataset?.staffHire;
+        if (onStaff && role && hook.ROLES?.[role]) {
+          return {
+            message: `Tap Hire on ${hook.ROLES[role].name} — crew speeds every show`,
+            tab: "staff",
+            cta: "Hire",
+            urgent: true,
+            action: { type: "hire", role },
+          };
+        }
+        return {
+          message: "Open Recruit and hire your first team member",
+          tab: "staff",
+          cta: "Recruit",
+          urgent: true,
+          action: { type: "tab", tab: "staff" },
+        };
+      },
     },
     {
       id: "greenlight",
@@ -112,6 +123,20 @@
   ];
 
   let _gtHighlight = null;
+  let _renderMain = null;
+
+  function staffHireTutorialTarget(S, hook) {
+    const priority = ["animator", "writer", "director", "voice", "producer"];
+    if (S.tab === "staff") {
+      for (const k of priority) {
+        const btn = document.querySelector(`[data-staff-hire="${k}"]:not([disabled])`);
+        if (btn) return btn;
+      }
+      const hero = document.getElementById("staff-hero-cta");
+      if (hero && !hero.disabled && hero.dataset.hire) return hero;
+    }
+    return document.querySelector('.tab[data-tab="staff"]');
+  }
 
   function shouldRunGuidedTutorial(S, hook) {
     if (hook.isGuidedTutorialEligible) return hook.isGuidedTutorialEligible();
@@ -212,13 +237,26 @@
       if (nextBtn) nextBtn.hidden = step.id !== "name";
     }
     clearGtHighlight();
-    const target = step.target?.();
+    const target = typeof step.target === "function" ? step.target(S, hook) : step.target?.();
     if (target) {
       target.classList.add("gt-highlight");
       _gtHighlight = target;
       requestAnimationFrame(() => {
         try { target.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" }); } catch (_e) {}
       });
+      if (step.id === "hire" && S.tab === "staff" && target.matches?.(".tab")) {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            const retry = typeof step.target === "function" ? step.target(S, hook) : null;
+            if (retry && !retry.matches?.(".tab")) {
+              clearGtHighlight();
+              retry.classList.add("gt-highlight");
+              _gtHighlight = retry;
+              try { retry.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" }); } catch (_e) {}
+            }
+          });
+        });
+      }
     }
     const coach = typeof step.coach === "function" ? step.coach(S, hook) : step.coach;
     return coach;
@@ -280,19 +318,38 @@
       };
     }
 
+    const starsUnlocked = hook.featureUnlocked ? hook.featureUnlocked("stars") : (S.releases || 0) >= 2;
+    if (starsUnlocked && (S.stars || []).length === 0 && (S.releases || 0) >= 2 && (S.releases || 0) <= 8) {
+      const freeScout = (S.releases || 0) === 2 && !S.freeScoutUsed;
+      return {
+        message: freeScout
+          ? "Stars unlocked — your first scout is FREE!"
+          : "Scout star talent for bigger premieres",
+        tab: "stars",
+        cta: freeScout ? "Free Scout" : "Stars",
+        urgent: true,
+        action: { type: "tab", tab: "stars" },
+      };
+    }
+
     if (glView) {
       const empties = Math.max(0, (S.slots || 1) - activeCount(S));
       if (empties > 0) {
-        const trend = hook.trendGenre ? hook.trendGenre() : "Action";
+        const trend = hook.suggestedGreenlightGenre ? hook.suggestedGreenlightGenre() : (hook.trendGenre ? hook.trendGenre() : "Action");
+        const midGame = (S.releases || 0) >= 2 && (S.releases || 0) <= 10;
         return {
-          message: showcase
-            ? `Pick a project — 🔥 ${trend} is trending for bonus rewards`
-            : "Choose a project and greenlight to fill your open slot",
+          message: midGame
+            ? `🔥 ${trend} trending — tap Use pick for bonus fans & yen`
+            : showcase
+              ? `Pick a project — 🔥 ${trend} is trending for bonus rewards`
+              : "Choose a project and greenlight to fill your open slot",
           tab: "produce",
-          cta: "Greenlight",
+          cta: midGame ? "Trending" : "Greenlight",
           urgent: !showcase,
           showOnGreenlight: true,
-          action: { type: "gl-focus" },
+          action: midGame && typeof hook.applyTrendingGenreSuggest === "function"
+            ? { type: "gl-suggest-trend" }
+            : { type: "gl-focus" },
         };
       }
     }
@@ -364,9 +421,10 @@
         action: { type: "tab", tab: "produce" },
       };
     }
-    if ((S.stars || []).length === 0 && S.fans >= 50) {
+    if ((S.stars || []).length === 0 && S.fans >= 50 && !starsUnlocked) {
+      const prog = hook.starsUnlockProgress ? hook.starsUnlockProgress() : null;
       return {
-        message: "Scout star talent for bigger premieres",
+        message: prog || "Scout star talent for bigger premieres",
         tab: "stars",
         cta: "Stars",
         action: { type: "tab", tab: "stars" },
@@ -478,8 +536,12 @@
       hook.play("click");
       return;
     }
+    if (pw.action.type === "gl-suggest-trend" && typeof hook.applyTrendingGenreSuggest === "function") {
+      hook.applyTrendingGenreSuggest();
+      return;
+    }
     if (pw.action.type === "gl-focus") {
-      const btn = document.querySelector(".aaa-gl-confirm-banner, .aaa-gl-card.sel");
+      const btn = document.querySelector(".aaa-gl-confirm-banner, .aaa-gl-card.sel, .aaa-gl-trend-suggest-btn");
       if (btn) btn.scrollIntoView({ behavior: "smooth", block: "center" });
       hook.play("click");
       return;
@@ -569,7 +631,18 @@
         <button type="button" class="coach-gift" id="coach-gift" aria-label="Rewards"><span class="coach-gift-ic">🎁</span><span class="coach-gift-dot" id="coach-gift-dot" hidden></span></button>
         <div class="pathway-steps" id="pathway-steps" hidden></div>`;
       const goal = document.getElementById("goal");
-      goal.parentNode.insertBefore(rail, goal.nextSibling);
+      if (goal && !document.getElementById("rival-race")) {
+        const race = document.createElement("div");
+        race.id = "rival-race";
+        race.className = "rival-race-widget";
+        race.hidden = true;
+        race.innerHTML = `
+          <span class="rival-race-ic" aria-hidden="true">🏁</span>
+          <span class="rival-race-rank">#<b id="rival-race-n">—</b></span>
+          <span class="rival-race-copy" id="rival-race-copy">Industry race</span>`;
+        goal.parentNode.insertBefore(race, goal.nextSibling);
+      }
+      goal.parentNode.insertBefore(rail, (document.getElementById("rival-race") || goal).nextSibling);
     }
 
     const tabs = document.getElementById("tabs");
@@ -772,7 +845,7 @@
   }
 
   function goalMilestoneAction(S, hook) {
-    const milestones = hook.MILESTONES || [];
+    const milestones = hook.allGoalMilestones ? hook.allGoalMilestones() : (hook.MILESTONES || []);
     const nextM = milestones.find((m) => S.fans < m.fans);
     let tab = "produce";
     let selectors = [".aaa-play-btn", ".aaa-poster", ".aaa-gl-open", '[data-act="greenlight-view"]', ".slotpanel", ".aaa-premiere-ready"];
@@ -955,6 +1028,24 @@
     const trendEl = document.getElementById("trend");
     if (trendEl) trendEl.textContent = trend;
 
+    const race = document.getElementById("rival-race");
+    if (race) {
+      const showRace = (S.releases || 0) >= 2 && !glView;
+      race.hidden = !showRace;
+      if (showRace && hook.industryStandings) {
+        const st = hook.industryStandings();
+        const n = document.getElementById("rival-race-n");
+        const copy = document.getElementById("rival-race-copy");
+        if (n) n.textContent = String(st.rank);
+        const next = st.idx > 0 ? st.all[st.idx - 1] : null;
+        if (copy) {
+          copy.textContent = next
+            ? `vs ${next.name} · ${hook.fmt ? hook.fmt(next.val) : next.val}`
+            : "Top studio in the world!";
+        }
+      }
+    }
+
     const hypeEl = document.getElementById("r-hype");
     if (hypeEl) {
       const hype = hook.hudDisplayValue ? hook.hudDisplayValue("hype") : S.hype;
@@ -979,6 +1070,17 @@
 
     if (window.__AST_STUDIO_RATING__?.refreshHud) {
       window.__AST_STUDIO_RATING__.refreshHud(S, hook);
+    }
+
+    if (shouldRunGuidedTutorial(S, hook)) {
+      const gStep = getGuidedStep(S, hook);
+      if (gStep && gStep.id !== "name") {
+        const coachHint = typeof gStep.coach === "function" ? gStep.coach(S, hook) : gStep.coach;
+        if (coachHint?.tab && S.tab !== coachHint.tab && stepNeedsTab(S, hook, coachHint.tab)) {
+          S.tab = coachHint.tab;
+          if (_renderMain) _renderMain();
+        }
+      }
     }
 
     const guidedCoach = updateGuidedTutorial(S, hook);
@@ -1067,6 +1169,7 @@
     organizeDrawerSlot();
     wireGoalBar();
     const origRender = hook.render;
+    _renderMain = origRender;
     hook.render = function () {
       origRender();
       closeDrawer();

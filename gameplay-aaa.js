@@ -480,21 +480,7 @@
       }
     });
 
-    const achCheck = window.checkAchievements;
-    if (typeof achCheck === "function") {
-      window.checkAchievements = function () {
-        const before = (hook.getState().achievements || []).length;
-        achCheck();
-        const after = (hook.getState().achievements || []).length;
-        if (after > before) {
-          const S = hook.getState();
-          const last = S.achievements[S.achievements.length - 1];
-          const ACH = window.ACHIEVEMENTS || [];
-          const def = ACH.find((a) => a.id === last);
-          if (def) showAchievePop(def.name, def.gems);
-        }
-      };
-    }
+    /* Core checkAchievements (index.html) owns achievement popups via window.showAchievePop */
 
     return true;
   }
