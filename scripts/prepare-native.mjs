@@ -1,6 +1,11 @@
 #!/usr/bin/env node
 /**
  * Assemble www/ for Capacitor native builds from repo source.
+ *
+ * iOS privacy strings (ios/App/App/Info.plist) — add after `npx cap add ios`:
+ *   No camera, microphone, location, contacts, or tracking SDKs (privacy.html: local save only).
+ *   Optional IAP: no extra usage string beyond StoreKit.
+ *   If you add analytics later, set NSUserTrackingUsageDescription before enabling ATT.
  */
 import { cpSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 import { join } from "path";

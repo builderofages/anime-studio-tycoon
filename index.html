@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <!-- the whole app lives in this HTML; don't let browsers serve a stale copy after a deploy -->
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
@@ -23,7 +23,7 @@
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icons/icon-512.png">
 <!-- Legacy gameplay-*.css disabled — aaa-ui + game-skin + hud-premium own chrome -->
-<link rel="stylesheet" href="hud-premium.css?v=97">
+<link rel="stylesheet" href="hud-premium.css?v=98">
 <!-- ui-complete.css disabled — v5 uses aaa-tab-page heroes -->
 <!-- gameplay-studio-rating.css disabled — ast-v5 authority -->
 <!-- studio-premium.css disabled — ast-v5 authority -->
@@ -31,11 +31,12 @@
 <!-- game-skin.css disabled — fought ast-v5 (animation:none, flat panels) -->
 <!-- hf-design.css disabled — ast-v5 authority -->
 <!-- aaa-ui.css disabled — ast-v5 authority -->
-<link rel="stylesheet" href="legacy-fx.css?v=97">
-<link rel="stylesheet" href="ast-v5.css?v=97">
+<link rel="stylesheet" href="legacy-fx.css?v=98">
+<link rel="stylesheet" href="ast-v5.css?v=98">
 <script>document.documentElement.classList.add("premium-hud","hud-v3-active")</script>
 <meta name="theme-color" content="#08050f">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <style>
 :root{
   --cream:#1a1228; --cream2:#120c1c; --ink:#ece6f4; --plum:#c4b5d8;
@@ -77,10 +78,10 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available}
 <div id="app">
   <div id="top">
     <div id="studio-rank"><span>🎬</span><span class="rank-tier">Garage Studio</span></div>
-    <div class="res yen"><img src="icons/hf/yen.png?v=97" alt="Yen"><span><span class="v" id="r-yen">0</span> <small>¥</small></span></div>
-    <div class="res fans"><img src="icons/hf/fans.png?v=97" alt="Fans"><span class="v" id="r-fans">0</span></div>
-    <div class="res hype"><img src="icons/hf/hype.png?v=97" alt="Hype"><span class="v" id="r-hype">0</span></div>
-    <div class="res gems"><img src="icons/hf/gems.png?v=97" alt="Gems"><span class="v" id="r-gems">0</span></div>
+    <div class="res yen"><img src="icons/hf/yen.png?v=98" alt="Yen"><span><span class="v" id="r-yen">0</span> <small>¥</small></span></div>
+    <div class="res fans"><img src="icons/hf/fans.png?v=98" alt="Fans"><span class="v" id="r-fans">0</span></div>
+    <div class="res hype"><img src="icons/hf/hype.png?v=98" alt="Hype"><span class="v" id="r-hype">0</span></div>
+    <div class="res gems"><img src="icons/hf/gems.png?v=98" alt="Gems"><span class="v" id="r-gems">0</span></div>
     <div id="trendbar"><span class="spark">📈</span> Trending: <b id="trend">Action</b></div>
   </div>
   <div id="goal"><span id="goal-txt">🎯 Reach 50 Fans for Web Series</span><div class="bar"><i id="goal-bar" style="width:0%"></i></div></div>
@@ -92,7 +93,7 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available}
     <button class="btn-ghost" id="btn-mute">🔊 Sound: On</button>
     <button class="btn-ghost" id="btn-save" style="display:none">💾 Save</button>
     <button class="btn-ghost" id="btn-reset">↺ Reset</button>
-  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 97 · Mobile</span></div>
+  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 98 · Endgame</span></div>
   <div id="toasts"></div>
   <div id="pwa-install-banner" class="aaa-pwa-install-banner" hidden>
     <div class="aaa-pwa-install-inner">
@@ -109,7 +110,7 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available}
 
 <div class="overlay" id="start" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="start-title">
   <div class="card-modal">
-    <img class="start-hero" src="start-hero.png?v=97" width="140" height="140" alt="Anime Studio Tycoon logo">
+    <img class="start-hero" src="start-hero.png?v=98" width="140" height="140" alt="Anime Studio Tycoon logo">
     <h1 id="start-title">Anime Studio Tycoon</h1>
     <p id="start-tagline">From a one-room studio to a global anime empire</p>
     <label style="display:block;font-size:12px;font-weight:800;color:var(--plum);margin:4px 0 4px">🏢 Studio Name</label>
@@ -332,14 +333,14 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available}
 
 <div class="overlay" id="whatsnew" style="display:none" role="dialog" aria-modal="true" aria-labelledby="whatsnew-title">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <img src="start-hero.png?v=97" alt="Anime Studio Tycoon logo" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
-    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 97 — Mobile</h1>
+    <img src="start-hero.png?v=98" alt="Anime Studio Tycoon logo" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
+    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 98 — Endgame</h1>
     <div class="offlist whatsnew-list" style="margin:12px 0">
-      <div><span>📱 iOS Safari</span><b>Audio unlock on first tap, 100dvh dock fix, no double-tap zoom on CTAs</b></div>
-      <div><span>⚡ Performance</span><b>Heavy layers (final/aaa/legend) defer until release 3 or 50 fans</b></div>
-      <div><span>🧪 Playtest sim</span><b>Automated honest-flow VM sim in CI — hire → greenlight → premiere</b></div>
-      <div><span>🎬 Produce/GL</span><b>Film grain, seat-row stage, coach pink glass, goal ticks — ~95% ref</b></div>
-      <div><span>👋 Return hub</span><b>One modal on boot — offline, daily, news, unlock teasers batched</b></div>
+      <div><span>👑 Dynasty</span><b>Studio tab shows dynasty score + peak rank from release 10</b></div>
+      <div><span>📺 Franchises</span><b>Franchise universe panel lists every series — not just a counter</b></div>
+      <div><span>🌪️ Chaos</span><b>Prominent Chaos Mode card on the studio dashboard</b></div>
+      <div><span>🏁 Rival race</span><b>HUD leaderboard expands with top 3 + gap to next rank</b></div>
+      <div><span>🎯 Coach</span><b>Suggests dynasty perks when points are ready (release 10+)</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
   </div>
@@ -377,7 +378,36 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available}
 
 <script type="module">
 import { STR, LANGS, LANG_NAMES, setLang, initialLang, t } from "./strings.js";
+import {
+  MAX_SLOTS,
+  EXPANSION_COST,
+  UNLOCK_THRESHOLDS,
+  createFreshState,
+  makeUnlocks,
+  fmt,
+  fmtCompact,
+  fmtYenCompact,
+  fmtLocale,
+  fmtHudRes,
+  expandCostFor,
+  featureUnlockedFor,
+} from "./logic.js";
 setLang(initialLang());
+
+window.__AST_LOGIC__ = {
+  MAX_SLOTS,
+  EXPANSION_COST,
+  UNLOCK_THRESHOLDS,
+  createFreshState,
+  makeUnlocks,
+  fmt,
+  fmtCompact,
+  fmtYenCompact,
+  fmtLocale,
+  fmtHudRes,
+  expandCostFor,
+  featureUnlockedFor,
+};
 
 /* robustness: never show a broken-image icon — failed images get a clean on-brand tile */
 addEventListener("error", e=>{
@@ -388,15 +418,33 @@ addEventListener("error", e=>{
   }
 }, true);
 
-/* platform: native iOS/Android builds hide external-link purchases (App Store rule 3.1.1).
-   The Capacitor wrapper sets window.NATIVE_IOS=true; web keeps the Gumroad store. */
-const NATIVE = !!(window.NATIVE_IOS || (window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform()));
-const STORE_PAYMENTS = true; // store always visible; buyReal routes web→checkout, native→StoreKit IAP
+/* platform: native iOS/Android builds use StoreKit/Play Billing (App Store rule 3.1.1).
+   Web keeps Gumroad checkout; native shell gates IAP on Capacitor.isNativePlatform(). */
+const IS_NATIVE_CAP = !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform());
+const NATIVE = !!(window.NATIVE_IOS || IS_NATIVE_CAP);
+function initNativeChrome(){
+  if(!NATIVE) return;
+  try{
+    const sb = window.Capacitor?.Plugins?.StatusBar;
+    if(sb){
+      sb.setStyle({ style: "LIGHT" }); // light icons on dark theme (#08050f)
+      sb.setBackgroundColor({ color: "#08050f00" });
+      sb.setOverlaysWebView({ overlay: true });
+    }
+  }catch(e){}
+  try{
+    const sp = window.Capacitor?.Plugins?.SplashScreen;
+    if(sp) sp.hide();
+  }catch(e){}
+}
+if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", initNativeChrome);
+else initNativeChrome();
+document.addEventListener("deviceready", initNativeChrome, false);
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 97 · Mobile";
-const ASSET_V = "97";
+const BUILD_TAG = "build 98 · Endgame";
+const ASSET_V = "98";
 const OFFLINE_PREVIEW_CAP = 4*3600; // "while away" preview when return is under 4h
 const SHARE_PLAY_URL = "https://anime-studio-tycoon.vercel.app/play";
 const PITY_EPIC = 25;
@@ -428,19 +476,6 @@ const TAB_ICONS = {
 function starRankLetter(stars){ return stars>=5?"S":stars>=4?"A":stars>=3?"B":stars>=2?"C":"D"; }
 function studioRankLetter(stars){ const s=stars||1; return s>=5?"S+":s>=4?"S":s>=3?"A":s>=2?"B":"C"; }
 function productionScore(stars,p,pr){ return Math.round(4200+stars*1100+Math.min(800,(pr.progress||0)/Math.max(1,p.work)*800)); }
-function fmtCompact(n){
-  const v=Math.abs(Math.round(n));
-  if(v>=1e6) return (v/1e6).toFixed(1).replace(/\.0$/,"")+"M";
-  if(v>=1e3) return (v/1e3).toFixed(1).replace(/\.0$/,"")+"K";
-  return fmt(v);
-}
-function fmtYenCompact(n){ return "¥"+fmtCompact(n); }
-function fmtLocale(n){ n=Math.floor(n); if(!isFinite(n)) return "0"; return n.toLocaleString("en-US"); }
-function fmtHudRes(k,n){
-  if(k==="gems") return fmtLocale(n);
-  if(k==="yen"||k==="fans") return fmtCompact(n);
-  return fmt(n);
-}
 function isDemoMode(){
   if(S._demoMode) return true;
   try{ return new URL(location.href).searchParams.get("demo")==="1"; }catch(e){ return false; }
@@ -1080,6 +1115,12 @@ const MONETIZATION = {
   supportUrl:"", // (no footer credit link)
   codes:{ "ANIME50":{gems:50}, "WELCOME":{gems:25} } // redeemable codes you can hand out
 };
+function checkoutConfigured(){
+  const co=MONETIZATION.checkout||{};
+  return Object.values(co).some(u=>typeof u==="string"&&/^https?:\/\//i.test(u.trim()));
+}
+/* Native → StoreKit/Play Billing; web → Gumroad when checkout URLs are set; else free-to-play only */
+const STORE_PAYMENTS = NATIVE || checkoutConfigured();
 const GEM_PACKS={ gems_s:120, gems_m:350, gems_l:800, gems_mega:2000 };
 /* ---- Premium exclusive stars (sold for real money / awarded by bundles — never in the free gacha) ---- */
 const EXCLUSIVE_STARS=[
@@ -1125,8 +1166,6 @@ const SCRATCH=[
   {w:4,  label:"⭐ Star",   apply:()=>{ const r=pullStar(true); showReveal(r.t,r.rar,r.leveled); return "⭐ "+r.t.name; }},
 ];
 const SPIN_GEM_COST=4, SCRATCH_GEM_COST=6;
-const MAX_SLOTS=4;
-const EXPANSION_COST=[0, 15000, 90000, 500000]; // cost to reach slot 2,3,4 (index = current slots)
 /* lightweight analytics: routes to your provider or any of plausible / gtag / dataLayer */
 function track(ev, props){
   try{
@@ -1139,69 +1178,11 @@ function track(ev, props){
 
 /* ========================= STATE ========================= */
 let S;
-function freshState(){
-  return {
-    yen:1500, fans:0, hype:0, totalFansEver:0, legacy:0,
-    catalogIncome:0, totalEarned:0, awardsWon:0, legacySpent:0, perks:{income:0,speed:0,fans:0,offline:0},
-    stamina:100, chaos:0, chaosMode:false, lastChaos:0, lastStarDemand:0,
-    items:{}, entitlements:[], purchaseLog:[], firstPurchaseDone:false, noAds:false, wheelDate:"", scratchDate:"",
-    studioName:"", hallOfFame:[], bestRank:99,
-    unlockedSeen:[], franchises:{}, franchiseOpportunity:null, firstFranchiseCelebrated:false, ageOk:false, freeScoutUsed:false, starsUnlockModalSeen:false, studioUnlockModalSeen:false, marketUnlockModalSeen:false, campaignsRun:0, researchUnlockModalSeen:false, chaosUnlockModalSeen:false, firstChaosToastSeen:false, awaitFirstChaosSurvival:false,
-    gems:0, producerPass:false, bundleBought:false, goldenUntil:0, rewardedUntil:0, rewardedCdUntil:0,
-    milestonesClaimed:[], seasonClaimed:[],
-    slots:1, projects:[null],   // each slot: {pid, genre, progress} or null
-    staff:{ animator:0, writer:0, director:0, voice:0, producer:0 },
-    stars:[],                   // owned: {sid, level}
-    upgrades:{ tablets:0, render:0, sound:0, marketing:0, agency:0 },
-    mastery:Object.fromEntries(GENRES.map(g=>[g,0])),
-    overdriveUntil:0,
-    trendIdx:0, trendUntil:0,
-    releases:0,
-    quests:[], questProg:{releases:0,yen:0,campaigns:0,hires:0,hypeSpent:0,scouts:0,greenlit:0,taps:0},
-    weekKey:"", weeklyQuests:[], weekProg:{releases:0,yen:0,campaigns:0,hires:0,hypeSpent:0,scouts:0,greenlit:0,taps:0},
-    loginMonth:"", loginClaimedCount:0, loginLastClaimDate:"", loginStreak:0, loginStreakBest:0, fanMilestonesToast:[],
-    lastDecision:0, studioLevel:1, starterSeen:false, combo:0, comboBest:0, lastReleaseAt:0, flashDealDay:"", flashSeen:false,
-    lastDailyDate:"", dailyStreak:0, bestValue:0, freeGemsDate:"", taps:0, sharedOnce:false, shareMilestoneSeen:false,
-    tutorialSeen:false, whatsnewSeen:false, achievements:[],
-    pityCount:0, merchLevel:0, autoGreenlight:false, rivalWins:0,
-    rivalWeek:"", rivalTarget:null, rivalStartVal:0, rivalGoal:0, rivalClaimed:false,
-    plusGoals:[], plusGoalsDate:"", plusGoalsBase:{}, plusCollection50:false,
-    settings:{motion:true,ticker:true,musicVol:0.35,sfxVol:0.5,confirmGems:true}, lastWhatsNewBuild:"",
-    pwaInstallDismissed:false, pwaInstalled:false, pwaCoachSeen:false, pushNotifyOptIn:false,
-    marketShare:5, bidsWon:0, bidWeek:"", bidResolved:false,
-    endlessRisk:"balanced", endlessDiff:"standard", endlessCourMode:false, endlessEvents:0,
-    namedStaff:[], empireSource:"original", empireBlendGenre:-1, scoutBannerWeek:"", scoutBannerStar:"",
-    chaosInsurance:false, calmStreak:0, crisesSurvived:0, lastCrisisDay:"",
-    sparks:0, templates:[],
-    influence:0, influenceSpent:0, inflPerks:{income:0,premiere:0,chaos:0},
-    streaming:[], recoveries:0, ostTotal:0, finalGuideSeen:false, finalGuideStep:0,
-    starStats:{}, starContracts:{}, festivalWins:[], directorsCuts:[], dynastyPoints:0,
-    autoRest:false, syndicationUntil:"", briefingDay:"", briefingPending:"", contractsSigned:0,
-    aaaQualityBoost:0, aaaYenBoost:0,
-    dynastyPerks:{income:0,premiere:0,festival:0}, dynastySpent:0,
-    studioStars:1, studioStarBest:1, premiereStats:{fourPlus:0,five:0}, studioStarPerks:{},
-    crisisSnoozeUntil:0, ratingGuideSeen:false, peakDynasty:0,
-    dynastyRankUps:[], festivalLosses:0, legendSlotDiscount:0, careerYen:0, careerFans:0,
-    firstFestivalWinSeen:false,
-    lastSave:Date.now(),
-    muted:false,
-    tab:"produce",
-    _demoMode:false, _bootstrapped:false, showcaseGlUsed:0,
-    _guidedFresh:false, _tutorialNameDone:false,
-  };
-}
+function freshState(){ return createFreshState(GENRES); }
 
 /* ========================= HELPERS ========================= */
 const $ = s=>document.querySelector(s);
 const main = $("#main");
-const fmt = n=>{
-  n = Math.floor(n);
-  if(!isFinite(n)) return "∞";
-  if(n<1000) return ""+n;
-  const u=["","K","M","B","T","Qa","Qi","Sx","Sp","Oc","No","Dc","UDc","DDc","TDc"]; let i=0; let x=n;
-  while(x>=1000 && i<u.length-1){ x/=1000; i++; }
-  return (x>=100? x.toFixed(0): x.toFixed(2).replace(/\.?0+$/,"")) + u[i];
-};
 /* monetization / boost helpers */
 let OFFLINE=false;            // true while simulating offline progress (suppresses toasts/audio/render)
 let pendingToasts=[];
@@ -1279,7 +1260,7 @@ function studioAwards(){
 /* multi-slot helpers */
 function activeCount(){ let n=0; for(const p of S.projects) if(p) n++; return n; }
 function firstEmptySlot(){ for(let i=0;i<S.slots;i++){ if(!S.projects[i]) return i; } return -1; }
-function expandCost(){ return EXPANSION_COST[S.slots]||0; }
+function expandCost(){ return expandCostFor(S); }
 function hireCost(role){
   const r=ROLES[role]; const n=S.staff[role];
   const disc=Math.max(0.4, 1 - S.upgrades.agency*0.05);
@@ -1563,6 +1544,34 @@ const DYNASTY_PERKS_SHOP=[
   {k:"festival",ic:"🏆",name:"Festival Prestige",desc:"+8% festival win chance per level",max:3,costs:[18,30,45]},
 ];
 function dynastyAvailable(){ return Math.max(0,(S.dynastyPoints||0)-(S.dynastySpent||0)); }
+function dynastyScore(){
+  let s=0;
+  s+=Math.min(18,(S.releases||0)/15);
+  s+=Math.min(15,Math.log10(Math.max(1,S.totalFansEver||1))*3);
+  s+=Math.min(12,(S.marketShare||5)/4);
+  s+=Math.min(10,(S.awardsWon||0)*2);
+  s+=Math.min(10,(S.festivalWins||[]).length*2.5);
+  s+=Math.min(8,(S.legacy||0)*1.5);
+  s+=Math.min(8,(S.influence||0)/3);
+  s+=Math.min(7,(S.stars||[]).length/2);
+  s+=Math.min(6,Object.keys(S.franchises||{}).length);
+  s+=Math.min(6,(S.dynastyPoints||0)/20);
+  if(S.producerPass) s+=4;
+  if((S.endlessDiff||"")==="nightmare") s+=5;
+  return Math.round(Math.min(100,s));
+}
+function dynastyGrade(score){
+  if(score>=92) return {g:"S",cls:"dynasty-s",label:"S-TIER LEGEND"};
+  if(score>=78) return {g:"A",cls:"dynasty-a",label:"A-TIER ELITE"};
+  if(score>=62) return {g:"B",cls:"dynasty-b",label:"B-TIER RISING"};
+  if(score>=45) return {g:"C",cls:"dynasty-c",label:"C-TIER INDIE"};
+  return {g:"D",cls:"dynasty-d",label:"D-TIER GARAGE"};
+}
+function syncPeakDynasty(){
+  const score=dynastyScore();
+  if(score>(S.peakDynasty||0)) S.peakDynasty=score;
+  return score;
+}
 function dynastyPerkCost(k){
   const def=DYNASTY_PERKS_SHOP.find(p=>p.k===k); if(!def) return 999;
   const lvl=(S.dynastyPerks||{})[k]||0; return def.costs[lvl]||999;
@@ -2593,14 +2602,8 @@ function renameShow(slot){
 }
 function studioName(){ return S.studioName || "My Studio"; }
 /* ---- Progressive unlocks: the studio reveals its systems as you grow ---- */
-const UNLOCKS={
-  studio:  { test:()=>(S.releases||0)>=1,  label:"🏢 Studio Upgrades & Expansion" },
-  stars:   { test:()=>(S.releases||0)>=2 || (S.totalFansEver||0)>=20, label:"⭐ Star Talent & Casting" },
-  market:  { test:()=>(S.fans||0)>=50,    label:"📣 Marketing at 50 Fans" },
-  research:{ test:()=>(S.totalFansEver||0)>=120, label:"🔬 Genre Research" },
-  chaos:   { test:()=>(S.releases||0)>=10, label:"🌪️ Chaos Mode (high risk / high reward)" },
-};
-function featureUnlocked(k){ const u=UNLOCKS[k]; return u?u.test():true; }
+const UNLOCKS=makeUnlocks(()=>S);
+function featureUnlocked(k){ return featureUnlockedFor(k,S); }
 function starsUnlockProgress(){
   const rel=S.releases||0, fans=S.totalFansEver||0;
   if(rel>=2||fans>=20) return null;
@@ -3093,13 +3096,19 @@ function freelance(){
 }
 /* ---- premium: spend Gems ---- */
 function gemCashAmount(){ const o=unlockedProjects(); const best=o[o.length-1]||PROJECTS[0]; return Math.floor(best.base*1.5*legacyMult()*passMult()); }
+function markGemSpent(){ if(!S.gemSpent){ S.gemSpent=true; } }
+function gemNeedToast(cost){
+  return STORE_PAYMENTS
+    ? "Need "+cost+" 💎 Gems — earn or buy more in the Store"
+    : "Need "+cost+" 💎 Gems — claim daily rewards & quests in the Store";
+}
 function spendGem(act, force){
   if(!force && window.__AST_CONFIRM_GEM__){ window.__AST_CONFIRM_GEM__(act, ()=>spendGem(act,true)); return; }
   const costs={hype:5,cash:8,skip:4,golden:12};
   const c=costs[act]; if(c==null) return;
-  if(S.gems<c){ toast("Need "+c+" 💎 Gems — earn or buy more in the Store"); return; }
+  if(S.gems<c){ toast(gemNeedToast(c)); return; }
   if(act==="skip" && activeCount()===0){ toast("No project in production to skip"); return; }
-  S.gems-=c; track("gem_spend",{act});
+  S.gems-=c; markGemSpent(); track("gem_spend",{act});
   if(act==="hype"){ S.hype+=50; toast("⚡ +50 Hype!",true); }
   else if(act==="cash"){ const a=gemCashAmount(); S.yen+=a; toast("💰 Cash injection +¥"+fmt(a),true); }
   else if(act==="skip"){ S.projects.forEach(pr=>{ if(pr) pr.progress=PROJECTS[pr.pid].work; }); toast("⏭️ All productions finished!",true); }
@@ -3109,14 +3118,19 @@ function spendGem(act, force){
 /* ---- real-money purchases (configurable) ---- */
 function buyReal(sku){
   track("purchase_click",{sku});
+  if(!STORE_PAYMENTS){
+    toast("🆓 Free to play — earn 💎 via daily rewards, quests & achievements in the Store");
+    S.tab="store"; render(); return;
+  }
   if(NATIVE){
-    if(typeof window.IAPBuy==="function"){ window.IAPBuy(sku); toast("Opening App Store purchase…"); }
+    if(typeof window.IAPBuy==="function"){ window.IAPBuy(sku); toast("Opening store purchase…"); }
     else toast("Purchases are still loading — try again in a moment.");
     return;
   }
   const url=(MONETIZATION.checkout||{})[sku];
   if(url){ try{ window.open(url,"_blank","noopener"); }catch(e){} toast("Opening checkout — you'll return to the game automatically after payment."); }
   else { toast("💳 Payments aren't set up yet. Add your checkout link to enable this."); }
+}
 async function redeemLicenseKey(sku, key){
   if(!key||!sku){ toast("Enter your license key and pick what you bought"); return; }
   try{
@@ -3127,14 +3141,13 @@ async function redeemLicenseKey(sku, key){
     toast("✅ Purchase redeemed!",true);
   }catch(e){ toast("Network error — try again"); }
 }
-}
 /* ---- Inventory / consumable items ---- */
 function addItem(id,n){ if(!ITEMS[id]) return; if(!S.items) S.items={}; S.items[id]=(S.items[id]||0)+(n||1); }
 function itemCount(id){ return (S.items&&S.items[id])||0; }
 function useItem(id){ const it=ITEMS[id]; if(!it) return; if(itemCount(id)<=0){ toast("You don't own that item"); return; }
   S.items[id]--; it.use(); track("item_use",{id}); play("reward"); toast(it.ic+" "+it.name+" used!",true); render(); save(); }
-function buyItem(id){ const it=ITEMS[id]; if(!it||!it.gem) return; if(S.gems<it.gem){ toast("Need "+it.gem+" 💎 — top up in the Store"); return; }
-  S.gems-=it.gem; addItem(id); track("item_buy",{id}); play("reward"); toast(it.ic+" "+it.name+" added to your inventory!",true); render(); save(); }
+function buyItem(id){ const it=ITEMS[id]; if(!it||!it.gem) return; if(S.gems<it.gem){ toast(gemNeedToast(it.gem)); return; }
+  S.gems-=it.gem; markGemSpent(); addItem(id); track("item_buy",{id}); play("reward"); toast(it.ic+" "+it.name+" added to your inventory!",true); render(); save(); }
 /* ---- Spin the Wheel & Scratch Cards (gem sinks with a free daily play) ---- */
 function weightedPick(list){ let tot=0; for(const x of list) tot+=x.w; let r=Math.random()*tot; for(const x of list){ r-=x.w; if(r<=0) return x; } return list[0]; }
 function showPrize(title,label,msg){
@@ -3148,7 +3161,7 @@ function showPrize(title,label,msg){
 function spinWheel(){
   if(!S.ageOk) return ageGate(spinWheel);
   const free=S.wheelDate!==todayStr();
-  if(!free){ if(S.gems<SPIN_GEM_COST){ toast("Daily free spin used — "+SPIN_GEM_COST+" 💎 for another"); return; } S.gems-=SPIN_GEM_COST; }
+  if(!free){ if(S.gems<SPIN_GEM_COST){ toast(gemNeedToast(SPIN_GEM_COST)); return; } S.gems-=SPIN_GEM_COST; markGemSpent(); }
   else S.wheelDate=todayStr();
   const prize=weightedPick(WHEEL); const msg=prize.apply();
   track("wheel",{prize:prize.label}); play("reward"); showPrize("🎡 Spin & Win",prize.label,msg); checkAchievements(); render(); save();
@@ -3156,7 +3169,7 @@ function spinWheel(){
 function scratchCard(){
   if(!S.ageOk) return ageGate(scratchCard);
   const free=S.scratchDate!==todayStr();
-  if(!free){ if(S.gems<SCRATCH_GEM_COST){ toast("Daily free card used — "+SCRATCH_GEM_COST+" 💎 for another"); return; } S.gems-=SCRATCH_GEM_COST; }
+  if(!free){ if(S.gems<SCRATCH_GEM_COST){ toast(gemNeedToast(SCRATCH_GEM_COST)); return; } S.gems-=SCRATCH_GEM_COST; markGemSpent(); }
   else S.scratchDate=todayStr();
   const prize=weightedPick(SCRATCH); const msg=prize.apply();
   track("scratch",{prize:prize.label}); play("reward"); showPrize("🎟️ Scratch Card",prize.label,msg); checkAchievements(); render(); save();
@@ -4161,6 +4174,69 @@ function festivalCircuitHTML(){
   ).join("");
   return `<div class="aaa-festival-circuit"><div class="aaa-festival-circuit-head"><span>🎪 Festival Circuit</span><span class="pill">${wins.length} won</span></div>${recent}</div>`;
 }
+function dynastyHeroHTML(){
+  if((S.releases||0)<10) return "";
+  const score=syncPeakDynasty();
+  const dg=dynastyGrade(score);
+  const peak=S.peakDynasty||score;
+  const avail=dynastyAvailable();
+  return `<div class="aaa-dynasty-hero ${dg.cls}" aria-label="Dynasty score ${score}, peak rank ${peak}">
+    <div class="aaa-dynasty-hero-grade" aria-hidden="true">${dg.g}</div>
+    <div class="aaa-dynasty-hero-body">
+      <b class="aaa-dynasty-hero-score">${score} <span>Dynasty Score</span></b>
+      <span class="aaa-dynasty-hero-sub">${dg.label} · Peak <b>${peak}</b></span>
+    </div>
+    <div class="aaa-dynasty-hero-pts"><b>${fmt(avail)}</b><small>pts ready</small></div>
+  </div>`;
+}
+function franchisePanelEntries(){
+  const seen={}, out=[];
+  for(const b in (S.franchises||{})){
+    if(!b) continue;
+    seen[b]=1;
+    const hof=(S.hallOfFame||[]).find(s=>franchiseBase(s.title)===b);
+    out.push({base:b, genre:hof?.genre||"—", season:S.franchises[b]||1, stars:hof?.stars||4});
+  }
+  for(const fr of franchiseList()){
+    if(seen[fr.base]) continue;
+    out.push(fr);
+  }
+  return out.sort((a,b)=>(b.season||1)-(a.season||1)).slice(0,8);
+}
+function franchisePanelHTML(){
+  if((S.releases||0)<10) return "";
+  const frs=franchisePanelEntries();
+  if(!frs.length) return `<div class="panel aaa-franchise-panel aaa-franchise-panel--empty">
+    <h2>📺 Franchise Universe</h2>
+    <div class="muted">Premiere 4★+ hits to build franchises — sequels earn bonus fans & yen.</div>
+  </div>`;
+  const rows=frs.map(fr=>{
+    const stars="★".repeat(Math.min(5,fr.stars||4))+"☆".repeat(Math.max(0,5-(fr.stars||4)));
+    const bonus=Math.min(40,8+(fr.season||1)*4);
+    return `<div class="aaa-franchise-row">
+      <span class="aaa-franchise-row-ic" aria-hidden="true">📺</span>
+      <div class="aaa-franchise-row-body"><b>${fr.base}</b><span>${fr.genre} · Season ${fr.season} · ${stars}</span></div>
+      <span class="aaa-franchise-row-bonus">+${bonus}%</span>
+    </div>`;
+  }).join("");
+  return `<div class="panel aaa-franchise-panel">
+    <h2>📺 Franchise Universe <span class="pill">${frs.length}</span></h2>
+    <div class="aaa-franchise-list">${rows}</div>
+  </div>`;
+}
+function chaosStudioToggleHTML(){
+  if(!featureUnlocked("chaos")) return "";
+  const ch=Math.round(S.chaos||0);
+  const on=!!S.chaosMode;
+  return `<div class="aaa-chaos-studio-card${on?" aaa-chaos-studio-on":""}${ch>=55?" aaa-chaos-studio-warn":""}" role="group" aria-label="Chaos Mode">
+    <div class="aaa-chaos-studio-head">
+      <span class="aaa-chaos-studio-ic" aria-hidden="true">🌪️</span>
+      <div class="aaa-chaos-studio-copy"><b>Chaos Mode</b><span>${on?"+50% rewards active":"+50% rewards · crises rise faster"}</span></div>
+      <span class="aaa-chaos-studio-meter">${ch}%</span>
+    </div>
+    <button type="button" class="btn-gold aaa-chaos-studio-btn" data-act="chaos-toggle">${on?"CHAOS ON — tap to calm seas":"Enable Chaos Mode"}</button>
+  </div>`;
+}
 function dynastyStudioHTML(){
   if((S.releases||0)<5) return "";
   const avail=dynastyAvailable();
@@ -4229,6 +4305,7 @@ function dashboardHTML(){
   if(Date.now()<S.overdriveUntil) boosts.push("Overdrive");
   const standings=industryStandings();
   let h=`<div class="panel dash-panel aaa-dash-compact"><h2 class="aaa-dash-title">🏢 ${studioName()} <button class="btn-ghost aaa-dash-edit" data-act="studio-name" title="Rename">✏️</button> <span class="pill aaa-dash-rank">🏆 #${standings.rank} / ${standings.total}</span></h2>
+     ${dynastyHeroHTML()}
      ${studioStatCardsHTML()}
      ${studioRankStripHTML()}
      <div class="kpis">
@@ -4247,11 +4324,11 @@ function dashboardHTML(){
      ${boosts.length?`<div class="aaa-boosts">⚡ ${boosts.join(" · ")}</div>`:""}
      ${(()=>{const st=Math.round(S.stamina==null?100:S.stamina), ch=Math.round(S.chaos||0);return aaaMeterHead("Stamina", st+"%", st, "stamina")+aaaMeterHead("Chaos", ch+"%", ch, "chaos");})()}
      ${festivalCircuitHTML()}
-     ${featureUnlocked("chaos")?`<button class="btn-ghost" data-act="chaos-toggle" style="margin-top:8px;width:100%">${S.chaosMode?"🌪️ Chaos ON":"🌪️ Chaos Mode"}</button>`:""}
+     ${chaosStudioToggleHTML()}
      ${activeCount()>0?`<button class="btn-cyan" id="a-over" style="margin-top:8px;width:100%">🚀 Overdrive · 15 Hype</button>`:""}
      ${S.fans>=PRESTIGE_FANS?`<button class="btn-cyan" id="a-prestige" style="margin-top:8px;width:100%">🌸 Reboot Studio</button>`:""}
    </div>`;
-  h+=industryHTML()+hallOfFameHTML();
+  h+=franchisePanelHTML()+industryHTML()+hallOfFameHTML();
   return h;
 }
 function showcaseForGreenlight(){
@@ -4801,7 +4878,10 @@ function renderMarket(){
 function renderStore(){
   const P=MONETIZATION.prices, packCfg=[["gems_s","Starter Pack"],["gems_m","Studio Pack"],["gems_l","Producer Pack"],["gems_mega","Mogul Pack"]];
   const fgClaimed=S.freeGemsDate===todayStr();
-  let h=`<div class="aaa-tab-page"><div class="aaa-page-hero aaa-store-hero"><h2>💎 ${t("s_store","Studio Store")}</h2><p>Gems power scouts, skips, and boosts. Earn free or top up below.</p></div>
+  const storeLead=STORE_PAYMENTS
+    ? "Gems power scouts, skips, and boosts. Earn free through play or top up below."
+    : "100% free to play — earn every 💎 through daily rewards, quests, and milestones.";
+  let h=`<div class="aaa-tab-page"><div class="aaa-page-hero aaa-store-hero"><h2>💎 ${t("s_store","Studio Store")}</h2><p>${storeLead}</p></div>
     <div class="aaa-store-balance aaa-store-balance-hero"><img src="icons/hf/gems.png?v=${ASSET_V}" alt=""><div class="aaa-store-balance-body"><div class="aaa-store-balance-kicker">Your Gem Balance</div><b class="aaa-store-balance-amt">${fmt(S.gems)}</b><div class="aaa-store-balance-sub muted">Scouts · skips · boosts</div></div></div>`;
   h+=`<div class="panel" style="padding:12px">`;
   // Producer Pass (owned state always shown)
@@ -4850,11 +4930,17 @@ function renderStore(){
       <select id="redeem-sku" class="ast-input">${redeemSkus.map(([k,l])=>`<option value="${k}">${l}</option>`).join("")}</select>
       <input id="redeem-key" class="ast-input" type="text" placeholder="XXXX-XXXX-XXXX-XXXX">
       <button class="btn-cyan" data-act="redeem-submit" style="width:100%">Redeem Purchase</button></div>`;
-  } else if(!S.producerPass){
-    h+=`<div class="muted" style="margin:8px 0">💎 Earn Gems free through milestones, daily rewards, quests &amp; every 25 releases — then spend them below.</div>`;
+  } else {
+    h+=`<div class="aaa-store-f2p-hero panel" style="margin:8px 0;padding:14px;border:2px solid rgba(255,211,110,.45);background:linear-gradient(135deg,rgba(255,211,110,.12),rgba(176,107,255,.08))">
+      <h3 style="margin:0 0 6px;font-size:15px">🆓 100% Free to Play</h3>
+      <div class="muted" style="font-size:12px;line-height:1.55">No purchase required. Earn 💎 through <b>daily login</b>, <b>quests</b>, <b>achievements</b>, <b>milestones</b>, <b>every 25 releases</b>, and <b>studio level-ups</b> — then spend below on boosts, skips, and items.</div>
+      <div class="aaa-store-earn-path" style="margin-top:10px;display:grid;gap:6px;font-size:11px">
+        <div>🎁 Daily free +10 💎 · 📋 Quest rewards · 🏆 Achievements</div>
+        <div>🎖️ Level-ups · 🎡 Free daily spin &amp; scratch</div>
+      </div></div>`;
   }
   // Spend gems
-  h+=`<div class="muted" style="margin:12px 0 6px;font-weight:800;color:var(--plum)">${t("s_spend","Spend Gems")}</div>`;
+  h+=`<div id="aaa-gem-spend" class="muted" style="margin:12px 0 6px;font-weight:800;color:var(--plum)">${t("s_spend","Spend Gems")}</div>`;
   h+=gemSpendRow("hype","⚡ Hype Boost","+50 Hype instantly");
   h+=gemSpendRow("cash","💰 Cash Injection","+¥"+fmt(gemCashAmount())+" now");
   h+=gemSpendRow("skip","⏭️ Skip Production","Instantly finish all active projects",activeCount()>0?"":"disabled");
@@ -5298,6 +5384,9 @@ window.__AST_HOOK__ = {
   unlockModalPending,
   flushPostPremiereQueue,
   dynastyAvailable,
+  dynastyScore,
+  dynastyGrade,
+  syncPeakDynasty,
   festivalEntryCost,
   festivalInvitePending,
   openFestivalDecisionModal,
@@ -5328,20 +5417,20 @@ window.__AST_HOOK__ = {
   pendingUnlockTeasers,
 };
 </script>
-<script src="aaa-upgrade.js?v=97"></script>
-<script src="v5-slim-gate.js?v=97"></script>
-<script src="gameplay-plus.js?v=97"></script>
-<script src="gameplay-ultra.js?v=97"></script>
-<script src="gameplay-endless.js?v=97"></script>
-<script src="gameplay-empire.js?v=97"></script>
-<script src="gameplay-studio.js?v=97"></script>
+<script src="aaa-upgrade.js?v=98"></script>
+<script src="v5-slim-gate.js?v=98"></script>
+<script src="gameplay-plus.js?v=98"></script>
+<script src="gameplay-ultra.js?v=98"></script>
+<script src="gameplay-endless.js?v=98"></script>
+<script src="gameplay-empire.js?v=98"></script>
+<script src="gameplay-studio.js?v=98"></script>
 <!-- gameplay-final/aaa/legend deferred by v5-slim-gate.js until releases>=3 or totalFansEver>=50 -->
-<script src="hud-premium.js?v=97"></script>
-<script src="ui-complete.js?v=97"></script>
-<script src="gameplay-studio-rating.js?v=97"></script>
-<script src="gameplay-polish.js?v=97"></script>
-<script src="hook-bridge.js?v=97"></script>
-<script src="v5-render-guard.js?v=97"></script>
+<script src="hud-premium.js?v=98"></script>
+<script src="ui-complete.js?v=98"></script>
+<script src="gameplay-studio-rating.js?v=98"></script>
+<script src="gameplay-polish.js?v=98"></script>
+<script src="hook-bridge.js?v=98"></script>
+<script src="v5-render-guard.js?v=98"></script>
 <!-- studio-premium.css loaded in head -->
 
 

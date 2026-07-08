@@ -138,16 +138,25 @@ function buildSandbox() {
   return sandbox;
 }
 
+function loadLogicForVm() {
+  let code = readFileSync(join(root, "logic.js"), "utf8");
+  code = code
+    .replace(/^export const /gm, "const ")
+    .replace(/^export function /gm, "function ");
+  return code;
+}
+
 function extractGameLogic() {
   const html = readFileSync(join(root, "index.html"), "utf8");
   const m = html.match(/<script type="module">([\s\S]*?)<\/script>/);
   if (!m) throw new Error("index.html game script block not found");
   let code = m[1]
-    .replace(/^import[\s\S]*?from\s+["'][^"']+["'];\s*/m, "")
+    .replace(/^import[\s\S]*?from\s+["'][^"']+["'];\s*/gm, "")
+    .replace(/^window\.__AST_LOGIC__\s*=\s*\{[\s\S]*?\};\s*/m, "")
     .replace(/^setLang\(initialLang\(\)\);\s*/m, "");
   const cut = code.indexOf("const loaded=load();");
   if (cut < 0) throw new Error("game script cut marker missing");
-  return code.slice(0, cut);
+  return loadLogicForVm() + "\n" + code.slice(0, cut);
 }
 
 const STUBS = `
@@ -226,6 +235,43 @@ function runVmSimulation() {
   return sandbox.__SIM_RESULT__;
 }
 
+const UNLOCK_GATE_RUNNER = `
+S = freshState();
+const gates = { release0: {}, release1: {}, fans49: {}, fans50: {} };
+
+gates.release0.studio = featureUnlocked("studio");
+gates.release0.slots = S.slots;
+S.yen = 50000;
+expandStudio();
+gates.release0.slotsAfterExpand = S.slots;
+
+S = freshState();
+S.releases = 1;
+gates.release1.studio = featureUnlocked("studio");
+gates.release1.expandCost = expandCost();
+S.yen = 50000;
+const yen0 = S.yen;
+const slots0 = S.slots;
+expandStudio();
+gates.release1.slotsAfter = S.slots;
+gates.release1.yenSpent = yen0 - S.yen;
+gates.release1.expandWorked = S.slots === slots0 + 1;
+
+S = freshState();
+S.fans = 49;
+gates.fans49.market = featureUnlocked("market");
+S.fans = 50;
+gates.fans50.market = featureUnlocked("market");
+
+__UNLOCK_GATES__ = gates;
+`;
+
+function runUnlockGateSimulation() {
+  const sandbox = buildSandbox();
+  vm.runInNewContext(extractGameLogic() + STUBS + UNLOCK_GATE_RUNNER, sandbox, { timeout: 20000 });
+  return sandbox.__UNLOCK_GATES__;
+}
+
 function assertHonestFlow(snap) {
   assert(snap.yen0 === 1500, "fresh honest yen", `got ${snap.yen0}`);
   assert(snap.releases0 === 0, "fresh releases zero");
@@ -255,32 +301,59 @@ function assertHonestFlow(snap) {
   assert(snap.chaosUnlocked === false, "chaos locked before 10 releases");
 }
 
+function assertUnlockGates(gates) {
+  assert(gates.release0.studio === false, "studio locked at release 0");
+  assert(
+    gates.release0.slotsAfterExpand === gates.release0.slots,
+    "expand no-op before release 1",
+    `slots ${gates.release0.slots} → ${gates.release0.slotsAfterExpand}`
+  );
+  assert(gates.release1.studio === true, "studio unlocked at release 1");
+  assert(gates.release1.expandWorked === true, "expand succeeds at release 1 with yen");
+  assert(
+    gates.release1.yenSpent === gates.release1.expandCost,
+    "expand costs yen at release 1",
+    `spent ${gates.release1.yenSpent} vs cost ${gates.release1.expandCost}`
+  );
+  assert(gates.fans49.market === false, "market locked at 49 fans");
+  assert(gates.fans50.market === true, "market unlocked at 50 fans");
+}
+
 function staticSaveSchemaAudit() {
+  const logic = readFileSync(join(root, "logic.js"), "utf8");
   const html = readFileSync(join(root, "index.html"), "utf8");
   const requiredKeys = [
-    "yen:1500",
-    "releases:0",
-    "slots:1",
-    "staff:{ animator:0",
-    "projects:[null]",
-    "_guidedFresh:false",
-    "_demoMode:false",
-    "catalogIncome:0",
-    "mastery:Object.fromEntries(GENRES.map",
+    "yen: 1500",
+    "releases: 0",
+    "slots: 1",
+    "animator: 0",
+    "projects: [null]",
+    "_guidedFresh: false",
+    "_demoMode: false",
+    "catalogIncome: 0",
+    "mastery: Object.fromEntries(genres.map",
   ];
   for (const key of requiredKeys) {
-    assert(html.includes(key), `save schema field: ${key.split(":")[0]}`);
+    assert(logic.includes(key), `save schema field: ${key.split(":")[0].trim()}`);
   }
 
+  assert(html.includes('from "./logic.js"'), "index.html imports logic.js");
+
   const unlockOrder = [
-    'studio:  { test:()=>(S.releases||0)>=1',
-    'stars:   { test:()=>(S.releases||0)>=2',
-    'market:  { test:()=>(S.fans||0)>=50',
-    'research:{ test:()=>(S.totalFansEver||0)>=120',
-    'chaos:   { test:()=>(S.releases||0)>=10',
+    "studio:  { label:",
+    "releases: 1",
+    "stars:   { label:",
+    "releases: 2",
+    "totalFansEver: 20",
+    "market:  { label:",
+    "fans: 50",
+    "research:{ label:",
+    "totalFansEver: 120",
+    "chaos:   { label:",
+    "releases: 10",
   ];
   for (const snippet of unlockOrder) {
-    assert(html.includes(snippet), `unlock gate: ${snippet.split(":")[0].trim()}`);
+    assert(logic.includes(snippet), `unlock gate: ${snippet.split(":")[0].trim()}`);
   }
 }
 
@@ -291,6 +364,14 @@ try {
   assertHonestFlow(snap);
 } catch (e) {
   fail("vm honest-flow sim", e.message || String(e));
+}
+
+console.log("\nUnlock gate state checks (expand @ release 1, market @ 50 fans):\n");
+try {
+  const gates = runUnlockGateSimulation();
+  assertUnlockGates(gates);
+} catch (e) {
+  fail("vm unlock-gate sim", e.message || String(e));
 }
 
 console.log("\nStatic save schema + unlock order:\n");

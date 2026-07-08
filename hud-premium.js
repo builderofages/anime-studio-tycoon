@@ -431,6 +431,28 @@
     return null;
   }
 
+  function dynastyPerkCoach(S, hook) {
+    if ((S.releases || 0) < 10) return null;
+    const avail = hook.dynastyAvailable
+      ? hook.dynastyAvailable()
+      : Math.max(0, (S.dynastyPoints || 0) - (S.dynastySpent || 0));
+    if (avail < 12) return null;
+    const score = hook.dynastyScore ? hook.dynastyScore() : 0;
+    const dg = hook.dynastyGrade ? hook.dynastyGrade(score) : { g: "", label: "" };
+    const peak = S.peakDynasty || score;
+    const msg = avail >= 20
+      ? `👑 ${avail} dynasty pts ready — invest in permanent perks`
+      : `👑 ${avail} dynasty pts — open Perk Shop in Studio`;
+    const sub = dg.g ? ` · ${dg.g}-rank ${score} (peak ${peak})` : "";
+    return {
+      message: msg + sub,
+      tab: "studio",
+      cta: "Perks",
+      urgent: avail >= 20,
+      action: { type: "dynasty-perks" },
+    };
+  }
+
   function fanMilestoneMarketCoach(S, hook) {
     const milestones = hook.FAN_TOAST_MILESTONES || [{ fans: 10 }, { fans: 50 }, { fans: 100 }];
     const target = milestones.map((m) => m.fans).find((f) => S.fans < f);
@@ -464,6 +486,33 @@
       urgent: gap <= afford.fans,
       action: { type: "tab", tab: "market" },
     };
+  }
+
+  function firstGemSpendCoach(S, hook) {
+    if (S.gemSpent) return null;
+    const gems = S.gems || 0;
+    if (gems < 4) return null;
+    if ((S.releases || 0) < 1) return null;
+    const active = activeCount(S);
+    if (active > 0 && gems >= 4) {
+      return {
+        message: "4💎 Skip Production — finish your show instantly",
+        tab: "store",
+        cta: "Spend",
+        urgent: false,
+        action: { type: "tab", tab: "store", focus: "gem-spend" },
+      };
+    }
+    if (gems >= 5) {
+      return {
+        message: "5💎 Hype Boost — great before your next greenlight",
+        tab: "store",
+        cta: "Spend",
+        urgent: false,
+        action: { type: "tab", tab: "store", focus: "gem-spend" },
+      };
+    }
+    return null;
   }
 
   function chaosDisasterCoach(S, hook) {
@@ -552,6 +601,9 @@
 
     const festivalCoach = festivalInviteCoach(S, hook);
     if (festivalCoach) return festivalCoach;
+
+    const dynastyCoach = dynastyPerkCoach(S, hook);
+    if (dynastyCoach) return dynastyCoach;
 
     const chaosUnlocked = hook.featureUnlocked ? hook.featureUnlocked("chaos") : (S.releases || 0) >= 10;
     if (chaosUnlocked && !S.chaosMode && (S.releases || 0) >= 10 && (S.releases || 0) <= 25) {
@@ -785,6 +837,9 @@
         };
       }
     }
+    const gemSpendCoach = firstGemSpendCoach(S, hook);
+    if (gemSpendCoach) return gemSpendCoach;
+
     const todayGems = new Date().toISOString().slice(0, 10);
     if (S.freeGemsDate !== todayGems) {
       return {
@@ -795,15 +850,8 @@
         action: { type: "tab", tab: "store", focus: "freegems" },
       };
     }
-    if ((S.dynastyPoints || 0) - (S.dynastySpent || 0) >= 12 && (S.releases || 0) >= 15) {
-      return {
-        message: "Dynasty perks available — open the perk shop in Studio",
-        tab: "studio",
-        cta: "Perks",
-        urgent: true,
-        action: { type: "dynasty-perks" },
-      };
-    }
+    const dynastyFallback = dynastyPerkCoach(S, hook);
+    if (dynastyFallback) return dynastyFallback;
     const pwaCoach = pwaHomeScreenCoach(S, hook);
     if (pwaCoach) return pwaCoach;
     const nextUnlockCoach = nextUnlockPreviewCoach(S, hook);
@@ -961,6 +1009,10 @@
           requestAnimationFrame(() => {
             document.querySelector(".aaa-free-gems-btn:not([disabled])")?.scrollIntoView({ behavior: "smooth", block: "center" });
           });
+        } else if (pw.action.focus === "gem-spend") {
+          requestAnimationFrame(() => {
+            document.getElementById("aaa-gem-spend")?.scrollIntoView({ behavior: "smooth", block: "start" });
+          });
         }
       }
       hook.play("click");
@@ -1056,8 +1108,15 @@
         race.hidden = true;
         race.innerHTML = `
           <span class="rival-race-ic" aria-hidden="true">🏁</span>
-          <span class="rival-race-rank">#<b id="rival-race-n">—</b></span>
-          <span class="rival-race-copy" id="rival-race-copy">Industry race</span>`;
+          <div class="rival-race-main">
+            <span class="rival-race-rank">#<b id="rival-race-n">—</b></span>
+            <span class="rival-race-total" id="rival-race-total"></span>
+          </div>
+          <div class="rival-race-detail">
+            <span class="rival-race-copy" id="rival-race-copy">Industry race</span>
+            <span class="rival-race-gap" id="rival-race-gap" hidden></span>
+          </div>
+          <div class="rival-race-leaders" id="rival-race-leaders" hidden></div>`;
         goal.parentNode.insertBefore(race, goal.nextSibling);
       }
       goal.parentNode.insertBefore(rail, (document.getElementById("rival-race") || goal).nextSibling);
@@ -1571,18 +1630,58 @@
 
     const race = document.getElementById("rival-race");
     if (race) {
+      if (!race.querySelector("#rival-race-total")) {
+        race.innerHTML = `
+          <span class="rival-race-ic" aria-hidden="true">🏁</span>
+          <div class="rival-race-main">
+            <span class="rival-race-rank">#<b id="rival-race-n">—</b></span>
+            <span class="rival-race-total" id="rival-race-total"></span>
+          </div>
+          <div class="rival-race-detail">
+            <span class="rival-race-copy" id="rival-race-copy">Industry race</span>
+            <span class="rival-race-gap" id="rival-race-gap" hidden></span>
+          </div>
+          <div class="rival-race-leaders" id="rival-race-leaders" hidden></div>`;
+      }
       const showRace = (S.releases || 0) >= 2 && !glView;
+      const expanded = (S.releases || 0) >= 10;
       race.hidden = !showRace;
+      race.classList.toggle("rival-race-expanded", showRace && expanded);
       if (showRace && hook.industryStandings) {
         const st = hook.industryStandings();
         const n = document.getElementById("rival-race-n");
+        const total = document.getElementById("rival-race-total");
         const copy = document.getElementById("rival-race-copy");
+        const gap = document.getElementById("rival-race-gap");
+        const leaders = document.getElementById("rival-race-leaders");
         if (n) n.textContent = String(st.rank);
+        if (total) total.textContent = expanded ? ` / ${st.total}` : "";
         const next = st.idx > 0 ? st.all[st.idx - 1] : null;
+        const me = st.all[st.idx];
         if (copy) {
           copy.textContent = next
-            ? `vs ${next.name} · ${hook.fmt ? hook.fmt(next.val) : next.val}`
+            ? (expanded ? `vs ${next.name}` : `vs ${next.name} · ${hook.fmt ? hook.fmt(next.val) : next.val}`)
             : "Top studio in the world!";
+        }
+        if (gap) {
+          if (expanded && next && me) {
+            const gapVal = Math.max(0, next.val - me.val);
+            gap.hidden = false;
+            gap.textContent = `¥${hook.fmt ? hook.fmt(gapVal) : gapVal} to pass`;
+          } else {
+            gap.hidden = true;
+          }
+        }
+        if (leaders) {
+          if (expanded) {
+            leaders.hidden = false;
+            leaders.innerHTML = st.all.slice(0, 3).map((r, i) => {
+              const mark = r.me ? " (you)" : "";
+              return `<span class="rival-race-leader${r.me ? " rival-race-me" : ""}">${i + 1}. ${r.name}${mark}</span>`;
+            }).join("");
+          } else {
+            leaders.hidden = true;
+          }
         }
       }
     }
@@ -1754,7 +1853,7 @@
       stars: starsUnlocked && scoutAfford,
       market: !!marketAfford,
       research: researchAfford,
-      studio: dynastyAvail >= 12 && (S.releases || 0) >= 15,
+      studio: dynastyAvail >= 12 && (S.releases || 0) >= 10,
       store: freeGems,
     };
     document.querySelectorAll(".tab").forEach((tab) => {

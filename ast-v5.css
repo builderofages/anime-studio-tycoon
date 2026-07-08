@@ -4416,7 +4416,47 @@ html.hud-v3-active #pathway-rail.coach-bar { margin:6px var(--ast-gutter) 0!impo
 html.hud-v3-active #goal .bar { position:relative!important; }
 html.hud-v3-active #goal .bar::before { content:""!important; position:absolute!important; inset:0!important; pointer-events:none!important; z-index:2!important; background-image:linear-gradient(to bottom,transparent 12%,var(--ast-gold) 12%,var(--ast-gold) 88%,transparent 88%),linear-gradient(to bottom,transparent 12%,var(--ast-gold) 12%,var(--ast-gold) 88%,transparent 88%),linear-gradient(to bottom,transparent 12%,var(--ast-gold) 12%,var(--ast-gold) 88%,transparent 88%)!important; background-size:2px 100%,2px 100%,2px 100%!important; background-position:10% 0,50% 0,calc(100% - 1px) 0!important; background-repeat:no-repeat!important; opacity:.92!important; }
 html.hud-v3-active #goal .bar i,html.hud-v3-active #goal #goal-bar { position:relative!important; z-index:1!important; }
-html.hud-v3-active #loading-splash { background:linear-gradient(180deg,rgba(12,10,24,.42) 0%,rgba(12,10,24,.9) 100%),url("bg-v4.png?v=97") center/cover no-repeat!important; }
+html.hud-v3-active #loading-splash { background:linear-gradient(180deg,rgba(12,10,24,.42) 0%,rgba(12,10,24,.9) 100%),url("bg-v4.png?v=98") center/cover no-repeat!important; }
 html.hud-v3-active #loading-splash h1 { background:linear-gradient(135deg,var(--ast-text),var(--ast-pink))!important; -webkit-background-clip:text!important; background-clip:text!important; color:transparent!important; }
 html.hud-v3-active .splash-hero { width:112px!important; height:112px!important; border-radius:28px!important; object-fit:cover!important; box-shadow:0 12px 40px rgba(255,92,168,.35),0 0 0 2px rgba(255,200,69,.28)!important; }
 html.hud-v3-active #loading-bar { width:220px!important; background:rgba(255,255,255,.06)!important; border:1px solid rgba(255,120,180,.18)!important; }
+/* BUILD 98 — Endgame visibility */
+html.hud-v3-active .aaa-dynasty-hero { display:flex!important; align-items:center!important; gap:12px!important; margin:0 0 12px!important; padding:12px 14px!important; border-radius:16px!important; border:1px solid rgba(255,200,69,.35)!important; background:linear-gradient(135deg,rgba(255,200,69,.16),rgba(107,92,255,.1))!important; box-shadow:0 8px 24px rgba(255,200,69,.12)!important; }
+html.hud-v3-active .aaa-dynasty-hero-grade { flex:0 0 auto!important; width:44px!important; height:44px!important; border-radius:12px!important; display:grid!important; place-items:center!important; font:900 20px/1 system-ui!important; color:#1a0a14!important; background:linear-gradient(135deg,#ffc845,#ff9bc4)!important; box-shadow:0 4px 14px rgba(255,200,69,.35)!important; }
+html.hud-v3-active .aaa-dynasty-hero.dynasty-s .aaa-dynasty-hero-grade { background:linear-gradient(135deg,#ffd700,#ff9bc4,#b06bff)!important; }
+html.hud-v3-active .aaa-dynasty-hero.dynasty-a .aaa-dynasty-hero-grade { background:linear-gradient(135deg,#5fd38a,#7ee8fa)!important; color:#1a3a2a!important; }
+html.hud-v3-active .aaa-dynasty-hero-body { flex:1!important; min-width:0!important; display:flex!important; flex-direction:column!important; gap:2px!important; }
+html.hud-v3-active .aaa-dynasty-hero-score { font:800 18px/1.1 system-ui!important; color:var(--ast-text)!important; }
+html.hud-v3-active .aaa-dynasty-hero-score span { font:700 10px/1.2 system-ui!important; letter-spacing:.06em!important; text-transform:uppercase!important; color:var(--ast-muted)!important; margin-left:4px!important; }
+html.hud-v3-active .aaa-dynasty-hero-sub { font:700 11px/1.35 system-ui!important; color:var(--ast-muted)!important; }
+html.hud-v3-active .aaa-dynasty-hero-sub b { color:var(--ast-gold)!important; }
+html.hud-v3-active .aaa-dynasty-hero-pts { flex:0 0 auto!important; text-align:center!important; padding:6px 10px!important; border-radius:12px!important; background:rgba(255,255,255,.06)!important; border:1px solid var(--ast-border-soft)!important; }
+html.hud-v3-active .aaa-dynasty-hero-pts b { display:block!important; font:800 16px/1.1 system-ui!important; color:var(--ast-gold)!important; }
+html.hud-v3-active .aaa-dynasty-hero-pts small { font:700 8px/1.2 system-ui!important; letter-spacing:.06em!important; text-transform:uppercase!important; color:var(--ast-muted)!important; }
+html.hud-v3-active .aaa-franchise-panel { margin-top:10px!important; }
+html.hud-v3-active .aaa-franchise-list { display:flex!important; flex-direction:column!important; gap:8px!important; margin-top:8px!important; }
+html.hud-v3-active .aaa-franchise-row { display:flex!important; align-items:center!important; gap:10px!important; padding:10px 12px!important; border-radius:12px!important; background:rgba(255,255,255,.04)!important; border:1px solid var(--ast-border-soft)!important; }
+html.hud-v3-active .aaa-franchise-row-ic { font-size:18px!important; flex-shrink:0!important; }
+html.hud-v3-active .aaa-franchise-row-body { flex:1!important; min-width:0!important; display:flex!important; flex-direction:column!important; gap:2px!important; }
+html.hud-v3-active .aaa-franchise-row-body b { font:800 13px/1.2 system-ui!important; color:var(--ast-text)!important; white-space:nowrap!important; overflow:hidden!important; text-overflow:ellipsis!important; }
+html.hud-v3-active .aaa-franchise-row-body span { font:700 10px/1.3 system-ui!important; color:var(--ast-muted)!important; }
+html.hud-v3-active .aaa-franchise-row-bonus { flex:0 0 auto!important; font:800 11px/1 system-ui!important; color:var(--ast-cyan)!important; padding:4px 8px!important; border-radius:999px!important; background:rgba(77,212,255,.12)!important; border:1px solid rgba(77,212,255,.28)!important; }
+html.hud-v3-active .aaa-chaos-studio-card { margin-top:10px!important; padding:12px 14px!important; border-radius:16px!important; border:1px solid rgba(248,113,113,.32)!important; background:linear-gradient(135deg,rgba(248,113,113,.14),rgba(251,146,60,.08))!important; box-shadow:0 8px 22px rgba(248,113,113,.12)!important; }
+html.hud-v3-active .aaa-chaos-studio-on { border-color:rgba(251,146,60,.55)!important; box-shadow:0 0 18px rgba(248,113,113,.22)!important; }
+html.hud-v3-active .aaa-chaos-studio-warn { animation:ast-chaos-warn-pulse 2s ease-in-out infinite!important; }
+html.hud-v3-active .aaa-chaos-studio-head { display:flex!important; align-items:center!important; gap:10px!important; margin-bottom:10px!important; }
+html.hud-v3-active .aaa-chaos-studio-ic { font-size:22px!important; line-height:1!important; }
+html.hud-v3-active .aaa-chaos-studio-copy { flex:1!important; min-width:0!important; display:flex!important; flex-direction:column!important; gap:2px!important; }
+html.hud-v3-active .aaa-chaos-studio-copy b { font:800 14px/1.2 system-ui!important; color:#fed7aa!important; }
+html.hud-v3-active .aaa-chaos-studio-copy span { font:700 10px/1.3 system-ui!important; color:var(--ast-muted)!important; }
+html.hud-v3-active .aaa-chaos-studio-meter { font:800 14px/1 system-ui!important; color:#fff!important; padding:4px 8px!important; border-radius:8px!important; background:rgba(0,0,0,.25)!important; }
+html.hud-v3-active .aaa-chaos-studio-btn { width:100%!important; font-size:14px!important; font-weight:800!important; padding:12px 14px!important; border-radius:14px!important; }
+html.hud-v3-active #rival-race.rival-race-expanded { flex-wrap:wrap!important; align-items:flex-start!important; padding:8px 12px!important; border-color:rgba(255,200,69,.28)!important; background:linear-gradient(135deg,rgba(8,6,18,.72),rgba(107,92,255,.1))!important; }
+html.hud-v3-active #rival-race .rival-race-main { display:flex!important; align-items:baseline!important; gap:2px!important; flex-shrink:0!important; }
+html.hud-v3-active #rival-race .rival-race-total { font:700 11px/1 system-ui!important; color:var(--ast-muted)!important; opacity:.85!important; }
+html.hud-v3-active #rival-race .rival-race-detail { flex:1 1 120px!important; min-width:0!important; display:flex!important; flex-direction:column!important; gap:2px!important; }
+html.hud-v3-active #rival-race .rival-race-gap { font:700 10px/1.2 system-ui!important; color:var(--ast-gold)!important; }
+html.hud-v3-active #rival-race .rival-race-leaders { flex:1 1 100%!important; display:flex!important; flex-wrap:wrap!important; gap:6px!important; margin-top:4px!important; padding-top:6px!important; border-top:1px solid rgba(255,255,255,.08)!important; }
+html.hud-v3-active #rival-race .rival-race-leader { flex:1 1 auto!important; min-width:0!important; font:700 10px/1.3 system-ui!important; color:var(--ast-muted)!important; white-space:nowrap!important; overflow:hidden!important; text-overflow:ellipsis!important; }
+html.hud-v3-active #rival-race .rival-race-leader.rival-race-me { color:var(--ast-gold)!important; font-weight:800!important; }
+/* BUILD 98 — Core unlock gates + playtest sim */

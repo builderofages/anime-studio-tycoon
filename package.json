@@ -5,6 +5,7 @@
   "description": "Anime Studio Tycoon — iOS + Android app wrapper (Capacitor)",
   "scripts": {
     "test": "node scripts/smoke-test.mjs",
+    "test:sim": "node scripts/playtest-sim.mjs",
     "audit:check": "node scripts/audit-check.mjs",
     "prepare": "node scripts/prepare-native.mjs",
     "prepare-native": "node scripts/prepare-native.mjs",
@@ -23,9 +24,11 @@
     "open-android": "cap open android"
   },
   "dependencies": {
+    "@capacitor/android": "^6.2.0",
     "@capacitor/core": "^6.2.0",
     "@capacitor/ios": "^6.2.0",
-    "@capacitor/android": "^6.2.0",
+    "@capacitor/splash-screen": "^6.0.3",
+    "@capacitor/status-bar": "^6.0.2",
     "cordova-plugin-purchase": "^13.11.1"
   },
   "devDependencies": {

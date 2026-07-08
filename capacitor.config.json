@@ -2,7 +2,28 @@
   "appId": "com.trainyouragent.animestudiotycoon",
   "appName": "Anime Studio Tycoon",
   "webDir": "www",
-  "backgroundColor": "#1a1426ff",
-  "ios": { "contentInset": "always", "backgroundColor": "#1a1426ff", "limitsNavigationsToAppBoundDomains": false },
-  "server": { "iosScheme": "app" }
+  "backgroundColor": "#08050fff",
+  "ios": {
+    "contentInset": "always",
+    "backgroundColor": "#08050fff",
+    "limitsNavigationsToAppBoundDomains": false
+  },
+  "server": { "iosScheme": "app" },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 2000,
+      "launchAutoHide": true,
+      "backgroundColor": "#08050f",
+      "androidSplashResourceName": "splash",
+      "androidScaleType": "CENTER_CROP",
+      "showSpinner": false,
+      "splashFullScreen": true,
+      "splashImmersive": true
+    },
+    "StatusBar": {
+      "style": "LIGHT",
+      "backgroundColor": "#08050f",
+      "overlaysWebView": true
+    }
+  }
 }

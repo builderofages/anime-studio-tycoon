@@ -25,6 +25,7 @@ function assert(cond, name, msg = "missing") {
 }
 
 const html = readFileSync(join(root, "index.html"), "utf8");
+const logic = readFileSync(join(root, "logic.js"), "utf8");
 const sources = [
   "index.html",
   "hud-premium.js",
@@ -138,29 +139,36 @@ for (const dynId of ["starter", "guided-tutorial", "aaa-achieve-pop"]) {
   );
 }
 
+assert(html.includes('from "./logic.js"'), "index.html imports logic.js");
+
 /** Honest bootstrap + save schema anchors (complemented by playtest-sim.mjs vm run). */
 const SAVE_SCHEMA_KEYS = [
-  "yen:1500",
-  "releases:0",
-  "slots:1",
-  "staff:{ animator:0",
-  "projects:[null]",
-  "_guidedFresh:false",
-  "catalogIncome:0",
+  "yen: 1500",
+  "releases: 0",
+  "slots: 1",
+  "animator: 0",
+  "projects: [null]",
+  "_guidedFresh: false",
+  "catalogIncome: 0",
 ];
 for (const key of SAVE_SCHEMA_KEYS) {
-  assert(html.includes(key), `honest save schema: ${key.split(":")[0]}`);
+  assert(logic.includes(key), `honest save schema: ${key.split(":")[0].trim()}`);
 }
 
 const UNLOCK_SNIPPETS = [
-  'studio:  { test:()=>(S.releases||0)>=1',
-  'stars:   { test:()=>(S.releases||0)>=2',
-  'market:  { test:()=>(S.fans||0)>=50',
-  'research:{ test:()=>(S.totalFansEver||0)>=120',
-  'chaos:   { test:()=>(S.releases||0)>=10',
+  "studio:  { label:",
+  "releases: 1",
+  "stars:   { label:",
+  "releases: 2",
+  "market:  { label:",
+  "fans: 50",
+  "research:{ label:",
+  "totalFansEver: 120",
+  "chaos:   { label:",
+  "releases: 10",
 ];
 for (const snippet of UNLOCK_SNIPPETS) {
-  assert(html.includes(snippet), `unlock order: ${snippet.split(":")[0].trim()}`);
+  assert(logic.includes(snippet), `unlock order: ${snippet.split(":")[0].trim()}`);
 }
 
 assert(html.includes("tapBoost(slot)"), "tap boost production hook");
