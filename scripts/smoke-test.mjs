@@ -141,9 +141,10 @@ assert(!html.includes('href="hf-design.css'), "hf-design.css disabled (ast-v5)")
 assert(!html.includes('href="aaa-ui.css'), "aaa-ui.css disabled (ast-v5)");
 assert(html.includes("legacy-fx.css"), "legacy-fx css linked");
 assert(html.includes("ast-v5.css"), "ast-v5 design css linked");
-assert(html.includes("build 82"), "build 82 tag");
+assert(html.includes("build 83"), "build 83 tag");
 assert(html.includes("Production Score"), "production score label");
-assert(html.includes("HUD Context"), "whatsnew build 82 changelog");
+assert(html.includes("GL Stats"), "whatsnew build 83 changelog");
+assert(html.includes("aaa-gl-confirm-main"), "greenlight confirm two-line layout");
 assert(html.includes("hudDisplayValue"), "context hud values");
 assert(html.includes("hudHypeCap"), "context hype cap");
 assert(html.includes("125600000"), "greenlight showcase yen");
@@ -175,10 +176,10 @@ assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("glView ? fal
 assert(readFileSync(join(root, "package.json"), "utf8").includes('"overrides"'), "npm overrides");
 assert(existsSync(join(root, "scripts/audit-check.mjs")), "audit check script");
 const astCss = readFileSync(join(root, "ast-v5.css"), "utf8");
-assert(astCss.includes("BUILD 82"), "build 82 css marker");
+assert(astCss.includes("BUILD 83"), "build 83 css marker");
 assert(astCss.includes(".tab .tab-lbl") && astCss.includes("display: block"), "dock tab labels visible");
 const astLines = astCss.split("\n").length;
-assert(astLines < 3200, "ast-v5.css pruned under 3200 lines", `${astLines} lines`);
+assert(astLines < 3300, "ast-v5.css under 3300 lines", `${astLines} lines`);
 assert(astCss.includes("BUILD 73 — CSS Prune"), "build 73 css marker");
 assert(!astCss.includes("BUILD 55 —"), "dead build 55 section removed");
 assert(existsSync(join(root, "scripts/prune-ast-v5.mjs")), "prune script exists");

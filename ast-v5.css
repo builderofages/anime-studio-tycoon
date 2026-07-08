@@ -38,7 +38,7 @@ html.hud-v3-active body {
 html.hud-v3-active body {
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.35) 0%, rgba(8, 6, 15, 0.82) 100%),
-    url('bg-v4.png?v=82') center top / cover no-repeat fixed !important;
+    url('bg-v4.png?v=83') center top / cover no-repeat fixed !important;
 }
 
 html.hud-v3-active button {
@@ -496,7 +496,7 @@ html.hud-v3-active .aaa-poster[data-act="tapboost"]:active {
 html.hud-v3-active .aaa-page-hero.aaa-gacha-hero {
   background:
     linear-gradient(135deg, rgba(107, 92, 255, 0.2), rgba(255, 92, 168, 0.14)),
-    url('assets/hf/gacha-bg.png?v=82') center/cover !important;
+    url('assets/hf/gacha-bg.png?v=83') center/cover !important;
   border: 1px solid rgba(180, 140, 255, 0.28) !important;
   overflow: hidden;
 }
@@ -1983,7 +1983,7 @@ html.hud-v3-active .aaa-gl-page-head {
   padding: 14px 14px 10px !important;
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.4) 0%, rgba(8, 6, 15, 0.9) 100%),
-    url('assets/hf/greenlight-bg.png?v=82') center/cover !important;
+    url('assets/hf/greenlight-bg.png?v=83') center/cover !important;
   border-bottom: 1px solid rgba(255, 200, 69, 0.15) !important;
 }
 
@@ -3108,4 +3108,94 @@ html.hud-v3-active .aaa-gl-page .aaa-gl-badge.editor {
   letter-spacing: 0.08em !important;
   padding: 5px 8px !important;
   border-radius: 8px !important;
+}
+
+/* ========== BUILD 83 (canonical) ========== */
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-stat {
+  margin: 0 10px 5px !important;
+  gap: 8px !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-stat > span {
+  flex: 0 0 78px !important;
+  font-size: 7px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.03em !important;
+  text-transform: uppercase !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-bar {
+  height: 6px !important;
+  border-radius: 999px !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-bar i {
+  border-radius: 999px !important;
+  box-shadow: 0 0 8px rgba(255, 92, 168, 0.45) !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-stat b {
+  flex: 0 0 22px !important;
+  font-size: 9px !important;
+  font-weight: 900 !important;
+  color: #fff !important;
+  text-align: right !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-confirm-banner {
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 4px !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-confirm-main {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  width: 100% !important;
+  letter-spacing: 0.1em !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-confirm-sub {
+  max-width: none !important;
+  width: 100% !important;
+  text-align: center !important;
+  opacity: 0.88 !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-confirm-cost {
+  margin-left: 0 !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-rewards,
+html.hud-v3-active .aaa-gl-page .aaa-gl-risk {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25) !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-score-star {
+  color: var(--ast-gold) !important;
+  font-size: 16px !important;
+  filter: drop-shadow(0 0 6px rgba(255, 200, 69, 0.5)) !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-score-val {
+  color: #fff !important;
+  letter-spacing: 0.02em !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-team-role {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 3px !important;
+  font-size: 7px !important;
+  line-height: 1.2 !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-team-role-ic {
+  font-size: 9px !important;
+  opacity: 0.9 !important;
 }
