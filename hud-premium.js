@@ -140,6 +140,17 @@
         action: { type: "tab", tab: "staff" },
       };
     }
+    if ((S.releases || 0) < 8 && activeCount(S) > 0 && hook.hireCost && hook.ROLES) {
+      const afford = Object.keys(hook.ROLES).find((k) => S.yen >= hook.hireCost(k));
+      if (afford) {
+        return {
+          message: `Hire a ${hook.ROLES[afford].name} to speed up production`,
+          tab: "staff",
+          cta: "Hire",
+          action: { type: "tab", tab: "staff" },
+        };
+      }
+    }
     if ((S.dynastyPoints || 0) - (S.dynastySpent || 0) >= 12 && (S.releases || 0) >= 15) {
       return {
         message: "Dynasty perks available in Studio",
@@ -200,7 +211,7 @@
     shell.innerHTML = `
       <div class="hud-top">
         <button type="button" class="hud-menu-btn" id="hud-menu-btn" aria-label="Menu">☰</button>
-        <div class="hud-avatar-wrap"><img class="hud-avatar" src="start-hero.png?v=59" alt=""><span class="hud-lv-badge" id="hud-lv-badge">1</span></div>
+        <div class="hud-avatar-wrap"><img class="hud-avatar" src="start-hero.png?v=60" alt=""><span class="hud-lv-badge" id="hud-lv-badge">1</span></div>
         <div class="hud-identity">
           <span class="hud-studio-name" id="hud-studio-name">Studio</span>
           <div id="hud-studio-rating" class="hud-rating-chip" title="Studio rating"></div>
@@ -253,7 +264,7 @@
       rail.id = "pathway-rail";
       rail.className = "coach-bar";
       rail.innerHTML = `
-        <img class="coach-avatar" src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg?v=59" alt="" width="40" height="40">
+        <img class="coach-avatar" src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg?v=60" alt="" width="40" height="40">
         <div class="coach-body">
           <span class="coach-label">Coach's Tip</span>
           <p class="coach-msg" id="pathway-now"></p>

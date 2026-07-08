@@ -34,7 +34,7 @@ html.hud-v3-active body {
 html.hud-v3-active body {
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.35) 0%, rgba(8, 6, 15, 0.82) 100%),
-    url('bg-v4.png?v=59') center top / cover no-repeat fixed !important;
+    url('bg-v4.png?v=60') center top / cover no-repeat fixed !important;
 }
 
 html.hud-v3-active button {
@@ -492,7 +492,7 @@ html.hud-v3-active .aaa-poster[data-act="tapboost"]:active {
 html.hud-v3-active .aaa-page-hero.aaa-gacha-hero {
   background:
     linear-gradient(135deg, rgba(107, 92, 255, 0.2), rgba(255, 92, 168, 0.14)),
-    url('assets/hf/gacha-bg.png?v=59') center/cover !important;
+    url('assets/hf/gacha-bg.png?v=60') center/cover !important;
   border: 1px solid rgba(180, 140, 255, 0.28) !important;
   overflow: hidden;
 }
@@ -735,10 +735,55 @@ html.hud-v3-active #daily #daily-body {
   color: var(--ast-text) !important;
 }
 
-/* ---- FX layers ---- */
+/* ---- FX layers (from hf-design — single source) ---- */
 #fx-canvas {
-  z-index: 0 !important;
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1 !important;
   opacity: 0.85;
+}
+
+#loading-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+#loading-splash.hide {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+#loading-bar {
+  width: 200px;
+  height: 6px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+  margin-top: 14px;
+}
+
+#loading-bar i {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--ast-pink), var(--ast-gold));
+  border-radius: 4px;
+  transition: width 0.15s ease;
+}
+
+html.hud-v3-active .overlay,
+.overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 200 !important;
 }
 
 html.hud-v3-active #app {
@@ -1874,21 +1919,21 @@ html.hud-v3-active #premiere .premiere-card .btn-gold {
 html.hud-v3-active .aaa-page-hero.aaa-quest-hero {
   background:
     linear-gradient(135deg, rgba(255, 200, 69, 0.16), rgba(255, 92, 168, 0.12)),
-    url('assets/hf/greenlight-bg.png?v=59') center/cover !important;
+    url('assets/hf/greenlight-bg.png?v=60') center/cover !important;
   border: 1px solid rgba(255, 200, 69, 0.28) !important;
 }
 
 html.hud-v3-active .aaa-page-hero.aaa-staff-hero {
   background:
     linear-gradient(135deg, rgba(107, 92, 255, 0.18), rgba(255, 92, 168, 0.1)),
-    url('assets/hf/gacha-bg.png?v=59') center/cover !important;
+    url('assets/hf/gacha-bg.png?v=60') center/cover !important;
   border: 1px solid rgba(180, 140, 255, 0.28) !important;
 }
 
 html.hud-v3-active .aaa-page-hero.aaa-store-hero {
   background:
     linear-gradient(135deg, rgba(34, 211, 238, 0.14), rgba(255, 92, 168, 0.12)),
-    url('assets/hf/greenlight-bg.png?v=59') center/cover !important;
+    url('assets/hf/greenlight-bg.png?v=60') center/cover !important;
   border: 1px solid rgba(255, 92, 168, 0.28) !important;
 }
 
@@ -1958,4 +2003,192 @@ html.hud-v3-active .aaa-team-card.aaa-rank-S {
 
 html.hud-v3-active .aaa-team-card.aaa-rank-A {
   border-color: rgba(139, 157, 255, 0.35) !important;
+}
+
+/* ========== BUILD 60 — CSS unified + easy produce + tab heroes ========== */
+
+/* Structural produce rules (from aaa-ui — now in ast-v5 only) */
+html.hud-v3-active .aaa-show-panel {
+  padding: 0 !important;
+  background: rgba(22, 18, 36, 0.95) !important;
+}
+
+html.hud-v3-active .aaa-show-card {
+  display: grid !important;
+}
+
+html.hud-v3-active .aaa-poster {
+  background: #2b2440 center/cover !important;
+  position: relative !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), inset 0 0 0 2px rgba(255, 255, 255, 0.12) !important;
+}
+
+html.hud-v3-active .aaa-trend {
+  position: absolute !important;
+  left: 8px !important;
+  top: 8px !important;
+  font-size: 14px !important;
+}
+
+html.hud-v3-active .aaa-chips {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 5px !important;
+  margin-bottom: 10px !important;
+}
+
+html.hud-v3-active .aaa-chip {
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  padding: 3px 8px !important;
+  border-radius: 999px !important;
+  background: rgba(255, 92, 168, 0.15) !important;
+  border: 1px solid rgba(255, 92, 168, 0.25) !important;
+  color: #f9a8d4 !important;
+}
+
+html.hud-v3-active .aaa-chip.gold {
+  background: rgba(255, 200, 69, 0.12) !important;
+  border-color: rgba(255, 200, 69, 0.3) !important;
+  color: var(--ast-gold) !important;
+}
+
+html.hud-v3-active .aaa-score-label {
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  color: var(--ast-muted) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.06em !important;
+  margin-bottom: 2px !important;
+}
+
+html.hud-v3-active .aaa-score-row {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin-bottom: 10px !important;
+}
+
+html.hud-v3-active .aaa-score-val {
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  color: var(--ast-gold) !important;
+  font-variant-numeric: tabular-nums !important;
+}
+
+html.hud-v3-active .aaa-rank {
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 50% !important;
+  display: grid !important;
+  place-items: center !important;
+  font-size: 14px !important;
+  font-weight: 900 !important;
+  color: #fff !important;
+  background: linear-gradient(135deg, var(--ast-pink), var(--ast-violet)) !important;
+  box-shadow: 0 0 16px rgba(255, 92, 168, 0.5) !important;
+}
+
+html.hud-v3-active .aaa-rank-A {
+  background: linear-gradient(135deg, #4dd4ff, #6b5cff) !important;
+}
+
+html.hud-v3-active .aaa-rank-B {
+  background: linear-gradient(135deg, #22c55e, #06b6d4) !important;
+}
+
+html.hud-v3-active .aaa-stat-line {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font-size: 11px !important;
+  margin-bottom: 5px !important;
+  color: var(--ast-muted) !important;
+}
+
+html.hud-v3-active .aaa-stat-line b {
+  color: var(--ast-text) !important;
+  font-weight: 700 !important;
+  margin-left: auto !important;
+  font-variant-numeric: tabular-nums !important;
+}
+
+html.hud-v3-active .aaa-mini-bar {
+  flex: 1 !important;
+  max-width: 72px !important;
+  height: 4px !important;
+  border-radius: 4px !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  overflow: hidden !important;
+}
+
+html.hud-v3-active .aaa-mini-bar i {
+  display: block !important;
+  height: 100% !important;
+  background: linear-gradient(90deg, var(--ast-pink), var(--ast-gold)) !important;
+}
+
+html.hud-v3-active .aaa-team {
+  border-top: 1px solid var(--ast-border) !important;
+  padding: 10px 12px 12px !important;
+  background: rgba(0, 0, 0, 0.2) !important;
+}
+
+html.hud-v3-active .aaa-team-head {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+}
+
+html.hud-v3-active .aaa-easy-mode .aaa-show-panel {
+  border-color: rgba(255, 92, 168, 0.22) !important;
+}
+
+html.hud-v3-active .aaa-page-hero.aaa-research-hero {
+  background:
+    linear-gradient(135deg, rgba(34, 211, 238, 0.16), rgba(107, 92, 255, 0.12)),
+    url('assets/hf/gacha-bg.png?v=60') center/cover !important;
+  border: 1px solid rgba(77, 212, 255, 0.28) !important;
+}
+
+html.hud-v3-active .aaa-page-hero.aaa-studio-hero {
+  background:
+    linear-gradient(135deg, rgba(255, 200, 69, 0.14), rgba(255, 92, 168, 0.1)),
+    url('assets/hf/greenlight-bg.png?v=60') center/cover !important;
+  border: 1px solid rgba(255, 200, 69, 0.28) !important;
+}
+
+html.hud-v3-active .aaa-page-hero.aaa-market-hero {
+  background:
+    linear-gradient(135deg, rgba(255, 92, 168, 0.14), rgba(107, 92, 255, 0.1)),
+    url('assets/hf/gacha-bg.png?v=60') center/cover !important;
+  border: 1px solid rgba(255, 92, 168, 0.28) !important;
+}
+
+html.hud-v3-active .aaa-page-hero.aaa-research-hero h2,
+html.hud-v3-active .aaa-page-hero.aaa-studio-hero h2,
+html.hud-v3-active .aaa-page-hero.aaa-market-hero h2,
+html.hud-v3-active .aaa-page-hero.aaa-research-hero p,
+html.hud-v3-active .aaa-page-hero.aaa-studio-hero p,
+html.hud-v3-active .aaa-page-hero.aaa-market-hero p {
+  position: relative;
+  z-index: 1;
+}
+
+html.hud-v3-active .aaa-minigame-panel {
+  background: var(--ast-glass) !important;
+  border: 1px solid var(--ast-border-soft) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35) !important;
+}
+
+html.hud-v3-active .aaa-minigame-panel h2 {
+  font-size: 15px !important;
+  margin: 0 0 6px !important;
+  color: var(--ast-text) !important;
+}
+
+html.hud-v3-active .aaa-minigame-panel .btn-gold,
+html.hud-v3-active .aaa-minigame-panel .btn-primary {
+  margin-top: 4px !important;
 }

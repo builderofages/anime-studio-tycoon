@@ -27,7 +27,7 @@ html.hud-v3-active {
 html.hud-v3-active body {
   background:
     linear-gradient(180deg, rgba(12, 10, 24, 0.25) 0%, rgba(12, 10, 24, 0.65) 100%),
-    url('bg-v4.png?v=59') center top / cover no-repeat fixed !important;
+    url('bg-v4.png?v=60') center top / cover no-repeat fixed !important;
 }
 
 html.hud-v3-active #app {
@@ -422,7 +422,7 @@ html.hud-v3-active .panel[style*="dashed"] {
 html.hud-v3-active #loading-splash {
   background:
     linear-gradient(180deg, rgba(12, 10, 24, 0.5) 0%, rgba(12, 10, 24, 0.85) 100%),
-    url('bg-v4.png?v=59') center / cover no-repeat !important;
+    url('bg-v4.png?v=60') center / cover no-repeat !important;
 }
 
 
