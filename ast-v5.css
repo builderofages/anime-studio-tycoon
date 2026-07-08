@@ -38,7 +38,7 @@ html.hud-v3-active body {
 html.hud-v3-active body {
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.35) 0%, rgba(8, 6, 15, 0.82) 100%),
-    url('bg-v4.png?v=81') center top / cover no-repeat fixed !important;
+    url('bg-v4.png?v=82') center top / cover no-repeat fixed !important;
 }
 
 html.hud-v3-active button {
@@ -496,7 +496,7 @@ html.hud-v3-active .aaa-poster[data-act="tapboost"]:active {
 html.hud-v3-active .aaa-page-hero.aaa-gacha-hero {
   background:
     linear-gradient(135deg, rgba(107, 92, 255, 0.2), rgba(255, 92, 168, 0.14)),
-    url('assets/hf/gacha-bg.png?v=81') center/cover !important;
+    url('assets/hf/gacha-bg.png?v=82') center/cover !important;
   border: 1px solid rgba(180, 140, 255, 0.28) !important;
   overflow: hidden;
 }
@@ -1983,7 +1983,7 @@ html.hud-v3-active .aaa-gl-page-head {
   padding: 14px 14px 10px !important;
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.4) 0%, rgba(8, 6, 15, 0.9) 100%),
-    url('assets/hf/greenlight-bg.png?v=81') center/cover !important;
+    url('assets/hf/greenlight-bg.png?v=82') center/cover !important;
   border-bottom: 1px solid rgba(255, 200, 69, 0.15) !important;
 }
 
@@ -3078,4 +3078,34 @@ html.hud-v3-active .coach-cta {
   border: none !important;
   color: #fff !important;
   box-shadow: 0 4px 14px rgba(255, 92, 168, 0.35) !important;
+}
+
+/* ========== BUILD 82 (canonical) ========== */
+
+html.hud-v3-active .aaa-gl-page .aaa-genre-row .chip.sel {
+  background: linear-gradient(135deg, var(--ast-pink), var(--ast-pink-2)) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 14px rgba(255, 92, 168, 0.35) !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-potential.pot-S {
+  font-size: 22px !important;
+  min-width: 28px !important;
+  text-align: center !important;
+  padding: 2px 8px !important;
+  border-radius: 8px !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-card.sel .aaa-gl-potential.pot-S {
+  font-size: 24px !important;
+  box-shadow: 0 0 20px rgba(255, 200, 69, 0.55) !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-badge.editor {
+  font-size: 9px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.08em !important;
+  padding: 5px 8px !important;
+  border-radius: 8px !important;
 }
