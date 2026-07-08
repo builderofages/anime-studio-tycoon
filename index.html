@@ -3985,7 +3985,7 @@ function renderGreenlightPage(empties,showBack){
       <p class="aaa-gl-jp">次のヒット作を生み出そう。</p>
       <p class="aaa-gl-sub">Choose the next project to bring your studio to new heights.</p>
     </div>
-    <div class="aaa-gl-slots-widget"><span class="aaa-gl-slots-label">Greenlight Slots</span><div class="aaa-gl-slots-row"><span class="aaa-gl-slots-ic">🎬</span><b class="aaa-gl-slots-count"><span>${usedShow}</span> / ${S.slots}</b>${S.slots<MAX_SLOTS?`<button type="button" class="aaa-gl-slots-plus" data-act="expand" ${S.yen>=expandCost()?"":"disabled"} title="Expand studio">+</button>`:""}</div></div>
+    <div class="aaa-gl-slots-widget"><span class="aaa-gl-slots-label">Greenlight Slots</span><div class="aaa-gl-slots-row"><span class="aaa-gl-slots-ic">🎬</span><b class="aaa-gl-slots-count"><span>${usedShow}</span> / ${S.slots}</b>${featureUnlocked("studio")&&S.slots<MAX_SLOTS?`<button type="button" class="aaa-gl-slots-plus" data-act="expand" ${S.yen>=expandCost()?"":"disabled"} title="Expand studio">+</button>`:""}</div></div>
   </div>`;
   h+=`<div class="aaa-genre-wrap"><div class="aaa-genre-row" id="genres"><span class="chip ${_selGenre===-1?'sel':''}" data-g="-1">ALL</span>`;
   h+=GENRES.map((g,i)=>`<span class="chip ${i===_selGenre?'sel':''} ${g===trendGenre()?'trend':''}" data-g="${i}"><span class="aaa-genre-ic">${GENRE_ICONS[g]||""}</span>${genreChipLabel(g)}</span>`).join("");
