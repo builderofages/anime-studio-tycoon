@@ -141,9 +141,10 @@ assert(!html.includes('href="hf-design.css'), "hf-design.css disabled (ast-v5)")
 assert(!html.includes('href="aaa-ui.css'), "aaa-ui.css disabled (ast-v5)");
 assert(html.includes("legacy-fx.css"), "legacy-fx css linked");
 assert(html.includes("ast-v5.css"), "ast-v5 design css linked");
-assert(html.includes("build 87"), "build 87 tag");
+assert(html.includes("build 88"), "build 88 tag");
 assert(html.includes("Production Score"), "production score label");
-assert(html.includes("Ref Card"), "whatsnew build 87 changelog");
+assert(html.includes("Ref GL"), "whatsnew build 88 changelog");
+assert(html.includes('class="aaa-gl-name-ja"'), "japanese primary gl title");
 assert(html.includes("aaa-gl-slots-label"), "greenlight slots label layout");
 assert(html.includes("animator:{lv:60,rank:\"S\"}"), "character design s rank");
 assert(html.includes("showcaseHypePct"), "showcase hype bar lock");
@@ -182,7 +183,7 @@ assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("glView ? fal
 assert(readFileSync(join(root, "package.json"), "utf8").includes('"overrides"'), "npm overrides");
 assert(existsSync(join(root, "scripts/audit-check.mjs")), "audit check script");
 const astCss = readFileSync(join(root, "ast-v5.css"), "utf8");
-assert(astCss.includes("BUILD 87"), "build 87 css marker");
+assert(astCss.includes("BUILD 88"), "build 88 css marker");
 assert(astCss.includes(".tab .tab-lbl") && astCss.includes("display: block"), "dock tab labels visible");
 const astLines = astCss.split("\n").length;
 assert(astLines < 3450, "ast-v5.css under 3450 lines", `${astLines} lines`);

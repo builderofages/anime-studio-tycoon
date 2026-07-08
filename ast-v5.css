@@ -38,7 +38,7 @@ html.hud-v3-active body {
 html.hud-v3-active body {
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.35) 0%, rgba(8, 6, 15, 0.82) 100%),
-    url('bg-v4.png?v=87') center top / cover no-repeat fixed !important;
+    url('bg-v4.png?v=88') center top / cover no-repeat fixed !important;
 }
 
 html.hud-v3-active button {
@@ -437,7 +437,7 @@ html.hud-v3-active .aaa-poster[data-act="tapboost"]:active {
 html.hud-v3-active .aaa-page-hero.aaa-gacha-hero {
   background:
     linear-gradient(135deg, rgba(107, 92, 255, 0.2), rgba(255, 92, 168, 0.14)),
-    url('assets/hf/gacha-bg.png?v=87') center/cover !important;
+    url('assets/hf/gacha-bg.png?v=88') center/cover !important;
   border: 1px solid rgba(180, 140, 255, 0.28) !important;
   overflow: hidden;
 }
@@ -1897,7 +1897,7 @@ html.hud-v3-active .aaa-gl-page-head {
   padding: 14px 14px 10px !important;
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.4) 0%, rgba(8, 6, 15, 0.9) 100%),
-    url('assets/hf/greenlight-bg.png?v=87') center/cover !important;
+    url('assets/hf/greenlight-bg.png?v=88') center/cover !important;
   border-bottom: 1px solid rgba(255, 200, 69, 0.15) !important;
 }
 
@@ -3349,4 +3349,66 @@ html.hud-v3-active .aaa-gl-open-hot {
     0 10px 28px rgba(255, 92, 168, 0.32),
     0 0 16px rgba(255, 200, 69, 0.15) !important;
   animation: ast-ready-pulse 3s ease-in-out infinite !important;
+}
+
+/* ========== BUILD 88 (canonical) ========== */
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-name-ja {
+  margin: 8px 10px 2px !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  color: var(--ast-pink) !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0.04em !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-name {
+  margin: 0 10px 4px !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  color: var(--ast-muted) !important;
+  line-height: 1.2 !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-badge.trend {
+  left: auto !important;
+  right: 8px !important;
+  top: 8px !important;
+  background: linear-gradient(135deg, #ff3b6b, #ff5ca8) !important;
+  box-shadow: 0 4px 12px rgba(255, 59, 107, 0.45) !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-carousel {
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 20px, #000 calc(100% - 20px), transparent 100%) !important;
+  mask-image: linear-gradient(90deg, transparent 0, #000 20px, #000 calc(100% - 20px), transparent 100%) !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-genre-row .chip[data-g="-1"].sel {
+  background: linear-gradient(135deg, var(--ast-pink), var(--ast-pink-2)) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 14px rgba(255, 92, 168, 0.35) !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-premiere-bonus {
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 6px !important;
+}
+
+html.hud-v3-active .aaa-show-panel .aaa-play-btn::after {
+  content: " ✨" !important;
+  font-size: 12px !important;
+  opacity: 0.9 !important;
+}
+
+html.hud-v3-active .aaa-gl-page .aaa-gl-risk-level {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  padding: 3px 8px !important;
+  border-radius: 999px !important;
+  background: rgba(255, 200, 69, 0.12) !important;
+  border: 1px solid rgba(255, 200, 69, 0.28) !important;
+  margin-bottom: 6px !important;
 }

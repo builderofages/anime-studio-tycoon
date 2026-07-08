@@ -32,7 +32,7 @@
   const splash = document.createElement("div");
   splash.id = "loading-splash";
   splash.innerHTML = `
-    <img class="splash-hero" src="start-hero.png?v=87" width="96" height="96" alt="">
+    <img class="splash-hero" src="start-hero.png?v=88" width="96" height="96" alt="">
     <h1>Anime Studio Tycoon</h1>
     <div class="splash-tag">Loading your empire…</div>
     <div id="loading-bar"><i></i></div>`;
