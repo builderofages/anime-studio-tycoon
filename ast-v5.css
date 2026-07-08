@@ -34,7 +34,7 @@ html.hud-v3-active body {
 html.hud-v3-active body {
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.35) 0%, rgba(8, 6, 15, 0.82) 100%),
-    url('bg-v4.png?v=63') center top / cover no-repeat fixed !important;
+    url('bg-v4.png?v=64') center top / cover no-repeat fixed !important;
 }
 
 html.hud-v3-active button {
@@ -492,7 +492,7 @@ html.hud-v3-active .aaa-poster[data-act="tapboost"]:active {
 html.hud-v3-active .aaa-page-hero.aaa-gacha-hero {
   background:
     linear-gradient(135deg, rgba(107, 92, 255, 0.2), rgba(255, 92, 168, 0.14)),
-    url('assets/hf/gacha-bg.png?v=63') center/cover !important;
+    url('assets/hf/gacha-bg.png?v=64') center/cover !important;
   border: 1px solid rgba(180, 140, 255, 0.28) !important;
   overflow: hidden;
 }
@@ -1930,21 +1930,21 @@ html.hud-v3-active #premiere .premiere-card .btn-gold {
 html.hud-v3-active .aaa-page-hero.aaa-quest-hero {
   background:
     linear-gradient(135deg, rgba(255, 200, 69, 0.16), rgba(255, 92, 168, 0.12)),
-    url('assets/hf/greenlight-bg.png?v=63') center/cover !important;
+    url('assets/hf/greenlight-bg.png?v=64') center/cover !important;
   border: 1px solid rgba(255, 200, 69, 0.28) !important;
 }
 
 html.hud-v3-active .aaa-page-hero.aaa-staff-hero {
   background:
     linear-gradient(135deg, rgba(107, 92, 255, 0.18), rgba(255, 92, 168, 0.1)),
-    url('assets/hf/gacha-bg.png?v=63') center/cover !important;
+    url('assets/hf/gacha-bg.png?v=64') center/cover !important;
   border: 1px solid rgba(180, 140, 255, 0.28) !important;
 }
 
 html.hud-v3-active .aaa-page-hero.aaa-store-hero {
   background:
     linear-gradient(135deg, rgba(34, 211, 238, 0.14), rgba(255, 92, 168, 0.12)),
-    url('assets/hf/greenlight-bg.png?v=63') center/cover !important;
+    url('assets/hf/greenlight-bg.png?v=64') center/cover !important;
   border: 1px solid rgba(255, 92, 168, 0.28) !important;
 }
 
@@ -2158,21 +2158,21 @@ html.hud-v3-active .aaa-easy-mode .aaa-show-panel {
 html.hud-v3-active .aaa-page-hero.aaa-research-hero {
   background:
     linear-gradient(135deg, rgba(34, 211, 238, 0.16), rgba(107, 92, 255, 0.12)),
-    url('assets/hf/gacha-bg.png?v=63') center/cover !important;
+    url('assets/hf/gacha-bg.png?v=64') center/cover !important;
   border: 1px solid rgba(77, 212, 255, 0.28) !important;
 }
 
 html.hud-v3-active .aaa-page-hero.aaa-studio-hero {
   background:
     linear-gradient(135deg, rgba(255, 200, 69, 0.14), rgba(255, 92, 168, 0.1)),
-    url('assets/hf/greenlight-bg.png?v=63') center/cover !important;
+    url('assets/hf/greenlight-bg.png?v=64') center/cover !important;
   border: 1px solid rgba(255, 200, 69, 0.28) !important;
 }
 
 html.hud-v3-active .aaa-page-hero.aaa-market-hero {
   background:
     linear-gradient(135deg, rgba(255, 92, 168, 0.14), rgba(107, 92, 255, 0.1)),
-    url('assets/hf/gacha-bg.png?v=63') center/cover !important;
+    url('assets/hf/gacha-bg.png?v=64') center/cover !important;
   border: 1px solid rgba(255, 92, 168, 0.28) !important;
 }
 
@@ -2351,7 +2351,7 @@ html.hud-v3-active .aaa-greenlight-cinema-head {
   padding: 18px 16px 12px !important;
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.55) 0%, rgba(8, 6, 15, 0.85) 100%),
-    url('assets/hf/greenlight-bg.png?v=63') center/cover !important;
+    url('assets/hf/greenlight-bg.png?v=64') center/cover !important;
   border-bottom: 1px solid rgba(255, 200, 69, 0.15) !important;
 }
 
@@ -2886,4 +2886,188 @@ html.hud-v3-active .aaa-gl-advanced summary {
 
 html.hud-v3-active .aaa-pick-scroll {
   display: none !important;
+}
+
+/* ========== BUILD 64 — Ref Clone (match design-ref PNGs) ========== */
+
+#sakura-petals {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+#sakura-petals .petal {
+  position: absolute;
+  top: -12px;
+  left: var(--x, 50%);
+  width: 10px;
+  height: 10px;
+  background: radial-gradient(circle at 30% 30%, #ffc8e8, #ff5ca8 70%);
+  border-radius: 50% 0 50% 50%;
+  opacity: 0.55;
+  transform: scale(var(--s, 1));
+  animation: ast-petal-fall 9s linear infinite;
+  animation-delay: var(--d, 0s);
+}
+
+@keyframes ast-petal-fall {
+  0% { transform: translateY(-10px) rotate(0deg) scale(var(--s, 1)); opacity: 0; }
+  10% { opacity: 0.6; }
+  100% { transform: translateY(110vh) rotate(360deg) scale(var(--s, 1)); opacity: 0; }
+}
+
+html.hud-v3-active .aaa-gl-page {
+  padding: 0 !important;
+  background: rgba(8, 6, 15, 0.92) !important;
+  border: 1px solid rgba(255, 200, 69, 0.2) !important;
+  border-radius: 20px !important;
+  overflow: hidden !important;
+}
+
+html.hud-v3-active .aaa-gl-back {
+  margin: 10px 12px 0 !important;
+  padding: 6px 12px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: var(--ast-muted) !important;
+  border-radius: 999px !important;
+  cursor: pointer !important;
+}
+
+html.hud-v3-active .aaa-gl-page-head {
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
+  gap: 10px !important;
+  padding: 14px 14px 10px !important;
+  background:
+    linear-gradient(180deg, rgba(8, 6, 15, 0.4) 0%, rgba(8, 6, 15, 0.9) 100%),
+    url('assets/hf/greenlight-bg.png?v=64') center/cover !important;
+  border-bottom: 1px solid rgba(255, 200, 69, 0.15) !important;
+}
+
+html.hud-v3-active .aaa-gl-page-head .aaa-gl-title {
+  font-size: 20px !important;
+  margin: 0 0 4px !important;
+  letter-spacing: 0.12em !important;
+}
+
+html.hud-v3-active .aaa-gl-slots-widget {
+  flex-shrink: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 2px !important;
+  padding: 8px 10px !important;
+  border-radius: 12px !important;
+  background: rgba(255, 92, 168, 0.1) !important;
+  border: 1px solid rgba(255, 92, 168, 0.25) !important;
+  font-size: 8px !important;
+  font-weight: 700 !important;
+  color: var(--ast-muted) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+}
+
+html.hud-v3-active .aaa-gl-slots-widget b {
+  font-size: 14px !important;
+  color: var(--ast-pink) !important;
+}
+
+html.hud-v3-active .aaa-gl-slots-ic {
+  font-size: 16px !important;
+}
+
+html.hud-v3-active .aaa-gl-card {
+  flex: 0 0 220px !important;
+  min-width: 220px !important;
+}
+
+html.hud-v3-active .aaa-gl-poster {
+  height: 280px !important;
+}
+
+html.hud-v3-active .aaa-gl-pie-wrap {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+html.hud-v3-active .aaa-gl-pie {
+  width: 56px !important;
+  height: 56px !important;
+  border-radius: 50% !important;
+  flex-shrink: 0 !important;
+  background: conic-gradient(
+    #fbbf24 0% 40%,
+    #ec4899 40% 70%,
+    #4ade80 70% 85%,
+    #a78bfa 85% 95%,
+    #6b7280 95% 100%
+  ) !important;
+  box-shadow: 0 0 12px rgba(255, 200, 69, 0.2) !important;
+}
+
+html.hud-v3-active .aaa-gl-pie-legend {
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 8px !important;
+  color: var(--ast-muted) !important;
+}
+
+html.hud-v3-active .aaa-gl-pie-legend li {
+  display: flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  margin-bottom: 2px !important;
+}
+
+html.hud-v3-active .aaa-gl-pie-legend i {
+  width: 6px !important;
+  height: 6px !important;
+  border-radius: 50% !important;
+  flex-shrink: 0 !important;
+}
+
+html.hud-v3-active .aaa-gl-open {
+  display: block !important;
+  width: calc(100% - 20px) !important;
+  margin: 10px !important;
+  padding: 12px !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  border-radius: 14px !important;
+  border: 1px dashed rgba(255, 92, 168, 0.45) !important;
+  background: rgba(255, 92, 168, 0.08) !important;
+  color: var(--ast-pink) !important;
+  cursor: pointer !important;
+}
+
+html.hud-v3-active .aaa-play-btn {
+  animation: ast-ready-pulse 2.5s ease-in-out infinite !important;
+}
+
+html.hud-v3-active .aaa-stat-ic {
+  font-size: 11px !important;
+  opacity: 0.85 !important;
+  flex-shrink: 0 !important;
+}
+
+html.hud-v3-active .aaa-produce-page .aaa-show-panel {
+  margin: 0 !important;
+}
+
+html.hud-v3-active .aaa-greenlight,
+html.hud-v3-active .aaa-greenlight-cinema {
+  display: none !important;
+}
+
+html.hud-v3-active #main {
+  position: relative !important;
+  z-index: 2 !important;
 }

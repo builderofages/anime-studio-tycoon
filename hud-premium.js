@@ -237,7 +237,7 @@
     shell.innerHTML = `
       <div class="hud-top">
         <button type="button" class="hud-menu-btn" id="hud-menu-btn" aria-label="Menu">☰</button>
-        <div class="hud-avatar-wrap"><img class="hud-avatar" src="start-hero.png?v=63" alt=""><span class="hud-lv-badge" id="hud-lv-badge">1</span></div>
+        <div class="hud-avatar-wrap"><img class="hud-avatar" src="start-hero.png?v=64" alt=""><span class="hud-lv-badge" id="hud-lv-badge">1</span></div>
         <div class="hud-identity">
           <span class="hud-studio-name" id="hud-studio-name">Studio</span>
           <div id="hud-studio-rating" class="hud-rating-chip" title="Studio rating"></div>
@@ -290,7 +290,7 @@
       rail.id = "pathway-rail";
       rail.className = "coach-bar";
       rail.innerHTML = `
-        <img class="coach-avatar" src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg?v=63" alt="" width="40" height="40">
+        <img class="coach-avatar" src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg?v=64" alt="" width="40" height="40">
         <div class="coach-body">
           <span class="coach-label">Coach's Tip</span>
           <p class="coach-msg" id="pathway-now"></p>
@@ -318,6 +318,16 @@
     }
 
     document.documentElement.classList.add("premium-hud", "hud-v3-active");
+
+    if (!document.getElementById("sakura-petals")) {
+      const petals = document.createElement("div");
+      petals.id = "sakura-petals";
+      petals.setAttribute("aria-hidden", "true");
+      petals.innerHTML = Array.from({ length: 12 }, (_, i) =>
+        `<i class="petal" style="--d:${(i * 0.7).toFixed(1)}s;--x:${(i * 8.3) % 100}%;--s:${0.6 + (i % 4) * 0.15}"></i>`
+      ).join("");
+      document.body.appendChild(petals);
+    }
 
     document.getElementById("pathway-cta").addEventListener("click", runPathwayAction);
     document.getElementById("coach-gift").addEventListener("click", () => {
