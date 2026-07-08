@@ -3,7 +3,10 @@
 
 const EN = {
   title:"Anime Studio Tycoon", tagline:"From a one-room studio to a global anime empire",
-  start:"Enter the Studio", goal:"Goal",
+  start:"Enter the Studio", startPlay:"Play", startDemo:"Try Demo",
+  startPlayHint:"Real game — start from ¥1,500, hire staff, greenlight your first anime.",
+  startDemoHint:'Showcase tour — pre-loaded Sakura studio for screenshots (<code>?demo=1</code>).',
+  goal:"Goal",
   res_yen:"Yen", res_fans:"Fans", res_hype:"Hype", netWorth:"Studio Value", trend:"Trending",
   tab_produce:"Produce", tab_quests:"Quests", tab_staff:"Staff", tab_stars:"Stars",
   tab_research:"Research", tab_studio:"Studio", tab_market:"Marketing", tab_store:"Store",

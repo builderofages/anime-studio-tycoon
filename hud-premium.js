@@ -7,7 +7,222 @@
     rel: "releases", rel2: "releases", yen: "yen", big: "yen", camp: "campaigns",
     hire: "hires", hire2: "hires", hype: "hypeSpent", scout: "scouts",
     green: "greenlit", tap: "taps", tap2: "taps",
+    w_rel: "releases", w_yen: "yen", w_scout: "scouts", w_green: "greenlit",
+    w_camp: "campaigns", w_hire: "hires", w_tap: "taps",
   };
+
+  const GUIDED_STEPS = [
+    {
+      id: "name",
+      label: "Studio",
+      stepN: 1,
+      title: "Name your studio",
+      body: (S) => `You're ${S.studioName || "the director"}! Your brand shows at the top of the screen.`,
+      target: () => document.getElementById("hud-studio-name"),
+      done: (S) => !!S._tutorialNameDone,
+      coach: (S) => ({
+        message: `Welcome, ${S.studioName || "Director"}! Tap Next when you're ready.`,
+        cta: "Next",
+        urgent: true,
+        action: { type: "tutorial-next" },
+      }),
+    },
+    {
+      id: "hire",
+      label: "Hire",
+      stepN: 2,
+      title: "Hire your first staff",
+      body: () => "Animators and writers speed up every production. Hire one on Recruit.",
+      target: () =>
+        document.querySelector('[data-hire="animator"]') ||
+        document.querySelector('[data-hire="writer"]') ||
+        document.querySelector('.tab[data-tab="staff"]'),
+      done: (S) => staffTotal(S) > 0,
+      coach: () => ({
+        message: "Open Recruit and hire your first team member",
+        tab: "staff",
+        cta: "Recruit",
+        urgent: true,
+        action: { type: "tab", tab: "staff" },
+      }),
+    },
+    {
+      id: "greenlight",
+      label: "Greenlight",
+      stepN: 3,
+      title: "Greenlight your first anime",
+      body: () => "Pick a project and start production — one tap greenlights your debut show.",
+      target: () =>
+        document.querySelector(".aaa-quick-gl-banner") ||
+        document.querySelector(".aaa-gl-confirm-banner") ||
+        document.querySelector('.tab[data-tab="produce"]'),
+      done: (S) => activeCount(S) > 0 || (S.releases || 0) > 0,
+      coach: () => ({
+        message: "Greenlight your first anime on Play",
+        tab: "produce",
+        cta: "Greenlight",
+        urgent: true,
+        action: { type: "quick-greenlight" },
+      }),
+    },
+    {
+      id: "boost",
+      label: "Boost",
+      stepN: 4,
+      title: "Tap to boost speed",
+      body: () => "Tap the poster or Boost button to rush episodes — great for your first premiere.",
+      target: () =>
+        document.querySelector(".aaa-poster.aaa-tap-hint") ||
+        document.querySelector(".aaa-play-btn") ||
+        document.querySelector(".aaa-poster[data-act='tapboost']"),
+      done: (S) => (S.taps || 0) > 0,
+      coach: (S, hook) => {
+        const pr = (S.projects || []).find(Boolean);
+        const slot = pr ? (S.projects || []).indexOf(pr) : 0;
+        return {
+          message: "Tap the poster to boost production speed",
+          tab: "produce",
+          cta: "Boost",
+          urgent: true,
+          action: { type: "tapboost", slot },
+        };
+      },
+    },
+    {
+      id: "premiere",
+      label: "Premiere",
+      stepN: 5,
+      title: "Premiere when ready",
+      body: () => "When the bar fills, hit Global Premiere to earn ¥, fans, and your first hit.",
+      target: () =>
+        document.querySelector(".aaa-premiere-ready") ||
+        document.getElementById("pathway-cta"),
+      done: (S) => (S.releases || 0) > 0,
+      coach: (S, hook) => {
+        const ready = readySlot(S, hook);
+        return {
+          message: ready >= 0 ? "Production ready — premiere now!" : "Keep boosting until production finishes",
+          tab: "produce",
+          cta: ready >= 0 ? "Premiere" : "Play",
+          urgent: ready >= 0,
+          action: ready >= 0 ? { type: "premiere", slot: ready } : { type: "tab", tab: "produce" },
+        };
+      },
+    },
+  ];
+
+  let _gtHighlight = null;
+
+  function shouldRunGuidedTutorial(S, hook) {
+    if (hook.isGuidedTutorialEligible) return hook.isGuidedTutorialEligible();
+    if (hook.isDemoMode && hook.isDemoMode()) return false;
+    if (S.tutorialSeen) return false;
+    if ((S.releases || 0) > 0) return false;
+    return !!S._guidedFresh;
+  }
+
+  function getGuidedStep(S, hook) {
+    for (const step of GUIDED_STEPS) {
+      if (!step.done(S, hook)) return step;
+    }
+    return null;
+  }
+
+  function clearGtHighlight() {
+    if (_gtHighlight) {
+      _gtHighlight.classList.remove("gt-highlight");
+      _gtHighlight = null;
+    }
+  }
+
+  function ensureGuidedTutorialShell() {
+    if (document.getElementById("guided-tutorial")) return;
+    const el = document.createElement("div");
+    el.id = "guided-tutorial";
+    el.hidden = true;
+    el.innerHTML = `
+      <div class="gt-card">
+        <div class="gt-kicker">First session</div>
+        <div class="gt-step" id="gt-step-label">Step 1 of 5</div>
+        <h3 class="gt-title" id="gt-title"></h3>
+        <p class="gt-body" id="gt-body"></p>
+        <div class="gt-actions">
+          <button type="button" class="btn-ghost gt-skip" data-act="tutorial-skip">Skip tutorial</button>
+          <button type="button" class="btn-primary gt-next" id="gt-next" hidden>Next ▶</button>
+        </div>
+      </div>`;
+    document.body.appendChild(el);
+    el.querySelector(".gt-skip").addEventListener("click", () => {
+      const hook = window.__AST_HOOK__;
+      if (hook?.completeTutorial) hook.completeTutorial();
+      else if (hook) {
+        const S = hook.getState();
+        S.tutorialSeen = true;
+        S._guidedFresh = false;
+        hook.save?.();
+      }
+      document.documentElement.classList.remove("gt-tutorial-active");
+      el.hidden = true;
+      clearGtHighlight();
+      hook?.render?.();
+      hook?.play?.("click");
+    });
+    document.getElementById("gt-next").addEventListener("click", () => {
+      const hook = window.__AST_HOOK__;
+      if (!hook) return;
+      const S = hook.getState();
+      S._tutorialNameDone = true;
+      hook.save?.();
+      hook.play("click");
+      hook.render();
+    });
+  }
+
+  function updateGuidedTutorial(S, hook) {
+    ensureGuidedTutorialShell();
+    const panel = document.getElementById("guided-tutorial");
+    if (!shouldRunGuidedTutorial(S, hook)) {
+      document.documentElement.classList.remove("gt-tutorial-active");
+      if (panel) panel.hidden = true;
+      clearGtHighlight();
+      return null;
+    }
+    const step = getGuidedStep(S, hook);
+    if (!step) {
+      if (hook.completeTutorial) hook.completeTutorial();
+      else {
+        S.tutorialSeen = true;
+        S._guidedFresh = false;
+        hook.save?.();
+      }
+      document.documentElement.classList.remove("gt-tutorial-active");
+      if (panel) panel.hidden = true;
+      clearGtHighlight();
+      return null;
+    }
+    document.documentElement.classList.add("gt-tutorial-active");
+    if (panel) {
+      panel.hidden = false;
+      const title = typeof step.title === "function" ? step.title(S, hook) : step.title;
+      const body = typeof step.body === "function" ? step.body(S, hook) : step.body;
+      document.getElementById("gt-step-label").textContent = `Step ${step.stepN} of ${GUIDED_STEPS.length}`;
+      document.getElementById("gt-title").textContent = title;
+      document.getElementById("gt-body").textContent = body;
+      const nextBtn = document.getElementById("gt-next");
+      if (nextBtn) nextBtn.hidden = step.id !== "name";
+    }
+    clearGtHighlight();
+    const target = step.target?.();
+    if (target) {
+      target.classList.add("gt-highlight");
+      _gtHighlight = target;
+      requestAnimationFrame(() => {
+        try { target.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" }); } catch (_e) {}
+      });
+    }
+    const coach = typeof step.coach === "function" ? step.coach(S, hook) : step.coach;
+    return coach;
+  }
 
   function staffTotal(S) {
     const st = S.staff || {};
@@ -46,6 +261,8 @@
   function analyzePathway(S, hook, ctx) {
     ctx = ctx || {};
     const glView = !!ctx.glView;
+    const guidedCoach = ctx.guidedCoach;
+    if (guidedCoach) return guidedCoach;
     const showcase = hook.isShowcaseDemo && hook.isShowcaseDemo();
     const st = S.staff || {};
     const staffed = staffTotal(S);
@@ -253,6 +470,14 @@
       hook.play("click");
       return;
     }
+    if (pw.action.type === "tutorial-next") {
+      const S = hook.getState();
+      S._tutorialNameDone = true;
+      hook.save?.();
+      hook.render();
+      hook.play("click");
+      return;
+    }
     if (pw.action.type === "gl-focus") {
       const btn = document.querySelector(".aaa-gl-confirm-banner, .aaa-gl-card.sel");
       if (btn) btn.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -361,6 +586,8 @@
       while (foot.firstChild) drawerSlot.appendChild(foot.firstChild);
       foot.remove();
     }
+    organizeDrawerSlot();
+    wireGoalBar();
 
     document.documentElement.classList.add("premium-hud", "hud-v3-active");
 
@@ -426,7 +653,207 @@
     if (d) d.hidden = true;
   }
 
+  function enterDemoFromDrawer() {
+    const hook = window.__AST_HOOK__;
+    if (!hook) return;
+    closeDrawer();
+    if (typeof hook.restartAsDemo === "function") {
+      hook.restartAsDemo();
+      hook.play("click");
+      return;
+    }
+    try {
+      const url = new URL(location.href);
+      url.searchParams.set("demo", "1");
+      location.href = url.pathname + url.search;
+    } catch (e) {
+      location.href = location.pathname + "?demo=1";
+    }
+  }
+
+  function organizeDrawerSlot() {
+    const slot = document.getElementById("hud-drawer-slot");
+    if (!slot) return;
+
+    const reset = document.getElementById("btn-reset");
+    const mute = document.getElementById("btn-mute");
+    const lang = document.getElementById("lang-sel");
+    const share = slot.querySelector('[data-act="share"]') || document.querySelector('[data-act="share"]');
+    const news = slot.querySelector('[data-act="whatsnew-show"]') || document.querySelector('[data-act="whatsnew-show"]');
+    const buildtag = document.getElementById("buildtag");
+    const save = document.getElementById("btn-save");
+    if (save) save.style.display = "none";
+
+    function group(label, key) {
+      let g = slot.querySelector(`.hud-drawer-group[data-drawer-group="${key}"]`);
+      if (!g) {
+        g = document.createElement("div");
+        g.className = "hud-drawer-group";
+        g.dataset.drawerGroup = key;
+        const lbl = document.createElement("div");
+        lbl.className = "hud-drawer-sublabel";
+        lbl.textContent = label;
+        g.appendChild(lbl);
+      }
+      return g;
+    }
+
+    const resetG = group("Reset", "reset");
+    const soundG = group("Sound", "sound");
+    const langG = group("Language", "language");
+    let moreG = slot.querySelector('.hud-drawer-group[data-drawer-group="more"]');
+    if (!moreG) {
+      moreG = document.createElement("div");
+      moreG.className = "hud-drawer-group hud-drawer-more";
+      moreG.dataset.drawerGroup = "more";
+      const lbl = document.createElement("div");
+      lbl.className = "hud-drawer-sublabel";
+      lbl.textContent = "More";
+      moreG.appendChild(lbl);
+    }
+
+    if (reset) {
+      reset.classList.add("hud-drawer-owned");
+      if (reset.parentNode !== resetG) resetG.appendChild(reset);
+    }
+
+    let demo = document.getElementById("hud-demo-link");
+    if (!demo) {
+      demo = document.createElement("a");
+      demo.id = "hud-demo-link";
+      demo.className = "hud-drawer-link hud-drawer-owned";
+      demo.href = "#";
+      demo.textContent = "✨ Try Demo Mode";
+      demo.addEventListener("click", (e) => {
+        e.preventDefault();
+        const go = () => enterDemoFromDrawer();
+        if (window.__AST_CONFIRM__) window.__AST_CONFIRM__("Try Demo Mode?", "Loads the Sakura Films showcase studio.", go);
+        else if (confirm("Try Demo Mode?\nLoads the Sakura Films showcase studio.")) go();
+      });
+    }
+    if (demo.parentNode !== resetG) resetG.appendChild(demo);
+
+    if (mute) {
+      mute.classList.add("hud-drawer-owned");
+      if (mute.parentNode !== soundG) soundG.appendChild(mute);
+    }
+    if (lang) {
+      lang.classList.add("hud-drawer-owned");
+      if (lang.parentNode !== langG) langG.appendChild(lang);
+    }
+
+    [share, news].filter(Boolean).forEach((el) => {
+      el.classList.add("hud-drawer-owned");
+      if (el.parentNode !== moreG) moreG.appendChild(el);
+    });
+    slot.querySelectorAll('a[href="privacy.html"], a[href="terms.html"]').forEach((a) => {
+      a.classList.add("hud-drawer-owned");
+      if (a.parentNode !== moreG) moreG.appendChild(a);
+    });
+    if (buildtag && buildtag.parentNode !== moreG) moreG.appendChild(buildtag);
+
+    if (!slot.dataset.organized) {
+      slot.innerHTML = "";
+      slot.appendChild(resetG);
+      slot.appendChild(soundG);
+      slot.appendChild(langG);
+      slot.appendChild(moreG);
+      slot.dataset.organized = "1";
+    }
+  }
+
+  function pulseHudCombo() {
+    const combo = document.getElementById("hud-combo");
+    if (!combo) return;
+    combo.classList.remove("hud-combo-pulse");
+    void combo.offsetWidth;
+    combo.classList.add("hud-combo-pulse", "hud-combo-tap");
+    window.setTimeout(() => combo.classList.remove("hud-combo-tap"), 450);
+  }
+
+  function goalMilestoneAction(S, hook) {
+    const milestones = hook.MILESTONES || [];
+    const nextM = milestones.find((m) => S.fans < m.fans);
+    let tab = "produce";
+    let selectors = [".aaa-play-btn", ".aaa-poster", ".aaa-gl-open", '[data-act="greenlight-view"]', ".slotpanel", ".aaa-premiere-ready"];
+
+    if (!nextM) {
+      tab = "studio";
+      selectors = [".aaa-dash-compact", ".dash-panel", ".panel"];
+    } else {
+      const fans = nextM.fans;
+      if (fans >= 25000) {
+        tab = "studio";
+        selectors = [".aaa-dash-compact", ".dynasty-badge", ".panel"];
+      } else if (fans >= 9000) {
+        tab = "market";
+        selectors = [".ui-campaign-card", '[data-act="freelance"]', ".panel"];
+      } else if (fans >= 2200) {
+        tab = "stars";
+        selectors = [".pick", ".staffrow", '[data-act="spin"]'];
+      } else if (fans >= 500) {
+        tab = "market";
+        selectors = [".ui-campaign-card", ".aaa-play-btn", ".aaa-poster"];
+      } else if (fans >= 120) {
+        tab = "produce";
+        selectors = [".aaa-gl-open", '[data-act="greenlight-view"]', ".aaa-premiere-ready", ".aaa-play-btn"];
+      } else if ((S.releases || 0) < 1 && staffTotal(S) === 0) {
+        tab = "staff";
+        selectors = [".hirebtn", ".staffrow", ".panel"];
+      }
+    }
+
+    hook.getState().tab = tab;
+    hook.render();
+    hook.play("click");
+    requestAnimationFrame(() => {
+      const main = document.getElementById("main");
+      for (let i = 0; i < selectors.length; i++) {
+        const el = main?.querySelector(selectors[i]);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "center" });
+          return;
+        }
+      }
+      main?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }
+
+  function wireGoalBar() {
+    const goal = document.getElementById("goal");
+    if (!goal || goal.dataset.hudGoalWired) return;
+    goal.dataset.hudGoalWired = "1";
+    goal.setAttribute("role", "button");
+    goal.setAttribute("tabindex", "0");
+    goal.setAttribute("aria-label", "North-star milestone — tap to jump to the next action");
+    const run = () => {
+      const hook = window.__AST_HOOK__;
+      if (!hook) return;
+      goalMilestoneAction(hook.getState(), hook);
+    };
+    goal.addEventListener("click", run);
+    goal.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        run();
+      }
+    });
+  }
+
   function renderPathwaySteps(S, hook) {
+    const guided = shouldRunGuidedTutorial(S, hook);
+    if (guided) {
+      let current = GUIDED_STEPS.findIndex((d) => !d.done(S, hook));
+      if (current < 0) current = GUIDED_STEPS.length - 1;
+      return GUIDED_STEPS.map((d, i) => {
+        const done = d.done(S, hook);
+        const cls = ["pathway-step"];
+        if (done) cls.push("done");
+        else if (i === current) cls.push("current");
+        const mark = done ? "✓" : String(d.stepN);
+        return `<span class="${cls.join(" ")}" title="${d.label}"><span class="pathway-step-n">${mark}</span><span class="pathway-step-lbl">${d.label}</span></span>`;
+      }).join("");
+    }
     const showcase = hook.isShowcaseDemo && hook.isShowcaseDemo();
     const starsOk = hook.featureUnlocked ? hook.featureUnlocked("stars") : (S.releases || 0) >= 2;
     const studioOk = hook.featureUnlocked ? hook.featureUnlocked("studio") : (S.releases || 0) >= 1;
@@ -448,6 +875,13 @@
       const mark = d.done ? "✓" : d.locked ? "🔒" : String(i + 1);
       return `<span class="${cls.join(" ")}" title="${d.label}"><span class="pathway-step-n">${mark}</span><span class="pathway-step-lbl">${d.label}</span></span>`;
     }).join("");
+  }
+
+  function stepNeedsTab(S, hook, tab) {
+    const step = getGuidedStep(S, hook);
+    if (!step || step.id === "name") return false;
+    if (step.id === "greenlight" && hook.isGreenlightView?.()) return false;
+    return !!tab;
   }
 
   function ensureHudStats() {
@@ -531,19 +965,31 @@
     const combo = document.getElementById("hud-combo");
     const comboN = document.getElementById("hud-combo-n");
     if (combo && comboN) {
-      if ((S.combo || 0) >= 2) {
+      const active = (S.combo || 0) >= 2;
+      const left = 60000 - (Date.now() - (S.lastReleaseAt || 0));
+      const pct = active && left > 0 ? Math.max(0, Math.min(100, (left / 60000) * 100)) : 0;
+      combo.style.setProperty("--combo-pct", pct + "%");
+      if (active && left > 0) {
         combo.classList.add("show");
         comboN.textContent = S.combo;
-      } else combo.classList.remove("show");
+      } else if (!combo.classList.contains("hud-combo-tap")) {
+        combo.classList.remove("show");
+      }
     }
 
-    const pw = analyzePathway(S, hook, { glView });
+    if (window.__AST_STUDIO_RATING__?.refreshHud) {
+      window.__AST_STUDIO_RATING__.refreshHud(S, hook);
+    }
+
+    const guidedCoach = updateGuidedTutorial(S, hook);
+    const pw = analyzePathway(S, hook, { glView, guidedCoach });
     window.__AST_PATHWAY__ = pw;
 
     const rail = document.getElementById("pathway-rail");
     if (rail) {
-      const showCoach = !glView || !!pw.showOnGreenlight;
+      const showCoach = guidedCoach || !glView || !!pw.showOnGreenlight;
       rail.classList.toggle("coach-hidden", !showCoach);
+      rail.classList.toggle("coach-guided", !!guidedCoach);
       if (showCoach) delete rail.dataset.coachDismissed;
     }
 
@@ -560,9 +1006,15 @@
 
     const stepsEl = document.getElementById("pathway-steps");
     if (stepsEl) {
-      const showSteps = showcaseDemo || (S.releases || 0) < 15;
+      const showSteps = guidedCoach || showcaseDemo || (S.releases || 0) < 15;
       stepsEl.innerHTML = showSteps ? renderPathwaySteps(S, hook) : "";
       stepsEl.hidden = !showSteps;
+    }
+
+    if (guidedCoach?.tab && S.tab !== guidedCoach.tab && stepNeedsTab(S, hook, guidedCoach.tab)) {
+      S.tab = guidedCoach.tab;
+      hook.render();
+      return;
     }
 
     const today = new Date().toISOString().slice(0, 10);
@@ -575,24 +1027,34 @@
   function updateTabBadges(S, hook) {
     const today = new Date().toISOString().slice(0, 10);
     const loginPending = S.loginLastClaimDate !== today && (S.loginClaimedCount || 0) < 31;
+    const claimable = claimableQuests(S);
     const hireAfford = hook.ROLES && hook.hireCost && Object.keys(hook.ROLES).some((k) => S.yen >= hook.hireCost(k));
     const scoutAfford = (hook.castingCost && S.yen >= hook.castingCost()) || S.gems >= (hook.SCOUT_GEMS || 8);
     const starsUnlocked = (S.releases || 0) >= 2 || (S.totalFansEver || 0) >= 20;
     const freeGems = S.freeGemsDate !== today;
     const badges = {
       produce: readySlot(S, hook) >= 0,
-      quests: claimableQuests(S) > 0 || loginPending,
+      quests: claimable > 0 || loginPending,
       staff: !!hireAfford,
       stars: starsUnlocked && scoutAfford,
       store: freeGems,
     };
     document.querySelectorAll(".tab").forEach((tab) => {
       const k = tab.dataset.tab;
+      const on = !!badges[k];
+      tab.classList.toggle("tab-has-badge", on);
       tab.querySelector(".tab-badge")?.remove();
-      if (badges[k]) {
+      if (on) {
         const b = document.createElement("span");
         b.className = "tab-badge";
+        b.setAttribute("aria-hidden", "true");
+        if (k === "quests" && claimable > 0) b.title = claimable + " reward" + (claimable > 1 ? "s" : "") + " ready";
         tab.appendChild(b);
+      }
+      const lbl = tab.querySelector(".tab-lbl");
+      if (lbl && k === "quests") {
+        const note = claimable > 0 ? " — rewards ready" : loginPending ? " — login reward ready" : "";
+        lbl.setAttribute("aria-label", (tab.getAttribute("aria-label") || "Quests") + note);
       }
     });
   }
@@ -602,10 +1064,13 @@
     if (!hook || hook.__hudPremiumInstalled) return false;
     hook.__hudPremiumInstalled = true;
     buildHudShell();
+    organizeDrawerSlot();
+    wireGoalBar();
     const origRender = hook.render;
     hook.render = function () {
       origRender();
       closeDrawer();
+      organizeDrawerSlot();
       updateHud(hook.getState(), hook);
       updateTabBadges(hook.getState(), hook);
     };
@@ -616,9 +1081,19 @@
         updateHud(hook.getState(), hook);
       };
     }
+    if (typeof hook.tapBoost === "function" && !hook.__hudComboTapHooked) {
+      hook.__hudComboTapHooked = true;
+      const origTap = hook.tapBoost;
+      hook.tapBoost = function (slot) {
+        origTap(slot);
+        pulseHudCombo();
+      };
+    }
     hook.render();
     return true;
   }
+
+  window.__AST_HUD__ = { organizeDrawerSlot, pulseHudCombo, goalMilestoneAction };
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", () => setTimeout(buildHudShell, 0));

@@ -401,6 +401,11 @@
     }
 
     window.__AST_TRY_RANKUP__ = () => tryPendingRankUp(hook);
+    const origUpdateTop = window.updateTopBar;
+    window.updateTopBar = function () {
+      if (typeof origUpdateTop === "function") origUpdateTop();
+      updateHud(hook.getState(), hook);
+    };
     updateHud(hook.getState(), hook);
     return true;
   }
@@ -426,7 +431,14 @@
     });
   }
 
-  window.__AST_STUDIO_RATING__ = { tierInfo, pillarProgress, starsHTML, TIERS, initState };
+  window.__AST_STUDIO_RATING__ = {
+    tierInfo,
+    pillarProgress,
+    starsHTML,
+    TIERS,
+    initState,
+    refreshHud: (S, hook) => updateHud(S || (hook || window.__AST_HOOK__)?.getState?.(), hook || window.__AST_HOOK__),
+  };
 
   const poll = setInterval(() => {
     if (installHooks()) clearInterval(poll);
