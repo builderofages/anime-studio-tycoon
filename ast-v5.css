@@ -34,7 +34,7 @@ html.hud-v3-active body {
 html.hud-v3-active body {
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.35) 0%, rgba(8, 6, 15, 0.82) 100%),
-    url('bg-v4.png?v=69') center top / cover no-repeat fixed !important;
+    url('bg-v4.png?v=70') center top / cover no-repeat fixed !important;
 }
 
 html.hud-v3-active button {
@@ -492,7 +492,7 @@ html.hud-v3-active .aaa-poster[data-act="tapboost"]:active {
 html.hud-v3-active .aaa-page-hero.aaa-gacha-hero {
   background:
     linear-gradient(135deg, rgba(107, 92, 255, 0.2), rgba(255, 92, 168, 0.14)),
-    url('assets/hf/gacha-bg.png?v=69') center/cover !important;
+    url('assets/hf/gacha-bg.png?v=70') center/cover !important;
   border: 1px solid rgba(180, 140, 255, 0.28) !important;
   overflow: hidden;
 }
@@ -1930,21 +1930,21 @@ html.hud-v3-active #premiere .premiere-card .btn-gold {
 html.hud-v3-active .aaa-page-hero.aaa-quest-hero {
   background:
     linear-gradient(135deg, rgba(255, 200, 69, 0.16), rgba(255, 92, 168, 0.12)),
-    url('assets/hf/greenlight-bg.png?v=69') center/cover !important;
+    url('assets/hf/greenlight-bg.png?v=70') center/cover !important;
   border: 1px solid rgba(255, 200, 69, 0.28) !important;
 }
 
 html.hud-v3-active .aaa-page-hero.aaa-staff-hero {
   background:
     linear-gradient(135deg, rgba(107, 92, 255, 0.18), rgba(255, 92, 168, 0.1)),
-    url('assets/hf/gacha-bg.png?v=69') center/cover !important;
+    url('assets/hf/gacha-bg.png?v=70') center/cover !important;
   border: 1px solid rgba(180, 140, 255, 0.28) !important;
 }
 
 html.hud-v3-active .aaa-page-hero.aaa-store-hero {
   background:
     linear-gradient(135deg, rgba(34, 211, 238, 0.14), rgba(255, 92, 168, 0.12)),
-    url('assets/hf/greenlight-bg.png?v=69') center/cover !important;
+    url('assets/hf/greenlight-bg.png?v=70') center/cover !important;
   border: 1px solid rgba(255, 92, 168, 0.28) !important;
 }
 
@@ -2158,21 +2158,21 @@ html.hud-v3-active .aaa-easy-mode .aaa-show-panel {
 html.hud-v3-active .aaa-page-hero.aaa-research-hero {
   background:
     linear-gradient(135deg, rgba(34, 211, 238, 0.16), rgba(107, 92, 255, 0.12)),
-    url('assets/hf/gacha-bg.png?v=69') center/cover !important;
+    url('assets/hf/gacha-bg.png?v=70') center/cover !important;
   border: 1px solid rgba(77, 212, 255, 0.28) !important;
 }
 
 html.hud-v3-active .aaa-page-hero.aaa-studio-hero {
   background:
     linear-gradient(135deg, rgba(255, 200, 69, 0.14), rgba(255, 92, 168, 0.1)),
-    url('assets/hf/greenlight-bg.png?v=69') center/cover !important;
+    url('assets/hf/greenlight-bg.png?v=70') center/cover !important;
   border: 1px solid rgba(255, 200, 69, 0.28) !important;
 }
 
 html.hud-v3-active .aaa-page-hero.aaa-market-hero {
   background:
     linear-gradient(135deg, rgba(255, 92, 168, 0.14), rgba(107, 92, 255, 0.1)),
-    url('assets/hf/gacha-bg.png?v=69') center/cover !important;
+    url('assets/hf/gacha-bg.png?v=70') center/cover !important;
   border: 1px solid rgba(255, 92, 168, 0.28) !important;
 }
 
@@ -2351,7 +2351,7 @@ html.hud-v3-active .aaa-greenlight-cinema-head {
   padding: 18px 16px 12px !important;
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.55) 0%, rgba(8, 6, 15, 0.85) 100%),
-    url('assets/hf/greenlight-bg.png?v=69') center/cover !important;
+    url('assets/hf/greenlight-bg.png?v=70') center/cover !important;
   border-bottom: 1px solid rgba(255, 200, 69, 0.15) !important;
 }
 
@@ -2946,7 +2946,7 @@ html.hud-v3-active .aaa-gl-page-head {
   padding: 14px 14px 10px !important;
   background:
     linear-gradient(180deg, rgba(8, 6, 15, 0.4) 0%, rgba(8, 6, 15, 0.9) 100%),
-    url('assets/hf/greenlight-bg.png?v=69') center/cover !important;
+    url('assets/hf/greenlight-bg.png?v=70') center/cover !important;
   border-bottom: 1px solid rgba(255, 200, 69, 0.15) !important;
 }
 
@@ -3436,4 +3436,100 @@ html.hud-v3-active .aaa-gl-slots-plus:disabled {
 html.hud-v3-active .hud-stat.hype .v {
   font-size: 9px !important;
   letter-spacing: -0.02em !important;
+}
+
+/* ========== BUILD 70 — Ref Chrome ========== */
+
+html.hud-v3-active .hud-back-btn {
+  flex-shrink: 0 !important;
+  width: 32px !important;
+  height: 32px !important;
+  padding: 0 !important;
+  border-radius: 10px !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: var(--ast-text) !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+}
+
+html.hud-v3-active .hud-brand-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  flex-shrink: 0 !important;
+  margin-left: auto !important;
+}
+
+html.hud-v3-active .hud-awards-chip {
+  display: flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  padding: 4px 8px !important;
+  max-width: 108px !important;
+}
+
+html.hud-v3-active .hud-awards-copy {
+  display: flex !important;
+  flex-direction: column !important;
+  min-width: 0 !important;
+  line-height: 1.1 !important;
+}
+
+html.hud-v3-active .hud-awards-copy small {
+  font-size: 7px !important;
+  font-weight: 700 !important;
+  color: var(--ast-gold) !important;
+  opacity: 0.9 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+html.hud-v3-active .hud-awards-copy b {
+  font-size: 7px !important;
+  font-weight: 800 !important;
+  color: #fff !important;
+  letter-spacing: 0.03em !important;
+}
+
+html.hud-v3-active #hud-shell.hud-gl-view .hud-stat-wrap.fans {
+  display: none !important;
+}
+
+html.hud-v3-active #hud-shell:not(.hud-gl-view) .hud-stat-wrap.hype {
+  display: none !important;
+}
+
+html.hud-v3-active #hud-shell .hud-stats {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  width: 100% !important;
+  flex-basis: 100% !important;
+  order: 10 !important;
+}
+
+html.hud-v3-active .hud-brand-row {
+  flex-wrap: wrap !important;
+}
+
+html.hud-v3-active .aaa-gl-card.sel {
+  transform: scale(1.04) !important;
+  z-index: 2 !important;
+  box-shadow: 0 0 28px rgba(255, 200, 69, 0.35), 0 12px 32px rgba(0, 0, 0, 0.5) !important;
+  border-color: rgba(255, 200, 69, 0.55) !important;
+}
+
+html.hud-v3-active .aaa-gl-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease !important;
+}
+
+html.hud-v3-active .aaa-team-head span::before {
+  content: "👥 " !important;
+}
+
+html.hud-v3-active .aaa-gl-back {
+  display: none !important;
 }

@@ -54,17 +54,27 @@
         action: { type: "premiere", slot: ready },
       };
     }
-    if ((S.releases || 0) < 5 && activeCount(S) > 0) {
+    if ((S.releases || 0) < 15 && activeCount(S) > 0) {
       const pr = (S.projects || []).find(Boolean);
       if (pr) {
         const p = hook.getProject(pr.pid);
         if (p && pr.progress < p.work) {
+          const st = S.staff || {};
+          if ((st.director || 0) > 0) {
+            return {
+              message: "Assigning experienced directors increases final score!",
+              tab: "produce",
+              cta: "Team",
+              urgent: false,
+              action: { type: "tab", tab: "staff" },
+            };
+          }
           return {
             message: "Tap the poster to boost speed — or wait for your team",
             tab: "produce",
             cta: "Boost",
             urgent: false,
-            action: { type: "tab", tab: "produce" },
+            action: { type: "tapboost", slot: (S.projects || []).indexOf(pr) },
           };
         }
       }
@@ -219,6 +229,12 @@
       hook.play("click");
       return;
     }
+    if (pw.action.type === "tapboost" && typeof hook.tapBoost === "function") {
+      hook.getState().tab = "produce";
+      hook.tapBoost(pw.action.slot);
+      hook.play("click");
+      return;
+    }
     if (pw.action.type === "tab") {
       hook.getState().tab = pw.action.tab;
       hook.render();
@@ -236,13 +252,16 @@
     shell.className = "hud-v3";
     shell.innerHTML = `
       <div class="hud-brand-row">
-        <div class="hud-avatar-wrap"><img class="hud-avatar" src="start-hero.png?v=69" alt=""><span class="hud-lv-badge" id="hud-lv-badge">1</span></div>
+        <button type="button" class="hud-back-btn" id="hud-back-btn" aria-label="Back" hidden>←</button>
+        <div class="hud-avatar-wrap" id="hud-avatar-wrap"><img class="hud-avatar" src="start-hero.png?v=70" alt=""><span class="hud-lv-badge" id="hud-lv-badge">1</span></div>
         <div class="hud-identity">
           <div class="hud-brand-line"><span class="hud-sakura-logo" aria-hidden="true">🌸</span><span class="hud-studio-name" id="hud-studio-name">Studio</span></div>
           <span class="hud-studio-rank-label" id="hud-studio-rank-label">Studio Rank C</span>
         </div>
-        <span class="hud-awards-chip" id="hud-awards" hidden title="Golden Anime Awards">🏆</span>
-        <button type="button" class="hud-mail-btn" id="hud-mail-btn" aria-label="Mail and rewards">✉️</button>
+        <div class="hud-brand-actions">
+          <button type="button" class="hud-mail-btn" id="hud-mail-btn" aria-label="Mail and rewards">✉️</button>
+          <span class="hud-awards-chip" id="hud-awards" hidden title="Golden Anime Awards"><span class="hud-awards-ic">🏆</span><span class="hud-awards-copy"><small>年度最佳动画公司</small><b>Golden Anime Awards</b></span></span>
+        </div>
         <div class="hud-stats" id="hud-resources"></div>
       </div>
       <div class="hud-drawer" id="hud-drawer" hidden>
@@ -255,8 +274,8 @@
     top.parentNode.insertBefore(shell, top);
 
     const resWrap = document.getElementById("hud-resources");
-    const plusTab = { yen: "market", gems: "store", hype: "produce" };
-    ["yen", "gems", "hype"].forEach((k) => {
+    const plusTab = { yen: "market", fans: "market", gems: "store", hype: "produce" };
+    ["yen", "fans", "gems", "hype"].forEach((k) => {
       const el = top.querySelector(".res." + k);
       if (!el) return;
       el.classList.add("hud-stat", k);
@@ -289,7 +308,7 @@
       rail.id = "pathway-rail";
       rail.className = "coach-bar";
       rail.innerHTML = `
-        <img class="coach-avatar" src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg?v=69" alt="" width="40" height="40">
+        <img class="coach-avatar" src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg?v=70" alt="" width="40" height="40">
         <div class="coach-body">
           <span class="coach-label">Coach's Tip</span>
           <p class="coach-msg" id="pathway-now"></p>
@@ -328,6 +347,14 @@
       document.body.appendChild(petals);
     }
 
+    document.getElementById("hud-back-btn").addEventListener("click", () => {
+      const hook = window.__AST_HOOK__;
+      if (!hook) return;
+      const main = document.getElementById("main");
+      if (main?.dataset.glBack === "1" && hook.greenlightBack) hook.greenlightBack();
+      else if (main?.dataset.glView === "1") { hook.getState().tab = "quests"; hook.render(); }
+      hook.play("click");
+    });
     document.getElementById("pathway-cta").addEventListener("click", runPathwayAction);
     document.getElementById("hud-mail-btn").addEventListener("click", () => {
       const hook = window.__AST_HOOK__;
@@ -358,8 +385,41 @@
     if (d) d.hidden = true;
   }
 
+  function ensureHudStats() {
+    const resWrap = document.getElementById("hud-resources");
+    const top = document.getElementById("top");
+    if (!resWrap || !top || resWrap.querySelector(".hud-stat-wrap.fans")) return;
+    const plusTab = { yen: "market", fans: "market", gems: "store", hype: "produce" };
+    ["fans"].forEach((k) => {
+      const el = top.querySelector(".res." + k);
+      if (!el) return;
+      el.classList.add("hud-stat", k);
+      const wrap = document.createElement("div");
+      wrap.className = "hud-stat-wrap " + k;
+      wrap.appendChild(el);
+      const plus = document.createElement("button");
+      plus.type = "button";
+      plus.className = "hud-stat-plus";
+      plus.textContent = "+";
+      plus.setAttribute("aria-label", "Get more " + k);
+      plus.addEventListener("click", () => {
+        const hook = window.__AST_HOOK__;
+        if (!hook) return;
+        hook.getState().tab = plusTab[k];
+        hook.render();
+        hook.play("click");
+        closeDrawer();
+      });
+      wrap.appendChild(plus);
+      const gemsWrap = resWrap.querySelector(".hud-stat-wrap.gems");
+      if (gemsWrap) resWrap.insertBefore(wrap, gemsWrap);
+      else resWrap.appendChild(wrap);
+    });
+  }
+
   function updateHud(S, hook) {
     buildHudShell();
+    ensureHudStats();
     const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
     const nameEl = document.getElementById("hud-studio-name");
     if (nameEl) nameEl.textContent = (S.studioName || "Your Studio").toUpperCase();
@@ -369,6 +429,15 @@
       const letter = stars >= 5 ? "S+" : stars >= 4 ? "S" : stars >= 3 ? "A" : stars >= 2 ? "B" : "C";
       rankLbl.textContent = "Studio Rank " + letter;
     }
+    const main = document.getElementById("main");
+    const glView = main?.dataset.glView === "1";
+    const shell = document.getElementById("hud-shell");
+    if (shell) shell.classList.toggle("hud-gl-view", glView);
+    const backBtn = document.getElementById("hud-back-btn");
+    const avatarWrap = document.getElementById("hud-avatar-wrap");
+    if (backBtn) backBtn.hidden = !glView;
+    if (avatarWrap) avatarWrap.hidden = !!glView;
+
     const awards = document.getElementById("hud-awards");
     if (awards) awards.hidden = (S.releases || 0) < 8;
     const mailBtn = document.getElementById("hud-mail-btn");
@@ -404,8 +473,8 @@
 
     const rail = document.getElementById("pathway-rail");
     if (rail) {
-      rail.classList.remove("coach-hidden");
-      delete rail.dataset.coachDismissed;
+      rail.classList.toggle("coach-hidden", glView);
+      if (!glView) delete rail.dataset.coachDismissed;
     }
 
     const nowEl = document.getElementById("pathway-now");
