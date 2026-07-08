@@ -5,7 +5,7 @@
 (function () {
   if (!document.documentElement.classList.contains("hud-v3-active")) return;
 
-  const ASSET_V = "98";
+  const ASSET_V = "99";
   const HEAVY_FLAGS = ["__finalInstalled", "__aaaLayerInstalled", "__legendInstalled"];
   const HEAVY_SCRIPTS = [
     "gameplay-final.js",

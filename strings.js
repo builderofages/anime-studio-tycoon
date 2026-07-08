@@ -6,6 +6,7 @@ const EN = {
   start:"Enter the Studio", startPlay:"Play", startDemo:"Try Demo",
   startPlayHint:"Real game — start from ¥1,500, hire staff, greenlight your first anime.",
   startDemoHint:'Showcase tour — pre-loaded Sakura studio for screenshots (<code>?demo=1</code>).',
+  startShare:"Share", startShareHint:"Invite friends — link opens the real game start (not demo).",
   goal:"Goal",
   res_yen:"Yen", res_fans:"Fans", res_hype:"Hype", netWorth:"Studio Value", trend:"Trending",
   tab_produce:"Produce", tab_quests:"Quests", tab_staff:"Staff", tab_stars:"Stars",

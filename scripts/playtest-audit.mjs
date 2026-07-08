@@ -50,6 +50,7 @@ const HONEST_FLOW_FUNCTIONS = [
   "drainUnlockModalQueue",
   "celebrationOverlayOpen",
   "featureUnlocked",
+  "tabLocked",
   "tabAccessible",
   "releaseProject",
   "showOfflineModal",
@@ -149,6 +150,7 @@ const SAVE_SCHEMA_KEYS = [
   "animator: 0",
   "projects: [null]",
   "_guidedFresh: false",
+  "_demoMode: false",
   "catalogIncome: 0",
 ];
 for (const key of SAVE_SCHEMA_KEYS) {
@@ -173,6 +175,13 @@ for (const snippet of UNLOCK_SNIPPETS) {
 
 assert(html.includes("tapBoost(slot)"), "tap boost production hook");
 assert(html.includes("if((S.releases||0)<1) amt=Math.min"), "first-release tap floor");
+assert(html.includes("S._demoMode=true"), "demo bootstrap sets _demoMode");
+assert(html.includes("S.yen=23800000"), "demo bootstrap inflated yen");
+assert(html.includes('function tabLocked(k)'), "tab lock gate for dock tabs");
+assert(
+  html.includes("return false;") && html.match(/function drainUnlockModalQueue[\s\S]*?return true;/),
+  "drainUnlockModalQueue returns boolean"
+);
 assert(existsSync(join(root, "scripts/playtest-sim.mjs")), "playtest sim script present");
 
 console.log(`\n${passed} passed, ${failed} failed`);

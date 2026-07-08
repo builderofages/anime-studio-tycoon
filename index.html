@@ -7,23 +7,26 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <title>Anime Studio Tycoon — Build Your Anime Empire</title>
-<meta name="description" content="Run your own anime studio! Name your own shows, scout a cast of star talent, grow millions of fans, and become the #1 studio in the world. A free, easy-to-play idle tycoon game for everyone.">
+<meta name="description" content="Free browser idle tycoon: start with ¥1,500, hire staff, greenlight anime, grow fans, and chase #1 in the charts. No download — play or install as a PWA.">
+<link rel="canonical" href="https://anime-studio-tycoon.vercel.app/play">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Anime Studio Tycoon">
-<meta property="og:title" content="Anime Studio Tycoon — Build Your Anime Empire">
-<meta property="og:description" content="Greenlight hit shows, scout legendary stars, and grow millions of fans. Can you build the #1 anime studio? Play free.">
+<meta property="og:url" content="https://anime-studio-tycoon.vercel.app/play">
+<meta property="og:title" content="Anime Studio Tycoon — Free Anime Idle Tycoon Game">
+<meta property="og:description" content="Run your own anime studio from a garage to a global empire. Hire your team, greenlight hits, scout stars, and climb the industry charts. Play free in your browser.">
 <meta property="og:image" content="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_062706_8cb8f42c-84b2-45b0-8c27-96e8ffc01bb7.jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Anime Studio Tycoon — Build Your Anime Empire">
-<meta name="twitter:description" content="Name your own anime, scout a cast of stars, and grow millions of fans. Easy, cozy, and fun for all ages. Can you build the #1 studio? Play free.">
+<meta name="twitter:title" content="Anime Studio Tycoon — Free Anime Idle Tycoon Game">
+<meta name="twitter:description" content="Start with ¥1,500 and one room. Hire staff, greenlight anime, grow fans, and chase #1. Free in your browser — cozy tycoon fun for all ages.">
 <meta name="twitter:image" content="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_062706_8cb8f42c-84b2-45b0-8c27-96e8ffc01bb7.jpeg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Anime Studio Tycoon","alternateName":"Anime Studio Tycoon — Build Your Empire","url":"https://anime-studio-tycoon.vercel.app/play","image":"https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_062706_8cb8f42c-84b2-45b0-8c27-96e8ffc01bb7.jpeg","description":"Free idle tycoon game: hire staff, greenlight anime, grow fans, and build a studio empire from ¥1,500 to industry #1.","applicationCategory":"GameApplication","operatingSystem":"Any","browserRequirements":"Requires JavaScript","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"inLanguage":["en","es","pt","fr","de","ja"]}</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%233a2b4d'/%3E%3Ccircle cx='32' cy='32' r='30' fill='none' stroke='%23ffc845' stroke-width='3'/%3E%3Cg fill='%23ff9bc4'%3E%3Cellipse cx='32' cy='15' rx='5' ry='8'/%3E%3Cellipse cx='32' cy='49' rx='5' ry='8'/%3E%3Cellipse cx='15' cy='32' rx='8' ry='5'/%3E%3Cellipse cx='49' cy='32' rx='8' ry='5'/%3E%3C/g%3E%3Ccircle cx='32' cy='32' r='7' fill='%23ffc845'/%3E%3C/svg%3E">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icons/icon-512.png">
 <!-- Legacy gameplay-*.css disabled — aaa-ui + game-skin + hud-premium own chrome -->
-<link rel="stylesheet" href="hud-premium.css?v=98">
+<link rel="stylesheet" href="hud-premium.css?v=99">
 <!-- ui-complete.css disabled — v5 uses aaa-tab-page heroes -->
 <!-- gameplay-studio-rating.css disabled — ast-v5 authority -->
 <!-- studio-premium.css disabled — ast-v5 authority -->
@@ -31,8 +34,8 @@
 <!-- game-skin.css disabled — fought ast-v5 (animation:none, flat panels) -->
 <!-- hf-design.css disabled — ast-v5 authority -->
 <!-- aaa-ui.css disabled — ast-v5 authority -->
-<link rel="stylesheet" href="legacy-fx.css?v=98">
-<link rel="stylesheet" href="ast-v5.css?v=98">
+<link rel="stylesheet" href="legacy-fx.css?v=99">
+<link rel="stylesheet" href="ast-v5.css?v=99">
 <script>document.documentElement.classList.add("premium-hud","hud-v3-active")</script>
 <meta name="theme-color" content="#08050f">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -78,10 +81,10 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available}
 <div id="app">
   <div id="top">
     <div id="studio-rank"><span>🎬</span><span class="rank-tier">Garage Studio</span></div>
-    <div class="res yen"><img src="icons/hf/yen.png?v=98" alt="Yen"><span><span class="v" id="r-yen">0</span> <small>¥</small></span></div>
-    <div class="res fans"><img src="icons/hf/fans.png?v=98" alt="Fans"><span class="v" id="r-fans">0</span></div>
-    <div class="res hype"><img src="icons/hf/hype.png?v=98" alt="Hype"><span class="v" id="r-hype">0</span></div>
-    <div class="res gems"><img src="icons/hf/gems.png?v=98" alt="Gems"><span class="v" id="r-gems">0</span></div>
+    <div class="res yen"><img src="icons/hf/yen.png?v=99" alt="Yen"><span><span class="v" id="r-yen">0</span> <small>¥</small></span></div>
+    <div class="res fans"><img src="icons/hf/fans.png?v=99" alt="Fans"><span class="v" id="r-fans">0</span></div>
+    <div class="res hype"><img src="icons/hf/hype.png?v=99" alt="Hype"><span class="v" id="r-hype">0</span></div>
+    <div class="res gems"><img src="icons/hf/gems.png?v=99" alt="Gems"><span class="v" id="r-gems">0</span></div>
     <div id="trendbar"><span class="spark">📈</span> Trending: <b id="trend">Action</b></div>
   </div>
   <div id="goal"><span id="goal-txt">🎯 Reach 50 Fans for Web Series</span><div class="bar"><i id="goal-bar" style="width:0%"></i></div></div>
@@ -93,7 +96,7 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available}
     <button class="btn-ghost" id="btn-mute">🔊 Sound: On</button>
     <button class="btn-ghost" id="btn-save" style="display:none">💾 Save</button>
     <button class="btn-ghost" id="btn-reset">↺ Reset</button>
-  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 98 · Endgame</span></div>
+  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 99 · Landing</span></div>
   <div id="toasts"></div>
   <div id="pwa-install-banner" class="aaa-pwa-install-banner" hidden>
     <div class="aaa-pwa-install-inner">
@@ -110,7 +113,7 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available}
 
 <div class="overlay" id="start" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="start-title">
   <div class="card-modal">
-    <img class="start-hero" src="start-hero.png?v=98" width="140" height="140" alt="Anime Studio Tycoon logo">
+    <img class="start-hero" src="start-hero.png?v=99" width="140" height="140" alt="Anime Studio Tycoon logo">
     <h1 id="start-title">Anime Studio Tycoon</h1>
     <p id="start-tagline">From a one-room studio to a global anime empire</p>
     <label style="display:block;font-size:12px;font-weight:800;color:var(--plum);margin:4px 0 4px">🏢 Studio Name</label>
@@ -129,6 +132,8 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available}
       <p class="start-cta-hint" id="start-play-hint">Real game — start from ¥1,500, hire staff, greenlight your first anime.</p>
       <button class="btn-ghost start-cta-demo" id="btn-start-demo" type="button">✨ Try Demo</button>
       <p class="start-cta-hint start-cta-hint-demo" id="start-demo-hint">Showcase tour — pre-loaded Sakura studio for screenshots (<code>?demo=1</code>).</p>
+      <button type="button" class="btn-ghost start-share-link" id="btn-start-share">📣 Share</button>
+      <p class="start-cta-hint start-share-hint" id="start-share-hint">Invite friends — link opens the real game start (not demo).</p>
     </div>
     <p id="start-legal" style="font-size:11px;opacity:.72;margin:12px 0 0;line-height:1.5">By entering, you agree to our <a href="terms.html" target="_blank" rel="noopener">Terms &amp; EULA</a> and <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>. Includes optional in-app purchases and items with randomized rewards (odds shown in-game).</p>
   </div>
@@ -333,14 +338,14 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available}
 
 <div class="overlay" id="whatsnew" style="display:none" role="dialog" aria-modal="true" aria-labelledby="whatsnew-title">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <img src="start-hero.png?v=98" alt="Anime Studio Tycoon logo" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
-    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 98 — Endgame</h1>
+    <img src="start-hero.png?v=99" alt="Anime Studio Tycoon logo" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
+    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 99 — Landing</h1>
     <div class="offlist whatsnew-list" style="margin:12px 0">
-      <div><span>👑 Dynasty</span><b>Studio tab shows dynasty score + peak rank from release 10</b></div>
-      <div><span>📺 Franchises</span><b>Franchise universe panel lists every series — not just a counter</b></div>
-      <div><span>🌪️ Chaos</span><b>Prominent Chaos Mode card on the studio dashboard</b></div>
-      <div><span>🏁 Rival race</span><b>HUD leaderboard expands with top 3 + gap to next rank</b></div>
-      <div><span>🎯 Coach</span><b>Suggests dynasty perks when points are ready (release 10+)</b></div>
+      <div><span>🔗 play.html</span><b>Legacy link redirects to /play with honest real-game start</b></div>
+      <div><span>📣 Share cards</span><b>Richer Open Graph + Twitter previews for social posts</b></div>
+      <div><span>📲 Start screen</span><b>Share button copies the canonical play link for invites</b></div>
+      <div><span>🔍 SEO</span><b>JSON-LD WebApplication schema + canonical /play URL</b></div>
+      <div><span>📦 PWA</span><b>Manifest short name + description tuned for install search</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
   </div>
@@ -443,8 +448,8 @@ document.addEventListener("deviceready", initNativeChrome, false);
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 98 · Endgame";
-const ASSET_V = "98";
+const BUILD_TAG = "build 99 · Landing";
+const ASSET_V = "99";
 const OFFLINE_PREVIEW_CAP = 4*3600; // "while away" preview when return is under 4h
 const SHARE_PLAY_URL = "https://anime-studio-tycoon.vercel.app/play";
 const PITY_EPIC = 25;
@@ -2229,6 +2234,8 @@ function updateChrome(){
     const sd=document.getElementById("btn-start-demo"); if(sd) sd.textContent="✨ "+(STR.startDemo||"Try Demo");
     const ph=document.getElementById("start-play-hint"); if(ph) ph.textContent=STR.startPlayHint||"Real game — start from ¥1,500, hire staff, greenlight your first anime.";
     const dh=document.getElementById("start-demo-hint"); if(dh) dh.innerHTML=STR.startDemoHint||'Showcase tour — pre-loaded Sakura studio for screenshots (<code>?demo=1</code>).';
+    const ss=document.getElementById("btn-start-share"); if(ss) ss.textContent="📣 "+(STR.startShare||STR.share||"Share");
+    const shareHint=document.getElementById("start-share-hint"); if(shareHint) shareHint.textContent=STR.startShareHint||"Invite friends — link opens the real game start (not demo).";
     const tg=document.getElementById("start-tagline"); if(tg) tg.textContent=STR.tagline;
     const ll=document.getElementById("start-lang-label"); if(ll) ll.textContent="🌐 "+STR.language;
     const sl=document.getElementById("start-lang"); if(sl) sl.value=STR.__code||"en";
@@ -3295,6 +3302,15 @@ function shareGame(){
   if(navigator.clipboard){ navigator.clipboard.writeText(text+" "+url).catch(()=>{}); }
   rewardShare();
   try{ window.open("https://twitter.com/intent/tweet?text="+encodeURIComponent(text)+"&url="+encodeURIComponent(url),"_blank","noopener"); }catch(_){ toast(url); }
+}
+function sharePlayInvite(){
+  const url=SHARE_PLAY_URL;
+  const text="🎬 Anime Studio Tycoon — free idle tycoon. Start with ¥1,500, hire staff, and greenlight your first anime!";
+  track("share_invite",{});
+  if(navigator.share){ navigator.share({title:"Anime Studio Tycoon", text, url}).catch(()=>{}); return; }
+  const payload=text+" "+url;
+  if(navigator.clipboard){ navigator.clipboard.writeText(payload).then(()=>toast("🔗 Play link copied!",true)).catch(()=>toast(url)); }
+  else toast(url);
 }
 /* ---- free rewarded boost (ad slot) ---- */
 function rewardedBoost(){
@@ -5287,6 +5303,7 @@ if(MONETIZATION.supportUrl){
 }
 { const bp=document.getElementById("btn-start-play"); if(bp) bp.onclick=()=>begin(false); }
 { const bd=document.getElementById("btn-start-demo"); if(bd) bd.onclick=()=>begin(true); }
+{ const bs=document.getElementById("btn-start-share"); if(bs) bs.onclick=()=>sharePlayInvite(); }
 $("#btn-offclose").onclick=()=>{ celebrateCollect("offline"); $("#offline").style.display="none"; };
 { const rh=document.getElementById("btn-return-hub-close"); if(rh) rh.onclick=()=>closeReturnHub(); }
 { const sl=document.getElementById("start-lang"); if(sl) sl.onchange=()=>{ setLang(sl.value); updateChrome(); render(); }; }
@@ -5417,20 +5434,20 @@ window.__AST_HOOK__ = {
   pendingUnlockTeasers,
 };
 </script>
-<script src="aaa-upgrade.js?v=98"></script>
-<script src="v5-slim-gate.js?v=98"></script>
-<script src="gameplay-plus.js?v=98"></script>
-<script src="gameplay-ultra.js?v=98"></script>
-<script src="gameplay-endless.js?v=98"></script>
-<script src="gameplay-empire.js?v=98"></script>
-<script src="gameplay-studio.js?v=98"></script>
+<script src="aaa-upgrade.js?v=99"></script>
+<script src="v5-slim-gate.js?v=99"></script>
+<script src="gameplay-plus.js?v=99"></script>
+<script src="gameplay-ultra.js?v=99"></script>
+<script src="gameplay-endless.js?v=99"></script>
+<script src="gameplay-empire.js?v=99"></script>
+<script src="gameplay-studio.js?v=99"></script>
 <!-- gameplay-final/aaa/legend deferred by v5-slim-gate.js until releases>=3 or totalFansEver>=50 -->
-<script src="hud-premium.js?v=98"></script>
-<script src="ui-complete.js?v=98"></script>
-<script src="gameplay-studio-rating.js?v=98"></script>
-<script src="gameplay-polish.js?v=98"></script>
-<script src="hook-bridge.js?v=98"></script>
-<script src="v5-render-guard.js?v=98"></script>
+<script src="hud-premium.js?v=99"></script>
+<script src="ui-complete.js?v=99"></script>
+<script src="gameplay-studio-rating.js?v=99"></script>
+<script src="gameplay-polish.js?v=99"></script>
+<script src="hook-bridge.js?v=99"></script>
+<script src="v5-render-guard.js?v=99"></script>
 <!-- studio-premium.css loaded in head -->
 
 

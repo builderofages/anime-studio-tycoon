@@ -159,7 +159,7 @@ function extractGameLogic() {
   return loadLogicForVm() + "\n" + code.slice(0, cut);
 }
 
-const STUBS = `
+const STUBS_BASE = `
 render = function(){};
 save = function(){};
 toast = function(){};
@@ -175,7 +175,6 @@ celebrateCampaignRun = function(){};
 celebrateStudioAward = function(){};
 showPremiere = function(){};
 maybeDecision = function(){};
-drainUnlockModalQueue = function(){ return false; };
 checkAchievements = function(){};
 checkFanMilestoneToasts = function(){};
 checkStudioLevel = function(){};
@@ -183,6 +182,10 @@ awardMilestoneGems = function(){};
 registerFranchiseHit = function(){};
 processCast = function(){};
 studioAwards = function(){};
+`;
+
+const STUBS = STUBS_BASE + `
+drainUnlockModalQueue = function(){ return false; };
 `;
 
 const SIM_RUNNER = `
@@ -272,6 +275,90 @@ function runUnlockGateSimulation() {
   return sandbox.__UNLOCK_GATES__;
 }
 
+const DEMO_BOOTSTRAP_RUNNER = `
+S = freshState();
+const demo = {
+  booted: bootstrapDemoStudio(),
+  demoMode: S._demoMode,
+  yen: S.yen,
+  fans: S.fans,
+  staffTotal: staffTotal(),
+  slots: S.slots,
+  studioStars: S.studioStars,
+};
+__DEMO_BOOTSTRAP__ = demo;
+`;
+
+function runDemoBootstrapSimulation() {
+  const sandbox = buildSandbox();
+  vm.runInNewContext(extractGameLogic() + STUBS + DEMO_BOOTSTRAP_RUNNER, sandbox, { timeout: 20000 });
+  return sandbox.__DEMO_BOOTSTRAP__;
+}
+
+const STARS_UNLOCK_RUNNER = `
+S = freshState();
+const stars = { r0: {}, r1: {}, r2: {}, fans20: {} };
+stars.r0.unlocked = featureUnlocked("stars");
+stars.r0.tabLocked = tabLocked("stars");
+S.releases = 1;
+stars.r1.unlocked = featureUnlocked("stars");
+stars.r1.tabLocked = tabLocked("stars");
+S.releases = 2;
+stars.r2.unlocked = featureUnlocked("stars");
+stars.r2.tabLocked = tabLocked("stars");
+S = freshState();
+S.totalFansEver = 20;
+stars.fans20.unlocked = featureUnlocked("stars");
+__STARS_UNLOCK__ = stars;
+`;
+
+function runStarsUnlockSimulation() {
+  const sandbox = buildSandbox();
+  vm.runInNewContext(extractGameLogic() + STUBS + STARS_UNLOCK_RUNNER, sandbox, { timeout: 20000 });
+  return sandbox.__STARS_UNLOCK__;
+}
+
+const TAP_BOOST_RUNNER = `
+S = freshState();
+bootstrapHonestStudio();
+hire("animator");
+const shortFilm = PROJECTS[0];
+greenlight(shortFilm.id, "Action", [], null);
+const pr = S.projects[0];
+const before = pr.progress;
+tapBoost(0);
+__TAP_BOOST__ = {
+  before,
+  after: pr.progress,
+  gain: pr.progress - before,
+  ppt: powerPerTick(),
+};
+`;
+
+function runTapBoostSimulation() {
+  const sandbox = buildSandbox();
+  vm.runInNewContext(extractGameLogic() + STUBS + TAP_BOOST_RUNNER, sandbox, { timeout: 20000 });
+  return sandbox.__TAP_BOOST__;
+}
+
+const DRAIN_QUEUE_RUNNER = `
+S = freshState();
+const drain = { types: {} };
+drain.empty = drainUnlockModalQueue();
+S.releases = 1;
+_studioUnlockQueued = true;
+drain.studioQueued = drainUnlockModalQueue();
+drain.types.empty = typeof drain.empty;
+drain.types.studioQueued = typeof drain.studioQueued;
+__DRAIN_QUEUE__ = drain;
+`;
+
+function runDrainQueueSimulation() {
+  const sandbox = buildSandbox();
+  vm.runInNewContext(extractGameLogic() + STUBS_BASE + DRAIN_QUEUE_RUNNER, sandbox, { timeout: 20000 });
+  return sandbox.__DRAIN_QUEUE__;
+}
+
 function assertHonestFlow(snap) {
   assert(snap.yen0 === 1500, "fresh honest yen", `got ${snap.yen0}`);
   assert(snap.releases0 === 0, "fresh releases zero");
@@ -299,6 +386,41 @@ function assertHonestFlow(snap) {
   assert(snap.starsUnlocked === false, "stars still locked after first premiere");
   assert(snap.marketUnlocked === false, "market locked before 50 fans");
   assert(snap.chaosUnlocked === false, "chaos locked before 10 releases");
+}
+
+function assertDemoBootstrap(demo) {
+  assert(demo.booted === true, "bootstrapDemoStudio succeeds on empty studio");
+  assert(demo.demoMode === true, "demo bootstrap sets _demoMode");
+  assert(demo.yen >= 1000000, "demo bootstrap has inflated yen", `yen=${demo.yen}`);
+  assert(demo.yen >= 23700000, "demo bootstrap yen near showcase seed", `got ${demo.yen}`);
+  assert(demo.fans > 10000, "demo bootstrap has inflated fans", `fans=${demo.fans}`);
+  assert(demo.staffTotal > 0, "demo bootstrap pre-hires staff");
+  assert(demo.slots >= 3, "demo bootstrap expands slots", `slots=${demo.slots}`);
+  assert(demo.studioStars === 5, "demo bootstrap max studio stars", `got ${demo.studioStars}`);
+}
+
+function assertStarsUnlock(stars) {
+  assert(stars.r0.unlocked === false, "stars locked at release 0");
+  assert(stars.r0.tabLocked === true, "tabLocked(stars) true at release 0");
+  assert(stars.r1.unlocked === false, "stars locked at release 1");
+  assert(stars.r1.tabLocked === true, "tabLocked(stars) true at release 1");
+  assert(stars.r2.unlocked === true, "stars unlock at 2 releases");
+  assert(stars.r2.tabLocked === false, "tabLocked(stars) false at release 2");
+  assert(stars.fans20.unlocked === true, "stars unlock at 20 totalFansEver alt gate");
+}
+
+function assertTapBoost(tap) {
+  assert(tap.before >= 0, "tap boost baseline progress valid");
+  assert(tap.gain > 0, "tapBoost increases progress", `+${tap.gain}`);
+  assert(tap.after === tap.before + tap.gain, "tap boost progress delta");
+  assert(tap.ppt > 0, "powerPerTick positive for tap math");
+}
+
+function assertDrainQueue(drain) {
+  assert(drain.types.empty === "boolean", "drainUnlockModalQueue returns boolean (empty)");
+  assert(drain.types.studioQueued === "boolean", "drainUnlockModalQueue returns boolean (queued)");
+  assert(drain.empty === false, "drainUnlockModalQueue false when queue empty");
+  assert(drain.studioQueued === true, "drainUnlockModalQueue true when studio unlock queued");
 }
 
 function assertUnlockGates(gates) {
@@ -372,6 +494,38 @@ try {
   assertUnlockGates(gates);
 } catch (e) {
   fail("vm unlock-gate sim", e.message || String(e));
+}
+
+console.log("\nDemo bootstrap (_demoMode + inflated yen):\n");
+try {
+  const demo = runDemoBootstrapSimulation();
+  assertDemoBootstrap(demo);
+} catch (e) {
+  fail("vm demo-bootstrap sim", e.message || String(e));
+}
+
+console.log("\nStars unlock @ 2 releases + tabLocked:\n");
+try {
+  const stars = runStarsUnlockSimulation();
+  assertStarsUnlock(stars);
+} catch (e) {
+  fail("vm stars-unlock sim", e.message || String(e));
+}
+
+console.log("\ntapBoost progress delta:\n");
+try {
+  const tap = runTapBoostSimulation();
+  assertTapBoost(tap);
+} catch (e) {
+  fail("vm tap-boost sim", e.message || String(e));
+}
+
+console.log("\ndrainUnlockModalQueue boolean return:\n");
+try {
+  const drain = runDrainQueueSimulation();
+  assertDrainQueue(drain);
+} catch (e) {
+  fail("vm drain-queue sim", e.message || String(e));
 }
 
 console.log("\nStatic save schema + unlock order:\n");

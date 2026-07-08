@@ -1,7 +1,7 @@
 {
   "name": "Anime Studio Tycoon — Build Your Empire",
-  "short_name": "Anime Studio",
-  "description": "Run your anime studio — greenlight hits, scout stars, grow fans, and climb the charts. Free idle tycoon game.",
+  "short_name": "Anime Tycoon",
+  "description": "Free idle tycoon — start with ¥1,500, hire staff, greenlight anime, grow fans, and chase #1. Play in browser or install as PWA.",
   "start_url": "/",
   "scope": "/",
   "id": "/",

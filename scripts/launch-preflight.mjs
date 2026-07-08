@@ -18,8 +18,73 @@ let fail = 0;
 function pass(name) { ok++; console.log(`  ✓ ${name}`); }
 function failMsg(name, msg) { fail++; console.error(`  ✗ ${name}: ${msg}`); }
 
+function buildNum(html) {
+  const m = html.match(/build\s+(\d+)/i);
+  return m ? parseInt(m[1], 10) : 0;
+}
+
 console.log(`Anime Studio Tycoon — launch preflight\n  URL: ${base}\n`);
 
+/* ── Native / TestFlight bundle (build 99) ── */
+console.log("Native bundle:");
+const indexPath = join(root, "index.html");
+if (!existsSync(indexPath)) {
+  failMsg("index.html", "missing");
+} else {
+  const indexHtml = readFileSync(indexPath, "utf8");
+  const localBuild = buildNum(indexHtml);
+  if (localBuild >= 98) pass(`local build tag (build ${localBuild})`);
+  else failMsg("local build tag", `expected build 98+, got ${localBuild || "none"}`);
+
+  if (indexHtml.includes('from "./logic.js"')) pass("logic.js import in index.html");
+  else failMsg("logic.js import", 'missing from "./logic.js"');
+
+  if (indexHtml.includes('id="return-hub"')) pass("return-hub overlay in index.html");
+  else failMsg("return-hub", 'missing id="return-hub"');
+}
+
+existsSync(join(root, "logic.js")) ? pass("logic.js on disk") : failMsg("logic.js", "missing");
+existsSync(join(root, "iap.js")) ? pass("iap.js on disk") : failMsg("iap.js", "missing");
+
+const wwwIdx = join(root, "www/index.html");
+if (!existsSync(wwwIdx)) {
+  failMsg("www/index.html", "run: npm run prepare-native");
+} else {
+  const wwwHtml = readFileSync(wwwIdx, "utf8");
+  existsSync(join(root, "www/logic.js")) ? pass("www/logic.js") : failMsg("www/logic.js", "run npm run prepare-native");
+  existsSync(join(root, "www/iap.js")) ? pass("www/iap.js") : failMsg("www/iap.js", "run npm run prepare-native");
+  if (wwwHtml.includes('src="iap.js"')) pass("www iap.js injected");
+  else failMsg("www iap.js", "not injected — run npm run prepare-native");
+  if (wwwHtml.includes('from "./logic.js"')) pass("www logic.js import");
+  else failMsg("www logic.js import", 'missing from "./logic.js"');
+  if (wwwHtml.includes('id="return-hub"')) pass("www return-hub overlay");
+  else failMsg("www return-hub", 'missing id="return-hub"');
+  const wwwBuild = buildNum(wwwHtml);
+  if (wwwBuild >= 98) pass(`www build tag (build ${wwwBuild})`);
+  else failMsg("www build tag", `expected build 98+, got ${wwwBuild || "none"}`);
+}
+
+const capPath = join(root, "capacitor.config.json");
+if (existsSync(capPath)) {
+  try {
+    const cap = JSON.parse(readFileSync(capPath, "utf8"));
+    cap.appId === "com.trainyouragent.animestudiotycoon"
+      ? pass("capacitor appId")
+      : failMsg("capacitor appId", cap.appId || "unset");
+    cap.appName === "Anime Studio Tycoon"
+      ? pass("capacitor appName")
+      : failMsg("capacitor appName", cap.appName || "unset");
+    cap.webDir === "www"
+      ? pass("capacitor webDir")
+      : failMsg("capacitor webDir", cap.webDir || "unset");
+  } catch (e) {
+    failMsg("capacitor.config.json", e.message);
+  }
+} else {
+  failMsg("capacitor.config.json", "missing");
+}
+
+console.log("\nStore assets:");
 const assets = ["app-icon.png", "steam-capsule.jpg", "screenshot-produce.png", "screenshot-stars.png"];
 for (const f of assets) {
   existsSync(join(root, "launch/store", f)) ? pass(`asset: ${f}`) : failMsg(`asset: ${f}`, "missing");
@@ -32,6 +97,7 @@ if (existsSync(dmg)) {
   failMsg("desktop/dist", "run: cd desktop && npm run dist:mac");
 }
 
+console.log("\nAPI:");
 try {
   const r = await fetch(`${base}/api/grant/redeem?pt=bad`);
   const j = await r.json();
@@ -45,16 +111,19 @@ try {
 try {
   const r = await fetch(base);
   const html = await r.text();
-  if (html.includes("build 23")) pass("live build tag");
-  else if (html.includes("BUILD_TAG") || html.includes("Studio")) pass("live site responds");
+  const liveBuild = buildNum(html);
+  if (liveBuild >= 98) pass(`live build tag (build ${liveBuild})`);
+  else if (html.includes("BUILD_TAG") || html.includes("Studio")) pass("live site responds (deploy latest for build 98+)");
   else failMsg("live site", "unexpected HTML");
 } catch (e) {
   failMsg("live site", e.message);
 }
 
+console.log("\nGuides:");
 const guides = [
   "launch/ENV_CHECKLIST.md", "launch/GUMROAD_SETUP.md", "launch/GUMROAD_PRODUCTS.md",
   "launch/CODEMAGIC.md", "launch/STORE_LISTING.md", "launch/STEAM_SUBMISSION.md",
+  "launch/TESTFLIGHT_CHECKLIST.md",
 ];
 for (const g of guides) {
   existsSync(join(root, g)) ? pass(`guide: ${g}`) : failMsg(`guide: ${g}`, "missing");
@@ -80,7 +149,8 @@ try {
 console.log(`\n${ok} passed, ${fail} failed`);
 console.log("\nManual steps:");
 console.log("  • Vercel: GUMROAD_ACCESS_TOKEN + GUMROAD_SELLER_ID");
+console.log("  • Vercel: APPLE_SHARED_SECRET + VALIDATOR_URL for native IAP");
 console.log("  • Create 7 Gumroad products → launch/GUMROAD_PRODUCTS.md");
-console.log("  • Codemagic ios-release → launch/CODEMAGIC.md");
+console.log("  • Codemagic ios-release → launch/TESTFLIGHT_CHECKLIST.md");
 console.log("  • Steam upload → launch/STEAM_SUBMISSION.md");
 process.exit(fail > 0 ? 1 : 0);
