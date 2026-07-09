@@ -97,7 +97,7 @@ Removes optional ad prompts on web. All free rewards (daily gems, 2× boost) rem
 
 ## After creating all 7
 
-1. Gumroad → Settings → Advanced → copy **Access token** → Vercel `GUMROAD_ACCESS_TOKEN`
+1. `gumroad auth login` → `gumroad auth token` → Vercel `GUMROAD_ACCESS_TOKEN` (see `GUMROAD_SETUP.md §0`)
 2. Copy **Seller ID** → Vercel `GUMROAD_SELLER_ID`
 3. Set Ping URL: `https://anime-studio-tycoon.vercel.app/api/grant/gumroad`
 4. Run `npm run launch-preflight`

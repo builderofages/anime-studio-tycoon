@@ -44,7 +44,16 @@ try {
   console.error("  ✗ Could not reach /api/grant/health — deploy latest build first");
 }
 
-const token = process.env.GUMROAD_ACCESS_TOKEN;
+let token = process.env.GUMROAD_ACCESS_TOKEN;
+if (!token && process.argv.includes("--from-cli")) {
+  const p = spawnSync("gumroad", ["auth", "token"], { encoding: "utf8" });
+  token = (p.stdout || "").trim();
+  if (!token) {
+    console.error("  ✗ No CLI token — run: gumroad auth login");
+    process.exit(1);
+  }
+  console.log("  ✓ Using token from `gumroad auth token`");
+}
 if (setVercel && token) {
   console.log("\nSetting Vercel env (requires logged-in vercel CLI)...");
   for (const [name, value] of [
@@ -105,9 +114,10 @@ if (missing.length) {
 }
 
 if (!health.gumroad_token) {
-  console.log("Add Gumroad token (one command when you have it):");
-  console.log("  GUMROAD_ACCESS_TOKEN=xxx node scripts/setup-distribution.mjs --set-vercel --create --publish");
-  console.log("  Or: gumroad auth login  →  npm run create-gumroad -- --publish --set-vercel");
+  console.log("Gumroad token (Settings no longer has “Generate token” — use CLI):");
+  console.log("  1. gumroad auth login     # open URL, approve in browser");
+  console.log("  2. npm run setup-distribution -- --from-cli --set-vercel --create --publish");
+  console.log("  Docs: launch/GUMROAD_SETUP.md §0");
 }
 
 if (!health.apple_shared_secret) {

@@ -2,6 +2,38 @@
 
 Production web **blocks** raw `?grant=` URLs. Buyers receive entitlements via signed `?pt=` tokens.
 
+## 0. Get a token (2026 — no “Generate access token” in Settings)
+
+Gumroad no longer shows a one-click access token. Use either method:
+
+### A. CLI device login (fastest — ~30 seconds)
+
+```bash
+brew install antiwork/cli/gumroad   # already on this Mac
+gumroad auth login                  # prints a URL + code — approve in browser
+gumroad auth token                  # copy this string → GUMROAD_ACCESS_TOKEN
+```
+
+Then wire everything:
+
+```bash
+cd /Users/alexandermills/anime-studio
+export GUMROAD_ACCESS_TOKEN=$(gumroad auth token)
+npm run setup-distribution -- --set-vercel --create --publish
+vercel --prod --yes
+```
+
+### B. OAuth application (if you need a long-lived token in the Gumroad UI)
+
+1. [gumroad.com/settings/advanced](https://gumroad.com/settings/advanced)
+2. **Create application** (not “Generate token” — that field is gone)
+3. Name: `Anime Studio Tycoon`, Redirect URI: `https://anime-studio-tycoon.vercel.app/` (any HTTPS URL you control)
+4. After create → copy **Application Secret** or complete OAuth → that value is `GUMROAD_ACCESS_TOKEN`
+
+Help: [Create an application for the API](https://gumroad.com/help/article/280-create-application-api)
+
+---
+
 ## 1. Vercel environment variables
 
 | Variable | Required | Notes |
@@ -9,7 +41,7 @@ Production web **blocks** raw `?grant=` URLs. Buyers receive entitlements via si
 | `GRANT_JWT_SECRET` | Yes | Random 32+ characters |
 | `GRANT_MINT_SECRET` | Yes | Admin/webhook mint key |
 | `GRANT_REDIRECT_BASE` | No | Default: `https://anime-studio-tycoon.vercel.app/` |
-| `GUMROAD_ACCESS_TOKEN` | Yes | Gumroad → Settings → Advanced → Generate access token |
+| `GUMROAD_ACCESS_TOKEN` | Yes | See **§0 Get a token** below (Gumroad removed the old “Generate token” button) |
 | `GUMROAD_SELLER_ID` | Recommended | Your Gumroad seller ID (webhook validation) |
 | `GUMROAD_SKIP_LICENSE_VERIFY` | Dev only | `true` skips license check (never in prod) |
 
