@@ -1097,7 +1097,7 @@ html.hud-v3-active #start-lang {
   border-radius: 12px !important;
   padding: 10px 12px !important;
   width: 100% !important;
-  font-weight: 600 !important;
+  font-size: 16px !important; font-weight: 600 !important; touch-action: manipulation !important;
 }
 
 /* ---- Premiere modal (dark glass) ---- */
@@ -3663,13 +3663,7 @@ html.hud-v3-active .aaa-page-hero.aaa-market-hero.aaa-market-locked {
   border-color: rgba(255, 200, 69, 0.32) !important;
   background: linear-gradient(135deg, rgba(255, 200, 69, 0.1), rgba(255, 92, 168, 0.08)) !important;
 }
-html.hud-v3-active .aaa-market-hero-meta {
-  display: flex !important;
-  flex-wrap: wrap !important;
-  gap: 6px !important;
-  justify-content: center !important;
-  margin-top: 8px !important;
-}
+html.hud-v3-active .aaa-market-hero-meta,html.hud-v3-active .aaa-research-hero-meta { display:flex!important; flex-wrap:wrap!important; gap:6px!important; justify-content:center!important; margin-top:8px!important; }
 html.hud-v3-active .aaa-market-pill-afford {
   color: var(--ast-gold) !important;
   background: rgba(255, 200, 69, 0.16) !important;
@@ -3725,6 +3719,9 @@ html.hud-v3-active .aaa-market-unlock-perks small { grid-column:2!important; fon
 html.hud-v3-active .aaa-market-unlock-cta { box-shadow:0 10px 28px rgba(74,222,128,.32)!important; }
 
 /* BUILD 92 — research unlock modal + genre lab mastery */
+html.hud-v3-active .aaa-page-hero.aaa-research-hero { background:linear-gradient(135deg,rgba(77,212,255,.14),rgba(107,92,255,.12),rgba(255,92,168,.1))!important; border:1px solid rgba(77,212,255,.28)!important; backdrop-filter:blur(12px) saturate(1.2)!important; -webkit-backdrop-filter:blur(12px) saturate(1.2)!important; }
+html.hud-v3-active .aaa-page-hero.aaa-research-hero.aaa-research-locked { border-color:rgba(77,212,255,.32)!important; background:linear-gradient(135deg,rgba(77,212,255,.1),rgba(107,92,255,.08))!important; }
+html.hud-v3-active .aaa-research-pill-afford { color:var(--ast-gold)!important; background:rgba(77,212,255,.16)!important; border:1px solid rgba(77,212,255,.35)!important; }
 html.hud-v3-active .aaa-research-unlock-modal { max-width:400px!important; text-align:center!important; background:var(--ast-glass)!important; backdrop-filter:blur(16px) saturate(1.35)!important; -webkit-backdrop-filter:blur(16px) saturate(1.35)!important; border:1px solid rgba(77,212,255,.35)!important; box-shadow:0 20px 48px rgba(0,0,0,.55),0 0 32px rgba(77,212,255,.18)!important; }
 html.hud-v3-active .aaa-research-unlock-hero { font-size:48px!important; line-height:1!important; margin:4px auto 10px!important; filter:drop-shadow(0 4px 16px rgba(77,212,255,.45)); }
 html.hud-v3-active .aaa-research-unlock-lead { margin:8px 0 12px!important; font-size:13px!important; line-height:1.45!important; color:var(--ast-muted)!important; }
@@ -3744,6 +3741,7 @@ html.hud-v3-active .aaa-mastery-genre-ic { display:inline-flex!important; align-
 html.hud-v3-active .aaa-mastery-head h4 { flex:1!important; min-width:0!important; margin:0!important; display:flex!important; flex-wrap:wrap!important; align-items:center!important; gap:4px!important; }
 html.hud-v3-active .aaa-mastery-trend-pill { padding:2px 6px!important; border-radius:999px!important; font:900 8px/1 system-ui!important; letter-spacing:.06em!important; text-transform:uppercase!important; color:#1a0a14!important; background:linear-gradient(135deg,#ffc845,#ff5ca8)!important; }
 html.hud-v3-active .aaa-mastery-card.aaa-mastery-trend { border-color:rgba(255,200,69,.45)!important; box-shadow:0 0 0 1px rgba(255,200,69,.2),0 8px 24px rgba(255,200,69,.12)!important; background:linear-gradient(135deg,rgba(255,200,69,.08),rgba(255,92,168,.06))!important; }
+html.hud-v3-active .aaa-mastery-card.aaa-mastery-afford { border-color:rgba(77,212,255,.45)!important; box-shadow:0 0 0 1px rgba(77,212,255,.22),0 8px 24px rgba(77,212,255,.12)!important; }
 html.hud-v3-active .aaa-mastery-card.aaa-mastery-afford .hirebtn:not(:disabled) { animation:ast-staff-afford-pulse 2.2s ease-in-out infinite!important; }
 html.hud-v3-active .aaa-mastery-bar { height:8px!important; border-radius:999px!important; background:rgba(255,255,255,.08)!important; overflow:hidden!important; margin-bottom:4px!important; }
 html.hud-v3-active .aaa-mastery-bar i { display:block!important; height:100%!important; border-radius:inherit!important; background:linear-gradient(90deg,#6b5cff,#ff5ca8,#ffc845)!important; transition:width .25s ease!important; }
@@ -4496,3 +4494,4 @@ html.hud-v3-active .start-share-hint { margin-top:0!important; }
 /* BUILD 105 — QA: device smoke checklist, playtest audit SFX, preflight www bundle */
 /* BUILD 106 — Audio: self-hosted BGM + WAV SFX, hybrid playDedicatedSfx */
 /* BUILD 107 — Hotfix: vercelignore audio deploy + safeBegin boot guard */
+/* BUILD 108 — Legion: 20-agent audit — boot, modals, coach, IAP, produce, i18n */

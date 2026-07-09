@@ -272,7 +272,7 @@
         }
       }
 
-      if (S.tab === "quests") {
+      if (S.tab === "quests" && !document.documentElement.classList.contains("hud-v3-active")) {
         const existing = document.getElementById("season-pass-panel");
         if (existing) existing.remove();
         main.insertAdjacentHTML("beforeend", seasonPassHTML(S));

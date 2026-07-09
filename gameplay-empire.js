@@ -302,8 +302,10 @@
       } else {
         opened = renderWarRoom(ev, hook);
       }
-      if (opened) S.lastChaos = Date.now();
-      else if (fallback) fallback();
+      if (opened) {
+        S.lastChaos = Date.now();
+        if (typeof hook.celebrateFirstChaosEvent === "function") hook.celebrateFirstChaosEvent();
+      }
     };
 
     const origGreen = hook.greenlight;

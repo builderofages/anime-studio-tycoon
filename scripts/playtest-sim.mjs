@@ -10,14 +10,29 @@ import vm from "vm";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 import {
+  CONTENT_RANK_LADDER,
+  activeCountFor,
+  castingCostFor,
+  contentRankIndexFor,
   createFreshState,
   DEFAULT_QUEST_PROG,
   DEFAULT_SETTINGS,
   DEFAULT_STAFF,
   DEFAULT_WEEK_PROG,
+  fmtEta,
+  hireCostFor,
+  hypeCapFor,
+  levelMultForLevel,
   mergeLoadedSave,
+  passMultFor,
+  productionScoreFor,
   rivalGoalFromStart,
+  starRankLetterFor,
+  studioLevelFromFans,
+  studioRankLetterFor,
+  studioValueFor,
   tabUnlockPctFor,
+  upCostFor,
 } from "../logic.js";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -230,11 +245,14 @@ function createGrantFetchMock() {
     const u = String(url);
     if (u.includes("/api/grant/redeem")) {
       const pt = new URL(u, "http://localhost").searchParams.get("pt");
-      if (pt === "VALID" || pt === "TEST_PT") {
-        return { json: async () => ({ ok: true, grant: { kind: "gems", amount: "100" } }) };
+      if (pt === "VALID") {
+        return { json: async () => ({ ok: true, grant: { kind: "gems", amount: "100", gid: "test-gems-100" } }) };
+      }
+      if (pt === "TEST_PT") {
+        return { json: async () => ({ ok: true, grant: { kind: "gems", amount: "100", gid: "test-license-gems-100" } }) };
       }
       if (pt === "PASS_PT") {
-        return { json: async () => ({ ok: true, grant: { kind: "pass" } }) };
+        return { json: async () => ({ ok: true, grant: { kind: "pass", gid: "test-pass" } }) };
       }
       if (pt === "INVALID") {
         return { json: async () => ({ ok: false }) };
@@ -565,6 +583,21 @@ const itemsGems0 = S.gems;
 const ip1 = grantEntitlement("items_pack");
 const afterIp1 = { gems: S.gems, items: Object.assign({}, S.items||{}), ents: (S.entitlements||[]).slice() };
 const ip2 = grantEntitlement("items_pack");
+const gemsAfterIp2 = S.gems;
+const passGems0 = S.gems;
+const p1 = grantEntitlement("pass");
+const p2 = grantEntitlement("pass");
+const gemsAfterP2 = S.gems;
+const legendGems0 = S.gems;
+const bl1 = grantEntitlement("bundle_legend");
+const bl2 = grantEntitlement("bundle_legend");
+const gemsAfterBl2 = S.gems;
+const mogulGems0 = S.gems;
+const bm1 = grantEntitlement("bundle_mogul");
+const bm2 = grantEntitlement("bundle_mogul");
+const gemsAfterBm2 = S.gems;
+const noads1 = grantEntitlement("noads");
+const noads2 = grantEntitlement("noads");
 __REDEEM__ = {
   gemsGain: after1.gems - gems0,
   codesAfterFirst: after1.codes,
@@ -576,7 +609,18 @@ __REDEEM__ = {
   itemsGemsGain: afterIp1.gems - itemsGems0,
   itemsEntitled: afterIp1.ents.includes("items_pack"),
   itemsMegaphone: afterIp1.items.megaphone === 1,
-  itemsNoDoubleGems: S.gems === afterIp1.gems,
+  itemsNoDoubleGems: gemsAfterIp2 === afterIp1.gems,
+  passFirst: p1 === true,
+  passRepeat: p2,
+  passNoDoubleGems: gemsAfterP2 === passGems0,
+  legendFirst: bl1 === true,
+  legendRepeat: bl2,
+  legendNoDoubleGems: gemsAfterBl2 === legendGems0 + 400,
+  mogulFirst: bm1 === true,
+  mogulRepeat: bm2,
+  mogulNoDoubleGems: gemsAfterBm2 === mogulGems0 + 1500,
+  noadsFirst: noads1 === true,
+  noadsRepeat: noads2,
 };
 `;
 
@@ -592,11 +636,16 @@ globalThis.__runIapSim = async function() {
   const gems0 = S.gems;
   const validChanged = await redeemPurchaseToken("VALID");
   const gemsAfterValid = S.gems;
+  const validDupChanged = await redeemPurchaseToken("VALID");
+  const gemsAfterValidDup = S.gems;
   const invalidChanged = await redeemPurchaseToken("INVALID");
   const gemsAfterInvalid = S.gems;
   const gemsBeforeLicense = S.gems;
   await redeemLicenseKey("bundle", "KEY-123");
   const gemsAfterLicense = S.gems;
+  const gemsBeforeLicenseDup = S.gems;
+  await redeemLicenseKey("bundle", "KEY-123");
+  const gemsAfterLicenseDup = S.gems;
 
   S = freshState();
   const passFirst = await redeemPurchaseToken("PASS_PT");
@@ -605,10 +654,13 @@ globalThis.__runIapSim = async function() {
 
   return {
     validChanged,
+    validDupChanged,
     invalidChanged,
     gemsValidGain: gemsAfterValid - gems0,
+    gemsNoDoubleValid: gemsAfterValidDup === gemsAfterValid,
     gemsUnchangedAfterInvalid: gemsAfterInvalid === gemsAfterValid,
     gemsLicenseGain: gemsAfterLicense - gemsBeforeLicense,
+    gemsNoDoubleLicense: gemsAfterLicenseDup === gemsAfterLicense,
     passFirst,
     passSecond,
     passEntitlements,
@@ -979,6 +1031,30 @@ const chanceOff = ((50) / 100) * 0.12;
 const chanceOn = ((50) / 100) * 0.22;
 survival.chaosModeDoublesChance = chanceOn > chanceOff;
 
+survival.dangerCritical = chaosDangerTier(90).cls === "critical";
+_pendingDecision = null;
+window.__AST_CRISIS_OPEN__ = false;
+if (decisionEl) decisionEl.style.display = "none";
+document.documentElement.classList.remove("ast-crisis-open");
+S.chaos = 90;
+_pendingDecision = Object.assign({ chaos: true }, CHAOS[0]);
+renderDecisionModal(_pendingDecision, true);
+const bodyEl = document.getElementById("decision-body");
+survival.dangerMarkup = !!(bodyEl && bodyEl.innerHTML.includes("aaa-decision-danger--critical"));
+survival.dangerPct = !!(bodyEl && bodyEl.innerHTML.includes("90%"));
+survival.hudPulseOn = document.documentElement.classList.has("ast-crisis-open");
+_pendingDecision = {
+  chaos: true,
+  id: "melt",
+  ic: "🔥",
+  title: "Test crisis",
+  text: "Sim crisis",
+  yes: ["Fix", () => "fixed"],
+  no: ["Skip", () => "skipped"],
+};
+resolveDecision(true);
+survival.hudPulseCleared = !document.documentElement.classList.has("ast-crisis-open");
+
 __CHAOS_SURVIVAL__ = survival;
 `;
 
@@ -1154,6 +1230,17 @@ function assertRedeem(r) {
   assert(r.itemsEntitled === true, "items_pack records entitlement");
   assert(r.itemsMegaphone === true, "items_pack grants megaphone");
   assert(r.itemsNoDoubleGems === true, "repeat items_pack does not add gems");
+  assert(r.passFirst === true, "grantEntitlement pass delivers once");
+  assert(r.passRepeat === false, "grantEntitlement pass idempotent on repeat");
+  assert(r.passNoDoubleGems === true, "repeat pass does not add gems");
+  assert(r.legendFirst === true, "grantEntitlement bundle_legend delivers once");
+  assert(r.legendRepeat === false, "grantEntitlement bundle_legend idempotent on repeat");
+  assert(r.legendNoDoubleGems === true, "repeat bundle_legend does not add gems");
+  assert(r.mogulFirst === true, "grantEntitlement bundle_mogul delivers once");
+  assert(r.mogulRepeat === false, "grantEntitlement bundle_mogul idempotent on repeat");
+  assert(r.mogulNoDoubleGems === true, "repeat bundle_mogul does not add gems");
+  assert(r.noadsFirst === true, "grantEntitlement noads delivers once");
+  assert(r.noadsRepeat === false, "grantEntitlement noads idempotent on repeat");
 }
 
 function assertReadGrant(rg) {
@@ -1172,6 +1259,9 @@ function assertIap(iap) {
   assert(iap.invalidChanged === false, "redeemPurchaseToken INVALID returns false");
   assert(iap.gemsUnchangedAfterInvalid === true, "INVALID pt does not change gems");
   assert(iap.gemsLicenseGain === 100, "redeemLicenseKey chains license→TEST_PT redeem", `got +${iap.gemsLicenseGain}`);
+  assert(iap.validDupChanged === false, "redeemPurchaseToken VALID idempotent via gid");
+  assert(iap.gemsNoDoubleValid === true, "repeat VALID pt does not add gems");
+  assert(iap.gemsNoDoubleLicense === true, "repeat redeemLicenseKey does not add gems");
   assert(iap.passFirst === true, "PASS_PT first redeem delivers pass");
   assert(iap.passSecond === false, "PASS_PT second redeem idempotent (entitlement exists)");
   assert(iap.passEntitlements === 1, "pass entitlement recorded once", `count=${iap.passEntitlements}`);
@@ -1247,6 +1337,11 @@ function assertChaosSurvival(survival) {
   assert(survival.decisionTriggered === true, "maybeDecision fires with chaosMode on");
   assert(survival.chaosTriggered === true, "maybeChaos triggers chaos crisis with chaosMode on");
   assert(survival.chaosModeDoublesChance === true, "chaosMode raises maybeChaos trigger rate");
+  assert(survival.dangerCritical === true, "chaosDangerTier marks 90% as critical");
+  assert(survival.dangerMarkup === true, "renderDecisionModal paints crisis danger meter");
+  assert(survival.dangerPct === true, "danger meter shows current chaos percent");
+  assert(survival.hudPulseOn === true, "syncCrisisHudPulse sets ast-crisis-open during crisis");
+  assert(survival.hudPulseCleared === true, "resolveDecision clears ast-crisis-open");
 }
 
 function assertPrestige(p) {
@@ -1325,6 +1420,31 @@ function testExtractedLogic() {
   assert(DEFAULT_STAFF.animator === 0, "DEFAULT_STAFF exported");
   assert(DEFAULT_QUEST_PROG.greenlit === 0 && DEFAULT_WEEK_PROG.taps === 0, "DEFAULT_QUEST_PROG / DEFAULT_WEEK_PROG exported");
   assert(DEFAULT_SETTINGS.musicVol === 0.35, "DEFAULT_SETTINGS exported");
+
+  assert(starRankLetterFor(5) === "S" && starRankLetterFor(1) === "D", "starRankLetterFor tiers");
+  assert(studioRankLetterFor(5) === "S+" && studioRankLetterFor(2) === "B", "studioRankLetterFor tiers");
+  assert(
+    productionScoreFor(4, { work: 100 }, { progress: 50 }) === 4200 + 4400 + 400,
+    "productionScoreFor progress blend"
+  );
+  assert(fmtEta(0) === "Ready!" && fmtEta(90) === "1M 30s", "fmtEta formatting");
+  assert(studioLevelFromFans(0) === 1 && studioLevelFromFans(40) >= 1, "studioLevelFromFans");
+  assert(levelMultForLevel(10) === 1.2, "levelMultForLevel");
+  assert(passMultFor(true) === 1.5 && passMultFor(false) === 1, "passMultFor");
+  assert(
+    hireCostFor("animator", 0, 0, { base: 200, growth: 1.17 }) === 200,
+    "hireCostFor first hire"
+  );
+  assert(upCostFor("tablets", 0, { base: 800, growth: 1.6 }) === 800, "upCostFor base level");
+  assert(castingCostFor(0) === 2000 && castingCostFor(2) === 3125, "castingCostFor scaling");
+  assert(hypeCapFor(5, 2) === 220, "hypeCapFor studio + active slots");
+  assert(activeCountFor([{ pid: 0 }, null, { pid: 1 }]) === 2, "activeCountFor");
+  assert(contentRankIndexFor(25) === 1 && contentRankIndexFor(500) === 3, "contentRankIndexFor");
+  assert(CONTENT_RANK_LADDER.length === 7, "CONTENT_RANK_LADDER exported");
+  assert(
+    studioValueFor({ totalFansEver: 100, fans: 50, releases: 5, legacy: 2 }) === 6190,
+    "studioValueFor composite"
+  );
 }
 
 function staticSaveSchemaAudit() {

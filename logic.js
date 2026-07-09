@@ -152,6 +152,8 @@ export function mergeLoadedSave(d, fresh, genres, maxSlots = MAX_SLOTS) {
   S.weeklyQuests = Array.isArray(d.weeklyQuests) ? d.weeklyQuests : S.weeklyQuests || [];
   S.weekKey = d.weekKey || S.weekKey || "";
   S.redeemedCodes = Array.isArray(d.redeemedCodes) ? d.redeemedCodes : [];
+  S.redeemedGrants = Array.isArray(d.redeemedGrants) ? d.redeemedGrants : [];
+  S.redeemedLicenses = Array.isArray(d.redeemedLicenses) ? d.redeemedLicenses : [];
   S.bestValue = +d.bestValue || 0;
   S.freeGemsDate = d.freeGemsDate || "";
   S.taps = +d.taps || 0;
@@ -244,6 +246,155 @@ export function fmtHudRes(k, n) {
   return fmt(n);
 }
 
+/** Content rank ladder — fans thresholds for studio tier names. */
+export const CONTENT_RANK_LADDER = [
+  { fans: 0, icon: "🎬", name: "Garage", unlock: "Short Film" },
+  { fans: 20, icon: "📱", name: "Buzz", unlock: "Web Series" },
+  { fans: 120, icon: "📺", name: "Broadcast", unlock: "TV Series" },
+  { fans: 500, icon: "💿", name: "Premium", unlock: "OVA" },
+  { fans: 2200, icon: "🎥", name: "Cinema", unlock: "Feature Film" },
+  { fans: 9000, icon: "🌟", name: "Blockbuster", unlock: "Mega Hit" },
+  { fans: 25000, icon: "👑", name: "Legend", unlock: "Mythic" },
+];
+
+export function contentRankIndexFor(fans, ladder = CONTENT_RANK_LADDER) {
+  let idx = 0;
+  for (let i = 0; i < ladder.length; i++) {
+    if (fans >= ladder[i].fans) idx = i;
+  }
+  return idx;
+}
+
+export function nextContentRankFor(fans, ladder = CONTENT_RANK_LADDER) {
+  const idx = contentRankIndexFor(fans, ladder);
+  return idx < ladder.length - 1 ? ladder[idx + 1] : null;
+}
+
+export function starRankLetterFor(stars) {
+  return stars >= 5 ? "S" : stars >= 4 ? "A" : stars >= 3 ? "B" : stars >= 2 ? "C" : "D";
+}
+
+export function studioRankLetterFor(stars) {
+  const s = stars || 1;
+  return s >= 5 ? "S+" : s >= 4 ? "S" : s >= 3 ? "A" : s >= 2 ? "B" : "C";
+}
+
+export function productionScoreFor(stars, p, pr) {
+  return Math.round(
+    4200 + stars * 1100 + Math.min(800, ((pr.progress || 0) / Math.max(1, p.work)) * 800)
+  );
+}
+
+export function fmtEta(sec) {
+  if (sec <= 0) return "Ready!";
+  if (sec >= 86400) return Math.floor(sec / 86400) + "D " + Math.floor((sec % 86400) / 3600) + "H";
+  if (sec >= 3600) return Math.floor(sec / 3600) + "H " + Math.floor((sec % 3600) / 60) + "M";
+  if (sec >= 60) return Math.floor(sec / 60) + "M " + (sec % 60) + "s";
+  return sec + "s";
+}
+
+export function studioLevelFromFans(totalFansEver) {
+  return Math.max(1, Math.floor(Math.pow(Math.max(0, totalFansEver) / 40, 0.37)));
+}
+
+export function fansForLevel(L) {
+  return Math.ceil(40 * Math.pow(L, 1 / 0.37));
+}
+
+export function levelMultForLevel(L) {
+  return 1 + L * 0.02;
+}
+
+export function passMultFor(producerPass) {
+  return producerPass ? 1.5 : 1;
+}
+
+export function hireCostFor(role, staffCount, agencyLevel, roleDef) {
+  const r = roleDef;
+  if (!r) return 0;
+  const n = staffCount || 0;
+  const disc = Math.max(0.4, 1 - (agencyLevel || 0) * 0.05);
+  return Math.ceil(r.base * Math.pow(r.growth, n) * disc);
+}
+
+export function upCostFor(key, level, upgradeDef) {
+  const u = upgradeDef;
+  if (!u) return 0;
+  return Math.ceil(u.base * Math.pow(u.growth, level || 0));
+}
+
+export function castingCostFor(starCount) {
+  return Math.ceil(2000 * Math.pow(1.25, starCount || 0));
+}
+
+export function hypeCapFor(studioLevel, activeProjectCount) {
+  return 100 + (studioLevel || 1) * 20 + (activeProjectCount || 0) * 10;
+}
+
+export function activeCountFor(projects) {
+  let n = 0;
+  for (const p of projects || []) if (p) n++;
+  return n;
+}
+
+export function firstEmptySlotFor(slots, projects) {
+  const projs = projects || [];
+  for (let i = 0; i < (slots || 1); i++) {
+    if (!projs[i]) return i;
+  }
+  return -1;
+}
+
+export function studioValueFor(S) {
+  return Math.floor(
+    (S.totalFansEver || 0) + (S.fans || 0) + (S.releases || 0) * 8 + (S.legacy || 0) * 3000
+  );
+}
+
+export function castCapFor(producerPass) {
+  return 3 + (producerPass ? 1 : 0);
+}
+
+export function perkMultFor(perks, k) {
+  return 1 + (((perks && perks[k]) || 0) * 0.05);
+}
+
+export function xpNeedFor(lvl) {
+  return 8 + (lvl || 1) * 6;
+}
+
+export function showcaseBudgetFor(pr, p, pct) {
+  if (pr.showcaseBudget) return [pr.showcaseBudget.spent, pr.showcaseBudget.cap];
+  return [Math.round(p.cost * (pct / 100)), Math.round(p.cost * 1.15)];
+}
+
+export function slotEtaSecondsFor(pr, p, powerPerTick, showcaseEta = null) {
+  if (pr.progress >= p.work) return 0;
+  if (showcaseEta != null) return showcaseEta;
+  return Math.ceil((p.work - pr.progress) / Math.max(0.0001, powerPerTick));
+}
+
+/** ISO week key e.g. "2026-W14 — used for weekly quest rotation. */
+export function weekKeyStr(d = new Date()) {
+  const dt = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  const day = dt.getUTCDay() || 7;
+  dt.setUTCDate(dt.getUTCDate() + 4 - day);
+  const ys = new Date(Date.UTC(dt.getUTCFullYear(), 0, 1));
+  const wk = Math.ceil(((dt - ys) / 86400000 + 1) / 7);
+  return dt.getUTCFullYear() + "-W" + wk;
+}
+
+export function fmtDur(ms) {
+  if (ms < 0) ms = 0;
+  const s = Math.floor(ms / 1000);
+  const h = Math.floor(s / 3600);
+  const mi = Math.floor((s % 3600) / 60);
+  const d = Math.floor(h / 24);
+  if (d > 0) return d + "d " + (h % 24) + "h";
+  if (h > 0) return h + "h " + mi + "m";
+  return mi + "m";
+}
+
 export function createFreshState(genres) {
   return {
     yen: 1500,
@@ -265,6 +416,8 @@ export function createFreshState(genres) {
     entitlements: [],
     purchaseLog: [],
     redeemedCodes: [],
+    redeemedGrants: [],
+    redeemedLicenses: [],
     firstPurchaseDone: false,
     noAds: false,
     wheelDate: "",

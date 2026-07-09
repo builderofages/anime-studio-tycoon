@@ -1,24 +1,29 @@
 <!DOCTYPE html>
 <html lang="en"><head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content">
 <!-- the whole app lives in this HTML; don't let browsers serve a stale copy after a deploy -->
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <title>Anime Studio Tycoon — Build Your Anime Empire</title>
 <meta name="description" content="Free browser idle tycoon: start with ¥1,500, hire staff, greenlight anime, grow fans, and chase #1 in the charts. No download — play or install as a PWA.">
+<meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://anime-studio-tycoon.vercel.app/play">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Anime Studio Tycoon">
+<meta property="og:locale" content="en_US">
 <meta property="og:url" content="https://anime-studio-tycoon.vercel.app/play">
 <meta property="og:title" content="Anime Studio Tycoon — Free Anime Idle Tycoon Game">
 <meta property="og:description" content="Run your own anime studio from a garage to a global empire. Hire your team, greenlight hits, scout stars, and climb the industry charts. Play free in your browser.">
 <meta property="og:image" content="https://anime-studio-tycoon.vercel.app/og-share.jpg">
+<meta property="og:image:secure_url" content="https://anime-studio-tycoon.vercel.app/og-share.jpg">
+<meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1376">
 <meta property="og:image:height" content="768">
 <meta property="og:image:alt" content="Anime Studio Tycoon — build your anime empire from ¥1,500 to industry #1">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://anime-studio-tycoon.vercel.app/play">
 <meta name="twitter:title" content="Anime Studio Tycoon — Free Anime Idle Tycoon Game">
 <meta name="twitter:description" content="Start with ¥1,500 and one room. Hire staff, greenlight anime, grow fans, and chase #1. Free in your browser — cozy tycoon fun for all ages.">
 <meta name="twitter:image" content="https://anime-studio-tycoon.vercel.app/og-share.jpg">
@@ -61,6 +66,14 @@
 .row{display:flex;gap:10px;align-items:center}
 .genrepick{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
 .chip{padding:6px 10px;border-radius:20px;font-size:12px;font-weight:800;background:rgba(70,80,107,.14);color:var(--plum)}
+.aaa-gl-cast{margin:12px 0 14px;padding:12px 14px;border-radius:16px;background:rgba(107,92,255,.08);border:1px solid rgba(180,140,255,.22)}
+.aaa-gl-cast-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
+.aaa-gl-cast-title{font:800 11px/1.3 system-ui;color:#efe6ff}
+.aaa-gl-cast-hint{margin:0 0 8px;font-size:10px;line-height:1.4}
+.aaa-cast-chip{cursor:pointer;border:1px solid transparent}
+.aaa-cast-chip.sel{background:rgba(255,92,168,.18);color:#fff}
+.aaa-cast-en{font-size:10px;margin-left:4px}
+.aaa-gl-smart-cast{font-size:10px!important;padding:6px 10px!important;min-height:0!important}
 .progress{height:16px;background:rgba(70,80,107,.18);border-radius:10px;overflow:hidden;margin:8px 0 4px}
 .progress i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--sakura),var(--gold));transition:width .2s}
 @media (prefers-reduced-motion: reduce){ .progress i{transition:none} }
@@ -68,10 +81,15 @@
 /* Safe areas + iOS viewport (100vh fallback, 100dvh when supported) */
 :root{ --safe-t:env(safe-area-inset-top,0px); --safe-b:env(safe-area-inset-bottom,0px);
        --safe-l:env(safe-area-inset-left,0px); --safe-r:env(safe-area-inset-right,0px); }
-html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available}
+html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available;width:100%;margin:0;
+  overflow:hidden;overscroll-behavior:none;touch-action:manipulation;-webkit-text-size-adjust:100%}
 @supports(height:100dvh){ html,body{height:100dvh;min-height:100dvh} }
-#app{padding-left:var(--safe-l);padding-right:var(--safe-r);height:100%;min-height:0}
+#app{padding-left:var(--safe-l);padding-right:var(--safe-r);height:100%;min-height:0;
+  max-height:100vh;max-height:-webkit-fill-available;overflow:hidden;touch-action:manipulation}
 @supports(height:100dvh){ #app{height:100dvh;max-height:100dvh} }
+.overlay{padding:calc(var(--safe-t,0px) + 12px) calc(var(--safe-r,0px) + 12px) calc(var(--safe-b,0px) + 12px) calc(var(--safe-l,0px) + 12px);
+  overscroll-behavior:contain;-webkit-overflow-scrolling:touch;box-sizing:border-box}
+.ast-input,#start-studio,#start-lang,select.ast-input{font-size:16px}
 
 .asd-topbar,.asd-mpanel,#asd-p-status,#asd-p-menu{display:none !important}
 #main{min-height:0 !important}
@@ -98,7 +116,7 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available}
     <button class="btn-ghost" id="btn-mute">🔊 Sound: On</button>
     <button class="btn-ghost" id="btn-save" style="display:none">💾 Save</button>
     <button class="btn-ghost" id="btn-reset">↺ Reset</button>
-  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 107 · Hotfix</span></div>
+  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 108 · Legion</span></div>
   <div id="toasts"></div>
   <div id="pwa-install-banner" class="aaa-pwa-install-banner" hidden>
     <div class="aaa-pwa-install-inner">
@@ -340,13 +358,14 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available}
 
 <div class="overlay" id="whatsnew" style="display:none" role="dialog" aria-modal="true" aria-labelledby="whatsnew-title">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <img src="start-hero.png?v=107" alt="Anime Studio Tycoon logo" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
-    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 107 — Hotfix</h1>
+    <img src="start-hero.png?v=108" alt="Anime Studio Tycoon logo" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
+    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 108 — Legion</h1>
     <div class="offlist whatsnew-list" style="margin:12px 0">
-      <div><span>🔧 Deploy fix</span><b>BGM + MP3 SFX were blocked by .vercelignore — now ship to production</b></div>
-      <div><span>🛡️ Boot guard</span><b>Corrupt saves auto-reset; safeBegin() catches crash and shows Play screen</b></div>
-      <div><span>🎵 Audio</span><b>Self-hosted WAV + MP3/M4A all live on Vercel</b></div>
-      <div><span>▶ Play</span><b>Start screen always recoverable — tap Play if anything looks stuck</b></div>
+      <div><span>🛡️ Boot</span><b>repairLoadedState + safeBegin — corrupt saves never brick the game</b></div>
+      <div><span>🎬 Produce</span><b>Empty slots tap-to-greenlight, premiere queue + modal drain fixed</b></div>
+      <div><span>🧭 Coach</span><b>Locked-tab safe routing, full CTA labels, 6-language tutorial</b></div>
+      <div><span>💎 IAP</span><b>Grant idempotency, license one-time redeem, items_pack fix</b></div>
+      <div><span>🧪 901 tests</span><b>675 smoke + 226 VM sim — honest playthrough to 3 releases</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
   </div>
@@ -383,11 +402,12 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available}
 </div>
 
 <script type="module">
-import { STR, LANGS, LANG_NAMES, setLang, initialLang, t } from "./strings.js";
+import { STR, LANGS, LANG_NAMES, setLang, initialLang, t, tf } from "./strings.js";
 import {
   MAX_SLOTS,
   EXPANSION_COST,
   UNLOCK_THRESHOLDS,
+  CONTENT_RANK_LADDER,
   createFreshState,
   makeUnlocks,
   fmt,
@@ -395,11 +415,35 @@ import {
   fmtYenCompact,
   fmtLocale,
   fmtHudRes,
+  fmtEta,
+  fmtDur,
   expandCostFor,
   featureUnlockedFor,
   tabUnlockPctFor,
   rivalGoalFromStart,
   mergeLoadedSave,
+  contentRankIndexFor,
+  nextContentRankFor,
+  starRankLetterFor,
+  studioRankLetterFor,
+  productionScoreFor,
+  studioLevelFromFans,
+  fansForLevel,
+  levelMultForLevel,
+  passMultFor,
+  hireCostFor,
+  upCostFor,
+  castingCostFor,
+  hypeCapFor,
+  activeCountFor,
+  firstEmptySlotFor,
+  studioValueFor,
+  castCapFor,
+  perkMultFor,
+  xpNeedFor,
+  showcaseBudgetFor,
+  slotEtaSecondsFor,
+  weekKeyStr,
 } from "./logic.js";
 setLang(initialLang());
 
@@ -407,6 +451,7 @@ window.__AST_LOGIC__ = {
   MAX_SLOTS,
   EXPANSION_COST,
   UNLOCK_THRESHOLDS,
+  CONTENT_RANK_LADDER,
   createFreshState,
   makeUnlocks,
   fmt,
@@ -414,11 +459,35 @@ window.__AST_LOGIC__ = {
   fmtYenCompact,
   fmtLocale,
   fmtHudRes,
+  fmtEta,
+  fmtDur,
   expandCostFor,
   featureUnlockedFor,
   tabUnlockPctFor,
   rivalGoalFromStart,
   mergeLoadedSave,
+  contentRankIndexFor,
+  nextContentRankFor,
+  starRankLetterFor,
+  studioRankLetterFor,
+  productionScoreFor,
+  studioLevelFromFans,
+  fansForLevel,
+  levelMultForLevel,
+  passMultFor,
+  hireCostFor,
+  upCostFor,
+  castingCostFor,
+  hypeCapFor,
+  activeCountFor,
+  firstEmptySlotFor,
+  studioValueFor,
+  castCapFor,
+  perkMultFor,
+  xpNeedFor,
+  showcaseBudgetFor,
+  slotEtaSecondsFor,
+  weekKeyStr,
 };
 
 /* robustness: never show a broken-image icon — failed images get a clean on-brand tile */
@@ -455,8 +524,8 @@ document.addEventListener("deviceready", initNativeChrome, false);
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 107 · Hotfix";
-const ASSET_V = "107";
+const BUILD_TAG = "build 108 · Legion";
+const ASSET_V = "108";
 const SHARE_OG_URL = "https://anime-studio-tycoon.vercel.app/og-share.jpg";
 const OFFLINE_PREVIEW_CAP = 4*3600; // "while away" preview when return is under 4h
 const SHARE_PLAY_URL = "https://anime-studio-tycoon.vercel.app/play";
@@ -467,7 +536,7 @@ const POSTER_META={
   "Sakura no Yakusoku":{ja:"桜色の約束",en:"SAKURA NO YAKUSOKU",tagline:"未来を、もう一度描け。"},
   "Promise of Sakura":{ja:"桜色の約束",en:"SAKURA NO YAKUSOKU",tagline:"未来を、もう一度描け。"},
 };
-const TAB_ORDER_EARLY = ["produce","quests","staff","stars","market","studio","store"];
+const TAB_ORDER_EARLY = ["produce","quests","staff","stars","market","research","studio","store"];
 const COACH_AVATAR = "https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg";
 const TAB_ICON_IMG = {
   produce:"icons/tabs/produce.png", quests:"icons/tabs/quests.png", staff:"icons/tabs/staff.png",
@@ -486,9 +555,9 @@ const TAB_ICONS = {
   market:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 16l4-6 4 3 5-8"/></svg>',
   store:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>',
 };
-function starRankLetter(stars){ return stars>=5?"S":stars>=4?"A":stars>=3?"B":stars>=2?"C":"D"; }
-function studioRankLetter(stars){ const s=stars||1; return s>=5?"S+":s>=4?"S":s>=3?"A":s>=2?"B":"C"; }
-function productionScore(stars,p,pr){ return Math.round(4200+stars*1100+Math.min(800,(pr.progress||0)/Math.max(1,p.work)*800)); }
+function starRankLetter(stars){ return starRankLetterFor(stars); }
+function studioRankLetter(stars){ return studioRankLetterFor(stars); }
+function productionScore(stars,p,pr){ return productionScoreFor(stars,p,pr); }
 function isDemoMode(){
   if(S._demoMode) return true;
   try{ return new URL(location.href).searchParams.get("demo")==="1"; }catch(e){ return false; }
@@ -525,22 +594,11 @@ function hudHypeCap(){
   if(isShowcaseDemo()&&isGlHudView()) return 120;
   return hypeCap();
 }
-function fmtEta(sec){
-  if(sec<=0) return "Ready!";
-  if(sec>=86400) return Math.floor(sec/86400)+"D "+Math.floor((sec%86400)/3600)+"H";
-  if(sec>=3600) return Math.floor(sec/3600)+"H "+Math.floor((sec%3600)/60)+"M";
-  if(sec>=60) return Math.floor(sec/60)+"M "+(sec%60)+"s";
-  return sec+"s";
-}
 function slotEtaSeconds(pr,p){
-  if(pr.progress>=p.work) return 0;
-  if(isShowcaseDemo()&&pr.showcaseEta!=null) return pr.showcaseEta;
-  return Math.ceil((p.work-pr.progress)/Math.max(0.0001,powerPerTick()));
+  const eta=isShowcaseDemo()&&pr.showcaseEta!=null?pr.showcaseEta:null;
+  return slotEtaSecondsFor(pr,p,powerPerTick(),eta);
 }
-function showcaseBudget(pr,p,pct){
-  if(pr.showcaseBudget) return [pr.showcaseBudget.spent,pr.showcaseBudget.cap];
-  return [Math.round(p.cost*pct/100),Math.round(p.cost*1.15)];
-}
+function showcaseBudget(pr,p,pct){ return showcaseBudgetFor(pr,p,pct); }
 function posterMetaFor(title){ return POSTER_META[title]||null; }
 const ROLE_ICONS={director:"🎬",writer:"✒️",animator:"🎨",voice:"🎵",producer:"📋"};
 function productionTeamHTML(){
@@ -638,7 +696,7 @@ function greenlightStatBar(label,val){
 }
 function staffTotal(){ let n=0; for(const k in ROLES) n+=S.staff[k]||0; return n; }
 function hypePerHour(){ return Math.floor((S.fans||0)*0.04+(S.upgrades.marketing||0)*600+activeCount()*900+powerPerTick()*360); }
-function hypeCap(){ return 100+(S.studioLevel||1)*20+activeCount()*10; }
+function hypeCap(){ return hypeCapFor(S.studioLevel||1,activeCount()); }
 function projectHypeDisplay(p,pr){
   if(pr.showcaseHype!=null) return pr.showcaseHype;
   const pct=Math.min(100, pr.progress/p.work*100);
@@ -882,7 +940,7 @@ const STAR_POOL=[
   {id:"noa",name:"Noa Goldberg ☆",role:"writer",rarity:"Legendary",img:CDN+"hf_20260614_085030_3a53863b-061f-46a6-a648-261f4e73c746.png"},
 ];
 const SCOUT_GEMS=8;                 // premium scout (full odds)
-function castingCost(){ return Math.ceil(2000*Math.pow(1.25, (S.stars?S.stars.length:0))); } // yen casting (common/rare)
+function castingCost(){ return castingCostFor(S.stars?S.stars.length:0); } // yen casting (common/rare)
 
 /* ---- Daily Quests ---- */
 const EARLY_QUEST_POOL=[
@@ -1053,24 +1111,8 @@ function currentLoginStreak(){
   return 0;
 }
 
-const CONTENT_RANK_LADDER = [
-  { fans:0,    icon:"🎬", name:"Garage",      unlock:"Short Film" },
-  { fans:20,   icon:"📱", name:"Buzz",        unlock:"Web Series" },
-  { fans:120,  icon:"📺", name:"Broadcast",   unlock:"TV Series" },
-  { fans:500,  icon:"💿", name:"Premium",     unlock:"OVA" },
-  { fans:2200, icon:"🎥", name:"Cinema",      unlock:"Feature Film" },
-  { fans:9000, icon:"🌟", name:"Blockbuster", unlock:"Mega Hit" },
-  { fans:25000,icon:"👑", name:"Legend",      unlock:"Mythic" },
-];
-function contentRankIndex(fans){
-  let idx=0;
-  for(let i=0;i<CONTENT_RANK_LADDER.length;i++){ if(fans>=CONTENT_RANK_LADDER[i].fans) idx=i; }
-  return idx;
-}
-function nextContentRank(fans){
-  const idx=contentRankIndex(fans);
-  return idx<CONTENT_RANK_LADDER.length-1?CONTENT_RANK_LADDER[idx+1]:null;
-}
+function contentRankIndex(fans){ return contentRankIndexFor(fans); }
+function nextContentRank(fans){ return nextContentRankFor(fans); }
 const MILESTONES = [
   { fans:20,    label:"Earn 20 Fans to unlock Web Series" },
   { fans:120,   label:"Reach 120 Fans for your own TV Series" },
@@ -1133,8 +1175,16 @@ function checkoutConfigured(){
   const co=MONETIZATION.checkout||{};
   return Object.values(co).some(u=>typeof u==="string"&&/^https?:\/\//i.test(u.trim()));
 }
-/* Native → StoreKit/Play Billing; web → Gumroad when checkout URLs are set; else free-to-play only */
-const STORE_PAYMENTS = NATIVE || checkoutConfigured();
+function storePaymentsEnabled(){
+  try{
+    const q=new URLSearchParams(location.search);
+    if(q.get("f2p")==="1"||q.get("payments")==="0") return false;
+    if(q.get("payments")==="1") return NATIVE||checkoutConfigured();
+  }catch(_){}
+  return NATIVE||checkoutConfigured();
+}
+/* Native → StoreKit/Play Billing; web → Gumroad when checkout URLs are set; else free-to-play only (?f2p=1 forces earn-only UI) */
+const STORE_PAYMENTS = storePaymentsEnabled();
 const GEM_PACKS={ gems_s:120, gems_m:350, gems_l:800, gems_mega:2000 };
 /* ---- Premium exclusive stars (sold for real money / awarded by bundles — never in the free gacha) ---- */
 const EXCLUSIVE_STARS=[
@@ -1196,19 +1246,54 @@ function freshState(){ return createFreshState(GENRES); }
 
 /* ========================= HELPERS ========================= */
 const $ = s=>document.querySelector(s);
-const main = $("#main");
+function elText(sel, txt){
+  const e = typeof sel === "string" ? document.querySelector(sel) : sel;
+  if(e != null && txt != null) e.textContent = txt;
+}
+function elHtml(sel, html){
+  const e = typeof sel === "string" ? document.querySelector(sel) : sel;
+  if(e != null && html != null) e.innerHTML = html;
+}
+function elShow(id, disp){
+  const e = document.getElementById(id);
+  if(e) e.style.display = disp;
+}
+function setMainHTML(h){
+  const m = document.getElementById("main");
+  if(m) m.innerHTML = h;
+  return m;
+}
+const VALID_TABS = new Set(["produce","quests","staff","stars","research","studio","market","store"]);
+function repairLoadedState(){
+  if(!S || typeof S !== "object"){ S = freshState(); return; }
+  S.slots = Math.max(1, Math.min(MAX_SLOTS, Math.floor(Number(S.slots) || 1)));
+  if(!Array.isArray(S.projects)) S.projects = [];
+  while(S.projects.length < S.slots) S.projects.push(null);
+  S.projects = S.projects.slice(0, S.slots).map(pr => {
+    if(!pr || typeof pr !== "object") return null;
+    const p = PROJECTS[pr.pid];
+    if(!p) return null;
+    const prog = Number(pr.progress);
+    pr.progress = Math.max(0, Math.min(p.work, Number.isFinite(prog) ? prog : 0));
+    return pr;
+  });
+  S.trendIdx = Math.max(0, Math.min(GENRES.length - 1, Math.floor(Number(S.trendIdx) || 0)));
+  if(!VALID_TABS.has(S.tab)) S.tab = "produce";
+  S.fanMilestonesToast = Array.isArray(S.fanMilestonesToast) ? S.fanMilestonesToast : [];
+  if(!S.staff || typeof S.staff !== "object") S.staff = { animator: 0, writer: 0, director: 0, voice: 0, producer: 0 };
+  for(const r of Object.keys(ROLES)) if(typeof S.staff[r] !== "number" || !Number.isFinite(S.staff[r])) S.staff[r] = 0;
+}
 /* monetization / boost helpers */
 let OFFLINE=false;            // true while simulating offline progress (suppresses toasts/audio/render)
 let pendingToasts=[];
 function toastSafe(m,g){ if(OFFLINE){return;} toast(m,g); }
 function toastLater(m,g){ pendingToasts.push([m,g]); }
-function passMult(){ return S.producerPass?1.5:1; }
+function passMult(){ return passMultFor(S.producerPass); }
 function goldenActive(){ return Date.now()<S.goldenUntil; }
 function rewardedActive(){ return Date.now()<S.rewardedUntil; }
 /* Studio Level — endless progression off total fans ever; +2% income per level, forever. */
-function studioLevel(){ return Math.max(1, Math.floor(Math.pow(Math.max(0,S.totalFansEver)/40, 0.37))); }
-function fansForLevel(L){ return Math.ceil(40*Math.pow(L,1/0.37)); }
-function levelMult(){ return 1 + studioLevel()*0.02; }
+function studioLevel(){ return studioLevelFromFans(S.totalFansEver); }
+function levelMult(){ return levelMultForLevel(studioLevel()); }
 function checkStudioLevel(){
   const L=studioLevel();
   if(L>(S.studioLevel||1)){
@@ -1272,20 +1357,16 @@ function studioAwards(){
   toastSafe("🏆 Studio Awards Night #"+S.awardsWon+"! +"+gems+" 💎 · 3× income for 2 min",true);
 }
 /* multi-slot helpers */
-function activeCount(){ let n=0; for(const p of S.projects) if(p) n++; return n; }
-function firstEmptySlot(){ for(let i=0;i<S.slots;i++){ if(!S.projects[i]) return i; } return -1; }
+function activeCount(){ return activeCountFor(S.projects); }
+function firstEmptySlot(){ return firstEmptySlotFor(S.slots,S.projects); }
 function expandCost(){ return expandCostFor(S); }
-function hireCost(role){
-  const r=ROLES[role]; const n=S.staff[role];
-  const disc=Math.max(0.4, 1 - S.upgrades.agency*0.05);
-  return Math.ceil(r.base * Math.pow(r.growth,n) * disc);
-}
-function upCost(key){ const u=UPGRADES[key]; return Math.ceil(u.base*Math.pow(u.growth,S.upgrades[key])); }
+function hireCost(role){ return hireCostFor(role,S.staff[role]||0,S.upgrades.agency||0,ROLES[role]); }
+function upCost(key){ return upCostFor(key,S.upgrades[key]||0,UPGRADES[key]); }
 function equipMult(){ return (1+S.upgrades.tablets*0.08)*(1+S.upgrades.render*0.15); }
 function qualityMult(){ return (1+S.upgrades.sound*0.06); }
 function marketingMult(){ return (1+S.upgrades.marketing*0.10); }
 function legacyMult(){ return 1 + S.legacy*0.05; }
-function perkMult(k){ return 1 + (((S.perks&&S.perks[k])||0)*0.05); }
+function perkMult(k){ return perkMultFor(S.perks,k); }
 const STAR_BY_ID=Object.fromEntries(STAR_POOL.map(s=>[s.id,s]));
 /* ---- Star development model: rarity-promotion, fame, and energy all shape a star's real output ---- */
 const RARITY_ORDER=["Common","Rare","Epic","Legendary"];
@@ -1298,19 +1379,19 @@ function starFameMult(st){ return 1 + (st.fame||0)*0.08; }                 // in
 function starEnergyFactor(st){ return st.resting?0:(0.5+0.5*(starEnergy(st)/100)); } // …but a tired star underperforms
 function effStarPower(st){ const t=STAR_BY_ID[st.sid]; if(!t) return 0; return STAR_RARITY[effRarity(st)].power * (st.level||1) * starFameMult(st) * starEnergyFactor(st); }
 function starPowerForRole(role){ let p=0; for(const st of (S.stars||[])){ const t=STAR_BY_ID[st.sid]; if(t&&t.role===role) p+=effStarPower(st); } return p; }
-function xpNeed(lvl){ return 8+(lvl||1)*6; }
-function castCap(){ return 3 + (S.producerPass?1:0); }                      // how many stars you can feature on one show
+function xpNeed(lvl){ return xpNeedFor(lvl); }
+function castCap(){ return castCapFor(S.producerPass); }                      // how many stars you can feature on one show
 function castSet(){ const s=new Set(); for(const pr of (S.projects||[])){ if(pr&&pr.cast&&pr.progress<PROJECTS[pr.pid].work) pr.cast.forEach(id=>s.add(id)); } return s; }
 function castStarPower(pr){ if(!pr||!pr.cast) return 0; let p=0; for(const id of pr.cast){ const st=(S.stars||[]).find(x=>x.sid===id); if(st) p+=effStarPower(st); } return p; }
 function rolePower(role){ let p=S.staff[role]*ROLES[role].power + starPowerForRole(role); if(S._empireRoleBonus) p+=(S._empireRoleBonus[role]||0); return p; }
-function studioValue(){ return Math.floor(S.totalFansEver + S.fans + S.releases*8 + S.legacy*3000); }
+function studioValue(){ return studioValueFor(S); }
 /* quests */
 function questAdd(metric, amt){
   if(S.questProg) S.questProg[metric]=(S.questProg[metric]||0)+amt;
   if(S.weekProg)  S.weekProg[metric]=(S.weekProg[metric]||0)+amt;
 }
 /* ---- weekly quest rotation ---- */
-function weekKeyStr(d){ d=d||new Date(); const dt=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())); const day=dt.getUTCDay()||7; dt.setUTCDate(dt.getUTCDate()+4-day); const ys=new Date(Date.UTC(dt.getUTCFullYear(),0,1)); const wk=Math.ceil((((dt-ys)/86400000)+1)/7); return dt.getUTCFullYear()+"-W"+wk; }
+
 function rollWeekly(){
   const pool=[...weeklyPoolFor()], out=[];
   while(out.length<3 && pool.length){ const t=pool.splice(Math.floor(Math.random()*pool.length),1)[0]; out.push({id:t.id, goal:t.goals[Math.floor(Math.random()*t.goals.length)], reward:t.reward, claimed:false}); }
@@ -1346,8 +1427,9 @@ function claimLoginDay(){
 /* ---- reset countdown helpers ---- */
 function msToMidnight(){ const n=new Date(); const m=new Date(n); m.setHours(24,0,0,0); return m-n; }
 function msToWeekReset(){ const n=new Date(); const day=n.getDay()||7; const m=new Date(n); m.setHours(24,0,0,0); m.setDate(m.getDate()+(7-day)); return m-n; }
-function fmtDur(ms){ if(ms<0)ms=0; const s=Math.floor(ms/1000); const h=Math.floor(s/3600), mi=Math.floor((s%3600)/60); const d=Math.floor(h/24); if(d>0) return d+"d "+(h%24)+"h"; if(h>0) return h+"h "+mi+"m"; return mi+"m"; }
-function questMetric(id){ const t=QUEST_POOL.find(q=>q.id===id); return t?t.metric:null; }
+
+function questTemplate(id){ return QUEST_POOL.find(q=>q.id===id)||EARLY_QUEST_POOL.find(q=>q.id===id); }
+function questMetric(id){ const t=questTemplate(id); return t?t.metric:null; }
 function rollQuests(){
   const pool=(S.releases||0)<3?[...EARLY_QUEST_POOL]:[...QUEST_POOL], out=[];
   while(out.length<4 && pool.length){
@@ -1363,6 +1445,27 @@ function claimQuest(i){
   q.claimed=true; S.gems+=q.reward; track("quest_claim",{id:q.id});
   play("claim"); toast("✅ Quest complete! +"+q.reward+" 💎",true); render(); save();
 }
+function claimableRewardCount(){
+  let n=0;
+  (S.quests||[]).forEach((q)=>{
+    if(q.claimed) return;
+    if((S.questProg[questMetric(q.id)]||0)>=q.goal) n++;
+  });
+  checkWeekly();
+  (S.weeklyQuests||[]).forEach((q)=>{
+    if(q.claimed) return;
+    if((S.weekProg[weeklyMetric(q.id)]||0)>=q.goal) n++;
+  });
+  ensureHudDailyGoals();
+  (S.plusGoals||[]).forEach((g)=>{
+    if(!g.claimed && hudDailyGoalProg(g)>=g.need) n++;
+  });
+  ensureHudRival();
+  if(!S.rivalClaimed && studioValue()>=(S.rivalGoal||0)) n++;
+  const next=seasonPassNextTier();
+  if(next && (S.releases||0)>=next.tier.releases) n++;
+  return n;
+}
 function claimFirstReward(){
   S.tab="quests";
   if(canClaimLogin()){ claimLoginDay(); return; }
@@ -1375,6 +1478,15 @@ function claimFirstReward(){
     const q=S.weeklyQuests[i]; if(q.claimed) continue;
     if((S.weekProg[weeklyMetric(q.id)]||0)>=q.goal){ claimWeekly(i); return; }
   }
+  ensureHudDailyGoals();
+  for(let i=0;i<(S.plusGoals||[]).length;i++){
+    const g=S.plusGoals[i]; if(g.claimed||hudDailyGoalProg(g)<g.need) continue;
+    claimHudDailyGoal(i); return;
+  }
+  ensureHudRival();
+  if(!S.rivalClaimed && studioValue()>=(S.rivalGoal||0)){ claimHudRival(); return; }
+  const sp=seasonPassNextTier();
+  if(sp && (S.releases||0)>=sp.tier.releases){ claimSeasonTier(sp.idx); return; }
   render();
 }
 /* star scouting (gacha) */
@@ -1415,6 +1527,10 @@ function scout(kind){
   play("reward");
   showReveal(r.t, r.rar, r.leveled);
   render(); save();
+}
+function closeRevealModal(){
+  const m=document.getElementById("reveal");
+  if(m){ m.style.display="none"; m.className="overlay aaa-reveal-overlay"; m.classList.remove("aaa-reveal-opening"); }
 }
 function showReveal(t, rar, leveled){
   const R=STAR_RARITY[rar];
@@ -1734,6 +1850,7 @@ function dismissCrisisModal(){
 window.dismissCrisisModal=dismissCrisisModal;
 function crisesSnoozed(){ return S.crisisSnoozeUntil&&Date.now()<S.crisisSnoozeUntil; }
 function maybeDecision(){
+  if(!started||OFFLINE||_premiereOpen) return;
   if(crisesSnoozed()) return;
   if(crisisModalOpen()) return;
   if(maybeStarterOffer()) return;
@@ -1748,17 +1865,18 @@ function showDecision(){
   if(!pool.length) return;
   _pendingDecision=pool[Math.floor(Math.random()*pool.length)];
   S.lastDecision=Date.now();
-  const d=_pendingDecision, body=document.getElementById("decision-body");
-  if(!body){ _pendingDecision=null; return; }
-  if(d.id==="festival"){ renderFestivalDecisionModal(d,false); return; }
-  resetDecisionModalChrome();
-  body.innerHTML=`<div style="font-size:42px">${d.ic}</div><h2 style="margin:6px 0;color:var(--plum)">${d.title}</h2>
-    <p style="color:var(--slate);font-size:14px;margin:6px 0 0">${d.text}</p>
-    <div class="row aaa-decision-actions" style="gap:10px;margin-top:16px">
-      <button class="btn-primary aaa-decision-btn" data-act="dec-yes" style="flex:1">${d.yes[0]}</button>
-      <button class="btn-ghost aaa-decision-btn" data-act="dec-no" style="flex:1">${d.no[0]}</button>
-    </div>`;
-  const m=document.getElementById("decision"); if(m) m.style.display="flex";
+  const d=_pendingDecision;
+  if(d.id==="festival"){
+    if(!renderFestivalDecisionModal(d,false)){
+      _pendingDecision=null;
+      S.lastDecision=Date.now()-180001;
+    }
+    return;
+  }
+  if(!renderDecisionModal(d,false)){
+    _pendingDecision=null;
+    S.lastDecision=Date.now()-180001;
+  }
 }
 function resolveDecision(yes){
   const d=_pendingDecision; _pendingDecision=null;
@@ -1777,11 +1895,13 @@ function resolveDecision(yes){
 }
 /* ========================= CHAOS & STAR-RISK SYSTEMS ========================= */
 function chaosDangerTier(ch){
+  ch=Math.round(ch||0);
   if(ch>=70) return {cls:"critical",lbl:"Critical — disaster imminent"};
   if(ch>=50) return {cls:"high",lbl:"High risk — next event likely"};
   if(ch>=40) return {cls:"elevated",lbl:"Elevated — consider a Calm Orb"};
   return {cls:"moderate",lbl:"Moderate — watch the meter"};
 }
+window.chaosDangerTier=chaosDangerTier;
 function renderDecisionModal(d, danger){
   const body=document.getElementById("decision-body");
   const overlay=document.getElementById("decision");
@@ -1859,7 +1979,11 @@ function maybeChaos(){
   const chance=((S.chaos||0)/100) * (S.chaosMode?0.22:0.12);
   if(Math.random()<chance){ showChaosDecision(); }
 }
-function removeStar(sid){ S.stars=(S.stars||[]).filter(s=>s.sid!==sid); S.projects.forEach(pr=>{ if(pr&&pr.cast) pr.cast=pr.cast.filter(id=>id!==sid); }); }
+function removeStar(sid){
+  S.stars=(S.stars||[]).filter(s=>s.sid!==sid);
+  _castSel=_castSel.filter(id=>id!==sid);
+  S.projects.forEach(pr=>{ if(pr&&pr.cast) pr.cast=pr.cast.filter(id=>id!==sid); });
+}
 /* The fame trap: a star you've over-hyped can outgrow you and demand a raise — or walk. */
 function maybeStarDemand(){
   if(!started||OFFLINE||_premiereOpen) return;
@@ -1882,7 +2006,12 @@ function maybeStarDemand(){
 function toggleChaosMode(){ S.chaosMode=!S.chaosMode; toast(S.chaosMode?"🌪️ CHAOS MODE ON — +50% rewards, but disasters loom…":"🕊️ Chaos Mode off — calm seas.", S.chaosMode); play("reward"); render(); save(); }
 /* ---- Star management actions ---- */
 function findStar(sid){ return (S.stars||[]).find(s=>s.sid===sid); }
-function toggleRest(sid){ const st=findStar(sid); if(!st) return; st.resting=!st.resting; play("click"); render(); save(); }
+function toggleRest(sid){
+  const st=findStar(sid); if(!st) return;
+  st.resting=!st.resting;
+  if(st.resting) _castSel=_castSel.filter(id=>id!==sid);
+  play("click"); render(); save();
+}
 function levelCost(st){ return Math.ceil(1500*Math.pow(1.35,(st.level||1))); }
 function levelStar(sid){ const st=findStar(sid); if(!st) return; const c=levelCost(st);
   if(S.yen<c){ toast("Need ¥"+fmt(c)+" to train this star"); return; }
@@ -1908,11 +2037,34 @@ function fireStar(sid){ const st=findStar(sid), t=STAR_BY_ID[sid]; if(!st||!t) r
   if(window.__AST_CONFIRM__) window.__AST_CONFIRM__("Release "+t.name+"?","They leave permanently — can't be undone.",doFire);
   else if(!confirm("Release "+t.name+" from your studio? This can't be undone.")) return; else doFire();
 }
+function castEligible(st){ return st && !st.resting && starEnergy(st)>=15; }
+function pruneCastSel(){
+  _castSel=_castSel.filter(id=>{ const st=findStar(id); return castEligible(st); }).slice(0,castCap());
+}
+function smartCastPick(){
+  const stars=S.stars||[];
+  if(!stars.length){ toast("Scout stars first — Stars tab!"); return; }
+  const cap=castCap();
+  const order=["Legendary","Epic","Rare","Common"];
+  const roster=stars
+    .map(st=>({st,t:STAR_BY_ID[st.sid]}))
+    .filter(x=>x.t&&castEligible(x.st))
+    .sort((a,b)=>{
+      const ra=order.indexOf(effRarity(a.st)), rb=order.indexOf(effRarity(b.st));
+      return ra-rb || (b.st.level||1)-(a.st.level||1) || starEnergy(b.st)-starEnergy(a.st);
+    })
+    .slice(0,cap)
+    .map(x=>x.st.sid);
+  _castSel=roster;
+  toast(roster.length?`🎭 Smart Cast: ${roster.length} star${roster.length!==1?"s":""} ready`:"No stars with enough energy — let them rest", !!roster.length);
+  play(roster.length?"click":"error");
+  render();
+}
 function toggleCast(sid){ const st=findStar(sid); if(!st) return;
-  if(st.resting||starEnergy(st)<15){ toast("This star needs rest before working"); return; }
+  if(!castEligible(st)){ toast("This star needs rest before working (15+ energy)"); return; }
   const i=_castSel.indexOf(sid);
   if(i>=0) _castSel.splice(i,1);
-  else { if(_castSel.length>=castCap()){ toast("Cast is full ("+castCap()+") — tap a star to remove first"); return; } _castSel.push(sid); }
+  else { pruneCastSel(); if(_castSel.length>=castCap()){ toast("Cast is full ("+castCap()+") — tap a star to remove first"); return; } _castSel.push(sid); }
   play("click"); render();
 }
 /* ---- active tap-to-boost (more fun + works with zero staff for the first film) ---- */
@@ -2011,9 +2163,17 @@ function gemSpendBestFor(act){
   return {text:hints[act]||"",hot};
 }
 function gemSpendRow(act,title,desc,btnExtra){
+  const costs={hype:5,cash:8,skip:4,golden:12};
+  const cost=costs[act]||0;
   const hint=gemSpendBestFor(act);
   const hotCls=hint.hot?" aaa-gem-row-hot":"";
-  return `<div class="uprow aaa-gem-row${hotCls}"><div class="meta"><h4>${title}</h4><div class="muted">${desc}</div>${hint.text?`<div class="aaa-gem-hint${hint.hot?" hot":""}">Best for: ${hint.text}</div>`:""}</div><button class="btn-cyan hirebtn" data-gem="${act}" ${btnExtra||""}>Spend<small>${({hype:"5",cash:"8",skip:"4",golden:"12"})[act]} 💎</small></button></div>`;
+  const lowCls=S.gems<cost?" aaa-gem-row-low":"";
+  const hardOff=btnExtra&&/\bdisabled\b/.test(btnExtra);
+  return `<div class="uprow aaa-gem-row${hotCls}${lowCls}"><div class="meta"><h4>${title}</h4><div class="muted">${desc}</div>${hint.text?`<div class="aaa-gem-hint${hint.hot?" hot":""}">Best for: ${hint.text}</div>`:""}</div><button type="button" class="btn-cyan hirebtn" data-gem="${act}"${hardOff?" disabled":""}>Spend<small>${cost} 💎</small></button></div>`;
+}
+function scrollStoreSection(id){
+  if(S.tab!=="store"){ S.tab="store"; render(); }
+  requestAnimationFrame(()=>{ document.getElementById(id)?.scrollIntoView({behavior:"smooth",block:"start"}); });
 }
 /* Studio Stamina (crew energy): output dips ~40% when the team is fully burned out,
    so you can't just run every line flat-out forever — rest lines to recover. */
@@ -2029,7 +2189,11 @@ function powerPerTick(){
 /* Back-catalog royalties: every premiere adds permanent passive Yen/sec — true idle income that scales forever. */
 function royaltyPerSec(){ return (S.catalogIncome||0); }
 function salaryPerTick(){ let s=0; for(const r in ROLES) s+=S.staff[r]*ROLES[r].salary; return s; }
-function trendGenre(){ return GENRES[S.trendIdx]; }
+function trendGenre(){
+  const i = Math.max(0, Math.min(GENRES.length - 1, Math.floor(Number(S.trendIdx) || 0)));
+  if(S.trendIdx !== i) S.trendIdx = i;
+  return GENRES[i];
+}
 function dimPowerForQuality(){
   // per-dim effective talent used to rate a finished project
   const o={};
@@ -2098,21 +2262,68 @@ function resumeAudioCtx(){
   return ctx;
 }
 let _audioGestureBound=false;
+let _audioUnlocked=false;
+function primeHtml5Audio(){
+  try{
+    if(bgm){
+      const muted=!(S&&!S.muted);
+      if(!muted) bgm.volume=0.001;
+      const p=bgm.play();
+      const done=()=>{ try{ if(muted) bgm.pause(); else applyAudioSettings(); }catch(_){} };
+      if(p&&p.then) p.then(done).catch(()=>{});
+      else done();
+    }
+    for(const a of Object.values(sfx||{})){
+      try{
+        const c=a.cloneNode();
+        c.volume=0.001;
+        const p=c.play();
+        if(p&&p.then) p.then(()=>c.pause()).catch(()=>{});
+      }catch(_){}
+    }
+  }catch(_){}
+}
+function unlockAudioFromGesture(){
+  if(_audioUnlocked) return true;
+  const ctx=resumeAudioCtx();
+  if(ctx&&ctx.state==="suspended"){
+    ctx.resume().then(()=>{ _audioUnlocked=true; primeHtml5Audio(); }).catch(()=>{});
+    return false;
+  }
+  try{
+    if(ctx){
+      const buf=ctx.createBuffer(1,1,22050);
+      const src=ctx.createBufferSource();
+      src.buffer=buf;
+      src.connect(ctx.destination);
+      src.start(0);
+      src.stop(ctx.currentTime+0.001);
+    }
+  }catch(_){}
+  primeHtml5Audio();
+  _audioUnlocked=true;
+  return true;
+}
 function bindAudioGestureUnlock(){
   if(_audioGestureBound) return;
   _audioGestureBound=true;
   const unlock=()=>{
-    resumeAudioCtx();
-    try{ if(bgm&&S&&!S.muted) bgm.play().catch(()=>{}); }catch(e){}
-    document.removeEventListener("touchstart",unlock,true);
-    document.removeEventListener("touchend",unlock,true);
-    document.removeEventListener("pointerdown",unlock,true);
-    document.removeEventListener("click",unlock,true);
+    if(unlockAudioFromGesture()){
+      document.removeEventListener("touchstart",unlock,true);
+      document.removeEventListener("touchend",unlock,true);
+      document.removeEventListener("pointerdown",unlock,true);
+      document.removeEventListener("click",unlock,true);
+      document.removeEventListener("keydown",unlock,true);
+    }
   };
   document.addEventListener("touchstart",unlock,{capture:true,passive:true});
   document.addEventListener("touchend",unlock,{capture:true,passive:true});
   document.addEventListener("pointerdown",unlock,{capture:true,passive:true});
   document.addEventListener("click",unlock,true);
+  document.addEventListener("keydown",unlock,true);
+  document.addEventListener("visibilitychange",()=>{
+    if(document.visibilityState==="visible") resumeAudioCtx();
+  });
 }
 function sfxMasterVol(){ return (S.settings&&S.settings.sfxVol!=null)?S.settings.sfxVol:0.5; }
 function synthTone(ctx,t0,freq,dur,type,peak,vol){
@@ -2252,13 +2463,20 @@ function playDedicatedSfx(n){
   }catch(e){ return false; }
 }
 function initAudio(){
-  bgm=new Audio(AUDIO_ASSETS.bgm); bgm.loop=true;
-  for(const [k,path] of Object.entries(AUDIO_ASSETS)){
-    if(k==="bgm") continue;
-    sfx[k]=new Audio(path);
+  try{
+    if(typeof Audio === "undefined") return;
+    bgm = new Audio(AUDIO_ASSETS.bgm);
+    bgm.loop = true;
+    for(const [k, path] of Object.entries(AUDIO_ASSETS)){
+      if(k === "bgm") continue;
+      try{ sfx[k] = new Audio(path); }catch(_){}
+    }
+    applyAudioSettings();
+    bindAudioGestureUnlock();
+  }catch(e){
+    console.warn("audio init failed", e);
+    bgm = null;
   }
-  applyAudioSettings();
-  bindAudioGestureUnlock();
 }
 function applyAudioSettings(){
   const mv=(S.settings&&S.settings.musicVol!=null)?S.settings.musicVol:0.35;
@@ -2276,7 +2494,7 @@ function play(n,opts){
   playClip(SFX_PROFILES[n]||SFX_PROFILES.click);
 }
 function updateMute(){
-  $("#btn-mute").textContent = (S.muted?("🔇 "+STR.muteOff):("🔊 "+STR.muteOn));
+  elText("#btn-mute", (S.muted ? ("🔇 "+STR.muteOff) : ("🔊 "+STR.muteOn)));
   applyAudioSettings();
   if(bgm){ if(S.muted) bgm.pause(); else bgm.play().catch(()=>{}); }
 }
@@ -2304,12 +2522,17 @@ function updateChrome(){
     if(!sel){
       sel=document.createElement("select"); sel.id="lang-sel"; sel.className="btn-ghost";
       sel.style.cssText="padding:7px 10px;font-size:12px;border:none;border-radius:12px;font-weight:700";
-      for(const c in LANG_NAMES){ const o=document.createElement("option"); o.value=c; o.textContent="🌐 "+LANG_NAMES[c]; sel.appendChild(o); }
-      sel.onchange=()=>{ setLang(sel.value); updateChrome(); render(); };
       const util=document.getElementById("hud-drawer-slot")||document.querySelector(".foot"); if(util) util.appendChild(sel);
     }
-    sel.value=STR.__code||"en";
+    if(sel){
+      if(!sel.options.length){
+        for(const c in LANG_NAMES){ const o=document.createElement("option"); o.value=c; o.textContent="🌐 "+LANG_NAMES[c]; sel.appendChild(o); }
+      }
+      sel.onchange=()=>{ setLang(sel.value); updateChrome(); render(); };
+      sel.value=STR.__code||"en";
+    }
     if(window.__AST_HUD__&&window.__AST_HUD__.organizeDrawerSlot) window.__AST_HUD__.organizeDrawerSlot();
+    if(window.__AST_HUD__&&window.__AST_HUD__.updateCoachChrome) window.__AST_HUD__.updateCoachChrome(!!document.getElementById("pathway-rail")?.classList.contains("coach-guided"));
     const bt=document.getElementById("buildtag"); if(bt) bt.textContent=BUILD_TAG;
   }catch(e){}
 }
@@ -2333,15 +2556,17 @@ function load(){
   try{
     const raw=localStorage.getItem(SAVE_KEY); if(!raw) return false;
     const d=JSON.parse(raw);
-    if(!d||typeof d!=="object") throw new Error("invalid save");
+    if(!d||typeof d!=="object"||Array.isArray(d)) throw new Error("invalid save");
     S=mergeLoadedSave(d, freshState(), GENRES, MAX_SLOTS);
+    repairLoadedState();
     normStars();
-    if(window.__AST_STUDIO_RATING__?.initState) window.__AST_STUDIO_RATING__.initState(S);
+    try{ if(window.__AST_STUDIO_RATING__?.initState) window.__AST_STUDIO_RATING__.initState(S); }catch(_){}
     for(const m of FAN_TOAST_MILESTONES){
-      if(S.fans>=m.fans&&!S.fanMilestonesToast.includes(m.fans)) S.fanMilestonesToast.push(m.fans);
+      if((S.fans||0)>=m.fans&&!S.fanMilestonesToast.includes(m.fans)) S.fanMilestonesToast.push(m.fans);
     }
     return true;
   }catch(e){
+    console.warn("load failed", e);
     try{ localStorage.removeItem(SAVE_KEY); }catch(_){}
     return false;
   }
@@ -2354,8 +2579,10 @@ function toastTierClass(tier){
   return "";
 }
 function toast(msg, tier){
+  const box=document.getElementById("toasts");
+  if(!box) return;
   const t=document.createElement("div"); t.className="toast"+toastTierClass(tier); t.textContent=msg;
-  $("#toasts").appendChild(t); setTimeout(()=>t.remove(), tier==="special"?3200:2600);
+  box.appendChild(t); setTimeout(()=>t.remove(), tier==="special"?3200:2600);
 }
 function floatGain(txt, anchor){
   try{ if(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return; }catch(e){}
@@ -2622,7 +2849,7 @@ function greenlight(pid, genre, cast, sequel, sfx){
   if(S.yen < p.cost){ toast("Not enough Yen to greenlight"); play("error"); return; }
   const isFirstGl=(S.releases||0)===0 && activeCount()===0;
   // validate the featured cast — only working stars with enough energy, capped
-  const ok=(cast||[]).filter(id=>{ const st=(S.stars||[]).find(x=>x.sid===id); return st && !st.resting && starEnergy(st)>=15; }).slice(0,castCap());
+  const ok=(cast||[]).filter(id=>castEligible((S.stars||[]).find(x=>x.sid===id))).slice(0,castCap());
   S.yen -= p.cost;
   const sc=showcaseEntry(pid,genre);
   let title=sc?(sc.titleEn||sc.titleJa):makeTitle(genre), base=null, seq=0;
@@ -3155,27 +3382,30 @@ function buyUpgrade(key){
   S.yen-=c; S.upgrades[key]++; play("click"); render(); save();
 }
 function research(genre){
+  if(!featureUnlocked("research")){ toast(tabLockLabel("research")); play("click"); return; }
   const {lvl,cost,hypeCost}=researchCost(genre);
   if(S.yen<cost){ toast("Not enough Yen to research"); return; }
   if(S.hype<hypeCost){ toast("Need "+hypeCost+" Hype to research"); return; }
   const isFirst=totalMasteryLevels()===0;
   S.yen-=cost; S.hype-=hypeCost; questAdd("hypeSpent",hypeCost); S.mastery[genre]=lvl+1;
-  if(isFirst) celebrateFirstResearch(genre);
-  else play("click");
   render(); save();
+  if(isFirst) requestAnimationFrame(()=>celebrateFirstResearch(genre));
+  else play("click");
 }
 function campaign(i){
   const c=CAMPAIGNS[i];
   if(!featureUnlocked("market")){ toast(tabLockLabel("market")); play("click"); return; }
-  if(S.yen<c.cost){ toast("Not enough Yen"); return; }
-  const first=!(S.campaignsRun>0);
+  if(!c||S.yen<c.cost){ toast("Not enough Yen"); return; }
+  const first=!((S.campaignsRun||0)>0);
   S.yen-=c.cost; S.fans+=c.fans; S.totalFansEver+=c.fans; S.campaignsRun=(S.campaignsRun||0)+1;
   questAdd("campaigns",1); awardMilestoneGems(); checkFanMilestoneToasts();
-  celebrateCampaignRun(i);
-  floatGain("+"+fmt(c.fans)+" fans", document.querySelector(`[data-camp="${i}"]`));
   toast("📣 "+c.name+" live! +"+fmt(c.fans)+" fans","special");
   if(first) toast("🎉 First campaign — your fanbase is growing!","special");
   checkAchievements(); render(); save();
+  requestAnimationFrame(()=>{
+    celebrateCampaignRun(i);
+    floatGain("+"+fmt(c.fans)+" fans", document.querySelector(`[data-camp="${i}"]`)||document.querySelector(`[data-camp-card="${i}"]`));
+  });
 }
 /* ---- anti-softlock: free freelance gig when broke & idle ---- */
 function freelance(){
@@ -3219,14 +3449,19 @@ function buyReal(sku){
   if(url){ try{ window.open(url,"_blank","noopener"); }catch(e){} toast("Opening checkout — you'll return to the game automatically after payment."); }
   else { toast("💳 Payments aren't set up yet. Add your checkout link to enable this."); }
 }
+function licenseRedeemKey(sku, key){ return String(sku||"").toLowerCase()+"|"+String(key||"").trim().toLowerCase(); }
 async function redeemLicenseKey(sku, key){
   if(!key||!sku){ toast("Enter your license key and pick what you bought"); return; }
+  const lk=licenseRedeemKey(sku, key);
+  if(!S.redeemedLicenses) S.redeemedLicenses=[];
+  if(S.redeemedLicenses.includes(lk)){ toast("This license was already redeemed on this device"); return; }
   try{
     const r=await fetch("/api/grant/license",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({sku,license_key:key.trim()})});
     const j=await r.json();
     if(!j.ok||!j.pt){ toast(j.error==="invalid license"?"Invalid license — check key & product":"Redeem failed — try again or email support"); return; }
-    await redeemPurchaseToken(j.pt);
-    toast("✅ Purchase redeemed!",true);
+    const changed=await redeemPurchaseToken(j.pt);
+    S.redeemedLicenses.push(lk);
+    toast(changed?"✅ Purchase redeemed!":"✅ Already on this account — you're all set!",true);
   }catch(e){ toast("Network error — try again"); }
 }
 /* ---- Inventory / consumable items ---- */
@@ -3241,10 +3476,12 @@ function weightedPick(list){ let tot=0; for(const x of list) tot+=x.w; let r=Mat
 function showPrize(title,label,msg){
   const el=document.getElementById('reveal-body');
   if(!el){ toast(title+": "+(msg||label),true); return; }
+  const m=document.getElementById('reveal');
+  if(m) m.className='overlay aaa-reveal-overlay';
   el.innerHTML=`<div style="font-size:13px;font-weight:800;color:var(--plum);letter-spacing:1px">${title}</div>
     <div style="font-size:52px;margin:10px 0">🎉</div><h1 style="font-size:24px;margin:2px 0">${label}</h1>
     <div class="muted">${msg||""}</div>`;
-  const m=document.getElementById('reveal'); if(m) m.style.display='flex';
+  if(m) m.style.display='flex';
 }
 function spinWheel(){
   if(!S.ageOk) return ageGate(spinWheel);
@@ -3265,6 +3502,8 @@ function scratchCard(){
 /* Published odds for every randomized reward (App Store / Google Play loot-box disclosure requirement). */
 function showOdds(){
   const el=document.getElementById('reveal-body'); if(!el) return;
+  const m=document.getElementById('reveal');
+  if(m) m.className='overlay aaa-reveal-overlay';
   const pct=(w,tot)=>((w/tot)*100).toFixed(1)+"%";
   const sum=l=>l.reduce((a,x)=>a+x.w,0);
   const full=Object.keys(STAR_RARITY), ft=full.reduce((a,r)=>a+STAR_RARITY[r].w,0);
@@ -3278,7 +3517,7 @@ function showOdds(){
     <h4 style="margin:8px 0 2px">🎡 Spin &amp; Win</h4><div class="muted">${WHEEL.map(x=>`${x.label} <b>${pct(x.w,wt)}</b>`).join(" · ")}</div>
     <h4 style="margin:8px 0 2px">🎟️ Scratch Cards</h4><div class="muted">${SCRATCH.map(x=>`${x.label} <b>${pct(x.w,st)}</b>`).join(" · ")}</div>
     <div class="muted" style="margin-top:10px;font-size:11px;line-height:1.5">Gems can be earned free through play or bought. Items, stars, and gems are virtual goods with no real-world value and are non-refundable.</div></div>`;
-  const m=document.getElementById('reveal'); if(m) m.style.display='flex';
+  if(m) m.style.display='flex';
 }
 /* entitlement bridge — called by the native StoreKit layer (iap.js) on a verified purchase,
    and reused by the web ?grant= redirect. Idempotent for non-consumables so buyers ALWAYS
@@ -3289,15 +3528,17 @@ function grantStar(id){ const t=STAR_BY_ID[id]; if(!t) return false;
   if(owned){ owned.level=(owned.level||1)+1; toast("🌟 "+t.name+" leveled up — thank you!",true); }
   else { if(!S.stars) S.stars=[]; S.stars.push(normStar({sid:id,level:1})); toast("🌟 Exclusive star "+t.name.replace(' ☆','')+" joined your studio!",true); }
   return true; }
+function grantWasRedeemed(gid){ return !!(gid && (S.redeemedGrants||[]).includes(gid)); }
+function rememberGrantId(gid){ if(!gid) return; if(!S.redeemedGrants) S.redeemedGrants=[]; if(!S.redeemedGrants.includes(gid)) S.redeemedGrants.push(gid); }
 function grantEntitlement(kind, amount, extra){
   extra=extra||{}; let delivered=false;
   if(kind==="pass"){ S.producerPass=true; if(addEntitlement("pass")){ delivered=true; toast("🎬 Producer Pass unlocked — thank you!",true); } }
   else if(kind==="bundle"){ S.producerPass=true; S.bundleBought=true; if(addEntitlement("bundle")){ S.gems+=200; delivered=true; toast("🌟 Starter Bundle: Pass + 200 💎!",true); } }
-  else if(kind==="bundle_legend"){ S.producerPass=true; if(addEntitlement("bundle_legend")){ S.gems+=400; grantStar("x_aurora"); } delivered=true; toast("🏆 Legend Bundle delivered — thank you!",true); }
-  else if(kind==="bundle_mogul"){ S.producerPass=true; if(addEntitlement("bundle_mogul")){ S.gems+=1500; grantStar("x_phoenix"); grantStar("x_shogun"); S.noAds=true; } delivered=true; toast("👑 Mogul Bundle delivered — thank you!",true); }
+  else if(kind==="bundle_legend"){ S.producerPass=true; if(addEntitlement("bundle_legend")){ S.gems+=400; grantStar("x_aurora"); delivered=true; toast("🏆 Legend Bundle delivered — thank you!",true); } }
+  else if(kind==="bundle_mogul"){ S.producerPass=true; if(addEntitlement("bundle_mogul")){ S.gems+=1500; grantStar("x_phoenix"); grantStar("x_shogun"); S.noAds=true; delivered=true; toast("👑 Mogul Bundle delivered — thank you!",true); } }
   else if(kind==="items_pack"){ if(addEntitlement("items_pack")){ ["megaphone","power_glove","time_pendant","stardust","espresso"].forEach(i=>addItem(i,1)); S.gems+=50; delivered=true; toast("🧰 Power Items Pack delivered!",true); } }
-  else if(kind==="noads"){ S.noAds=true; addEntitlement("noads"); delivered=true; toast("🚫 Ads removed — thank you!",true); }
-  else if(kind==="star"){ const id=extra.id||SKU2STAR[extra.sku]; if(id){ addEntitlement("star:"+id); delivered=grantStar(id); } }
+  else if(kind==="noads"){ if(addEntitlement("noads")){ S.noAds=true; delivered=true; toast("🚫 Ads removed — thank you!",true); } }
+  else if(kind==="star"){ const id=extra.id||SKU2STAR[extra.sku]; if(id && addEntitlement("star:"+id)){ delivered=grantStar(id); } }
   else if(kind==="gems"){ const n=+amount||0; if(n>0){ S.gems+=n; delivered=true; toast("💎 +"+n+" Gems — thank you!",true);
       if(flashAvailable()){ const bonus=Math.ceil(n*0.20); S.gems+=bonus; S.flashDealDay=todayStr(); toast("⚡ Daily Deal bonus: +"+bonus+" Gems!",true); } } }
   if(delivered && !S.firstPurchaseDone){ S.firstPurchaseDone=true; S.gems+=50; toast("🎁 First-purchase thank-you: +50 💎!",true); }
@@ -3403,7 +3644,7 @@ function rewardedBoost(){
 /* ---- redeem code ---- */
 function redeem(code){
   code=(code||"").trim().toUpperCase();
-  if(!code) return;
+  if(!code){ toast("Enter a promo code"); return; }
   const r=(MONETIZATION.codes||{})[code];
   if(!r){ toast("Invalid code"); return; }
   if(!S.redeemedCodes) S.redeemedCodes=[];
@@ -3436,6 +3677,7 @@ function prestige(){
               influence:S.influence, influenceSpent:S.influenceSpent, inflPerks:S.inflPerks, streaming:S.streaming,
               finalGuideSeen:S.finalGuideSeen, finalGuideStep:S.finalGuideStep,
               items:S.items, entitlements:S.entitlements, purchaseLog:S.purchaseLog, firstPurchaseDone:S.firstPurchaseDone, noAds:S.noAds,
+              redeemedGrants:S.redeemedGrants, redeemedLicenses:S.redeemedLicenses,
               studioName:S.studioName, hof:S.hallOfFame, bestRank:S.bestRank};
   S=freshState();
   S.legacy=keep.legacy; S.mastery=keep.mastery; S.totalFansEver=keep.total; S.muted=keep.mute;
@@ -3448,6 +3690,7 @@ function prestige(){
   S.awardsWon=keep.awards||0; S.totalEarned=keep.earned||0; S.comboBest=keep.comboBest||0;
   // purchases & entitlements are permanent — they survive every reboot
   S.items=keep.items||{}; S.entitlements=keep.entitlements||[]; S.purchaseLog=keep.purchaseLog||[]; S.firstPurchaseDone=!!keep.firstPurchaseDone; S.noAds=!!keep.noAds;
+  S.redeemedGrants=keep.redeemedGrants||[]; S.redeemedLicenses=keep.redeemedLicenses||[];
   S.studioName=keep.studioName||""; S.hallOfFame=keep.hof||[]; S.bestRank=keep.bestRank||99;
   checkAchievements(); track("prestige",{gain});
   toast("🌸 Studio rebooted! +"+gain+" Legacy",true); render(); save();
@@ -3707,6 +3950,33 @@ function returnHubHasContent(ctx={}){
   const {returnR=null,dr=null,had=false}=ctx;
   return !!had||!!dr||!!(returnR&&offlineHadMeaningfulReturn(returnR))||shouldShowWhatsNew()||pendingUnlockTeasers().length>0;
 }
+function orderReturnHubSectionsOfflineFirst(showOffline,showWelcome){
+  if(!showOffline||!showWelcome) return;
+  const modal=document.querySelector(".aaa-return-hub-modal");
+  const offSec=document.getElementById("return-hub-offline");
+  const welcomeSec=document.getElementById("return-hub-welcome");
+  if(modal&&offSec&&welcomeSec) modal.insertBefore(offSec,welcomeSec);
+}
+/** Return-hub boot batch — modal priority: hub → offline modal → while-away toast → daily/whatsnew/howto. */
+function bootReturnBatch({returnSec=0,returnR=null,dr=null,had=false}){
+  if(maybeShowReturnHub({returnSec,returnR,dr,had})) return;
+  const meaningful=returnR&&offlineHadMeaningfulReturn(returnR);
+  if(meaningful){
+    if(returnSec>=OFFLINE_PREVIEW_CAP) showOfflineModal(returnSec,returnR,{preview:false});
+    else showWhileAwayPreviewToast(returnSec,returnR);
+    return;
+  }
+  if(had) showReturnPlayerWelcomeToast(returnSec,returnR,dr);
+  if(dr){
+    elHtml("#daily-body", renderDailySectionHTML(dr));
+    elShow("daily", "flex");
+  }else if(shouldShowWhatsNew()){
+    S.whatsnewSeen=false; S.lastWhatsNewBuild=BUILD_TAG;
+    elShow("whatsnew", "flex");
+  }else if(!S.tutorialSeen&&!isGuidedTutorialEligible()){
+    elShow("howto", "flex");
+  }
+}
 function maybeShowHowtoAfterReturnHub(){
   if(!S.tutorialSeen&&!isGuidedTutorialEligible()){
     const h=document.getElementById("howto"); if(h) h.style.display="flex";
@@ -3778,6 +4048,7 @@ function maybeShowReturnHub(ctx={}){
     const body=document.getElementById("return-hub-unlocks-body");
     if(body) body.innerHTML=renderUnlockTeasersHTML(unlocks);
   });
+  orderReturnHubSectionsOfflineFirst(showOffline,showWelcome);
   const btn=document.getElementById("btn-return-hub-close");
   if(btn) btn.textContent=(showOffline||showDaily)?"Collect & Continue":"Continue ▶";
   hub.dataset.hadOffline=showOffline?"1":"";
@@ -3883,12 +4154,44 @@ function setTab(t){
 
 /* ---- Live in-place updates: refresh only the moving numbers each tick/tap.
    Avoids rebuilding #main (which would reset scroll and make the screen jump). ---- */
-function updateTopBar(){
-  const set=(id,k)=>{ const el=document.getElementById(id); if(el) el.textContent=fmtHudRes(k,hudDisplayValue(k)); };
+let _liveRaf=0, _tabsDockSig="";
+function patchTopBarResources(){
+  const set=(id,k)=>{ const el=document.getElementById(id); if(!el) return; const v=fmtHudRes(k,hudDisplayValue(k)); if(el.textContent!==v) el.textContent=v; };
   set("r-yen","yen"); set("r-fans","fans"); set("r-gems","gems");
-  const hypeEl=document.getElementById("r-hype"); if(hypeEl) hypeEl.textContent=fmt(hudDisplayValue("hype"))+"/"+fmt(hudHypeCap());
-  const tr=document.getElementById("trend"); if(tr) tr.textContent=trendGenre();
+  const hypeEl=document.getElementById("r-hype");
+  if(hypeEl){ const v=fmt(hudDisplayValue("hype"))+"/"+fmt(hudHypeCap()); if(hypeEl.textContent!==v) hypeEl.textContent=v; }
+  const tr=document.getElementById("trend");
+  if(tr){ const g=trendGenre(); if(tr.textContent!==g) tr.textContent=g; }
+}
+function updateTopBar(){
+  patchTopBarResources();
   updateIdleIncomeHudTip();
+}
+function tabsDockSignature(){
+  const tabOrder=(S.releases||0)<5?TAB_ORDER_EARLY:["produce","quests","staff","stars","research","studio","market","store"];
+  const parts=[S.tab,S.releases||0,STR.tab_produce];
+  for(const k of tabOrder){
+    if(!tabInDock(k)) continue;
+    parts.push(k, tabLocked(k)?"L":"U");
+  }
+  return parts.join("\x1f");
+}
+function syncTabsDock(){
+  const sig=tabsDockSignature();
+  if(sig===_tabsDockSig) return;
+  _tabsDockSig=sig;
+  const tabDefs=[["produce","🎬",STR.tab_produce],["quests","📋",STR.tab_quests],["staff","👥",STR.tab_staff],["stars","⭐",STR.tab_stars],["research","🔬",STR.tab_research],["studio","🏢",STR.tab_studio],["market","📣",STR.tab_market],["store","💎",STR.tab_store]];
+  const tabOrder=(S.releases||0)<5?TAB_ORDER_EARLY:tabDefs.map(t=>t[0]);
+  const tabs=tabOrder.map(k=>tabDefs.find(t=>t[0]===k)).filter(t=>t&&tabInDock(t[0]));
+  elHtml("#tabs", tabs.map(([k,ic,l])=>{
+    const locked=tabLocked(k);
+    return `<button type="button" class="tab ${S.tab===k&&!locked?"active":""}${locked?" tab-locked":""}" data-tab="${k}" role="tab" aria-selected="${S.tab===k&&!locked?"true":"false"}" aria-label="${l}${locked?" (locked)":""}" aria-disabled="${locked?"true":"false"}"><span class="ic" aria-hidden="true">${tabIcon(k,ic)}</span><span class="tab-lbl" aria-hidden="true">${TAB_MOCKUP[k]||l}</span>${locked?'<span class="tab-lock-ic" aria-hidden="true">🔒</span>':""}</button>`;
+  }).join(""));
+}
+function expectedProducePanels(){
+  if(S.tab!=="produce"||isGreenlightView()) return 0;
+  if(S.slots>1) return S.slots;
+  return activeCount();
 }
 /* returns true if the slot's *structure* changed (done/empty) and a full render is needed */
 function updateSlotLive(i){
@@ -3896,33 +4199,52 @@ function updateSlotLive(i){
   if(!pr) return !!cont;                 // slot now empty but panel still present → rebuild
   if(!cont) return true;                 // slot has a project but no panel yet → rebuild
   const p=PROJECTS[pr.pid];
+  if(!p) return true;
   const done=pr.progress>=p.work;
   if((cont.dataset.done==="1")!==done) return true; // transitioned to/from "Ready" → buttons change
   const pct=Math.min(100,pr.progress/p.work*100);
-  const bar=cont.querySelector(".slot-bar"); if(bar) bar.style.width=pct+"%";
+  const bar=cont.querySelector(".slot-bar"); if(bar){ const w=pct+"%"; if(bar.style.width!==w) bar.style.width=w; }
   const stars=projectStars(p,pr.genre,pr), score=pr.showcaseScore!=null?pr.showcaseScore:productionScore(stars,p,pr), rank=pr.showcaseRank||starRankLetter(stars);
-  const scoreEl=cont.querySelector(".aaa-score-val"); if(scoreEl) scoreEl.textContent=fmtLocale(score);
-  const rankEl=cont.querySelector(".aaa-rank"); if(rankEl){ rankEl.textContent=rank; rankEl.className="aaa-rank aaa-rank-"+rank; }
-  const rankWrap=cont.querySelector(".aaa-rank-wrap"); if(rankWrap) rankWrap.className="aaa-rank-wrap"+(rank==="S"?" aaa-rank-laurel":"");
-  const budgetEl=cont.querySelector(".aaa-stat-line b"); 
+  const scoreEl=cont.querySelector(".aaa-score-val"); if(scoreEl){ const sv=fmtLocale(score); if(scoreEl.textContent!==sv) scoreEl.textContent=sv; }
+  const rankEl=cont.querySelector(".aaa-rank");
+  if(rankEl){
+    if(rankEl.textContent!==rank) rankEl.textContent=rank;
+    const rc="aaa-rank aaa-rank-"+rank;
+    if(rankEl.className!==rc) rankEl.className=rc;
+  }
+  const rankWrap=cont.querySelector(".aaa-rank-wrap");
+  if(rankWrap){ const rw="aaa-rank-wrap"+(rank==="S"?" aaa-rank-laurel":""); if(rankWrap.className!==rw) rankWrap.className=rw; }
   cont.querySelectorAll(".aaa-stat-line").forEach(row=>{
     const lbl=row.querySelector("span");
-    if(lbl&&lbl.textContent.includes("Budget")){ const b=row.querySelector("b"); if(b){ const [sp,cap]=showcaseBudget(pr,p,pct); b.textContent=`${fmtYenCompact(sp)} / ${fmtYenCompact(cap)}`; } }
-    if(lbl&&lbl.textContent.includes("Hype")){ const b=row.querySelector("b"); if(b) b.textContent=fmtCompact(projectHypeDisplay(p,pr)); const rate=row.querySelector(".aaa-rate"); if(rate) rate.textContent="+"+fmtCompact(pr.showcaseHypeRate!=null?pr.showcaseHypeRate:hypePerHour())+"/h"; const mini=row.querySelector(".aaa-mini-bar i"); if(mini) mini.style.width=hypeBarPct(pr,p,pct)+"%"; }
+    if(lbl&&lbl.textContent.includes("Budget")){ const b=row.querySelector("b"); if(b){ const [sp,cap]=showcaseBudget(pr,p,pct); const tv=`${fmtYenCompact(sp)} / ${fmtYenCompact(cap)}`; if(b.textContent!==tv) b.textContent=tv; } }
+    if(lbl&&lbl.textContent.includes("Hype")){
+      const b=row.querySelector("b"); if(b){ const hv=fmtCompact(projectHypeDisplay(p,pr)); if(b.textContent!==hv) b.textContent=hv; }
+      const rate=row.querySelector(".aaa-rate"); if(rate){ const rv="+"+fmtCompact(pr.showcaseHypeRate!=null?pr.showcaseHypeRate:hypePerHour())+"/h"; if(rate.textContent!==rv) rate.textContent=rv; }
+      const mini=row.querySelector(".aaa-mini-bar i"); if(mini){ const mw=hypeBarPct(pr,p,pct)+"%"; if(mini.style.width!==mw) mini.style.width=mw; }
+    }
   });
   if(!done){ const eta=cont.querySelector(".slot-eta");
-    if(eta) eta.textContent=fmtEta(slotEtaSeconds(pr,p)); }
+    if(eta){ const tv=fmtEta(slotEtaSeconds(pr,p)); if(eta.textContent!==tv) eta.textContent=tv; } }
   return false;
 }
-function liveUpdate(){
-  updateTopBar();
-  if(S.tab!=="produce") return;
-  // if the number of visible production panels no longer matches state, do a full render
-  const shown=document.querySelectorAll(".slotpanel").length;
-  let filled=0; for(const pr of S.projects) if(pr) filled++;
-  if(shown!==filled){ render(); return; }
+function liveUpdateBody(){
+  patchTopBarResources();
+  if(S.tab!=="produce"||isGreenlightView()) return;
+  const expected=expectedProducePanels();
+  if(expected>0){
+    const shown=document.querySelectorAll(".slotpanel").length;
+    if(shown!==expected){ render(); return; }
+  }
   for(let i=0;i<S.projects.length;i++){ if(updateSlotLive(i)){ render(); return; } }
 }
+function scheduleLiveUpdate(){
+  if(_liveRaf) return;
+  _liveRaf=requestAnimationFrame(()=>{
+    _liveRaf=0;
+    if(started) liveUpdateBody();
+  });
+}
+function liveUpdate(){ scheduleLiveUpdate(); }
 
 function ensurePlayable(){
   if(!started) return;
@@ -3943,37 +4265,42 @@ function syncMainViewState(){
   m.dataset.glBack=(gl&&activeCount()>0&&_glMode)?"1":"0";
 }
 function render(){
+  _tabsDockSig="";
+  try{ renderBody(); }
+  catch(e){
+    console.error("render failed", e);
+    try{
+      setMainHTML(`<div class="aaa-tab-page panel"><h2>🛠️ Display error</h2><p class="muted">Tap <b>Play</b> or <b>Reset</b> to recover.</p></div>`);
+    }catch(_){}
+  }
+}
+function renderBody(){
+  if(!S) S=freshState();
   ensurePlayable();
   checkUnlocks();
   if(!tabAccessible(S.tab)) S.tab="produce";
   syncMainViewState();
-  // top bar
-  $("#r-yen").textContent=fmtHudRes("yen",hudDisplayValue("yen"));
-  $("#r-fans").textContent=fmtHudRes("fans",hudDisplayValue("fans"));
-  $("#r-hype").textContent=fmt(hudDisplayValue("hype"))+"/"+fmt(hudHypeCap());
-  $("#r-gems").textContent=fmtHudRes("gems",hudDisplayValue("gems"));
-  $("#trend").textContent=trendGenre();
+  elText("#r-yen", fmtHudRes("yen", hudDisplayValue("yen")));
+  elText("#r-fans", fmtHudRes("fans", hudDisplayValue("fans")));
+  elText("#r-hype", fmt(hudDisplayValue("hype"))+"/"+fmt(hudHypeCap()));
+  elText("#r-gems", fmtHudRes("gems", hudDisplayValue("gems")));
+  elText("#trend", trendGenre());
   updateIdleIncomeHudTip();
   { const sb=document.getElementById("share-bonus"); if(sb) sb.style.display=S.sharedOnce?"none":""; }
 
-  // goal — early fan toasts (10/50/100) sync with the north-star bar
   const goals=allGoalMilestones();
-  let nextM=goals.find(m=>S.fans<m.fans);
+  let nextM=goals.find(m=>(S.fans||0)<m.fans);
   if(nextM){
-    const prev=[...goals].reverse().find(m=>m.fans<=S.fans);
-    const lo=prev?prev.fans:0; const pct=Math.max(0,Math.min(100,(S.fans-lo)/(nextM.fans-lo)*100));
-    $("#goal-txt").textContent="🎯 "+nextM.label;
-    $("#goal-bar").style.width=pct+"%";
-  } else { $("#goal-txt").textContent="👑 Global Anime Empire achieved!"; $("#goal-bar").style.width="100%"; }
+    const prev=[...goals].reverse().find(m=>m.fans<=(S.fans||0));
+    const lo=prev?prev.fans:0; const pct=Math.max(0,Math.min(100,((S.fans||0)-lo)/(nextM.fans-lo)*100));
+    elText("#goal-txt", "🎯 "+nextM.label);
+    const gb=document.getElementById("goal-bar"); if(gb) gb.style.width=pct+"%";
+  } else {
+    elText("#goal-txt", "👑 Global Anime Empire achieved!");
+    const gb=document.getElementById("goal-bar"); if(gb) gb.style.width="100%";
+  }
 
-  // tabs
-  const tabDefs=[["produce","🎬",STR.tab_produce],["quests","📋",STR.tab_quests],["staff","👥",STR.tab_staff],["stars","⭐",STR.tab_stars],["research","🔬",STR.tab_research],["studio","🏢",STR.tab_studio],["market","📣",STR.tab_market],["store","💎",STR.tab_store]];
-  const tabOrder=(S.releases||0)<5?TAB_ORDER_EARLY:tabDefs.map(t=>t[0]);
-  const tabs=tabOrder.map(k=>tabDefs.find(t=>t[0]===k)).filter(t=>t&&tabInDock(t[0]));
-  $("#tabs").innerHTML=tabs.map(([k,ic,l])=>{
-    const locked=tabLocked(k);
-    return `<button type="button" class="tab ${S.tab===k&&!locked?"active":""}${locked?" tab-locked":""}" data-tab="${k}" role="tab" aria-selected="${S.tab===k&&!locked?"true":"false"}" aria-label="${l}${locked?" (locked)":""}" aria-disabled="${locked?"true":"false"}"><span class="ic" aria-hidden="true">${tabIcon(k,ic)}</span><span class="tab-lbl" aria-hidden="true">${TAB_MOCKUP[k]||l}</span>${locked?'<span class="tab-lock-ic" aria-hidden="true">🔒</span>':""}</button>`;
-  }).join("");
+  syncTabsDock();
 
   if(S.tab==="produce") renderProduce();
   else if(S.tab==="quests") renderQuests();
@@ -3990,7 +4317,7 @@ function dailyQuestHTML(){
   if(!(S.quests && S.quests.length)) return "";
   let h=`<div class="aaa-quest-block"><h3>📋 ${STR.h_daily} · ${fmtDur(msToMidnight())}</h3>`;
   S.quests.forEach((q,i)=>{
-    const t=QUEST_POOL.find(x=>x.id===q.id);
+    const t=questTemplate(q.id);
     const prog=Math.min(q.goal, S.questProg[questMetric(q.id)]||0);
     const done=prog>=q.goal;
     h+=`<div class="aaa-quest-card ${q.claimed?'done':done?'claimable':''}"><span class="aaa-quest-ic">📋</span><div class="aaa-quest-meta"><b>${t?t.desc(q.goal):q.id}</b><span>${fmt(prog)}/${fmt(q.goal)} · +${q.reward} 💎</span><div class="progress aaa-progress" style="margin-top:4px"><i style="width:${Math.min(100,prog/q.goal*100)}%"></i></div></div>
@@ -4022,7 +4349,7 @@ function loginCalendarHTML(){
       <span class="aaa-login-streak-flame" aria-hidden="true">${streakHot?"🔥":"✨"}</span>
       <div class="aaa-login-streak-body">
         <b class="aaa-login-streak-n">${streak} day streak</b>
-        <span class="aaa-login-streak-sub">${streakHot?"On fire — don't break the chain!":canClaim?"Claim today to keep your streak alive":"Log in daily for bigger rewards"}</span>
+        <span class="aaa-login-streak-sub">${streakHot?"On fire — don't break the chain!":canClaim?(streak?"Claim today to keep your streak alive":"Claim today to start your streak"):"Log in daily for bigger rewards"}</span>
       </div>
       <div class="aaa-login-streak-best"><small>Best</small><b>${best}</b></div>
     </div>
@@ -4182,6 +4509,29 @@ function seasonPassProgressHTML(){
     ${ready?'<div class="aaa-season-claim-hint">Tap to claim your tier ↓</div>':""}
   </div>`;
 }
+function seasonPassPanelHTML(){
+  const rel=S.releases||0, claimed=S.seasonClaimed||[];
+  let h=`<div class="aaa-quest-block" id="season-pass-panel"><h3>🎫 Season Pass</h3>
+    <div class="muted" style="margin:-4px 0 8px;font-size:11px">Free gem rewards for premiere milestones — no paywall.</div>
+    <div class="season-track">`;
+  SEASON_TIERS.forEach((t,i)=>{
+    const done=claimed.includes(i);
+    const ready=!done && rel>=t.releases;
+    h+=`<div class="season-tier ${done?"claimed":ready?"ready":""}" ${ready?`data-season="${i}"`:""} role="button" tabindex="${ready?"0":"-1"}" aria-label="${t.releases} premieres · +${t.gems} gems${done?" claimed":ready?" ready to claim":""}">
+      <div>${t.releases} shows</div><span class="st-gems">+${t.gems}💎</span>${done?"<div>✓</div>":ready?"<div>CLAIM</div>":""}</div>`;
+  });
+  return h+`</div></div>`;
+}
+function claimSeasonTier(i){
+  const t=SEASON_TIERS[i]; if(!t) return;
+  S.seasonClaimed=S.seasonClaimed||[];
+  if(S.seasonClaimed.includes(i)) return;
+  if((S.releases||0)<t.releases){ toast("Keep premiering to unlock this tier!"); return; }
+  S.seasonClaimed.push(i);
+  S.gems+=t.gems;
+  play("claim"); toast(`🎫 Season Pass: +${t.gems} Gems!`,true);
+  window.__AST_FX__?.burst?.(16); save(); render();
+}
 function renderQuests(){
   let h=`<div class="aaa-tab-page">${miniDashStripHTML()}${seasonPassProgressHTML()}<div class="aaa-page-hero aaa-quest-hero"><h2>🎯 ${STR.h_rewards}</h2><p>Daily login, quests, and weekly challenges — all on timers.</p></div>`;
   h+=loginCalendarHTML();
@@ -4189,8 +4539,9 @@ function renderQuests(){
   h+=hudRivalHTML();
   h+=dailyQuestHTML();
   h+=weeklyQuestHTML();
+  h+=seasonPassPanelHTML();
   h+=`</div>`;
-  main.innerHTML=h;
+  setMainHTML(h);
 }
 /* Industry Ranking — a live ladder of rival studios you climb */
 function industryHTML(){
@@ -4457,6 +4808,33 @@ function greenlightPieHTML(cost){
     <li><i style="background:#6b7280"></i>Contingency 5%</li>
   </ul></div>`;
 }
+function greenlightCastHTML(){
+  if(!featureUnlocked("stars")) return "";
+  const roster=(S.stars||[]).map(st=>({st,t:STAR_BY_ID[st.sid]})).filter(x=>x.t);
+  if(!roster.length) return "";
+  pruneCastSel();
+  const order=["Legendary","Epic","Rare","Common"];
+  roster.sort((a,b)=>order.indexOf(effRarity(a.st))-order.indexOf(effRarity(b.st)) || (b.st.level||1)-(a.st.level||1));
+  const chips=roster.map(({st,t})=>{
+    const rar=effRarity(st); const R=STAR_RARITY[rar];
+    const sel=_castSel.includes(st.sid);
+    const tired=!castEligible(st);
+    const en=Math.round(starEnergy(st));
+    const enColor=en>=60?"#5fd38a":(en>=30?"#ffc845":"#ff6b8a");
+    return `<button type="button" class="chip aaa-cast-chip${sel?" sel":""}${tired?" aaa-cast-tired":""}" data-cast="${st.sid}" style="border-color:${R.color};${tired?"opacity:.5":""}" title="Energy ${en}% · tap to ${sel?"remove":"feature"}">
+      ${sel?"✓ ":""}${t.name.replace(" ☆","")} <span class="pill" style="background:${R.color}22;color:${R.color}">L${st.level||1}</span>
+      <span class="aaa-cast-en" style="color:${enColor}">⚡${en}</span>
+    </button>`;
+  }).join("");
+  return `<div class="aaa-gl-cast">
+    <div class="aaa-gl-cast-head">
+      <span class="aaa-gl-cast-title">🎭 Featured cast <span class="pill">${_castSel.length}/${castCap()}</span></span>
+      <button type="button" class="btn-cyan hirebtn aaa-gl-smart-cast" data-act="smart-cast">Smart Cast</button>
+    </div>
+    <p class="aaa-gl-cast-hint muted">Stars with 15+ energy boost premiere score — tap to feature on this show.</p>
+    <div class="genrepick aaa-cast-pick">${chips}</div>
+  </div>`;
+}
 function renderGreenlightPage(empties,showBack){
   const ultraEarly=(S.releases||0)<1;
   const used=S.slots-empties;
@@ -4574,6 +4952,7 @@ function renderGreenlightPage(empties,showBack){
       </div>
       <div class="aaa-gl-risk"><h5>RISK ASSESSMENT</h5><span class="aaa-gl-risk-level ${risk.level.toLowerCase()}">🛡 ${risk.level}</span><p>${risk.note}</p></div>
     </div>
+    ${greenlightCastHTML()}
     ${isSequel?`<button type="button" class="btn-primary aaa-gl-confirm-banner aaa-gl-confirm-sequel" data-seq="${encodeURIComponent(selSc.sequelBase)}" data-seqg="${encodeURIComponent(selSc.genre)}" ${!afford?"disabled":""}><span class="aaa-gl-confirm-main"><span class="aaa-gl-confirm-ic">📺</span> GREENLIGHT SEQUEL<span class="aaa-gl-confirm-cost"><span class="aaa-gl-confirm-budget">${fmtYenCompact(selCost)}</span><span class="aaa-gl-confirm-slot">· uses 1 of ${empties} open</span></span></span><span class="aaa-gl-confirm-sub">${selSc.titleEn} · ${slotLabel}</span></button>`:`<button type="button" class="btn-primary aaa-gl-confirm-banner" data-gl="${selP.id}" data-gl-genre="${selSc.genre}" ${lock.locked||!afford?"disabled":""}><span class="aaa-gl-confirm-main"><span class="aaa-gl-confirm-ic">🎬</span> ${ultraEarly?"START PRODUCTION":"GREENLIGHT PROJECT"}<span class="aaa-gl-confirm-cost"><span class="aaa-gl-confirm-budget">${fmtYenCompact(selCost)}</span><span class="aaa-gl-confirm-slot">· uses 1 of ${empties} open</span></span></span><span class="aaa-gl-confirm-sub">${selSc.titleJa?selSc.titleJa+" · ":""}${selSc.titleEn} · ${slotLabel}</span></button>`}
   </div></div>`;
   return h;
@@ -4616,6 +4995,19 @@ function normalizeProduceSlotIx(){
     _produceSlotIx=firstEmptySlot()>=0?firstEmptySlot():0;
   }
 }
+function preferredEmptySlot(){
+  const ix=firstEmptySlot();
+  return ix>=0?ix:0;
+}
+function openGreenlightView(slot){
+  const ix=slot!=null&&slot>=0?(slot|0):preferredEmptySlot();
+  _produceSlotIx=Math.max(0,Math.min((S.slots||1)-1,ix));
+  S._produceSlotManual=true;
+  _glMode=true;
+  S.tab="produce";
+  render();
+  requestAnimationFrame(()=>focusProduceSlot(_produceSlotIx,true));
+}
 function focusProduceSlot(ix,manual){
   _produceSlotIx=Math.max(0,Math.min((S.slots||1)-1,ix|0));
   if(manual) S._produceSlotManual=true;
@@ -4630,6 +5022,7 @@ function focusProduceSlot(ix,manual){
 }
 function renderProduceSlotPanel(i,pr){
   const p=PROJECTS[pr.pid];
+  if(!p) return "";
   const pct=Math.min(100, pr.progress/p.work*100);
   const done=pr.progress>=p.work;
   const stars=projectStars(p, pr.genre, pr);
@@ -4713,7 +5106,7 @@ function renderProduce(){
   const empties=S.slots-activeCount();
   const hasActive=activeCount()>0;
   if((!hasActive&&empties>0)||(_glMode&&empties>0)){
-    main.innerHTML=renderGreenlightPage(empties,hasActive&&_glMode);
+    setMainHTML(renderGreenlightPage(empties,hasActive&&_glMode));
     scrollSelectedGlCard();
     return;
   }
@@ -4754,7 +5147,7 @@ function renderProduce(){
     ${idleRate>0?`<span class="aaa-idle-hint muted">+¥${fmt(idleRate*60)}/min · cap ${formatOfflineCapHours()}</span>`:""}
   </div>`;
   h+=`</div>`;
-  main.innerHTML=h;
+  setMainHTML(h);
   if(multi){
     bindProduceCarousel();
     requestAnimationFrame(()=>focusProduceSlot(_produceSlotIx));
@@ -4795,10 +5188,8 @@ function batchHireTotal(roles){
   const staffCopy={...S.staff};
   let total=0;
   for(const role of roles){
-    const r=ROLES[role]; const n=staffCopy[role]||0;
-    const disc=Math.max(0.4, 1 - S.upgrades.agency*0.05);
-    total+=Math.ceil(r.base*Math.pow(r.growth,n)*disc);
-    staffCopy[role]=n+1;
+    total+=hireCostFor(role, staffCopy[role]||0, S.upgrades.agency||0, ROLES[role]);
+    staffCopy[role]=(staffCopy[role]||0)+1;
   }
   return total;
 }
@@ -4813,7 +5204,7 @@ function hireBatch(){
     S.yen-=c; S.staff[role]++; questAdd("hires",1);
   }
   if(wasFirst) celebrateFirstHire(roles[0]);
-  else play("reward");
+  else play("hire");
   toast("🎉 Hired "+roles.map(r=>ROLES[r].name).join(" + ")+" — empire crew growing!",true);
   checkAchievements(); render(); save();
 }
@@ -4860,7 +5251,7 @@ function renderStaff(){
       <button type="button" class="btn-primary hirebtn aaa-staff-hire${afford?" aaa-staff-hire-afford":""}" data-hire="${key}" data-staff-hire="${key}" ${key==="animator"?'id="staff-hire-primary"':""} ${afford?"":"disabled"}>${STR.hire}<small>¥${fmt(c)}</small></button>
     </div>`;
   }
-  h+=`</div></div>`; main.innerHTML=h;
+  h+=`</div></div>`; setMainHTML(h);
 }
 
 function renderStars(){
@@ -4897,12 +5288,19 @@ function renderStars(){
       });
   }
   h+=`</div><div class="panel" style="margin-top:10px"><h2>📈 Role Bonuses</h2><div class="muted" style="font-size:11px">`+Object.keys(ROLES).map(r=>`${ROLES[r].name}: <b>+${fmt(starPowerForRole(r))}</b>`).join(" · ")+`</div></div></div>`;
-  main.innerHTML=h;
+  setMainHTML(h);
 }
 
 function renderResearch(){
+  if(!featureUnlocked("research")){
+    const prog=researchUnlockProgress();
+    setMainHTML(`<div class="aaa-tab-page"><div class="aaa-page-hero aaa-research-hero aaa-research-locked"><h2>🔬 ${t("h_research","Genre Mastery")}</h2><p>${prog||"Reach 120 total fans to unlock Genre Research."}</p></div></div>`);
+    return;
+  }
   const trend=trendGenre();
-  let h=`<div class="aaa-tab-page"><div class="aaa-page-hero aaa-research-hero"><h2>🔬 ${t("h_research","Genre Mastery")}</h2><p>+6% quality per level in each genre. Costs Yen + Hype.</p></div>
+  const affordAny=GENRES.some(g=>{ const rc=researchCost(g); return S.yen>=rc.cost&&S.hype>=rc.hypeCost; });
+  let h=`<div class="aaa-tab-page"><div class="aaa-page-hero aaa-research-hero"><h2>🔬 ${t("h_research","Genre Mastery")}</h2><p>+6% quality per level in each genre. Costs Yen + Hype.</p>
+    <div class="aaa-research-hero-meta">${affordAny?`<span class="pill aaa-research-pill-afford">Research ready</span>`:""}<span class="pill">${fmt(S.totalFansEver||0)} fans earned</span></div></div>
     <div class="aaa-research-trend-banner" aria-label="Trending genre">
       <span class="aaa-research-trend-ic" aria-hidden="true">🔥</span>
       <div class="aaa-research-trend-body"><b>Trending: ${trend}</b><span>Research <span class="aaa-mastery-genre-ic">${GENRE_ICONS[trend]||""}</span> ${trend} for bonus synergy on matching shows</span></div>
@@ -4919,7 +5317,7 @@ function renderResearch(){
       <div class="muted" style="font-size:10px">+${lvl*6}% → +${(lvl+1)*6}%</div>
       <button class="btn-cyan hirebtn" data-res="${g}" style="width:100%;margin-top:8px" ${canAfford?"":"disabled"}>${t("b_research","Research")}<small>¥${fmt(cost)} · ${hc}⚡</small></button></div>`;
   }
-  h+=`</div></div>`; main.innerHTML=h;
+  h+=`</div></div>`; setMainHTML(h);
 }
 
 function renderStudio(){
@@ -4953,40 +5351,47 @@ function renderStudio(){
   }
   h+=`</div>`;
   h+=statsHTML()+`</div>`;
-  main.innerHTML=h;
+  setMainHTML(h);
 }
 
 function renderMarket(){
   if(!featureUnlocked("market")){
     const prog=marketUnlockProgress();
-    main.innerHTML=`<div class="aaa-tab-page"><div class="aaa-page-hero aaa-market-hero aaa-market-locked"><h2>📣 ${t("h_marketing","Marketing")}</h2><p>${prog||"Reach 50 fans to unlock ad campaigns."}</p></div></div>`;
+    setMainHTML(`<div class="aaa-tab-page"><div class="aaa-page-hero aaa-market-hero aaa-market-locked"><h2>📣 ${t("h_marketing","Marketing")}</h2><p>${prog||"Reach 50 fans to unlock ad campaigns."}</p></div></div>`);
     return;
   }
   const affordAny=CAMPAIGNS.some(c=>S.yen>=c.cost);
-  let bestRoi=CAMPAIGNS[0];
-  CAMPAIGNS.forEach(c=>{ if(campaignRoiPer1k(c)>campaignRoiPer1k(bestRoi)) bestRoi=c; });
+  let bestRoi=null;
+  CAMPAIGNS.forEach(c=>{
+    if(S.yen<c.cost) return;
+    if(!bestRoi||campaignRoiPer1k(c)>campaignRoiPer1k(bestRoi)) bestRoi=c;
+  });
   let h=`<div class="aaa-tab-page"><div class="aaa-page-hero aaa-market-hero"><h2>📣 ${t("h_marketing","Marketing")}</h2><p>Convert ¥ into fans — ROI shows fans gained per ¥1,000 spent.</p>
     <div class="aaa-market-hero-meta"><span class="pill">${fmt(S.fans)} fans</span>${affordAny?`<span class="pill aaa-market-pill-afford">Campaign ready</span>`:""}</div></div><div class="aaa-market-grid">`;
   CAMPAIGNS.forEach((c,i)=>{
     const afford=S.yen>=c.cost;
-    const isBest=afford && c.name===bestRoi.name;
+    const isBest=!!(bestRoi&&afford&&c.name===bestRoi.name);
     h+=`<div class="aaa-market-card${afford?" aaa-market-afford":""}${isBest?" aaa-market-best":""}" data-camp-card="${i}">
       <div class="ic">${c.ic}</div><h4>${c.name}</h4>
       <div class="aaa-market-roi"><b>+${fmtCampaignRoi(c)}</b><span>fans / ¥1k</span></div>
       <div class="muted aaa-market-fans">+${fmt(c.fans)} fans</div>
       <button class="btn-primary hirebtn${afford?" aaa-market-run-afford":""}" data-camp="${i}" ${afford?"":"disabled"}>${t("b_run","Run")}<small>¥${fmt(c.cost)}</small></button></div>`;
   });
-  h+=`</div></div>`; main.innerHTML=h;
+  h+=`</div></div>`; setMainHTML(h);
 }
 
 function renderStore(){
   const P=MONETIZATION.prices, packCfg=[["gems_s","Starter Pack"],["gems_m","Studio Pack"],["gems_l","Producer Pack"],["gems_mega","Mogul Pack"]];
   const fgClaimed=S.freeGemsDate===todayStr();
   const storeLead=STORE_PAYMENTS
-    ? "Gems power scouts, skips, and boosts. Earn free through play or top up below."
-    : "100% free to play — earn every 💎 through daily rewards, quests, and milestones.";
+    ? t("s_lead_pay","Gems power scouts, skips, and boosts. Earn free through play or top up below.")
+    : t("s_lead_f2p","100% free to play — earn every 💎 through daily rewards, quests, and milestones.");
   let h=`<div class="aaa-tab-page"><div class="aaa-page-hero aaa-store-hero"><h2>💎 ${t("s_store","Studio Store")}</h2><p>${storeLead}</p></div>
-    <div class="aaa-store-balance aaa-store-balance-hero"><img src="icons/hf/gems.png?v=${ASSET_V}" alt=""><div class="aaa-store-balance-body"><div class="aaa-store-balance-kicker">Your Gem Balance</div><b class="aaa-store-balance-amt">${fmt(S.gems)}</b><div class="aaa-store-balance-sub muted">Scouts · skips · boosts</div></div></div>`;
+    <div class="aaa-store-balance aaa-store-balance-hero"><img src="icons/hf/gems.png?v=${ASSET_V}" alt=""><div class="aaa-store-balance-body"><div class="aaa-store-balance-kicker">${t("s_balance_kicker","Your Gem Balance")}</div><b class="aaa-store-balance-amt">${fmt(S.gems)}</b><div class="aaa-store-balance-sub muted">${t("s_balance_sub","Scouts · skips · boosts")}</div></div></div>`;
+  if(STORE_PAYMENTS){
+    h+=`<div class="aaa-store-earn-strip panel"><span class="muted">Earn 💎 free every day — no purchase needed.</span>
+      <button type="button" class="btn-gold hirebtn aaa-store-earn-cta" data-act="${fgClaimed?"store-scroll-freegems":"freegems"}">${fgClaimed?"View free rewards":"Claim +10 💎"}<small>FREE</small></button></div>`;
+  }
   h+=`<div class="panel" style="padding:12px">`;
   // Producer Pass (owned state always shown)
   if(S.producerPass){
@@ -5029,19 +5434,20 @@ function renderStore(){
     if(!S.noAds) h+=`<div class="uprow"><div class="meta"><h4>🚫 Remove Ads</h4><div class="muted">Removes ad prompts; keeps all free rewards</div></div>
         <button class="btn-ghost hirebtn" data-buy="noads">Get<small>${P.noads}</small></button></div>`;
     const redeemSkus=[["pass","Producer Pass"],["bundle","Starter Bundle"],["bundle_legend","Legend Bundle"],["bundle_mogul","Mogul Bundle"],["gems_s","Gems 120"],["gems_m","Gems 350"],["gems_l","Gems 800"],["gems_mega","Gems 2000"],["star_aurora","Aurora Vesper"],["star_phoenix","Phoenix Kogane"],["star_shogun","Kaiser Shogun"],["items_pack","Items Pack"],["noads","Remove Ads"]];
-    h+=`<div class="panel" style="margin-top:12px;border:2px dashed rgba(70,80,107,.35)"><h3 style="margin:0 0 8px;font-size:14px">🔑 Redeem Gumroad License</h3>
+    h+=`<div class="panel aaa-redeem-license-form" style="margin-top:12px;border:2px dashed rgba(70,80,107,.35)"><h3 style="margin:0 0 8px;font-size:14px">🔑 Redeem Gumroad License</h3>
       <div class="muted" style="font-size:11px;margin-bottom:8px">If auto-redirect didn't work, paste the license key from your Gumroad receipt.</div>
-      <select id="redeem-sku" class="ast-input">${redeemSkus.map(([k,l])=>`<option value="${k}">${l}</option>`).join("")}</select>
-      <input id="redeem-key" class="ast-input" type="text" placeholder="XXXX-XXXX-XXXX-XXXX">
-      <button class="btn-cyan" data-act="redeem-submit" style="width:100%">Redeem Purchase</button></div>`;
+      <select id="redeem-sku" class="ast-input" aria-label="Product purchased">${redeemSkus.map(([k,l])=>`<option value="${k}">${l}</option>`).join("")}</select>
+      <input id="redeem-key" class="ast-input" type="text" placeholder="XXXX-XXXX-XXXX-XXXX" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="License key">
+      <button type="button" class="btn-cyan hirebtn" data-act="redeem-submit" style="width:100%">Redeem Purchase</button></div>`;
   } else {
-    h+=`<div class="aaa-store-f2p-hero panel" style="margin:8px 0;padding:14px;border:2px solid rgba(255,211,110,.45);background:linear-gradient(135deg,rgba(255,211,110,.12),rgba(176,107,255,.08))">
+    h+=`<div class="aaa-store-f2p-hero panel">
       <h3 style="margin:0 0 6px;font-size:15px">🆓 100% Free to Play</h3>
       <div class="muted" style="font-size:12px;line-height:1.55">No purchase required. Earn 💎 through <b>daily login</b>, <b>quests</b>, <b>achievements</b>, <b>milestones</b>, <b>every 25 releases</b>, and <b>studio level-ups</b> — then spend below on boosts, skips, and items.</div>
-      <div class="aaa-store-earn-path" style="margin-top:10px;display:grid;gap:6px;font-size:11px">
+      <div class="aaa-store-earn-path">
         <div>🎁 Daily free +10 💎 · 📋 Quest rewards · 🏆 Achievements</div>
         <div>🎖️ Level-ups · 🎡 Free daily spin &amp; scratch</div>
-      </div></div>`;
+      </div>
+      <button type="button" class="btn-gold hirebtn aaa-store-f2p-cta" data-act="${fgClaimed?"store-scroll-freegems":"freegems"}" style="width:100%;margin-top:10px">${fgClaimed?"See free rewards below":"Claim +10 💎 now"}<small>FREE</small></button></div>`;
   }
   // Spend gems
   h+=`<div id="aaa-gem-spend" class="muted" style="margin:12px 0 6px;font-weight:800;color:var(--plum)">${t("s_spend","Spend Gems")}</div>`;
@@ -5051,11 +5457,11 @@ function renderStore(){
   h+=gemSpendRow("golden","🌟 Golden Hour","3× income for 10 minutes");
   // Free rewarded boost + daily free gems
   const cd=Math.max(0,Math.ceil((S.rewardedCdUntil-Date.now())/1000));
-  h+=`<div class="muted" style="margin:12px 0 6px;font-weight:800;color:var(--plum)">${t("s_free","Free Rewards")}</div>
+  h+=`<div id="aaa-free-gems" class="muted" style="margin:12px 0 6px;font-weight:800;color:var(--plum)">${t("s_free","Free Rewards")}</div>
     <div class="uprow aaa-free-gems-row${fgClaimed?"":" claimable"}"><div class="meta"><h4>🎁 Daily Free Gems</h4><div class="muted">${fgClaimed?"Claimed — back tomorrow!":(typeof MONETIZATION.adProvider==="function"?"Watch a short ad and collect +10 💎":"Collect your free +10 💎 today")}</div></div>
-      <button class="btn-gold hirebtn aaa-free-gems-btn" data-act="freegems" ${fgClaimed?"disabled":""}>Claim<small>+10 💎</small></button></div>
+      <button type="button" class="btn-gold hirebtn aaa-free-gems-btn" data-act="freegems" ${fgClaimed?"disabled":""}>Claim<small>+10 💎</small></button></div>
     <div class="uprow"><div class="meta"><h4>⚡ Free 2× Income</h4><div class="muted">${rewardedActive()?"Active now!":(cd>0?("Recharges in "+cd+"s"):(typeof MONETIZATION.adProvider==="function"?"Watch &amp; earn 2× income for 5 min":"Claim a free 2× income boost for 5 min"))}</div></div>
-      <button class="btn-gold hirebtn" data-act="rewarded" ${cd>0?"disabled":""}>Boost<small>FREE</small></button></div>`;
+      <button type="button" class="btn-gold hirebtn" data-act="rewarded">Boost<small>FREE</small></button></div>`;
   // Achievements
   const got=S.achievements.length, tot=ACHIEVEMENTS.length, nextAch=nextAchievement();
   h+=`<div class="muted" style="margin:12px 0 6px;font-weight:800;color:var(--plum)">🏆 ${t("s_ach","Achievements")} (${got}/${tot})</div>`;
@@ -5069,7 +5475,7 @@ function renderStore(){
   });
   // Redeem
   h+=`<div class="muted" style="margin:12px 0 6px;font-weight:800;color:var(--plum)">${t("s_redeem","Redeem a Code")}</div>
-    <div class="row" style="gap:8px"><input id="redeemcode" placeholder="ENTER CODE" style="flex:1;padding:10px;border-radius:12px;border:2px solid rgba(70,80,107,.25);font-weight:700;text-transform:uppercase"><button class="btn-ghost hirebtn" data-act="redeem">Redeem</button></div>`;
+    <div class="aaa-redeem-promo-form row" style="gap:8px"><input id="redeemcode" class="ast-input" placeholder="ENTER CODE" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Promo code" style="flex:1;font-weight:700;text-transform:uppercase"><button type="button" class="btn-ghost hirebtn" data-act="redeem">Redeem</button></div>`;
   if(NATIVE){
     h+=`<button class="btn-ghost" data-act="restore" style="width:100%;margin-top:10px">↺ Restore Purchases</button>`;
   }
@@ -5079,25 +5485,25 @@ function renderStore(){
   const spinFree=S.wheelDate!==todayStr(), scratchFree=S.scratchDate!==todayStr();
   h+=`<div class="panel aaa-minigame-panel"><h2>🎡 Spin &amp; Win</h2>
     <div class="muted" style="margin-bottom:8px">One FREE spin daily, then ${SPIN_GEM_COST} 💎 each. Win Yen, Gems, Hype, items, boosts &amp; rare stars.</div>
-    <button class="btn-gold" data-act="spin" style="width:100%" ${(spinFree||S.gems>=SPIN_GEM_COST)?"":"disabled"}>🎡 ${spinFree?"FREE Daily Spin":("Spin · "+SPIN_GEM_COST+" 💎")}</button>
+    <button type="button" class="btn-gold hirebtn${(!spinFree&&S.gems<SPIN_GEM_COST)?" aaa-store-btn-low":""}" data-act="spin" style="width:100%">🎡 ${spinFree?"FREE Daily Spin":("Spin · "+SPIN_GEM_COST+" 💎")}</button>
     <h2 style="margin-top:14px">🎟️ Scratch Cards</h2>
     <div class="muted" style="margin-bottom:8px">One FREE card daily, then ${SCRATCH_GEM_COST} 💎. Bigger prizes — premium items &amp; stars.</div>
-    <button class="btn-primary" data-act="scratch" style="width:100%" ${(scratchFree||S.gems>=SCRATCH_GEM_COST)?"":"disabled"}>🎟️ ${scratchFree?"FREE Daily Card":("Scratch · "+SCRATCH_GEM_COST+" 💎")}</button>
-    <button class="btn-ghost" data-act="odds" style="width:100%;margin-top:8px">📊 View all drop rates &amp; odds</button></div>`;
+    <button type="button" class="btn-primary hirebtn${(!scratchFree&&S.gems<SCRATCH_GEM_COST)?" aaa-store-btn-low":""}" data-act="scratch" style="width:100%">🎟️ ${scratchFree?"FREE Daily Card":("Scratch · "+SCRATCH_GEM_COST+" 💎")}</button>
+    <button type="button" class="btn-ghost hirebtn" data-act="odds" style="width:100%;margin-top:8px">📊 View all drop rates &amp; odds</button></div>`;
   // ----- Power Items shop + inventory -----
   h+=`<div class="panel listgrid"><h2>🧰 Power Items</h2><div class="muted" style="margin-bottom:8px">One-use props for an instant edge — buy with Gems, win from spins, or grab the Items Pack above.</div>`;
   Object.keys(ITEMS).forEach(id=>{ const it=ITEMS[id]; const have=itemCount(id);
     const calmHot=id==="calm_orb"&&(S.chaos||0)>40;
     h+=`<div class="uprow${calmHot?" aaa-calm-orb-hot":""}"${calmHot?' data-calm-orb-hot="1"':""}><div class="meta"><h4>${it.ic} ${it.name}${calmHot?` <span class="pill aaa-calm-orb-badge">Chaos high</span>`:""}${have?` <span class="pill">×${have}</span>`:""}${it.premium?` <span class="pill" style="background:#ffe39a;color:#7a5200">PREMIUM</span>`:""}</h4><div class="muted">${it.desc}${calmHot?" — resets chaos before the next disaster.":""}</div></div>
-      <div class="row" style="gap:6px">${have?`<button class="btn-cyan hirebtn" data-itemuse="${id}">Use</button>`:""}<button class="btn-gold hirebtn" data-itembuy="${id}" ${S.gems>=it.gem?"":"disabled"}>Buy<small>${it.gem} 💎</small></button></div></div>`;
+      <div class="row" style="gap:6px">${have?`<button type="button" class="btn-cyan hirebtn" data-itemuse="${id}">Use</button>`:""}<button type="button" class="btn-gold hirebtn${S.gems<it.gem?" aaa-store-btn-low":""}" data-itembuy="${id}">Buy<small>${it.gem} 💎</small></button></div></div>`;
   });
   h+=`</div></div>`;
-  main.innerHTML=h;
+  setMainHTML(h);
 }
 
 /* ========================= EVENTS (delegated) ========================= */
 document.addEventListener("click", e=>{
-  const t=e.target.closest("[data-tab],[data-gl],[data-gl-select],[data-gl-sequel],[data-hire],[data-up],[data-res],[data-camp],[data-g],[data-buy],[data-gem],[data-act],[data-rel],[data-rush],[data-scout],[data-quest],[data-week],[data-perk],[data-cast],[data-sa],[data-itemuse],[data-itembuy],[data-seq],#a-over,#a-prestige");
+  const t=e.target.closest("[data-tab],[data-gl],[data-gl-select],[data-gl-sequel],[data-hire],[data-up],[data-res],[data-camp],[data-g],[data-buy],[data-gem],[data-act],[data-rel],[data-rush],[data-scout],[data-quest],[data-week],[data-plus-goal],[data-rival-claim],[data-season],[data-perk],[data-cast],[data-sa],[data-itemuse],[data-itembuy],[data-seq],#a-over,#a-prestige");
   if(!t) return;
   if(t.dataset.itemuse) return useItem(t.dataset.itemuse);
   if(t.dataset.itembuy) return buyItem(t.dataset.itembuy);
@@ -5114,6 +5520,7 @@ document.addEventListener("click", e=>{
   if(t.dataset.week!=null) return claimWeekly(+t.dataset.week);
   if(t.dataset.plusGoal!=null) return claimHudDailyGoal(+t.dataset.plusGoal);
   if(t.dataset.rivalClaim!=null) return claimHudRival();
+  if(t.dataset.season!=null) return claimSeasonTier(+t.dataset.season);
   if(t.dataset.act==="login-claim") return claimLoginDay();
   if(t.dataset.act==="produce-slot-tab"){ focusProduceSlot(+t.dataset.slotIx,true); play("click"); return; }
   if(t.dataset.act==="greenlight-view"){ _glMode=true; play("click"); return render(); }
@@ -5150,14 +5557,17 @@ document.addEventListener("click", e=>{
   if(t.dataset.act==="quick-greenlight") return quickGreenlight();
   if(t.dataset.act==="freelance") return freelance();
   if(t.dataset.act==="rewarded") return rewardedBoost();
+  if(t.dataset.act==="store-scroll-freegems"){ scrollStoreSection("aaa-free-gems"); play("click"); return; }
+  if(t.dataset.act==="store-scroll-gemspend"){ scrollStoreSection("aaa-gem-spend"); play("click"); return; }
   if(t.dataset.act==="tapboost") return tapBoost(+t.dataset.slot);
   if(t.dataset.act==="freegems") return claimFreeGems();
   if(t.dataset.act==="expand") return expandStudio();
   if(t.dataset.act==="batch-hire") return hireBatch();
+  if(t.dataset.act==="smart-cast") return smartCastPick();
   if(t.dataset.act==="share") return shareGame();
   if(t.dataset.act==="return-hub-close"){ closeReturnHub(); return; }
   if(t.dataset.act==="daily-close"){ celebrateCollect("daily"); const m=document.getElementById("daily"); if(m) m.style.display="none"; if(!drainUnlockModalQueue()) maybeShowHowtoAfterReturnHub(); return; }
-  if(t.dataset.act==="reveal-close"){ const m=document.getElementById("reveal"); if(m){ m.style.display="none"; m.classList.remove("aaa-reveal-opening"); } return; }
+  if(t.dataset.act==="reveal-close"){ closeRevealModal(); return; }
   if(t.dataset.act==="dec-yes") return resolveDecision(true);
   if(t.dataset.act==="dec-no") return resolveDecision(false);
   if(t.dataset.act==="festival-win-close") return closeFestivalWinModal();
@@ -5192,11 +5602,19 @@ document.addEventListener("click", e=>{
   if(t.id==="a-over") return overdrive();
   if(t.id==="a-prestige") return prestige();
 });
-$("#btn-mute").onclick=()=>{ S.muted=!S.muted; updateMute(); save(); };
-$("#btn-save").onclick=()=>{ save(); toast("Game saved 💾"); };
-$("#btn-reset").onclick=()=>{ const reset=()=>{ S=freshState(); if(isDemoMode()) S._demoMode=true; bootstrapNewStudio(); save(); render(); toast(isDemoMode()?"🎬 Demo studio ready — showcase anime is producing!":"🎬 Fresh studio — hire staff and greenlight your first anime!",true); };
+{ const bm=document.getElementById("btn-mute"); if(bm) bm.onclick=()=>{ S.muted=!S.muted; updateMute(); save(); }; }
+{ const bs=document.getElementById("btn-save"); if(bs) bs.onclick=()=>{ save(); toast("Game saved 💾"); }; }
+{ const br=document.getElementById("btn-reset"); if(br) br.onclick=()=>{ const reset=()=>{ S=freshState(); if(isDemoMode()) S._demoMode=true; bootstrapNewStudio(); save(); render(); toast(isDemoMode()?"🎬 Demo studio ready — showcase anime is producing!":"🎬 Fresh studio — hire staff and greenlight your first anime!",true); };
   if(window.__AST_CONFIRM__) window.__AST_CONFIRM__("Reset ALL progress?","Every save wiped — cannot be undone.",reset);
-  else if(confirm("Reset ALL progress? This cannot be undone.")) reset(); };
+  else if(confirm("Reset ALL progress? This cannot be undone.")) reset(); }; }
+document.addEventListener("keydown", e=>{
+  if(e.key!=="Enter") return;
+  const ae=document.activeElement;
+  if(!ae||ae.id!=="redeemcode"&&ae.id!=="redeem-key") return;
+  e.preventDefault();
+  if(ae.id==="redeemcode") redeem(ae.value);
+  else{ const sk=document.getElementById("redeem-sku"); redeemLicenseKey(sk&&sk.value, ae.value); }
+});
 
 /* keyboard shortcuts (physical key codes) */
 const KEYTAB={ Digit1:"produce",Digit2:"staff",Digit3:"stars",Digit4:"research",Digit5:"studio",Digit6:"market",Digit7:"store" };
@@ -5232,7 +5650,7 @@ function frame(now){
   acc+=now-last; last=now;
   let ticked=false;
   while(acc>=STEP){ tick(1); acc-=STEP; ticked=true; }
-  if(ticked && started){ liveUpdate(); } // light, in-place refresh — never rebuilds #main on a normal tick
+  if(ticked && started) scheduleLiveUpdate(); // rAF-coalesced in-place refresh — never rebuilds #main on a normal tick
 }
 addEventListener("blur", ()=>paused=true);
 addEventListener("focus", ()=>{ paused=false; last=performance.now(); });
@@ -5245,15 +5663,7 @@ document.addEventListener("visibilitychange", ()=>{
   if(sec>60){
     const r=simulateOffline(sec);
     const dr=checkDaily();
-    if(!maybeShowReturnHub({returnSec:sec,returnR:r,dr,had:true})){
-      if(offlineHadMeaningfulReturn(r)){
-        if(sec<OFFLINE_PREVIEW_CAP) showReturnPlayerWelcomeToast(sec,r,dr);
-        else showOfflineModal(sec,r,{preview:false});
-      }else if(dr){
-        $("#daily-body").innerHTML=renderDailySectionHTML(dr);
-        $("#daily").style.display="flex";
-      }
-    }
+    bootReturnBatch({returnSec:sec,returnR:r,dr,had:true});
     save(); render();
   }
   last=performance.now();
@@ -5281,9 +5691,10 @@ function begin(forceDemo){
   else if(forceDemo===false) S._demoMode=false;
   try{ const sn=document.getElementById("start-studio"); if(sn&&sn.value&&!S.studioName) S.studioName=cleanName(sn.value); }catch(e){}
   const booted=bootstrapNewStudio();
-  initAudio(); updateMute();
-  $("#start").style.display="none";
-  pendingToasts.forEach(([m,g])=>toast(m,g)); pendingToasts=[];
+  try{ initAudio(); }catch(e){ console.warn("initAudio in begin", e); }
+  try{ updateMute(); }catch(e){}
+  elShow("start", "none");
+  pendingToasts.forEach(([m,g])=>{ try{ toast(m,g); }catch(_){} }); pendingToasts=[];
   if((S.releases||0)<3){
     const earlyIds=new Set(EARLY_QUEST_POOL.map(q=>q.id));
     if(!S.quests?.length||S.quests.some(q=>!earlyIds.has(q.id))) rollQuests();
@@ -5313,27 +5724,23 @@ function begin(forceDemo){
     }
     const dr=checkDaily();
     if((S.releases||0)>=2) maybeShowPwaInstallBanner();
-    const hubShown=maybeShowReturnHub({returnSec,returnR,dr,had});
-    if(!hubShown){
-      if(had&&returnR&&offlineHadMeaningfulReturn(returnR)){
-        showOfflineModal(returnSec,returnR,{preview:returnSec<OFFLINE_PREVIEW_CAP});
-      }
-      if(had) showReturnPlayerWelcomeToast(returnSec,returnR,dr);
-      if(dr){
-        $("#daily-body").innerHTML=renderDailySectionHTML(dr);
-        $("#daily").style.display="flex";
-      }
-      if(shouldShowWhatsNew()){ S.whatsnewSeen=false; S.lastWhatsNewBuild=BUILD_TAG; const wn=document.getElementById("whatsnew"); if(wn) wn.style.display="flex"; }
-      else if(!S.tutorialSeen&&!isGuidedTutorialEligible()){ $("#howto").style.display="flex"; }
-    }
+    bootReturnBatch({returnSec,returnR,dr,had});
   }
   track("game_start",{slots:S.slots,fans:S.fans,bootstrapped:!!booted});
   render(); save();
   requestAnimationFrame(frame);
 }
 let loaded=false;
-try{ loaded=load(); if(!loaded) S=freshState(); }
-catch(e){ S=freshState(); loaded=false; }
+try{
+  loaded=load();
+  if(!loaded) S=freshState();
+  repairLoadedState();
+}catch(e){
+  console.warn("boot load failed", e);
+  S=freshState();
+  repairLoadedState();
+  loaded=false;
+}
 bindAudioGestureUnlock();
 if(isDemoMode()) S._demoMode=true;
 else if(S._bootstrapped||((S.yen||0)>5000000&&(S.releases||0)<3)) S._demoMode=true;
@@ -5348,11 +5755,14 @@ async function redeemPurchaseToken(pt){
     const j=await r.json();
     if(!j.ok||!j.grant) return false;
     const g=j.grant;
+    if(grantWasRedeemed(g.gid)) return false;
     let changed=false;
     if(g.kind==="gems") changed=grantEntitlement("gems", parseInt(g.amount||"0",10));
     else if(g.kind==="star") changed=grantEntitlement("star",0,{id:g.id,sku:g.sku});
     else changed=grantEntitlement(g.kind);
-    if(changed){ track("purchase_grant",{grant:g.kind,signed:true}); clearGrantParams(); }
+    if(g.gid) rememberGrantId(g.gid);
+    if(changed) track("purchase_grant",{grant:g.kind,signed:true});
+    if(changed || g.gid) clearGrantParams();
     return changed;
   }catch(e){ return false; }
 }
@@ -5413,8 +5823,10 @@ function safeBegin(){
   catch(e){
     console.error("boot failed", e);
     try{ localStorage.removeItem(SAVE_KEY); }catch(_){}
+    started=false;
     S=freshState();
-    toast("Save reset — tap Play to start fresh", true);
+    try{ repairLoadedState(); }catch(_){}
+    try{ toast("Save reset — tap Play to start fresh", true); }catch(_){}
     showStartScreen();
   }
 }
@@ -5440,7 +5852,10 @@ window.__AST_HOOK__ = {
   castCap,
   starEnergy,
   effRarity,
-  setCastSel: (arr) => { _castSel = (arr || []).slice(); },
+  setCastSel: (arr) => { _castSel = (arr || []).slice(); pruneCastSel(); },
+  smartCastPick,
+  pruneCastSel,
+  closeRevealModal,
   GENRES,
   PROJECTS,
   STAR_POOL,
@@ -5468,6 +5883,7 @@ window.__AST_HOOK__ = {
   castingCost,
   SCOUT_GEMS,
   canClaimLogin,
+  claimableRewardCount,
   quickGreenlight,
   claimFirstReward,
   hypeCap,
@@ -5521,6 +5937,8 @@ window.__AST_HOOK__ = {
   isGreenlightView,
   greenlightBack: ()=>{ _glMode=false; render(); },
   focusProduceSlot,
+  openGreenlightView,
+  preferredEmptySlot,
   produceSlotHud: ()=>({active:activeCount(),total:S.slots,ready:produceReadyCount()}),
   tapBoost,
   isGuidedTutorialEligible,
@@ -5535,10 +5953,14 @@ window.__AST_HOOK__ = {
   maybeShowPwaInstallBanner,
   triggerPwaInstall,
   showReturnPlayerWelcomeToast,
+  showWhileAwayPreviewToast,
+  bootReturnBatch,
   returnHubOpen,
   maybeShowReturnHub,
   closeReturnHub,
   pendingUnlockTeasers,
+  t,
+  tf,
 };
 </script>
 <script src="aaa-upgrade.js?v=100"></script>

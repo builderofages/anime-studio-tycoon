@@ -15,7 +15,7 @@
     star_aurora:"star_aurora", star_phoenix:"star_phoenix", star_shogun:"star_shogun",
     items_pack:"items_pack", noads:"noads" };
   var GEMS = { gems_s:120, gems_m:350, gems_l:800, gems_mega:2000 };
-  var NONCONSUMABLE = { pass:1, bundle:1, bundle_legend:1, bundle_mogul:1, star_aurora:1, star_phoenix:1, star_shogun:1, noads:1 };
+  var NONCONSUMABLE = { pass:1, bundle:1, bundle_legend:1, bundle_mogul:1, star_aurora:1, star_phoenix:1, star_shogun:1, items_pack:1, noads:1 };
 
   // reverse lookup: any platform product id -> our sku key
   var ID2SKU = {};
@@ -44,7 +44,7 @@
       var NC=P.ProductType.NON_CONSUMABLE, C=P.ProductType.CONSUMABLE;
       [["pass",NC],["bundle",NC],["bundle_legend",NC],["bundle_mogul",NC],["noads",NC],
        ["star_aurora",NC],["star_phoenix",NC],["star_shogun",NC],
-       ["gems_s",C],["gems_m",C],["gems_l",C],["gems_mega",C],["items_pack",C]]
+       ["gems_s",C],["gems_m",C],["gems_l",C],["gems_mega",C],["items_pack",NC]]
        .forEach(function(p){ if(map[p[0]]) defs.push({ id:map[p[0]], type:p[1], platform:plat }); });
     }
     if(isAndroid) add(GOOGLE, GP);

@@ -155,11 +155,12 @@ assert(!html.includes('href="hf-design.css'), "hf-design.css disabled (ast-v5)")
 assert(!html.includes('href="aaa-ui.css'), "aaa-ui.css disabled (ast-v5)");
 assert(html.includes("legacy-fx.css"), "legacy-fx css linked");
 assert(html.includes("ast-v5.css"), "ast-v5 design css linked");
-assert(html.includes("build 107"), "build 107 tag");
+assert(html.includes("build 108"), "build 108 tag");
 assert(html.includes("Production Score"), "production score label");
-assert(html.includes("Hotfix"), "build 107 hotfix tag");
+assert(html.includes("Legion"), "build 108 legion tag");
 assert(html.includes("safeBegin"), "boot safeBegin guard");
 assert(readFileSync(join(root, ".vercelignore"), "utf8").includes("!audio/*.mp3"), "vercelignore allows audio mp3");
+assert(readFileSync(join(root, ".vercelignore"), "utf8").includes("!audio/*.wav"), "vercelignore allows audio wav");
 assert(existsSync(join(root, "audio/bgm.m4a")), "self-hosted bgm");
 assert(existsSync(join(root, "audio/hire.wav")), "hire wav sfx");
 assert(existsSync(join(root, "audio/first-greenlight.wav")), "first-greenlight wav sfx");
@@ -171,7 +172,13 @@ assert(existsSync(join(root, "og-share.jpg")), "og-share.jpg self-hosted share c
 assert(html.includes("og-share.jpg"), "og image uses self-hosted share card");
 assert(html.includes("SHARE_OG_URL"), "share og url constant");
 assert(existsSync(join(root, "robots.txt")), "robots.txt for crawlers");
+assert(readFileSync(join(root, "robots.txt"), "utf8").includes("Disallow: /api/"), "robots blocks api");
 assert(existsSync(join(root, "sitemap.xml")), "sitemap.xml for seo");
+assert(readFileSync(join(root, "sitemap.xml"), "utf8").includes("<lastmod>"), "sitemap lastmod dates");
+const vercelCfg = JSON.parse(readFileSync(join(root, "vercel.json"), "utf8"));
+assert(vercelCfg.rewrites?.some((r) => String(r.source).includes("/audio/")), "vercel audio rewrite");
+assert(vercelCfg.headers?.some((h) => String(h.source).includes("/audio/")), "vercel audio cache headers");
+assert(vercelCfg.redirects?.some((r) => r.destination === "/play"), "vercel root redirect to play");
 assert(html.includes("v5-idle-feel.js"), "idle feel script linked");
 assert(html.includes("dynastyHeroHTML"), "dynasty hero on studio dashboard");
 assert(html.includes("franchisePanelHTML"), "franchise list panel on studio tab");
@@ -242,6 +249,8 @@ assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("premieres to
 assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("Chaos Mode unlocked"), "coach chaos enable nudge");
 assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("chaosDisasterCoach"), "coach chaos disaster warning");
 assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("disaster looming"), "coach chaos over 50 tip");
+assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("firstChaosSurvivalCoach"), "coach first chaos survival tip");
+assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("crisisOpenCoach"), "coach active crisis tip");
 assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("hud-chaos-crisis"), "chaos pill crisis pulse class");
 assert(readFileSync(join(root, "gameplay-endless.js"), "utf8").includes("S.chaosMode"), "endless chaos mode synergy");
 assert(html.includes('id="market-unlock"'), "market unlock modal");
@@ -260,6 +269,13 @@ assert(html.includes("nextAchievement"), "next achievement helper");
 assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("free gems ready"), "store tab badge free gems");
 assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("free +10"), "coach free gems nudge");
 assert(html.includes("checkoutConfigured"), "store payments checkout gate");
+assert(html.includes("storePaymentsEnabled"), "store payments f2p url gate");
+assert(html.includes('id="aaa-free-gems"'), "free gems section anchor");
+assert(html.includes("aaa-redeem-promo-form"), "promo redeem form row");
+assert(html.includes("aaa-redeem-license-form"), "gumroad license redeem form");
+assert(html.includes("store-scroll-freegems"), "store scroll to free gems cta");
+assert(html.includes("scrollStoreSection"), "store section scroll helper");
+assert(html.includes("Enter a promo code"), "redeem empty code feedback");
 assert(html.includes("async function redeemLicenseKey"), "gumroad license redeem helper");
 assert(/function buyReal\([^)]*\)\{[\s\S]*?\}\s*\nasync function redeemLicenseKey/.test(html), "buyReal closed before redeemLicenseKey");
 assert(html.includes("aaa-store-f2p-hero"), "f2p earn gems hero when payments off");
@@ -293,11 +309,11 @@ assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("guided-tutor
 assert(html.includes('id="btn-start-play"'), "start play cta");
 assert(html.includes('id="btn-start-demo"'), "start demo cta");
 assert(html.includes("start-cta-group"), "start cta group");
-assert(html.includes("Build 107"), "what's new build 107");
-assert(html.includes("Self-hosted"), "what's new audio bullet");
-assert(html.includes("Build 107 — Hotfix"), "what's new hotfix headline");
-assert(html.includes("Deploy fix"), "what's new deploy fix bullet");
-assert(html.includes("safeBegin"), "what's new boot guard bullet");
+assert(html.includes("Build 108"), "what's new build 108");
+assert(html.includes("Build 108 — Legion"), "what's new legion headline");
+assert(html.includes("901 tests"), "what's new test count bullet");
+assert(html.includes("repairLoadedState"), "what's new boot repair bullet");
+assert(html.includes("Grant idempotency"), "what's new iap bullet");
 assert(existsSync(join(root, "launch/DEVICE_QA.md")), "device qa checklist doc");
 assert(html.includes("tabUnlockPct"), "tab unlock pct helper");
 assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("updateTabUnlockRings"), "tab unlock ring updater");
@@ -308,8 +324,14 @@ assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("tab-unlock-r
 assert(html.includes("redeemedCodes"), "promo code one-time schema");
 assert(html.includes("WebApplication"), "what's new seo bullet");
 assert(existsSync(join(root, "play.html")), "play.html redirect file");
+const playHtml = readFileSync(join(root, "play.html"), "utf8");
+assert(playHtml.includes("og-share.jpg"), "play.html og image for share crawlers");
+assert(playHtml.includes('property="og:url"'), "play.html og url meta");
 assert(html.includes('rel="canonical"'), "canonical link tag");
 assert(html.includes('property="og:url"'), "og url meta");
+assert(html.includes('property="og:image:type"'), "og image type meta");
+assert(html.includes('property="og:locale"'), "og locale meta");
+assert(html.includes("max-image-preview:large"), "robots max image preview");
 assert(html.includes('type="application/ld+json"'), "json-ld schema");
 assert(html.includes("Free Anime Idle Tycoon Game"), "og title for share cards");
 assert(html.includes('id="btn-start-share"'), "start screen share button");
@@ -409,7 +431,7 @@ assert(html.includes("celebrateGreenlightSlot"), "greenlight slot celebration bu
 assert(html.includes("unlock-open"), "unlock modal open sfx profile");
 assert(html.includes("milestone-collect"), "share milestone collect sfx profile");
 const astCss = readFileSync(join(root, "ast-v5.css"), "utf8");
-assert(astCss.includes("BUILD 107"), "build 107 css marker");
+assert(astCss.includes("BUILD 108"), "build 108 css marker");
 assert(astCss.includes("start-share-link"), "start share link css");
 assert(astCss.includes("aaa-dynasty-hero"), "dynasty hero css");
 assert(astCss.includes("aaa-franchise-panel"), "franchise panel css");
@@ -585,6 +607,66 @@ assert(hudJs.includes("goalMilestoneAction"), "goal bar milestone scroll");
 assert(hudJs.includes("pulseHudCombo"), "combo pulse on tap boost");
 assert(hudJs.includes("refreshHud"), "live studio rating refresh");
 assert(readFileSync(join(root, "gameplay-studio-rating.js"), "utf8").includes("refreshHud"), "rating refreshHud export");
+
+/** Agent fixes markers — boot guards, corrupt-save repair, grant idempotency, greenlight nav. */
+assert(html.includes("function repairLoadedState("), "agent fix: repairLoadedState defined");
+assert(
+  html.includes("repairLoadedState();") && html.includes("mergeLoadedSave"),
+  "agent fix: repairLoadedState on load merge"
+);
+assert(html.includes('const VALID_TABS = new Set(["produce"'), "agent fix: VALID_TABS set");
+assert(html.includes("S.projects = S.projects.slice(0, S.slots)"), "agent fix: repairLoadedState clamps slots");
+assert(html.includes('if(!VALID_TABS.has(S.tab)) S.tab = "produce"'), "agent fix: repairLoadedState resets tab");
+assert(html.includes("for(const r of Object.keys(ROLES))"), "agent fix: repairLoadedState sanitizes staff");
+assert(html.includes("function safeBegin("), "agent fix: safeBegin wrapper");
+assert(html.includes('console.error("boot failed"'), "agent fix: safeBegin logs boot failure");
+assert(
+  html.includes("localStorage.removeItem(SAVE_KEY)") && html.includes("function safeBegin("),
+  "agent fix: safeBegin clears corrupt save"
+);
+assert(html.includes("function showStartScreen("), "agent fix: showStartScreen helper");
+assert(
+  html.includes("showStartScreen();") && html.includes("function safeBegin("),
+  "agent fix: safeBegin falls back to start screen"
+);
+assert(html.includes("if(loaded) safeBegin()"), "agent fix: returning player safeBegin path");
+assert(html.includes("else showStartScreen()"), "agent fix: new player start screen path");
+assert(html.includes('console.warn("boot load failed"'), "agent fix: boot load catch warns");
+assert(html.includes('throw new Error("invalid save")'), "agent fix: load rejects invalid save");
+assert(html.includes('console.warn("load failed"'), "agent fix: load failure warns");
+assert(html.includes('console.error("render failed"'), "agent fix: render failure recovery");
+assert(html.includes("function openGreenlightView("), "agent fix: openGreenlightView defined");
+assert(html.includes("openGreenlightView,"), "agent fix: openGreenlightView on hook");
+assert(
+  /function openGreenlightView\([\s\S]*?S\._produceSlotManual=true/.test(html),
+  "agent fix: openGreenlightView manual slot"
+);
+assert(/function openGreenlightView\([\s\S]*?_glMode=true/.test(html), "agent fix: openGreenlightView gl mode");
+assert(html.includes("preferredEmptySlot,"), "agent fix: preferredEmptySlot on hook");
+assert(html.includes("greenlightBack:"), "agent fix: greenlightBack on hook");
+assert(hudJs.includes("hook.openGreenlightView"), "agent fix: coach uses openGreenlightView");
+assert(hudJs.includes("produce-slot-empty"), "agent fix: coach produce-slot-empty action");
+assert(logic.includes("redeemedGrants: []"), "agent fix: logic freshState redeemedGrants");
+assert(logic.includes("redeemedLicenses: []"), "agent fix: logic freshState redeemedLicenses");
+assert(logic.includes("S.redeemedGrants = Array.isArray(d.redeemedGrants)"), "agent fix: mergeLoadedSave redeemedGrants");
+assert(logic.includes("S.redeemedLicenses = Array.isArray(d.redeemedLicenses)"), "agent fix: mergeLoadedSave redeemedLicenses");
+assert(html.includes("function grantWasRedeemed("), "agent fix: grantWasRedeemed helper");
+assert(html.includes("function rememberGrantId("), "agent fix: rememberGrantId helper");
+assert(html.includes("if(grantWasRedeemed(g.gid)) return false"), "agent fix: redeemPurchaseToken idempotency");
+assert(html.includes("if(g.gid) rememberGrantId(g.gid)"), "agent fix: redeemPurchaseToken remembers gid");
+assert(html.includes("function clearGrantParams("), "agent fix: clearGrantParams helper");
+assert(html.includes("S.redeemedGrants=keep.redeemedGrants"), "agent fix: prestige keeps redeemedGrants");
+assert(html.includes("S.redeemedLicenses=keep.redeemedLicenses"), "agent fix: prestige keeps redeemedLicenses");
+assert(html.includes("redeemedGrants:S.redeemedGrants"), "agent fix: prestige snapshot redeemedGrants");
+assert(html.includes("S.redeemedLicenses.includes(lk)"), "agent fix: license one-time redeem guard");
+assert(html.includes("function ensureHudRival("), "agent fix: ensureHudRival hook");
+assert(html.includes("S.rivalGoal<=S.rivalStartVal"), "agent fix: rival goal corrupt-save repair");
+assert(astCss.includes("safeBegin boot guard"), "agent fix: build 107 css safeBegin marker");
+assert(html.includes("function ensurePlayable("), "agent fix: ensurePlayable stuck-save helper");
+assert(html.includes("ensurePlayable();") && html.includes("function renderBody("), "agent fix: ensurePlayable in render path");
+assert(html.includes("function redeemPurchaseToken("), "agent fix: signed purchase token redeem");
+assert(html.includes("window.AST_GRANT = grantEntitlement"), "agent fix: native IAP grant bridge");
+
 assert(html.includes("restartAsDemo"), "restartAsDemo on hook");
 assert(html.includes("seasonClaimed"), "season pass state");
 assert(html.includes('id="main"></div>'), "clean #main shell");

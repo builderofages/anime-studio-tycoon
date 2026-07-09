@@ -3,6 +3,23 @@
  * Minimal chrome: compact stat bar, slim coach, icon dock, utility drawer.
  */
 (function () {
+  function tr(key, fallback, vars) {
+    const hook = window.__AST_HOOK__;
+    if (hook?.tf) return hook.tf(key, vars, fallback);
+    if (hook?.t) {
+      let s = hook.t(key, fallback);
+      if (vars) { for (const k in vars) s = String(s).split("{" + k + "}").join(vars[k]); }
+      return s;
+    }
+    let s = fallback != null ? fallback : key;
+    if (vars) { for (const k in vars) s = String(s).split("{" + k + "}").join(vars[k]); }
+    return s;
+  }
+
+  function stepText(val, S, hook) {
+    return typeof val === "function" ? val(S, hook) : val;
+  }
+
   const QUEST_METRICS = {
     rel: "releases", rel2: "releases", yen: "yen", big: "yen", camp: "campaigns",
     hire: "hires", hire2: "hires", hype: "hypeSpent", scout: "scouts",
@@ -14,25 +31,25 @@
   const GUIDED_STEPS = [
     {
       id: "name",
-      label: "Studio",
+      label: () => tr("tut_lbl_studio", "Studio"),
       stepN: 1,
-      title: "Name your studio",
-      body: (S) => `You're ${S.studioName || "the director"}! Your brand shows at the top of the screen.`,
+      title: () => tr("tut_name_title", "Name your studio"),
+      body: (S) => tr("tut_name_body", "You're {name}! Your brand shows at the top of the screen.", { name: S.studioName || "the director" }),
       target: () => document.getElementById("hud-studio-name"),
       done: (S) => !!S._tutorialNameDone,
       coach: (S) => ({
-        message: `Welcome, ${S.studioName || "Director"}! Tap Next when you're ready.`,
-        cta: "Next",
+        message: tr("coach_welcome", "Welcome, {name}! Tap Next when you're ready.", { name: S.studioName || "Director" }),
+        cta: tr("coach_cta_next", "Next"),
         urgent: true,
         action: { type: "tutorial-next" },
       }),
     },
     {
       id: "hire",
-      label: "Hire",
+      label: () => tr("tut_lbl_hire", "Hire"),
       stepN: 2,
-      title: "Hire your first staff",
-      body: () => "Animators and writers speed up every production. Hire one on Recruit.",
+      title: () => tr("tut_hire_title", "Hire your first staff"),
+      body: () => tr("tut_hire_body", "Animators and writers speed up every production. Hire one on Recruit."),
       target: (S, hook) => staffHireTutorialTarget(S, hook),
       done: (S) => staffTotal(S) > 0,
       coach: (S, hook) => {
@@ -41,17 +58,17 @@
         const role = btn?.dataset?.hire || btn?.dataset?.staffHire;
         if (onStaff && role && hook.ROLES?.[role]) {
           return {
-            message: `Tap Hire on ${hook.ROLES[role].name} — crew speeds every show`,
+            message: tr("coach_hire_role", "Tap Hire on {role} — crew speeds every show", { role: hook.ROLES[role].name }),
             tab: "staff",
-            cta: "Hire",
+            cta: tr("hire", "Hire"),
             urgent: true,
             action: { type: "hire", role },
           };
         }
         return {
-          message: "Open Recruit and hire your first team member",
+          message: tr("coach_hire_first", "Open Recruit and hire your first team member"),
           tab: "staff",
-          cta: "Recruit",
+          cta: tr("coach_cta_recruit", "Recruit"),
           urgent: true,
           action: { type: "tab", tab: "staff" },
         };
@@ -59,29 +76,29 @@
     },
     {
       id: "greenlight",
-      label: "Greenlight",
+      label: () => tr("tut_lbl_greenlight", "Greenlight"),
       stepN: 3,
-      title: "Greenlight your first anime",
-      body: () => "Pick a project and start production — one tap greenlights your debut show.",
+      title: () => tr("tut_gl_title", "Greenlight your first anime"),
+      body: () => tr("tut_gl_body", "Pick a project and start production — one tap greenlights your debut show."),
       target: () =>
         document.querySelector(".aaa-quick-gl-banner") ||
         document.querySelector(".aaa-gl-confirm-banner") ||
         document.querySelector('.tab[data-tab="produce"]'),
       done: (S) => activeCount(S) > 0 || (S.releases || 0) > 0,
       coach: () => ({
-        message: "Greenlight your first anime on Play",
+        message: tr("coach_gl_first", "Greenlight your first anime on Play"),
         tab: "produce",
-        cta: "Greenlight",
+        cta: tr("coach_cta_greenlight", "Greenlight"),
         urgent: true,
         action: { type: "quick-greenlight" },
       }),
     },
     {
       id: "boost",
-      label: "Boost",
+      label: () => tr("tut_lbl_boost", "Boost"),
       stepN: 4,
-      title: "Tap to boost speed",
-      body: () => "Tap the poster or Boost button to rush episodes — great for your first premiere.",
+      title: () => tr("tut_boost_title", "Tap to boost speed"),
+      body: () => tr("tut_boost_body", "Tap the poster or Boost button to rush episodes — great for your first premiere."),
       target: () =>
         document.querySelector(".aaa-poster.aaa-tap-hint") ||
         document.querySelector(".aaa-play-btn") ||
@@ -91,9 +108,9 @@
         const pr = (S.projects || []).find(Boolean);
         const slot = pr ? (S.projects || []).indexOf(pr) : 0;
         return {
-          message: "Tap the poster to boost production speed",
+          message: tr("coach_boost_poster", "Tap the poster to boost production speed"),
           tab: "produce",
-          cta: "Boost",
+          cta: tr("coach_cta_boost", "Boost"),
           urgent: true,
           action: { type: "tapboost", slot },
         };
@@ -101,10 +118,10 @@
     },
     {
       id: "premiere",
-      label: "Premiere",
+      label: () => tr("tut_lbl_premiere", "Premiere"),
       stepN: 5,
-      title: "Premiere when ready",
-      body: () => "When the bar fills, hit Global Premiere to earn ¥, fans, and your first hit.",
+      title: () => tr("tut_premiere_title", "Premiere when ready"),
+      body: () => tr("tut_premiere_body", "When the bar fills, hit Global Premiere to earn ¥, fans, and your first hit."),
       target: () =>
         document.querySelector(".aaa-premiere-ready") ||
         document.getElementById("pathway-cta"),
@@ -112,9 +129,9 @@
       coach: (S, hook) => {
         const ready = readySlot(S, hook);
         return {
-          message: ready >= 0 ? "Production ready — premiere now!" : "Keep boosting until production finishes",
+          message: ready >= 0 ? tr("coach_premiere_ready", "Production ready — premiere now!") : tr("coach_premiere_wait", "Keep boosting until production finishes"),
           tab: "produce",
-          cta: ready >= 0 ? "Premiere" : "Play",
+          cta: ready >= 0 ? tr("coach_cta_premiere", "Premiere") : tr("coach_cta_play", "Play"),
           urgent: ready >= 0,
           action: ready >= 0 ? { type: "premiere", slot: ready } : { type: "tab", tab: "produce" },
         };
@@ -168,13 +185,13 @@
     el.hidden = true;
     el.innerHTML = `
       <div class="gt-card">
-        <div class="gt-kicker">First session</div>
-        <div class="gt-step" id="gt-step-label">Step 1 of 5</div>
+        <div class="gt-kicker" id="gt-kicker"></div>
+        <div class="gt-step" id="gt-step-label"></div>
         <h3 class="gt-title" id="gt-title"></h3>
         <p class="gt-body" id="gt-body"></p>
         <div class="gt-actions">
-          <button type="button" class="btn-ghost gt-skip" data-act="tutorial-skip">Skip tutorial</button>
-          <button type="button" class="btn-primary gt-next" id="gt-next" hidden>Next ▶</button>
+          <button type="button" class="btn-ghost gt-skip" data-act="tutorial-skip" id="gt-skip-btn"></button>
+          <button type="button" class="btn-primary gt-next" id="gt-next" hidden></button>
         </div>
       </div>`;
     document.body.appendChild(el);
@@ -229,13 +246,20 @@
     document.documentElement.classList.add("gt-tutorial-active");
     if (panel) {
       panel.hidden = false;
-      const title = typeof step.title === "function" ? step.title(S, hook) : step.title;
-      const body = typeof step.body === "function" ? step.body(S, hook) : step.body;
-      document.getElementById("gt-step-label").textContent = `Step ${step.stepN} of ${GUIDED_STEPS.length}`;
+      const title = stepText(step.title, S, hook);
+      const body = stepText(step.body, S, hook);
+      const kicker = document.getElementById("gt-kicker");
+      if (kicker) kicker.textContent = tr("tut_kicker", "First session");
+      document.getElementById("gt-step-label").textContent = tr("tut_step", "Step {n} of {total}", { n: step.stepN, total: GUIDED_STEPS.length });
       document.getElementById("gt-title").textContent = title;
       document.getElementById("gt-body").textContent = body;
+      const skipBtn = document.getElementById("gt-skip-btn");
+      if (skipBtn) skipBtn.textContent = tr("tut_skip", "Skip tutorial");
       const nextBtn = document.getElementById("gt-next");
-      if (nextBtn) nextBtn.hidden = step.id !== "name";
+      if (nextBtn) {
+        nextBtn.hidden = step.id !== "name";
+        nextBtn.textContent = tr("coach_cta_next", "Next") + " ▶";
+      }
     }
     clearGtHighlight();
     const target = typeof step.target === "function" ? step.target(S, hook) : step.target?.();
@@ -283,6 +307,8 @@
   }
 
   function claimableQuests(S) {
+    const hook = window.__AST_HOOK__;
+    if (hook?.claimableRewardCount) return hook.claimableRewardCount();
     let n = 0;
     (S.quests || []).forEach((q) => {
       if (q.claimed) return;
@@ -388,6 +414,7 @@
       { key: "studio", label: "🏢 Studio", prog: () => hook.studioUnlockProgress?.() },
       { key: "stars", label: "⭐ Stars", prog: () => hook.starsUnlockProgress?.() },
       { key: "market", label: "📣 Marketing", prog: () => hook.marketUnlockProgress?.() },
+      { key: "research", label: "🔬 Research", prog: () => hook.researchUnlockProgress?.() },
     ];
     for (const item of order) {
       if (hook.featureUnlocked?.(item.key)) continue;
@@ -516,6 +543,27 @@
     return null;
   }
 
+  function firstChaosSurvivalCoach(S) {
+    if (!S.awaitFirstChaosSurvival) return null;
+    const ch = Math.round(S.chaos || 0);
+    return {
+      message: `First crisis at ${ch}% danger — pick pay-to-fix or ride it out!`,
+      tab: "produce",
+      cta: "Respond",
+      urgent: true,
+    };
+  }
+
+  function crisisOpenCoach() {
+    if (!window.__AST_CRISIS_OPEN__ && !window.__AST_PENDING_WARROOM__) return null;
+    return {
+      message: "Studio crisis — read the danger meter and choose your response.",
+      tab: "produce",
+      cta: "Crisis",
+      urgent: true,
+    };
+  }
+
   function chaosDisasterCoach(S, hook) {
     const chaosOk = hook.featureUnlocked ? hook.featureUnlocked("chaos") : (S.releases || 0) >= 10;
     if (!chaosOk) return null;
@@ -575,6 +623,9 @@
 
     const franchiseCoach = franchiseOpportunityCoach(S, hook);
     if (franchiseCoach) return franchiseCoach;
+
+    const crisisCoach = crisisOpenCoach() || firstChaosSurvivalCoach(S);
+    if (crisisCoach) return crisisCoach;
 
     const chaosWarn = chaosDisasterCoach(S, hook);
     if (chaosWarn) return chaosWarn;
@@ -921,7 +972,18 @@
       hook.play("click");
       return;
     }
-    if (pw.action.type === "produce-slot-empty" || pw.action.type === "produce-slot-focus") {
+    if (pw.action.type === "produce-slot-empty") {
+      hook.getState().tab = "produce";
+      const slot = pw.action.slot ?? hook.firstEmptySlot?.() ?? 0;
+      if (typeof hook.openGreenlightView === "function") hook.openGreenlightView(slot);
+      else {
+        if (typeof hook.focusProduceSlot === "function") hook.focusProduceSlot(slot, true);
+        hook.render();
+      }
+      hook.play("click");
+      return;
+    }
+    if (pw.action.type === "produce-slot-focus") {
       const needRender = hook.getState().tab !== "produce";
       hook.getState().tab = "produce";
       if (needRender) hook.render();
@@ -1008,7 +1070,7 @@
         hook.render();
         if (pw.action.focus === "freegems") {
           requestAnimationFrame(() => {
-            document.querySelector(".aaa-free-gems-btn:not([disabled])")?.scrollIntoView({ behavior: "smooth", block: "center" });
+            (document.getElementById("aaa-free-gems") || document.querySelector(".aaa-free-gems-btn:not([disabled])"))?.scrollIntoView({ behavior: "smooth", block: "start" });
           });
         } else if (pw.action.focus === "gem-spend") {
           requestAnimationFrame(() => {
@@ -1091,15 +1153,15 @@
       rail.id = "pathway-rail";
       rail.className = "coach-bar";
       rail.setAttribute("role", "region");
-      rail.setAttribute("aria-label", "Coach tips");
+      rail.setAttribute("aria-label", tr("coach_aria_tips", "Coach tips"));
       rail.innerHTML = `
         <img class="coach-avatar" src="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_063644_801c60be-70bb-4a64-99db-703283d57b54.jpeg?v=88" alt="Coach avatar" width="40" height="40">
         <div class="coach-body">
-          <span class="coach-label" id="coach-label">Coach's Tip</span>
+          <span class="coach-label" id="coach-label"></span>
           <p class="coach-msg" id="pathway-now" aria-live="polite" aria-labelledby="coach-label"></p>
         </div>
-        <button type="button" class="coach-cta" id="pathway-cta" aria-label="Go to next action">→</button>
-        <button type="button" class="coach-gift" id="coach-gift" aria-label="Rewards and quests"><span class="coach-gift-ic" aria-hidden="true">🎁</span><span class="coach-gift-dot" id="coach-gift-dot" hidden></span></button>
+        <button type="button" class="coach-cta" id="pathway-cta" aria-label="">→</button>
+        <button type="button" class="coach-gift" id="coach-gift" aria-label=""><span class="coach-gift-ic" aria-hidden="true">🎁</span><span class="coach-gift-dot" id="coach-gift-dot" hidden></span></button>
         <div class="pathway-steps" id="pathway-steps" hidden></div>`;
       const goal = document.getElementById("goal");
       if (goal && !document.getElementById("rival-race")) {
@@ -1156,6 +1218,12 @@
       ).join("");
       document.body.appendChild(petals);
     }
+
+    updateCoachChrome(false);
+    const ctaBoot = document.getElementById("pathway-cta");
+    if (ctaBoot) ctaBoot.setAttribute("aria-label", tr("coach_aria_cta", "Go to next action"));
+    const giftBoot = document.getElementById("coach-gift");
+    if (giftBoot) giftBoot.setAttribute("aria-label", tr("coach_aria_gift", "Rewards and quests"));
 
     document.getElementById("hud-back-btn").addEventListener("click", () => {
       const hook = window.__AST_HOOK__;
@@ -1534,8 +1602,9 @@
         const cls = ["pathway-step"];
         if (done) cls.push("done");
         else if (i === current) cls.push("current");
+        const lbl = stepText(d.label, S, hook);
         const mark = done ? "✓" : String(d.stepN);
-        return `<span class="${cls.join(" ")}" title="${d.label}"><span class="pathway-step-n">${mark}</span><span class="pathway-step-lbl">${d.label}</span></span>`;
+        return `<span class="${cls.join(" ")}" title="${lbl}"><span class="pathway-step-n">${mark}</span><span class="pathway-step-lbl">${lbl}</span></span>`;
       }).join("");
     }
     const showcase = hook.isShowcaseDemo && hook.isShowcaseDemo();
@@ -1860,9 +1929,15 @@
       nowEl.textContent = pw.message;
       nowEl.classList.toggle("coach-next-unlock", !!pw.nextUnlock);
     }
+    const coachLbl = document.getElementById("coach-label");
+    if (coachLbl) {
+      const base = tr("coach_label", "Coach's Tip");
+      coachLbl.textContent = guidedCoach ? `${base} · ${tr("coach_guided", "Guided")}` : base;
+    }
+
     const cta = document.getElementById("pathway-cta");
     if (cta) {
-      const label = pw.cta || "Go";
+      const label = pw.cta || tr("coach_go", "Go");
       cta.textContent = label;
       cta.setAttribute("aria-label", label);
       cta.classList.toggle("urgent", !!pw.urgent);
@@ -2029,7 +2104,25 @@
     return true;
   }
 
-  window.__AST_HUD__ = { organizeDrawerSlot, pulseHudCombo, goalMilestoneAction };
+  function updateCoachChrome(guided) {
+    const rail = document.getElementById("pathway-rail");
+    if (rail) rail.setAttribute("aria-label", tr("coach_aria_tips", "Coach tips"));
+    const lbl = document.getElementById("coach-label");
+    if (lbl) {
+      const base = tr("coach_label", "Coach's Tip");
+      lbl.textContent = guided ? `${base} · ${tr("coach_guided", "Guided")}` : base;
+    }
+    const cta = document.getElementById("pathway-cta");
+    if (cta && cta.getAttribute("aria-label") == null) cta.setAttribute("aria-label", tr("coach_aria_cta", "Go to next action"));
+    const gift = document.getElementById("coach-gift");
+    if (gift) gift.setAttribute("aria-label", tr("coach_aria_gift", "Rewards and quests"));
+    const skipBtn = document.getElementById("gt-skip-btn");
+    if (skipBtn) skipBtn.textContent = tr("tut_skip", "Skip tutorial");
+    const kicker = document.getElementById("gt-kicker");
+    if (kicker) kicker.textContent = tr("tut_kicker", "First session");
+  }
+
+  window.__AST_HUD__ = { organizeDrawerSlot, pulseHudCombo, goalMilestoneAction, updateCoachChrome };
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", () => setTimeout(buildHudShell, 0));

@@ -492,6 +492,8 @@
     document.addEventListener("click", (e) => {
       const t = e.target.closest("[data-plus-goal],[data-plus-smartcast],[data-plus-autogl],[data-plus-freelance],[data-plus-settings],[data-merch-buy],[data-rival-claim],[data-collection-bonus],[data-settings-close],[data-settings-motion],[data-settings-ticker],[data-settings-autogl]");
       if (!t) return;
+      if (document.documentElement.classList.contains("hud-v3-active") &&
+          (t.dataset.plusGoal != null || t.dataset.rivalClaim != null)) return;
       const S = hook.getState();
       if (t.dataset.plusGoal != null) return claimDailyGoal(+t.dataset.plusGoal);
       if (t.dataset.plusSmartcast != null) return smartCast(S, hook);

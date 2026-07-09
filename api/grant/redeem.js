@@ -12,6 +12,6 @@ export default async function handler(req, res) {
 
   return res.status(200).json({
     ok: true,
-    grant: { kind: data.kind, amount: data.amount || 0, sku: data.sku || null, id: data.id || null },
+    grant: { kind: data.kind, amount: data.amount || 0, sku: data.sku || null, id: data.id || null, gid: data.gid || null },
   });
 }

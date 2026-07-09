@@ -3,5 +3,6 @@ Allow: /
 Allow: /play
 Allow: /privacy
 Allow: /terms
+Disallow: /api/
 
 Sitemap: https://anime-studio-tycoon.vercel.app/sitemap.xml

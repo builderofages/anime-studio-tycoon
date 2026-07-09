@@ -13,13 +13,43 @@
     ".ui-dept-header,.ui-store-hero,.ui-store-shelf,.dynasty-badge,.eventbar," +
     ".aaa-produce-strip,.hero-card";
 
+  let stripRaf = 0;
+  let mainClean = true;
+
   function stripLegacyInjections() {
     if (!document.documentElement.classList.contains("hud-v3-active")) return;
-    document.querySelectorAll(KILL).forEach((el) => el.remove());
+
+    const nodes = document.querySelectorAll(KILL);
+    if (nodes.length) nodes.forEach((el) => el.remove());
+
     const main = document.getElementById("main");
     if (!main) return;
+
+    if (mainClean) {
+      for (const el of main.children) {
+        if (!el.classList.contains("aaa-tab-page")) {
+          mainClean = false;
+          break;
+        }
+      }
+      if (mainClean) return;
+    }
+
+    let removed = false;
     [...main.children].forEach((el) => {
-      if (!el.classList.contains("aaa-tab-page")) el.remove();
+      if (!el.classList.contains("aaa-tab-page")) {
+        el.remove();
+        removed = true;
+      }
+    });
+    mainClean = !removed;
+  }
+
+  function scheduleStrip() {
+    if (stripRaf) return;
+    stripRaf = requestAnimationFrame(() => {
+      stripRaf = 0;
+      stripLegacyInjections();
     });
   }
 
@@ -29,10 +59,10 @@
     hook.__v5GuardInstalled = true;
     const inner = hook.render;
     hook.render = function () {
+      mainClean = false;
       inner();
       stripLegacyInjections();
-      requestAnimationFrame(stripLegacyInjections);
-      setTimeout(stripLegacyInjections, 0);
+      scheduleStrip();
     };
     stripLegacyInjections();
     return true;

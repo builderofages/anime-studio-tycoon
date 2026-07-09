@@ -201,5 +201,182 @@ assert(html.includes("celebrateGreenlightSlot"), "celebrateGreenlightSlot burst 
 const playSimSrc = readFileSync(join(root, "scripts/playtest-sim.mjs"), "utf8");
 assert(playSimSrc.includes("IAP_FETCH_MOCK"), "playtest-sim IAP_FETCH_MOCK coverage");
 
+/** logic.js exports + extended save schema (parity with playtest-sim staticSaveSchemaAudit). */
+const LOGIC_EXPORTS = [
+  "makeUnlocks",
+  "tabUnlockPctFor",
+  "rivalGoalFromStart",
+  "mergeLoadedSave",
+  "createFreshState",
+  "DEFAULT_STAFF",
+  "DEFAULT_QUEST_PROG",
+  "UNLOCK_THRESHOLDS",
+  "redeemedGrants: []",
+  "totalFansEver: 20",
+];
+for (const key of LOGIC_EXPORTS) {
+  assert(logic.includes(key), `logic export/schema: ${key.split(":")[0].trim()}`);
+}
+
+/** Production loop hooks — bootstrap → hire → greenlight → tap/tick → premiere. */
+const PRODUCTION_HOOKS = [
+  "function greenlight(",
+  "function releaseProject(",
+  "function tick(",
+  "function powerPerTick(",
+  "function hire(",
+  "function expandStudio(",
+  "function activeCount(",
+  "function freshState(",
+];
+for (const hook of PRODUCTION_HOOKS) {
+  assert(html.includes(hook), `production hook: ${hook.replace("function ", "").replace("(", "")}`);
+}
+assert(html.includes("expandCostFor"), "expandCostFor imported from logic.js");
+assert(
+  html.includes('if(!featureUnlocked("studio"))') && html.includes("function expandStudio("),
+  "expandStudio gated on studio unlock"
+);
+
+/** Save/load persistence anchors. */
+assert(html.includes('const SAVE_KEY = "anime_studio_tycoon_v1"'), "SAVE_KEY constant");
+assert(html.includes("localStorage.setItem(SAVE_KEY"), "save writes localStorage");
+assert(html.includes("localStorage.getItem(SAVE_KEY"), "load reads localStorage");
+assert(html.includes("mergeLoadedSave"), "load merges via mergeLoadedSave");
+
+/** IAP / redeem / grant entitlement hooks. */
+const IAP_HOOKS = [
+  "function grantEntitlement(",
+  "async function redeemPurchaseToken(",
+  "async function redeemLicenseKey(",
+  "function readGrant(",
+  "function grantWasRedeemed(",
+  "function rememberGrantId(",
+  "function clearGrantParams(",
+];
+for (const hook of IAP_HOOKS) {
+  assert(html.includes(hook), `iap hook: ${hook.replace(/^(async )?function /, "").replace("(", "")}`);
+}
+assert(html.includes('"WELCOME":{gems:25}'), "WELCOME redeem code defined");
+assert(html.includes("redeemedGrants"), "redeemedGrants grant idempotency field");
+
+/** Unlock modal storm — queue flags + drain priority chain. */
+const UNLOCK_QUEUE_FLAGS = [
+  "_studioUnlockQueued",
+  "_starsUnlockQueued",
+  "_marketUnlockQueued",
+  "_researchUnlockQueued",
+  "_chaosUnlockQueued",
+];
+for (const flag of UNLOCK_QUEUE_FLAGS) {
+  assert(html.includes(flag), `unlock queue flag: ${flag}`);
+}
+assert(html.includes("function unlockModalPending("), "unlockModalPending gate");
+const drainBody = html.match(/function drainUnlockModalQueue\(\)\{[\s\S]*?return false;\s*\}/);
+assert(!!drainBody, "drainUnlockModalQueue body");
+if (drainBody) {
+  const body = drainBody[0];
+  const studioIdx = body.indexOf("_studioUnlockQueued");
+  const starsIdx = body.indexOf("_starsUnlockQueued");
+  const marketIdx = body.indexOf("_marketUnlockQueued");
+  const researchIdx = body.indexOf("_researchUnlockQueued");
+  const chaosIdx = body.indexOf("_chaosUnlockQueued");
+  assert(
+    studioIdx > 0 &&
+      starsIdx > studioIdx &&
+      marketIdx > starsIdx &&
+      researchIdx > marketIdx &&
+      chaosIdx > researchIdx,
+    "modal storm priority: studio → stars → market → research → chaos"
+  );
+}
+const UNLOCK_OVERLAY_IDS = [
+  "studio-unlock",
+  "stars-unlock",
+  "market-unlock",
+  "research-unlock",
+  "chaos-unlock",
+];
+for (const id of UNLOCK_OVERLAY_IDS) {
+  assert(html.includes(`id="${id}"`), `unlock overlay DOM: ${id}`);
+}
+
+/** Chaos / crisis decision flow. */
+const CHAOS_HOOKS = [
+  "function chaosBonus(",
+  "function maybeChaos(",
+  "function resolveDecision(",
+  "function celebrateChaosSurvival(",
+  "toggleChaosMode",
+  "crisesSurvived",
+  "awaitFirstChaosSurvival",
+];
+for (const hook of CHAOS_HOOKS) {
+  assert(html.includes(hook), `chaos flow: ${hook.replace("function ", "")}`);
+}
+assert(html.includes('id="decision"'), "decision crisis overlay in DOM");
+assert(html.includes("S.chaosMode?1.5:1"), "chaosBonus 1.5× when chaosMode on");
+
+/** Offline earnings + return hub boot batching. */
+assert(html.includes("function simulateOffline("), "simulateOffline hook");
+assert(html.includes('id="offline"'), "offline overlay in DOM");
+assert(html.includes("function returnHubOpen("), "returnHubOpen gate");
+assert(html.includes("function closeReturnHub("), "closeReturnHub hook");
+
+/** Premiere queue while modal open. */
+assert(html.includes("let _premiereQueue=") || html.includes("let _premiereQueue ="), "premiere queue array");
+assert(html.includes("_premiereOpen"), "premiere modal open flag");
+assert(html.includes("_premiereQueue.push"), "premiere queue push while modal open");
+assert(html.includes('id="premiere"'), "premiere overlay in DOM");
+
+/** Franchise sequel greenlight + registry. */
+assert(html.includes("function registerFranchiseHit("), "registerFranchiseHit hook");
+assert(html.includes("sequel&&sequel.base"), "sequel greenlight franchise base");
+assert(html.includes("function franchiseList("), "franchiseList helper");
+
+/** Prestige carry-over reset. */
+assert(html.includes("function prestige("), "prestige hook");
+assert(html.includes("legacy:S.legacy+gain"), "prestige accumulates legacy");
+assert(html.includes("S.redeemedGrants=keep.redeemedGrants"), "prestige keeps redeemedGrants");
+
+/** Rival HUD goal repair for corrupt saves. */
+assert(html.includes("function ensureHudRival("), "ensureHudRival hook");
+assert(html.includes("S.rivalGoal<=S.rivalStartVal"), "rival goal repair when goal <= start");
+
+/** Tutorial + what's new onboarding. */
+assert(html.includes("function completeTutorial("), "completeTutorial hook");
+assert(html.includes("function isGuidedTutorialEligible("), "isGuidedTutorialEligible hook");
+assert(html.includes('id="whatsnew"'), "whatsnew overlay in DOM");
+assert(html.includes("function shouldShowWhatsNew("), "shouldShowWhatsNew build gate");
+assert(
+  bundle.includes("guided-tutorial") || html.includes("guided-tutorial"),
+  "guided-tutorial overlay reference"
+);
+
+/** playtest-sim VM runner parity — every critical flow has a sim harness. */
+const SIM_RUNNERS = [
+  "SIM_RUNNER",
+  "UNLOCK_GATE_RUNNER",
+  "DEMO_BOOTSTRAP_RUNNER",
+  "SAVE_LOAD_RUNNER",
+  "REDEEM_RUNNER",
+  "IAP_RUNNER",
+  "MODAL_STORM_RUNNER",
+  "READ_GRANT_RUNNER",
+  "CHAOS_RUNNER",
+  "RESEARCH_UNLOCK_RUNNER",
+  "FRANCHISE_RUNNER",
+  "OFFLINE_RUNNER",
+  "RETURN_HUB_RUNNER",
+  "CHAOS_SURVIVAL_RUNNER",
+  "PRESTIGE_RUNNER",
+  "PREMIERE_QUEUE_RUNNER",
+  "RIVAL_GOAL_RUNNER",
+  "TUTORIAL_RUNNER",
+];
+for (const runner of SIM_RUNNERS) {
+  assert(playSimSrc.includes(runner), `playtest-sim runner: ${runner}`);
+}
+
 console.log(`\n${passed} passed, ${failed} failed`);
 process.exit(failed > 0 ? 1 : 0);

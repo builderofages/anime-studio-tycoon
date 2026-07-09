@@ -5,8 +5,10 @@ desktop/
 .git/
 *.mp3
 *.m4a
+*.wav
 !audio/*.mp3
 !audio/*.m4a
+!audio/*.wav
 launch/store/*.png
 launch/store/*.jpg
 !icons/**

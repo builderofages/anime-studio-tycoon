@@ -157,6 +157,95 @@ const UI3 = {
 };
 for(const c in UI3){ if(LANGS[c]) Object.assign(LANGS[c], UI3[c]); }
 
+// Fourth batch: Coach bar, guided tutorial, and store hero copy.
+const UI4 = {
+  en:{ coach_label:"Coach's Tip", coach_guided:"Guided", coach_aria_tips:"Coach tips", coach_aria_cta:"Go to next action", coach_aria_gift:"Rewards and quests",
+       coach_go:"Go", coach_cta_next:"Next", coach_cta_recruit:"Recruit", coach_cta_greenlight:"Greenlight", coach_cta_boost:"Boost", coach_cta_premiere:"Premiere", coach_cta_play:"Play",
+       coach_welcome:"Welcome, {name}! Tap Next when you're ready.", coach_hire_role:"Tap Hire on {role} — crew speeds every show", coach_hire_first:"Open Recruit and hire your first team member",
+       coach_gl_first:"Greenlight your first anime on Play", coach_boost_poster:"Tap the poster to boost production speed", coach_premiere_ready:"Production ready — premiere now!", coach_premiere_wait:"Keep boosting until production finishes",
+       tut_kicker:"First session", tut_skip:"Skip tutorial", tut_step:"Step {n} of {total}",
+       tut_lbl_studio:"Studio", tut_lbl_hire:"Hire", tut_lbl_greenlight:"Greenlight", tut_lbl_boost:"Boost", tut_lbl_premiere:"Premiere",
+       tut_name_title:"Name your studio", tut_name_body:"You're {name}! Your brand shows at the top of the screen.",
+       tut_hire_title:"Hire your first staff", tut_hire_body:"Animators and writers speed up every production. Hire one on Recruit.",
+       tut_gl_title:"Greenlight your first anime", tut_gl_body:"Pick a project and start production — one tap greenlights your debut show.",
+       tut_boost_title:"Tap to boost speed", tut_boost_body:"Tap the poster or Boost button to rush episodes — great for your first premiere.",
+       tut_premiere_title:"Premiere when ready", tut_premiere_body:"When the bar fills, hit Global Premiere to earn ¥, fans, and your first hit.",
+       s_balance_kicker:"Your Gem Balance", s_balance_sub:"Scouts · skips · boosts",
+       s_lead_pay:"Gems power scouts, skips, and boosts. Earn free through play or top up below.",
+       s_lead_f2p:"100% free to play — earn every 💎 through daily rewards, quests, and milestones." },
+  es:{ coach_label:"Consejo del Coach", coach_guided:"Guiado", coach_aria_tips:"Consejos del coach", coach_aria_cta:"Ir a la siguiente acción", coach_aria_gift:"Recompensas y misiones",
+       coach_go:"Ir", coach_cta_next:"Siguiente", coach_cta_recruit:"Reclutar", coach_cta_greenlight:"Aprobar", coach_cta_boost:"Impulsar", coach_cta_premiere:"Estrenar", coach_cta_play:"Jugar",
+       coach_welcome:"¡Bienvenido, {name}! Toca Siguiente cuando estés listo.", coach_hire_role:"Toca Contratar en {role} — el equipo acelera cada show", coach_hire_first:"Abre Reclutar y contrata a tu primer miembro",
+       coach_gl_first:"Aprueba tu primer anime en Jugar", coach_boost_poster:"Toca el póster para acelerar la producción", coach_premiere_ready:"¡Producción lista — estrena ahora!", coach_premiere_wait:"Sigue impulsando hasta que termine la producción",
+       tut_kicker:"Primera sesión", tut_skip:"Saltar tutorial", tut_step:"Paso {n} de {total}",
+       tut_lbl_studio:"Estudio", tut_lbl_hire:"Contratar", tut_lbl_greenlight:"Aprobar", tut_lbl_boost:"Impulsar", tut_lbl_premiere:"Estreno",
+       tut_name_title:"Nombra tu estudio", tut_name_body:"¡Eres {name}! Tu marca aparece arriba de la pantalla.",
+       tut_hire_title:"Contrata tu primer staff", tut_hire_body:"Animadores y guionistas aceleran cada producción. Contrata uno en Reclutar.",
+       tut_gl_title:"Aprueba tu primer anime", tut_gl_body:"Elige un proyecto y empieza — un toque aprueba tu debut.",
+       tut_boost_title:"Toca para acelerar", tut_boost_body:"Toca el póster o Impulsar para apurar episodios — ideal para tu primer estreno.",
+       tut_premiere_title:"Estrena cuando esté listo", tut_premiere_body:"Cuando la barra se llene, pulsa Estreno Global para ganar ¥, fans y tu primer hit.",
+       s_balance_kicker:"Tu saldo de Gemas", s_balance_sub:"Scouts · saltos · boosts",
+       s_lead_pay:"Las gemas impulsan scouts, saltos y boosts. Gana gratis jugando o recarga abajo.",
+       s_lead_f2p:"100% gratis — gana cada 💎 con recompensas diarias, misiones y hitos." },
+  pt:{ coach_label:"Dica do Coach", coach_guided:"Guiado", coach_aria_tips:"Dicas do coach", coach_aria_cta:"Ir para a próxima ação", coach_aria_gift:"Recompensas e missões",
+       coach_go:"Ir", coach_cta_next:"Próximo", coach_cta_recruit:"Recrutar", coach_cta_greenlight:"Aprovar", coach_cta_boost:"Impulsionar", coach_cta_premiere:"Estrear", coach_cta_play:"Jogar",
+       coach_welcome:"Bem-vindo, {name}! Toque Próximo quando estiver pronto.", coach_hire_role:"Toque Contratar em {role} — a equipe acelera cada show", coach_hire_first:"Abra Recrutar e contrate seu primeiro membro",
+       coach_gl_first:"Aprove seu primeiro anime em Jogar", coach_boost_poster:"Toque o pôster para acelerar a produção", coach_premiere_ready:"Produção pronta — estreie agora!", coach_premiere_wait:"Continue impulsionando até a produção terminar",
+       tut_kicker:"Primeira sessão", tut_skip:"Pular tutorial", tut_step:"Passo {n} de {total}",
+       tut_lbl_studio:"Estúdio", tut_lbl_hire:"Contratar", tut_lbl_greenlight:"Aprovar", tut_lbl_boost:"Impulsionar", tut_lbl_premiere:"Estreia",
+       tut_name_title:"Nomeie seu estúdio", tut_name_body:"Você é {name}! Sua marca aparece no topo da tela.",
+       tut_hire_title:"Contrate sua primeira equipe", tut_hire_body:"Animadores e roteiristas aceleram cada produção. Contrate um em Recrutar.",
+       tut_gl_title:"Aprove seu primeiro anime", tut_gl_body:"Escolha um projeto e comece — um toque aprova seu estreia.",
+       tut_boost_title:"Toque para acelerar", tut_boost_body:"Toque o pôster ou Impulsionar para apressar episódios — ótimo para sua primeira estreia.",
+       tut_premiere_title:"Estreie quando estiver pronto", tut_premiere_body:"Quando a barra encher, toque Estreia Global para ganhar ¥, fãs e seu primeiro hit.",
+       s_balance_kicker:"Seu saldo de Gemas", s_balance_sub:"Scouts · pulos · boosts",
+       s_lead_pay:"Gemas alimentam scouts, pulos e boosts. Ganhe grátis jogando ou recarregue abaixo.",
+       s_lead_f2p:"100% grátis — ganhe cada 💎 com recompensas diárias, missões e marcos." },
+  fr:{ coach_label:"Conseil du Coach", coach_guided:"Guidé", coach_aria_tips:"Conseils du coach", coach_aria_cta:"Aller à l'action suivante", coach_aria_gift:"Récompenses et quêtes",
+       coach_go:"Aller", coach_cta_next:"Suivant", coach_cta_recruit:"Recruter", coach_cta_greenlight:"Lancer", coach_cta_boost:"Booster", coach_cta_premiere:"Sortie", coach_cta_play:"Jouer",
+       coach_welcome:"Bienvenue, {name} ! Appuyez sur Suivant quand vous êtes prêt.", coach_hire_role:"Appuyez sur Recruter {role} — l'équipe accélère chaque show", coach_hire_first:"Ouvrez Recruter et embauchez votre premier membre",
+       coach_gl_first:"Lancez votre premier anime sur Jouer", coach_boost_poster:"Touchez l'affiche pour accélérer la production", coach_premiere_ready:"Production prête — sortez maintenant !", coach_premiere_wait:"Continuez à booster jusqu'à la fin de la production",
+       tut_kicker:"Première session", tut_skip:"Passer le tutoriel", tut_step:"Étape {n} sur {total}",
+       tut_lbl_studio:"Studio", tut_lbl_hire:"Recruter", tut_lbl_greenlight:"Lancer", tut_lbl_boost:"Booster", tut_lbl_premiere:"Sortie",
+       tut_name_title:"Nommez votre studio", tut_name_body:"Vous êtes {name} ! Votre marque s'affiche en haut de l'écran.",
+       tut_hire_title:"Recrutez votre première équipe", tut_hire_body:"Animateurs et scénaristes accélèrent chaque production. Recrutez-en un dans Recruter.",
+       tut_gl_title:"Lancez votre premier anime", tut_gl_body:"Choisissez un projet et démarrez — un tap lance votre premier show.",
+       tut_boost_title:"Touchez pour accélérer", tut_boost_body:"Touchez l'affiche ou Booster pour précipiter les épisodes — parfait pour votre première sortie.",
+       tut_premiere_title:"Sortez quand c'est prêt", tut_premiere_body:"Quand la barre est pleine, lancez la Première mondiale pour gagner ¥, fans et votre premier hit.",
+       s_balance_kicker:"Votre solde de Gemmes", s_balance_sub:"Scouts · sauts · boosts",
+       s_lead_pay:"Les gemmes alimentent scouts, sauts et boosts. Gagnez-en gratuitement ou rechargez ci-dessous.",
+       s_lead_f2p:"100 % gratuit — gagnez chaque 💎 via récompenses quotidiennes, quêtes et jalons." },
+  de:{ coach_label:"Coach-Tipp", coach_guided:"Geführt", coach_aria_tips:"Coach-Tipps", coach_aria_cta:"Zur nächsten Aktion", coach_aria_gift:"Belohnungen und Aufgaben",
+       coach_go:"Los", coach_cta_next:"Weiter", coach_cta_recruit:"Rekrutieren", coach_cta_greenlight:"Freigeben", coach_cta_boost:"Boosten", coach_cta_premiere:"Premiere", coach_cta_play:"Spielen",
+       coach_welcome:"Willkommen, {name}! Tippe auf Weiter, wenn du bereit bist.", coach_hire_role:"Tippe Anstellen bei {role} — Crew beschleunigt jede Show", coach_hire_first:"Öffne Rekrutieren und stelle dein erstes Teammitglied ein",
+       coach_gl_first:"Gib dein erstes Anime auf Spiel frei", coach_boost_poster:"Tippe das Poster, um die Produktion zu beschleunigen", coach_premiere_ready:"Produktion fertig — jetzt premiere!", coach_premiere_wait:"Booste weiter, bis die Produktion fertig ist",
+       tut_kicker:"Erste Sitzung", tut_skip:"Tutorial überspringen", tut_step:"Schritt {n} von {total}",
+       tut_lbl_studio:"Studio", tut_lbl_hire:"Anstellen", tut_lbl_greenlight:"Freigeben", tut_lbl_boost:"Boosten", tut_lbl_premiere:"Premiere",
+       tut_name_title:"Benenne dein Studio", tut_name_body:"Du bist {name}! Deine Marke steht oben auf dem Bildschirm.",
+       tut_hire_title:"Stelle dein erstes Team ein", tut_hire_body:"Animatoren und Autoren beschleunigen jede Produktion. Stelle einen unter Rekrutieren ein.",
+       tut_gl_title:"Gib dein erstes Anime frei", tut_gl_body:"Wähle ein Projekt und starte — ein Tipp gibt dein Debüt frei.",
+       tut_boost_title:"Tippen zum Beschleunigen", tut_boost_body:"Tippe Poster oder Boosten, um Episoden zu beschleunigen — ideal für deine erste Premiere.",
+       tut_premiere_title:"Premiere wenn bereit", tut_premiere_body:"Wenn der Balken voll ist, starte die Weltpremiere für ¥, Fans und deinen ersten Hit.",
+       s_balance_kicker:"Dein Gem-Guthaben", s_balance_sub:"Scouts · Sprünge · Boosts",
+       s_lead_pay:"Gems für Scouts, Sprünge und Boosts. Verdiene gratis beim Spielen oder lade unten auf.",
+       s_lead_f2p:"100 % kostenlos — verdiene jedes 💎 über tägliche Belohnungen, Aufgaben und Meilensteine." },
+  ja:{ coach_label:"コーチのヒント", coach_guided:"ガイド中", coach_aria_tips:"コーチのヒント", coach_aria_cta:"次のアクションへ", coach_aria_gift:"報酬とクエスト",
+       coach_go:"移動", coach_cta_next:"次へ", coach_cta_recruit:"採用", coach_cta_greenlight:"企画開始", coach_cta_boost:"ブースト", coach_cta_premiere:"公開", coach_cta_play:"プレイ",
+       coach_welcome:"ようこそ、{name}さん！準備ができたら「次へ」をタップ。", coach_hire_role:"{role}の採用をタップ — スタッフが全作品を加速", coach_hire_first:"採用を開いて最初のメンバーを雇う",
+       coach_gl_first:"プレイで最初のアニメを企画開始", coach_boost_poster:"ポスターをタップして制作を加速", coach_premiere_ready:"制作完了 — 今すぐ公開！", coach_premiere_wait:"制作が終わるまでブーストを続けよう",
+       tut_kicker:"初回セッション", tut_skip:"チュートリアルをスキップ", tut_step:"ステップ {n}/{total}",
+       tut_lbl_studio:"スタジオ", tut_lbl_hire:"採用", tut_lbl_greenlight:"企画", tut_lbl_boost:"ブースト", tut_lbl_premiere:"公開",
+       tut_name_title:"スタジオに名前をつける", tut_name_body:"あなたは{name}！ブランド名が画面上部に表示されます。",
+       tut_hire_title:"最初のスタッフを雇う", tut_hire_body:"アニメーターとライターが制作を加速。採用で1人雇いましょう。",
+       tut_gl_title:"最初のアニメを企画開始", tut_gl_body:"プロジェクトを選んで開始 — ワンタップでデビュー作をスタート。",
+       tut_boost_title:"タップで加速", tut_boost_body:"ポスターまたはブーストでエピソードを急げ — 初公開に最適。",
+       tut_premiere_title:"準備ができたら公開", tut_premiere_body:"バーが満タンになったらグローバル公開で¥、ファン、初ヒットを獲得。",
+       s_balance_kicker:"ジェム残高", s_balance_sub:"スカウト · スキップ · ブースト",
+       s_lead_pay:"ジェムでスカウト、スキップ、ブースト。プレイで無料獲得または下でチャージ。",
+       s_lead_f2p:"完全無料 — デイリー報酬、クエスト、マイルストーンで💎を獲得。" },
+};
+for(const c in UI4){ if(LANGS[c]) Object.assign(LANGS[c], UI4[c]); }
+
 // STR is the live, current-language object. Mutated in place by setLang.
 export const STR = Object.assign({}, EN);
 STR.__code = "en";
@@ -172,6 +261,12 @@ export function setLang(code){
 }
 /* Translate a key, falling back to English (or the provided fallback). */
 export function t(key, fallback){ const v=STR[key]; return (v==null) ? (fallback!=null?fallback:key) : v; }
+/* Translate with {var} placeholders, e.g. tf("coach_welcome",{name:"Alex"},"Welcome…") */
+export function tf(key, vars, fallback){
+  let s=t(key, fallback);
+  if(vars){ for(const k in vars){ s=String(s).split("{"+k+"}").join(vars[k]); } }
+  return s;
+}
 export function initialLang(){
   // Default to English. Only use a language the player explicitly chose before.
   try{ const s=localStorage.getItem("ast_lang"); if(s && LANGS[s]) return s; }catch(e){}
