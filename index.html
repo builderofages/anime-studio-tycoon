@@ -14,14 +14,16 @@
 <meta property="og:url" content="https://anime-studio-tycoon.vercel.app/play">
 <meta property="og:title" content="Anime Studio Tycoon — Free Anime Idle Tycoon Game">
 <meta property="og:description" content="Run your own anime studio from a garage to a global empire. Hire your team, greenlight hits, scout stars, and climb the industry charts. Play free in your browser.">
-<meta property="og:image" content="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_062706_8cb8f42c-84b2-45b0-8c27-96e8ffc01bb7.jpeg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
+<meta property="og:image" content="https://anime-studio-tycoon.vercel.app/og-share.jpg">
+<meta property="og:image:width" content="1376">
+<meta property="og:image:height" content="768">
+<meta property="og:image:alt" content="Anime Studio Tycoon — build your anime empire from ¥1,500 to industry #1">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Anime Studio Tycoon — Free Anime Idle Tycoon Game">
 <meta name="twitter:description" content="Start with ¥1,500 and one room. Hire staff, greenlight anime, grow fans, and chase #1. Free in your browser — cozy tycoon fun for all ages.">
-<meta name="twitter:image" content="https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_062706_8cb8f42c-84b2-45b0-8c27-96e8ffc01bb7.jpeg">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Anime Studio Tycoon","alternateName":"Anime Studio Tycoon — Build Your Empire","url":"https://anime-studio-tycoon.vercel.app/play","image":"https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_062706_8cb8f42c-84b2-45b0-8c27-96e8ffc01bb7.jpeg","description":"Free idle tycoon game: hire staff, greenlight anime, grow fans, and build a studio empire from ¥1,500 to industry #1.","applicationCategory":"GameApplication","operatingSystem":"Any","browserRequirements":"Requires JavaScript","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"inLanguage":["en","es","pt","fr","de","ja"]}</script>
+<meta name="twitter:image" content="https://anime-studio-tycoon.vercel.app/og-share.jpg">
+<meta name="twitter:image:alt" content="Anime Studio Tycoon — anime idle tycoon game screenshot">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Anime Studio Tycoon","alternateName":"Anime Studio Tycoon — Build Your Empire","url":"https://anime-studio-tycoon.vercel.app/play","image":"https://anime-studio-tycoon.vercel.app/og-share.jpg","description":"Free idle tycoon game: hire staff, greenlight anime, grow fans, and build a studio empire from ¥1,500 to industry #1.","applicationCategory":"GameApplication","operatingSystem":"Any","browserRequirements":"Requires JavaScript","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"inLanguage":["en","es","pt","fr","de","ja"]}</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%233a2b4d'/%3E%3Ccircle cx='32' cy='32' r='30' fill='none' stroke='%23ffc845' stroke-width='3'/%3E%3Cg fill='%23ff9bc4'%3E%3Cellipse cx='32' cy='15' rx='5' ry='8'/%3E%3Cellipse cx='32' cy='49' rx='5' ry='8'/%3E%3Cellipse cx='15' cy='32' rx='8' ry='5'/%3E%3Cellipse cx='49' cy='32' rx='8' ry='5'/%3E%3C/g%3E%3Ccircle cx='32' cy='32' r='7' fill='%23ffc845'/%3E%3C/svg%3E">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icons/icon-512.png">
@@ -96,7 +98,7 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available}
     <button class="btn-ghost" id="btn-mute">🔊 Sound: On</button>
     <button class="btn-ghost" id="btn-save" style="display:none">💾 Save</button>
     <button class="btn-ghost" id="btn-reset">↺ Reset</button>
-  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 101 · Audit</span></div>
+  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 102 · Share</span></div>
   <div id="toasts"></div>
   <div id="pwa-install-banner" class="aaa-pwa-install-banner" hidden>
     <div class="aaa-pwa-install-inner">
@@ -338,14 +340,14 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available}
 
 <div class="overlay" id="whatsnew" style="display:none" role="dialog" aria-modal="true" aria-labelledby="whatsnew-title">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <img src="start-hero.png?v=101" alt="Anime Studio Tycoon logo" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
-    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 101 — Audit</h1>
+    <img src="start-hero.png?v=102" alt="Anime Studio Tycoon logo" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
+    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 102 — Share</h1>
     <div class="offlist whatsnew-list" style="margin:12px 0">
-      <div><span>🧪 122-check sim</span><b>Tutorial, save/load, IAP grants, chaos, franchise & offline — all VM-tested</b></div>
-      <div><span>🎬 Premiere queue</span><b>Multi-slot finishes no longer drop celebrations</b></div>
-      <div><span>🔓 Modal drain</span><b>Unlock queues clear after offline, daily & what's new</b></div>
-      <div><span>♿ HUD a11y</span><b>44px targets, tab keyboard nav, reduced-motion idle loops</b></div>
-      <div><span>🛡️ Anti-farm</span><b>Promo codes one-time; rival goals repair corrupt saves</b></div>
+      <div><span>📣 Share cards</span><b>Self-hosted OG image — Discord, X & iMessage previews look pro</b></div>
+      <div><span>🔓 Tab rings</span><b>Locked dock tabs show unlock progress at a glance</b></div>
+      <div><span>🧪 144-check sim</span><b>Return hub, chaos survival & prestige now VM-tested</b></div>
+      <div><span>🔍 SEO</span><b>robots.txt + sitemap for /play, privacy & terms</b></div>
+      <div><span>🎬 Premiere queue</span><b>Multi-slot celebrations + modal drain fixes from Build 101</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
   </div>
@@ -448,8 +450,9 @@ document.addEventListener("deviceready", initNativeChrome, false);
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 101 · Audit";
-const ASSET_V = "100";
+const BUILD_TAG = "build 102 · Share";
+const ASSET_V = "102";
+const SHARE_OG_URL = "https://anime-studio-tycoon.vercel.app/og-share.jpg";
 const OFFLINE_PREVIEW_CAP = 4*3600; // "while away" preview when return is under 4h
 const SHARE_PLAY_URL = "https://anime-studio-tycoon.vercel.app/play";
 const PITY_EPIC = 25;
@@ -2645,6 +2648,26 @@ function chaosUnlockProgress(){
   if(rel>=10) return null;
   const need=10-rel;
   return need===1?"1 more premiere to unlock Chaos":fmt(need)+" more premieres to unlock Chaos";
+}
+function tabUnlockPct(k){
+  if(featureUnlocked(k)) return null;
+  const rel=S.releases||0, fans=S.fans||0, fansEver=S.totalFansEver||0;
+  if(k==="studio"){
+    if(rel>=1) return null;
+    let best=0;
+    for(const pr of S.projects){
+      if(!pr) continue;
+      const op=PROJECTS[pr.pid];
+      if(!op||!op.work) continue;
+      best=Math.max(best, pr.progress/op.work);
+    }
+    return Math.round(Math.min(100, best*100));
+  }
+  if(k==="stars") return Math.round(Math.min(100, Math.max(rel/2, fansEver/20)*100));
+  if(k==="market") return Math.round(Math.min(100, fans/50*100));
+  if(k==="research") return Math.round(Math.min(100, fansEver/120*100));
+  if(k==="chaos") return Math.round(Math.min(100, rel/10*100));
+  return null;
 }
 function researchCost(genre){
   const lvl=S.mastery[genre]||0;
@@ -5416,6 +5439,7 @@ window.__AST_HOOK__ = {
   celebrateChaosSurvival,
   campaignRoiPer1k,
   studioUnlockProgress,
+  tabUnlockPct,
   expandCost,
   researchUnlockProgress,
   researchCost,

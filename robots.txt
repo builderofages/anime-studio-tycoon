@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Allow: /play
+Allow: /privacy
+Allow: /terms
+
+Sitemap: https://anime-studio-tycoon.vercel.app/sitemap.xml

@@ -45,6 +45,17 @@ function mockEl() {
       remove(...c) {
         c.forEach((x) => cls.delete(x));
       },
+      toggle(...c) {
+        const [name, force] = c;
+        if (force === true) cls.add(name);
+        else if (force === false) cls.delete(name);
+        else if (cls.has(name)) cls.delete(name);
+        else cls.add(name);
+        return cls.has(name);
+      },
+      has(name) {
+        return cls.has(name);
+      },
     },
     offsetWidth: 0,
     removeAttribute() {},
@@ -58,6 +69,27 @@ function mockEl() {
     querySelector: () => mockEl(),
     querySelectorAll: () => [],
   };
+}
+
+function mockElWith(extra = {}) {
+  const el = mockEl();
+  if (extra.style) Object.assign(el.style, extra.style);
+  if (extra.dataset) el.dataset = { ...extra.dataset };
+  if (extra.hidden != null) el.hidden = extra.hidden;
+  if (extra.querySelector) el.querySelector = extra.querySelector;
+  return el;
+}
+
+/** Sandbox with named overlay elements (return-hub, unlock modals, decision). */
+function buildDomSandbox(ids = []) {
+  const els = Object.fromEntries(ids.map((id) => [id, mockElWith({ dataset: {} })]));
+  const sandbox = buildSandbox();
+  sandbox.document.getElementById = (id) => els[id] || mockEl();
+  sandbox.document.querySelector = (sel) => {
+    if (sel === ".card-modal") return mockEl();
+    return mockEl();
+  };
+  return { sandbox, els };
 }
 
 function buildSandbox() {
@@ -636,6 +668,188 @@ function runLateGameSimulation() {
   return sandbox.__LATE_GAME__;
 }
 
+const RETURN_HUB_IDS = [
+  "return-hub",
+  "return-hub-title",
+  "return-hub-lead",
+  "return-hub-welcome",
+  "return-hub-welcome-body",
+  "return-hub-offline",
+  "return-hub-offline-lead",
+  "return-hub-offline-preview",
+  "return-hub-offlist",
+  "return-hub-offline-pass",
+  "return-hub-offline-cap",
+  "return-hub-daily",
+  "return-hub-daily-body",
+  "return-hub-whatsnew",
+  "return-hub-whatsnew-body",
+  "return-hub-unlocks",
+  "return-hub-unlocks-body",
+  "btn-return-hub-close",
+  "studio-unlock",
+  "stars-unlock",
+  "howto",
+];
+
+const RETURN_HUB_RUNNER = `
+S = freshState();
+S.whatsnewSeen = true;
+S.lastWhatsNewBuild = BUILD_TAG;
+const hub = document.getElementById("return-hub");
+const studioUnlock = document.getElementById("studio-unlock");
+const rh = { shown: false, hubFlex: false, drainStudio: false, hubHidden: false, noDrain: false };
+rh.shown = maybeShowReturnHub({ had: true, returnSec: 0, returnR: null, dr: null });
+rh.hubFlex = hub.style.display === "flex";
+
+S = freshState();
+S.releases = 1;
+S.studioUnlockModalSeen = false;
+S.whatsnewSeen = true;
+S.lastWhatsNewBuild = BUILD_TAG;
+hub.style.display = "flex";
+hub.dataset.hadDaily = "1";
+_studioUnlockQueued = true;
+closeReturnHub();
+rh.drainStudio = studioUnlock.style.display === "flex" && hub.style.display === "none" && !_studioUnlockQueued;
+
+S = freshState();
+S.whatsnewSeen = true;
+S.lastWhatsNewBuild = BUILD_TAG;
+hub.style.display = "flex";
+hub.dataset.hadDaily = "";
+studioUnlock.style.display = "none";
+_studioUnlockQueued = false;
+closeReturnHub();
+rh.noDrain = hub.style.display === "none" && studioUnlock.style.display !== "flex";
+
+__RETURN_HUB__ = rh;
+`;
+
+function runReturnHubSimulation() {
+  const { sandbox } = buildDomSandbox(RETURN_HUB_IDS);
+  vm.runInNewContext(extractGameLogic() + STUBS_BASE + RETURN_HUB_RUNNER, sandbox, { timeout: 20000 });
+  return sandbox.__RETURN_HUB__;
+}
+
+const CHAOS_SURVIVAL_RUNNER = `
+S = freshState();
+OFFLINE = false;
+started = true;
+S.chaosMode = true;
+S.releases = 5;
+S.lastDecision = 0;
+S.lastChaos = 0;
+S.chaos = 90;
+const decisionEl = document.getElementById("decision");
+_premiereOpen = false;
+window.__AST_CRISIS_OPEN__ = false;
+_pendingDecision = null;
+if (decisionEl) decisionEl.style.display = "none";
+Math.random = () => 0.01;
+maybeChaos();
+const survival = {
+  chaosTriggered: !!(_pendingDecision && _pendingDecision.chaos),
+  chaosModeOn: S.chaosMode === true,
+};
+
+_pendingDecision = null;
+window.__AST_CRISIS_OPEN__ = false;
+if (decisionEl) decisionEl.style.display = "none";
+S.starterSeen = true;
+Math.random = () => 0.01;
+maybeDecision();
+survival.decisionTriggered = !!_pendingDecision && !_pendingDecision.chaos;
+
+_pendingDecision = {
+  chaos: true,
+  id: "melt",
+  ic: "🔥",
+  title: "Test crisis",
+  text: "Sim crisis",
+  yes: ["Fix", () => "fixed"],
+  no: ["Skip", () => "skipped"],
+};
+S.awaitFirstChaosSurvival = true;
+const crises0 = S.crisesSurvived || 0;
+resolveDecision(true);
+survival.crisesGain = (S.crisesSurvived || 0) - crises0;
+survival.awaitCleared = S.awaitFirstChaosSurvival === false;
+survival.chaosModeOn = S.chaosMode === true;
+
+const chanceOff = ((50) / 100) * 0.12;
+const chanceOn = ((50) / 100) * 0.22;
+survival.chaosModeDoublesChance = chanceOn > chanceOff;
+
+__CHAOS_SURVIVAL__ = survival;
+`;
+
+const STUBS_CHAOS_DOM = STUBS_BASE.replace("maybeDecision = function(){};\n", "") + `
+drainUnlockModalQueue = function(){ return false; };
+`;
+
+function runChaosSurvivalSimulation() {
+  const { sandbox } = buildDomSandbox(["decision-body", "decision"]);
+  const decision = sandbox.document.getElementById("decision");
+  decision.querySelector = () => mockEl();
+  vm.runInNewContext(extractGameLogic() + STUBS_CHAOS_DOM + CHAOS_SURVIVAL_RUNNER, sandbox, { timeout: 20000 });
+  return sandbox.__CHAOS_SURVIVAL__;
+}
+
+const PRESTIGE_RUNNER = `
+window.__AST_CONFIRM__ = function(_t, _b, cb) { cb(); };
+S = freshState();
+S.fans = 30000;
+S.totalFansEver = 1000000;
+S.yen = 999999;
+S.releases = 15;
+S.legacy = 5;
+S.legacySpent = 2;
+S.gems = 42;
+S.mastery.Action = 3;
+S.mastery.Drama = 1;
+S.stars = [{ sid: "sakura", fame: 2, loyalty: 80, energy: 100, level: 3, promo: 0, resting: false }];
+S.staff = { animator: 5, writer: 3, director: 2, voice: 1, producer: 1 };
+S.tutorialSeen = true;
+S.perks = { income: 2, speed: 1, fans: 0, offline: 1 };
+S.entitlements = ["bundle"];
+S.studioName = "Sakura Films";
+const gain = Math.floor(Math.sqrt(S.totalFansEver / 1000));
+const keep = {
+  legacy: S.legacy + gain,
+  masteryAction: S.mastery.Action,
+  gems: S.gems,
+  starsLen: S.stars.length,
+  perksIncome: S.perks.income,
+  studioName: S.studioName,
+  entitlements: S.entitlements.slice(),
+};
+prestige();
+__PRESTIGE__ = {
+  gain,
+  legacy: S.legacy,
+  legacySpent: S.legacySpent,
+  yen: S.yen,
+  fans: S.fans,
+  releases: S.releases,
+  masteryAction: S.mastery.Action,
+  gems: S.gems,
+  starsLen: S.stars.length,
+  perksIncome: S.perks.income,
+  studioName: S.studioName,
+  entitlements: S.entitlements,
+  staffAnimator: S.staff.animator,
+  keep,
+};
+`;
+
+function runPrestigeSimulation() {
+  const sandbox = buildSandbox();
+  sandbox.window.__AST_CONFIRM__ = (_t, _b, cb) => cb();
+  vm.runInNewContext(extractGameLogic() + STUBS + PRESTIGE_RUNNER, sandbox, { timeout: 20000 });
+  return sandbox.__PRESTIGE__;
+}
+
 function assertHonestFlow(snap) {
   assert(snap.yen0 === 1500, "fresh honest yen", `got ${snap.yen0}`);
   assert(snap.releases0 === 0, "fresh releases zero");
@@ -780,6 +994,40 @@ function assertLateGame(late) {
   assert(late.chaos === true, "late-game chaos unlocked");
   assert(late.ppt > 0, "late-game powerPerTick positive", `ppt=${late.ppt}`);
   assert(late.expandCost > 0, "late-game expand cost available for slot 2");
+}
+
+function assertReturnHub(rh) {
+  assert(rh.shown === true, "maybeShowReturnHub shows hub when had:true");
+  assert(rh.hubFlex === true, "return-hub display flex after maybeShowReturnHub");
+  assert(rh.drainStudio === true, "closeReturnHub drains studio unlock queue");
+  assert(rh.noDrain === true, "closeReturnHub hides hub without queued unlocks");
+}
+
+function assertChaosSurvival(survival) {
+  assert(survival.crisesGain === 1, "resolveDecision chaos increments crisesSurvived", `+${survival.crisesGain}`);
+  assert(survival.awaitCleared === true, "celebrateChaosSurvival clears awaitFirstChaosSurvival");
+  assert(survival.chaosModeOn === true, "chaos survival keeps chaosMode on");
+  assert(survival.decisionTriggered === true, "maybeDecision fires with chaosMode on");
+  assert(survival.chaosTriggered === true, "maybeChaos triggers chaos crisis with chaosMode on");
+  assert(survival.chaosModeDoublesChance === true, "chaosMode raises maybeChaos trigger rate");
+}
+
+function assertPrestige(p) {
+  assert(p.gain === 31, "prestige legacy gain from totalFansEver", `gain=${p.gain}`);
+  assert(p.legacy === p.keep.legacy, "prestige carries legacy + gain", `legacy=${p.legacy}`);
+  assert(p.yen === 1500, "prestige resets yen to fresh", `yen=${p.yen}`);
+  assert(p.fans === 0, "prestige resets fans", `fans=${p.fans}`);
+  assert(p.releases === 0, "prestige resets releases", `releases=${p.releases}`);
+  assert(p.staffAnimator === 0, "prestige resets staff", `animator=${p.staffAnimator}`);
+  assert(p.masteryAction === p.keep.masteryAction, "prestige keeps mastery", `Action=${p.masteryAction}`);
+  assert(p.gems === p.keep.gems, "prestige keeps gems", `gems=${p.gems}`);
+  assert(p.starsLen === p.keep.starsLen, "prestige keeps stars roster", `stars=${p.starsLen}`);
+  assert(p.perksIncome === p.keep.perksIncome, "prestige keeps perks", `income=${p.perksIncome}`);
+  assert(p.studioName === p.keep.studioName, "prestige keeps studioName", `name=${p.studioName}`);
+  assert(
+    Array.isArray(p.entitlements) && p.entitlements[0] === "bundle",
+    "prestige keeps entitlements"
+  );
 }
 
 function assertUnlockGates(gates) {
@@ -974,6 +1222,30 @@ try {
   assertPremiereQueue(pq);
 } catch (e) {
   fail("vm premiere-queue sim", e.message || String(e));
+}
+
+console.log("\nReturn hub show + closeReturnHub unlock drain:\n");
+try {
+  const rh = runReturnHubSimulation();
+  assertReturnHub(rh);
+} catch (e) {
+  fail("vm return-hub sim", e.message || String(e));
+}
+
+console.log("\nChaos survival (resolveDecision + maybeDecision/maybeChaos @ chaosMode):\n");
+try {
+  const survival = runChaosSurvivalSimulation();
+  assertChaosSurvival(survival);
+} catch (e) {
+  fail("vm chaos-survival sim", e.message || String(e));
+}
+
+console.log("\nPrestige() carry-over (legacy, mastery, gems, stars):\n");
+try {
+  const p = runPrestigeSimulation();
+  assertPrestige(p);
+} catch (e) {
+  fail("vm prestige sim", e.message || String(e));
 }
 
 console.log("\nStatic save schema + unlock order:\n");

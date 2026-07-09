@@ -1867,6 +1867,41 @@
     if (giftDot) giftDot.hidden = !rewardPending;
   }
 
+  const TAB_UNLOCK_RING_KEYS = ["studio", "stars", "market", "research", "chaos"];
+  const TAB_UNLOCK_RING_COLOR = {
+    studio: "var(--ui-gold)",
+    stars: "var(--ui-gold)",
+    market: "var(--ui-cyan)",
+    research: "var(--ui-accent)",
+    chaos: "var(--ui-accent-hot)",
+  };
+
+  function updateTabUnlockRings(S, hook) {
+    document.querySelectorAll(".tab").forEach((tab) => {
+      const k = tab.dataset.tab;
+      if (!k || !TAB_UNLOCK_RING_KEYS.includes(k) || !hook.tabLocked?.(k)) {
+        tab.classList.remove("tab-unlock-ring-on");
+        tab.style.removeProperty("--tab-unlock-pct");
+        tab.style.removeProperty("--tab-unlock-color");
+        return;
+      }
+      const pct = hook.tabUnlockPct ? hook.tabUnlockPct(k) : null;
+      if (pct == null) {
+        tab.classList.remove("tab-unlock-ring-on");
+        tab.style.removeProperty("--tab-unlock-pct");
+        tab.style.removeProperty("--tab-unlock-color");
+        return;
+      }
+      const clamped = Math.max(0, Math.min(100, pct));
+      tab.classList.add("tab-unlock-ring-on");
+      tab.style.setProperty("--tab-unlock-pct", String(clamped));
+      tab.style.setProperty("--tab-unlock-color", TAB_UNLOCK_RING_COLOR[k] || "var(--ui-accent)");
+      const hint = hook.tabLockLabel ? hook.tabLockLabel(k) : "";
+      const ic = tab.querySelector(".ic");
+      if (ic) ic.title = hint || ic.title || "";
+    });
+  }
+
   function updateTabBadges(S, hook) {
     const today = new Date().toISOString().slice(0, 10);
     const loginPending = S.loginLastClaimDate !== today && (S.loginClaimedCount || 0) < 31;
@@ -1949,6 +1984,7 @@
       closeDrawer();
       organizeDrawerSlot();
       updateHud(hook.getState(), hook);
+      updateTabUnlockRings(hook.getState(), hook);
       updateTabBadges(hook.getState(), hook);
       pulseActiveTab(hook.getState().tab);
     };
