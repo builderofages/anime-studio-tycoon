@@ -334,7 +334,7 @@
     });
 
     const S = hook.getState();
-    S.settings = Object.assign({ musicVol: 0.35, sfxVol: 0.5, confirmGems: true, motion: true, ticker: true }, S.settings || {});
+    S.settings = Object.assign({ musicVol: 0.35, sfxVol: 0.5, confirmGems: true, motion: true, ticker: true, bgmTrack: "auto" }, S.settings || {});
     hook.applyAudioSettings?.();
     return true;
   }

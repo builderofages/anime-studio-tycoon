@@ -1481,7 +1481,7 @@
 
   function drawerInteractionKeepsOpen(target) {
     const el = target?.closest?.(
-      "#btn-mute, #lang-sel, #drawer-music-vol, #drawer-sfx-vol, [data-drawer-music], [data-drawer-sfx], .hud-drawer-vol-row, .hud-drawer-vol-row input"
+      "#btn-mute, #lang-sel, #drawer-bgm-track, #drawer-music-vol, #drawer-sfx-vol, [data-drawer-music], [data-drawer-sfx], .hud-drawer-vol-row, .hud-drawer-vol-row input, .hud-drawer-bgm-row, .hud-drawer-bgm-row select"
     );
     return !!el;
   }
@@ -1493,8 +1493,10 @@
     S.settings = S.settings || {};
     const music = document.getElementById("drawer-music-vol");
     const sfx = document.getElementById("drawer-sfx-vol");
+    const bgmTrack = document.getElementById("drawer-bgm-track");
     if (music) music.value = String(Math.round((S.settings.musicVol ?? 0.35) * 100));
     if (sfx) sfx.value = String(Math.round((S.settings.sfxVol ?? 0.5) * 100));
+    if (bgmTrack) bgmTrack.value = S.settings.bgmTrack || "auto";
   }
 
   function wireDrawerAudio() {
@@ -1520,6 +1522,18 @@
         hook.save?.();
       }
     });
+    slot.addEventListener("change", (e) => {
+      const t = e.target;
+      if (!t || t.id !== "drawer-bgm-track") return;
+      const hook = window.__AST_HOOK__;
+      if (!hook) return;
+      const S = hook.getState();
+      S.settings = S.settings || {};
+      S.settings.bgmTrack = t.value;
+      if (typeof hook.setBgmTrack === "function") hook.setBgmTrack(t.value);
+      else hook.applyBgmTrack?.();
+      hook.save?.();
+    });
   }
 
   function ensureDrawerVolumeRows(soundG) {
@@ -1536,7 +1550,33 @@
         <div class="hud-drawer-vol-row">
           <label class="hud-drawer-vol-label" for="drawer-sfx-vol">🔊 SFX</label>
           <input type="range" id="drawer-sfx-vol" min="0" max="100" value="50" data-drawer-sfx aria-label="Sound effects volume">
+        </div>
+        <div class="hud-drawer-bgm-row">
+          <label class="hud-drawer-vol-label" for="drawer-bgm-track">🎼 BGM</label>
+          <select id="drawer-bgm-track" class="hud-drawer-bgm-select" aria-label="Background music track">
+            <option value="auto">Auto</option>
+            <option value="studio">Studio</option>
+            <option value="produce">Produce</option>
+            <option value="market">Market</option>
+            <option value="premiere">Premiere</option>
+            <option value="chill">Chill</option>
+          </select>
         </div>`;
+    }
+    if (!document.getElementById("drawer-bgm-track")) {
+      const row = document.createElement("div");
+      row.className = "hud-drawer-bgm-row";
+      row.innerHTML = `
+        <label class="hud-drawer-vol-label" for="drawer-bgm-track">🎼 BGM</label>
+        <select id="drawer-bgm-track" class="hud-drawer-bgm-select" aria-label="Background music track">
+          <option value="auto">Auto</option>
+          <option value="studio">Studio</option>
+          <option value="produce">Produce</option>
+          <option value="market">Market</option>
+          <option value="premiere">Premiere</option>
+          <option value="chill">Chill</option>
+        </select>`;
+      wrap.appendChild(row);
     }
     if (wrap.parentNode !== soundG) soundG.appendChild(wrap);
     syncDrawerAudio();

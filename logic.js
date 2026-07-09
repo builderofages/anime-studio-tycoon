@@ -69,6 +69,7 @@ export const DEFAULT_SETTINGS = {
   musicVol: 0.35,
   sfxVol: 0.5,
   confirmGems: true,
+  bgmTrack: "auto",
 };
 export const DEFAULT_PREMIERE_STATS = { fourPlus: 0, five: 0 };
 

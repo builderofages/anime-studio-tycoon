@@ -161,9 +161,9 @@ assert(!html.includes('href="hf-design.css'), "hf-design.css disabled (ast-v5)")
 assert(!html.includes('href="aaa-ui.css'), "aaa-ui.css disabled (ast-v5)");
 assert(html.includes("legacy-fx.css"), "legacy-fx css linked");
 assert(html.includes("ast-v5.css"), "ast-v5 design css linked");
-assert(html.includes("build 113"), "build 113 tag");
+assert(html.includes("build 114"), "build 114 tag");
 assert(html.includes("Production Score"), "production score label");
-assert(html.includes("Audio"), "build 113 audio tag");
+assert(html.includes("Soundtracks"), "build 114 soundtracks tag");
 assert(html.includes("safeBegin"), "boot safeBegin guard");
 const vercelIgnore = readFileSync(join(root, ".vercelignore"), "utf8");
 assert(vercelIgnore.includes("!audio/*.mp3"), "vercelignore allows audio mp3");
@@ -179,6 +179,14 @@ for (const m of html.matchAll(/"(?:audio\/[^"]+\.(?:wav|mp3|m4a))"/g)) {
   assert(existsSync(join(root, m[0].slice(1, -1))), `audio asset on disk: ${m[0]}`);
 }
 assert(html.includes("audio/bgm.m4a"), "self-hosted bgm path in index");
+assert(
+  html.includes("BGM_TRACKS") || existsSync(join(root, "audio/bgm-produce.m4a")),
+  "BGM_TRACKS registry or bgm-produce.m4a on disk"
+);
+assert(
+  html.includes("startBgm") || html.includes("shouldPlayBgm"),
+  "BGM gated on started (startBgm or shouldPlayBgm)"
+);
 assert(!/new Audio\([^)]*cloudfront/.test(html), "no cloudfront new Audio urls");
 assert(existsSync(join(root, "og-share.jpg")), "og-share.jpg self-hosted share card");
 assert(html.includes("og-share.jpg"), "og image uses self-hosted share card");
@@ -331,15 +339,16 @@ assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("guided-tutor
 assert(html.includes('id="btn-start-play"'), "start play cta");
 assert(html.includes('id="btn-start-demo"'), "start demo cta");
 assert(html.includes("start-cta-group"), "start cta group");
-assert(html.includes("Build 113"), "what's new build 113");
-assert(html.includes("Build 113 — Audio"), "what's new audio headline");
+assert(html.includes("Build 114"), "what's new build 114");
+assert(html.includes("Build 114 — Soundtracks"), "what's new soundtracks headline");
 assert(html.includes("toggleMute"), "toggleMute export");
 assert(html.includes('data-act="toggle-mute"'), "mute button data-act");
 assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("drawer-music-vol"), "drawer music volume slider");
 assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("drawerInteractionKeepsOpen"), "drawer stays open for audio");
 assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("syncDrawerAudio"), "drawer audio sync helper");
-assert(html.includes("repairLoadedState"), "what's new boot repair bullet");
-assert(html.includes("ghost audio"), "what's new audio fix bullet");
+assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("drawer-bgm-track"), "drawer bgm track picker");
+assert(html.includes("BGM track") || html.includes("bgm-produce") || html.includes("Scene BGM"), "what's new soundtrack tracks bullet");
+assert(html.includes("after you tap Play") || html.includes("startBgm") || html.includes("shouldPlayBgm"), "what's new bgm gated on play bullet");
 assert(existsSync(join(root, "launch/DEVICE_QA.md")), "device qa checklist doc");
 assert(html.includes("tabUnlockPct"), "tab unlock pct helper");
 assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("updateTabUnlockRings"), "tab unlock ring updater");
@@ -385,7 +394,7 @@ assert(html.includes("sharePlayInvite"), "start screen share invite helper");
 assert(readFileSync(join(root, "manifest.json"), "utf8").includes("Anime Tycoon"), "manifest short_name");
 assert(readFileSync(join(root, "package.json"), "utf8").includes('"test:sim"'), "test:sim npm script");
 assert(html.includes("bindAudioGestureUnlock"), "ios audio gesture unlock");
-assert(html.includes("primeHtml5Audio"), "ios html5 audio prime helper");
+assert(html.includes("primeHtml5UnlockOnly")||html.includes("primeHtml5Audio"), "ios html5 audio prime helper");
 assert(html.includes("bindIosFormFocusScroll"), "ios input focus scroll helper");
 assert(html.includes("-webkit-fill-available"), "ios viewport fill fallback");
 assert(astCss.includes("100dvh"), "ios dynamic viewport height in ast-v5");

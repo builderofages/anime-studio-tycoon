@@ -116,7 +116,7 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available;width:1
     <button class="btn-ghost" id="btn-mute" type="button" data-act="toggle-mute">🔊 Sound: On</button>
     <button class="btn-ghost" id="btn-save" style="display:none">💾 Save</button>
     <button class="btn-ghost" id="btn-reset">↺ Reset</button>
-  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 16px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 113 · Audio</span></div>
+  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 16px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 114 · Soundtracks</span></div>
   <div id="toasts"></div>
   <div id="pwa-install-banner" class="aaa-pwa-install-banner" hidden>
     <div class="aaa-pwa-install-inner">
@@ -361,13 +361,13 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available;width:1
 <div class="overlay" id="whatsnew" style="display:none" role="dialog" aria-modal="true" aria-labelledby="whatsnew-title">
   <div class="card-modal" style="max-width:400px;text-align:left">
     <img src="start-hero.png?v=112" alt="Anime Studio Tycoon logo" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
-    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 113 — Audio</h1>
+    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 114 — Soundtracks</h1>
     <div class="offlist whatsnew-list" style="margin:12px 0">
-      <div><span>🔇 Sound</span><b>Mute + music/SFX sliders in ⚙️ Settings — drawer stays open while adjusting</b></div>
-      <div><span>🎵 Fix</span><b>Mute actually silences BGM + synth SFX — no ghost audio on tap</b></div>
-      <div><span>🖥️ Desktop</span><b>720–900px centered shell — staff grid + tab labels</b></div>
-      <div><span>📱 Mobile</span><b>HUD grid fixed — playable main area, no black void</b></div>
-      <div><span>🧪 1290+ tests</span><b>Smoke + sim guards for drawer audio controls</b></div>
+      <div><span>🎼 Scene BGM</span><b>5 tracks — Studio, Produce, Market, Premiere, Chill — auto-switch per tab</b></div>
+      <div><span>🔇 No spam</span><b>Music starts after you tap Play — no SFX burst on start screen</b></div>
+      <div><span>⚙️ Settings</span><b>Pick Auto or lock a BGM track + music/SFX sliders</b></div>
+      <div><span>🎵 Crossfade</span><b>Smooth transitions when changing tabs or tracks</b></div>
+      <div><span>🧪 960+ tests</span><b>Smoke + sim guards for soundtrack system</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
   </div>
@@ -548,7 +548,7 @@ document.addEventListener("deviceready", initNativeChrome, false);
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 113 · Audio";
+const BUILD_TAG = "build 114 · Soundtracks";
 const ASSET_V = "112";
 const SHARE_OG_URL = "https://anime-studio-tycoon.vercel.app/og-share.jpg";
 const OFFLINE_PREVIEW_CAP = 4*3600; // "while away" preview when return is under 4h
@@ -2262,8 +2262,21 @@ function projectLockInfo(p){
 function unlockedProjects(){ return PROJECTS.filter(p=>!projectLockInfo(p).locked); }
 
 /* ========================= AUDIO ========================= */
-let bgm=null; const sfx={};
+let bgm=null, bgmNext=null; const sfx={};
 let _actx=null;
+let _html5Primed=false;
+let _unlockInFlight=false;
+let _bgmCurSrc=null;
+let _bgmFadeTimer=null;
+const BGM_TRACKS={
+  studio:"audio/bgm.m4a",
+  produce:"audio/bgm-produce.m4a",
+  market:"audio/bgm-market.m4a",
+  premiere:"audio/bgm-premiere.m4a",
+  chill:"audio/bgm-chill.m4a",
+};
+const BGM_BY_TAB={produce:"produce",quests:"studio",staff:"studio",stars:"chill",research:"chill",studio:"studio",market:"market",store:"chill"};
+const BGM_CROSSFADE_SEC=1.4;
 const SYNTH_SFX_KEYS=new Set(["hire","greenlight","first-greenlight","premiere","claim","tab-switch","unlock-open","milestone-collect","error"]);
 const SFX_PROFILES={
   click:{src:"click",rate:1,v:1},
@@ -2298,31 +2311,104 @@ function resumeAudioCtx(){
 }
 let _audioGestureBound=false;
 let _audioUnlocked=false;
-function primeHtml5Audio(){
+function musicMasterVol(){ return (S.settings&&S.settings.musicVol!=null)?S.settings.musicVol:0.35; }
+function shouldPlayBgm(){ return started&&S&&!S.muted&&_audioUnlocked; }
+function bgmSrcPath(el){ if(!el||!el.src) return ""; try{ const p=el.src.split("/"); return p.slice(-2).join("/"); }catch(_){ return ""; } }
+function bgmTrackForTab(tab){
+  const pref=(S.settings&&S.settings.bgmTrack)||"auto";
+  if(pref!=="auto"&&BGM_TRACKS[pref]) return BGM_TRACKS[pref];
+  const key=BGM_BY_TAB[tab]||"studio";
+  return BGM_TRACKS[key]||BGM_TRACKS.studio;
+}
+function primeHtml5UnlockOnly(){
+  if(_html5Primed) return;
+  _html5Primed=true;
   try{
-    if(bgm){
-      if(S&&S.muted){ try{ bgm.pause(); bgm.volume=0; }catch(_){} return; }
-      bgm.volume=0.001;
-      const p=bgm.play();
-      const done=()=>{ try{ applyAudioSettings(); }catch(_){} };
-      if(p&&p.then) p.then(done).catch(()=>{});
-      else done();
-    }
-    for(const a of Object.values(sfx||{})){
-      try{
-        const c=a.cloneNode();
-        c.volume=0.001;
-        const p=c.play();
-        if(p&&p.then) p.then(()=>c.pause()).catch(()=>{});
-      }catch(_){}
-    }
+    const base=sfx.click;
+    if(!base) return;
+    const c=base.cloneNode();
+    c.volume=0.001;
+    const p=c.play();
+    if(p&&p.then) p.then(()=>c.pause()).catch(()=>{});
   }catch(_){}
 }
+function stopBgm(){
+  if(_bgmFadeTimer){ clearInterval(_bgmFadeTimer); _bgmFadeTimer=null; }
+  _bgmCurSrc=null;
+  for(const el of [bgm,bgmNext]){
+    if(!el) continue;
+    try{ el.pause(); el.volume=0; }catch(_){}
+  }
+}
+function startBgmForTab(tab,opts){
+  if(!shouldPlayBgm()||!bgm) return;
+  const src=bgmTrackForTab(tab);
+  const immediate=!!(opts&&opts.immediate);
+  const cur=bgmSrcPath(bgm);
+  if(cur===src&&!bgm.paused&&bgm.volume>0) return;
+  const dur=immediate?0:BGM_CROSSFADE_SEC;
+  if(dur<=0||!bgmNext||_bgmCurSrc==null){
+    try{
+      if(cur!==src) bgm.src=src;
+      bgm.loop=true;
+      bgm.volume=musicMasterVol();
+      bgm.play().catch(()=>{});
+      _bgmCurSrc=src;
+    }catch(_){}
+    return;
+  }
+  crossfadeBgmTo(src,dur);
+}
+function crossfadeBgmTo(src,durSec){
+  if(_bgmFadeTimer){ clearInterval(_bgmFadeTimer); _bgmFadeTimer=null; }
+  const out=bgm, inn=bgmNext;
+  if(!out||!inn) return startBgmForTab(S.tab,{immediate:true});
+  try{
+    inn.src=src;
+    inn.loop=true;
+    inn.volume=0;
+    inn.currentTime=0;
+    inn.play().catch(()=>{});
+  }catch(_){ return startBgmForTab(S.tab,{immediate:true}); }
+  const target=musicMasterVol();
+  const steps=Math.max(1,Math.round(durSec*30));
+  let i=0;
+  _bgmFadeTimer=setInterval(()=>{
+    i++;
+    const t=i/steps;
+    try{
+      out.volume=Math.max(0,target*(1-t));
+      inn.volume=Math.min(target,target*t);
+    }catch(_){}
+    if(i>=steps){
+      clearInterval(_bgmFadeTimer);
+      _bgmFadeTimer=null;
+      try{ out.pause(); out.volume=0; }catch(_){}
+      bgm=inn;
+      bgmNext=out;
+      _bgmCurSrc=src;
+    }
+  },1000/30);
+}
+function setBgmTrack(track){
+  S.settings=S.settings||{};
+  S.settings.bgmTrack=track||"auto";
+  if(started&&!S.muted) startBgmForTab(S.tab,{immediate:false});
+}
+function applyBgmTrack(){ setBgmTrack((S.settings&&S.settings.bgmTrack)||"auto"); }
 function unlockAudioFromGesture(){
   if(_audioUnlocked) return true;
+  if(_unlockInFlight) return false;
   const ctx=resumeAudioCtx();
+  const finishUnlock=()=>{
+    _audioUnlocked=true;
+    _unlockInFlight=false;
+    primeHtml5UnlockOnly();
+    if(started) startBgmForTab(S.tab,{immediate:true});
+  };
   if(ctx&&ctx.state==="suspended"){
-    ctx.resume().then(()=>{ _audioUnlocked=true; primeHtml5Audio(); }).catch(()=>{});
+    _unlockInFlight=true;
+    ctx.resume().then(finishUnlock).catch(()=>{ _unlockInFlight=false; });
     return false;
   }
   try{
@@ -2335,8 +2421,7 @@ function unlockAudioFromGesture(){
       src.stop(ctx.currentTime+0.001);
     }
   }catch(_){}
-  primeHtml5Audio();
-  _audioUnlocked=true;
+  finishUnlock();
   return true;
 }
 function bindAudioGestureUnlock(){
@@ -2506,8 +2591,10 @@ function playDedicatedSfx(n,opts){
 function initAudio(){
   try{
     if(typeof Audio === "undefined") return;
-    bgm = new Audio(AUDIO_ASSETS.bgm);
-    bgm.loop = true;
+    bgm=new Audio(BGM_TRACKS.studio);
+    bgm.loop=true;
+    bgmNext=new Audio(BGM_TRACKS.studio);
+    bgmNext.loop=true;
     for(const [k, path] of Object.entries(AUDIO_ASSETS)){
       if(k === "bgm") continue;
       try{
@@ -2520,21 +2607,25 @@ function initAudio(){
     bindAudioGestureUnlock();
   }catch(e){
     console.warn("audio init failed", e);
-    bgm = null;
+    bgm=null;
+    bgmNext=null;
   }
 }
 function applyAudioSettings(){
-  const mv=(S.settings&&S.settings.musicVol!=null)?S.settings.musicVol:0.35;
   const sv=(S.settings&&S.settings.sfxVol!=null)?S.settings.sfxVol:0.5;
-  if(bgm) bgm.volume=S.muted?0:mv;
   for(const k of Object.keys(AUDIO_ASSETS)){
     if(k==="bgm"||!sfx[k]) continue;
     sfx[k].volume=Math.min(1, sv*(SFX_PROFILES[k]?.v||1));
   }
+  if(shouldPlayBgm()){
+    const mv=musicMasterVol();
+    if(bgm&&bgm.volume>0) bgm.volume=mv;
+    if(bgmNext&&bgmNext.volume>0) bgmNext.volume=mv;
+  }
 }
 function play(n,opts){
   if(S.muted) return;
-  unlockAudioFromGesture();
+  if(!_audioUnlocked) unlockAudioFromGesture();
   if(playDedicatedSfx(n,opts)) return;
   playSfxFallback(n,opts);
 }
@@ -2557,7 +2648,8 @@ function toggleMute(){
 function updateMute(){
   elText("#btn-mute", (S.muted ? ("🔇 "+STR.muteOff) : ("🔊 "+STR.muteOn)));
   applyAudioSettings();
-  if(bgm){ if(S.muted){ try{ bgm.pause(); bgm.volume=0; }catch(_){} } else bgm.play().catch(()=>{}); }
+  if(S.muted) stopBgm();
+  else startBgmForTab(S.tab,{immediate:true});
   if(window.__AST_HUD__&&window.__AST_HUD__.syncDrawerAudio) window.__AST_HUD__.syncDrawerAudio();
 }
 /* localize the static chrome (footer, start screen) + build the language picker */
@@ -4183,7 +4275,7 @@ function setTab(t){
   if(tabLocked(t)){ toast(tabLockLabel(t)); play("error"); return; }
   /* integration: leaving produce clears greenlight view — prevents _glMode tab desync */
   if(t!=="produce"){ _glMode=false; S._produceSlotManual=false; }
-  S.tab=t; play("tab-switch"); render();
+  S.tab=t; play("tab-switch"); startBgmForTab(t); render();
 }
 
 /* ---- Live in-place updates: refresh only the moving numbers each tick/tap.
@@ -6064,6 +6156,9 @@ window.__AST_HOOK__ = {
   applyAudioSettings,
   toggleMute,
   updateMute,
+  setBgmTrack,
+  applyBgmTrack,
+  startBgmForTab,
   projectStars,
   pullStar,
   hire,
