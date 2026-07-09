@@ -116,7 +116,7 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available;width:1
     <button class="btn-ghost" id="btn-mute" type="button" data-act="toggle-mute">🔊 Sound: On</button>
     <button class="btn-ghost" id="btn-save" style="display:none">💾 Save</button>
     <button class="btn-ghost" id="btn-reset">↺ Reset</button>
-  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 16px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 116 · Polish</span></div>
+  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 16px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 117 · Ship</span></div>
   <div id="toasts"></div>
   <div id="pwa-install-banner" class="aaa-pwa-install-banner" hidden>
     <div class="aaa-pwa-install-inner">
@@ -361,13 +361,13 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available;width:1
 <div class="overlay" id="whatsnew" style="display:none" role="dialog" aria-modal="true" aria-labelledby="whatsnew-title">
   <div class="card-modal" style="max-width:400px;text-align:left">
     <img src="start-hero.png?v=112" alt="Anime Studio Tycoon logo" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
-    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 116 — Polish</h1>
+    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 117 — Ship</h1>
     <div class="offlist whatsnew-list" style="margin:12px 0">
-      <div><span>▶ Play</span><b>Audio unlocks on first Play tap — no second tap needed on iOS</b></div>
-      <div><span>⚙️ Settings</span><b>Auto-greenlight, particles & ticker in drawer — music slider hits 0%</b></div>
-      <div><span>👆 Touch</span><b>Genre chips 44px — coach CTA no longer clips localized text</b></div>
-      <div><span>📱 Drawer</span><b>Settings panel scrolls on small phones — no clipped controls</b></div>
-      <div><span>🧪 975+ tests</span><b>Smoke guards for audio unlock + drawer gameplay toggles</b></div>
+      <div><span>🌍 i18n</span><b>Premiere modal + coach pathway tips in 8 languages</b></div>
+      <div><span>🎬 Premiere</span><b>Red-carpet ribbons, stats & franchise CTA fully localized</b></div>
+      <div><span>🧭 Coach</span><b>Rank, festival, dynasty & market hints use your language</b></div>
+      <div><span>⚡ Perf</span><b>Drawer slot guard + guided coach no longer double-renders</b></div>
+      <div><span>🧪 980+ tests</span><b>Smoke guards for UI5 premiere keys + coach i18n</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
   </div>
@@ -548,7 +548,7 @@ document.addEventListener("deviceready", initNativeChrome, false);
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 116 · Polish";
+const BUILD_TAG = "build 117 · Ship";
 const ASSET_V = "112";
 const SHARE_OG_URL = "https://anime-studio-tycoon.vercel.app/og-share.jpg";
 const OFFLINE_PREVIEW_CAP = 4*3600; // "while away" preview when return is under 4h
@@ -3335,37 +3335,38 @@ function showPremiere(pr,p,stars,yenGain,fansGain){
   const est=estimatePremiere(pr,p);
   const franBase=stars>=4?franchiseBase(pr.title||p.name):"";
   const nextSeason=franBase?(S.franchises[franBase]||1)+1:0;
+  const seqTitle=franBase?sequelTitle(franBase,nextSeason):"";
   const sequelBlock=stars>=4&&franBase?`<div class="prem-franchise-suggest">
-      <p class="prem-franchise-kicker">📺 Franchise opportunity!</p>
-      <p class="prem-franchise-copy">Your hit deserves a sequel — built-in audience boosts fans &amp; yen on premiere.</p>
-      <button type="button" class="btn-gold prem-franchise-btn" data-act="sequel-from-premiere" data-seq="${encodeURIComponent(franBase)}" data-seqg="${encodeURIComponent(pr.genre)}">📺 Greenlight ${sequelTitle(franBase,nextSeason)}</button>
+      <p class="prem-franchise-kicker">${t("prem_franchise_kicker")}</p>
+      <p class="prem-franchise-copy">${t("prem_franchise_copy")}</p>
+      <button type="button" class="btn-gold prem-franchise-btn" data-act="sequel-from-premiere" data-seq="${encodeURIComponent(franBase)}" data-seqg="${encodeURIComponent(pr.genre)}">${tf("prem_franchise_btn",{title:seqTitle})}</button>
     </div>`:"";
   body.innerHTML=`
-    ${isFirst?`<div class="prem-first-ribbon" aria-hidden="true"><span class="prem-first-spark">✨</span><span>YOUR FIRST PREMIERE!</span><span class="prem-first-spark">✨</span></div>`:""}
-    ${isSecond?`<div class="prem-second-ribbon" aria-hidden="true">🎬 Hit #2 — back on the red carpet!</div>`:""}
+    ${isFirst?`<div class="prem-first-ribbon" aria-hidden="true"><span class="prem-first-spark">✨</span><span>${t("prem_first_ribbon")}</span><span class="prem-first-spark">✨</span></div>`:""}
+    ${isSecond?`<div class="prem-second-ribbon" aria-hidden="true">${t("prem_second_ribbon")}</div>`:""}
     <div class="prem-banner${isFirst?" prem-banner-first":isSecond?" prem-banner-second":""}" style="background-image:url(${pr.poster||GENRE_POSTER[pr.genre]||DEFAULT_POSTER})">
       <div class="prem-grad"></div>
       ${isFirst?`<div class="prem-shine"></div>`:""}
-      <div class="prem-tag">${isFirst?"🌸 DEBUT NIGHT":isSecond?"🎬 SOPHOMORE HIT":"🎬 WORLD PREMIERE"}</div>
+      <div class="prem-tag">${isFirst?t("prem_tag_debut"):isSecond?t("prem_tag_sophomore"):t("prem_tag_world")}</div>
       <div class="prem-stars">${"★".repeat(stars)}${"☆".repeat(5-stars)}</div>
       <div class="prem-title">“${pr.title||p.name}”</div>
       <div class="prem-sub">${p.name} · ${pr.genre} · ${ev.ic} ${ev.name}</div>
     </div>
-    ${isFirst?`<p class="prem-first-kicker">The crowd goes wild — your studio is officially open for business!</p>`:""}
-    ${isSecond?`<p class="prem-second-kicker">Another premiere in the books — the industry is watching.</p>`:""}
-    <div class="prem-now"><i></i> Now Showing · ${scenes.length} scenes</div>
+    ${isFirst?`<p class="prem-first-kicker">${t("prem_first_kicker")}</p>`:""}
+    ${isSecond?`<p class="prem-second-kicker">${t("prem_second_kicker")}</p>`:""}
+    <div class="prem-now"><i></i> ${tf("prem_now_showing",{scenes:scenes.length})}</div>
     <div class="prem-review">“${review}”</div>
     <div class="prem-strip">${scenes.map(s=>`<div class="prem-scene" style="background-image:url(${s})"></div>`).join("")}</div>
     <div class="prem-stats${isFirst?" prem-stats-first":""}">
-      <div class="kpi accent" style="flex:1"><div class="kl">Box office</div><div class="kv" id="prem-yen">¥0</div></div>
-      <div class="kpi" style="flex:1"><div class="kl">New fans</div><div class="kv" id="prem-fans">0</div></div>
-      ${isFirst?`<div class="kpi prem-kpi-gems" style="flex:1"><div class="kl">Quest gems waiting</div><div class="kv">+${est.gems||0} 💎</div></div>`:""}
+      <div class="kpi accent" style="flex:1"><div class="kl">${t("prem_box_office")}</div><div class="kv" id="prem-yen">¥0</div></div>
+      <div class="kpi" style="flex:1"><div class="kl">${t("prem_new_fans")}</div><div class="kv" id="prem-fans">0</div></div>
+      ${isFirst?`<div class="kpi prem-kpi-gems" style="flex:1"><div class="kl">${t("prem_quest_gems")}</div><div class="kv">+${est.gems||0} 💎</div></div>`:""}
     </div>
-    ${isFirst?`<p class="prem-first-next">Greenlight your next hit — daily &amp; weekly quests pay 💎</p>`:""}
+    ${isFirst?`<p class="prem-first-next">${t("prem_first_next")}</p>`:""}
     ${sequelBlock}`;
   const m=document.getElementById("premiere");
   const closeBtn=m?.querySelector("[data-act='premiere-close']");
-  if(closeBtn) closeBtn.textContent=stars>=4&&!isFirst?"📺 Greenlight the sequel!":isFirst?"🎬 Greenlight the next one!":isSecond?"🎬 Scout stars & keep rolling!":"🎬 To the red carpet!";
+  if(closeBtn) closeBtn.textContent=stars>=4&&!isFirst?t("prem_close_sequel"):isFirst?t("prem_close_first"):isSecond?t("prem_close_second"):t("prem_close_default");
   if(m){ m.classList.toggle("prem-first",isFirst); m.classList.toggle("prem-second",isSecond); m.classList.toggle("prem-franchise",stars>=4); m.style.display="flex"; }
   _premiereOpen=true;
   startBgmForTab(S.tab);

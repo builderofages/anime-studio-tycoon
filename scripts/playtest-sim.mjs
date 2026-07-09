@@ -215,6 +215,13 @@ function buildSandbox() {
     setLang: () => "en",
     initialLang: () => "en",
     t: (_k, fb) => fb || _k,
+    tf: (key, vars, fb) => {
+      let s = fb || key;
+      if (vars) {
+        for (const k in vars) s = String(s).split("{" + k + "}").join(String(vars[k]));
+      }
+      return s;
+    },
   };
   sandbox.window = sandbox;
   return sandbox;

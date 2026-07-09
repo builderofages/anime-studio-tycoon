@@ -381,9 +381,9 @@
     if (prog && (S.studioStars || 1) < 5) {
       if (prog.ready) {
         return {
-          message: `⭐ Ready for ${prog.tier?.name || "studio rank up"}!`,
+          message: tr("coach_rank_ready", "⭐ Ready for {tier}!", { tier: prog.tier?.name || tr("coach_rank_up", "studio rank up") }),
           tab: "studio",
-          cta: "Promote",
+          cta: tr("coach_cta_promote", "Promote"),
           urgent: true,
           action: { type: "rating" },
         };
@@ -399,9 +399,15 @@
                 : weak.id === "share" ? "market"
                   : "produce";
           return {
-            message: `${prog.pct}% to ${prog.tier?.name || "next rank"} — ${weak.label} ${cur}/${need}`,
+            message: tr("coach_rank_progress", "{pct}% to {tier} — {pillar} {cur}/{need}", {
+              pct: prog.pct,
+              tier: prog.tier?.name || tr("coach_rank_next", "next rank"),
+              pillar: weak.label,
+              cur,
+              need,
+            }),
             tab,
-            cta: "Rank up",
+            cta: tr("coach_cta_rank", "Rank up"),
             urgent: prog.pct >= 80,
             action: { type: "rating" },
           };
@@ -415,9 +421,9 @@
         const gapTxt = hook.fmt ? hook.fmt(gap) : String(gap);
         const marketOk = hook.featureUnlocked ? hook.featureUnlocked("market") : (S.fans || 0) >= 50;
         return {
-          message: `${gapTxt} fans to unlock ${nextRank.unlock}!`,
+          message: tr("coach_fans_to_unlock", "{gap} fans to unlock {unlock}!", { gap: gapTxt, unlock: nextRank.unlock }),
           tab: marketOk ? "market" : "produce",
-          cta: "Grow",
+          cta: tr("coach_cta_grow", "Grow"),
           action: { type: "tab", tab: marketOk ? "market" : "produce" },
         };
       }
@@ -435,9 +441,9 @@
       if (banner && !banner.hidden) return null;
     }
     return {
-      message: "📲 Add to Home Screen — play offline & launch like an app",
+      message: tr("coach_pwa_install", "📲 Add to Home Screen — play offline & launch like an app"),
       tab: "produce",
-      cta: "Install",
+      cta: tr("coach_cta_install", "Install"),
       urgent: false,
       action: { type: "pwa-coach" },
     };
@@ -451,9 +457,9 @@
     const season = (S.franchises?.[opp.base] || 1) + 1;
     const title = hook.sequelTitle ? hook.sequelTitle(opp.base, season) : `${opp.base} II`;
     return {
-      message: `Your hit deserves a sequel — greenlight ${title}`,
+      message: tr("coach_sequel", "Your hit deserves a sequel — greenlight {title}", { title }),
       tab: "produce",
-      cta: "Sequel",
+      cta: tr("coach_cta_sequel", "Sequel"),
       urgent: true,
       showOnGreenlight: true,
       action: { type: "franchise-sequel", base: opp.base, genre: opp.genre },
@@ -474,9 +480,9 @@
       const hint = item.prog?.();
       if (!hint) continue;
       return {
-        message: `🔓 Next unlock: ${item.label} — ${hint}`,
+        message: tr("coach_unlock_next", "🔓 Next unlock: {label} — {hint}", { label: item.label, hint }),
         tab: "produce",
-        cta: rel === 0 ? "Start" : "Play",
+        cta: rel === 0 ? tr("coach_cta_start", "Start") : tr("coach_cta_play", "Play"),
         action: { type: "tab", tab: "produce" },
         nextUnlock: true,
       };
@@ -493,19 +499,19 @@
       const costTxt = hook.fmt ? hook.fmt(cost) : String(cost);
       return {
         message: afford
-          ? "🎪 Festival invite — enter for fans, hype & circuit prestige!"
-          : `🎪 Festival invite — save ¥${costTxt} for entry`,
+          ? tr("coach_festival_enter", "🎪 Festival invite — enter for fans, hype & circuit prestige!")
+          : tr("coach_festival_save", "🎪 Festival invite — save ¥{cost} for entry", { cost: costTxt }),
         tab: "produce",
-        cta: afford ? "Enter" : "Save",
+        cta: afford ? tr("coach_cta_enter", "Enter") : tr("coach_cta_save", "Save"),
         urgent: afford,
         action: { type: "festival-decision" },
       };
     }
     if (afford && (S.festivalWins || []).length < 5 && (hook.dynastyAvailable?.() || 0) < 30) {
       return {
-        message: "🎪 You can afford festival entry — watch for invites!",
+        message: tr("coach_festival_afford", "🎪 You can afford festival entry — watch for invites!"),
         tab: "produce",
-        cta: "Play",
+        cta: tr("coach_cta_play", "Play"),
         action: { type: "tab", tab: "produce" },
       };
     }
@@ -522,13 +528,15 @@
     const dg = hook.dynastyGrade ? hook.dynastyGrade(score) : { g: "", label: "" };
     const peak = S.peakDynasty || score;
     const msg = avail >= 20
-      ? `👑 ${avail} dynasty pts ready — invest in permanent perks`
-      : `👑 ${avail} dynasty pts — open Perk Shop in Studio`;
-    const sub = dg.g ? ` · ${dg.g}-rank ${score} (peak ${peak})` : "";
+      ? tr("coach_dynasty_ready", "👑 {avail} dynasty pts ready — invest in permanent perks", { avail })
+      : tr("coach_dynasty_shop", "👑 {avail} dynasty pts — open Perk Shop in Studio", { avail });
+    const sub = dg.g
+      ? tr("coach_dynasty_grade", " · {grade}-rank {score} (peak {peak})", { grade: dg.g, score, peak })
+      : "";
     return {
       message: msg + sub,
       tab: "studio",
-      cta: "Perks",
+      cta: tr("coach_cta_perks", "Perks"),
       urgent: avail >= 20,
       action: { type: "dynasty-perks" },
     };
@@ -546,9 +554,9 @@
       if (target === 50 && S.fans >= 38) {
         const need = 50 - S.fans;
         return {
-          message: `${hook.fmt ? hook.fmt(need) : need} fans until Marketing unlocks`,
+          message: tr("coach_fan_market_near", "{need} fans until Marketing unlocks", { need: hook.fmt ? hook.fmt(need) : need }),
           tab: "produce",
-          cta: "Play",
+          cta: tr("coach_cta_play", "Play"),
           action: { type: "tab", tab: "produce" },
         };
       }
@@ -561,9 +569,14 @@
     const targetTxt = hook.fmt ? hook.fmt(target) : String(target);
     const fanTxt = hook.fmt ? hook.fmt(afford.fans) : String(afford.fans);
     return {
-      message: `${gapTxt} fans to ${targetTxt} — ${afford.name} adds +${fanTxt}`,
+      message: tr("coach_fans_market", "{gap} fans to {target} — {campaign} adds +{fans}", {
+        gap: gapTxt,
+        target: targetTxt,
+        campaign: afford.name,
+        fans: fanTxt,
+      }),
       tab: "market",
-      cta: "Campaign",
+      cta: tr("coach_cta_campaign", "Campaign"),
       urgent: gap <= afford.fans,
       action: { type: "tab", tab: "market" },
     };
@@ -577,18 +590,18 @@
     const active = activeCount(S);
     if (active > 0 && gems >= 4) {
       return {
-        message: "4💎 Skip Production — finish your show instantly",
+        message: tr("coach_gem_spend", "4💎 Skip Production — finish your show instantly"),
         tab: "store",
-        cta: "Spend",
+        cta: tr("coach_cta_spend", "Spend"),
         urgent: false,
         action: { type: "tab", tab: "store", focus: "gem-spend" },
       };
     }
     if (gems >= 5) {
       return {
-        message: "5💎 Hype Boost — great before your next greenlight",
+        message: tr("coach_gem_hype_boost", "5💎 Hype Boost — great before your next greenlight"),
         tab: "store",
-        cta: "Spend",
+        cta: tr("coach_cta_spend", "Spend"),
         urgent: false,
         action: { type: "tab", tab: "store", focus: "gem-spend" },
       };
@@ -651,9 +664,11 @@
     if (ready >= 0) {
       const multi = (S.slots || 1) > 1;
       return {
-        message: multi ? `Line ${ready + 1} ready — premiere now!` : "Production ready — premiere now!",
+        message: multi
+          ? tr("coach_produce_ready", "Line {line} ready — premiere now!", { line: ready + 1 })
+          : tr("coach_premiere_ready", "Production ready — premiere now!"),
         tab: "produce",
-        cta: "Premiere",
+        cta: tr("coach_cta_premiere", "Premiere"),
         urgent: true,
         showOnGreenlight: true,
         action: multi
@@ -667,9 +682,9 @@
       if (empties === 1 && activeCount(S) > 0) {
         const emptyIx = (S.projects || []).findIndex((p) => !p);
         return {
-          message: "You have an open production line — fill your open slot!",
+          message: tr("coach_open_slot", "You have an open production line — fill your open slot!"),
           tab: "produce",
-          cta: "Greenlight",
+          cta: tr("coach_cta_greenlight", "Greenlight"),
           urgent: true,
           action: emptyIx >= 0 ? { type: "produce-slot-empty", slot: emptyIx } : { type: "gl-focus" },
         };
@@ -691,9 +706,9 @@
       const afford = camps.find((c) => S.yen >= c.cost);
       if (afford) {
         return {
-          message: `Marketing unlocked — run ${afford.name} for quick fans`,
+          message: tr("coach_market_first", "Marketing unlocked — run {campaign} for quick fans", { campaign: afford.name }),
           tab: "market",
-          cta: "Market",
+          cta: tr("coach_cta_market", "Market"),
           urgent: true,
           action: { type: "tab", tab: "market" },
         };
@@ -715,9 +730,9 @@
     const chaosUnlocked = hook.featureUnlocked ? hook.featureUnlocked("chaos") : (S.releases || 0) >= 10;
     if (chaosUnlocked && !S.chaosMode && (S.releases || 0) >= 10 && (S.releases || 0) <= 25) {
       return {
-        message: "Chaos Mode unlocked — enable for +50% rewards (crises rise faster)",
+        message: tr("coach_chaos_enable", "Chaos Mode unlocked — enable for +50% rewards (crises rise faster)"),
         tab: "produce",
-        cta: "Chaos",
+        cta: tr("coach_cta_chaos", "Chaos"),
         urgent: (S.chaos || 0) < 35,
         action: { type: "chaos-enable" },
       };
@@ -728,9 +743,9 @@
       const need = 10 - rel;
       const needTxt = hook.fmt ? hook.fmt(need) : String(need);
       return {
-        message: `${needTxt} left — 10 premieres to unlock Chaos Mode`,
+        message: tr("coach_chaos_progress", "{need} left — 10 premieres to unlock Chaos Mode", { need: needTxt }),
         tab: "produce",
-        cta: "Play",
+        cta: tr("coach_cta_play", "Play"),
         action: { type: "tab", tab: "produce" },
       };
     }
@@ -740,10 +755,10 @@
       const freeScout = (S.releases || 0) === 2 && !S.freeScoutUsed;
       return {
         message: freeScout
-          ? "Stars unlocked — your first scout is FREE!"
-          : "Scout star talent for bigger premieres",
+          ? tr("coach_stars_free", "Stars unlocked — your first scout is FREE!")
+          : tr("coach_stars_scout", "Scout star talent for bigger premieres"),
         tab: "stars",
-        cta: freeScout ? "Free Scout" : "Stars",
+        cta: freeScout ? tr("coach_cta_free_scout", "Free Scout") : tr("coach_cta_stars", "Stars"),
         urgent: true,
         action: { type: "tab", tab: "stars" },
       };
@@ -758,10 +773,10 @@
       if (S.yen >= cost && S.hype >= hypeCost) {
         return {
           message: totalMastery === 0
-            ? `🔬 Research ${trend} — trending genre boosts every premiere`
-            : `🔬 Level ${trend} mastery — it's trending for bonus rewards`,
+            ? tr("coach_research_trend", "🔬 Research {genre} — trending genre boosts every premiere", { genre: trend })
+            : tr("coach_research_mastery", "🔬 Level {genre} mastery — it's trending for bonus rewards", { genre: trend }),
           tab: "research",
-          cta: "Lab",
+          cta: tr("coach_cta_lab", "Lab"),
           urgent: totalMastery === 0,
           action: { type: "tab", tab: "research" },
         };
@@ -775,14 +790,14 @@
         const midGame = (S.releases || 0) >= 2 && (S.releases || 0) <= 10;
         return {
           message: midGame
-            ? `🔥 ${trend} trending — tap Use pick for bonus fans & yen`
+            ? tr("coach_gl_trend", "🔥 {genre} trending — tap Use pick for bonus fans & yen", { genre: trend })
             : showcase
-              ? `Pick a project — 🔥 ${trend} is trending for bonus rewards`
+              ? tr("coach_gl_pick_trend", "Pick a project — 🔥 {trend} is trending for bonus rewards", { trend })
               : empties === 1
-                ? "Choose a project — greenlight to fill your open slot"
-                : "Choose a project and greenlight to fill your open slots",
+                ? tr("coach_gl_fill_slot", "Choose a project — greenlight to fill your open slot")
+                : tr("coach_gl_fill_slots", "Choose a project and greenlight to fill your open slots"),
           tab: "produce",
-          cta: midGame ? "Trending" : "Greenlight",
+          cta: midGame ? tr("coach_cta_trending", "Trending") : tr("coach_cta_greenlight", "Greenlight"),
           urgent: !showcase,
           showOnGreenlight: true,
           action: midGame && typeof hook.applyTrendingGenreSuggest === "function"
@@ -807,11 +822,13 @@
       });
       if (best >= 0) {
         const hud = hook.produceSlotHud ? hook.produceSlotHud() : null;
-        const lines = hud ? `${hud.active}/${hud.total} lines active` : "Multiple lines active";
+        const lines = hud
+          ? tr("coach_lines_active", "{active}/{total} lines active", { active: hud.active, total: hud.total })
+          : tr("coach_lines_multi", "Multiple lines active");
         return {
-          message: `${lines} — boost your slowest show`,
+          message: tr("coach_boost_slowest", "{lines} — boost your slowest show", { lines }),
           tab: "produce",
-          cta: "Boost",
+          cta: tr("coach_cta_boost", "Boost"),
           action: { type: "produce-slot-focus", slot: best },
         };
       }
@@ -824,18 +841,18 @@
         if (p && pr.progress < p.work) {
           if (!wellStaffed && (st.director || 0) < 1) {
             return {
-              message: "Hire a Director — they boost your production score",
+              message: tr("coach_hire_director", "Hire a Director — they boost your production score"),
               tab: "staff",
-              cta: "Hire",
+              cta: tr("hire", "Hire"),
               action: { type: "tab", tab: "staff" },
             };
           }
           return {
             message: showcase
-              ? "Production is rolling — tap the poster to boost speed"
-              : "Tap the poster to boost speed — or wait for your team",
+              ? tr("coach_produce_showcase", "Production is rolling — tap the poster to boost speed")
+              : tr("coach_produce_boost", "Tap the poster to boost speed — or wait for your team"),
             tab: "produce",
-            cta: "Boost",
+            cta: tr("coach_cta_boost", "Boost"),
             urgent: false,
             action: { type: "tapboost", slot: (S.projects || []).indexOf(pr) },
           };
@@ -850,18 +867,18 @@
       (S.releases || 0) <= 12
     ) {
       return {
-        message: "Expand your studio — unlock a second production line!",
+        message: tr("coach_studio_expand", "Expand your studio — unlock a second production line!"),
         tab: "studio",
-        cta: "Expand",
+        cta: tr("coach_cta_expand", "Expand"),
         urgent: true,
         action: { type: "studio-expand" },
       };
     }
     if ((S.studioStars || 1) < 3 && (S.releases || 0) >= 1 && (S.releases || 0) < 15) {
       return {
-        message: `Push toward ${(S.studioStars || 1) + 1}★ studio rating`,
+        message: tr("coach_rating_push", "Push toward {stars}★ studio rating", { stars: (S.studioStars || 1) + 1 }),
         tab: "produce",
-        cta: "Rating",
+        cta: tr("coach_cta_rating", "Rating"),
         urgent: false,
         action: { type: "rating" },
       };
@@ -869,33 +886,33 @@
     if ((S.releases || 0) === 0 && activeCount(S) === 0) {
       if (staffTotal(S) === 0) {
         return {
-          message: "Hire animators and writers first",
+          message: tr("coach_hire_staff_first", "Hire animators and writers first"),
           tab: "staff",
-          cta: "Hire",
+          cta: tr("hire", "Hire"),
           action: { type: "tab", tab: "staff" },
         };
       }
       if (S.yen < 100) {
         return {
-          message: "Low cash — freelance or wait for royalties",
+          message: tr("coach_low_cash", "Low cash — freelance or wait for royalties"),
           tab: "produce",
-          cta: "Produce",
+          cta: tr("coach_cta_produce", "Produce"),
           action: { type: "tab", tab: "produce" },
         };
       }
       return {
-        message: "One tap to greenlight your first anime",
+        message: tr("coach_first_greenlight", "One tap to greenlight your first anime"),
         tab: "produce",
-        cta: "Greenlight",
+        cta: tr("coach_cta_greenlight", "Greenlight"),
         urgent: true,
         action: { type: "quick-greenlight" },
       };
     }
     if (activeCount(S) > 0 && (S.releases || 0) < 5) {
       return {
-        message: "Tap posters to boost production speed",
+        message: tr("coach_boost_posters", "Tap posters to boost production speed"),
         tab: "produce",
-        cta: "Lines",
+        cta: tr("coach_cta_lines", "Lines"),
         action: { type: "tab", tab: "produce" },
       };
     }
@@ -905,7 +922,7 @@
         return {
           message: prog,
           tab: "produce",
-          cta: "Play",
+          cta: tr("coach_cta_play", "Play"),
           action: { type: "tab", tab: "produce" },
         };
       }
@@ -915,19 +932,19 @@
     if (claimableQuests(S) > 0 || loginPending) {
       return {
         message: loginPending && claimableQuests(S) === 0
-          ? "Daily login reward is ready"
-          : "Rewards ready — tap to claim",
+          ? tr("coach_daily_login", "Daily login reward is ready")
+          : tr("coach_rewards_ready", "Rewards ready — tap to claim"),
         tab: "quests",
-        cta: "Claim",
+        cta: tr("coach_cta_claim", "Claim"),
         urgent: true,
         action: { type: "claim-reward" },
       };
     }
     if (!wellStaffed && (S.staff?.director || 0) < 1 && activeCount(S) > 0 && (S.releases || 0) >= 1 && (S.releases || 0) < 12) {
       return {
-        message: "Hire a Director — they boost your production score",
+        message: tr("coach_hire_director", "Hire a Director — they boost your production score"),
         tab: "staff",
-        cta: "Hire",
+        cta: tr("hire", "Hire"),
         action: { type: "tab", tab: "staff" },
       };
     }
@@ -936,9 +953,9 @@
       const afford = priority.find((k) => hook.ROLES[k] && S.yen >= hook.hireCost(k) && (S.staff[k] || 0) < 2);
       if (afford) {
         return {
-          message: `Hire a ${hook.ROLES[afford].name} to speed up production`,
+          message: tr("coach_hire_role_speed", "Hire a {role} to speed up production", { role: hook.ROLES[afford].name }),
           tab: "staff",
-          cta: "Hire",
+          cta: tr("hire", "Hire"),
           urgent: (S.staff[afford] || 0) === 0,
           action: { type: "hire", role: afford },
         };
@@ -950,9 +967,9 @@
     const todayGems = new Date().toISOString().slice(0, 10);
     if (S.freeGemsDate !== todayGems) {
       return {
-        message: "Claim your free +10 💎 in the Store — resets daily",
+        message: tr("coach_free_gems", "Claim your free +10 💎 in the Store — resets daily"),
         tab: "store",
-        cta: "Claim",
+        cta: tr("coach_cta_claim", "Claim"),
         urgent: true,
         action: { type: "tab", tab: "store", focus: "freegems" },
       };
@@ -964,9 +981,9 @@
     const nextUnlockCoach = nextUnlockPreviewCoach(S, hook);
     if (nextUnlockCoach) return nextUnlockCoach;
     return {
-      message: "Trending: " + (hook.trendGenre ? hook.trendGenre() : "Action"),
+      message: tr("coach_trending_fallback", "Trending: {genre}", { genre: hook.trendGenre ? hook.trendGenre() : "Action" }),
       tab: "produce",
-      cta: "Play",
+      cta: tr("coach_cta_play", "Play"),
       action: { type: "tab", tab: "produce" },
     };
   }
@@ -1605,9 +1622,17 @@
     syncDrawerAudio();
   }
 
+  function drawerSlotSignature(slot) {
+    if (!slot) return "";
+    const organized = slot.dataset.organized === "1" ? "1" : "0";
+    return `${organized}:${slot.childElementCount}`;
+  }
+
   function organizeDrawerSlot() {
     const slot = document.getElementById("hud-drawer-slot");
     if (!slot) return;
+    const sig = drawerSlotSignature(slot);
+    if (slot.dataset.drawerSig === sig) return;
     wireDrawerAudio();
 
     const reset = document.getElementById("btn-reset");
@@ -1728,6 +1753,7 @@
       if (langNode) slot.insertBefore(gameG, langNode);
       else slot.appendChild(gameG);
     }
+    slot.dataset.drawerSig = drawerSlotSignature(slot);
   }
 
   function pulseHudCombo() {
@@ -2151,9 +2177,6 @@
         const dest = coachHint?.tab ? safeCoachTab(hook, coachHint.tab) : null;
         if (dest && S.tab !== dest && stepNeedsTab(S, hook, dest)) {
           S.tab = dest;
-          /* integration: guided coach tab switch uses full hook.render (not _renderMain) */
-          requestAnimationFrame(() => hook.render());
-          return;
         }
       }
     }
