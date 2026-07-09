@@ -57,7 +57,8 @@ html.hud-v3-active #app {
   margin: 0 auto;
   display: grid !important;
   grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: auto auto auto 1fr var(--ui-dock-h);
+  /* 6 areas → 6 rows; main must get 1fr (was 4th row = coach → empty void + 56px main) */
+  grid-template-rows: auto auto auto auto 1fr var(--ui-dock-h);
   grid-template-areas:
     "hud"
     "goal"
@@ -114,7 +115,13 @@ html.hud-v3-active #rival-race .rival-race-copy {
 }
 
 html.hud-v3-active #rival-race[hidden] { display: none !important; }
-html.hud-v3-active #pathway-rail { grid-area: coach; }
+html.hud-v3-active #pathway-rail {
+  grid-area: coach;
+  flex-shrink: 0;
+  min-height: 0;
+  max-height: 88px;
+  overflow: hidden;
+}
 html.hud-v3-active #main { grid-area: main; }
 html.hud-v3-active #command-dock { grid-area: dock; }
 html.hud-v3-active #top,

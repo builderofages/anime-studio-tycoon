@@ -3363,10 +3363,11 @@ html.hud-v3-active .aaa-page-hero.aaa-gacha-hero .aaa-gacha-btns {
 }
 
 /* BUILD 90 — guided tutorial */
-html.gt-tutorial-active::before { content: "" !important; position: fixed !important; inset: 0 !important; background: rgba(4,2,12,.68) !important; z-index: 9998 !important; pointer-events: none !important; }
+html.gt-tutorial-active::before { content: "" !important; position: fixed !important; inset: 0 !important; background: rgba(4,2,12,.45) !important; z-index: 9998 !important; pointer-events: none !important; }
+html.gt-tutorial-active #pathway-rail { display: none !important; }
 html.gt-tutorial-active .gt-highlight { position: relative !important; z-index: 9999 !important; box-shadow: 0 0 0 3px var(--ast-pink), 0 0 28px rgba(255,92,168,.55) !important; animation: gt-spot-pulse 2.2s ease-in-out infinite !important; }
 @keyframes gt-spot-pulse { 0%,100% { box-shadow: 0 0 0 3px var(--ast-pink), 0 0 20px rgba(255,92,168,.4); } 50% { box-shadow: 0 0 0 4px var(--ast-gold), 0 0 32px rgba(255,200,69,.45); } }
-#guided-tutorial { position: fixed !important; left: 50% !important; bottom: calc(var(--safe-b,0px) + 108px) !important; transform: translateX(-50%) !important; width: min(420px,calc(100vw - 24px)) !important; z-index: 10001 !important; pointer-events: auto !important; }
+#guided-tutorial { position: fixed !important; left: 50% !important; bottom: calc(var(--safe-b,0px) + var(--ui-dock-h,56px) + 12px) !important; transform: translateX(-50%) !important; width: min(420px,calc(100vw - 24px)) !important; max-width: calc(100vw - 20px) !important; z-index: 10001 !important; pointer-events: auto !important; }
 #guided-tutorial .gt-card { padding: 14px 16px 12px !important; border-radius: 18px !important; background: linear-gradient(160deg,rgba(22,14,36,.97),rgba(12,8,22,.98)) !important; border: 1px solid rgba(255,92,168,.35) !important; box-shadow: 0 16px 40px rgba(0,0,0,.55), 0 0 24px rgba(255,92,168,.18) !important; }
 #guided-tutorial .gt-kicker { font-size: 10px !important; font-weight: 800 !important; letter-spacing: .12em !important; text-transform: uppercase !important; color: var(--ast-pink) !important; margin-bottom: 4px !important; }
 #guided-tutorial .gt-step { font-size: 11px !important; font-weight: 700 !important; color: var(--ast-muted) !important; margin-bottom: 6px !important; }
