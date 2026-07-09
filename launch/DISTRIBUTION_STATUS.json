@@ -1,6 +1,14 @@
 {
-  "at": "2026-07-09T09:32:24.015Z",
-  "health": {},
+  "at": "2026-07-09T09:37:45.631Z",
+  "health": {
+    "ok": true,
+    "grant_jwt": true,
+    "grant_mint": true,
+    "gumroad_token": false,
+    "gumroad_seller": true,
+    "apple_shared_secret": false,
+    "google_play": false
+  },
   "missingSlugs": [
     "astlegend",
     "astmogul",

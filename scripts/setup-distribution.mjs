@@ -4,6 +4,7 @@
  * Usage:
  *   node scripts/setup-distribution.mjs
  *   GUMROAD_ACCESS_TOKEN=xxx node scripts/setup-distribution.mjs --set-vercel
+ *   GUMROAD_ACCESS_TOKEN=xxx node scripts/setup-distribution.mjs --create --publish
  */
 import { spawnSync } from "child_process";
 import { readFileSync, writeFileSync, existsSync } from "fs";
@@ -13,6 +14,9 @@ import { fileURLToPath } from "url";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const base = process.env.PREFLIGHT_URL || "https://anime-studio-tycoon.vercel.app";
 const setVercel = process.argv.includes("--set-vercel");
+const createProducts = process.argv.includes("--create");
+const publish = process.argv.includes("--publish");
+const SELLER_ID = process.env.GUMROAD_SELLER_ID || "2936157234519";
 
 const MISSING = [
   { slug: "astlegend", name: "Legend Bundle", price: "7.99" },
@@ -43,14 +47,31 @@ try {
 const token = process.env.GUMROAD_ACCESS_TOKEN;
 if (setVercel && token) {
   console.log("\nSetting Vercel env (requires logged-in vercel CLI)...");
-  for (const name of ["GUMROAD_ACCESS_TOKEN"]) {
+  for (const [name, value] of [
+    ["GUMROAD_ACCESS_TOKEN", token],
+    ["GUMROAD_SELLER_ID", SELLER_ID],
+  ]) {
     const p = spawnSync("vercel", ["env", "add", name, "production"], {
       cwd: root,
-      input: token + "\n",
+      input: value + "\n",
       encoding: "utf8",
     });
     console.log(p.status === 0 ? `  ✓ ${name}` : `  ✗ ${name}: ${p.stderr || p.stdout}`);
   }
+}
+
+if (createProducts && token) {
+  console.log("\nCreating missing Gumroad products via API...");
+  const args = ["scripts/create-gumroad-products.mjs"];
+  if (publish) args.push("--publish");
+  if (setVercel) args.push("--set-vercel");
+  const p = spawnSync("node", args, {
+    cwd: root,
+    env: { ...process.env, GUMROAD_ACCESS_TOKEN: token, GUMROAD_SELLER_ID: SELLER_ID },
+    encoding: "utf8",
+    stdio: "inherit",
+  });
+  if (p.status !== 0) process.exit(p.status ?? 1);
 }
 
 console.log("\nGumroad products:");
@@ -84,10 +105,9 @@ if (missing.length) {
 }
 
 if (!health.gumroad_token) {
-  console.log("Add Gumroad token:");
-  console.log("  1. Gumroad → Settings → Advanced → Generate access token");
-  console.log("  2. GUMROAD_ACCESS_TOKEN=xxx node scripts/setup-distribution.mjs --set-vercel");
-  console.log("  Or: vercel env add GUMROAD_ACCESS_TOKEN production");
+  console.log("Add Gumroad token (one command when you have it):");
+  console.log("  GUMROAD_ACCESS_TOKEN=xxx node scripts/setup-distribution.mjs --set-vercel --create --publish");
+  console.log("  Or: gumroad auth login  →  npm run create-gumroad -- --publish --set-vercel");
 }
 
 if (!health.apple_shared_secret) {
