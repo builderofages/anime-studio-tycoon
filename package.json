@@ -19,6 +19,7 @@
     "test:web-qa": "node scripts/device-qa-web.mjs",
     "verify-gumroad": "node scripts/verify-gumroad.mjs",
     "create-gumroad": "node scripts/create-gumroad-products.mjs",
+    "gumroad-ship": "node scripts/gumroad-ship.mjs",
     "launch-readiness": "node scripts/launch-readiness.mjs",
     "setup-distribution": "node scripts/setup-distribution.mjs",
     "gen:sfx": "node scripts/gen-sfx.mjs",
