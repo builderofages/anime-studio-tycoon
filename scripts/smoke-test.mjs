@@ -155,9 +155,11 @@ assert(!html.includes('href="hf-design.css'), "hf-design.css disabled (ast-v5)")
 assert(!html.includes('href="aaa-ui.css'), "aaa-ui.css disabled (ast-v5)");
 assert(html.includes("legacy-fx.css"), "legacy-fx css linked");
 assert(html.includes("ast-v5.css"), "ast-v5 design css linked");
-assert(html.includes("build 106"), "build 106 tag");
+assert(html.includes("build 107"), "build 107 tag");
 assert(html.includes("Production Score"), "production score label");
-assert(html.includes("Audio"), "build 106 audio tag");
+assert(html.includes("Hotfix"), "build 107 hotfix tag");
+assert(html.includes("safeBegin"), "boot safeBegin guard");
+assert(readFileSync(join(root, ".vercelignore"), "utf8").includes("!audio/*.mp3"), "vercelignore allows audio mp3");
 assert(existsSync(join(root, "audio/bgm.m4a")), "self-hosted bgm");
 assert(existsSync(join(root, "audio/hire.wav")), "hire wav sfx");
 assert(existsSync(join(root, "audio/first-greenlight.wav")), "first-greenlight wav sfx");
@@ -291,11 +293,11 @@ assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("guided-tutor
 assert(html.includes('id="btn-start-play"'), "start play cta");
 assert(html.includes('id="btn-start-demo"'), "start demo cta");
 assert(html.includes("start-cta-group"), "start cta group");
-assert(html.includes("Build 106"), "what's new build 106");
+assert(html.includes("Build 107"), "what's new build 107");
 assert(html.includes("Self-hosted"), "what's new audio bullet");
-assert(html.includes("Build 106 — Audio"), "what's new audio headline");
-assert(html.includes("Hybrid play"), "what's new hybrid play bullet");
-assert(html.includes("gen:sfx"), "what's new gen sfx bullet");
+assert(html.includes("Build 107 — Hotfix"), "what's new hotfix headline");
+assert(html.includes("Deploy fix"), "what's new deploy fix bullet");
+assert(html.includes("safeBegin"), "what's new boot guard bullet");
 assert(existsSync(join(root, "launch/DEVICE_QA.md")), "device qa checklist doc");
 assert(html.includes("tabUnlockPct"), "tab unlock pct helper");
 assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("updateTabUnlockRings"), "tab unlock ring updater");
@@ -407,7 +409,7 @@ assert(html.includes("celebrateGreenlightSlot"), "greenlight slot celebration bu
 assert(html.includes("unlock-open"), "unlock modal open sfx profile");
 assert(html.includes("milestone-collect"), "share milestone collect sfx profile");
 const astCss = readFileSync(join(root, "ast-v5.css"), "utf8");
-assert(astCss.includes("BUILD 106"), "build 106 css marker");
+assert(astCss.includes("BUILD 107"), "build 107 css marker");
 assert(astCss.includes("start-share-link"), "start share link css");
 assert(astCss.includes("aaa-dynasty-hero"), "dynasty hero css");
 assert(astCss.includes("aaa-franchise-panel"), "franchise panel css");

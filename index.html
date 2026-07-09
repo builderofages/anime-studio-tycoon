@@ -98,7 +98,7 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available}
     <button class="btn-ghost" id="btn-mute">🔊 Sound: On</button>
     <button class="btn-ghost" id="btn-save" style="display:none">💾 Save</button>
     <button class="btn-ghost" id="btn-reset">↺ Reset</button>
-  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 106 · Audio</span></div>
+  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 107 · Hotfix</span></div>
   <div id="toasts"></div>
   <div id="pwa-install-banner" class="aaa-pwa-install-banner" hidden>
     <div class="aaa-pwa-install-inner">
@@ -340,14 +340,13 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available}
 
 <div class="overlay" id="whatsnew" style="display:none" role="dialog" aria-modal="true" aria-labelledby="whatsnew-title">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <img src="start-hero.png?v=106" alt="Anime Studio Tycoon logo" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
-    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 106 — Audio</h1>
+    <img src="start-hero.png?v=107" alt="Anime Studio Tycoon logo" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
+    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 107 — Hotfix</h1>
     <div class="offlist whatsnew-list" style="margin:12px 0">
-      <div><span>🎵 Self-hosted</span><b>BGM + click/reward MP3 + 9 distinct WAV SFX — no CloudFront dependency</b></div>
-      <div><span>🔊 Hybrid play</span><b>Asset clip first → Web Audio synth fallback → legacy clip</b></div>
-      <div><span>🎬 Distinct cues</span><b>hire, greenlight, premiere, unlock-open, milestone-collect each have own file</b></div>
-      <div><span>📱 Offline-ready</span><b>audio/ bundled in www/ for TestFlight + PWA</b></div>
-      <div><span>🛠️ Regen</span><b>npm run gen:sfx rebuilds WAVs from scripts/gen-sfx.mjs</b></div>
+      <div><span>🔧 Deploy fix</span><b>BGM + MP3 SFX were blocked by .vercelignore — now ship to production</b></div>
+      <div><span>🛡️ Boot guard</span><b>Corrupt saves auto-reset; safeBegin() catches crash and shows Play screen</b></div>
+      <div><span>🎵 Audio</span><b>Self-hosted WAV + MP3/M4A all live on Vercel</b></div>
+      <div><span>▶ Play</span><b>Start screen always recoverable — tap Play if anything looks stuck</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
   </div>
@@ -456,8 +455,8 @@ document.addEventListener("deviceready", initNativeChrome, false);
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 106 · Audio";
-const ASSET_V = "106";
+const BUILD_TAG = "build 107 · Hotfix";
+const ASSET_V = "107";
 const SHARE_OG_URL = "https://anime-studio-tycoon.vercel.app/og-share.jpg";
 const OFFLINE_PREVIEW_CAP = 4*3600; // "while away" preview when return is under 4h
 const SHARE_PLAY_URL = "https://anime-studio-tycoon.vercel.app/play";
@@ -2331,8 +2330,10 @@ function syncCloudSave(){
 }
 function load(){
   syncCloudSave();
-  try{ const raw=localStorage.getItem(SAVE_KEY); if(!raw) return false;
+  try{
+    const raw=localStorage.getItem(SAVE_KEY); if(!raw) return false;
     const d=JSON.parse(raw);
+    if(!d||typeof d!=="object") throw new Error("invalid save");
     S=mergeLoadedSave(d, freshState(), GENRES, MAX_SLOTS);
     normStars();
     if(window.__AST_STUDIO_RATING__?.initState) window.__AST_STUDIO_RATING__.initState(S);
@@ -2340,7 +2341,10 @@ function load(){
       if(S.fans>=m.fans&&!S.fanMilestonesToast.includes(m.fans)) S.fanMilestonesToast.push(m.fans);
     }
     return true;
-  }catch(e){ return false; }
+  }catch(e){
+    try{ localStorage.removeItem(SAVE_KEY); }catch(_){}
+    return false;
+  }
 }
 
 /* ========================= TOASTS / FLOAT GAIN ========================= */
@@ -5327,7 +5331,9 @@ function begin(forceDemo){
   render(); save();
   requestAnimationFrame(frame);
 }
-const loaded=load(); if(!loaded) S=freshState();
+let loaded=false;
+try{ loaded=load(); if(!loaded) S=freshState(); }
+catch(e){ S=freshState(); loaded=false; }
 bindAudioGestureUnlock();
 if(isDemoMode()) S._demoMode=true;
 else if(S._bootstrapped||((S.yen||0)>5000000&&(S.releases||0)<3)) S._demoMode=true;
@@ -5396,8 +5402,24 @@ updateChrome();
 initPwaInstall();
 /* Always run the simulation. Returning players auto-resume (no tap needed to "start" the loop —
    productions count down on their own); brand-new players see the intro gate once. */
-if(loaded){ begin(); }
-else { const s=document.getElementById("start"); if(s) s.style.display="flex"; render(); }
+function showStartScreen(){
+  started=false;
+  const s=document.getElementById("start"); if(s) s.style.display="flex";
+  const app=document.getElementById("app"); if(app) app.style.display="";
+  render();
+}
+function safeBegin(){
+  try{ begin(); }
+  catch(e){
+    console.error("boot failed", e);
+    try{ localStorage.removeItem(SAVE_KEY); }catch(_){}
+    S=freshState();
+    toast("Save reset — tap Play to start fresh", true);
+    showStartScreen();
+  }
+}
+if(loaded) safeBegin();
+else showStartScreen();
 window.__AST_HOOK__ = {
   getState: () => S,
   getProject: (pid) => PROJECTS[pid],

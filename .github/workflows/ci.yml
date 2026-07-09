@@ -16,3 +16,7 @@ jobs:
           node-version: "20"
       - run: npm install
       - run: npm test
+      - run: npm run test:sim
+      - run: npm run launch-preflight
+        env:
+          PREFLIGHT_URL: https://anime-studio-tycoon.vercel.app

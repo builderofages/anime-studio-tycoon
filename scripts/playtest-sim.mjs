@@ -207,7 +207,7 @@ function extractGameLogic() {
     .replace(/^import[\s\S]*?from\s+["'][^"']+["'];\s*/gm, "")
     .replace(/^window\.__AST_LOGIC__\s*=\s*\{[\s\S]*?\};\s*/m, "")
     .replace(/^setLang\(initialLang\(\)\);\s*/m, "");
-  const cut = code.indexOf("const loaded=load();");
+  const cut = code.indexOf("let loaded=false;");
   if (cut < 0) throw new Error("game script cut marker missing");
   return loadLogicForVm() + "\n" + code.slice(0, cut);
 }
