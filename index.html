@@ -98,7 +98,7 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available}
     <button class="btn-ghost" id="btn-mute">🔊 Sound: On</button>
     <button class="btn-ghost" id="btn-save" style="display:none">💾 Save</button>
     <button class="btn-ghost" id="btn-reset">↺ Reset</button>
-  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 105 · QA</span></div>
+  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 106 · Audio</span></div>
   <div id="toasts"></div>
   <div id="pwa-install-banner" class="aaa-pwa-install-banner" hidden>
     <div class="aaa-pwa-install-inner">
@@ -340,15 +340,14 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available}
 
 <div class="overlay" id="whatsnew" style="display:none" role="dialog" aria-modal="true" aria-labelledby="whatsnew-title">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <img src="start-hero.png?v=105" alt="Anime Studio Tycoon logo" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
-    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 105 — QA</h1>
+    <img src="start-hero.png?v=106" alt="Anime Studio Tycoon logo" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
+    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 106 — Audio</h1>
     <div class="offlist whatsnew-list" style="margin:12px 0">
-      <div><span>📋 Device QA</span><b>launch/DEVICE_QA.md — iPhone + Android smoke checklist with pass/fail table</b></div>
-      <div><span>🧪 Audit</span><b>playtest-audit asserts first-greenlight, unlock-open, milestone-collect, slot burst</b></div>
-      <div><span>🚀 Preflight</span><b>launch-preflight gates build 104+, www idle-feel + og-share.jpg</b></div>
-      <div><span>🎵 Game feel</span><b>First greenlight arpeggio, unlock chimes, share-milestone sparkle + slot burst</b></div>
-      <div><span>📱 Native</span><b>Capacitor www bundle unchanged — TestFlight smoke per DEVICE_QA</b></div>
-      <div><span>🔗 Share</span><b>Self-hosted og-share.jpg for link previews on iMessage / Slack</b></div>
+      <div><span>🎵 Self-hosted</span><b>BGM + click/reward MP3 + 9 distinct WAV SFX — no CloudFront dependency</b></div>
+      <div><span>🔊 Hybrid play</span><b>Asset clip first → Web Audio synth fallback → legacy clip</b></div>
+      <div><span>🎬 Distinct cues</span><b>hire, greenlight, premiere, unlock-open, milestone-collect each have own file</b></div>
+      <div><span>📱 Offline-ready</span><b>audio/ bundled in www/ for TestFlight + PWA</b></div>
+      <div><span>🛠️ Regen</span><b>npm run gen:sfx rebuilds WAVs from scripts/gen-sfx.mjs</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
   </div>
@@ -457,8 +456,8 @@ document.addEventListener("deviceready", initNativeChrome, false);
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 105 · QA";
-const ASSET_V = "102";
+const BUILD_TAG = "build 106 · Audio";
+const ASSET_V = "106";
 const SHARE_OG_URL = "https://anime-studio-tycoon.vercel.app/og-share.jpg";
 const OFFLINE_PREVIEW_CAP = 4*3600; // "while away" preview when return is under 4h
 const SHARE_PLAY_URL = "https://anime-studio-tycoon.vercel.app/play";
@@ -2228,10 +2227,37 @@ function playClip(prof){
     a.play().catch(()=>{});
   }catch(e){}
 }
+const AUDIO_ASSETS={
+  bgm:"audio/bgm.m4a",
+  click:"audio/click.mp3",
+  reward:"audio/reward.mp3",
+  hire:"audio/hire.wav",
+  greenlight:"audio/greenlight.wav",
+  "first-greenlight":"audio/first-greenlight.wav",
+  premiere:"audio/premiere.wav",
+  claim:"audio/claim.wav",
+  "tab-switch":"audio/tab-switch.wav",
+  "unlock-open":"audio/unlock-open.wav",
+  "milestone-collect":"audio/milestone-collect.wav",
+  error:"audio/error.wav",
+};
+function playDedicatedSfx(n){
+  const base=sfx[n]; if(!base) return false;
+  try{
+    const prof=SFX_PROFILES[n]||SFX_PROFILES.click;
+    const a=base.cloneNode();
+    a.playbackRate=prof.rate||1;
+    a.volume=Math.min(1, sfxMasterVol()*(prof.v||1));
+    a.play().catch(()=>{});
+    return true;
+  }catch(e){ return false; }
+}
 function initAudio(){
-  bgm=new Audio("https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_062744_f564f7ba-ec29-4a6e-a28b-023ff2c2f867.m4a"); bgm.loop=true;
-  sfx.click=new Audio("https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_062745_f345d8e7-d3ee-47c5-b9c5-2474f060ee3d.mp3");
-  sfx.reward=new Audio("https://d8j0ntlcm91z4.cloudfront.net/user_342M7OMJEmtQi5ZXBKPVqJZUjCn/hf_20260614_062746_9941319d-2b65-406d-a9d3-bb1010fb5616.mp3");
+  bgm=new Audio(AUDIO_ASSETS.bgm); bgm.loop=true;
+  for(const [k,path] of Object.entries(AUDIO_ASSETS)){
+    if(k==="bgm") continue;
+    sfx[k]=new Audio(path);
+  }
   applyAudioSettings();
   bindAudioGestureUnlock();
 }
@@ -2239,14 +2265,16 @@ function applyAudioSettings(){
   const mv=(S.settings&&S.settings.musicVol!=null)?S.settings.musicVol:0.35;
   const sv=(S.settings&&S.settings.sfxVol!=null)?S.settings.sfxVol:0.5;
   if(bgm) bgm.volume=S.muted?0:mv;
-  if(sfx.click) sfx.click.volume=sv;
-  if(sfx.reward) sfx.reward.volume=Math.min(1,sv*1.2);
+  for(const k of Object.keys(AUDIO_ASSETS)){
+    if(k==="bgm"||!sfx[k]) continue;
+    sfx[k].volume=Math.min(1, sv*(SFX_PROFILES[k]?.v||1));
+  }
 }
 function play(n,opts){
   if(S.muted) return;
-  const prof=SFX_PROFILES[n]||SFX_PROFILES.click;
+  if(playDedicatedSfx(n)) return;
   if(SYNTH_SFX_KEYS.has(n)&&playSynth(n,opts)) return;
-  playClip(prof);
+  playClip(SFX_PROFILES[n]||SFX_PROFILES.click);
 }
 function updateMute(){
   $("#btn-mute").textContent = (S.muted?("🔇 "+STR.muteOff):("🔊 "+STR.muteOn));

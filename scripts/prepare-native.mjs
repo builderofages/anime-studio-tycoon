@@ -7,7 +7,7 @@
  *   Optional IAP: no extra usage string beyond StoreKit.
  *   If you add analytics later, set NSUserTrackingUsageDescription before enabling ATT.
  */
-import { cpSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
+import { cpSync, existsSync, mkdirSync, readFileSync, writeFileSync, readdirSync } from "fs";
 import { join } from "path";
 
 const ROOT = new URL("..", import.meta.url).pathname;
@@ -90,6 +90,17 @@ for (const f of FILES) {
   }
   cpSync(src, join(WWW, f));
   console.log(`copied ${f}`);
+}
+
+const audioDir = join(ROOT, "audio");
+if (existsSync(audioDir)) {
+  mkdirSync(join(WWW, "audio"), { recursive: true });
+  for (const name of readdirSync(audioDir)) {
+    const src = join(audioDir, name);
+    if (!name.match(/\.(wav|mp3|m4a|ogg)$/i)) continue;
+    cpSync(src, join(WWW, "audio", name));
+    console.log(`copied audio/${name}`);
+  }
 }
 
 const idx = join(WWW, "index.html");
