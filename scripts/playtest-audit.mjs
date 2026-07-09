@@ -206,6 +206,12 @@ const LOGIC_EXPORTS = [
   "makeUnlocks",
   "tabUnlockPctFor",
   "rivalGoalFromStart",
+  "repairLoadedStateFor",
+  "repairRivalGoalFor",
+  "VALID_TABS",
+  "starsUnlockProgressFor",
+  "tabLockedFor",
+  "masteryResearchCostFor",
   "mergeLoadedSave",
   "createFreshState",
   "DEFAULT_STAFF",
@@ -321,7 +327,13 @@ assert(html.includes("S.chaosMode?1.5:1"), "chaosBonus 1.5× when chaosMode on")
 assert(html.includes("function simulateOffline("), "simulateOffline hook");
 assert(html.includes('id="offline"'), "offline overlay in DOM");
 assert(html.includes("function returnHubOpen("), "returnHubOpen gate");
+assert(html.includes("function bootBatchModalOpen("), "bootBatchModalOpen gate");
 assert(html.includes("function closeReturnHub("), "closeReturnHub hook");
+assert(
+  html.includes("bootBatchModalOpen()") &&
+    html.match(/function drainUnlockModalQueue[\s\S]*?celebrationOverlayOpen\(\)\) return false;/),
+  "drainUnlockModalQueue blocks premiere, return hub, boot batch, and open celebrations"
+);
 
 /** Premiere queue while modal open. */
 assert(html.includes("let _premiereQueue=") || html.includes("let _premiereQueue ="), "premiere queue array");
@@ -338,10 +350,14 @@ assert(html.includes("function franchiseList("), "franchiseList helper");
 assert(html.includes("function prestige("), "prestige hook");
 assert(html.includes("legacy:S.legacy+gain"), "prestige accumulates legacy");
 assert(html.includes("S.redeemedGrants=keep.redeemedGrants"), "prestige keeps redeemedGrants");
+assert(html.includes("S.redeemedCodes=keep.redeemedCodes"), "prestige keeps redeemedCodes");
 
 /** Rival HUD goal repair for corrupt saves. */
 assert(html.includes("function ensureHudRival("), "ensureHudRival hook");
-assert(html.includes("S.rivalGoal<=S.rivalStartVal"), "rival goal repair when goal <= start");
+assert(
+  logic.includes("export function repairRivalGoalFor") && html.includes("repairRivalGoalFor(S, studioValue())"),
+  "rival goal repair when goal <= start"
+);
 
 /** Tutorial + what's new onboarding. */
 assert(html.includes("function completeTutorial("), "completeTutorial hook");
@@ -361,16 +377,28 @@ const SIM_RUNNERS = [
   "SAVE_LOAD_RUNNER",
   "REDEEM_RUNNER",
   "IAP_RUNNER",
+  "DOUBLE_IAP_RUNNER",
+  "GRANT_PERSIST_RUNNER",
   "MODAL_STORM_RUNNER",
+  "MODAL_STORM_FIVE_RUNNER",
+  "CORRUPT_LOAD_RUNNER",
   "READ_GRANT_RUNNER",
   "CHAOS_RUNNER",
   "RESEARCH_UNLOCK_RUNNER",
   "FRANCHISE_RUNNER",
+  "DYNASTY_PERK_RUNNER",
   "OFFLINE_RUNNER",
   "RETURN_HUB_RUNNER",
+  "MODAL_PENDING_RUNNER",
+  "BOOT_PRIORITY_RUNNER",
+  "AWARD_DEFER_RUNNER",
+  "PREMIERE_DEFER_RUNNER",
   "CHAOS_SURVIVAL_RUNNER",
+  "EMPIRE_CRISIS_RUNNER",
   "PRESTIGE_RUNNER",
   "PREMIERE_QUEUE_RUNNER",
+  "PREMIERE_QUEUE_MULTI_RUNNER",
+  "COACH_LOCKED_TAB_RUNNER",
   "RIVAL_GOAL_RUNNER",
   "TUTORIAL_RUNNER",
 ];

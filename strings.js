@@ -22,7 +22,11 @@ const EN = {
 };
 const ES = {
   title:"Anime Studio Tycoon", tagline:"De un estudio de una sala a un imperio global del anime",
-  start:"Entrar al Estudio", goal:"Meta",
+  start:"Entrar al Estudio", startPlay:"Jugar", startDemo:"Probar demo",
+  startPlayHint:"Juego real — empieza con ¥1,500, contrata staff y aprueba tu primer anime.",
+  startDemoHint:"Tour demo — estudio Sakura precargado (<code>?demo=1</code>).",
+  startShare:"Compartir", startShareHint:"Invita amigos — el enlace abre el juego real (no demo).",
+  goal:"Meta",
   res_yen:"Yenes", res_fans:"Fans", res_hype:"Hype", netWorth:"Valor del Estudio", trend:"Tendencia",
   tab_produce:"Producir", tab_quests:"Misiones", tab_staff:"Equipo", tab_stars:"Estrellas",
   tab_research:"Investigar", tab_studio:"Estudio", tab_market:"Marketing", tab_store:"Tienda",
@@ -37,7 +41,11 @@ const ES = {
 };
 const PT = {
   title:"Anime Studio Tycoon", tagline:"De um estúdio de uma sala a um império global do anime",
-  start:"Entrar no Estúdio", goal:"Meta",
+  start:"Entrar no Estúdio", startPlay:"Jogar", startDemo:"Testar demo",
+  startPlayHint:"Jogo real — comece com ¥1,500, contrate equipe e aprove seu primeiro anime.",
+  startDemoHint:"Tour demo — estúdio Sakura pré-carregado (<code>?demo=1</code>).",
+  startShare:"Compartilhar", startShareHint:"Convide amigos — o link abre o jogo real (não demo).",
+  goal:"Meta",
   res_yen:"Ienes", res_fans:"Fãs", res_hype:"Hype", netWorth:"Valor do Estúdio", trend:"Em alta",
   tab_produce:"Produzir", tab_quests:"Missões", tab_staff:"Equipe", tab_stars:"Estrelas",
   tab_research:"Pesquisa", tab_studio:"Estúdio", tab_market:"Marketing", tab_store:"Loja",
@@ -80,9 +88,51 @@ const DE = {
   muteOn:"Ton: An", muteOff:"Ton: Aus", save:"Speichern", reset:"Zurücksetzen",
   privacy:"Datenschutz", terms:"AGB", share:"Teilen", language:"Sprache",
 };
+const KO = {
+  title:"Anime Studio Tycoon", tagline:"작은 스튜디오에서 글로벌 애니메이션 제국으로",
+  start:"스튜디오 입장", startPlay:"플레이", startDemo:"데모 체험",
+  startPlayHint:"본편 — ¥1,500부터 시작, 스태프 고용, 첫 애니 기획.",
+  startDemoHint:"쇼케이스 투어 — 사쿠라 스튜디오 미리 로드 (<code>?demo=1</code>).",
+  startShare:"공유", startShareHint:"친구 초대 — 링크는 본편 시작 화면을 엽니다 (데모 아님).",
+  goal:"목표",
+  res_yen:"엔", res_fans:"팬", res_hype:"Hype", netWorth:"스튜디오 가치", trend:"트렌딩",
+  tab_produce:"제작", tab_quests:"퀘스트", tab_staff:"스태프", tab_stars:"스타",
+  tab_research:"연구", tab_studio:"스튜디오", tab_market:"마케팅", tab_store:"상점",
+  greenlight:"기획 승인", release:"공개!", rush:"가속 (Hype)", overdrive:"오버드라이브 (Hype)", hire:"고용",
+  h_dashboard:"스튜디오 대시보드", h_daily:"일일 퀘스트", h_weekly:"주간 퀘스트",
+  h_login:"30일 로그인 캘린더", h_rewards:"보상 & 퀘스트", h_achievements:"업적",
+  h_store:"상점", h_freeRewards:"무료 보상",
+  claim:"수령", resetsIn:"초기화까지",
+  offlineTitle:"자리 비운 동안",
+  muteOn:"사운드: 켜짐", muteOff:"사운드: 꺼짐", save:"저장", reset:"초기화",
+  privacy:"개인정보", terms:"약관", share:"공유", language:"언어",
+};
+const ZH = {
+  title:"Anime Studio Tycoon", tagline:"从单间工作室到全球动漫帝国",
+  start:"进入工作室", startPlay:"开始游戏", startDemo:"试玩演示",
+  startPlayHint:"正式游戏 — 从¥1,500起步，雇佣员工，企划首部动漫。",
+  startDemoHint:"展示之旅 — 预载樱花工作室（<code>?demo=1</code>）。",
+  startShare:"分享", startShareHint:"邀请好友 — 链接打开正式游戏（非演示）。",
+  goal:"目标",
+  res_yen:"日元", res_fans:"粉丝", res_hype:"Hype", netWorth:"工作室价值", trend:"热门",
+  tab_produce:"制作", tab_quests:"任务", tab_staff:"员工", tab_stars:"明星",
+  tab_research:"研究", tab_studio:"工作室", tab_market:"营销", tab_store:"商店",
+  greenlight:"立项", release:"上映!", rush:"加速 (Hype)", overdrive:"超频 (Hype)", hire:"雇佣",
+  h_dashboard:"工作室面板", h_daily:"每日任务", h_weekly:"每周任务",
+  h_login:"30天登录日历", h_rewards:"奖励与任务", h_achievements:"成就",
+  h_store:"商店", h_freeRewards:"免费奖励",
+  claim:"领取", resetsIn:"重置倒计时",
+  offlineTitle:"离线期间",
+  muteOn:"声音：开", muteOff:"声音：关", save:"保存", reset:"重置",
+  privacy:"隐私", terms:"条款", share:"分享", language:"语言",
+};
 const JA = {
   title:"Anime Studio Tycoon", tagline:"小さなスタジオから世界的なアニメ帝国へ",
-  start:"スタジオに入る", goal:"目標",
+  start:"スタジオに入る", startPlay:"プレイ", startDemo:"デモを試す",
+  startPlayHint:"本編 — ¥1,500から開始、スタッフ雇用、最初のアニメを企画。",
+  startDemoHint:"ショーケース — Sakuraスタジオを読み込み（<code>?demo=1</code>）。",
+  startShare:"シェア", startShareHint:"友達を招待 — リンクは本編開始を開きます（デモではありません）。",
+  goal:"目標",
   res_yen:"円", res_fans:"ファン", res_hype:"Hype", netWorth:"スタジオ価値", trend:"トレンド",
   tab_produce:"制作", tab_quests:"クエスト", tab_staff:"スタッフ", tab_stars:"スター",
   tab_research:"研究", tab_studio:"スタジオ", tab_market:"宣伝", tab_store:"ストア",
@@ -96,8 +146,8 @@ const JA = {
   privacy:"プライバシー", terms:"利用規約", share:"シェア", language:"言語",
 };
 
-export const LANGS = { en:EN, es:ES, pt:PT, fr:FR, de:DE, ja:JA };
-export const LANG_NAMES = { en:"English", es:"Español", pt:"Português", fr:"Français", de:"Deutsch", ja:"日本語" };
+export const LANGS = { en:EN, es:ES, pt:PT, fr:FR, de:DE, ja:JA, ko:KO, zh:ZH };
+export const LANG_NAMES = { en:"English", es:"Español", pt:"Português", fr:"Français", de:"Deutsch", ja:"日本語", ko:"한국어", zh:"中文" };
 
 /* ---- Extended UI vocabulary (first i18n batch beyond the chrome).
    English is the base/fallback; any key missing in a language falls back to it. ---- */
@@ -132,6 +182,16 @@ const UI = {
        h_industry:"業界ランキング", h_hof:"殿堂", h_greenlight:"企画を承認",
        b_buy:"購入", b_run:"実施", b_upgrade:"強化", b_research:"研究", b_spend:"消費", b_use:"使う",
        b_get:"入手", b_expand:"拡張", b_scoutOpen:"オープン採用", b_scoutPremium:"プレミアム採用" },
+  ko:{ h_hire:"팀 고용", h_stars:"스타 인재", h_yourstars:"내 스타", h_research:"장르 숙련",
+       h_upgrades:"스튜디오 업그레이드", h_perks:"레거시 특전", h_records:"스튜디오 기록", h_marketing:"마케팅",
+       h_industry:"업계 순위", h_hof:"명예의 전당", h_greenlight:"프로젝트 승인",
+       b_buy:"구매", b_run:"실행", b_upgrade:"업그레이드", b_research:"연구", b_spend:"소비", b_use:"사용",
+       b_get:"획득", b_expand:"확장", b_scoutOpen:"오픈 캐스팅", b_scoutPremium:"프리미엄 스카우트" },
+  zh:{ h_hire:"雇佣团队", h_stars:"明星人才", h_yourstars:"你的明星", h_research:"类型精通",
+       h_upgrades:"工作室升级", h_perks:"传承特权", h_records:"工作室纪录", h_marketing:"营销",
+       h_industry:"行业排名", h_hof:"名人堂", h_greenlight:"批准项目",
+       b_buy:"购买", b_run:"运行", b_upgrade:"升级", b_research:"研究", b_spend:"花费", b_use:"使用",
+       b_get:"获取", b_expand:"扩建", b_scoutOpen:"公开选角", b_scoutPremium:"高级星探" },
 };
 for(const c in UI){ if(LANGS[c]) Object.assign(LANGS[c], UI[c]); }
 
@@ -143,6 +203,8 @@ const UI2 = {
   fr:{ k_level:"Niveau", k_value:"Valeur", k_income:"Revenu ×", k_output:"Sortie/s", k_premieres:"Premières", k_stars:"Stars", k_slots:"Lignes", k_legacy:"Héritage", k_best:"Meilleure Valeur", k_royalties:"Royalties", k_awards:"Prix", c_cost:"Coût", c_reward:"Récompense", c_workload:"Charge", c_fans:"fans" },
   de:{ k_level:"Level", k_value:"Wert", k_income:"Einkommen ×", k_output:"Ausstoß/s", k_premieres:"Premieren", k_stars:"Stars", k_slots:"Linien", k_legacy:"Vermächtnis", k_best:"Bester Wert", k_royalties:"Tantiemen", k_awards:"Preise", c_cost:"Kosten", c_reward:"Belohnung", c_workload:"Aufwand", c_fans:"Fans" },
   ja:{ k_level:"レベル", k_value:"価値", k_income:"収入 ×", k_output:"出力/秒", k_premieres:"公開数", k_stars:"スター", k_slots:"ライン", k_legacy:"レガシー", k_best:"最高価値", k_royalties:"印税", k_awards:"受賞", c_cost:"費用", c_reward:"報酬", c_workload:"作業量", c_fans:"ファン" },
+  ko:{ k_level:"레벨", k_value:"가치", k_income:"수입 ×", k_output:"생산/초", k_premieres:"공개", k_stars:"스타", k_slots:"슬롯", k_legacy:"레거시", k_best:"최고 가치", k_royalties:"로열티", k_awards:"수상", c_cost:"비용", c_reward:"보상", c_workload:"작업량", c_fans:"팬" },
+  zh:{ k_level:"等级", k_value:"价值", k_income:"收入 ×", k_output:"产出/秒", k_premieres:"上映", k_stars:"明星", k_slots:"产线", k_legacy:"传承", k_best:"最高价值", k_royalties:"版税", k_awards:"奖项", c_cost:"成本", c_reward:"奖励", c_workload:"工作量", c_fans:"粉丝" },
 };
 for(const c in UI2){ if(LANGS[c]) Object.assign(LANGS[c], UI2[c]); }
 
@@ -154,15 +216,19 @@ const UI3 = {
   fr:{ s_store:"Boutique du Studio", s_topup:"Recharger des Gemmes", s_premium:"Packs Premium", s_exclusive:"Stars Exclusives", s_spend:"Dépenser des Gemmes", s_free:"Récompenses Gratuites", s_redeem:"Utiliser un Code", s_ach:"Succès" },
   de:{ s_store:"Studio-Shop", s_topup:"Gems aufladen", s_premium:"Premium-Pakete", s_exclusive:"Exklusive Stars", s_spend:"Gems ausgeben", s_free:"Gratis-Belohnungen", s_redeem:"Code einlösen", s_ach:"Erfolge" },
   ja:{ s_store:"スタジオストア", s_topup:"ジェムを補充", s_premium:"プレミアムバンドル", s_exclusive:"限定スター", s_spend:"ジェムを使う", s_free:"無料報酬", s_redeem:"コードを引き換える", s_ach:"実績" },
+  ko:{ s_store:"스튜디오 상점", s_topup:"젬 충전", s_premium:"프리미엄 번들", s_exclusive:"독점 스타", s_spend:"젬 사용", s_free:"무료 보상", s_redeem:"코드 입력", s_ach:"업적" },
+  zh:{ s_store:"工作室商店", s_topup:"充值宝石", s_premium:"高级礼包", s_exclusive:"独家明星", s_spend:"消费宝石", s_free:"免费奖励", s_redeem:"兑换代码", s_ach:"成就" },
 };
 for(const c in UI3){ if(LANGS[c]) Object.assign(LANGS[c], UI3[c]); }
 
 // Fourth batch: Coach bar, guided tutorial, and store hero copy.
 const UI4 = {
   en:{ coach_label:"Coach's Tip", coach_guided:"Guided", coach_aria_tips:"Coach tips", coach_aria_cta:"Go to next action", coach_aria_gift:"Rewards and quests",
+       coach_tab_locked:"🔒 Keep playing to unlock that tab",
        coach_go:"Go", coach_cta_next:"Next", coach_cta_recruit:"Recruit", coach_cta_greenlight:"Greenlight", coach_cta_boost:"Boost", coach_cta_premiere:"Premiere", coach_cta_play:"Play",
        coach_welcome:"Welcome, {name}! Tap Next when you're ready.", coach_hire_role:"Tap Hire on {role} — crew speeds every show", coach_hire_first:"Open Recruit and hire your first team member",
        coach_gl_first:"Greenlight your first anime on Play", coach_boost_poster:"Tap the poster to boost production speed", coach_premiere_ready:"Production ready — premiere now!", coach_premiere_wait:"Keep boosting until production finishes",
+       coach_default_name:"Director", coach_toast_welcome:"Welcome, {name}! Follow the coach for your first premiere.", coach_toast_welcome_alt:"Welcome! Hire staff on Recruit, then greenlight your first anime.", coach_toast_demo:"{title} is in production! Tap the poster to speed it up.",
        tut_kicker:"First session", tut_skip:"Skip tutorial", tut_step:"Step {n} of {total}",
        tut_lbl_studio:"Studio", tut_lbl_hire:"Hire", tut_lbl_greenlight:"Greenlight", tut_lbl_boost:"Boost", tut_lbl_premiere:"Premiere",
        tut_name_title:"Name your studio", tut_name_body:"You're {name}! Your brand shows at the top of the screen.",
@@ -174,9 +240,11 @@ const UI4 = {
        s_lead_pay:"Gems power scouts, skips, and boosts. Earn free through play or top up below.",
        s_lead_f2p:"100% free to play — earn every 💎 through daily rewards, quests, and milestones." },
   es:{ coach_label:"Consejo del Coach", coach_guided:"Guiado", coach_aria_tips:"Consejos del coach", coach_aria_cta:"Ir a la siguiente acción", coach_aria_gift:"Recompensas y misiones",
+       coach_tab_locked:"🔒 Sigue jugando para desbloquear esa pestaña",
        coach_go:"Ir", coach_cta_next:"Siguiente", coach_cta_recruit:"Reclutar", coach_cta_greenlight:"Aprobar", coach_cta_boost:"Impulsar", coach_cta_premiere:"Estrenar", coach_cta_play:"Jugar",
        coach_welcome:"¡Bienvenido, {name}! Toca Siguiente cuando estés listo.", coach_hire_role:"Toca Contratar en {role} — el equipo acelera cada show", coach_hire_first:"Abre Reclutar y contrata a tu primer miembro",
        coach_gl_first:"Aprueba tu primer anime en Jugar", coach_boost_poster:"Toca el póster para acelerar la producción", coach_premiere_ready:"¡Producción lista — estrena ahora!", coach_premiere_wait:"Sigue impulsando hasta que termine la producción",
+       coach_default_name:"Director", coach_toast_welcome:"¡Bienvenido, {name}! Sigue al coach para tu primer estreno.", coach_toast_welcome_alt:"¡Bienvenido! Contrata en Reclutar y aprueba tu primer anime.", coach_toast_demo:"¡{title} está en producción! Toca el póster para acelerar.",
        tut_kicker:"Primera sesión", tut_skip:"Saltar tutorial", tut_step:"Paso {n} de {total}",
        tut_lbl_studio:"Estudio", tut_lbl_hire:"Contratar", tut_lbl_greenlight:"Aprobar", tut_lbl_boost:"Impulsar", tut_lbl_premiere:"Estreno",
        tut_name_title:"Nombra tu estudio", tut_name_body:"¡Eres {name}! Tu marca aparece arriba de la pantalla.",
@@ -188,9 +256,11 @@ const UI4 = {
        s_lead_pay:"Las gemas impulsan scouts, saltos y boosts. Gana gratis jugando o recarga abajo.",
        s_lead_f2p:"100% gratis — gana cada 💎 con recompensas diarias, misiones y hitos." },
   pt:{ coach_label:"Dica do Coach", coach_guided:"Guiado", coach_aria_tips:"Dicas do coach", coach_aria_cta:"Ir para a próxima ação", coach_aria_gift:"Recompensas e missões",
+       coach_tab_locked:"🔒 Continue jogando para desbloquear essa aba",
        coach_go:"Ir", coach_cta_next:"Próximo", coach_cta_recruit:"Recrutar", coach_cta_greenlight:"Aprovar", coach_cta_boost:"Impulsionar", coach_cta_premiere:"Estrear", coach_cta_play:"Jogar",
        coach_welcome:"Bem-vindo, {name}! Toque Próximo quando estiver pronto.", coach_hire_role:"Toque Contratar em {role} — a equipe acelera cada show", coach_hire_first:"Abra Recrutar e contrate seu primeiro membro",
        coach_gl_first:"Aprove seu primeiro anime em Jogar", coach_boost_poster:"Toque o pôster para acelerar a produção", coach_premiere_ready:"Produção pronta — estreie agora!", coach_premiere_wait:"Continue impulsionando até a produção terminar",
+       coach_default_name:"Diretor", coach_toast_welcome:"Bem-vindo, {name}! Siga o coach para sua primeira estreia.", coach_toast_welcome_alt:"Bem-vindo! Contrate em Recrutar e aprove seu primeiro anime.", coach_toast_demo:"{title} está em produção! Toque o pôster para acelerar.",
        tut_kicker:"Primeira sessão", tut_skip:"Pular tutorial", tut_step:"Passo {n} de {total}",
        tut_lbl_studio:"Estúdio", tut_lbl_hire:"Contratar", tut_lbl_greenlight:"Aprovar", tut_lbl_boost:"Impulsionar", tut_lbl_premiere:"Estreia",
        tut_name_title:"Nomeie seu estúdio", tut_name_body:"Você é {name}! Sua marca aparece no topo da tela.",
@@ -202,9 +272,11 @@ const UI4 = {
        s_lead_pay:"Gemas alimentam scouts, pulos e boosts. Ganhe grátis jogando ou recarregue abaixo.",
        s_lead_f2p:"100% grátis — ganhe cada 💎 com recompensas diárias, missões e marcos." },
   fr:{ coach_label:"Conseil du Coach", coach_guided:"Guidé", coach_aria_tips:"Conseils du coach", coach_aria_cta:"Aller à l'action suivante", coach_aria_gift:"Récompenses et quêtes",
+       coach_tab_locked:"🔒 Continuez à jouer pour débloquer cet onglet",
        coach_go:"Aller", coach_cta_next:"Suivant", coach_cta_recruit:"Recruter", coach_cta_greenlight:"Lancer", coach_cta_boost:"Booster", coach_cta_premiere:"Sortie", coach_cta_play:"Jouer",
        coach_welcome:"Bienvenue, {name} ! Appuyez sur Suivant quand vous êtes prêt.", coach_hire_role:"Appuyez sur Recruter {role} — l'équipe accélère chaque show", coach_hire_first:"Ouvrez Recruter et embauchez votre premier membre",
        coach_gl_first:"Lancez votre premier anime sur Jouer", coach_boost_poster:"Touchez l'affiche pour accélérer la production", coach_premiere_ready:"Production prête — sortez maintenant !", coach_premiere_wait:"Continuez à booster jusqu'à la fin de la production",
+       coach_default_name:"Directeur", coach_toast_welcome:"Bienvenue, {name} ! Suivez le coach pour votre première sortie.", coach_toast_welcome_alt:"Bienvenue ! Recrutez sur Recruter puis lancez votre premier anime.", coach_toast_demo:"{title} est en production ! Touchez l'affiche pour accélérer.",
        tut_kicker:"Première session", tut_skip:"Passer le tutoriel", tut_step:"Étape {n} sur {total}",
        tut_lbl_studio:"Studio", tut_lbl_hire:"Recruter", tut_lbl_greenlight:"Lancer", tut_lbl_boost:"Booster", tut_lbl_premiere:"Sortie",
        tut_name_title:"Nommez votre studio", tut_name_body:"Vous êtes {name} ! Votre marque s'affiche en haut de l'écran.",
@@ -216,9 +288,11 @@ const UI4 = {
        s_lead_pay:"Les gemmes alimentent scouts, sauts et boosts. Gagnez-en gratuitement ou rechargez ci-dessous.",
        s_lead_f2p:"100 % gratuit — gagnez chaque 💎 via récompenses quotidiennes, quêtes et jalons." },
   de:{ coach_label:"Coach-Tipp", coach_guided:"Geführt", coach_aria_tips:"Coach-Tipps", coach_aria_cta:"Zur nächsten Aktion", coach_aria_gift:"Belohnungen und Aufgaben",
+       coach_tab_locked:"🔒 Spiel weiter, um diesen Tab freizuschalten",
        coach_go:"Los", coach_cta_next:"Weiter", coach_cta_recruit:"Rekrutieren", coach_cta_greenlight:"Freigeben", coach_cta_boost:"Boosten", coach_cta_premiere:"Premiere", coach_cta_play:"Spielen",
        coach_welcome:"Willkommen, {name}! Tippe auf Weiter, wenn du bereit bist.", coach_hire_role:"Tippe Anstellen bei {role} — Crew beschleunigt jede Show", coach_hire_first:"Öffne Rekrutieren und stelle dein erstes Teammitglied ein",
        coach_gl_first:"Gib dein erstes Anime auf Spiel frei", coach_boost_poster:"Tippe das Poster, um die Produktion zu beschleunigen", coach_premiere_ready:"Produktion fertig — jetzt premiere!", coach_premiere_wait:"Booste weiter, bis die Produktion fertig ist",
+       coach_default_name:"Regisseur", coach_toast_welcome:"Willkommen, {name}! Folge dem Coach für deine erste Premiere.", coach_toast_welcome_alt:"Willkommen! Stelle unter Rekrutieren ein und gib dein erstes Anime frei.", coach_toast_demo:"{title} ist in Produktion! Tippe das Poster zum Beschleunigen.",
        tut_kicker:"Erste Sitzung", tut_skip:"Tutorial überspringen", tut_step:"Schritt {n} von {total}",
        tut_lbl_studio:"Studio", tut_lbl_hire:"Anstellen", tut_lbl_greenlight:"Freigeben", tut_lbl_boost:"Boosten", tut_lbl_premiere:"Premiere",
        tut_name_title:"Benenne dein Studio", tut_name_body:"Du bist {name}! Deine Marke steht oben auf dem Bildschirm.",
@@ -230,9 +304,11 @@ const UI4 = {
        s_lead_pay:"Gems für Scouts, Sprünge und Boosts. Verdiene gratis beim Spielen oder lade unten auf.",
        s_lead_f2p:"100 % kostenlos — verdiene jedes 💎 über tägliche Belohnungen, Aufgaben und Meilensteine." },
   ja:{ coach_label:"コーチのヒント", coach_guided:"ガイド中", coach_aria_tips:"コーチのヒント", coach_aria_cta:"次のアクションへ", coach_aria_gift:"報酬とクエスト",
+       coach_tab_locked:"🔒 プレイを続けてそのタブを解放しよう",
        coach_go:"移動", coach_cta_next:"次へ", coach_cta_recruit:"採用", coach_cta_greenlight:"企画開始", coach_cta_boost:"ブースト", coach_cta_premiere:"公開", coach_cta_play:"プレイ",
        coach_welcome:"ようこそ、{name}さん！準備ができたら「次へ」をタップ。", coach_hire_role:"{role}の採用をタップ — スタッフが全作品を加速", coach_hire_first:"採用を開いて最初のメンバーを雇う",
        coach_gl_first:"プレイで最初のアニメを企画開始", coach_boost_poster:"ポスターをタップして制作を加速", coach_premiere_ready:"制作完了 — 今すぐ公開！", coach_premiere_wait:"制作が終わるまでブーストを続けよう",
+       coach_default_name:"ディレクター", coach_toast_welcome:"ようこそ、{name}さん！コーチに従って初公開を目指しましょう。", coach_toast_welcome_alt:"ようこそ！採用でスタッフを雇い、最初のアニメを企画開始しましょう。", coach_toast_demo:"{title}を制作中！ポスターをタップして加速。",
        tut_kicker:"初回セッション", tut_skip:"チュートリアルをスキップ", tut_step:"ステップ {n}/{total}",
        tut_lbl_studio:"スタジオ", tut_lbl_hire:"採用", tut_lbl_greenlight:"企画", tut_lbl_boost:"ブースト", tut_lbl_premiere:"公開",
        tut_name_title:"スタジオに名前をつける", tut_name_body:"あなたは{name}！ブランド名が画面上部に表示されます。",
@@ -243,6 +319,36 @@ const UI4 = {
        s_balance_kicker:"ジェム残高", s_balance_sub:"スカウト · スキップ · ブースト",
        s_lead_pay:"ジェムでスカウト、スキップ、ブースト。プレイで無料獲得または下でチャージ。",
        s_lead_f2p:"完全無料 — デイリー報酬、クエスト、マイルストーンで💎を獲得。" },
+  ko:{ coach_label:"코치 팁", coach_guided:"가이드", coach_aria_tips:"코치 팁", coach_aria_cta:"다음 행동으로", coach_aria_gift:"보상 및 퀘스트",
+       coach_go:"이동", coach_cta_next:"다음", coach_cta_recruit:"채용", coach_cta_greenlight:"기획 승인", coach_cta_boost:"부스트", coach_cta_premiere:"공개", coach_cta_play:"플레이",
+       coach_welcome:"환영합니다, {name}님! 준비되면 다음을 탭하세요.", coach_hire_role:"{role} 고용을 탭 — 스태프가 모든 작품을 가속", coach_hire_first:"채용을 열고 첫 팀원을 고용하세요",
+       coach_gl_first:"플레이에서 첫 애니를 기획 승인", coach_boost_poster:"포스터를 탭해 제작 속도를 높이세요", coach_premiere_ready:"제작 완료 — 지금 공개!", coach_premiere_wait:"제작이 끝날 때까지 부스트를 계속하세요",
+       coach_default_name:"감독", coach_toast_welcome:"환영합니다, {name}님! 코치를 따라 첫 공개를 준비하세요.", coach_toast_welcome_alt:"환영합니다! 채용에서 스태프를 고용한 뒤 첫 애니를 승인하세요.", coach_toast_demo:"{title} 제작 중! 포스터를 탭해 가속하세요.",
+       tut_kicker:"첫 세션", tut_skip:"튜토리얼 건너뛰기", tut_step:"{total}단계 중 {n}단계",
+       tut_lbl_studio:"스튜디오", tut_lbl_hire:"고용", tut_lbl_greenlight:"기획", tut_lbl_boost:"부스트", tut_lbl_premiere:"공개",
+       tut_name_title:"스튜디오 이름 짓기", tut_name_body:"당신은 {name}! 브랜드가 화면 상단에 표시됩니다.",
+       tut_hire_title:"첫 스태프 고용", tut_hire_body:"애니메이터와 작가가 제작을 가속합니다. 채용에서 한 명 고용하세요.",
+       tut_gl_title:"첫 애니 기획 승인", tut_gl_body:"프로젝트를 선택해 시작 — 한 번의 탭으로 데뷔작을 승인.",
+       tut_boost_title:"탭하여 가속", tut_boost_body:"포스터나 부스트로 에피소드를 서두르세요 — 첫 공개에 좋습니다.",
+       tut_premiere_title:"준비되면 공개", tut_premiere_body:"바가 차면 글로벌 공개로 ¥, 팬, 첫 히트를 획득하세요.",
+       s_balance_kicker:"젬 잔액", s_balance_sub:"스카우트 · 스킵 · 부스트",
+       s_lead_pay:"젬으로 스카우트, 스킵, 부스트. 플레이로 무료 획득 또는 아래에서 충전.",
+       s_lead_f2p:"100% 무료 — 일일 보상, 퀘스트, 마일스톤으로 💎 획득." },
+  zh:{ coach_label:"教练提示", coach_guided:"引导中", coach_aria_tips:"教练提示", coach_aria_cta:"前往下一步", coach_aria_gift:"奖励与任务",
+       coach_go:"前往", coach_cta_next:"下一步", coach_cta_recruit:"招聘", coach_cta_greenlight:"立项", coach_cta_boost:"加速", coach_cta_premiere:"上映", coach_cta_play:"游玩",
+       coach_welcome:"欢迎，{name}！准备好后点击下一步。", coach_hire_role:"点击雇佣 {role} — 团队加速每部作品", coach_hire_first:"打开招聘并雇佣第一名成员",
+       coach_gl_first:"在游玩界面立项首部动漫", coach_boost_poster:"点击海报加速制作", coach_premiere_ready:"制作完成 — 立即上映！", coach_premiere_wait:"继续加速直到制作完成",
+       coach_default_name:"导演", coach_toast_welcome:"欢迎，{name}！跟随教练完成首次上映。", coach_toast_welcome_alt:"欢迎！在招聘中雇佣员工，然后立项首部动漫。", coach_toast_demo:"{title}制作中！点击海报加速。",
+       tut_kicker:"首次会话", tut_skip:"跳过教程", tut_step:"第 {n} 步，共 {total} 步",
+       tut_lbl_studio:"工作室", tut_lbl_hire:"雇佣", tut_lbl_greenlight:"立项", tut_lbl_boost:"加速", tut_lbl_premiere:"上映",
+       tut_name_title:"为工作室命名", tut_name_body:"你是 {name}！品牌名显示在屏幕顶部。",
+       tut_hire_title:"雇佣首位员工", tut_hire_body:"动画师和编剧加速制作。在招聘中雇佣一人。",
+       tut_gl_title:"立项首部动漫", tut_gl_body:"选择项目并开始 — 一键批准你的处女作。",
+       tut_boost_title:"点击加速", tut_boost_body:"点击海报或加速按钮赶工剧集 — 适合首次上映。",
+       tut_premiere_title:"准备好后上映", tut_premiere_body:"进度条满后，全球上映赚取¥、粉丝和首个热门。",
+       s_balance_kicker:"宝石余额", s_balance_sub:"星探 · 跳过 · 加速",
+       s_lead_pay:"宝石用于星探、跳过和加速。游玩免费获取或下方充值。",
+       s_lead_f2p:"100% 免费 — 通过每日奖励、任务和里程碑赚取每颗 💎。" },
 };
 for(const c in UI4){ if(LANGS[c]) Object.assign(LANGS[c], UI4[c]); }
 

@@ -16,6 +16,54 @@
     return s;
   }
 
+  const COACH_SAFE_TABS = ["produce", "staff", "quests", "store"];
+
+  function coachTabUsable(hook, tab) {
+    if (!tab || typeof tab !== "string") return false;
+    if (hook.tabLocked?.(tab)) return false;
+    if (hook.tabAccessible && !hook.tabAccessible(tab)) return false;
+    return true;
+  }
+
+  /** Map a coach destination to an unlocked tab (never returns a locked dock tab). */
+  function safeCoachTab(hook, tab) {
+    if (coachTabUsable(hook, tab)) return tab;
+    for (const f of COACH_SAFE_TABS) {
+      if (coachTabUsable(hook, f)) return f;
+    }
+    return "produce";
+  }
+
+  /** Switch tabs from coach CTAs with lock toasts and safe fallbacks. */
+  function navigateCoachTab(hook, tab, opts) {
+    /* integration: guided coach tab switch uses full hook.render */
+    opts = opts || {};
+    const requested = tab;
+    const dest = safeCoachTab(hook, tab);
+    if (requested && dest !== requested && !opts.silent) {
+      hook.toast?.(hook.tabLockLabel?.(requested) || tr("coach_tab_locked", "🔒 Keep playing to unlock that tab"));
+    }
+    const S = hook.getState();
+    if (S.tab !== dest) {
+      S.tab = dest;
+      if (opts.render !== false) hook.render();
+    }
+    return dest;
+  }
+
+  function sanitizeCoachPathway(pw, hook) {
+    if (!pw || !hook) return pw;
+    const out = { ...pw };
+    if (out.tab) out.tab = safeCoachTab(hook, out.tab);
+    if (out.action) {
+      out.action = { ...out.action };
+      if (out.action.type === "tab" && out.action.tab) {
+        out.action.tab = safeCoachTab(hook, out.action.tab);
+      }
+    }
+    return out;
+  }
+
   function stepText(val, S, hook) {
     return typeof val === "function" ? val(S, hook) : val;
   }
@@ -34,11 +82,11 @@
       label: () => tr("tut_lbl_studio", "Studio"),
       stepN: 1,
       title: () => tr("tut_name_title", "Name your studio"),
-      body: (S) => tr("tut_name_body", "You're {name}! Your brand shows at the top of the screen.", { name: S.studioName || "the director" }),
+      body: (S) => tr("tut_name_body", "You're {name}! Your brand shows at the top of the screen.", { name: S.studioName || tr("coach_default_name", "Director") }),
       target: () => document.getElementById("hud-studio-name"),
       done: (S) => !!S._tutorialNameDone,
       coach: (S) => ({
-        message: tr("coach_welcome", "Welcome, {name}! Tap Next when you're ready.", { name: S.studioName || "Director" }),
+        message: tr("coach_welcome", "Welcome, {name}! Tap Next when you're ready.", { name: S.studioName || tr("coach_default_name", "Director") }),
         cta: tr("coach_cta_next", "Next"),
         urgent: true,
         action: { type: "tutorial-next" },
@@ -262,7 +310,13 @@
       }
     }
     clearGtHighlight();
-    const target = typeof step.target === "function" ? step.target(S, hook) : step.target?.();
+    const coachHint = typeof step.coach === "function" ? step.coach(S, hook) : step.coach;
+    const safeTab = coachHint?.tab ? safeCoachTab(hook, coachHint.tab) : null;
+    let target = typeof step.target === "function" ? step.target(S, hook) : step.target?.();
+    if (safeTab && S.tab !== safeTab && target?.closest?.("#main")) {
+      const tabBtn = document.querySelector(`.tab[data-tab="${safeTab}"]`);
+      if (tabBtn) target = tabBtn;
+    }
     if (target) {
       target.classList.add("gt-highlight");
       _gtHighlight = target;
@@ -283,8 +337,7 @@
         });
       }
     }
-    const coach = typeof step.coach === "function" ? step.coach(S, hook) : step.coach;
-    return coach;
+    return sanitizeCoachPathway(coachHint, hook);
   }
 
   function staffTotal(S) {
@@ -551,6 +604,7 @@
       tab: "produce",
       cta: "Respond",
       urgent: true,
+      action: { type: "tab", tab: "produce" },
     };
   }
 
@@ -561,6 +615,7 @@
       tab: "produce",
       cta: "Crisis",
       urgent: true,
+      action: { type: "tab", tab: "produce" },
     };
   }
 
@@ -916,6 +971,18 @@
     };
   }
 
+  function wirePathwayDelegatedCta() {
+    const rail = document.getElementById("pathway-rail");
+    if (!rail || rail.dataset.pathwayDelegated) return;
+    rail.dataset.pathwayDelegated = "1";
+    rail.addEventListener("click", (e) => {
+      const btn = e.target.closest("#pathway-cta");
+      if (!btn || btn.hidden) return;
+      e.preventDefault();
+      runPathwayAction(e);
+    });
+  }
+
   function runPathwayAction() {
     const hook = window.__AST_HOOK__;
     if (!hook) return;
@@ -927,7 +994,7 @@
       return;
     }
     if (pw.action.type === "quick-greenlight" && typeof hook.quickGreenlight === "function") {
-      hook.getState().tab = "produce";
+      navigateCoachTab(hook, "produce", { silent: true });
       hook.quickGreenlight();
       hook.play("click");
       return;
@@ -938,7 +1005,7 @@
       return;
     }
     if (pw.action.type === "hire" && typeof hook.hire === "function") {
-      hook.getState().tab = "staff";
+      navigateCoachTab(hook, "staff", { silent: true });
       hook.hire(pw.action.role);
       hook.play("click");
       return;
@@ -949,7 +1016,7 @@
       return;
     }
     if (pw.action.type === "tapboost" && typeof hook.tapBoost === "function") {
-      hook.getState().tab = "produce";
+      navigateCoachTab(hook, "produce", { silent: true });
       hook.tapBoost(pw.action.slot);
       hook.play("click");
       return;
@@ -973,7 +1040,7 @@
       return;
     }
     if (pw.action.type === "produce-slot-empty") {
-      hook.getState().tab = "produce";
+      navigateCoachTab(hook, "produce", { silent: true });
       const slot = pw.action.slot ?? hook.firstEmptySlot?.() ?? 0;
       if (typeof hook.openGreenlightView === "function") hook.openGreenlightView(slot);
       else {
@@ -985,8 +1052,7 @@
     }
     if (pw.action.type === "produce-slot-focus") {
       const needRender = hook.getState().tab !== "produce";
-      hook.getState().tab = "produce";
-      if (needRender) hook.render();
+      navigateCoachTab(hook, "produce", { silent: true, render: needRender });
       if (typeof hook.focusProduceSlot === "function") {
         requestAnimationFrame(() => hook.focusProduceSlot(pw.action.slot ?? hook.firstEmptySlot?.() ?? 0, true));
       } else if (!needRender) hook.render();
@@ -999,8 +1065,12 @@
       return;
     }
     if (pw.action.type === "studio-expand") {
-      hook.getState().tab = "studio";
-      hook.render();
+      if (!coachTabUsable(hook, "studio")) {
+        hook.toast?.(hook.tabLockLabel?.("studio") || tr("coach_tab_locked", "🔒 Keep playing to unlock that tab"));
+        hook.play("click");
+        return;
+      }
+      navigateCoachTab(hook, "studio", { silent: true });
       hook.play("click");
       requestAnimationFrame(() => {
         const btn = document.querySelector(".aaa-studio-expand-btn,[data-act='expand']");
@@ -1009,7 +1079,7 @@
       return;
     }
     if (pw.action.type === "franchise-sequel" && typeof hook.focusFranchiseSequel === "function") {
-      hook.getState().tab = "produce";
+      navigateCoachTab(hook, "produce", { silent: true });
       hook.focusFranchiseSequel(pw.action.base, pw.action.genre);
       hook.play("click");
       return;
@@ -1039,8 +1109,12 @@
       return;
     }
     if (pw.action.type === "dynasty-perks") {
-      hook.getState().tab = "studio";
-      hook.render();
+      if (!coachTabUsable(hook, "studio")) {
+        hook.toast?.(hook.tabLockLabel?.("studio") || tr("coach_tab_locked", "🔒 Keep playing to unlock that tab"));
+        hook.play("click");
+        return;
+      }
+      navigateCoachTab(hook, "studio", { silent: true });
       hook.play("click");
       requestAnimationFrame(() => {
         document.getElementById("dynasty-perk-shop")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -1051,8 +1125,7 @@
       if (typeof hook.toggleChaosMode === "function" && !hook.getState().chaosMode) hook.toggleChaosMode();
       else {
         hook.getState().chaosMode = true;
-        hook.getState().tab = "produce";
-        hook.render();
+        navigateCoachTab(hook, "produce", { silent: true });
         hook.save?.();
       }
       hook.play("click");
@@ -1062,21 +1135,15 @@
       return;
     }
     if (pw.action.type === "tab") {
-      const dest = pw.action.tab;
-      if (hook.tabLocked?.(dest)) {
-        hook.toast?.(hook.tabLockLabel?.(dest) || "🔒 Keep playing to unlock this tab");
-      } else {
-        hook.getState().tab = dest;
-        hook.render();
-        if (pw.action.focus === "freegems") {
-          requestAnimationFrame(() => {
-            (document.getElementById("aaa-free-gems") || document.querySelector(".aaa-free-gems-btn:not([disabled])"))?.scrollIntoView({ behavior: "smooth", block: "start" });
-          });
-        } else if (pw.action.focus === "gem-spend") {
-          requestAnimationFrame(() => {
-            document.getElementById("aaa-gem-spend")?.scrollIntoView({ behavior: "smooth", block: "start" });
-          });
-        }
+      navigateCoachTab(hook, pw.action.tab);
+      if (pw.action.focus === "freegems") {
+        requestAnimationFrame(() => {
+          (document.getElementById("aaa-free-gems") || document.querySelector(".aaa-free-gems-btn:not([disabled])"))?.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      } else if (pw.action.focus === "gem-spend") {
+        requestAnimationFrame(() => {
+          document.getElementById("aaa-gem-spend")?.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
       }
       hook.play("click");
     }
@@ -1109,7 +1176,7 @@
       </div>
       <div class="hud-drawer" id="hud-drawer" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-label="Settings">
         <div class="hud-drawer-inner" tabindex="-1">
-          <div class="hud-drawer-label">⚙️ Settings</div>
+          <div class="hud-drawer-label" aria-hidden="true">⚙️ Settings</div>
           <div id="hud-drawer-slot"></div>
         </div>
       </div>`;
@@ -1183,6 +1250,7 @@
         goal.parentNode.insertBefore(race, goal.nextSibling);
       }
       goal.parentNode.insertBefore(rail, (document.getElementById("rival-race") || goal).nextSibling);
+      wirePathwayDelegatedCta();
     }
 
     const tabs = document.getElementById("tabs");
@@ -1244,7 +1312,7 @@
       const hook = window.__AST_HOOK__;
       if (hook) hook.play("click");
     });
-    document.getElementById("pathway-cta").addEventListener("click", runPathwayAction);
+    wirePathwayDelegatedCta();
     document.getElementById("hud-mail-btn").addEventListener("click", () => {
       const hook = window.__AST_HOOK__;
       if (!hook) return;
@@ -1279,23 +1347,36 @@
         if (e.key !== "Tab") return;
         const inner = d.querySelector(".hud-drawer-inner");
         if (!inner) return;
-        const items = [...inner.querySelectorAll(
-          'button:not([disabled]), select:not([disabled]), a[href], input:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
-        )].filter((el) => !el.hidden && el.getAttribute("aria-hidden") !== "true");
-        if (!items.length) return;
-        const first = items[0];
-        const last = items[items.length - 1];
-        const active = document.activeElement;
-        if (e.shiftKey) {
-          if (active === first || !inner.contains(active)) {
-            e.preventDefault();
-            last.focus();
-          }
-        } else if (active === last || !inner.contains(active)) {
-          e.preventDefault();
-          first.focus();
-        }
+        trapDrawerTabKey(e, inner);
       });
+    }
+  }
+
+  function drawerFocusables(inner) {
+    return [...inner.querySelectorAll(
+      'button:not([disabled]), select:not([disabled]), a[href], input:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    )].filter((el) => !el.hidden && el.getAttribute("aria-hidden") !== "true");
+  }
+
+  function trapDrawerTabKey(e, inner) {
+    const items = drawerFocusables(inner);
+    const active = document.activeElement;
+    if (!items.length) {
+      e.preventDefault();
+      inner.focus();
+      return;
+    }
+    const first = items[0];
+    const last = items[items.length - 1];
+    const onTrap = items.includes(active);
+    if (e.shiftKey) {
+      if (!onTrap || active === first) {
+        e.preventDefault();
+        last.focus();
+      }
+    } else if (!onTrap || active === last) {
+      e.preventDefault();
+      first.focus();
     }
   }
 
@@ -1323,10 +1404,27 @@
       else if (e.key === "ArrowLeft") next = idx < 0 ? tabEls.length - 1 : (idx - 1 + tabEls.length) % tabEls.length;
       else if (e.key === "Home") next = 0;
       else if (e.key === "End") next = tabEls.length - 1;
-      else return;
+      else if ((e.key === "Enter" || e.key === " ") && idx >= 0) {
+        e.preventDefault();
+        tabEls[idx].click();
+        return;
+      } else return;
       e.preventDefault();
       tabEls[next]?.focus();
     });
+  }
+
+  function syncTabRovingFocus() {
+    document.querySelectorAll('#tabs .tab[role="tab"]').forEach((tab) => {
+      const selected = tab.getAttribute("aria-selected") === "true" && tab.getAttribute("aria-disabled") !== "true";
+      tab.tabIndex = selected ? 0 : -1;
+    });
+  }
+
+  function tabAriaBase(tab, tabKey) {
+    const locked = tab.getAttribute("aria-disabled") === "true";
+    const lbl = tab.querySelector(".tab-lbl")?.textContent?.trim() || tabKey || "Tab";
+    return lbl + (locked ? " (locked)" : "");
   }
 
   function wireHudChipKeyboard(el) {
@@ -1709,7 +1807,12 @@
       mailBtn.hidden = glView;
       const today = new Date().toISOString().slice(0, 10);
       const loginPending = S.loginLastClaimDate !== today && (S.loginClaimedCount || 0) < 31;
-      mailBtn.classList.toggle("has-dot", !glView && (claimableQuests(S) > 0 || loginPending || demoDots));
+      const mailPending = !glView && (claimableQuests(S) > 0 || loginPending || demoDots);
+      mailBtn.classList.toggle("has-dot", mailPending);
+      mailBtn.setAttribute(
+        "aria-label",
+        mailPending ? "Mail and rewards — notifications pending" : "Mail and rewards"
+      );
     }
     const festPending = hook.festivalInvitePending && hook.festivalInvitePending();
     let festBadge = document.getElementById("hud-festival-badge");
@@ -1904,16 +2007,22 @@
     if (shouldRunGuidedTutorial(S, hook)) {
       const gStep = getGuidedStep(S, hook);
       if (gStep && gStep.id !== "name") {
-        const coachHint = typeof gStep.coach === "function" ? gStep.coach(S, hook) : gStep.coach;
-        if (coachHint?.tab && S.tab !== coachHint.tab && stepNeedsTab(S, hook, coachHint.tab)) {
-          S.tab = coachHint.tab;
-          if (_renderMain) _renderMain();
+        const coachHint = sanitizeCoachPathway(
+          typeof gStep.coach === "function" ? gStep.coach(S, hook) : gStep.coach,
+          hook
+        );
+        const dest = coachHint?.tab ? safeCoachTab(hook, coachHint.tab) : null;
+        if (dest && S.tab !== dest && stepNeedsTab(S, hook, dest)) {
+          S.tab = dest;
+          /* integration: guided coach tab switch uses full hook.render (not _renderMain) */
+          requestAnimationFrame(() => hook.render());
+          return;
         }
       }
     }
 
     const guidedCoach = updateGuidedTutorial(S, hook);
-    const pw = analyzePathway(S, hook, { glView, guidedCoach });
+    const pw = sanitizeCoachPathway(analyzePathway(S, hook, { glView, guidedCoach }), hook);
     window.__AST_PATHWAY__ = pw;
 
     const rail = document.getElementById("pathway-rail");
@@ -1952,8 +2061,7 @@
     }
 
     if (guidedCoach?.tab && S.tab !== guidedCoach.tab && stepNeedsTab(S, hook, guidedCoach.tab)) {
-      S.tab = guidedCoach.tab;
-      hook.render();
+      navigateCoachTab(hook, guidedCoach.tab, { silent: true });
       return;
     }
 
@@ -1962,6 +2070,11 @@
     const rewardPending = claimableQuests(S) > 0 || loginPending || demoDots;
     const giftDot = document.getElementById("coach-gift-dot");
     if (giftDot) giftDot.hidden = !rewardPending;
+    const giftBtn = document.getElementById("coach-gift");
+    if (giftBtn) {
+      const base = tr("coach_aria_gift", "Rewards and quests");
+      giftBtn.setAttribute("aria-label", rewardPending ? `${base} — rewards ready` : base);
+    }
   }
 
   const TAB_UNLOCK_RING_KEYS = ["studio", "stars", "market", "research", "chaos"];
@@ -2028,9 +2141,23 @@
       studio: dynastyAvail >= 12 && (S.releases || 0) >= 10,
       store: freeGems,
     };
+    const badgeCtx = { claimable, loginPending, festPending, freeGems };
+    const badgeNotes = {
+      produce: (ctx) => (ctx.festPending ? " — premiere or festival ready" : " — premiere ready"),
+      quests: (ctx) => (ctx.claimable > 0
+        ? ` — ${ctx.claimable} reward${ctx.claimable > 1 ? "s" : ""} ready`
+        : ctx.loginPending ? " — login reward ready" : " — rewards ready"),
+      staff: () => " — hire affordable",
+      stars: () => " — scout affordable",
+      market: () => " — campaign affordable",
+      research: () => " — research affordable",
+      studio: () => " — dynasty perk ready",
+      store: () => " — free gems ready",
+    };
     document.querySelectorAll(".tab").forEach((tab) => {
       const k = tab.dataset.tab;
       const on = !!badges[k];
+      const base = tabAriaBase(tab, k);
       tab.classList.toggle("tab-has-badge", on);
       tab.querySelector(".tab-badge")?.remove();
       if (on) {
@@ -2040,16 +2167,13 @@
         if (k === "quests" && claimable > 0) b.title = claimable + " reward" + (claimable > 1 ? "s" : "") + " ready";
         if (k === "store" && freeGems) b.title = "Free daily gems ready to claim";
         tab.appendChild(b);
-      }
-      const lbl = tab.querySelector(".tab-lbl");
-      if (lbl && k === "quests") {
-        const note = claimable > 0 ? " — rewards ready" : loginPending ? " — login reward ready" : "";
-        lbl.setAttribute("aria-label", (tab.getAttribute("aria-label") || "Quests") + note);
-      }
-      if (lbl && k === "store" && freeGems) {
-        lbl.setAttribute("aria-label", (tab.getAttribute("aria-label") || "Store") + " — free gems ready");
+        const noteFn = badgeNotes[k];
+        tab.setAttribute("aria-label", base + (noteFn ? noteFn(badgeCtx) : " — notification"));
+      } else {
+        tab.setAttribute("aria-label", base);
       }
     });
+    syncTabRovingFocus();
   }
 
   let _lastHudTab = null;
@@ -2083,7 +2207,13 @@
       updateHud(hook.getState(), hook);
       updateTabUnlockRings(hook.getState(), hook);
       updateTabBadges(hook.getState(), hook);
+      syncTabRovingFocus();
       pulseActiveTab(hook.getState().tab);
+    };
+    hook.refreshDockChrome = function () {
+      const S = hook.getState();
+      updateTabUnlockRings(S, hook);
+      updateTabBadges(S, hook);
     };
     const origUpdateTop = window.updateTopBar;
     if (typeof origUpdateTop === "function") {
@@ -2122,11 +2252,16 @@
     if (kicker) kicker.textContent = tr("tut_kicker", "First session");
   }
 
-  window.__AST_HUD__ = { organizeDrawerSlot, pulseHudCombo, goalMilestoneAction, updateCoachChrome };
+  window.__AST_HUD__ = {
+    organizeDrawerSlot, pulseHudCombo, goalMilestoneAction, updateCoachChrome,
+    safeCoachTab, navigateCoachTab, sanitizeCoachPathway, wirePathwayDelegatedCta,
+  };
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", () => setTimeout(buildHudShell, 0));
   } else buildHudShell();
 
   const poll = setInterval(() => { if (install()) clearInterval(poll); }, 60);
+  /* integration: hud install poll timeout */
+  setTimeout(() => clearInterval(poll), 8000);
 })();

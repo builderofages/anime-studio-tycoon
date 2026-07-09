@@ -264,13 +264,6 @@ html.hud-v3-active .aaa-staff-row .muted {
 }
 
 html.hud-v3-active .aaa-staff-row .aaa-staff-hire { min-width: 88px !important; width: auto !important; padding: 10px 10px !important; margin: 0 !important; }
-/* ---- Produce: hero card polish ---- */
-html.hud-v3-active .aaa-show-panel {
-  border-radius: var(--ast-r) !important;
-  border: 1px solid rgba(255, 92, 168, 0.28) !important;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 32px rgba(255, 92, 168, 0.08) !important;
-}
-
 html.hud-v3-active .aaa-cta,
 html.hud-v3-active .aaa-show-card .btn-gold.aaa-cta {
   background: linear-gradient(135deg, var(--ast-pink), var(--ast-pink-2), #ff6b8a) !important;
@@ -1262,7 +1255,7 @@ html.hud-v3-active .aaa-show-panel {
   border: 1px solid rgba(255, 92, 168, 0.28) !important;
   box-shadow: 0 20px 56px rgba(0, 0, 0, 0.5), 0 0 32px rgba(255, 92, 168, 0.08) !important;
   border-radius: 20px !important;
-  overflow: hidden !important;
+  overflow: visible !important;
 }
 
 html.hud-v3-active .aaa-show-panel.slot-ready {
@@ -3177,7 +3170,7 @@ html.hud-v3-active #hud-shell.hud-gl-view ~ #goal { margin-top: 2px !important; 
 html.hud-v3-active #hud-shell.hud-gl-view ~ #goal #goal-txt { font-size: 10px !important; line-height: 1.2 !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; }
 html.hud-v3-active #hud-shell.hud-gl-view ~ #goal .bar { height: 4px !important; }
 html.hud-v3-active #hud-shell.hud-gl-view ~ #pathway-rail { padding: 6px 10px !important; }
-html.hud-v3-active .aaa-show-panel .aaa-show-card { grid-template-columns: minmax(136px, 44%) 1fr !important; gap: 10px !important; padding: 12px 12px 8px !important; }
+html.hud-v3-active .aaa-show-panel .aaa-show-card { display:grid!important; grid-template-columns:minmax(136px,44%) 1fr!important; gap:10px!important; padding:12px 12px 8px!important; align-items:start!important; min-width:0!important; }
 html.hud-v3-active .aaa-show-panel .aaa-poster { aspect-ratio: 3 / 4 !important; min-height: 196px !important; max-height: 272px !important; }
 html.hud-v3-active .aaa-show-panel .aaa-title { font-size: var(--ast-type-title) !important; }
 html.hud-v3-active .aaa-show-panel .aaa-score-val { font-size: var(--ast-type-score) !important; }
@@ -3782,12 +3775,16 @@ html.hud-v3-active .aaa-slot-tab-sub { font-size:9px!important; opacity:.82!impo
 html.hud-v3-active .aaa-slot-carousel { display:flex!important; gap:10px!important; overflow-x:auto!important; scroll-snap-type:x mandatory!important; -webkit-overflow-scrolling:touch!important; padding:0 2px 8px!important; margin:0 -2px!important; }
 html.hud-v3-active .aaa-slot-card { flex:0 0 calc(100% - 8px)!important; scroll-snap-align:center!important; min-width:calc(100% - 8px)!important; }
 html.hud-v3-active .aaa-slot-empty .aaa-slot-empty-inner { display:flex!important; flex-direction:column!important; align-items:center!important; text-align:center!important; gap:8px!important; padding:28px 18px 22px!important; border-radius:18px!important; border:2px dashed rgba(255,92,168,.38)!important; background:linear-gradient(160deg,rgba(255,92,168,.08),rgba(107,92,255,.06))!important; }
+html.hud-v3-active .aaa-slot-empty .aaa-slot-empty-inner[data-act="greenlight-view"] { cursor:pointer!important; -webkit-tap-highlight-color:transparent!important; transition:transform .15s ease,border-color .15s ease,box-shadow .15s ease!important; }
+html.hud-v3-active .aaa-slot-empty .aaa-slot-empty-inner[data-act="greenlight-view"]:hover { border-color:rgba(255,92,168,.55)!important; box-shadow:0 10px 28px rgba(255,92,168,.18)!important; }
+html.hud-v3-active .aaa-slot-empty .aaa-slot-empty-inner[data-act="greenlight-view"]:active { transform:scale(.985)!important; }
+html.hud-v3-active .aaa-slot-tab.empty.active { border-color:rgba(255,92,168,.55)!important; color:#fff!important; }
 html.hud-v3-active .aaa-slot-empty-ic { font-size:36px!important; line-height:1!important; filter:drop-shadow(0 4px 12px rgba(255,92,168,.35)); }
 html.hud-v3-active .aaa-slot-empty-title { margin:0!important; font:800 16px/1.2 system-ui!important; color:#fff!important; }
 html.hud-v3-active .aaa-slot-empty-copy { margin:0!important; font:600 11px/1.45 system-ui!important; color:var(--ast-muted)!important; max-width:260px!important; }
 html.hud-v3-active .aaa-slot-empty-cta { width:100%!important; max-width:280px!important; margin-top:4px!important; }
 html.hud-v3-active .aaa-line-pill { margin-left:6px!important; font:800 9px/1 system-ui!important; padding:3px 7px!important; border-radius:999px!important; background:rgba(107,92,255,.2)!important; color:#d4c8ff!important; }
-html.hud-v3-active .aaa-produce-multi-page .aaa-show-panel:not(.slot-ready) { animation:none!important; box-shadow:0 14px 40px rgba(0,0,0,.45)!important; border-color:rgba(255,255,255,.1)!important; }
+html.hud-v3-active .aaa-produce-multi-page .aaa-show-panel:not(.slot-ready) { animation:none!important; border:1px solid rgba(255,255,255,.1)!important; box-shadow:0 14px 40px rgba(0,0,0,.45)!important; }
 html.hud-v3-active .aaa-produce-slots-full-compact { margin-top:8px!important; padding:10px 12px!important; font-size:11px!important; }
 html.hud-v3-active .aaa-chaos-unlock-modal { max-width:400px!important; text-align:center!important; background:var(--ast-glass)!important; backdrop-filter:blur(16px) saturate(1.35)!important; -webkit-backdrop-filter:blur(16px) saturate(1.35)!important; border:1px solid rgba(248,113,113,.4)!important; box-shadow:0 20px 48px rgba(0,0,0,.55),0 0 32px rgba(248,113,113,.2)!important; }
 html.hud-v3-active .aaa-chaos-unlock-hero { font-size:48px!important; line-height:1!important; margin:4px auto 10px!important; filter:drop-shadow(0 4px 16px rgba(248,113,113,.5)); }
@@ -4336,29 +4333,7 @@ html.hud-v3-active .aaa-gl-page .aaa-gl-card.sel { transform: scale(1.08) !impor
 html.hud-v3-active .aaa-gl-page .aaa-gl-confirm-banner:not(:disabled) { background: linear-gradient(90deg, #ff5ca8 0%, #ff5a9e 24%, #ff7a6e 42%, #ffab4a 68%, #ffc845 88%, #ffe08a 100%) !important; border: 1px solid rgba(255, 255, 255, 0.16) !important; color: #fff !important; text-shadow: 0 1px 10px rgba(72, 18, 38, 0.38) !important; box-shadow: 0 10px 32px rgba(255, 92, 168, 0.42), 0 0 28px rgba(255, 200, 69, 0.28) !important; }
 html.hud-v3-active .aaa-gl-page .aaa-gl-confirm-cost { background: rgba(0, 0, 0, 0.32) !important; border: 1px solid rgba(255, 255, 255, 0.24) !important; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08) !important; }
 /* BUILD 97 — iOS Safari / mobile hardening */
-html.hud-v3-active,
-html.hud-v3-active body {
-  height: 100% !important;
-  min-height: 100vh !important;
-  min-height: -webkit-fill-available !important;
-}
-@supports (height: 100dvh) {
-  html.hud-v3-active,
-  html.hud-v3-active body {
-    height: 100dvh !important;
-    min-height: 100dvh !important;
-  }
-}
-html.hud-v3-active #app {
-  height: 100% !important;
-  min-height: 0 !important;
-}
-@supports (height: 100dvh) {
-  html.hud-v3-active #app {
-    height: 100dvh !important;
-    max-height: 100dvh !important;
-  }
-}
+html.hud-v3-active,html.hud-v3-active body{height:100%!important;min-height:100vh!important;min-height:-webkit-fill-available!important}@supports(height:100dvh){html.hud-v3-active,html.hud-v3-active body{height:100dvh!important;min-height:100dvh!important}}html.hud-v3-active #app{height:100%!important;min-height:0!important}@supports(height:100dvh){html.hud-v3-active #app{height:100dvh!important;max-height:100dvh!important}}
 html.hud-v3-active button,
 html.hud-v3-active .tab,
 html.hud-v3-active .coach-cta,
@@ -4410,8 +4385,9 @@ html.hud-v3-active .aaa-gl-page .aaa-gl-carousel {
 /* BUILD 97 — produce/GL polish → 95% mockup fidelity */
 html.hud-v3-active .aaa-show-panel .aaa-poster::before { content:""!important; position:absolute!important; inset:0!important; border-radius:inherit!important; opacity:.2!important; mix-blend-mode:overlay!important; pointer-events:none!important; z-index:2!important; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.52'/%3E%3C/svg%3E")!important; background-size:160px 160px!important; }
 html.hud-v3-active .aaa-show-panel .aaa-poster::after { background:radial-gradient(ellipse 94% 90% at 50% 46%,transparent 44%,rgba(4,2,10,.68) 100%),linear-gradient(180deg,rgba(8,6,15,.05) 0%,rgba(8,6,15,.15) 45%,rgba(8,6,15,.82) 100%)!important; }
-html.hud-v3-active .aaa-show-panel .aaa-hero-block { position:relative!important; }
-html.hud-v3-active .aaa-show-panel .aaa-hero-block::after { content:""!important; position:absolute!important; inset:0!important; border-radius:inherit!important; pointer-events:none!important; z-index:6!important; background:radial-gradient(ellipse 90% 84% at 50% 40%,transparent 46%,rgba(2,1,8,.52) 100%)!important; }
+html.hud-v3-active .aaa-show-panel .aaa-hero-block { position:relative!important; isolation:isolate!important; }
+html.hud-v3-active .aaa-show-panel .aaa-hero-block::after { content:""!important; position:absolute!important; inset:0!important; border-radius:inherit!important; pointer-events:none!important; z-index:0!important; background:radial-gradient(ellipse 90% 84% at 50% 40%,transparent 46%,rgba(2,1,8,.52) 100%)!important; }
+html.hud-v3-active .aaa-show-panel .aaa-show-card,html.hud-v3-active .aaa-show-panel .aaa-team { position:relative!important; z-index:1!important; }
 html.hud-v3-active .aaa-gl-page .aaa-gl-carousel-stage { padding-bottom:22px!important; background:repeating-radial-gradient(ellipse 10px 6px at 10px calc(100% - 3px),rgba(6,3,12,.92) 0 8px,transparent 8px 20px),linear-gradient(180deg,transparent 68%,rgba(6,3,12,.42) 84%,rgba(6,3,12,.78) 100%),linear-gradient(180deg,rgba(36,8,18,.72),rgba(10,7,18,.94)),radial-gradient(ellipse 85% 55% at 50% 0%,rgba(160,28,55,.38),transparent 68%)!important; }
 html.hud-v3-active .aaa-gl-page .aaa-gl-carousel-stage .aaa-gl-carousel::after { content:""!important; position:absolute!important; left:10px!important; right:10px!important; bottom:-12px!important; height:14px!important; pointer-events:none!important; z-index:1!important; opacity:.9!important; border-radius:0 0 12px 12px!important; background:repeating-linear-gradient(90deg,transparent 0 5px,rgba(10,5,16,.82) 5px 14px,transparent 14px 19px),linear-gradient(180deg,rgba(16,8,20,.45),rgba(6,3,12,.95))!important; -webkit-mask-image:linear-gradient(180deg,transparent,#000 42%)!important; mask-image:linear-gradient(180deg,transparent,#000 42%)!important; }
 html.hud-v3-active #pathway-rail.coach-bar { margin:6px var(--ast-gutter) 0!important; padding:7px 10px!important; background:linear-gradient(135deg,rgba(255,92,168,.14),rgba(18,14,32,.72))!important; backdrop-filter:blur(12px) saturate(1.15)!important; -webkit-backdrop-filter:blur(12px) saturate(1.15)!important; border:1px solid rgba(255,120,180,.18)!important; border-bottom:1px solid rgba(255,120,180,.18)!important; border-radius:14px!important; box-shadow:0 0 24px rgba(255,92,168,.15),0 4px 16px rgba(0,0,0,.28)!important; }
@@ -4465,7 +4441,7 @@ html.hud-v3-active #rival-race .rival-race-leader.rival-race-me { color:var(--as
 html.hud-v3-active .aaa-poster-col { position: relative !important; }
 html.hud-v3-active .aaa-poster.aaa-poster-idle { animation: ast-poster-idle-glow 3.6s ease-in-out infinite !important; }
 @keyframes ast-poster-idle-glow { 0%, 100% { box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55), 0 0 0 rgba(255, 92, 168, 0); } 50% { box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5), 0 0 22px rgba(255, 92, 168, 0.28); } }
-html.hud-v3-active .aaa-poster-col:has(.aaa-poster.aaa-poster-idle)::after { content: "" !important; position: absolute !important; inset: -4px 0 0 0 !important; border-radius: inherit !important; pointer-events: none !important; z-index: 4 !important; opacity: 0.72 !important; background: radial-gradient(circle, rgba(255, 200, 69, 0.95) 0 1.5px, transparent 2.5px), radial-gradient(circle, rgba(255, 92, 168, 0.9) 0 1.2px, transparent 2.2px), radial-gradient(circle, rgba(77, 212, 255, 0.85) 0 1px, transparent 2px) !important; background-size: 100% 100%, 100% 100%, 100% 100% !important; background-position: 18% 22%, 72% 38%, 48% 78% !important; background-repeat: no-repeat !important; animation: ast-poster-idle-sparkle 4.2s ease-in-out infinite !important; }
+html.hud-v3-active .aaa-poster-col:has(.aaa-poster.aaa-poster-idle)::after { content: "" !important; position: absolute !important; inset: 0 !important; border-radius: inherit !important; pointer-events: none !important; z-index: 4 !important; opacity: 0.72 !important; background: radial-gradient(circle, rgba(255, 200, 69, 0.95) 0 1.5px, transparent 2.5px), radial-gradient(circle, rgba(255, 92, 168, 0.9) 0 1.2px, transparent 2.2px), radial-gradient(circle, rgba(77, 212, 255, 0.85) 0 1px, transparent 2px) !important; background-size: 100% 100%, 100% 100%, 100% 100% !important; background-position: 18% 22%, 72% 38%, 48% 78% !important; background-repeat: no-repeat !important; animation: ast-poster-idle-sparkle 4.2s ease-in-out infinite !important; }
 @keyframes ast-poster-idle-sparkle { 0%, 100% { opacity: 0.45; transform: translateY(0) scale(1); } 50% { opacity: 0.92; transform: translateY(-3px) scale(1.06); } }
 html.hud-v3-active .aaa-poster.aaa-poster-boosting { animation: ast-poster-pulse 0.45s ease-out !important; }
 html.hud-v3-active .aaa-show-panel .aaa-play-btn { position: relative !important; overflow: hidden !important; }
@@ -4481,17 +4457,19 @@ html.hud-v3-active .coach-gift.coach-gift-unclaimed { animation: ast-coach-gift-
 @keyframes ast-coach-gift-pulse { 0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 92, 168, 0.35), 0 6px 16px rgba(255, 92, 168, 0.22); } 50% { transform: scale(1.06); box-shadow: 0 0 0 6px rgba(255, 92, 168, 0), 0 8px 22px rgba(255, 200, 69, 0.35); } }
 html.hud-v3-active .coach-gift.coach-gift-unclaimed .coach-gift-ic { animation: ast-coach-gift-wiggle 2.2s ease-in-out infinite !important; }
 @keyframes ast-coach-gift-wiggle { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-8deg); } 75% { transform: rotate(8deg); } }
-/* BUILD 98 — Core unlock gates + playtest sim */
-/* BUILD 99 — Landing + SEO */
 html.hud-v3-active .start-share-link { width:100%!important; font-size:13px!important; font-weight:800!important; padding:10px 14px!important; margin-top:6px!important; border-radius:14px!important; border:1px solid rgba(77,212,255,.28)!important; background:rgba(77,212,255,.08)!important; color:var(--ast-cyan)!important; }
 html.hud-v3-active .start-share-link:hover, html.hud-v3-active .start-share-link:focus-visible { background:rgba(77,212,255,.14)!important; border-color:rgba(77,212,255,.45)!important; transform:translateY(-1px)!important; }
 html.hud-v3-active .start-share-hint { margin-top:0!important; }
 
-/* BUILD 100 — Ship: idle-feel wired */
-/* BUILD 101 — Audit: premiere queue, modal drain, HUD a11y */
-/* BUILD 103 — Native: coach ellipsis, drawer trap, www bundle (102: OG, tab rings) */
-/* BUILD 104 — IAP: signed ?pt= grants, license redeem chain, vm fetch mock */
-/* BUILD 105 — QA: device smoke checklist, playtest audit SFX, preflight www bundle */
-/* BUILD 106 — Audio: self-hosted BGM + WAV SFX, hybrid playDedicatedSfx */
 /* BUILD 107 — Hotfix: vercelignore audio deploy + safeBegin boot guard */
-/* BUILD 108 — Legion: 20-agent audit — boot, modals, coach, IAP, produce, i18n */
+/* BUILD 108 — iOS Safari: viewport, safe-area, input zoom, overlay scroll */
+html.hud-v3-active #loading-splash{padding:calc(var(--safe-t,0px) + 12px) calc(var(--safe-r,0px) + 12px) calc(var(--safe-b,0px) + 12px) calc(var(--safe-l,0px) + 12px)!important;box-sizing:border-box!important}
+html.hud-v3-active .achieve-pop{top:calc(var(--safe-t,0px) + 56px)!important}
+html.hud-v3-active #lang-sel,html.hud-v3-active .hud-drawer-inner #lang-sel,html.hud-v3-active .aaa-redeem-license-form .ast-input,html.hud-v3-active .aaa-redeem-promo-form .ast-input,html.hud-v3-active #redeemcode,html.hud-v3-active #redeem-key,html.hud-v3-active #redeem-sku{font-size:16px!important;touch-action:manipulation!important}
+@media (max-width:720px){html.hud-v3-active .overlay[role="dialog"]{align-items:flex-start!important;justify-content:center!important;overflow-y:auto!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior:contain!important;padding-top:calc(var(--safe-t,0px) + 12px)!important;padding-bottom:calc(var(--safe-b,0px) + 12px)!important}html.hud-v3-active .overlay[role="dialog"] .card-modal{max-height:min(calc(100dvh - var(--safe-t,0px) - var(--safe-b,0px) - 24px),640px)!important;overflow-y:auto!important;-webkit-overflow-scrolling:touch!important;margin:auto 0!important;flex-shrink:0!important}}
+@supports not (height:100dvh){@media (max-width:720px){html.hud-v3-active .overlay[role="dialog"] .card-modal{max-height:min(calc(100vh - var(--safe-t,0px) - var(--safe-b,0px) - 24px),640px)!important}}}
+/* BUILD 108 — Legion: produce grid, vignette stack, GL carousel clip */
+/* BUILD 108 agent4 — produce/greenlight: openGreenlightView taps, slot resolve, burst SFX sync */
+html.hud-v3-active .aaa-gl-page .aaa-gl-carousel-stage{overflow:visible!important}
+html.hud-v3-active .aaa-show-panel .aaa-meta-col,html.hud-v3-active .aaa-show-panel .aaa-actions .aaa-cta{position:relative!important;z-index:2!important}
+/* BUILD 108 integration — setTab gl reset, tabsDock sig cache, coach hook.render, empire click guard */

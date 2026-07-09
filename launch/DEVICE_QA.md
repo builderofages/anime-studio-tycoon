@@ -2,7 +2,7 @@
 
 Structured manual pass before TestFlight external beta or Play internal track. Run after `npm test`, `npm run prepare-native`, and `npm run launch-preflight` are green.
 
-**Build gate:** build **105+** · QA  
+**Build gate:** build **108+** · Legion
 **URLs:** [Play](https://anime-studio-tycoon.vercel.app/play) · [OG card](https://anime-studio-tycoon.vercel.app/og-share.jpg)
 
 ---
@@ -23,8 +23,25 @@ Use one **fresh install** and one **returning save** per platform.
 
 - [ ] `npm test` — smoke + playtest audit pass
 - [ ] `npm run test:sim` — honest-flow VM sim pass
-- [ ] `npm run prepare-native` — `www/v5-idle-feel.js`, `www/og-share.jpg` present
-- [ ] Build tag shows **build 105 · QA** in footer / What's New
+- [ ] `npm run prepare-native` — `www/v5-idle-feel.js`, `www/og-share.jpg`, absolute `VALIDATOR_URL` in `www/iap.js`
+- [ ] Build tag shows **build 109 · Phalanx** in footer / What's New
+
+---
+
+## iOS Safari regression (Build 108)
+
+Automated smoke asserts `bindAudioGestureUnlock`, `primeHtml5Audio`, `-webkit-fill-available`, and `100dvh` in `ast-v5.css`. Manual pass on a notch iPhone:
+
+| Case | Action | Expected |
+|------|--------|----------|
+| Viewport | Cold load `/play` in Safari | No double scrollbars; app fills screen (`100dvh` + `-webkit-fill-available` fallback); no rubber-band on `body` |
+| Notch | Start screen + in-game HUD | Top chrome clears notch (`--safe-t` on `#app`); tab dock clears home indicator (`--safe-b` on `#command-dock`); achievement toast below notch |
+| Input zoom | Focus studio name, language, store redeem fields | No page zoom (all inputs/selects ≥ **16px**); keyboard does not hide focused field (overlay scroll + `focusin` scroll) |
+| Audio | Fresh tab, no prior tap | Silent until first gesture |
+| Audio unlock | First tap Play / tab / hire | `primeHtml5Audio()` runs; tab/hire chime audible; no sustained `AudioContext suspended` errors |
+| Modal scroll | Open start screen on iPhone SE | Long start card scrolls inside overlay; Collect / Play remain reachable above keyboard |
+
+**Pass if:** all six cases Pass on Safari iOS 16+.
 
 ---
 

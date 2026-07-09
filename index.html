@@ -30,8 +30,8 @@
 <meta name="twitter:image:alt" content="Anime Studio Tycoon — anime idle tycoon game screenshot">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Anime Studio Tycoon","alternateName":"Anime Studio Tycoon — Build Your Empire","url":"https://anime-studio-tycoon.vercel.app/play","image":"https://anime-studio-tycoon.vercel.app/og-share.jpg","description":"Free idle tycoon game: hire staff, greenlight anime, grow fans, and build a studio empire from ¥1,500 to industry #1.","applicationCategory":"GameApplication","operatingSystem":"Any","browserRequirements":"Requires JavaScript","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"inLanguage":["en","es","pt","fr","de","ja"]}</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%233a2b4d'/%3E%3Ccircle cx='32' cy='32' r='30' fill='none' stroke='%23ffc845' stroke-width='3'/%3E%3Cg fill='%23ff9bc4'%3E%3Cellipse cx='32' cy='15' rx='5' ry='8'/%3E%3Cellipse cx='32' cy='49' rx='5' ry='8'/%3E%3Cellipse cx='15' cy='32' rx='8' ry='5'/%3E%3Cellipse cx='49' cy='32' rx='8' ry='5'/%3E%3C/g%3E%3Ccircle cx='32' cy='32' r='7' fill='%23ffc845'/%3E%3C/svg%3E">
-<link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="icons/icon-512.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/icons/icon-512.png">
 <!-- Legacy gameplay-*.css disabled — aaa-ui + game-skin + hud-premium own chrome -->
 <link rel="stylesheet" href="hud-premium.css?v=100">
 <!-- ui-complete.css disabled — v5 uses aaa-tab-page heroes -->
@@ -89,7 +89,7 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available;width:1
 @supports(height:100dvh){ #app{height:100dvh;max-height:100dvh} }
 .overlay{padding:calc(var(--safe-t,0px) + 12px) calc(var(--safe-r,0px) + 12px) calc(var(--safe-b,0px) + 12px) calc(var(--safe-l,0px) + 12px);
   overscroll-behavior:contain;-webkit-overflow-scrolling:touch;box-sizing:border-box}
-.ast-input,#start-studio,#start-lang,select.ast-input{font-size:16px}
+.ast-input,#start-studio,#start-lang,select.ast-input,#lang-sel,#redeemcode,#redeem-key,#redeem-sku{font-size:16px;touch-action:manipulation}
 
 .asd-topbar,.asd-mpanel,#asd-p-status,#asd-p-menu{display:none !important}
 #main{min-height:0 !important}
@@ -116,7 +116,7 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available;width:1
     <button class="btn-ghost" id="btn-mute">🔊 Sound: On</button>
     <button class="btn-ghost" id="btn-save" style="display:none">💾 Save</button>
     <button class="btn-ghost" id="btn-reset">↺ Reset</button>
-  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 108 · Legion</span></div>
+  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 16px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 109 · Phalanx</span></div>
   <div id="toasts"></div>
   <div id="pwa-install-banner" class="aaa-pwa-install-banner" hidden>
     <div class="aaa-pwa-install-inner">
@@ -146,6 +146,8 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available;width:1
       <option value="fr">Français</option>
       <option value="de">Deutsch</option>
       <option value="ja">日本語</option>
+      <option value="ko">한국어</option>
+      <option value="zh">中文</option>
     </select>
     <div class="start-cta-group">
       <button class="btn-primary" id="btn-start-play" type="button">▶ Play</button>
@@ -358,14 +360,14 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available;width:1
 
 <div class="overlay" id="whatsnew" style="display:none" role="dialog" aria-modal="true" aria-labelledby="whatsnew-title">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <img src="start-hero.png?v=108" alt="Anime Studio Tycoon logo" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
-    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 108 — Legion</h1>
+    <img src="start-hero.png?v=109" alt="Anime Studio Tycoon logo" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
+    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 109 — Phalanx</h1>
     <div class="offlist whatsnew-list" style="margin:12px 0">
-      <div><span>🛡️ Boot</span><b>repairLoadedState + safeBegin — corrupt saves never brick the game</b></div>
-      <div><span>🎬 Produce</span><b>Empty slots tap-to-greenlight, premiere queue + modal drain fixed</b></div>
-      <div><span>🧭 Coach</span><b>Locked-tab safe routing, full CTA labels, 6-language tutorial</b></div>
-      <div><span>💎 IAP</span><b>Grant idempotency, license one-time redeem, items_pack fix</b></div>
-      <div><span>🧪 901 tests</span><b>675 smoke + 226 VM sim — honest playthrough to 3 releases</b></div>
+      <div><span>🛡️ Logic</span><b>repairLoadedState extracted — NaN fans, bad slots, corrupt saves auto-heal</b></div>
+      <div><span>🎬 Produce</span><b>Tap correct slot to greenlight, burst SFX synced, produce grid fixed</b></div>
+      <div><span>🌐 i18n</span><b>Korean + Chinese full UI — coach, tutorial, start screen</b></div>
+      <div><span>💎 IAP</span><b>Grant security hardened, prestige promo farm blocked, native validator URL</b></div>
+      <div><span>🧪 1270 tests</span><b>938 smoke + 332 VM sim — modal storm, empire crisis, corrupt load</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
   </div>
@@ -421,6 +423,17 @@ import {
   featureUnlockedFor,
   tabUnlockPctFor,
   rivalGoalFromStart,
+  repairLoadedStateFor,
+  repairRivalGoalFor,
+  VALID_TABS,
+  starsUnlockProgressFor,
+  marketUnlockProgressFor,
+  studioUnlockProgressFor,
+  researchUnlockProgressFor,
+  chaosUnlockProgressFor,
+  tabInDockFor,
+  tabLockedFor,
+  masteryResearchCostFor,
   mergeLoadedSave,
   contentRankIndexFor,
   nextContentRankFor,
@@ -465,6 +478,17 @@ window.__AST_LOGIC__ = {
   featureUnlockedFor,
   tabUnlockPctFor,
   rivalGoalFromStart,
+  repairLoadedStateFor,
+  repairRivalGoalFor,
+  VALID_TABS,
+  starsUnlockProgressFor,
+  marketUnlockProgressFor,
+  studioUnlockProgressFor,
+  researchUnlockProgressFor,
+  chaosUnlockProgressFor,
+  tabInDockFor,
+  tabLockedFor,
+  masteryResearchCostFor,
   mergeLoadedSave,
   contentRankIndexFor,
   nextContentRankFor,
@@ -524,8 +548,8 @@ document.addEventListener("deviceready", initNativeChrome, false);
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 108 · Legion";
-const ASSET_V = "108";
+const BUILD_TAG = "build 109 · Phalanx";
+const ASSET_V = "109";
 const SHARE_OG_URL = "https://anime-studio-tycoon.vercel.app/og-share.jpg";
 const OFFLINE_PREVIEW_CAP = 4*3600; // "while away" preview when return is under 4h
 const SHARE_PLAY_URL = "https://anime-studio-tycoon.vercel.app/play";
@@ -1263,25 +1287,15 @@ function setMainHTML(h){
   if(m) m.innerHTML = h;
   return m;
 }
-const VALID_TABS = new Set(["produce","quests","staff","stars","research","studio","market","store"]);
 function repairLoadedState(){
-  if(!S || typeof S !== "object"){ S = freshState(); return; }
-  S.slots = Math.max(1, Math.min(MAX_SLOTS, Math.floor(Number(S.slots) || 1)));
-  if(!Array.isArray(S.projects)) S.projects = [];
-  while(S.projects.length < S.slots) S.projects.push(null);
-  S.projects = S.projects.slice(0, S.slots).map(pr => {
-    if(!pr || typeof pr !== "object") return null;
-    const p = PROJECTS[pr.pid];
-    if(!p) return null;
-    const prog = Number(pr.progress);
-    pr.progress = Math.max(0, Math.min(p.work, Number.isFinite(prog) ? prog : 0));
-    return pr;
+  S = repairLoadedStateFor(S, {
+    maxSlots: MAX_SLOTS,
+    genres: GENRES,
+    projectDefs: PROJECTS,
+    roleKeys: Object.keys(ROLES),
+    fresh: freshState,
+    validTabs: VALID_TABS,
   });
-  S.trendIdx = Math.max(0, Math.min(GENRES.length - 1, Math.floor(Number(S.trendIdx) || 0)));
-  if(!VALID_TABS.has(S.tab)) S.tab = "produce";
-  S.fanMilestonesToast = Array.isArray(S.fanMilestonesToast) ? S.fanMilestonesToast : [];
-  if(!S.staff || typeof S.staff !== "object") S.staff = { animator: 0, writer: 0, director: 0, voice: 0, producer: 0 };
-  for(const r of Object.keys(ROLES)) if(typeof S.staff[r] !== "number" || !Number.isFinite(S.staff[r])) S.staff[r] = 0;
 }
 /* monetization / boost helpers */
 let OFFLINE=false;            // true while simulating offline progress (suppresses toasts/audio/render)
@@ -1339,7 +1353,7 @@ function celebrateStudioAward(num, gems){
   }
 }
 function queueStudioAwardModal(num, gems){
-  if(OFFLINE||unlockModalPending()){ _studioAwardQueued={num, gems}; return; }
+  if(OFFLINE||unlockModalPending()||_premiereWillShow){ _studioAwardQueued={num, gems}; return; }
   celebrateStudioAward(num, gems);
 }
 function closeStudioAwardModal(){
@@ -1706,6 +1720,21 @@ function dynastyPerkCost(k){
   const def=DYNASTY_PERKS_SHOP.find(p=>p.k===k); if(!def) return 999;
   const lvl=(S.dynastyPerks||{})[k]||0; return def.costs[lvl]||999;
 }
+function buyDynastyPerk(k){
+  const def=DYNASTY_PERKS_SHOP.find(p=>p.k===k);
+  if(!def) return;
+  const lvl=(S.dynastyPerks||{})[k]||0;
+  if(lvl>=def.max){ toast("Max level reached"); play("error"); return; }
+  const cost=dynastyPerkCost(k);
+  if(dynastyAvailable()<cost){ toast("Need "+cost+" dynasty points"); play("error"); return; }
+  S.dynastySpent=(S.dynastySpent||0)+cost;
+  S.dynastyPerks[k]=lvl+1;
+  toast(def.ic+" "+def.name+" Lv "+S.dynastyPerks[k]+"!",true);
+  play("reward");
+  save();
+  render();
+  try{ if(window.STEAM_ACHIEVE) window.STEAM_ACHIEVE("dynperk1"); }catch(e){}
+}
 function festivalEntryCost(){ return bigYen(); }
 function festivalInvitePending(){ return !!(_pendingDecision&&_pendingDecision.id==="festival"); }
 function openFestivalDecisionModal(){
@@ -1894,6 +1923,12 @@ function resolveDecision(yes){
   if(window.__AST_TRY_RANKUP__) window.__AST_TRY_RANKUP__();
 }
 /* ========================= CHAOS & STAR-RISK SYSTEMS ========================= */
+function spendYen(amount){
+  const pay=Math.max(0,Math.floor(amount||0));
+  if(S.yen<pay) return false;
+  S.yen=Math.max(0,S.yen-pay);
+  return true;
+}
 function chaosDangerTier(ch){
   ch=Math.round(ch||0);
   if(ch>=70) return {cls:"critical",lbl:"Critical — disaster imminent"};
@@ -1944,15 +1979,15 @@ function renderDecisionModal(d, danger){
 const CHAOS=[
   {id:"melt", ic:"🔥", title:"Render Farm Meltdown",
    text:"Your render farm is overheating and productions are stalling. Pay for emergency repairs?",
-   yes:["Pay to fix", ()=>{const c=bigYen(); if(S.yen<c) return "No funds — productions stalled."; S.yen-=c; S.chaos=Math.max(0,(S.chaos||0)-35); return `−¥${fmt(c)}, crisis averted`;}],
+   yes:["Pay to fix", ()=>{const c=bigYen(); if(!spendYen(c)) return "No funds — productions stalled."; S.chaos=Math.max(0,(S.chaos||0)-35); return `−¥${fmt(c)}, crisis averted`;}],
    no:["Ride it out", ()=>{ S.projects.forEach(pr=>{ if(pr) pr.progress*=0.7; }); S.chaos=Math.max(0,(S.chaos||0)-15); return "Every production set back 30%";}]},
   {id:"scandal", ic:"📰", title:"Online Scandal",
    text:"A nasty rumor about the studio is trending. Bring in a PR crisis team?",
-   yes:["Hire PR team", ()=>{const c=Math.floor(bigYen()*1.5); if(S.yen<c) return "Couldn't afford PR — fans bail."; S.yen-=c; S.chaos=Math.max(0,(S.chaos||0)-35); return `−¥${fmt(c)}, reputation saved`;}],
+   yes:["Hire PR team", ()=>{const c=Math.floor(bigYen()*1.5); if(!spendYen(c)) return "Couldn't afford PR — fans bail."; S.chaos=Math.max(0,(S.chaos||0)-35); return `−¥${fmt(c)}, reputation saved`;}],
    no:["Ignore it", ()=>{const f=Math.floor((S.fans||0)*0.06); S.fans=Math.max(0,S.fans-f); S.chaos=Math.max(0,(S.chaos||0)-15); return `−${fmt(f)} fans`;}]},
   {id:"burnout", ic:"😵", title:"Studio Burnout",
    text:"The whole team is running on fumes. Give everyone a paid recovery break?",
-   yes:["Paid break", ()=>{const c=bigYen(); if(S.yen<c) return "No budget for breaks."; S.yen-=c; S.stamina=100; (S.stars||[]).forEach(s=>s.energy=100); S.chaos=Math.max(0,(S.chaos||0)-40); return `−¥${fmt(c)}, everyone fully recharged`;}],
+   yes:["Paid break", ()=>{const c=bigYen(); if(!spendYen(c)) return "No budget for breaks."; S.stamina=100; (S.stars||[]).forEach(s=>s.energy=100); S.chaos=Math.max(0,(S.chaos||0)-40); return `−¥${fmt(c)}, everyone fully recharged`;}],
    no:["Push through", ()=>{ S.stamina=Math.max(0,(S.stamina||0)-30); S.chaos=Math.max(0,(S.chaos||0)-10); return "Morale drops — Stamina −30";}]},
   {id:"leak", ic:"🕳️", title:"Plot Leak",
    text:"A finished show leaked online before its premiere. Rush the release or delay?",
@@ -1998,7 +2033,7 @@ function maybeStarDemand(){
   const cost=Math.max(2500, Math.floor(studioValue()*0.05)+(st.fame||0)*1500);
   _pendingDecision={ chaos:true, id:"demand", ic:"🌟", title:t.name+" Demands More",
     text:`${t.name} has become a Fame ${st.fame} superstar and wants a ¥${fmt(cost)} raise — or they'll sign with a rival studio.`,
-    yes:["Pay the raise", ()=>{ if(S.yen<cost){ removeStar(st.sid); return `Couldn't pay — ${t.name} walked.`; } S.yen-=cost; st.loyalty=100; return `−¥${fmt(cost)}, ${t.name} re-signs`; }],
+    yes:["Pay the raise", ()=>{ if(!spendYen(cost)){ removeStar(st.sid); return `Couldn't pay — ${t.name} walked.`; } st.loyalty=100; return `−¥${fmt(cost)}, ${t.name} re-signs`; }],
     no:["Let them walk", ()=>{ const f=Math.floor((st.fame||0)*200); S.fans+=f; S.totalFansEver+=f; removeStar(st.sid); return `${t.name} left for the big leagues — their fans linger: +${fmt(f)} fans`; }] };
   window.__AST_CRISIS_OPEN__=true;
   if(!renderDecisionModal(_pendingDecision, true)){ _pendingDecision=null; window.__AST_CRISIS_OPEN__=false; S.lastStarDemand=0; }
@@ -2451,14 +2486,19 @@ const AUDIO_ASSETS={
   "milestone-collect":"audio/milestone-collect.wav",
   error:"audio/error.wav",
 };
-function playDedicatedSfx(n){
-  const base=sfx[n]; if(!base) return false;
+function playSfxFallback(n,opts,prof){
+  if(SYNTH_SFX_KEYS.has(n)&&playSynth(n,opts)) return;
+  playClip(prof||SFX_PROFILES[n]||SFX_PROFILES.click);
+}
+function playDedicatedSfx(n,opts){
+  const base=sfx[n]; if(!base||base.error) return false;
   try{
     const prof=SFX_PROFILES[n]||SFX_PROFILES.click;
     const a=base.cloneNode();
     a.playbackRate=prof.rate||1;
     a.volume=Math.min(1, sfxMasterVol()*(prof.v||1));
-    a.play().catch(()=>{});
+    const p=a.play();
+    if(p&&typeof p.then==="function") p.catch(()=>playSfxFallback(n,opts,prof));
     return true;
   }catch(e){ return false; }
 }
@@ -2469,7 +2509,11 @@ function initAudio(){
     bgm.loop = true;
     for(const [k, path] of Object.entries(AUDIO_ASSETS)){
       if(k === "bgm") continue;
-      try{ sfx[k] = new Audio(path); }catch(_){}
+      try{
+        const el=new Audio(path);
+        el.addEventListener("error",()=>{ try{ delete sfx[k]; }catch(_){} });
+        sfx[k]=el;
+      }catch(_){}
     }
     applyAudioSettings();
     bindAudioGestureUnlock();
@@ -2489,10 +2533,21 @@ function applyAudioSettings(){
 }
 function play(n,opts){
   if(S.muted) return;
-  if(playDedicatedSfx(n)) return;
-  if(SYNTH_SFX_KEYS.has(n)&&playSynth(n,opts)) return;
-  playClip(SFX_PROFILES[n]||SFX_PROFILES.click);
+  unlockAudioFromGesture();
+  if(playDedicatedSfx(n,opts)) return;
+  playSfxFallback(n,opts);
 }
+function bindIosFormFocusScroll(){
+  if(window.__astIosFocusScroll) return;
+  window.__astIosFocusScroll=true;
+  const scrollFocused=(el)=>{
+    if(!el||!el.matches("input,select,textarea")) return;
+    const run=()=>{ try{ el.scrollIntoView({block:"center",behavior:"smooth"}); }catch(_){ try{ el.scrollIntoView(true); }catch(__){} } };
+    setTimeout(run,320);
+  };
+  document.addEventListener("focusin",(e)=>scrollFocused(e.target),true);
+}
+bindIosFormFocusScroll();
 function updateMute(){
   elText("#btn-mute", (S.muted ? ("🔇 "+STR.muteOff) : ("🔊 "+STR.muteOn)));
   applyAudioSettings();
@@ -2521,7 +2576,7 @@ function updateChrome(){
     let sel=document.getElementById("lang-sel");
     if(!sel){
       sel=document.createElement("select"); sel.id="lang-sel"; sel.className="btn-ghost";
-      sel.style.cssText="padding:7px 10px;font-size:12px;border:none;border-radius:12px;font-weight:700";
+      sel.style.cssText="padding:7px 10px;font-size:16px;border:none;border-radius:12px;font-weight:700";
       const util=document.getElementById("hud-drawer-slot")||document.querySelector(".foot"); if(util) util.appendChild(sel);
     }
     if(sel){
@@ -2554,7 +2609,8 @@ function syncCloudSave(){
 function load(){
   syncCloudSave();
   try{
-    const raw=localStorage.getItem(SAVE_KEY); if(!raw) return false;
+    const raw=localStorage.getItem(SAVE_KEY);
+    if(!raw||!String(raw).trim()) return false;
     const d=JSON.parse(raw);
     if(!d||typeof d!=="object"||Array.isArray(d)) throw new Error("invalid save");
     S=mergeLoadedSave(d, freshState(), GENRES, MAX_SLOTS);
@@ -2608,6 +2664,10 @@ function floatGain(txt, anchor){
 function returnHubOpen(){
   const m=document.getElementById("return-hub");
   return !!(m&&m.style.display==="flex");
+}
+const BOOT_BATCH_OVERLAY_IDS=["offline","daily","whatsnew","howto"];
+function bootBatchModalOpen(){
+  return BOOT_BATCH_OVERLAY_IDS.some(id=>{const m=document.getElementById(id);return m&&m.style.display==="flex";});
 }
 function celebrateCollect(kind, source){
   if(OFFLINE) return;
@@ -2699,9 +2759,10 @@ function celebrateShareMilestoneOpen(){
   }else window.__AST_FX__?.burst?.(20);
   play("milestone-collect");
 }
-function celebrateGreenlightSlot(slot, isFirst){
+function celebrateGreenlightSlot(slot, isFirst, sfxKey){
   if(OFFLINE) return;
   const burst=isFirst?32:22;
+  const sfx=sfxKey||(isFirst?"first-greenlight":"greenlight");
   const pulse=()=>{
     const slotEl=document.getElementById("slot-"+slot)||document.querySelector('.aaa-slot-card[data-slot-ix="'+slot+'"]');
     if(slotEl&&window.__AST_FX__?.burst){
@@ -2710,6 +2771,7 @@ function celebrateGreenlightSlot(slot, isFirst){
       slotEl.classList.add("aaa-slot-greenlit");
       setTimeout(()=>slotEl.classList.remove("aaa-slot-greenlit"), 1200);
     }else window.__AST_FX__?.burst?.(isFirst?24:14);
+    play(sfx);
   };
   requestAnimationFrame(()=>requestAnimationFrame(pulse));
 }
@@ -2844,8 +2906,8 @@ function greenlight(pid, genre, cast, sequel, sfx){
   const p=PROJECTS[pid];
   const lock=projectLockInfo(p);
   if(lock.locked){ toast("🔒 Need "+lock.reason+" for "+p.name); play("error"); return; }
-  const slot=firstEmptySlot();
-  if(slot<0){ toast("All production slots are busy — expand your studio"); play("error"); return; }
+  const slot=resolveGreenlightSlot();
+  if(slot<0||S.projects[slot]){ toast("All production slots are busy — expand your studio"); play("error"); return; }
   if(S.yen < p.cost){ toast("Not enough Yen to greenlight"); play("error"); return; }
   const isFirstGl=(S.releases||0)===0 && activeCount()===0;
   // validate the featured cast — only working stars with enough energy, capped
@@ -2864,11 +2926,9 @@ function greenlight(pid, genre, cast, sequel, sfx){
   _castSel=[];
   questAdd("greenlit",1);
   track("greenlight",{tier:p.tier,genre,cast:ok.length,seq});
-  if(isFirstGl) play("first-greenlight");
-  else if(sfx) play(sfx);
-  else play("greenlight");
+  const sfxKey=isFirstGl?"first-greenlight":(sfx||"greenlight");
   render(); save();
-  celebrateGreenlightSlot(slot, isFirstGl);
+  celebrateGreenlightSlot(slot, isFirstGl, sfxKey);
 }
 /* When a show premieres, the cast gains XP→levels, fame (from hits), drains energy, and earns loyalty for the work. */
 function processCast(pr, stars, p){
@@ -2906,52 +2966,23 @@ function studioName(){ return S.studioName || "My Studio"; }
 /* ---- Progressive unlocks: the studio reveals its systems as you grow ---- */
 const UNLOCKS=makeUnlocks(()=>S);
 function featureUnlocked(k){ return featureUnlockedFor(k,S); }
-function starsUnlockProgress(){
-  const rel=S.releases||0, fans=S.totalFansEver||0;
-  if(rel>=2||fans>=20) return null;
-  const needRel=Math.max(0,2-rel);
-  if(needRel>0) return needRel===1?"1 more premiere to unlock Stars":needRel+" more premieres to unlock Stars";
-  const needFans=Math.max(0,20-fans);
-  return needFans===1?"1 more fan to unlock Stars":fmt(needFans)+" more fans to unlock Stars";
-}
-function marketUnlockProgress(){
-  const fans=S.fans||0;
-  if(fans>=50) return null;
-  const need=50-fans;
-  return need===1?"1 more fan to unlock Marketing":fmt(need)+" more fans to unlock Marketing";
-}
-function studioUnlockProgress(){
-  const rel=S.releases||0;
-  if(rel>=1) return null;
-  return "Premiere 1 anime to unlock Studio";
-}
-function researchUnlockProgress(){
-  const fans=S.totalFansEver||0;
-  if(fans>=120) return null;
-  const need=120-fans;
-  return need===1?"1 more fan to unlock Research":fmt(need)+" more fans to unlock Research";
-}
-function chaosUnlockProgress(){
-  const rel=S.releases||0;
-  if(rel>=10) return null;
-  const need=10-rel;
-  return need===1?"1 more premiere to unlock Chaos":fmt(need)+" more premieres to unlock Chaos";
-}
+function starsUnlockProgress(){ return starsUnlockProgressFor(S, fmt); }
+function marketUnlockProgress(){ return marketUnlockProgressFor(S, fmt); }
+function studioUnlockProgress(){ return studioUnlockProgressFor(S); }
+function researchUnlockProgress(){ return researchUnlockProgressFor(S, fmt); }
+function chaosUnlockProgress(){ return chaosUnlockProgressFor(S); }
 function tabUnlockPct(k){
   return tabUnlockPctFor(k, S, (pid) => PROJECTS[pid]?.work);
 }
-function researchCost(genre){
-  const lvl=S.mastery[genre]||0;
-  return { lvl, cost:Math.ceil(1200*Math.pow(1.9,lvl)), hypeCost:2+lvl };
-}
+function researchCost(genre){ return masteryResearchCostFor(S.mastery[genre]||0); }
 function totalMasteryLevels(){ return GENRES.reduce((n,g)=>n+(S.mastery[g]||0),0); }
 function freeScoutAvailable(){ return (S.releases||0)===2 && !S.freeScoutUsed; }
 let _starsUnlockQueued=false;
 let _studioUnlockQueued=false;
 let _researchUnlockQueued=false;
-function unlockModalPending(){ return _premiereOpen||_premiereWillShow||celebrationOverlayOpen()||returnHubOpen(); }
+function unlockModalPending(){ return _premiereOpen||_premiereWillShow||celebrationOverlayOpen()||returnHubOpen()||bootBatchModalOpen(); }
 function drainUnlockModalQueue(){
-  if(_premiereOpen||_premiereWillShow) return false;
+  if(_premiereOpen||_premiereWillShow||returnHubOpen()||bootBatchModalOpen()||celebrationOverlayOpen()) return false;
   if(_studioUnlockQueued){ showStudioUnlockModal(); save(); return true; }
   if(_starsUnlockQueued){ showStarsUnlockModal(); save(); return true; }
   if(_marketUnlockQueued){ showMarketUnlockModal(); save(); return true; }
@@ -3139,12 +3170,10 @@ function greenlightCarouselList(){
   return [...sequels,...showcaseForGreenlight()];
 }
 function focusFranchiseSequel(base, genre){
-  _glMode=true;
   _selGlSequel=base;
   _selGlGenre=genre||null;
   _selGlPid=null;
-  S.tab="produce";
-  render();
+  openGreenlightView();
   requestAnimationFrame(()=>{
     const cards=[...document.querySelectorAll(".aaa-gl-card[data-gl-sequel]")];
     const card=cards.find(el=>decodeURIComponent(el.dataset.glSequel||"")===base);
@@ -3152,11 +3181,11 @@ function focusFranchiseSequel(base, genre){
   });
 }
 function makeSequel(base, genre){
-  const opts=unlockedProjects().filter(p=>S.yen>=p.cost);
-  if(!opts.length){ toast("Not enough Yen to fund a sequel"); return; }
-  const p=opts[opts.length-1];
+  if(firstEmptySlot()<0){ toast("All production slots are busy — expand your studio"); play("error"); return; }
+  const info=sequelGreenlightInfo();
+  if(!info.afford||!info.p){ toast("Not enough Yen to fund a sequel"); play("error"); return; }
   _glMode=false;
-  greenlight(p.id, genre, _castSel.slice(), {base, genre});
+  greenlight(info.p.id, genre||info.p.genre||GENRES[0], _castSel.slice(), {base, genre:genre||info.p.genre});
   if(S.franchiseOpportunity?.base===base) delete S.franchiseOpportunity;
   _selGlSequel=null;
 }
@@ -3200,7 +3229,9 @@ function animateCount(el,to,prefix){
   requestAnimationFrame(step);
 }
 function showPremiere(pr,p,stars,yenGain,fansGain){
-  if(_premiereOpen){ _premiereQueue.push({pr,p,stars,yenGain,fansGain}); return; }
+  if(_premiereOpen||celebrationOverlayOpen()||returnHubOpen()||bootBatchModalOpen()){
+    _premiereQueue.push({pr,p,stars,yenGain,fansGain}); return;
+  }
   const body=document.getElementById("premiere-body"); if(!body) return;
   const isFirst=(S.releases||0)===1;
   const isSecond=(S.releases||0)===2;
@@ -3258,7 +3289,7 @@ function closePremiere(){
   }
   if(drainUnlockModalQueue()) return;
   if((S.releases||0)<2&&activeCount()===0){
-    _glMode=true; S.tab="produce"; render(); save(); return;
+    openGreenlightView(); save(); return;
   }
   if((S.releases||0)>=2) maybeShowPwaInstallBanner();
   maybeDecision();
@@ -3328,9 +3359,10 @@ function releaseProject(slot){
     toast(`${"★".repeat(stars)} “${pr.title||p.name}” premieres! +¥${fmt(yenGain)}  +${fmt(fansGain)} fans`+(trendBonus>1?"  🔥TREND":"")+((S.combo||0)>=2?`  🔗COMBO x${S.combo} (+${Math.round((comboMult-1)*100)}%)`:"")+(globalIncomeMult()>1?"  ⚡BOOST":"")+"  "+currentEvent().ic, true);
     if(stars===5 && p.tier>=3 && !S.sharedOnce){ setTimeout(()=>toast("🎉 Masterpiece! Tap 📣 Share to brag — and grab +25💎",true), 1600); }
     const bigPremiere = (p.tier>=2 || stars>=5) || S.releases<=3;
+    if(bigPremiere) _premiereWillShow=true;
     if(S.releases % 50 === 0) studioAwards();
     render(); save();
-    if(bigPremiere){ _premiereWillShow=true; showPremiere(pr, p, stars, yenGain, fansGain); }
+    if(bigPremiere) showPremiere(pr, p, stars, yenGain, fansGain);
     else { _premiereWillShow=false; maybeDecision(); }
   } else if(S.releases % 50 === 0) studioAwards();
 }
@@ -3383,6 +3415,7 @@ function buyUpgrade(key){
 }
 function research(genre){
   if(!featureUnlocked("research")){ toast(tabLockLabel("research")); play("click"); return; }
+  if(!GENRES.includes(genre)){ toast("Unknown genre"); play("error"); return; }
   const {lvl,cost,hypeCost}=researchCost(genre);
   if(S.yen<cost){ toast("Not enough Yen to research"); return; }
   if(S.hype<hypeCost){ toast("Need "+hypeCost+" Hype to research"); return; }
@@ -3393,6 +3426,8 @@ function research(genre){
   else play("click");
 }
 function campaign(i){
+  i=+i;
+  if(!Number.isFinite(i)||i<0||i>=CAMPAIGNS.length){ toast("Invalid campaign"); play("error"); return; }
   const c=CAMPAIGNS[i];
   if(!featureUnlocked("market")){ toast(tabLockLabel("market")); play("click"); return; }
   if(!c||S.yen<c.cost){ toast("Not enough Yen"); return; }
@@ -3461,6 +3496,7 @@ async function redeemLicenseKey(sku, key){
     if(!j.ok||!j.pt){ toast(j.error==="invalid license"?"Invalid license — check key & product":"Redeem failed — try again or email support"); return; }
     const changed=await redeemPurchaseToken(j.pt);
     S.redeemedLicenses.push(lk);
+    save();
     toast(changed?"✅ Purchase redeemed!":"✅ Already on this account — you're all set!",true);
   }catch(e){ toast("Network error — try again"); }
 }
@@ -3677,7 +3713,7 @@ function prestige(){
               influence:S.influence, influenceSpent:S.influenceSpent, inflPerks:S.inflPerks, streaming:S.streaming,
               finalGuideSeen:S.finalGuideSeen, finalGuideStep:S.finalGuideStep,
               items:S.items, entitlements:S.entitlements, purchaseLog:S.purchaseLog, firstPurchaseDone:S.firstPurchaseDone, noAds:S.noAds,
-              redeemedGrants:S.redeemedGrants, redeemedLicenses:S.redeemedLicenses,
+              redeemedGrants:S.redeemedGrants, redeemedLicenses:S.redeemedLicenses, redeemedCodes:S.redeemedCodes,
               studioName:S.studioName, hof:S.hallOfFame, bestRank:S.bestRank};
   S=freshState();
   S.legacy=keep.legacy; S.mastery=keep.mastery; S.totalFansEver=keep.total; S.muted=keep.mute;
@@ -3690,7 +3726,7 @@ function prestige(){
   S.awardsWon=keep.awards||0; S.totalEarned=keep.earned||0; S.comboBest=keep.comboBest||0;
   // purchases & entitlements are permanent — they survive every reboot
   S.items=keep.items||{}; S.entitlements=keep.entitlements||[]; S.purchaseLog=keep.purchaseLog||[]; S.firstPurchaseDone=!!keep.firstPurchaseDone; S.noAds=!!keep.noAds;
-  S.redeemedGrants=keep.redeemedGrants||[]; S.redeemedLicenses=keep.redeemedLicenses||[];
+  S.redeemedGrants=keep.redeemedGrants||[]; S.redeemedLicenses=keep.redeemedLicenses||[]; S.redeemedCodes=keep.redeemedCodes||[];
   S.studioName=keep.studioName||""; S.hallOfFame=keep.hof||[]; S.bestRank=keep.bestRank||99;
   checkAchievements(); track("prestige",{gain});
   toast("🌸 Studio rebooted! +"+gain+" Legacy",true); render(); save();
@@ -4111,19 +4147,8 @@ function simulateOffline(sec){
 }
 
 /* ========================= RENDER ========================= */
-function tabInDock(k){
-  if((S.releases||0)<5){
-    if(k==="research") return featureUnlocked("research");
-    return ["produce","quests","staff","stars","market","studio","store"].includes(k);
-  }
-  return true;
-}
-function tabLocked(k){
-  if(!tabInDock(k)) return true;
-  const u=UNLOCKS[k];
-  if(u && !u.test()) return true;
-  return false;
-}
+function tabInDock(k){ return tabInDockFor(k, S); }
+function tabLocked(k){ return tabLockedFor(k, S); }
 function tabLockLabel(k){
   if(k==="studio"){
     const prog=studioUnlockProgress();
@@ -4149,6 +4174,8 @@ function tabAccessible(k){ return tabInDock(k)&&!tabLocked(k); }
 function tabVisible(k){ return tabAccessible(k); }
 function setTab(t){
   if(tabLocked(t)){ toast(tabLockLabel(t)); play("error"); return; }
+  /* integration: leaving produce clears greenlight view — prevents _glMode tab desync */
+  if(t!=="produce"){ _glMode=false; S._produceSlotManual=false; }
   S.tab=t; play("tab-switch"); render();
 }
 
@@ -4227,9 +4254,142 @@ function updateSlotLive(i){
     if(eta){ const tv=fmtEta(slotEtaSeconds(pr,p)); if(eta.textContent!==tv) eta.textContent=tv; } }
   return false;
 }
+function accessibleTabOrder(){
+  const tabOrder=(S.releases||0)<5?TAB_ORDER_EARLY:["produce","quests","staff","stars","research","studio","market","store"];
+  return tabOrder.filter(k=>tabAccessible(k));
+}
+function marketAffordSignature(){
+  if(!featureUnlocked("market")) return "L:"+marketUnlockProgress();
+  let best=-1;
+  CAMPAIGNS.forEach((c,i)=>{ if(S.yen>=c.cost) best=i; });
+  return "U:"+S.yen+":"+S.fans+":"+best;
+}
+function updateMarketLive(){
+  if(S.tab!=="market") return false;
+  if(!featureUnlocked("market")){
+    if(document.querySelector(".aaa-market-locked")) return false;
+    render(); return true;
+  }
+  const grid=document.querySelector(".aaa-market-grid");
+  if(!grid) return false;
+  let bestRoi=null;
+  CAMPAIGNS.forEach(c=>{
+    if(S.yen<c.cost) return;
+    if(!bestRoi||campaignRoiPer1k(c)>campaignRoiPer1k(bestRoi)) bestRoi=c;
+  });
+  const affordAny=!!bestRoi;
+  const hero=document.querySelector(".aaa-market-hero-meta");
+  if(hero){
+    const fansPill=hero.querySelector(".pill:not(.aaa-market-pill-afford)");
+    if(fansPill) fansPill.textContent=fmt(S.fans)+" fans";
+    let readyPill=hero.querySelector(".aaa-market-pill-afford");
+    if(affordAny){
+      if(!readyPill){
+        readyPill=document.createElement("span");
+        readyPill.className="pill aaa-market-pill-afford";
+        readyPill.textContent="Campaign ready";
+        hero.appendChild(readyPill);
+      }
+    }else if(readyPill) readyPill.remove();
+  }
+  CAMPAIGNS.forEach((c,i)=>{
+    const card=grid.querySelector(`[data-camp-card="${i}"]`);
+    if(!card) return;
+    const afford=S.yen>=c.cost;
+    const isBest=!!(bestRoi&&afford&&c.name===bestRoi.name);
+    card.classList.toggle("aaa-market-afford",afford);
+    card.classList.toggle("aaa-market-best",isBest);
+    const btn=card.querySelector(`[data-camp="${i}"]`);
+    if(btn){
+      btn.disabled=!afford;
+      btn.classList.toggle("aaa-market-run-afford",afford);
+      const sm=btn.querySelector("small");
+      if(sm) sm.textContent="¥"+fmt(c.cost);
+    }
+  });
+  return false;
+}
+function researchAffordSignature(){
+  if(!featureUnlocked("research")) return "L:"+researchUnlockProgress();
+  const trend=trendGenre();
+  let bits=[S.yen,S.hype,trend];
+  for(const g of GENRES){
+    const rc=researchCost(g);
+    bits.push(g,rc.lvl,S.yen>=rc.cost&&S.hype>=rc.hypeCost?1:0);
+  }
+  return bits.join(":");
+}
+function updateResearchLive(){
+  if(S.tab!=="research") return false;
+  if(!featureUnlocked("research")){
+    if(document.querySelector(".aaa-research-locked")) return false;
+    render(); return true;
+  }
+  const grid=document.querySelector(".aaa-mastery-grid");
+  if(!grid) return false;
+  const trend=trendGenre();
+  const trendBody=document.querySelector(".aaa-research-trend-body");
+  if(trendBody){
+    const b=trendBody.querySelector("b");
+    if(b&&b.textContent!=="Trending: "+trend) b.textContent="Trending: "+trend;
+    const ic=trendBody.querySelector(".aaa-mastery-genre-ic");
+    if(ic) ic.textContent=GENRE_ICONS[trend]||"";
+    const span=trendBody.querySelector("span");
+    if(span) span.innerHTML=`Research <span class="aaa-mastery-genre-ic">${GENRE_ICONS[trend]||""}</span> ${trend} for bonus synergy on matching shows`;
+  }
+  const affordAny=GENRES.some(g=>{ const rc=researchCost(g); return S.yen>=rc.cost&&S.hype>=rc.hypeCost; });
+  const hero=document.querySelector(".aaa-research-hero-meta");
+  if(hero){
+    let readyPill=hero.querySelector(".aaa-research-pill-afford");
+    if(affordAny){
+      if(!readyPill){
+        readyPill=document.createElement("span");
+        readyPill.className="pill aaa-research-pill-afford";
+        readyPill.textContent="Research ready";
+        hero.prepend(readyPill);
+      }
+    }else if(readyPill) readyPill.remove();
+  }
+  for(const g of GENRES){
+    const card=grid.querySelector(`[data-genre="${g}"]`);
+    if(!card) continue;
+    const {lvl,cost,hypeCost:hc}=researchCost(g);
+    const isTrend=g===trend;
+    const canAfford=S.yen>=cost&&S.hype>=hc;
+    card.classList.toggle("aaa-mastery-trend",isTrend);
+    card.classList.toggle("aaa-mastery-afford",canAfford);
+    const h4=card.querySelector("h4");
+    if(h4){
+      let pill=h4.querySelector(".pill");
+      if(pill) pill.textContent="L"+lvl;
+      let trendPill=h4.querySelector(".aaa-mastery-trend-pill");
+      if(isTrend&&!trendPill){
+        trendPill=document.createElement("span");
+        trendPill.className="aaa-mastery-trend-pill";
+        trendPill.textContent="TRENDING";
+        h4.insertBefore(trendPill,h4.querySelector(".pill"));
+      }else if(!isTrend&&trendPill) trendPill.remove();
+    }
+    const bar=card.querySelector(".aaa-mastery-bar i");
+    if(bar) bar.style.width=Math.min(100,lvl*10)+"%";
+    const muted=card.querySelector(".muted");
+    if(muted) muted.textContent=`+${lvl*6}% → +${(lvl+1)*6}%`;
+    const btn=card.querySelector(`[data-res="${g}"]`);
+    if(btn){
+      btn.disabled=!canAfford;
+      const sm=btn.querySelector("small");
+      if(sm) sm.textContent="¥"+fmt(cost)+" · "+hc+"⚡";
+    }
+  }
+  return false;
+}
 function liveUpdateBody(){
   patchTopBarResources();
-  if(S.tab!=="produce"||isGreenlightView()) return;
+  syncTabsDock();
+  if(window.__AST_HOOK__?.refreshDockChrome) window.__AST_HOOK__.refreshDockChrome();
+  if(S.tab==="market"){ if(updateMarketLive()) return; }
+  else if(S.tab==="research"){ if(updateResearchLive()) return; }
+  else if(S.tab!=="produce"||isGreenlightView()) return;
   const expected=expectedProducePanels();
   if(expected>0){
     const shown=document.querySelectorAll(".slotpanel").length;
@@ -4265,7 +4425,7 @@ function syncMainViewState(){
   m.dataset.glBack=(gl&&activeCount()>0&&_glMode)?"1":"0";
 }
 function render(){
-  _tabsDockSig="";
+  /* integration: tabs dock signature cache — avoid rebuilding #tabs every render/tick */
   try{ renderBody(); }
   catch(e){
     console.error("render failed", e);
@@ -4439,9 +4599,7 @@ function ensureHudRival(){
     S.rivalGoal=rivalGoalFromStart(S.rivalStartVal);
     S.rivalClaimed=false;
   }
-  if(!S.rivalGoal||S.rivalGoal<=S.rivalStartVal){
-    S.rivalGoal=rivalGoalFromStart(Math.max(S.rivalStartVal, studioValue(), 1));
-  }
+  repairRivalGoalFor(S, studioValue());
 }
 
 function hudRivalHTML(){
@@ -4701,10 +4859,11 @@ function dynastyStudioHTML(){
     const lvl=(S.dynastyPerks||{})[p.k]||0;
     const cost=dynastyPerkCost(p.k);
     const maxed=lvl>=p.max;
+    const canBuy=!maxed&&avail>=cost;
     return `<div class="aaa-upgrade-row aaa-dynasty-perk-row"><div class="meta">
       <h4>${p.ic} ${p.name} <span class="pill">Lv ${lvl}/${p.max}</span></h4>
       <div class="muted">${p.desc}</div></div>
-      <button class="btn-gold hirebtn" data-legend-perk="${p.k}" ${maxed?"disabled":""} style="font-size:11px;min-width:88px">${maxed?"MAX":cost+" pts"}</button></div>`;
+      <button class="btn-gold hirebtn" data-legend-perk="${p.k}" ${maxed||!canBuy?"disabled":""} style="font-size:11px;min-width:88px">${maxed?"MAX":cost+" pts"}</button></div>`;
   }).join("");
   return `<div class="panel aaa-dynasty-panel">
     <h2>👑 Dynasty Points</h2>
@@ -4953,7 +5112,7 @@ function renderGreenlightPage(empties,showBack){
       <div class="aaa-gl-risk"><h5>RISK ASSESSMENT</h5><span class="aaa-gl-risk-level ${risk.level.toLowerCase()}">🛡 ${risk.level}</span><p>${risk.note}</p></div>
     </div>
     ${greenlightCastHTML()}
-    ${isSequel?`<button type="button" class="btn-primary aaa-gl-confirm-banner aaa-gl-confirm-sequel" data-seq="${encodeURIComponent(selSc.sequelBase)}" data-seqg="${encodeURIComponent(selSc.genre)}" ${!afford?"disabled":""}><span class="aaa-gl-confirm-main"><span class="aaa-gl-confirm-ic">📺</span> GREENLIGHT SEQUEL<span class="aaa-gl-confirm-cost"><span class="aaa-gl-confirm-budget">${fmtYenCompact(selCost)}</span><span class="aaa-gl-confirm-slot">· uses 1 of ${empties} open</span></span></span><span class="aaa-gl-confirm-sub">${selSc.titleEn} · ${slotLabel}</span></button>`:`<button type="button" class="btn-primary aaa-gl-confirm-banner" data-gl="${selP.id}" data-gl-genre="${selSc.genre}" ${lock.locked||!afford?"disabled":""}><span class="aaa-gl-confirm-main"><span class="aaa-gl-confirm-ic">🎬</span> ${ultraEarly?"START PRODUCTION":"GREENLIGHT PROJECT"}<span class="aaa-gl-confirm-cost"><span class="aaa-gl-confirm-budget">${fmtYenCompact(selCost)}</span><span class="aaa-gl-confirm-slot">· uses 1 of ${empties} open</span></span></span><span class="aaa-gl-confirm-sub">${selSc.titleJa?selSc.titleJa+" · ":""}${selSc.titleEn} · ${slotLabel}</span></button>`}
+    ${isSequel?`<button type="button" class="btn-primary aaa-gl-confirm-banner aaa-gl-confirm-sequel" data-seq="${encodeURIComponent(selSc.sequelBase)}" data-seqg="${encodeURIComponent(selSc.genre)}" ${!afford||empties<=0?"disabled":""}><span class="aaa-gl-confirm-main"><span class="aaa-gl-confirm-ic">📺</span> GREENLIGHT SEQUEL<span class="aaa-gl-confirm-cost"><span class="aaa-gl-confirm-budget">${fmtYenCompact(selCost)}</span><span class="aaa-gl-confirm-slot">· uses 1 of ${empties} open</span></span></span><span class="aaa-gl-confirm-sub">${selSc.titleEn} · ${slotLabel}</span></button>`:`<button type="button" class="btn-primary aaa-gl-confirm-banner" data-gl="${selP.id}" data-gl-genre="${selSc.genre}" ${lock.locked||!afford||empties<=0?"disabled":""}><span class="aaa-gl-confirm-main"><span class="aaa-gl-confirm-ic">🎬</span> ${ultraEarly?"START PRODUCTION":"GREENLIGHT PROJECT"}<span class="aaa-gl-confirm-cost"><span class="aaa-gl-confirm-budget">${fmtYenCompact(selCost)}</span><span class="aaa-gl-confirm-slot">· uses 1 of ${empties} open</span></span></span><span class="aaa-gl-confirm-sub">${selSc.titleJa?selSc.titleJa+" · ":""}${selSc.titleEn} · ${slotLabel}</span></button>`}
   </div></div>`;
   return h;
 }
@@ -4998,6 +5157,20 @@ function normalizeProduceSlotIx(){
 function preferredEmptySlot(){
   const ix=firstEmptySlot();
   return ix>=0?ix:0;
+}
+function resolveGreenlightSlot(){
+  const max=Math.max(0,(S.slots||1)-1);
+  const ix=Math.max(0,Math.min(max,_produceSlotIx|0));
+  if(S._produceSlotManual&&!S.projects[ix]) return ix;
+  const auto=firstEmptySlot();
+  return auto>=0?auto:ix;
+}
+function greenlightSlotFromClick(t){
+  const el=t?.closest?.("[data-slot-ix]")||t;
+  const raw=el?.dataset?.slotIx;
+  if(raw==null||raw==="") return null;
+  const ix=+raw;
+  return Number.isNaN(ix)?null:ix;
 }
 function openGreenlightView(slot){
   const ix=slot!=null&&slot>=0?(slot|0):preferredEmptySlot();
@@ -5054,12 +5227,12 @@ function renderProduceSlotPanel(i,pr){
 }
 function renderProduceEmptySlotCard(i){
   return `<div class="aaa-slot-card aaa-slot-card-empty" data-slot-ix="${i}"><div class="panel slotpanel aaa-show-panel aaa-slot-empty" id="slot-${i}" data-slot-ix="${i}">
-    <div class="aaa-slot-empty-inner">
+    <div class="aaa-slot-empty-inner" data-act="greenlight-view" data-slot-ix="${i}" role="button" tabindex="0" aria-label="Greenlight new project on line ${i+1}">
       <span class="aaa-slot-empty-ic" aria-hidden="true">🎬</span>
       <p class="aaa-slot-empty-kicker">Line ${i+1} · Open</p>
       <h3 class="aaa-slot-empty-title">Greenlight new project</h3>
-      <p class="aaa-slot-empty-copy">This production line is idle — pick a genre and start your next hit anime.</p>
-      <button type="button" class="btn-gold aaa-gl-open aaa-slot-empty-cta" data-act="greenlight-view">+ Greenlight new project</button>
+      <p class="aaa-slot-empty-copy">Tap to pick a genre and start your next hit anime on this line.</p>
+      <button type="button" class="btn-gold aaa-gl-open aaa-slot-empty-cta" data-act="greenlight-view" data-slot-ix="${i}">+ Greenlight new project</button>
     </div></div></div>`;
 }
 function renderProduceSlotTab(i){
@@ -5503,7 +5676,7 @@ function renderStore(){
 
 /* ========================= EVENTS (delegated) ========================= */
 document.addEventListener("click", e=>{
-  const t=e.target.closest("[data-tab],[data-gl],[data-gl-select],[data-gl-sequel],[data-hire],[data-up],[data-res],[data-camp],[data-g],[data-buy],[data-gem],[data-act],[data-rel],[data-rush],[data-scout],[data-quest],[data-week],[data-plus-goal],[data-rival-claim],[data-season],[data-perk],[data-cast],[data-sa],[data-itemuse],[data-itembuy],[data-seq],#a-over,#a-prestige");
+  const t=e.target.closest("[data-tab],[data-gl],[data-gl-select],[data-gl-sequel],[data-hire],[data-up],[data-res],[data-camp],[data-g],[data-buy],[data-gem],[data-act],[data-rel],[data-rush],[data-scout],[data-quest],[data-week],[data-plus-goal],[data-rival-claim],[data-season],[data-perk],[data-cast],[data-sa],[data-itemuse],[data-itembuy],[data-seq],[data-legend-perk],#a-over,#a-prestige");
   if(!t) return;
   if(t.dataset.itemuse) return useItem(t.dataset.itemuse);
   if(t.dataset.itembuy) return buyItem(t.dataset.itembuy);
@@ -5512,6 +5685,12 @@ document.addEventListener("click", e=>{
   if(t.dataset.act==="odds") return showOdds();
   if(t.dataset.act==="studio-name") return setStudioName();
   if(t.dataset.act==="rename-show") return renameShow(+t.dataset.slot);
+  if(t.dataset.act==="franchise-sequel-focus"||t.dataset.act==="sequel-from-premiere"){
+    if(t.dataset.act==="sequel-from-premiere") closePremiere();
+    focusFranchiseSequel(decodeURIComponent(t.dataset.seq||""), decodeURIComponent(t.dataset.seqg||""));
+    return;
+  }
+  if(t.dataset.legendPerk) return buyDynastyPerk(t.dataset.legendPerk);
   if(t.dataset.seq!=null) return makeSequel(decodeURIComponent(t.dataset.seq), decodeURIComponent(t.dataset.seqg||""));
   if(t.dataset.perk) return buyPerk(t.dataset.perk);
   if(t.dataset.tab) return setTab(t.dataset.tab);
@@ -5522,18 +5701,19 @@ document.addEventListener("click", e=>{
   if(t.dataset.rivalClaim!=null) return claimHudRival();
   if(t.dataset.season!=null) return claimSeasonTier(+t.dataset.season);
   if(t.dataset.act==="login-claim") return claimLoginDay();
-  if(t.dataset.act==="produce-slot-tab"){ focusProduceSlot(+t.dataset.slotIx,true); play("click"); return; }
-  if(t.dataset.act==="greenlight-view"){ _glMode=true; play("click"); return render(); }
-  if(t.dataset.act==="greenlight-back"){ _glMode=false; play("click"); return render(); }
+  if(t.dataset.act==="produce-slot-tab"){
+    const ix=+t.dataset.slotIx;
+    play("click");
+    if(!S.projects[ix]) return openGreenlightView(ix);
+    focusProduceSlot(ix,true);
+    return;
+  }
+  if(t.dataset.act==="greenlight-view"){ play("click"); return openGreenlightView(greenlightSlotFromClick(t)); }
+  if(t.dataset.act==="greenlight-back"){ _glMode=false; if(activeCount()>0) S._produceSlotManual=true; play("click"); return render(); }
   if(t.dataset.act==="gl-suggest-trend") return applyTrendingGenreSuggest();
   if(t.dataset.g!=null){ _selGenre=+t.dataset.g; syncGlSelectionAfterGenreFilter(); play("click"); return render(); }
   if(t.dataset.glSequel!=null){ _selGlSequel=decodeURIComponent(t.dataset.glSequel); _selGlGenre=t.dataset.glGenre||null; _selGlPid=null; play("click"); return render(); }
   if(t.dataset.glSelect!=null){ _selGlPid=+t.dataset.glSelect; _selGlGenre=t.dataset.glGenre||null; _selGlSequel=null; play("click"); return render(); }
-  if(t.dataset.act==="franchise-sequel-focus"||t.dataset.act==="sequel-from-premiere"){
-    if(t.dataset.act==="sequel-from-premiere") closePremiere();
-    focusFranchiseSequel(decodeURIComponent(t.dataset.seq||""), decodeURIComponent(t.dataset.seqg||""));
-    return;
-  }
   if(t.dataset.cast) return toggleCast(t.dataset.cast);
   if(t.dataset.sa) return ({rest:toggleRest,level:levelStar,promote:promoteStar,fame:investFame,fire:fireStar}[t.dataset.sa]||(()=>{}))(t.dataset.sid);
   if(t.dataset.act==="chaos-toggle") return toggleChaosMode();
@@ -5630,12 +5810,13 @@ let padPrev={};
 function pollPad(){
   const pads=navigator.getGamepads?navigator.getGamepads():[];
   for(const gp of pads){ if(!gp) continue;
-    const order=["produce","staff","stars","research","studio","market","store"];
+    const order=accessibleTabOrder();
+    if(!order.length) break;
     const press=(i)=>gp.buttons[i]&&gp.buttons[i].pressed;
     const edge=(i)=>{ const p=press(i); const was=padPrev[i]; padPrev[i]=p; return p&&!was; };
     if(edge(0)){ releaseFirstFinished(); } // A
-    if(edge(5)){ let idx=order.indexOf(S.tab); setTab(order[(idx+1)%order.length]); }
-    if(edge(4)){ let idx=order.indexOf(S.tab); setTab(order[(idx+order.length-1)%order.length]); }
+    if(edge(5)){ let idx=Math.max(0,order.indexOf(S.tab)); setTab(order[(idx+1)%order.length]); }
+    if(edge(4)){ let idx=Math.max(0,order.indexOf(S.tab)); setTab(order[(idx+order.length-1)%order.length]); }
     break;
   }
 }
@@ -5652,6 +5833,7 @@ function frame(now){
   while(acc>=STEP){ tick(1); acc-=STEP; ticked=true; }
   if(ticked && started) scheduleLiveUpdate(); // rAF-coalesced in-place refresh — never rebuilds #main on a normal tick
 }
+let started=false;
 addEventListener("blur", ()=>paused=true);
 addEventListener("focus", ()=>{ paused=false; last=performance.now(); });
 document.addEventListener("visibilitychange", ()=>{
@@ -5684,7 +5866,6 @@ function updateComboMeter(){
 }
 
 /* ========================= BOOT ========================= */
-let started=false;
 function begin(forceDemo){
   if(started) return; started=true;
   if(forceDemo===true) S._demoMode=true;
@@ -5707,12 +5888,12 @@ function begin(forceDemo){
   loginRefresh();
   if(booted&&isDemoMode()){
     const pr=S.projects.find(Boolean);
-    pendingToasts.push([`🎬 "${pr?.title||'Your anime'}" is in production! Tap the poster to speed it up.`,true]);
+    pendingToasts.push([`🎬 ${tf("coach_toast_demo",{title:pr?.title||"Your anime"})}`,true]);
   }else if(booted){
     if(isGuidedTutorialEligible()){
-      pendingToasts.push([`👋 Welcome, ${S.studioName||"Director"}! Follow the coach for your first premiere.`,true]);
+      pendingToasts.push([`👋 ${tf("coach_toast_welcome",{name:S.studioName||t("coach_default_name")})}`,true]);
     }else{
-      pendingToasts.push(["👋 Welcome! Hire staff on Recruit, then greenlight your first anime.",true]);
+      pendingToasts.push([`👋 ${t("coach_toast_welcome_alt")}`,true]);
       if(!S.tutorialSeen){ const h=document.getElementById("howto"); if(h) h.style.display="flex"; }
     }
   }else{
@@ -5755,12 +5936,14 @@ async function redeemPurchaseToken(pt){
     const j=await r.json();
     if(!j.ok||!j.grant) return false;
     const g=j.grant;
-    if(grantWasRedeemed(g.gid)) return false;
+    if(g.gid){
+      if(grantWasRedeemed(g.gid)) return false;
+      rememberGrantId(g.gid);
+    }
     let changed=false;
     if(g.kind==="gems") changed=grantEntitlement("gems", parseInt(g.amount||"0",10));
     else if(g.kind==="star") changed=grantEntitlement("star",0,{id:g.id,sku:g.sku});
     else changed=grantEntitlement(g.kind);
-    if(g.gid) rememberGrantId(g.gid);
     if(changed) track("purchase_grant",{grant:g.kind,signed:true});
     if(changed || g.gid) clearGrantParams();
     return changed;
@@ -5819,7 +6002,7 @@ function showStartScreen(){
   render();
 }
 function safeBegin(){
-  try{ begin(); }
+  try{ repairLoadedState(); begin(); }
   catch(e){
     console.error("boot failed", e);
     try{ localStorage.removeItem(SAVE_KEY); }catch(_){}
@@ -5922,8 +6105,11 @@ window.__AST_HOOK__ = {
   celebrateFirstResearch,
   celebrateFirstFestivalWin,
   unlockModalPending,
+  bootBatchModalOpen,
   flushPostPremiereQueue,
   dynastyAvailable,
+  dynastyPerkCost,
+  buyDynastyPerk,
   dynastyScore,
   dynastyGrade,
   syncPeakDynasty,
@@ -5934,11 +6120,17 @@ window.__AST_HOOK__ = {
   tabLocked,
   tabLockLabel,
   tabAccessible,
+  tabInDock,
+  accessibleTabOrder,
+  updateMarketLive,
+  updateResearchLive,
   isGreenlightView,
-  greenlightBack: ()=>{ _glMode=false; render(); },
+  greenlightBack: ()=>{ _glMode=false; if(activeCount()>0) S._produceSlotManual=true; render(); },
   focusProduceSlot,
   openGreenlightView,
   preferredEmptySlot,
+  resolveGreenlightSlot,
+  greenlightSlotFromClick,
   produceSlotHud: ()=>({active:activeCount(),total:S.slots,ready:produceReadyCount()}),
   tapBoost,
   isGuidedTutorialEligible,

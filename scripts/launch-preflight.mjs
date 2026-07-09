@@ -33,8 +33,8 @@ if (!existsSync(indexPath)) {
 } else {
   const indexHtml = readFileSync(indexPath, "utf8");
   const localBuild = buildNum(indexHtml);
-  if (localBuild >= 104) pass(`local build tag (build ${localBuild})`);
-  else failMsg("local build tag", `expected build 104+, got ${localBuild || "none"}`);
+  if (localBuild >= 109) pass(`local build tag (build ${localBuild})`);
+  else failMsg("local build tag", `expected build 109+, got ${localBuild || "none"}`);
 
   if (indexHtml.includes('from "./logic.js"')) pass("logic.js import in index.html");
   else failMsg("logic.js import", 'missing from "./logic.js"');
@@ -60,8 +60,8 @@ if (!existsSync(wwwIdx)) {
   if (wwwHtml.includes('id="return-hub"')) pass("www return-hub overlay");
   else failMsg("www return-hub", 'missing id="return-hub"');
   const wwwBuild = buildNum(wwwHtml);
-  if (wwwBuild >= 104) pass(`www build tag (build ${wwwBuild})`);
-  else failMsg("www build tag", `expected build 104+, got ${wwwBuild || "none"}`);
+  if (wwwBuild >= 109) pass(`www build tag (build ${wwwBuild})`);
+  else failMsg("www build tag", `expected build 109+, got ${wwwBuild || "none"}`);
   existsSync(join(root, "www/v5-idle-feel.js"))
     ? pass("www v5-idle-feel.js")
     : failMsg("www v5-idle-feel.js", "run npm run prepare-native");
@@ -70,6 +70,16 @@ if (!existsSync(wwwIdx)) {
     : failMsg("www og-share.jpg", "run npm run prepare-native");
   if (wwwHtml.includes("v5-idle-feel.js")) pass("www idle feel script linked");
   else failMsg("www idle feel", "v5-idle-feel.js not in www/index.html");
+  const wwwIap = join(root, "www/iap.js");
+  if (existsSync(wwwIap)) {
+    const iapSrc = readFileSync(wwwIap, "utf8");
+    if (iapSrc.includes("https://") && iapSrc.includes("/api/iap/validate"))
+      pass("www iap.js absolute VALIDATOR_URL");
+    else failMsg("www iap.js VALIDATOR_URL", "run npm run prepare-native (needs production URL for native)");
+  }
+  existsSync(join(root, "www/design-overhaul.css"))
+    ? failMsg("www stale asset", "design-overhaul.css — re-run prepare-native (www/ should be wiped)")
+    : pass("www no stale design-overhaul.css");
 }
 
 const capPath = join(root, "capacitor.config.json");

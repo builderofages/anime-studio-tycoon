@@ -204,7 +204,7 @@
       hook.toast("Need ¥" + hook.fmt(t.cost));
       return;
     }
-    S.yen -= t.cost;
+    S.yen = Math.max(0, S.yen - t.cost);
     S.merchLevel = i + 1;
     if (t.fans) {
       S.fans += t.fans;
@@ -479,6 +479,24 @@
       tryAutoGreenlight(S, hook);
     };
 
+    function patchMerchLive(S) {
+      if (S.tab !== "market") return;
+      const panel = document.querySelector(".merch-panel");
+      if (!panel) return;
+      const lvl = S.merchLevel || 0;
+      const tier = MERCH_TIERS[lvl];
+      if (tier) {
+        const btn = panel.querySelector(`[data-merch-buy="${lvl}"]`);
+        if (btn) btn.disabled = S.yen < tier.cost;
+      }
+      const pill = panel.querySelector("h2 .pill");
+      if (pill) {
+        const income = merchPerSec(S);
+        const label = `¥${hook.fmt(income)}/s`;
+        if (pill.textContent !== label) pill.textContent = label;
+      }
+    }
+
     const origTick = hook.tick;
     if (origTick) {
       hook.tick = function (seconds) {
@@ -486,6 +504,7 @@
         const S = hook.getState();
         const mps = merchPerSec(S);
         if (mps > 0) S.yen += mps * seconds;
+        patchMerchLive(S);
       };
     }
 

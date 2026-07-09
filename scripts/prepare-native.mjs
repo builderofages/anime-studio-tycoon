@@ -7,11 +7,13 @@
  *   Optional IAP: no extra usage string beyond StoreKit.
  *   If you add analytics later, set NSUserTrackingUsageDescription before enabling ATT.
  */
-import { cpSync, existsSync, mkdirSync, readFileSync, writeFileSync, readdirSync } from "fs";
+import { cpSync, existsSync, mkdirSync, readFileSync, writeFileSync, readdirSync, rmSync } from "fs";
 import { join } from "path";
 
 const ROOT = new URL("..", import.meta.url).pathname;
 const WWW = join(ROOT, "www");
+const VALIDATOR_URL =
+  process.env.VALIDATOR_URL || "https://anime-studio-tycoon.vercel.app/api/iap/validate";
 
 const FILES = [
   "index.html",
@@ -80,6 +82,7 @@ const FILES = [
   "terms.html",
 ];
 
+if (existsSync(WWW)) rmSync(WWW, { recursive: true, force: true });
 mkdirSync(WWW, { recursive: true });
 
 for (const f of FILES) {
@@ -110,6 +113,17 @@ if (existsSync(idx)) {
     html = html.replace("</body>", '<script src="iap.js"></script>\n</body>');
     writeFileSync(idx, html);
     console.log("injected iap.js into www/index.html");
+  }
+}
+
+const iapPath = join(WWW, "iap.js");
+if (existsSync(iapPath)) {
+  let iap = readFileSync(iapPath, "utf8");
+  const injected = `var VALIDATOR_URL = "${VALIDATOR_URL}";`;
+  if (!iap.includes(injected)) {
+    iap = iap.replace('var VALIDATOR_URL = "/api/iap/validate";', injected);
+    writeFileSync(iapPath, iap);
+    console.log(`injected VALIDATOR_URL into www/iap.js → ${VALIDATOR_URL}`);
   }
 }
 

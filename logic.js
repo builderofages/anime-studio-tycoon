@@ -76,7 +76,152 @@ export function defaultMastery(genres) {
   return Object.fromEntries(genres.map((g) => [g, 0]));
 }
 
-/** Tab unlock ring progress 0–100, or null when unlocked / not applicable. */
+/** Coerce save numbers — NaN/Infinity/null → fallback, optional clamp. */
+export function safeSaveNum(n, fallback = 0, min = -Infinity, max = Infinity) {
+  const v = Number(n);
+  if (!Number.isFinite(v)) return fallback;
+  return Math.min(max, Math.max(min, v));
+}
+
+/** Clamp core economy counters after corrupt merge or in-memory tampering. */
+export function sanitizeSaveNumericsFor(S, _fresh = {}) {
+  if (!S || typeof S !== "object") return S;
+  S.yen = safeSaveNum(S.yen, 0, 0);
+  S.fans = safeSaveNum(S.fans, 0, 0);
+  S.hype = safeSaveNum(S.hype, 0, 0);
+  S.totalFansEver = safeSaveNum(S.totalFansEver, 0, 0);
+  S.releases = Math.floor(safeSaveNum(S.releases, 0, 0));
+  S.gems = Math.floor(safeSaveNum(S.gems, 0, 0));
+  S.catalogIncome = safeSaveNum(S.catalogIncome, 0, 0);
+  S.legacy = safeSaveNum(S.legacy, 0, 0);
+  S.stamina = safeSaveNum(S.stamina, 100, 0, 100);
+  S.chaos = safeSaveNum(S.chaos, 0, 0);
+  S.studioLevel = Math.max(1, Math.floor(safeSaveNum(S.studioLevel, 1, 1)));
+  S.rivalStartVal = Math.floor(safeSaveNum(S.rivalStartVal, 0, 0));
+  S.rivalGoal = Math.floor(safeSaveNum(S.rivalGoal, 0, 0));
+  return S;
+}
+
+/** Valid main-tab ids — corrupt saves reset to produce. */
+export const VALID_TABS = new Set([
+  "produce",
+  "quests",
+  "staff",
+  "stars",
+  "research",
+  "studio",
+  "market",
+  "store",
+]);
+
+/**
+ * Repair in-memory save after load or corruption (mutates S).
+ * Returns fresh() replacement when S is missing/invalid.
+ */
+export function repairLoadedStateFor(
+  S,
+  { maxSlots = MAX_SLOTS, genres = [], projectDefs = [], roleKeys = [], fresh = () => ({}), validTabs = VALID_TABS } = {}
+) {
+  if (!S || typeof S !== "object" || Array.isArray(S)) return fresh();
+  sanitizeSaveNumericsFor(S);
+  S.slots = Math.max(1, Math.min(maxSlots, Math.floor(safeSaveNum(S.slots, 1, 1, maxSlots))));
+  if (!Array.isArray(S.projects)) S.projects = [];
+  while (S.projects.length < S.slots) S.projects.push(null);
+  S.projects = S.projects.slice(0, S.slots).map((pr) => {
+    if (!pr || typeof pr !== "object") return null;
+    const p = projectDefs[pr.pid];
+    if (!p) return null;
+    const prog = Number(pr.progress);
+    pr.progress = Math.max(0, Math.min(p.work, Number.isFinite(prog) ? prog : 0));
+    return pr;
+  });
+  const genreLen = Math.max(1, genres.length);
+  S.trendIdx = Math.max(0, Math.min(genreLen - 1, Math.floor(safeSaveNum(S.trendIdx, 0, 0))));
+  if (!validTabs.has(S.tab)) S.tab = "produce";
+  S.fanMilestonesToast = Array.isArray(S.fanMilestonesToast) ? S.fanMilestonesToast : [];
+  S.milestonesClaimed = Array.isArray(S.milestonesClaimed) ? S.milestonesClaimed : [];
+  S.seasonClaimed = Array.isArray(S.seasonClaimed) ? S.seasonClaimed : [];
+  if (!S.staff || typeof S.staff !== "object") S.staff = { ...DEFAULT_STAFF };
+  for (const r of roleKeys) {
+    if (typeof S.staff[r] !== "number" || !Number.isFinite(S.staff[r])) S.staff[r] = 0;
+    else S.staff[r] = Math.max(0, Math.floor(S.staff[r]));
+  }
+  if (!S.upgrades || typeof S.upgrades !== "object") S.upgrades = { ...DEFAULT_UPGRADES };
+  for (const k of Object.keys(DEFAULT_UPGRADES)) {
+    S.upgrades[k] = Math.max(0, Math.floor(safeSaveNum(S.upgrades[k], 0, 0)));
+  }
+  return S;
+}
+
+/** Fix rival goal when save has goal <= start (corrupt or legacy). */
+export function repairRivalGoalFor(S, currentStudioValue = 0, rng = Math.random) {
+  if (!S || typeof S !== "object") return S;
+  if (!S.rivalGoal || S.rivalGoal <= (S.rivalStartVal || 0)) {
+    S.rivalGoal = rivalGoalFromStart(Math.max(S.rivalStartVal || 0, currentStudioValue, 1), rng);
+  }
+  return S;
+}
+
+/** Locked-tab copy for stars unlock (null when unlocked). */
+export function starsUnlockProgressFor(S, fmtFn = String) {
+  const rel = S.releases || 0;
+  const fans = S.totalFansEver || 0;
+  if (rel >= 2 || fans >= 20) return null;
+  const needRel = Math.max(0, 2 - rel);
+  if (needRel > 0) return needRel === 1 ? "1 more premiere to unlock Stars" : needRel + " more premieres to unlock Stars";
+  const needFans = Math.max(0, 20 - fans);
+  return needFans === 1 ? "1 more fan to unlock Stars" : fmtFn(needFans) + " more fans to unlock Stars";
+}
+
+export function marketUnlockProgressFor(S, fmtFn = String) {
+  const fans = S.fans || 0;
+  if (fans >= 50) return null;
+  const need = 50 - fans;
+  return need === 1 ? "1 more fan to unlock Marketing" : fmtFn(need) + " more fans to unlock Marketing";
+}
+
+export function studioUnlockProgressFor(S) {
+  const rel = S.releases || 0;
+  if (rel >= 1) return null;
+  return "Premiere 1 anime to unlock Studio";
+}
+
+export function researchUnlockProgressFor(S, fmtFn = String) {
+  const fans = S.totalFansEver || 0;
+  if (fans >= 120) return null;
+  const need = 120 - fans;
+  return need === 1 ? "1 more fan to unlock Research" : fmtFn(need) + " more fans to unlock Research";
+}
+
+export function chaosUnlockProgressFor(S) {
+  const rel = S.releases || 0;
+  if (rel >= 10) return null;
+  const need = 10 - rel;
+  return need === 1 ? "1 more premiere to unlock Chaos" : need + " more premieres to unlock Chaos";
+}
+
+/** Whether tab appears in dock before release-5 cull. */
+export function tabInDockFor(k, S) {
+  if ((S.releases || 0) < 5) {
+    if (k === "research") return featureUnlockedFor("research", S);
+    return ["produce", "quests", "staff", "stars", "market", "studio", "store"].includes(k);
+  }
+  return true;
+}
+
+/** Whether tab is locked (dock hidden or feature gate). */
+export function tabLockedFor(k, S) {
+  if (!tabInDockFor(k, S)) return true;
+  if (UNLOCK_THRESHOLDS[k] && !featureUnlockedFor(k, S)) return true;
+  return false;
+}
+
+/** Genre mastery research yen + hype cost from current level. */
+export function masteryResearchCostFor(lvl) {
+  lvl = lvl || 0;
+  return { lvl, cost: Math.ceil(1200 * Math.pow(1.9, lvl)), hypeCost: 2 + lvl };
+}
+
 export function tabUnlockPctFor(k, S, projectWorkFor) {
   if (featureUnlockedFor(k, S)) return null;
   const rel = S.releases || 0;
@@ -119,7 +264,7 @@ export function mergeLoadedSave(d, fresh, genres, maxSlots = MAX_SLOTS) {
   S.gems = +d.gems || 0;
   S.producerPass = !!d.producerPass;
   S.bundleBought = !!d.bundleBought;
-  S.slots = Math.max(1, Math.min(maxSlots, d.slots || 1));
+  S.slots = Math.max(1, Math.min(maxSlots, Math.floor(safeSaveNum(d.slots, fresh.slots, 1, maxSlots))));
   const projs = Array.isArray(d.projects) ? d.projects.slice() : d.project ? [d.project] : [];
   S.projects = Array.from({ length: S.slots }, (_, i) => projs[i] || null);
   S.lastDailyDate = d.lastDailyDate || "";
@@ -206,6 +351,7 @@ export function mergeLoadedSave(d, fresh, genres, maxSlots = MAX_SLOTS) {
   S.loginStreak = +d.loginStreak || 0;
   S.loginStreakBest = +d.loginStreakBest || S.loginStreak;
   S.fanMilestonesToast = Array.isArray(d.fanMilestonesToast) ? d.fanMilestonesToast : [];
+  sanitizeSaveNumericsFor(S, fresh);
   return S;
 }
 

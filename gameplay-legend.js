@@ -89,6 +89,7 @@
   }
 
   function buyDynastyPerk(k, h) {
+    if (typeof h.buyDynastyPerk === "function") return h.buyDynastyPerk(k);
     const S = h.getState();
     initState(S);
     const def = DYNASTY_PERKS.find((p) => p.k === k);
@@ -177,14 +178,16 @@
     if (!main) return;
 
     if (!main.querySelector(".legend-perks")) {
+      const availPts = dynastyAvailable(S);
       const rows = DYNASTY_PERKS.map((p) => {
         const lvl = (S.dynastyPerks || {})[p.k] || 0;
         const cost = perkCost(p.k, S);
         const maxed = lvl >= p.max;
+        const canBuy = !maxed && availPts >= cost;
         return `<div class="uprow legend-perk-row">
           <div class="meta"><h4 style="font-size:13px">${p.ic} ${p.name} <span class="muted">Lv ${lvl}/${p.max}</span></h4>
           <div class="muted" style="font-size:11px">${p.desc}</div></div>
-          <button class="btn-gold hirebtn" data-legend-perk="${p.k}" ${maxed ? "disabled" : ""} style="font-size:11px;min-width:88px">${maxed ? "MAX" : cost + " pts"}</button>
+          <button class="btn-gold hirebtn" data-legend-perk="${p.k}" ${maxed || !canBuy ? "disabled" : ""} style="font-size:11px;min-width:88px">${maxed ? "MAX" : cost + " pts"}</button>
         </div>`;
       }).join("");
       main.insertAdjacentHTML("beforeend", `<div class="panel legend-glass legend-perks">
@@ -195,13 +198,16 @@
     } else {
       const avail = main.querySelector(".legend-perks .muted b");
       if (avail) avail.textContent = String(dynastyAvailable(S));
+      const availPts = dynastyAvailable(S);
       DYNASTY_PERKS.forEach((p) => {
         const btn = main.querySelector(`[data-legend-perk="${p.k}"]`);
         if (!btn) return;
         const lvl = (S.dynastyPerks || {})[p.k] || 0;
         const maxed = lvl >= p.max;
-        btn.disabled = maxed;
-        btn.textContent = maxed ? "MAX" : perkCost(p.k, S) + " pts";
+        const cost = perkCost(p.k, S);
+        const canBuy = !maxed && availPts >= cost;
+        btn.disabled = maxed || !canBuy;
+        btn.textContent = maxed ? "MAX" : cost + " pts";
         const meta = btn.closest(".legend-perk-row");
         if (meta) {
           const span = meta.querySelector("h4 span");
@@ -320,15 +326,13 @@
     };
 
     document.addEventListener("click", (e) => {
-      const t = e.target.closest("[data-legend-perk],[data-legend-goto-perks]");
+      const t = e.target.closest("[data-legend-goto-perks]");
       if (!t) return;
       if (t.dataset.legendGotoPerks != null) {
         const S = hook.getState();
         S.tab = "studio";
         hook.render();
-        return;
       }
-      if (t.dataset.legendPerk) return buyDynastyPerk(t.dataset.legendPerk, hook);
     });
 
     const achCheck = window.checkAchievements;

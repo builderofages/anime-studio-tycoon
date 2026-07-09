@@ -29,7 +29,7 @@
       id: "melt3", ic: "🔥", title: "Render Farm Meltdown — War Room",
       text: "Productions are stalling. Choose your response:",
       opts: [
-        { label: "💰 Emergency repairs", fn: (S, h) => { const c = Math.floor(h.studioValue() * 0.04); if (S.yen < c) return "No funds."; S.yen -= applyIns(S, c); S.chaos = Math.max(0, (S.chaos || 0) - 40); return `−¥${h.fmt(applyIns(S, c))}, crisis contained`; } },
+        { label: "💰 Emergency repairs", fn: (S, h) => { const c = Math.floor(h.studioValue() * 0.04); const paid = crisisPay(S, c); if (paid == null) return "No funds."; S.chaos = Math.max(0, (S.chaos || 0) - 40); return `−¥${h.fmt(paid)}, crisis contained`; } },
         { label: "⏸️ Pause one line", fn: (S) => { const i = S.projects.findIndex((p) => p); if (i < 0) return "No active line."; S.projects[i].progress *= 0.5; S.chaos = Math.max(0, (S.chaos || 0) - 20); return "One show set back 50%"; } },
         { label: "🌪️ Ride it out", fn: (S) => { S.projects.forEach((pr) => { if (pr) pr.progress *= 0.75; }); S.chaos = Math.max(0, (S.chaos || 0) - 10); return "All shows −25% progress"; } },
       ],
@@ -38,9 +38,9 @@
       id: "scandal3", ic: "📰", title: "Viral Scandal — War Room",
       text: "A rumor is trending. How do you respond?",
       opts: [
-        { label: "📣 Full PR blitz", fn: (S, h) => { const c = Math.floor(h.studioValue() * 0.06); if (S.yen < c) return "Can't afford PR."; S.yen -= applyIns(S, c); S.chaos = Math.max(0, (S.chaos || 0) - 38); S.fans += 50; return `PR saved the day · +50 fans`; } },
+        { label: "📣 Full PR blitz", fn: (S, h) => { const c = Math.floor(h.studioValue() * 0.06); const paid = crisisPay(S, c); if (paid == null) return "Can't afford PR."; S.chaos = Math.max(0, (S.chaos || 0) - 38); S.fans += 50; return `PR saved the day · +50 fans`; } },
         { label: "🎬 Drop a teaser", fn: (S, h) => { S.hype += 12; S.chaos = Math.max(0, (S.chaos || 0) - 18); return "+12 Hype, buzz redirected"; } },
-        { label: "🙈 Ignore it", fn: (S, h) => { const f = Math.floor((S.fans || 0) * 0.05); S.fans = Math.max(0, S.fans - f); return `−${h.fmt(f)} fans`; } },
+        { label: "🙈 Ignore it", fn: (S, h) => { const f = Math.floor((S.fans || 0) * 0.05); S.fans = Math.max(0, S.fans - f); S.chaos = Math.max(0, (S.chaos || 0) - 15); return `−${h.fmt(f)} fans`; } },
       ],
     },
     {
@@ -71,6 +71,20 @@
     return Math.floor(cost * 0.55);
   }
 
+  /** Crisis spend guard — never drive yen negative. */
+  function spendYen(S, amount) {
+    const pay = Math.max(0, Math.floor(amount || 0));
+    if (S.yen < pay) return false;
+    S.yen = Math.max(0, S.yen - pay);
+    return true;
+  }
+
+  function crisisPay(S, rawCost) {
+    const pay = applyIns(S, rawCost);
+    if (!spendYen(S, pay)) return null;
+    return pay;
+  }
+
   function ensureBanner(S, hook) {
     if (S.scoutBannerWeek === weekKey() && S.scoutBannerStar) return;
     const pool = hook.STAR_POOL.filter((s) => !s.exclusive && (s.rarity === "Epic" || s.rarity === "Legendary"));
@@ -92,7 +106,7 @@
 
   function computeRoleBonus(S, h) {
     const bonus = { animator: 0, writer: 0, director: 0, voice: 0, producer: 0 };
-    if (!h) return bonus;
+    if (!S || !h) return bonus;
     for (const ns of S.namedStaff || []) {
       const tr = TRAITS[ns.trait] || TRAITS.steady;
       const role = ns.role;
@@ -269,9 +283,10 @@
   function installHooks() {
     hook = window.__AST_HOOK__;
     if (!hook || hook.__empireInstalled) return false;
-    hook.__empireInstalled = true;
 
     const S0 = hook.getState();
+    if (!S0) return false;
+    hook.__empireInstalled = true;
     S0.namedStaff = S0.namedStaff || [];
     S0.empireSource = S0.empireSource || "original";
     S0.empireBlendGenre = S0.empireBlendGenre != null ? S0.empireBlendGenre : -1;
@@ -292,6 +307,7 @@
       if (window.__AST_CRISIS_OPEN__ || window.__AST_PENDING_WARROOM__) return;
       const dm = document.getElementById("decision");
       if (dm && dm.style.display === "flex") return;
+      if (S.crisisSnoozeUntil && Date.now() < S.crisisSnoozeUntil) return;
       if (Date.now() - (S.lastChaos || 0) < 180000) return;
       const chance = ((S.chaos || 0) / 100) * (S.chaosMode ? 0.22 : 0.12);
       if (Math.random() >= chance) return;
@@ -302,9 +318,11 @@
       } else {
         opened = renderWarRoom(ev, hook);
       }
+      S.lastChaos = Date.now();
       if (opened) {
-        S.lastChaos = Date.now();
         if (typeof hook.celebrateFirstChaosEvent === "function") hook.celebrateFirstChaosEvent();
+      } else if (typeof fallback === "function") {
+        fallback();
       }
     };
 
@@ -367,6 +385,7 @@
       hook.tick = function (seconds) {
         origTick(seconds);
         const S = hook.getState();
+        if (!S) return;
         S._empireRoleBonus = computeRoleBonus(S, hook);
         if (S._empireTickDay !== todayStr()) {
           S._empireTickDay = todayStr();
@@ -397,7 +416,9 @@
       injectProduceChaos(S, hook);
     };
 
-    document.addEventListener("click", (e) => {
+    if (!document.body.dataset.empireClickWired) {
+      document.body.dataset.empireClickWired = "1";
+      document.addEventListener("click", (e) => {
       const t = e.target.closest("[data-empire-recruit],[data-empire-blend],[data-empire-source],[data-empire-insurance],[data-empire-war]");
       if (!t) return;
       const S = hook.getState();
@@ -416,8 +437,7 @@
       }
       if (t.dataset.empireInsurance != null) {
         const cost = Math.floor(hook.studioValue() * 0.03);
-        if (S.yen < cost) { hook.toast("Need ¥" + hook.fmt(cost)); return; }
-        S.yen -= cost;
+        if (!spendYen(S, cost)) { hook.toast("Need ¥" + hook.fmt(cost)); return; }
         S.chaosInsurance = true;
         try { if (window.STEAM_ACHIEVE) window.STEAM_ACHIEVE("insurance"); } catch (e) {}
         hook.toast("🛡️ Chaos Insurance active!", true);
@@ -427,11 +447,25 @@
       }
       if (t.dataset.empireWar != null) return resolveWarRoom(+t.dataset.empireWar, hook);
     });
+    }
+
+    window.__AST_EMPIRE_CRISIS__ = {
+      spendYen,
+      crisisPay,
+      applyIns,
+      warOpt: (id, idx) => {
+        const d = WARROOM.find((w) => w.id === id);
+        return d && d.opts[idx] ? d.opts[idx].fn(hook.getState(), hook) : null;
+      },
+    };
 
     return true;
   }
 
-  const poll = setInterval(() => {
+  let poll;
+  poll = setInterval(() => {
     if (installHooks()) clearInterval(poll);
   }, 80);
+  /* integration: empire poll timeout — avoid orphan interval if hook delayed */
+  setTimeout(() => clearInterval(poll), 8000);
 })();
