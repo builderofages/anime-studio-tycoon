@@ -24,7 +24,8 @@ Use one **fresh install** and one **returning save** per platform.
 - [ ] `npm test` — smoke + playtest audit pass
 - [ ] `npm run test:sim` — honest-flow VM sim pass
 - [ ] `npm run prepare-native` — `www/v5-idle-feel.js`, `www/og-share.jpg`, absolute `VALIDATOR_URL` in `www/iap.js`
-- [ ] Build tag shows **build 112 · Desktop** in footer / What's New
+- [ ] Build tag shows **build 113 · Audio** in footer / What's New
+- [ ] ⚙️ Settings → Sound: mute toggle + music/SFX sliders work; drawer stays open while adjusting
 
 ---
 

@@ -565,6 +565,38 @@ html.hud-v3-active #app > .foot {
   background: transparent !important;
 }
 
+.hud-drawer-vol-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 2px 0 4px;
+}
+
+.hud-drawer-vol-row {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px;
+  min-height: 44px;
+}
+
+.hud-drawer-vol-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ui-text);
+}
+
+.hud-drawer-vol-row input[type="range"] {
+  width: 100% !important;
+  min-height: 32px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  touch-action: manipulation;
+}
+
 /* ---- Coach bar ---- */
 #pathway-rail.coach-bar {
   display: flex;

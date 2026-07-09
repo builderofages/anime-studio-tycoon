@@ -1333,6 +1333,7 @@
       if (e.target.id === "hud-drawer") closeDrawer();
     });
     drawerSlot.addEventListener("click", (e) => {
+      if (drawerInteractionKeepsOpen(e.target)) return;
       if (e.target.closest("button, select, a")) closeDrawer();
     });
     if (!document.body.dataset.hudDrawerEscWired) {
@@ -1478,9 +1479,73 @@
     }
   }
 
+  function drawerInteractionKeepsOpen(target) {
+    const el = target?.closest?.(
+      "#btn-mute, #lang-sel, #drawer-music-vol, #drawer-sfx-vol, [data-drawer-music], [data-drawer-sfx], .hud-drawer-vol-row, .hud-drawer-vol-row input"
+    );
+    return !!el;
+  }
+
+  function syncDrawerAudio() {
+    const hook = window.__AST_HOOK__;
+    const S = hook?.getState?.();
+    if (!S) return;
+    S.settings = S.settings || {};
+    const music = document.getElementById("drawer-music-vol");
+    const sfx = document.getElementById("drawer-sfx-vol");
+    if (music) music.value = String(Math.round((S.settings.musicVol ?? 0.35) * 100));
+    if (sfx) sfx.value = String(Math.round((S.settings.sfxVol ?? 0.5) * 100));
+  }
+
+  function wireDrawerAudio() {
+    const slot = document.getElementById("hud-drawer-slot");
+    if (!slot || slot.dataset.drawerAudioWired) return;
+    slot.dataset.drawerAudioWired = "1";
+    slot.addEventListener("input", (e) => {
+      const t = e.target;
+      if (!t || t.tagName !== "INPUT" || t.type !== "range") return;
+      const hook = window.__AST_HOOK__;
+      if (!hook) return;
+      const S = hook.getState();
+      S.settings = S.settings || {};
+      if (t.id === "drawer-music-vol" || t.dataset.drawerMusic != null) {
+        S.settings.musicVol = +t.value / 100;
+        hook.applyAudioSettings?.();
+        hook.save?.();
+        return;
+      }
+      if (t.id === "drawer-sfx-vol" || t.dataset.drawerSfx != null) {
+        S.settings.sfxVol = +t.value / 100;
+        hook.applyAudioSettings?.();
+        hook.save?.();
+      }
+    });
+  }
+
+  function ensureDrawerVolumeRows(soundG) {
+    let wrap = document.getElementById("drawer-audio-vols");
+    if (!wrap) {
+      wrap = document.createElement("div");
+      wrap.id = "drawer-audio-vols";
+      wrap.className = "hud-drawer-vol-stack";
+      wrap.innerHTML = `
+        <div class="hud-drawer-vol-row">
+          <label class="hud-drawer-vol-label" for="drawer-music-vol">🎵 Music</label>
+          <input type="range" id="drawer-music-vol" min="0" max="100" value="35" data-drawer-music aria-label="Music volume">
+        </div>
+        <div class="hud-drawer-vol-row">
+          <label class="hud-drawer-vol-label" for="drawer-sfx-vol">🔊 SFX</label>
+          <input type="range" id="drawer-sfx-vol" min="0" max="100" value="50" data-drawer-sfx aria-label="Sound effects volume">
+        </div>`;
+    }
+    if (wrap.parentNode !== soundG) soundG.appendChild(wrap);
+    syncDrawerAudio();
+  }
+
   function organizeDrawerSlot() {
     const slot = document.getElementById("hud-drawer-slot");
     if (!slot) return;
+    wireDrawerAudio();
 
     const reset = document.getElementById("btn-reset");
     const mute = document.getElementById("btn-mute");
@@ -1565,6 +1630,7 @@
       mute.classList.add("hud-drawer-owned");
       if (mute.parentNode !== soundG) soundG.appendChild(mute);
     }
+    ensureDrawerVolumeRows(soundG);
     if (lang) {
       lang.classList.add("hud-drawer-owned");
       if (lang.parentNode !== langG) langG.appendChild(lang);
@@ -2253,7 +2319,7 @@
   }
 
   window.__AST_HUD__ = {
-    organizeDrawerSlot, pulseHudCombo, goalMilestoneAction, updateCoachChrome,
+    organizeDrawerSlot, syncDrawerAudio, pulseHudCombo, goalMilestoneAction, updateCoachChrome,
     safeCoachTab, navigateCoachTab, sanitizeCoachPathway, wirePathwayDelegatedCta,
   };
 
