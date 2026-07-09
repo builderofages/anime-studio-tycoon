@@ -213,14 +213,14 @@ function extractGameLogic() {
 }
 
 /** Boot-time IAP helpers live after the load() cut in index.html. */
-function extractIapRedeemFns() {
+function extractIapGrantFns() {
   const html = readFileSync(join(root, "index.html"), "utf8");
   const m = html.match(/<script type="module">([\s\S]*?)<\/script>/);
   if (!m) throw new Error("index.html game script block not found");
   const code = m[1];
   const start = code.indexOf("function clearGrantParams()");
-  const end = code.indexOf("function readGrant()");
-  if (start < 0 || end < 0) throw new Error("IAP redeem fns not found in index.html");
+  const end = code.indexOf("readGrant();");
+  if (start < 0 || end < 0) throw new Error("IAP grant fns not found in index.html");
   return code.slice(start, end);
 }
 
@@ -560,12 +560,23 @@ redeem("NOTREAL");
 const grant0 = S.gems;
 const g1 = grantEntitlement("bundle");
 const g2 = grantEntitlement("bundle");
+const bundleGems = S.gems - grant0;
+const itemsGems0 = S.gems;
+const ip1 = grantEntitlement("items_pack");
+const afterIp1 = { gems: S.gems, items: Object.assign({}, S.items||{}), ents: (S.entitlements||[]).slice() };
+const ip2 = grantEntitlement("items_pack");
 __REDEEM__ = {
   gemsGain: after1.gems - gems0,
   codesAfterFirst: after1.codes,
   noDoubleRedeem: after2.gems === after1.gems,
   grantOnce: g1 === true && g2 === false,
-  grantGems: S.gems - grant0,
+  grantGems: bundleGems,
+  itemsFirst: ip1 === true,
+  itemsRepeat: ip2,
+  itemsGemsGain: afterIp1.gems - itemsGems0,
+  itemsEntitled: afterIp1.ents.includes("items_pack"),
+  itemsMegaphone: afterIp1.items.megaphone === 1,
+  itemsNoDoubleGems: S.gems === afterIp1.gems,
 };
 `;
 
@@ -609,32 +620,134 @@ globalThis.__runIapSim = async function() {
 async function runIapSimulation() {
   const sandbox = buildSandbox();
   sandbox.fetch = createGrantFetchMock();
-  vm.runInNewContext(extractGameLogic() + extractIapRedeemFns() + STUBS + IAP_RUNNER, sandbox, {
+  vm.runInNewContext(extractGameLogic() + extractIapGrantFns() + STUBS + IAP_RUNNER, sandbox, {
     timeout: 20000,
   });
   return sandbox.__runIapSim();
 }
 
+const MODAL_STORM_IDS = [
+  "studio-unlock",
+  "stars-unlock",
+  "market-unlock",
+  "research-unlock",
+  "chaos-unlock",
+];
+
+/** Elements that record flex display into order[] for priority-chain assertions. */
+function buildModalStormSandbox() {
+  const order = [];
+  const els = Object.fromEntries(
+    MODAL_STORM_IDS.map((id) => {
+      const el = mockElWith({ dataset: {} });
+      const style = { _d: "none" };
+      Object.defineProperty(style, "display", {
+        get() {
+          return style._d;
+        },
+        set(v) {
+          style._d = v;
+          if (v === "flex") order.push(id);
+        },
+        enumerable: true,
+        configurable: true,
+      });
+      el.style = style;
+      return [id, el];
+    })
+  );
+  const sandbox = buildSandbox();
+  sandbox.document.getElementById = (id) => els[id] || mockEl();
+  sandbox.document.querySelector = (sel) => {
+    if (sel === ".card-modal") return mockEl();
+    return mockEl();
+  };
+  return { sandbox, order };
+}
+
 const MODAL_STORM_RUNNER = `
 S = freshState();
-S.releases = 2;
+S.releases = 10;
+S.fans = 50;
+S.totalFansEver = 120;
 S.studioUnlockModalSeen = true;
 _studioUnlockQueued = true;
 _starsUnlockQueued = true;
+_marketUnlockQueued = true;
+_researchUnlockQueued = true;
+_chaosUnlockQueued = true;
 const storm = {};
 storm.drain1 = drainUnlockModalQueue();
-storm.studioCleared = !_studioUnlockQueued;
-storm.starsStillQueued = _starsUnlockQueued;
-S.starsUnlockModalSeen = false;
 storm.drain2 = drainUnlockModalQueue();
+storm.drain3 = drainUnlockModalQueue();
+storm.drain4 = drainUnlockModalQueue();
+storm.drain5 = drainUnlockModalQueue();
+storm.drain6 = drainUnlockModalQueue();
+storm.studioCleared = !_studioUnlockQueued;
 storm.starsCleared = !_starsUnlockQueued;
+storm.marketCleared = !_marketUnlockQueued;
+storm.researchCleared = !_researchUnlockQueued;
+storm.chaosCleared = !_chaosUnlockQueued;
+storm.order = __MODAL_ORDER__;
 __MODAL_STORM__ = storm;
 `;
 
 function runModalStormSimulation() {
-  const sandbox = buildSandbox();
+  const { sandbox, order } = buildModalStormSandbox();
+  sandbox.__MODAL_ORDER__ = order;
   vm.runInNewContext(extractGameLogic() + STUBS_BASE + MODAL_STORM_RUNNER, sandbox, { timeout: 20000 });
   return sandbox.__MODAL_STORM__;
+}
+
+const READ_GRANT_RUNNER = `
+globalThis.__runReadGrantSim = function() {
+  S = freshState();
+  const gems0 = S.gems;
+  location.search = "?grant=gems&amt=30";
+  let paramsCleared = false;
+  history.replaceState = function() {
+    paramsCleared = true;
+    location.search = "";
+  };
+  readGrant();
+  const devGrant = { gemsGain: S.gems - gems0, paramsCleared };
+
+  S = freshState();
+  location.hostname = "localhost";
+  location.search = "?unlock=items_pack";
+  paramsCleared = false;
+  readGrant();
+  const devUnlock = {
+    gems: S.gems,
+    entitled: (S.entitlements || []).includes("items_pack"),
+    megaphone: (S.items || {}).megaphone || 0,
+    paramsCleared,
+  };
+
+  S = freshState();
+  location.hostname = "example.com";
+  location.search = "?grant=gems&amt=99";
+  const gemsBlocked0 = S.gems;
+  readGrant();
+  const prodBlocked = S.gems === gemsBlocked0;
+
+  S = freshState();
+  location.hostname = "example.com";
+  location.search = "?devgrants=1&grant=gems&amt=15";
+  const gemsDevFlag0 = S.gems;
+  readGrant();
+  const devFlagGrant = S.gems - gemsDevFlag0;
+
+  return { devGrant, devUnlock, prodBlocked, devFlagGrant };
+};
+`;
+
+function runReadGrantSimulation() {
+  const sandbox = buildSandbox();
+  vm.runInNewContext(extractGameLogic() + extractIapGrantFns() + STUBS + READ_GRANT_RUNNER, sandbox, {
+    timeout: 20000,
+  });
+  return sandbox.__runReadGrantSim();
 }
 
 const CHAOS_RUNNER = `
@@ -1036,6 +1149,21 @@ function assertRedeem(r) {
   assert(r.noDoubleRedeem === true, "redeem rejects duplicate code");
   assert(r.grantOnce === true, "grantEntitlement bundle idempotent");
   assert(r.grantGems === 250, "bundle grants 200 gems + first-purchase bonus once", `got ${r.grantGems}`);
+  assert(r.itemsFirst === true, "grantEntitlement items_pack delivers once");
+  assert(r.itemsRepeat === false, "grantEntitlement items_pack idempotent on repeat");
+  assert(r.itemsEntitled === true, "items_pack records entitlement");
+  assert(r.itemsMegaphone === true, "items_pack grants megaphone");
+  assert(r.itemsNoDoubleGems === true, "repeat items_pack does not add gems");
+}
+
+function assertReadGrant(rg) {
+  assert(rg.devGrant.gemsGain === 86, "readGrant ?grant=gems on localhost (+ flash deal)", `got +${rg.devGrant.gemsGain}`);
+  assert(rg.devGrant.paramsCleared === true, "readGrant clears dev grant params");
+  assert(rg.devUnlock.entitled === true, "readGrant ?unlock=items_pack delivers");
+  assert(rg.devUnlock.megaphone === 1, "readGrant items_pack grants items");
+  assert(rg.devUnlock.paramsCleared === true, "readGrant clears unlock params");
+  assert(rg.prodBlocked === true, "readGrant blocked off localhost without devgrants");
+  assert(rg.devFlagGrant === 68, "readGrant ?devgrants=1 on non-localhost (+ flash deal)", `got +${rg.devFlagGrant}`);
 }
 
 function assertIap(iap) {
@@ -1051,11 +1179,23 @@ function assertIap(iap) {
 }
 
 function assertModalStorm(storm) {
-  assert(storm.drain1 === true, "modal storm drain processes studio queue slot");
+  assert(storm.drain1 === true, "modal storm drain1 processes studio skip slot");
+  assert(storm.drain2 === true, "modal storm drain2 processes stars");
+  assert(storm.drain3 === true, "modal storm drain3 processes market");
+  assert(storm.drain4 === true, "modal storm drain4 processes research");
+  assert(storm.drain5 === true, "modal storm drain5 processes chaos");
+  assert(storm.drain6 === false, "modal storm drain6 empty after full chain");
   assert(storm.studioCleared === true, "seen studio modal clears studio queue flag");
-  assert(storm.starsStillQueued === true, "stars queue survives studio skip");
-  assert(storm.drain2 === true, "second drain processes stars queue");
   assert(storm.starsCleared === true, "stars queue cleared after drain");
+  assert(storm.marketCleared === true, "market queue cleared after drain");
+  assert(storm.researchCleared === true, "research queue cleared after drain");
+  assert(storm.chaosCleared === true, "chaos queue cleared after drain");
+  const expected = ["stars-unlock", "market-unlock", "research-unlock", "chaos-unlock"];
+  assert(
+    JSON.stringify(storm.order) === JSON.stringify(expected),
+    "modal storm priority: studio seen skip → stars → market → research → chaos",
+    `got ${JSON.stringify(storm.order)}`
+  );
 }
 
 function assertChaos(chaos) {
@@ -1317,12 +1457,20 @@ try {
   fail("vm iap sim", e.message || String(e));
 }
 
-console.log("\nModal storm queue (seen studio → drain stars):\n");
+console.log("\nModal storm queue (studio seen skip → stars → market → research → chaos):\n");
 try {
   const storm = runModalStormSimulation();
   assertModalStorm(storm);
 } catch (e) {
   fail("vm modal-storm sim", e.message || String(e));
+}
+
+console.log("\nreadGrant dev path (localhost mock + prod block):\n");
+try {
+  const rg = runReadGrantSimulation();
+  assertReadGrant(rg);
+} catch (e) {
+  fail("vm read-grant sim", e.message || String(e));
 }
 
 console.log("\nChaos mode bonus + unlock @ 10 releases:\n");

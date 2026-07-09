@@ -98,7 +98,7 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available}
     <button class="btn-ghost" id="btn-mute">🔊 Sound: On</button>
     <button class="btn-ghost" id="btn-save" style="display:none">💾 Save</button>
     <button class="btn-ghost" id="btn-reset">↺ Reset</button>
-  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 104 · IAP</span></div>
+  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 105 · QA</span></div>
   <div id="toasts"></div>
   <div id="pwa-install-banner" class="aaa-pwa-install-banner" hidden>
     <div class="aaa-pwa-install-inner">
@@ -340,15 +340,15 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available}
 
 <div class="overlay" id="whatsnew" style="display:none" role="dialog" aria-modal="true" aria-labelledby="whatsnew-title">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <img src="start-hero.png?v=104" alt="Anime Studio Tycoon logo" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
-    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 104 — IAP</h1>
+    <img src="start-hero.png?v=105" alt="Anime Studio Tycoon logo" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
+    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 105 — QA</h1>
     <div class="offlist whatsnew-list" style="margin:12px 0">
-      <div><span>🔐 Signed grants</span><b>Production web uses ?pt= JWT tokens — dev ?grant= stays on localhost</b></div>
-      <div><span>🎫 License redeem</span><b>Gumroad keys POST to /api/grant/license then chain redeem</b></div>
-      <div><span>🧪 VM sim</span><b>playtest-sim mocks fetch for VALID/INVALID pt + idempotent pass grants</b></div>
-      <div><span>📱 Native</span><b>Capacitor IAP bridge unchanged — StoreKit / Play Billing via iap.js</b></div>
-      <div><span>🛡️ Idempotent</span><b>Second redeem of same entitlement won't double-deliver</b></div>
+      <div><span>📋 Device QA</span><b>launch/DEVICE_QA.md — iPhone + Android smoke checklist with pass/fail table</b></div>
+      <div><span>🧪 Audit</span><b>playtest-audit asserts first-greenlight, unlock-open, milestone-collect, slot burst</b></div>
+      <div><span>🚀 Preflight</span><b>launch-preflight gates build 104+, www idle-feel + og-share.jpg</b></div>
       <div><span>🎵 Game feel</span><b>First greenlight arpeggio, unlock chimes, share-milestone sparkle + slot burst</b></div>
+      <div><span>📱 Native</span><b>Capacitor www bundle unchanged — TestFlight smoke per DEVICE_QA</b></div>
+      <div><span>🔗 Share</span><b>Self-hosted og-share.jpg for link previews on iMessage / Slack</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
   </div>
@@ -457,7 +457,7 @@ document.addEventListener("deviceready", initNativeChrome, false);
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 104 · IAP";
+const BUILD_TAG = "build 105 · QA";
 const ASSET_V = "102";
 const SHARE_OG_URL = "https://anime-studio-tycoon.vercel.app/og-share.jpg";
 const OFFLINE_PREVIEW_CAP = 4*3600; // "while away" preview when return is under 4h
@@ -3263,7 +3263,7 @@ function grantEntitlement(kind, amount, extra){
   else if(kind==="bundle"){ S.producerPass=true; S.bundleBought=true; if(addEntitlement("bundle")){ S.gems+=200; delivered=true; toast("🌟 Starter Bundle: Pass + 200 💎!",true); } }
   else if(kind==="bundle_legend"){ S.producerPass=true; if(addEntitlement("bundle_legend")){ S.gems+=400; grantStar("x_aurora"); } delivered=true; toast("🏆 Legend Bundle delivered — thank you!",true); }
   else if(kind==="bundle_mogul"){ S.producerPass=true; if(addEntitlement("bundle_mogul")){ S.gems+=1500; grantStar("x_phoenix"); grantStar("x_shogun"); S.noAds=true; } delivered=true; toast("👑 Mogul Bundle delivered — thank you!",true); }
-  else if(kind==="items_pack"){ ["megaphone","power_glove","time_pendant","stardust","espresso"].forEach(i=>addItem(i,1)); S.gems+=50; delivered=true; toast("🧰 Power Items Pack delivered!",true); }
+  else if(kind==="items_pack"){ if(addEntitlement("items_pack")){ ["megaphone","power_glove","time_pendant","stardust","espresso"].forEach(i=>addItem(i,1)); S.gems+=50; delivered=true; toast("🧰 Power Items Pack delivered!",true); } }
   else if(kind==="noads"){ S.noAds=true; addEntitlement("noads"); delivered=true; toast("🚫 Ads removed — thank you!",true); }
   else if(kind==="star"){ const id=extra.id||SKU2STAR[extra.sku]; if(id){ addEntitlement("star:"+id); delivered=grantStar(id); } }
   else if(kind==="gems"){ const n=+amount||0; if(n>0){ S.gems+=n; delivered=true; toast("💎 +"+n+" Gems — thank you!",true);

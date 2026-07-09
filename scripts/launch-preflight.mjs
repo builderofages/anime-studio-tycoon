@@ -33,8 +33,8 @@ if (!existsSync(indexPath)) {
 } else {
   const indexHtml = readFileSync(indexPath, "utf8");
   const localBuild = buildNum(indexHtml);
-  if (localBuild >= 98) pass(`local build tag (build ${localBuild})`);
-  else failMsg("local build tag", `expected build 98+, got ${localBuild || "none"}`);
+  if (localBuild >= 104) pass(`local build tag (build ${localBuild})`);
+  else failMsg("local build tag", `expected build 104+, got ${localBuild || "none"}`);
 
   if (indexHtml.includes('from "./logic.js"')) pass("logic.js import in index.html");
   else failMsg("logic.js import", 'missing from "./logic.js"');
@@ -60,8 +60,16 @@ if (!existsSync(wwwIdx)) {
   if (wwwHtml.includes('id="return-hub"')) pass("www return-hub overlay");
   else failMsg("www return-hub", 'missing id="return-hub"');
   const wwwBuild = buildNum(wwwHtml);
-  if (wwwBuild >= 98) pass(`www build tag (build ${wwwBuild})`);
-  else failMsg("www build tag", `expected build 98+, got ${wwwBuild || "none"}`);
+  if (wwwBuild >= 104) pass(`www build tag (build ${wwwBuild})`);
+  else failMsg("www build tag", `expected build 104+, got ${wwwBuild || "none"}`);
+  existsSync(join(root, "www/v5-idle-feel.js"))
+    ? pass("www v5-idle-feel.js")
+    : failMsg("www v5-idle-feel.js", "run npm run prepare-native");
+  existsSync(join(root, "www/og-share.jpg"))
+    ? pass("www og-share.jpg")
+    : failMsg("www og-share.jpg", "run npm run prepare-native");
+  if (wwwHtml.includes("v5-idle-feel.js")) pass("www idle feel script linked");
+  else failMsg("www idle feel", "v5-idle-feel.js not in www/index.html");
 }
 
 const capPath = join(root, "capacitor.config.json");
@@ -123,7 +131,7 @@ console.log("\nGuides:");
 const guides = [
   "launch/ENV_CHECKLIST.md", "launch/GUMROAD_SETUP.md", "launch/GUMROAD_PRODUCTS.md",
   "launch/CODEMAGIC.md", "launch/STORE_LISTING.md", "launch/STEAM_SUBMISSION.md",
-  "launch/TESTFLIGHT_CHECKLIST.md",
+  "launch/TESTFLIGHT_CHECKLIST.md", "launch/DEVICE_QA.md",
 ];
 for (const g of guides) {
   existsSync(join(root, g)) ? pass(`guide: ${g}`) : failMsg(`guide: ${g}`, "missing");

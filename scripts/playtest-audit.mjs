@@ -186,5 +186,20 @@ assert(
 );
 assert(existsSync(join(root, "scripts/playtest-sim.mjs")), "playtest sim script present");
 
+/** Build 105 — game-feel SFX + greenlight celebration hooks. */
+assert(html.includes("first-greenlight"), "synth sfx: first-greenlight");
+assert(html.includes("unlock-open"), "synth sfx: unlock-open");
+assert(html.includes("milestone-collect"), "synth sfx: milestone-collect");
+assert(
+  html.includes('"first-greenlight"') &&
+    html.includes('"unlock-open"') &&
+    html.includes('"milestone-collect"'),
+  "synth sfx keys in SYNTH_SFX_KEYS registry"
+);
+assert(html.includes("celebrateGreenlightSlot"), "celebrateGreenlightSlot burst helper");
+
+const playSimSrc = readFileSync(join(root, "scripts/playtest-sim.mjs"), "utf8");
+assert(playSimSrc.includes("IAP_FETCH_MOCK"), "playtest-sim IAP_FETCH_MOCK coverage");
+
 console.log(`\n${passed} passed, ${failed} failed`);
 process.exit(failed > 0 ? 1 : 0);
