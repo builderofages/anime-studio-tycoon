@@ -9,6 +9,16 @@ import { readFileSync } from "fs";
 import vm from "vm";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
+import {
+  createFreshState,
+  DEFAULT_QUEST_PROG,
+  DEFAULT_SETTINGS,
+  DEFAULT_STAFF,
+  DEFAULT_WEEK_PROG,
+  mergeLoadedSave,
+  rivalGoalFromStart,
+  tabUnlockPctFor,
+} from "../logic.js";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 let passed = 0;
@@ -1048,6 +1058,48 @@ function assertUnlockGates(gates) {
   assert(gates.fans50.market === true, "market unlocked at 50 fans");
 }
 
+const TEST_GENRES = ["Action", "Drama", "Comedy"];
+
+function testExtractedLogic() {
+  const fresh = createFreshState(TEST_GENRES);
+
+  assert(
+    fresh.staff.animator === 0 && fresh.questProg.taps === 0 && fresh.settings.confirmGems === true,
+    "createFreshState uses nested save defaults"
+  );
+
+  const partial = { staff: { animator: 3 }, questProg: { taps: 9 }, settings: { motion: false } };
+  const merged = mergeLoadedSave(partial, fresh, TEST_GENRES);
+  assert(merged.staff.animator === 3 && merged.staff.writer === 0, "mergeLoadedSave fills staff defaults");
+  assert(merged.questProg.taps === 9 && merged.questProg.greenlit === 0, "mergeLoadedSave fills questProg defaults");
+  assert(merged.settings.motion === false && merged.settings.confirmGems === true, "mergeLoadedSave merges settings");
+
+  const legacy = mergeLoadedSave(
+    { project: { pid: 0, progress: 50, genre: "Action" }, slots: 2 },
+    fresh,
+    TEST_GENRES
+  );
+  assert(legacy.slots === 2 && legacy.projects[0]?.pid === 0, "mergeLoadedSave migrates legacy d.project");
+
+  const s0 = { releases: 0, fans: 0, totalFansEver: 0, projects: [{ pid: 0, progress: 40 }] };
+  assert(tabUnlockPctFor("studio", s0, () => 80) === 50, "tabUnlockPct studio project progress");
+  assert(tabUnlockPctFor("studio", { releases: 1, projects: [] }) === null, "tabUnlockPct studio null when unlocked");
+  assert(tabUnlockPctFor("stars", { releases: 1, totalFansEver: 10 }) === 50, "tabUnlockPct stars dual gate");
+  assert(tabUnlockPctFor("market", { fans: 25 }) === 50, "tabUnlockPct market fans/50");
+  assert(tabUnlockPctFor("research", { totalFansEver: 60 }) === 50, "tabUnlockPct research fansEver/120");
+  assert(tabUnlockPctFor("chaos", { releases: 5 }) === 50, "tabUnlockPct chaos releases/10");
+  assert(tabUnlockPctFor("market", { fans: 50 }) === null, "tabUnlockPct null when feature unlocked");
+
+  const goalLo = rivalGoalFromStart(100, () => 0);
+  const goalHi = rivalGoalFromStart(100, () => 0.999);
+  assert(goalLo === 114 && goalHi === 139, "rivalGoalFromStart scales with rng", `lo=${goalLo} hi=${goalHi}`);
+  assert(rivalGoalFromStart(0, () => 0) === 1, "rivalGoalFromStart minimum goal above zero start");
+
+  assert(DEFAULT_STAFF.animator === 0, "DEFAULT_STAFF exported");
+  assert(DEFAULT_QUEST_PROG.greenlit === 0 && DEFAULT_WEEK_PROG.taps === 0, "DEFAULT_QUEST_PROG / DEFAULT_WEEK_PROG exported");
+  assert(DEFAULT_SETTINGS.musicVol === 0.35, "DEFAULT_SETTINGS exported");
+}
+
 function staticSaveSchemaAudit() {
   const logic = readFileSync(join(root, "logic.js"), "utf8");
   const html = readFileSync(join(root, "index.html"), "utf8");
@@ -1055,13 +1107,16 @@ function staticSaveSchemaAudit() {
     "yen: 1500",
     "releases: 0",
     "slots: 1",
-    "animator: 0",
+    "DEFAULT_STAFF",
     "projects: [null]",
     "_guidedFresh: false",
     "_demoMode: false",
     "catalogIncome: 0",
     "redeemedCodes: []",
-    "mastery: Object.fromEntries(genres.map",
+    "defaultMastery(genres)",
+    "tabUnlockPctFor",
+    "rivalGoalFromStart",
+    "mergeLoadedSave",
   ];
   for (const key of requiredKeys) {
     assert(logic.includes(key), `save schema field: ${key.split(":")[0].trim()}`);
@@ -1088,6 +1143,13 @@ function staticSaveSchemaAudit() {
 }
 
 console.log("Anime Studio Tycoon — playtest sim (honest flow)\n");
+
+console.log("Extracted logic.js pure helpers:\n");
+try {
+  testExtractedLogic();
+} catch (e) {
+  fail("logic.js unit checks", e.message || String(e));
+}
 
 try {
   const snap = runVmSimulation();

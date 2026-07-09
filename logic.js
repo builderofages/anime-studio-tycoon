@@ -49,6 +49,164 @@ export function expandCostFor(S) {
   return EXPANSION_COST[S.slots] || 0;
 }
 
+/** Nested save defaults — shared by createFreshState and mergeLoadedSave. */
+export const DEFAULT_STAFF = { animator: 0, writer: 0, director: 0, voice: 0, producer: 0 };
+export const DEFAULT_UPGRADES = { tablets: 0, render: 0, sound: 0, marketing: 0, agency: 0 };
+export const DEFAULT_QUEST_PROG = {
+  releases: 0,
+  yen: 0,
+  campaigns: 0,
+  hires: 0,
+  hypeSpent: 0,
+  scouts: 0,
+  greenlit: 0,
+  taps: 0,
+};
+export const DEFAULT_WEEK_PROG = { ...DEFAULT_QUEST_PROG };
+export const DEFAULT_SETTINGS = {
+  motion: true,
+  ticker: true,
+  musicVol: 0.35,
+  sfxVol: 0.5,
+  confirmGems: true,
+};
+export const DEFAULT_PREMIERE_STATS = { fourPlus: 0, five: 0 };
+
+export function defaultMastery(genres) {
+  return Object.fromEntries(genres.map((g) => [g, 0]));
+}
+
+/** Tab unlock ring progress 0–100, or null when unlocked / not applicable. */
+export function tabUnlockPctFor(k, S, projectWorkFor) {
+  if (featureUnlockedFor(k, S)) return null;
+  const rel = S.releases || 0;
+  const fans = S.fans || 0;
+  const fansEver = S.totalFansEver || 0;
+  if (k === "studio") {
+    if (rel >= 1) return null;
+    let best = 0;
+    for (const pr of S.projects || []) {
+      if (!pr) continue;
+      const work = projectWorkFor ? projectWorkFor(pr.pid) : 0;
+      if (!work) continue;
+      best = Math.max(best, pr.progress / work);
+    }
+    return Math.round(Math.min(100, best * 100));
+  }
+  if (k === "stars") return Math.round(Math.min(100, Math.max(rel / 2, fansEver / 20) * 100));
+  if (k === "market") return Math.round(Math.min(100, (fans / 50) * 100));
+  if (k === "research") return Math.round(Math.min(100, (fansEver / 120) * 100));
+  if (k === "chaos") return Math.round(Math.min(100, (rel / 10) * 100));
+  return null;
+}
+
+/** Weekly rival target from studio value at week start; optional rng for tests. */
+export function rivalGoalFromStart(start, rng = Math.random) {
+  start = Math.max(0, Math.floor(start || 0));
+  return Math.max(start + 1, Math.floor(start * (1.15 + rng() * 0.25)));
+}
+
+/**
+ * Merge parsed save JSON onto a fresh state (pure). Caller runs normStars / rating init.
+ */
+export function mergeLoadedSave(d, fresh, genres, maxSlots = MAX_SLOTS) {
+  const S = Object.assign({}, fresh, d);
+  S.staff = Object.assign({}, DEFAULT_STAFF, d.staff || {});
+  S.upgrades = Object.assign({}, DEFAULT_UPGRADES, d.upgrades || {});
+  S.mastery = Object.assign(defaultMastery(genres), d.mastery || {});
+  S.milestonesClaimed = Array.isArray(d.milestonesClaimed) ? d.milestonesClaimed : [];
+  S.seasonClaimed = Array.isArray(d.seasonClaimed) ? d.seasonClaimed : [];
+  S.gems = +d.gems || 0;
+  S.producerPass = !!d.producerPass;
+  S.bundleBought = !!d.bundleBought;
+  S.slots = Math.max(1, Math.min(maxSlots, d.slots || 1));
+  const projs = Array.isArray(d.projects) ? d.projects.slice() : d.project ? [d.project] : [];
+  S.projects = Array.from({ length: S.slots }, (_, i) => projs[i] || null);
+  S.lastDailyDate = d.lastDailyDate || "";
+  S.dailyStreak = +d.dailyStreak || 0;
+  S.stars = Array.isArray(d.stars) ? d.stars : [];
+  if (S.stamina == null) S.stamina = 100;
+  if (S.chaos == null) S.chaos = 0;
+  S.items = d.items && typeof d.items === "object" ? d.items : {};
+  S.entitlements = Array.isArray(d.entitlements) ? d.entitlements : [];
+  S.hallOfFame = Array.isArray(d.hallOfFame) ? d.hallOfFame : [];
+  S.studioName = d.studioName || "";
+  S.unlockedSeen = Array.isArray(d.unlockedSeen) ? d.unlockedSeen : [];
+  S.franchises = d.franchises && typeof d.franchises === "object" ? d.franchises : {};
+  S.franchiseOpportunity =
+    d.franchiseOpportunity && typeof d.franchiseOpportunity === "object" ? d.franchiseOpportunity : null;
+  S.firstFranchiseCelebrated = !!d.firstFranchiseCelebrated;
+  S.ageOk = !!d.ageOk;
+  S.freeScoutUsed = !!d.freeScoutUsed;
+  S.starsUnlockModalSeen = !!d.starsUnlockModalSeen;
+  S.studioUnlockModalSeen = !!d.studioUnlockModalSeen;
+  S.marketUnlockModalSeen = !!d.marketUnlockModalSeen;
+  S.campaignsRun = +d.campaignsRun || 0;
+  S.researchUnlockModalSeen = !!d.researchUnlockModalSeen;
+  S.chaosUnlockModalSeen = !!d.chaosUnlockModalSeen;
+  S.firstChaosToastSeen = !!d.firstChaosToastSeen;
+  S.awaitFirstChaosSurvival = !!d.awaitFirstChaosSurvival;
+  S.quests = Array.isArray(d.quests) ? d.quests : [];
+  S.questProg = Object.assign({}, DEFAULT_QUEST_PROG, d.questProg || {});
+  S.weekProg = Object.assign({}, DEFAULT_WEEK_PROG, d.weekProg || {});
+  S.weeklyQuests = Array.isArray(d.weeklyQuests) ? d.weeklyQuests : S.weeklyQuests || [];
+  S.weekKey = d.weekKey || S.weekKey || "";
+  S.redeemedCodes = Array.isArray(d.redeemedCodes) ? d.redeemedCodes : [];
+  S.bestValue = +d.bestValue || 0;
+  S.freeGemsDate = d.freeGemsDate || "";
+  S.taps = +d.taps || 0;
+  S.achievements = Array.isArray(d.achievements) ? d.achievements : [];
+  S.whatsnewSeen = !!d.whatsnewSeen;
+  S.pityCount = +d.pityCount || 0;
+  S.merchLevel = +d.merchLevel || 0;
+  S.autoGreenlight = !!d.autoGreenlight;
+  S.rivalWins = +d.rivalWins || 0;
+  S.rivalWeek = d.rivalWeek || "";
+  S.rivalTarget = d.rivalTarget || null;
+  S.rivalStartVal = +d.rivalStartVal || 0;
+  S.rivalGoal = +d.rivalGoal || 0;
+  S.rivalClaimed = !!d.rivalClaimed;
+  S.plusCollection50 = !!d.plusCollection50;
+  S.plusGoals = Array.isArray(d.plusGoals) ? d.plusGoals : [];
+  S.plusGoalsDate = d.plusGoalsDate || "";
+  S.plusGoalsBase = d.plusGoalsBase && typeof d.plusGoalsBase === "object" ? d.plusGoalsBase : {};
+  S.settings =
+    d.settings && typeof d.settings === "object"
+      ? Object.assign({}, DEFAULT_SETTINGS, d.settings)
+      : { ...DEFAULT_SETTINGS };
+  S.marketShare = +d.marketShare || 5;
+  S.bidsWon = +d.bidsWon || 0;
+  S.bidWeek = d.bidWeek || "";
+  S.bidResolved = !!d.bidResolved;
+  S.activeBid = d.activeBid && typeof d.activeBid === "object" ? d.activeBid : null;
+  S.endlessRisk = d.endlessRisk || "balanced";
+  S.endlessDiff = d.endlessDiff || "standard";
+  S.endlessCourMode = !!d.endlessCourMode;
+  S.endlessEvents = +d.endlessEvents || 0;
+  S.namedStaff = Array.isArray(d.namedStaff) ? d.namedStaff : [];
+  S.empireSource = d.empireSource || "original";
+  S.empireBlendGenre = d.empireBlendGenre != null ? +d.empireBlendGenre : -1;
+  S.scoutBannerWeek = d.scoutBannerWeek || "";
+  S.scoutBannerStar = d.scoutBannerStar || "";
+  S.chaosInsurance = !!d.chaosInsurance;
+  S.calmStreak = +d.calmStreak || 0;
+  S.crisesSurvived = +d.crisesSurvived || 0;
+  S.lastCrisisDay = d.lastCrisisDay || "";
+  S.sparks = +d.sparks || 0;
+  S.templates = Array.isArray(d.templates) ? d.templates : [];
+  S.studioStars = Math.max(1, Math.min(5, +d.studioStars || 1));
+  S.studioStarBest = Math.max(S.studioStars, +d.studioStarBest || S.studioStars);
+  S.premiereStats =
+    d.premiereStats && typeof d.premiereStats === "object" ? d.premiereStats : { ...DEFAULT_PREMIERE_STATS };
+  S.studioStarPerks = d.studioStarPerks && typeof d.studioStarPerks === "object" ? d.studioStarPerks : {};
+  S.crisisSnoozeUntil = +d.crisisSnoozeUntil || 0;
+  S.ratingGuideSeen = !!d.ratingGuideSeen;
+  S.loginStreak = +d.loginStreak || 0;
+  S.loginStreakBest = +d.loginStreakBest || S.loginStreak;
+  S.fanMilestonesToast = Array.isArray(d.fanMilestonesToast) ? d.fanMilestonesToast : [];
+  return S;
+}
+
 export function fmt(n) {
   n = Math.floor(n);
   if (!isFinite(n)) return "∞";
@@ -139,19 +297,19 @@ export function createFreshState(genres) {
     seasonClaimed: [],
     slots: 1,
     projects: [null],
-    staff: { animator: 0, writer: 0, director: 0, voice: 0, producer: 0 },
+    staff: { ...DEFAULT_STAFF },
     stars: [],
-    upgrades: { tablets: 0, render: 0, sound: 0, marketing: 0, agency: 0 },
-    mastery: Object.fromEntries(genres.map((g) => [g, 0])),
+    upgrades: { ...DEFAULT_UPGRADES },
+    mastery: defaultMastery(genres),
     overdriveUntil: 0,
     trendIdx: 0,
     trendUntil: 0,
     releases: 0,
     quests: [],
-    questProg: { releases: 0, yen: 0, campaigns: 0, hires: 0, hypeSpent: 0, scouts: 0, greenlit: 0, taps: 0 },
+    questProg: { ...DEFAULT_QUEST_PROG },
     weekKey: "",
     weeklyQuests: [],
-    weekProg: { releases: 0, yen: 0, campaigns: 0, hires: 0, hypeSpent: 0, scouts: 0, greenlit: 0, taps: 0 },
+    weekProg: { ...DEFAULT_WEEK_PROG },
     loginMonth: "",
     loginClaimedCount: 0,
     loginLastClaimDate: "",
@@ -189,7 +347,7 @@ export function createFreshState(genres) {
     plusGoalsDate: "",
     plusGoalsBase: {},
     plusCollection50: false,
-    settings: { motion: true, ticker: true, musicVol: 0.35, sfxVol: 0.5, confirmGems: true },
+    settings: { ...DEFAULT_SETTINGS },
     lastWhatsNewBuild: "",
     pwaInstallDismissed: false,
     pwaInstalled: false,
@@ -238,7 +396,7 @@ export function createFreshState(genres) {
     dynastySpent: 0,
     studioStars: 1,
     studioStarBest: 1,
-    premiereStats: { fourPlus: 0, five: 0 },
+    premiereStats: { ...DEFAULT_PREMIERE_STATS },
     studioStarPerks: {},
     crisisSnoozeUntil: 0,
     ratingGuideSeen: false,

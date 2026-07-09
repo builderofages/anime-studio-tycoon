@@ -85,6 +85,7 @@ for (const f of required) {
 }
 
 const html = readFileSync(join(root, "index.html"), "utf8");
+const logic = readFileSync(join(root, "logic.js"), "utf8");
 assert(!html.includes('${t("k_level"'), "no baked template literals in HTML");
 assert(html.includes("window.__AST_HOOK__"), "AST hook exported");
 assert(/src="aaa-upgrade\.js(\?v=\d+)?"/.test(html), "aaa-upgrade.js linked");
@@ -101,14 +102,14 @@ assert(html.includes('play("greenlight")') || html.includes('play(sfx||"click")'
 assert(html.includes('play("premiere",{close:true})'), "premiere close sfx wired");
 assert(/src="gameplay-ultra\.js(\?v=\d+)?"/.test(html), "gameplay-ultra.js linked");
 assert(/src="gameplay-endless\.js(\?v=\d+)?"/.test(html), "gameplay-endless.js linked");
-assert(html.includes("endlessRisk"), "endless risk state");
+assert(logic.includes("endlessRisk"), "endless risk state");
 assert(html.includes("endlessDiff"), "endless difficulty state");
 assert(html.includes("projectStars"), "projectStars on hook");
 assert(/src="gameplay-empire\.js(\?v=\d+)?"/.test(html), "gameplay-empire.js linked");
-assert(html.includes("namedStaff"), "named staff state");
+assert(logic.includes("namedStaff"), "named staff state");
 assert(html.includes("pullStar"), "pullStar on hook");
 assert(/src="gameplay-studio\.js(\?v=\d+)?"/.test(html), "gameplay-studio.js linked");
-assert(html.includes("sparks"), "spark currency state");
+assert(logic.includes("sparks"), "spark currency state");
 assert(html.includes("__AST_CONFIRM__"), "in-theme confirm hook");
 assert(!/src="gameplay-final\.js(\?v=\d+)?"/.test(html), "gameplay-final.js deferred (not static)");
 assert(readFileSync(join(root, "v5-slim-gate.js"), "utf8").includes("gameplay-final.js"), "v5 slim gate injects final");
@@ -154,9 +155,9 @@ assert(!html.includes('href="hf-design.css'), "hf-design.css disabled (ast-v5)")
 assert(!html.includes('href="aaa-ui.css'), "aaa-ui.css disabled (ast-v5)");
 assert(html.includes("legacy-fx.css"), "legacy-fx css linked");
 assert(html.includes("ast-v5.css"), "ast-v5 design css linked");
-assert(html.includes("build 102"), "build 102 tag");
+assert(html.includes("build 103"), "build 103 tag");
 assert(html.includes("Production Score"), "production score label");
-assert(html.includes("Share"), "build 102 share tag");
+assert(html.includes("Native"), "build 103 native tag");
 assert(existsSync(join(root, "og-share.jpg")), "og-share.jpg self-hosted share card");
 assert(html.includes("og-share.jpg"), "og image uses self-hosted share card");
 assert(html.includes("SHARE_OG_URL"), "share og url constant");
@@ -283,12 +284,16 @@ assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("guided-tutor
 assert(html.includes('id="btn-start-play"'), "start play cta");
 assert(html.includes('id="btn-start-demo"'), "start demo cta");
 assert(html.includes("start-cta-group"), "start cta group");
-assert(html.includes("Build 102"), "what's new build 102");
-assert(html.includes("Build 102 — Share"), "what's new share headline");
-assert(html.includes("Share cards"), "what's new share cards bullet");
+assert(html.includes("Build 103"), "what's new build 103");
+assert(html.includes("Build 103 — Native"), "what's new native headline");
+assert(html.includes("Coach CTA"), "what's new coach cta bullet");
+assert(html.includes("focus trap"), "what's new drawer focus trap bullet");
 assert(html.includes("Tab rings"), "what's new tab rings bullet");
 assert(html.includes("tabUnlockPct"), "tab unlock pct helper");
 assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("updateTabUnlockRings"), "tab unlock ring updater");
+assert(!readFileSync(join(root, "hud-premium.js"), "utf8").includes("label.slice(0, 13)"), "coach cta no hard js truncation");
+assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("hudDrawerEscWired"), "settings drawer escape close");
+assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes('e.key !== "Tab"'), "settings drawer focus trap");
 assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("tab-unlock-ring-on"), "tab unlock ring css class");
 assert(html.includes("redeemedCodes"), "promo code one-time schema");
 assert(html.includes("WebApplication"), "what's new seo bullet");
@@ -376,7 +381,7 @@ assert(existsSync(join(root, "scripts/audit-check.mjs")), "audit check script");
 assert(existsSync(join(root, "scripts/playtest-audit.mjs")), "playtest audit script");
 assert(existsSync(join(root, "scripts/playtest-sim.mjs")), "playtest sim script");
 const astCss = readFileSync(join(root, "ast-v5.css"), "utf8");
-assert(astCss.includes("BUILD 102"), "build 102 css marker");
+assert(astCss.includes("BUILD 103"), "build 103 css marker");
 assert(astCss.includes("start-share-link"), "start share link css");
 assert(astCss.includes("aaa-dynasty-hero"), "dynasty hero css");
 assert(astCss.includes("aaa-franchise-panel"), "franchise panel css");
@@ -541,7 +546,7 @@ assert(html.includes("rivalGoalFromStart"), "rival goal repair on corrupt save")
 assert(html.includes("if(OFFLINE||unlockModalPending()){ _studioAwardQueued"), "studio award deferred during offline sim");
 assert(/btn-offclose.*drainUnlockModalQueue/s.test(html), "offline collect drains unlock modal queue");
 assert(html.includes('data-act="daily-close"') && html.includes("daily-close") && html.includes("drainUnlockModalQueue"), "daily close drains unlock modal queue");
-assert(html.includes("S.weekProg=Object.assign"), "weekProg restored on load");
+assert(html.includes("mergeLoadedSave") && logic.includes("DEFAULT_WEEK_PROG"), "weekProg restored on load");
 assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("coach-gift"), "coach gift button");
 assert(html.includes("premium-hud"), "early premium-hud class");
 assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("hud-studio-rating"), "rating in hud shell");
@@ -587,6 +592,10 @@ try {
 const prep = spawnSync("node", ["scripts/prepare-native.mjs"], { cwd: root, encoding: "utf8" });
 assert(prep.status === 0, "prepare-native.mjs runs", prep.stderr?.trim() || prep.stdout?.trim());
 assert(existsSync(join(root, "www/index.html")), "www/index.html created");
+assert(existsSync(join(root, "www/og-share.jpg")), "www/og-share.jpg copied for native");
+assert(existsSync(join(root, "www/play.html")), "www/play.html copied for native");
+assert(existsSync(join(root, "www/robots.txt")), "www/robots.txt copied for native");
+assert(existsSync(join(root, "www/sitemap.xml")), "www/sitemap.xml copied for native");
 assert(existsSync(join(root, "www/aaa-upgrade.js")), "www/aaa-upgrade.js copied");
 assert(existsSync(join(root, "www/gameplay-ultra.js")), "www/gameplay-ultra.js copied");
 assert(existsSync(join(root, "www/gameplay-endless.js")), "www/gameplay-endless.js copied");

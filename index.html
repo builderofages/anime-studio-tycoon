@@ -98,7 +98,7 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available}
     <button class="btn-ghost" id="btn-mute">🔊 Sound: On</button>
     <button class="btn-ghost" id="btn-save" style="display:none">💾 Save</button>
     <button class="btn-ghost" id="btn-reset">↺ Reset</button>
-  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 102 · Share</span></div>
+  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 103 · Native</span></div>
   <div id="toasts"></div>
   <div id="pwa-install-banner" class="aaa-pwa-install-banner" hidden>
     <div class="aaa-pwa-install-inner">
@@ -340,14 +340,14 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available}
 
 <div class="overlay" id="whatsnew" style="display:none" role="dialog" aria-modal="true" aria-labelledby="whatsnew-title">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <img src="start-hero.png?v=102" alt="Anime Studio Tycoon logo" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
-    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 102 — Share</h1>
+    <img src="start-hero.png?v=103" alt="Anime Studio Tycoon logo" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
+    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 103 — Native</h1>
     <div class="offlist whatsnew-list" style="margin:12px 0">
-      <div><span>📣 Share cards</span><b>Self-hosted OG image — Discord, X & iMessage previews look pro</b></div>
-      <div><span>🔓 Tab rings</span><b>Locked dock tabs show unlock progress at a glance</b></div>
-      <div><span>🧪 144-check sim</span><b>Return hub, chaos survival & prestige now VM-tested</b></div>
-      <div><span>🔍 SEO</span><b>robots.txt + sitemap for /play, privacy & terms</b></div>
-      <div><span>🎬 Premiere queue</span><b>Multi-slot celebrations + modal drain fixes from Build 101</b></div>
+      <div><span>📱 TestFlight</span><b>www/ bundle ships og-share, play.html, robots & sitemap for Capacitor</b></div>
+      <div><span>🎯 Coach CTA</span><b>Full action labels with CSS ellipsis — no more hard 14-char chop</b></div>
+      <div><span>⚙️ Settings</span><b>Drawer focus trap — Tab cycles inside, Escape closes</b></div>
+      <div><span>🔓 Tab rings</span><b>Locked dock tabs still show unlock progress at a glance</b></div>
+      <div><span>📣 Share cards</span><b>Self-hosted OG image for Discord, X & iMessage previews</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
   </div>
@@ -398,6 +398,9 @@ import {
   fmtHudRes,
   expandCostFor,
   featureUnlockedFor,
+  tabUnlockPctFor,
+  rivalGoalFromStart,
+  mergeLoadedSave,
 } from "./logic.js";
 setLang(initialLang());
 
@@ -414,6 +417,9 @@ window.__AST_LOGIC__ = {
   fmtHudRes,
   expandCostFor,
   featureUnlockedFor,
+  tabUnlockPctFor,
+  rivalGoalFromStart,
+  mergeLoadedSave,
 };
 
 /* robustness: never show a broken-image icon — failed images get a clean on-brand tile */
@@ -450,7 +456,7 @@ document.addEventListener("deviceready", initNativeChrome, false);
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 102 · Share";
+const BUILD_TAG = "build 103 · Native";
 const ASSET_V = "102";
 const SHARE_OG_URL = "https://anime-studio-tycoon.vercel.app/og-share.jpg";
 const OFFLINE_PREVIEW_CAP = 4*3600; // "while away" preview when return is under 4h
@@ -2274,60 +2280,10 @@ function syncCloudSave(){
 function load(){
   syncCloudSave();
   try{ const raw=localStorage.getItem(SAVE_KEY); if(!raw) return false;
-    const d=JSON.parse(raw); S=Object.assign(freshState(), d);
-    S.staff=Object.assign({animator:0,writer:0,director:0,voice:0,producer:0}, d.staff||{});
-    S.upgrades=Object.assign({tablets:0,render:0,sound:0,marketing:0,agency:0}, d.upgrades||{});
-    S.mastery=Object.assign(Object.fromEntries(GENRES.map(g=>[g,0])), d.mastery||{});
-    S.milestonesClaimed=Array.isArray(d.milestonesClaimed)?d.milestonesClaimed:[];
-    S.seasonClaimed=Array.isArray(d.seasonClaimed)?d.seasonClaimed:[];
-    S.gems=+d.gems||0; S.producerPass=!!d.producerPass; S.bundleBought=!!d.bundleBought;
-    // multi-slot migration (older saves used d.project)
-    S.slots=Math.max(1,Math.min(MAX_SLOTS, d.slots||1));
-    let projs = Array.isArray(d.projects) ? d.projects.slice() : (d.project?[d.project]:[]);
-    S.projects = Array.from({length:S.slots}, (_,i)=> projs[i]||null);
-    S.lastDailyDate=d.lastDailyDate||""; S.dailyStreak=+d.dailyStreak||0;
-    S.stars=Array.isArray(d.stars)?d.stars:[]; normStars();
-    if(S.stamina==null) S.stamina=100; if(S.chaos==null) S.chaos=0;
-    S.items=(d.items&&typeof d.items==="object")?d.items:{}; S.entitlements=Array.isArray(d.entitlements)?d.entitlements:[];
-    S.hallOfFame=Array.isArray(d.hallOfFame)?d.hallOfFame:[]; S.studioName=d.studioName||"";
-    S.unlockedSeen=Array.isArray(d.unlockedSeen)?d.unlockedSeen:[]; S.franchises=(d.franchises&&typeof d.franchises==="object")?d.franchises:{}; S.franchiseOpportunity=(d.franchiseOpportunity&&typeof d.franchiseOpportunity==="object")?d.franchiseOpportunity:null; S.firstFranchiseCelebrated=!!d.firstFranchiseCelebrated; S.ageOk=!!d.ageOk;
-    S.freeScoutUsed=!!d.freeScoutUsed; S.starsUnlockModalSeen=!!d.starsUnlockModalSeen; S.studioUnlockModalSeen=!!d.studioUnlockModalSeen; S.marketUnlockModalSeen=!!d.marketUnlockModalSeen; S.campaignsRun=+d.campaignsRun||0; S.researchUnlockModalSeen=!!d.researchUnlockModalSeen; S.chaosUnlockModalSeen=!!d.chaosUnlockModalSeen; S.firstChaosToastSeen=!!d.firstChaosToastSeen; S.awaitFirstChaosSurvival=!!d.awaitFirstChaosSurvival;
-    S.quests=Array.isArray(d.quests)?d.quests:[];
-    S.questProg=Object.assign({releases:0,yen:0,campaigns:0,hires:0,hypeSpent:0,scouts:0,greenlit:0,taps:0}, d.questProg||{});
-    S.weekProg=Object.assign({releases:0,yen:0,campaigns:0,hires:0,hypeSpent:0,scouts:0,greenlit:0,taps:0}, d.weekProg||{});
-    S.weeklyQuests=Array.isArray(d.weeklyQuests)?d.weeklyQuests:(S.weeklyQuests||[]);
-    S.weekKey=d.weekKey||S.weekKey||"";
-    S.redeemedCodes=Array.isArray(d.redeemedCodes)?d.redeemedCodes:[];
-    S.bestValue=+d.bestValue||0; S.freeGemsDate=d.freeGemsDate||""; S.taps=+d.taps||0;
-    S.achievements=Array.isArray(d.achievements)?d.achievements:[];
-    S.whatsnewSeen=!!d.whatsnewSeen;
-    S.pityCount=+d.pityCount||0; S.merchLevel=+d.merchLevel||0; S.autoGreenlight=!!d.autoGreenlight;
-    S.rivalWins=+d.rivalWins||0; S.rivalWeek=d.rivalWeek||""; S.rivalTarget=d.rivalTarget||null;
-    S.rivalStartVal=+d.rivalStartVal||0; S.rivalGoal=+d.rivalGoal||0; S.rivalClaimed=!!d.rivalClaimed;
-    S.plusCollection50=!!d.plusCollection50;
-    S.plusGoals=Array.isArray(d.plusGoals)?d.plusGoals:[]; S.plusGoalsDate=d.plusGoalsDate||"";
-    S.plusGoalsBase=(d.plusGoalsBase&&typeof d.plusGoalsBase==="object")?d.plusGoalsBase:{};
-    S.settings=(d.settings&&typeof d.settings==="object")?Object.assign({motion:true,ticker:true,musicVol:0.35,sfxVol:0.5,confirmGems:true},d.settings):{motion:true,ticker:true,musicVol:0.35,sfxVol:0.5,confirmGems:true};
-    S.marketShare=+d.marketShare||5; S.bidsWon=+d.bidsWon||0; S.bidWeek=d.bidWeek||""; S.bidResolved=!!d.bidResolved;
-    S.activeBid=(d.activeBid&&typeof d.activeBid==="object")?d.activeBid:null;
-    S.endlessRisk=d.endlessRisk||"balanced"; S.endlessDiff=d.endlessDiff||"standard";
-    S.endlessCourMode=!!d.endlessCourMode; S.endlessEvents=+d.endlessEvents||0;
-    S.namedStaff=Array.isArray(d.namedStaff)?d.namedStaff:[];
-    S.empireSource=d.empireSource||"original"; S.empireBlendGenre=d.empireBlendGenre!=null?+d.empireBlendGenre:-1;
-    S.scoutBannerWeek=d.scoutBannerWeek||""; S.scoutBannerStar=d.scoutBannerStar||"";
-    S.chaosInsurance=!!d.chaosInsurance; S.calmStreak=+d.calmStreak||0;
-    S.crisesSurvived=+d.crisesSurvived||0; S.lastCrisisDay=d.lastCrisisDay||"";
-    S.sparks=+d.sparks||0; S.templates=Array.isArray(d.templates)?d.templates:[];
-    S.studioStars=Math.max(1,Math.min(5,+d.studioStars||1));
-    S.studioStarBest=Math.max(S.studioStars,+d.studioStarBest||S.studioStars);
-    S.premiereStats=(d.premiereStats&&typeof d.premiereStats==="object")?d.premiereStats:{fourPlus:0,five:0};
-    S.studioStarPerks=(d.studioStarPerks&&typeof d.studioStarPerks==="object")?d.studioStarPerks:{};
-    S.crisisSnoozeUntil=+d.crisisSnoozeUntil||0;
-    S.ratingGuideSeen=!!d.ratingGuideSeen;
+    const d=JSON.parse(raw);
+    S=mergeLoadedSave(d, freshState(), GENRES, MAX_SLOTS);
+    normStars();
     if(window.__AST_STUDIO_RATING__?.initState) window.__AST_STUDIO_RATING__.initState(S);
-    S.loginStreak=+d.loginStreak||0;
-    S.loginStreakBest=+d.loginStreakBest||S.loginStreak;
-    S.fanMilestonesToast=Array.isArray(d.fanMilestonesToast)?d.fanMilestonesToast:[];
     for(const m of FAN_TOAST_MILESTONES){
       if(S.fans>=m.fans&&!S.fanMilestonesToast.includes(m.fans)) S.fanMilestonesToast.push(m.fans);
     }
@@ -2650,24 +2606,7 @@ function chaosUnlockProgress(){
   return need===1?"1 more premiere to unlock Chaos":fmt(need)+" more premieres to unlock Chaos";
 }
 function tabUnlockPct(k){
-  if(featureUnlocked(k)) return null;
-  const rel=S.releases||0, fans=S.fans||0, fansEver=S.totalFansEver||0;
-  if(k==="studio"){
-    if(rel>=1) return null;
-    let best=0;
-    for(const pr of S.projects){
-      if(!pr) continue;
-      const op=PROJECTS[pr.pid];
-      if(!op||!op.work) continue;
-      best=Math.max(best, pr.progress/op.work);
-    }
-    return Math.round(Math.min(100, best*100));
-  }
-  if(k==="stars") return Math.round(Math.min(100, Math.max(rel/2, fansEver/20)*100));
-  if(k==="market") return Math.round(Math.min(100, fans/50*100));
-  if(k==="research") return Math.round(Math.min(100, fansEver/120*100));
-  if(k==="chaos") return Math.round(Math.min(100, rel/10*100));
-  return null;
+  return tabUnlockPctFor(k, S, (pid) => PROJECTS[pid]?.work);
 }
 function researchCost(genre){
   const lvl=S.mastery[genre]||0;
@@ -4072,10 +4011,7 @@ function ensureHudRival(){
     S.rivalGoal=rivalGoalFromStart(Math.max(S.rivalStartVal, studioValue(), 1));
   }
 }
-function rivalGoalFromStart(start){
-  start=Math.max(0, Math.floor(start||0));
-  return Math.max(start+1, Math.floor(start*(1.15+Math.random()*0.25)));
-}
+
 function hudRivalHTML(){
   ensureHudRival();
   const cur=studioValue(), goal=S.rivalGoal||cur;

@@ -1202,9 +1202,31 @@
     if (!document.body.dataset.hudDrawerEscWired) {
       document.body.dataset.hudDrawerEscWired = "1";
       document.addEventListener("keydown", (e) => {
-        if (e.key !== "Escape") return;
         const d = document.getElementById("hud-drawer");
-        if (d && !d.hidden) closeDrawer();
+        if (!d || d.hidden) return;
+        if (e.key === "Escape") {
+          closeDrawer();
+          return;
+        }
+        if (e.key !== "Tab") return;
+        const inner = d.querySelector(".hud-drawer-inner");
+        if (!inner) return;
+        const items = [...inner.querySelectorAll(
+          'button:not([disabled]), select:not([disabled]), a[href], input:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        )].filter((el) => !el.hidden && el.getAttribute("aria-hidden") !== "true");
+        if (!items.length) return;
+        const first = items[0];
+        const last = items[items.length - 1];
+        const active = document.activeElement;
+        if (e.shiftKey) {
+          if (active === first || !inner.contains(active)) {
+            e.preventDefault();
+            last.focus();
+          }
+        } else if (active === last || !inner.contains(active)) {
+          e.preventDefault();
+          first.focus();
+        }
       });
     }
   }
@@ -1841,7 +1863,7 @@
     const cta = document.getElementById("pathway-cta");
     if (cta) {
       const label = pw.cta || "Go";
-      cta.textContent = label.length > 14 ? label.slice(0, 13) + "…" : label;
+      cta.textContent = label;
       cta.setAttribute("aria-label", label);
       cta.classList.toggle("urgent", !!pw.urgent);
       cta.hidden = !pw.action;
