@@ -1502,9 +1502,10 @@ html.hud-v3-active .hud-stats {
 }
 
 html.hud-v3-active .aaa-genre-row .chip {
-  font-size: 10px !important;
+  font-size: 11px !important;
   letter-spacing: 0.06em !important;
-  padding: 6px 12px !important;
+  padding: 10px 14px !important;
+  min-height: 44px !important;
   border-radius: 999px !important;
   background: rgba(255, 255, 255, 0.05) !important;
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
@@ -2178,6 +2179,9 @@ html.hud-v3-active .aaa-gl-page .aaa-genre-row::-webkit-scrollbar {
 
 html.hud-v3-active .aaa-gl-page .aaa-genre-row .chip {
   flex-shrink: 0 !important;
+  min-height: 44px !important;
+  padding: 10px 14px !important;
+  font-size: 11px !important;
 }
 
 html.hud-v3-active .aaa-gl-page .aaa-gl-carousel {
@@ -3370,7 +3374,7 @@ html.gt-tutorial-active .gt-highlight { position: relative !important; z-index: 
 #guided-tutorial .gt-skip { font-size: 11px !important; padding: 8px 10px !important; opacity: .85 !important; }
 #guided-tutorial .gt-next { flex: 1 !important; max-width: 160px !important; font-size: 13px !important; padding: 10px 12px !important; }
 html.hud-v3-active #pathway-rail.coach-guided { box-shadow: 0 0 0 2px rgba(255,92,168,.35), 0 8px 24px rgba(255,92,168,.2) !important; z-index: 9999 !important; position: relative !important; }
-html.hud-v3-active #pathway-rail.coach-guided .coach-label::after { content: " · Guided" !important; color: var(--ast-gold) !important; font-weight: 800 !important; }
+html.hud-v3-active #pathway-rail.coach-guided .coach-label::after { content: none !important; }
 
 /* ========== BUILD 91 — Produce + Greenlight mockup fidelity (v4 + GL ref) ========== */
 

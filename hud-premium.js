@@ -1441,6 +1441,7 @@
   function openDrawer() {
     const d = document.getElementById("hud-drawer");
     if (!d) return;
+    syncDrawerAudio();
     _drawerPrevFocus = document.activeElement;
     d.hidden = false;
     d.setAttribute("aria-hidden", "false");
@@ -1481,7 +1482,7 @@
 
   function drawerInteractionKeepsOpen(target) {
     const el = target?.closest?.(
-      "#btn-mute, #lang-sel, #drawer-bgm-track, #drawer-music-vol, #drawer-sfx-vol, [data-drawer-music], [data-drawer-sfx], .hud-drawer-vol-row, .hud-drawer-vol-row input, .hud-drawer-bgm-row, .hud-drawer-bgm-row select"
+      "#btn-mute, #lang-sel, #drawer-bgm-track, #drawer-music-vol, #drawer-sfx-vol, [data-drawer-music], [data-drawer-sfx], [data-settings-motion], [data-settings-ticker], [data-settings-autogl], .hud-drawer-vol-row, .hud-drawer-vol-row input, .hud-drawer-bgm-row, .hud-drawer-bgm-row select, .hud-drawer-toggle-row, .hud-drawer-toggle-row input"
     );
     return !!el;
   }
@@ -1497,6 +1498,12 @@
     if (music) music.value = String(Math.round((S.settings.musicVol ?? 0.35) * 100));
     if (sfx) sfx.value = String(Math.round((S.settings.sfxVol ?? 0.5) * 100));
     if (bgmTrack) bgmTrack.value = S.settings.bgmTrack || "auto";
+    const motion = document.querySelector("#drawer-game-prefs [data-settings-motion]");
+    const ticker = document.querySelector("#drawer-game-prefs [data-settings-ticker]");
+    const autogl = document.querySelector("#drawer-game-prefs [data-settings-autogl]");
+    if (motion) motion.checked = S.settings.motion !== false;
+    if (ticker) ticker.checked = S.settings.ticker !== false;
+    if (autogl) autogl.checked = !!S.autoGreenlight;
   }
 
   function wireDrawerAudio() {
@@ -1513,6 +1520,7 @@
       if (t.id === "drawer-music-vol" || t.dataset.drawerMusic != null) {
         S.settings.musicVol = +t.value / 100;
         hook.applyAudioSettings?.();
+        hook.startBgmForTab?.(S.tab, { immediate: true });
         hook.save?.();
         return;
       }
@@ -1582,6 +1590,21 @@
     syncDrawerAudio();
   }
 
+  function ensureDrawerGameToggles(gameG) {
+    let wrap = document.getElementById("drawer-game-prefs");
+    if (!wrap) {
+      wrap = document.createElement("div");
+      wrap.id = "drawer-game-prefs";
+      wrap.className = "hud-drawer-toggle-stack";
+      wrap.innerHTML = `
+        <label class="hud-drawer-toggle-row"><span>🌸 Sakura particles</span><input type="checkbox" data-settings-motion aria-label="Sakura particles"></label>
+        <label class="hud-drawer-toggle-row"><span>📰 News ticker</span><input type="checkbox" data-settings-ticker aria-label="News ticker"></label>
+        <label class="hud-drawer-toggle-row"><span>⚡ Auto-greenlight</span><input type="checkbox" data-settings-autogl aria-label="Auto-greenlight"></label>`;
+    }
+    if (wrap.parentNode !== gameG) gameG.appendChild(wrap);
+    syncDrawerAudio();
+  }
+
   function organizeDrawerSlot() {
     const slot = document.getElementById("hud-drawer-slot");
     if (!slot) return;
@@ -1633,6 +1656,7 @@
 
     const resetG = group("Reset", "reset");
     const soundG = group("Sound", "sound");
+    const gameG = group("Gameplay", "gameplay");
     const langG = group("Language", "language");
     let moreG = slot.querySelector('.hud-drawer-group[data-drawer-group="more"]');
     if (!moreG) {
@@ -1671,6 +1695,7 @@
       if (mute.parentNode !== soundG) soundG.appendChild(mute);
     }
     ensureDrawerVolumeRows(soundG);
+    ensureDrawerGameToggles(gameG);
     if (lang) {
       lang.classList.add("hud-drawer-owned");
       if (lang.parentNode !== langG) langG.appendChild(lang);
@@ -1691,11 +1716,17 @@
       slot.appendChild(notifyG);
       slot.appendChild(resetG);
       slot.appendChild(soundG);
+      slot.appendChild(gameG);
       slot.appendChild(langG);
       slot.appendChild(moreG);
       slot.dataset.organized = "1";
     } else if (notifyG.parentNode !== slot) {
       slot.insertBefore(notifyG, slot.firstChild);
+    }
+    if (gameG.parentNode !== slot) {
+      const langNode = slot.querySelector('.hud-drawer-group[data-drawer-group="language"]');
+      if (langNode) slot.insertBefore(gameG, langNode);
+      else slot.appendChild(gameG);
     }
   }
 

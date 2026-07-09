@@ -487,6 +487,10 @@ html.hud-v3-active #hud-shell.hud-gl-view #hud-combo {
   flex-direction: column;
   gap: 4px;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+  max-height: min(calc(100dvh - var(--safe-t, 0px) - var(--safe-b, 0px) - 72px), 520px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 
 .hud-drawer-inner button,
@@ -606,6 +610,36 @@ html.hud-v3-active #app > .foot {
   min-height: 44px;
 }
 
+.hud-drawer-toggle-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 2px 0 4px;
+}
+
+.hud-drawer-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 12px;
+  min-height: 44px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ui-text);
+  cursor: pointer;
+}
+
+.hud-drawer-toggle-row input[type="checkbox"] {
+  width: 20px !important;
+  height: 20px !important;
+  min-height: 20px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  flex-shrink: 0;
+  accent-color: var(--ui-accent);
+}
+
 .hud-drawer-bgm-select {
   width: 100% !important;
   min-height: 44px !important;
@@ -685,9 +719,18 @@ html.hud-v3-active #pathway-rail.coach-guided .coach-label::after {
   letter-spacing: 0.02em;
   cursor: pointer;
   white-space: nowrap;
-  max-width: 108px;
+  max-width: min(140px, 38vw);
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+@media (max-width: 720px) {
+  .coach-cta {
+    white-space: normal;
+    line-height: 1.15;
+    text-align: center;
+    max-width: min(120px, 34vw);
+  }
 }
 
 .coach-cta[hidden] {

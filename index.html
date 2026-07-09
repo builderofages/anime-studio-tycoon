@@ -116,7 +116,7 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available;width:1
     <button class="btn-ghost" id="btn-mute" type="button" data-act="toggle-mute">🔊 Sound: On</button>
     <button class="btn-ghost" id="btn-save" style="display:none">💾 Save</button>
     <button class="btn-ghost" id="btn-reset">↺ Reset</button>
-  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 16px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 115 · Premiere</span></div>
+  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 16px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 116 · Polish</span></div>
   <div id="toasts"></div>
   <div id="pwa-install-banner" class="aaa-pwa-install-banner" hidden>
     <div class="aaa-pwa-install-inner">
@@ -361,13 +361,13 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available;width:1
 <div class="overlay" id="whatsnew" style="display:none" role="dialog" aria-modal="true" aria-labelledby="whatsnew-title">
   <div class="card-modal" style="max-width:400px;text-align:left">
     <img src="start-hero.png?v=112" alt="Anime Studio Tycoon logo" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
-    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 115 — Premiere</h1>
+    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 116 — Polish</h1>
     <div class="offlist whatsnew-list" style="margin:12px 0">
-      <div><span>🎬 Premiere BGM</span><b>Red-carpet soundtrack auto-fades in on every premiere — restores after</b></div>
-      <div><span>🔇 Start screen</span><b>Zero SFX until Play — no clicks/chimes while browsing menus</b></div>
-      <div><span>🎼 5 tracks</span><b>Studio · Produce · Market · Premiere · Chill — tab auto + manual pick</b></div>
-      <div><span>📱 Native</span><b>All scene BGMs bundled for TestFlight / Capacitor builds</b></div>
-      <div><span>🧪 970+ tests</span><b>Smoke guards for premiere audio + native BGM bundle</b></div>
+      <div><span>▶ Play</span><b>Audio unlocks on first Play tap — no second tap needed on iOS</b></div>
+      <div><span>⚙️ Settings</span><b>Auto-greenlight, particles & ticker in drawer — music slider hits 0%</b></div>
+      <div><span>👆 Touch</span><b>Genre chips 44px — coach CTA no longer clips localized text</b></div>
+      <div><span>📱 Drawer</span><b>Settings panel scrolls on small phones — no clipped controls</b></div>
+      <div><span>🧪 975+ tests</span><b>Smoke guards for audio unlock + drawer gameplay toggles</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
   </div>
@@ -548,7 +548,7 @@ document.addEventListener("deviceready", initNativeChrome, false);
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 115 · Premiere";
+const BUILD_TAG = "build 116 · Polish";
 const ASSET_V = "112";
 const SHARE_OG_URL = "https://anime-studio-tycoon.vercel.app/og-share.jpg";
 const OFFLINE_PREVIEW_CAP = 4*3600; // "while away" preview when return is under 4h
@@ -2429,19 +2429,14 @@ function unlockAudioFromGesture(){
 function bindAudioGestureUnlock(){
   if(_audioGestureBound) return;
   _audioGestureBound=true;
-  const unlock=()=>{
+  const unlock=(e)=>{
+    if(e&&e.type==="keydown"&&e.key!=="Enter"&&e.key!==" ") return;
     if(unlockAudioFromGesture()){
-      document.removeEventListener("touchstart",unlock,true);
-      document.removeEventListener("touchend",unlock,true);
       document.removeEventListener("pointerdown",unlock,true);
-      document.removeEventListener("click",unlock,true);
       document.removeEventListener("keydown",unlock,true);
     }
   };
-  document.addEventListener("touchstart",unlock,{capture:true,passive:true});
-  document.addEventListener("touchend",unlock,{capture:true,passive:true});
   document.addEventListener("pointerdown",unlock,{capture:true,passive:true});
-  document.addEventListener("click",unlock,true);
   document.addEventListener("keydown",unlock,true);
   document.addEventListener("visibilitychange",()=>{
     if(document.visibilityState==="visible") resumeAudioCtx();
@@ -2619,11 +2614,9 @@ function applyAudioSettings(){
     if(k==="bgm"||!sfx[k]) continue;
     sfx[k].volume=Math.min(1, sv*(SFX_PROFILES[k]?.v||1));
   }
-  if(shouldPlayBgm()){
-    const mv=musicMasterVol();
-    if(bgm&&bgm.volume>0) bgm.volume=mv;
-    if(bgmNext&&bgmNext.volume>0) bgmNext.volume=mv;
-  }
+  const mv=musicMasterVol();
+  if(bgm&&!bgm.paused) bgm.volume=shouldPlayBgm()?mv:0;
+  if(bgmNext&&!bgmNext.paused) bgmNext.volume=shouldPlayBgm()?mv:0;
 }
 function play(n,opts){
   if(S.muted||!started) return;
@@ -5976,7 +5969,7 @@ function begin(forceDemo){
   else if(forceDemo===false) S._demoMode=false;
   try{ const sn=document.getElementById("start-studio"); if(sn&&sn.value&&!S.studioName) S.studioName=cleanName(sn.value); }catch(e){}
   const booted=bootstrapNewStudio();
-  try{ initAudio(); }catch(e){ console.warn("initAudio in begin", e); }
+  try{ initAudio(); unlockAudioFromGesture(); }catch(e){ console.warn("initAudio in begin", e); }
   try{ updateMute(); }catch(e){}
   elShow("start", "none");
   pendingToasts.forEach(([m,g])=>{ try{ toast(m,g); }catch(_){} }); pendingToasts=[];
