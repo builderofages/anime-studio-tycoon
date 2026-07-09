@@ -94,10 +94,8 @@ html.hud-v3-active .tab.active {
   box-shadow: none !important;
 }
 
-/* ---- App shell: full width mobile; desktop width set in hud-premium.css ---- */
+/* ---- App shell: width/max-width owned by hud-premium.css (loads first; do not cap here) ---- */
 html.hud-v3-active #app {
-  max-width: none !important;
-  width: 100% !important;
   background: transparent !important;
 }
 

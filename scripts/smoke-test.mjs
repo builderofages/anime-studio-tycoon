@@ -356,6 +356,7 @@ assert(hudCss.includes("--ui-muted: #9d96ad"), "hud muted contrast bump");
 assert(hudCss.includes("auto auto auto auto 1fr"), "hud grid main row gets 1fr");
 assert(astCss.includes("gt-tutorial-active #pathway-rail"), "tutorial hides duplicate coach rail");
 assert(!astCss.includes("max-width: 440px"), "no desktop 440px app cap in ast-v5");
+assert(!astCss.match(/html\.hud-v3-active #app[\s\S]{0,120}max-width:\s*none/), "ast-v5 does not override app max-width");
 assert(hudCss.includes("BUILD 112"), "desktop shell css marker");
 assert(hudCss.includes("max-width: 900px"), "desktop wide shell at 1200px");
 assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("tab-unlock-ring-on"), "tab unlock ring css class");
