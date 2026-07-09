@@ -116,7 +116,7 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available;width:1
     <button class="btn-ghost" id="btn-mute">🔊 Sound: On</button>
     <button class="btn-ghost" id="btn-save" style="display:none">💾 Save</button>
     <button class="btn-ghost" id="btn-reset">↺ Reset</button>
-  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 16px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 111 · Playable</span></div>
+  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 16px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 112 · Desktop</span></div>
   <div id="toasts"></div>
   <div id="pwa-install-banner" class="aaa-pwa-install-banner" hidden>
     <div class="aaa-pwa-install-inner">
@@ -360,14 +360,14 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available;width:1
 
 <div class="overlay" id="whatsnew" style="display:none" role="dialog" aria-modal="true" aria-labelledby="whatsnew-title">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <img src="start-hero.png?v=111" alt="Anime Studio Tycoon logo" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
-    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 111 — Playable</h1>
+    <img src="start-hero.png?v=112" alt="Anime Studio Tycoon logo" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
+    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 112 — Desktop</h1>
     <div class="offlist whatsnew-list" style="margin:12px 0">
-      <div><span>📱 Mobile</span><b>Fixed HUD grid — main content was crushed to 56px (huge black void)</b></div>
-      <div><span>🎯 Quests</span><b>Today's Goals + Rival + Season Pass claims — badges stay in sync</b></div>
-      <div><span>🎬 Produce</span><b>Greenlight carousel + START PRODUCTION visible and scrollable on phone</b></div>
-      <div><span>🧭 Tutorial</span><b>Coach rail hidden during guided steps — less overlap on small screens</b></div>
-      <div><span>🧪 1286 tests</span><b>948 smoke + 338 VM sim — layout regression guards</b></div>
+      <div><span>🖥️ Desktop</span><b>720–900px centered shell (was stuck at 440px phone column)</b></div>
+      <div><span>📱 Mobile</span><b>HUD grid fixed — main content no longer crushed to 56px</b></div>
+      <div><span>👥 Staff</span><b>2-column hire grid on computer — tab labels + larger dock</b></div>
+      <div><span>🎬 Play</span><b>Greenlight carousel fills the shell on phone and desktop</b></div>
+      <div><span>🧪 1289 tests</span><b>951 smoke + 338 VM sim — desktop layout guards</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
   </div>
@@ -548,8 +548,8 @@ document.addEventListener("deviceready", initNativeChrome, false);
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 111 · Playable";
-const ASSET_V = "111";
+const BUILD_TAG = "build 112 · Desktop";
+const ASSET_V = "112";
 const SHARE_OG_URL = "https://anime-studio-tycoon.vercel.app/og-share.jpg";
 const OFFLINE_PREVIEW_CAP = 4*3600; // "while away" preview when return is under 4h
 const SHARE_PLAY_URL = "https://anime-studio-tycoon.vercel.app/play";

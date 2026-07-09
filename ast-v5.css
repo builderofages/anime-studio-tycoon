@@ -94,16 +94,11 @@ html.hud-v3-active .tab.active {
   box-shadow: none !important;
 }
 
-/* ---- App shell ---- */
+/* ---- App shell: full width mobile; desktop width set in hud-premium.css ---- */
 html.hud-v3-active #app {
-  max-width: 440px !important;
+  max-width: none !important;
+  width: 100% !important;
   background: transparent !important;
-}
-
-@media (max-width: 767px) {
-  html.hud-v3-active #app {
-    max-width: none !important;
-  }
 }
 
 /* ---- HUD: mockup glass bar ---- */

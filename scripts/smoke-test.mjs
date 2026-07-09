@@ -161,9 +161,9 @@ assert(!html.includes('href="hf-design.css'), "hf-design.css disabled (ast-v5)")
 assert(!html.includes('href="aaa-ui.css'), "aaa-ui.css disabled (ast-v5)");
 assert(html.includes("legacy-fx.css"), "legacy-fx css linked");
 assert(html.includes("ast-v5.css"), "ast-v5 design css linked");
-assert(html.includes("build 111"), "build 111 tag");
+assert(html.includes("build 112"), "build 112 tag");
 assert(html.includes("Production Score"), "production score label");
-assert(html.includes("Playable"), "build 111 playable tag");
+assert(html.includes("Desktop"), "build 112 desktop tag");
 assert(html.includes("safeBegin"), "boot safeBegin guard");
 const vercelIgnore = readFileSync(join(root, ".vercelignore"), "utf8");
 assert(vercelIgnore.includes("!audio/*.mp3"), "vercelignore allows audio mp3");
@@ -331,10 +331,10 @@ assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("guided-tutor
 assert(html.includes('id="btn-start-play"'), "start play cta");
 assert(html.includes('id="btn-start-demo"'), "start demo cta");
 assert(html.includes("start-cta-group"), "start cta group");
-assert(html.includes("Build 111"), "what's new build 111");
-assert(html.includes("Build 111 — Playable"), "what's new playable headline");
-assert(html.includes("1286 tests"), "what's new test count bullet");
-assert(html.includes("HUD grid"), "what's new mobile layout bullet");
+assert(html.includes("Build 112"), "what's new build 112");
+assert(html.includes("Build 112 — Desktop"), "what's new desktop headline");
+assert(html.includes("1289 tests"), "what's new test count bullet");
+assert(html.includes("720–900px"), "what's new desktop shell bullet");
 assert(html.includes("repairLoadedState"), "what's new boot repair bullet");
 assert(html.includes("Greenlight carousel"), "what's new produce bullet");
 assert(existsSync(join(root, "launch/DEVICE_QA.md")), "device qa checklist doc");
@@ -355,6 +355,9 @@ assert(hudCss.includes("min-height: 44px !important") && hudCss.includes("html.h
 assert(hudCss.includes("--ui-muted: #9d96ad"), "hud muted contrast bump");
 assert(hudCss.includes("auto auto auto auto 1fr"), "hud grid main row gets 1fr");
 assert(astCss.includes("gt-tutorial-active #pathway-rail"), "tutorial hides duplicate coach rail");
+assert(!astCss.includes("max-width: 440px"), "no desktop 440px app cap in ast-v5");
+assert(hudCss.includes("BUILD 112"), "desktop shell css marker");
+assert(hudCss.includes("max-width: 900px"), "desktop wide shell at 1200px");
 assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("tab-unlock-ring-on"), "tab unlock ring css class");
 assert(html.includes("redeemedCodes"), "promo code one-time schema");
 assert(html.includes("WebApplication"), "what's new seo bullet");

@@ -53,7 +53,7 @@ html.hud-v3-active body::before { display: none !important; }
 /* ---- App grid: hud · coach · main · dock ---- */
 html.hud-v3-active #app {
   width: 100%;
-  max-width: 480px;
+  max-width: 100%;
   margin: 0 auto;
   display: grid !important;
   grid-template-columns: minmax(0, 1fr);
@@ -176,7 +176,15 @@ html.hud-v3-active #goal #goal-bar {
 }
 
 @media (min-width: 768px) {
-  html.hud-v3-active #app { max-width: 720px; }
+  html.hud-v3-active #app {
+    max-width: 720px !important;
+    width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.06),
+      0 24px 72px rgba(0, 0, 0, 0.5);
+  }
 }
 
 /* ---- HUD shell ---- */
@@ -1167,4 +1175,50 @@ html.hud-v3-active .aaa-gem-row-low .btn-cyan:active {
 @media (max-width: 380px) {
   .hud-trend-chip { display: none; }
   .hud-stat .v { font-size: 10px !important; }
+}
+
+/* BUILD 112 — desktop: wider shell, readable scale, 2-col staff on wide screens */
+@media (min-width: 768px) {
+  html.hud-v3-active body {
+    background:
+      linear-gradient(180deg, rgba(8, 6, 15, 0.35), rgba(8, 6, 15, 0.82)),
+      url("bg-v4.png") center top / cover no-repeat fixed !important;
+  }
+  html.hud-v3-active #command-dock { --ui-dock-h: 64px; }
+  html.hud-v3-active .tab .tab-lbl {
+    display: block !important;
+    font-size: 10px !important;
+    font-weight: 700 !important;
+  }
+  html.hud-v3-active .tab .ic img.tab-ic {
+    width: 28px !important;
+    height: 28px !important;
+  }
+  html.hud-v3-active .panel h2,
+  html.hud-v3-active .aaa-page-hero h2 {
+    font-size: 18px !important;
+  }
+  html.hud-v3-active .aaa-staff-list {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+  html.hud-v3-active .aaa-staff-row {
+    grid-template-columns: 52px 1fr !important;
+    grid-template-rows: auto auto !important;
+  }
+  html.hud-v3-active .aaa-staff-row .aaa-staff-hire {
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+  }
+  html.hud-v3-active #start .card-modal,
+  html.hud-v3-active .overlay .card-modal {
+    max-width: min(480px, calc(100vw - 48px)) !important;
+  }
+}
+@media (min-width: 1200px) {
+  html.hud-v3-active #app { max-width: 900px !important; }
+  html.hud-v3-active .aaa-staff-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
 }
