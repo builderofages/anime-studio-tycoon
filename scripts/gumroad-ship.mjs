@@ -52,10 +52,10 @@ function setVercel(name, value) {
   return p.status === 0;
 }
 
-async function waitForAuth(maxMs = 300000) {
+async function waitForAuth(maxMs = 120000) {
   const start = Date.now();
   console.log("Log in to Gumroad in Chrome (passkey or Google), then this script continues.\n");
-  console.log("  gumroad auth login   # or approve passkey on gumroad.com/login\n");
+  console.log("  One tab only — do not run gumroad auth login in a loop.\n");
   spawn("open", ["-a", "Google Chrome", "https://gumroad.com/login?next=%2Fproducts"], { stdio: "ignore" }).unref();
 
   while (Date.now() - start < maxMs) {
@@ -73,6 +73,13 @@ async function waitForAuth(maxMs = 300000) {
 }
 
 console.log("Anime Studio Tycoon — Gumroad ship\n");
+
+const probe = await fetch("https://trainagent.gumroad.com/l/xmwvvi", { redirect: "follow" });
+if (probe.status === 429) {
+  console.error("✗ Gumroad IP rate-limited (429). Do NOT retry auth loops.");
+  console.error("  Wait 2–6 hours, or switch to phone hotspot, then: npm run gumroad-ship");
+  process.exit(2);
+}
 
 let token = getToken();
 if (!token) token = await waitForAuth();
