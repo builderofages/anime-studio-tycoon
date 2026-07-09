@@ -212,6 +212,41 @@ function extractGameLogic() {
   return loadLogicForVm() + "\n" + code.slice(0, cut);
 }
 
+/** Boot-time IAP helpers live after the load() cut in index.html. */
+function extractIapRedeemFns() {
+  const html = readFileSync(join(root, "index.html"), "utf8");
+  const m = html.match(/<script type="module">([\s\S]*?)<\/script>/);
+  if (!m) throw new Error("index.html game script block not found");
+  const code = m[1];
+  const start = code.indexOf("function clearGrantParams()");
+  const end = code.indexOf("function readGrant()");
+  if (start < 0 || end < 0) throw new Error("IAP redeem fns not found in index.html");
+  return code.slice(start, end);
+}
+
+/** IAP_FETCH_MOCK: redeem VALID/INVALID, license→redeem chain, pass idempotency */
+function createGrantFetchMock() {
+  return async function grantFetch(url, opts = {}) {
+    const u = String(url);
+    if (u.includes("/api/grant/redeem")) {
+      const pt = new URL(u, "http://localhost").searchParams.get("pt");
+      if (pt === "VALID" || pt === "TEST_PT") {
+        return { json: async () => ({ ok: true, grant: { kind: "gems", amount: "100" } }) };
+      }
+      if (pt === "PASS_PT") {
+        return { json: async () => ({ ok: true, grant: { kind: "pass" } }) };
+      }
+      if (pt === "INVALID") {
+        return { json: async () => ({ ok: false }) };
+      }
+    }
+    if (u.includes("/api/grant/license") && opts.method === "POST") {
+      return { json: async () => ({ ok: true, pt: "TEST_PT" }) };
+    }
+    return { json: async () => ({ ok: false }) };
+  };
+}
+
 const STUBS_BASE = `
 render = function(){};
 save = function(){};
@@ -538,6 +573,46 @@ function runRedeemSimulation() {
   const sandbox = buildSandbox();
   vm.runInNewContext(extractGameLogic() + STUBS + REDEEM_RUNNER, sandbox, { timeout: 20000 });
   return sandbox.__REDEEM__;
+}
+
+const IAP_RUNNER = `
+globalThis.__runIapSim = async function() {
+  S = freshState();
+  const gems0 = S.gems;
+  const validChanged = await redeemPurchaseToken("VALID");
+  const gemsAfterValid = S.gems;
+  const invalidChanged = await redeemPurchaseToken("INVALID");
+  const gemsAfterInvalid = S.gems;
+  const gemsBeforeLicense = S.gems;
+  await redeemLicenseKey("bundle", "KEY-123");
+  const gemsAfterLicense = S.gems;
+
+  S = freshState();
+  const passFirst = await redeemPurchaseToken("PASS_PT");
+  const passSecond = await redeemPurchaseToken("PASS_PT");
+  const passEntitlements = (S.entitlements || []).filter((e) => e === "pass").length;
+
+  return {
+    validChanged,
+    invalidChanged,
+    gemsValidGain: gemsAfterValid - gems0,
+    gemsUnchangedAfterInvalid: gemsAfterInvalid === gemsAfterValid,
+    gemsLicenseGain: gemsAfterLicense - gemsBeforeLicense,
+    passFirst,
+    passSecond,
+    passEntitlements,
+    producerPass: S.producerPass,
+  };
+};
+`;
+
+async function runIapSimulation() {
+  const sandbox = buildSandbox();
+  sandbox.fetch = createGrantFetchMock();
+  vm.runInNewContext(extractGameLogic() + extractIapRedeemFns() + STUBS + IAP_RUNNER, sandbox, {
+    timeout: 20000,
+  });
+  return sandbox.__runIapSim();
 }
 
 const MODAL_STORM_RUNNER = `
@@ -963,6 +1038,18 @@ function assertRedeem(r) {
   assert(r.grantGems === 250, "bundle grants 200 gems + first-purchase bonus once", `got ${r.grantGems}`);
 }
 
+function assertIap(iap) {
+  assert(iap.validChanged === true, "redeemPurchaseToken VALID grants");
+  assert(iap.gemsValidGain === 170, "VALID pt grants 100 gems + first-purchase 50 + flash 20", `got +${iap.gemsValidGain}`);
+  assert(iap.invalidChanged === false, "redeemPurchaseToken INVALID returns false");
+  assert(iap.gemsUnchangedAfterInvalid === true, "INVALID pt does not change gems");
+  assert(iap.gemsLicenseGain === 100, "redeemLicenseKey chains license→TEST_PT redeem", `got +${iap.gemsLicenseGain}`);
+  assert(iap.passFirst === true, "PASS_PT first redeem delivers pass");
+  assert(iap.passSecond === false, "PASS_PT second redeem idempotent (entitlement exists)");
+  assert(iap.passEntitlements === 1, "pass entitlement recorded once", `count=${iap.passEntitlements}`);
+  assert(iap.producerPass === true, "producerPass set after signed redeem");
+}
+
 function assertModalStorm(storm) {
   assert(storm.drain1 === true, "modal storm drain processes studio queue slot");
   assert(storm.studioCleared === true, "seen studio modal clears studio queue flag");
@@ -1220,6 +1307,14 @@ try {
   assertRedeem(r);
 } catch (e) {
   fail("vm redeem sim", e.message || String(e));
+}
+
+console.log("\nSigned IAP fetch mock (redeemPurchaseToken, redeemLicenseKey):\n");
+try {
+  const iap = await runIapSimulation();
+  assertIap(iap);
+} catch (e) {
+  fail("vm iap sim", e.message || String(e));
 }
 
 console.log("\nModal storm queue (seen studio → drain stars):\n");

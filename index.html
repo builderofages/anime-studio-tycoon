@@ -98,7 +98,7 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available}
     <button class="btn-ghost" id="btn-mute">🔊 Sound: On</button>
     <button class="btn-ghost" id="btn-save" style="display:none">💾 Save</button>
     <button class="btn-ghost" id="btn-reset">↺ Reset</button>
-  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 103 · Native</span></div>
+  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 12px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 104 · IAP</span></div>
   <div id="toasts"></div>
   <div id="pwa-install-banner" class="aaa-pwa-install-banner" hidden>
     <div class="aaa-pwa-install-inner">
@@ -340,14 +340,15 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available}
 
 <div class="overlay" id="whatsnew" style="display:none" role="dialog" aria-modal="true" aria-labelledby="whatsnew-title">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <img src="start-hero.png?v=103" alt="Anime Studio Tycoon logo" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
-    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 103 — Native</h1>
+    <img src="start-hero.png?v=104" alt="Anime Studio Tycoon logo" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
+    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 104 — IAP</h1>
     <div class="offlist whatsnew-list" style="margin:12px 0">
-      <div><span>📱 TestFlight</span><b>www/ bundle ships og-share, play.html, robots & sitemap for Capacitor</b></div>
-      <div><span>🎯 Coach CTA</span><b>Full action labels with CSS ellipsis — no more hard 14-char chop</b></div>
-      <div><span>⚙️ Settings</span><b>Drawer focus trap — Tab cycles inside, Escape closes</b></div>
-      <div><span>🔓 Tab rings</span><b>Locked dock tabs still show unlock progress at a glance</b></div>
-      <div><span>📣 Share cards</span><b>Self-hosted OG image for Discord, X & iMessage previews</b></div>
+      <div><span>🔐 Signed grants</span><b>Production web uses ?pt= JWT tokens — dev ?grant= stays on localhost</b></div>
+      <div><span>🎫 License redeem</span><b>Gumroad keys POST to /api/grant/license then chain redeem</b></div>
+      <div><span>🧪 VM sim</span><b>playtest-sim mocks fetch for VALID/INVALID pt + idempotent pass grants</b></div>
+      <div><span>📱 Native</span><b>Capacitor IAP bridge unchanged — StoreKit / Play Billing via iap.js</b></div>
+      <div><span>🛡️ Idempotent</span><b>Second redeem of same entitlement won't double-deliver</b></div>
+      <div><span>🎵 Game feel</span><b>First greenlight arpeggio, unlock chimes, share-milestone sparkle + slot burst</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
   </div>
@@ -456,7 +457,7 @@ document.addEventListener("deviceready", initNativeChrome, false);
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 103 · Native";
+const BUILD_TAG = "build 104 · IAP";
 const ASSET_V = "102";
 const SHARE_OG_URL = "https://anime-studio-tycoon.vercel.app/og-share.jpg";
 const OFFLINE_PREVIEW_CAP = 4*3600; // "while away" preview when return is under 4h
@@ -1023,6 +1024,7 @@ function queueShareMilestoneModal(){
     if(fans) fans.textContent=fmt(S.fans||0);
     if(rank) rank.textContent="#"+industryStandings().rank;
     m.style.display="flex";
+    celebrateShareMilestoneOpen();
     const shareBtn=document.querySelector('[data-act="share"]');
     if(shareBtn) shareBtn.classList.add("ast-share-nudge");
   };
@@ -2065,7 +2067,7 @@ function unlockedProjects(){ return PROJECTS.filter(p=>!projectLockInfo(p).locke
 /* ========================= AUDIO ========================= */
 let bgm=null; const sfx={};
 let _actx=null;
-const SYNTH_SFX_KEYS=new Set(["hire","greenlight","premiere","claim","tab-switch","error"]);
+const SYNTH_SFX_KEYS=new Set(["hire","greenlight","first-greenlight","premiere","claim","tab-switch","unlock-open","milestone-collect","error"]);
 const SFX_PROFILES={
   click:{src:"click",rate:1,v:1},
   tap:{src:"click",rate:1.18,v:0.42},
@@ -2077,7 +2079,10 @@ const SFX_PROFILES={
   premiere:{src:"reward",rate:1.02,v:1.2},
   hire:{src:"click",rate:1.15,v:0.9},
   greenlight:{src:"reward",rate:1.05,v:1},
+  "first-greenlight":{src:"reward",rate:1.1,v:1.15},
   "tab-switch":{src:"click",rate:0.88,v:0.5},
+  "unlock-open":{src:"reward",rate:1.02,v:1.05},
+  "milestone-collect":{src:"reward",rate:1.06,v:1.12},
   error:{src:"click",rate:0.72,v:0.65},
 };
 function audioCtx(){
@@ -2157,6 +2162,12 @@ const SYNTH_SFX={
     o.start(t); o.stop(t+0.35);
     synthTone(ctx,t+0.05,880,0.08,"sine",0.35,vol);
   },
+  "first-greenlight"(ctx,vol){
+    const t=ctx.currentTime;
+    [392,523.25,659.25,783.99,987.77].forEach((f,i)=>synthTone(ctx,t+i*0.07,f,0.18-i*0.02,"triangle",0.52-i*0.06,vol));
+    synthNoiseWhoosh(ctx,t+0.02,0.22,vol*0.42);
+    synthTone(ctx,t+0.38,1174.66,0.24,"sine",0.48,vol);
+  },
   premiere(ctx,vol,close){
     const t=ctx.currentTime;
     if(close){
@@ -2178,6 +2189,19 @@ const SYNTH_SFX={
     const t=ctx.currentTime;
     synthNoiseWhoosh(ctx,t,0.12,vol*0.55);
     synthTone(ctx,t+0.02,320,0.06,"sine",0.18,vol);
+  },
+  "unlock-open"(ctx,vol){
+    const t=ctx.currentTime;
+    synthTone(ctx,t,440,0.1,"sine",0.42,vol);
+    synthTone(ctx,t+0.08,554.37,0.12,"triangle",0.38,vol);
+    synthTone(ctx,t+0.16,659.25,0.16,"sine",0.34,vol);
+    synthNoiseWhoosh(ctx,t+0.04,0.14,vol*0.35);
+  },
+  "milestone-collect"(ctx,vol){
+    const t=ctx.currentTime;
+    [880,1046.5,1318.5].forEach((f,i)=>synthTone(ctx,t+i*0.05,f,0.1,"sine",0.46-i*0.08,vol));
+    synthTone(ctx,t+0.18,1567.98,0.2,"triangle",0.4,vol);
+    synthNoiseWhoosh(ctx,t+0.1,0.1,vol*0.22);
   },
   error(ctx,vol){
     const t=ctx.currentTime;
@@ -2387,6 +2411,49 @@ function celebrateReturnHubCollect({offline,daily}){
   if(daily) toastBits.push("🎁 Daily reward collected!");
   if(toastBits.length) toast(toastBits.join(" · "),"special");
 }
+function celebrateUnlockModalOpen(modalId){
+  if(OFFLINE) return;
+  const m=document.getElementById(modalId);
+  if(m&&window.__AST_FX__?.burst){
+    const card=m.querySelector(".card-modal");
+    if(card){
+      const r=card.getBoundingClientRect();
+      window.__AST_FX__.burst(20, r.left+r.width/2, r.top+r.height*0.35);
+    }else window.__AST_FX__.burst(16);
+  }else window.__AST_FX__?.burst?.(14);
+  play("unlock-open");
+}
+function celebrateShareMilestoneOpen(){
+  if(OFFLINE) return;
+  const app=document.getElementById("app");
+  if(app){
+    app.classList.remove("flash-gold"); void app.offsetWidth; app.classList.add("flash-gold");
+    setTimeout(()=>app.classList.remove("flash-gold"), 620);
+  }
+  const m=document.getElementById("share-milestone");
+  if(m&&window.__AST_FX__?.burst){
+    const card=m.querySelector(".card-modal");
+    if(card){
+      const r=card.getBoundingClientRect();
+      window.__AST_FX__.burst(26, r.left+r.width/2, r.top+r.height*0.35);
+    }else window.__AST_FX__.burst(22);
+  }else window.__AST_FX__?.burst?.(20);
+  play("milestone-collect");
+}
+function celebrateGreenlightSlot(slot, isFirst){
+  if(OFFLINE) return;
+  const burst=isFirst?32:22;
+  const pulse=()=>{
+    const slotEl=document.getElementById("slot-"+slot)||document.querySelector('.aaa-slot-card[data-slot-ix="'+slot+'"]');
+    if(slotEl&&window.__AST_FX__?.burst){
+      const r=slotEl.getBoundingClientRect();
+      window.__AST_FX__.burst(burst, r.left+r.width/2, r.top+r.height*0.45);
+      slotEl.classList.add("aaa-slot-greenlit");
+      setTimeout(()=>slotEl.classList.remove("aaa-slot-greenlit"), 1200);
+    }else window.__AST_FX__?.burst?.(isFirst?24:14);
+  };
+  requestAnimationFrame(()=>requestAnimationFrame(pulse));
+}
 function celebrateFirstHire(role){
   if(OFFLINE) return;
   const app=document.getElementById("app");
@@ -2521,6 +2588,7 @@ function greenlight(pid, genre, cast, sequel, sfx){
   const slot=firstEmptySlot();
   if(slot<0){ toast("All production slots are busy — expand your studio"); play("error"); return; }
   if(S.yen < p.cost){ toast("Not enough Yen to greenlight"); play("error"); return; }
+  const isFirstGl=(S.releases||0)===0 && activeCount()===0;
   // validate the featured cast — only working stars with enough energy, capped
   const ok=(cast||[]).filter(id=>{ const st=(S.stars||[]).find(x=>x.sid===id); return st && !st.resting && starEnergy(st)>=15; }).slice(0,castCap());
   S.yen -= p.cost;
@@ -2536,7 +2604,12 @@ function greenlight(pid, genre, cast, sequel, sfx){
   S.projects[slot]={ pid, genre, progress:0, title, poster, cast:ok, base, seq };
   _castSel=[];
   questAdd("greenlit",1);
-  track("greenlight",{tier:p.tier,genre,cast:ok.length,seq}); play(sfx||"click"); render(); save();
+  track("greenlight",{tier:p.tier,genre,cast:ok.length,seq});
+  if(isFirstGl) play("first-greenlight");
+  else if(sfx) play(sfx);
+  else play("greenlight");
+  render(); save();
+  celebrateGreenlightSlot(slot, isFirstGl);
 }
 /* When a show premieres, the cast gains XP→levels, fame (from hits), drains energy, and earns loyalty for the work. */
 function processCast(pr, stars, p){
@@ -2634,7 +2707,7 @@ function showStarsUnlockModal(){
   _starsUnlockQueued=false;
   if(S.starsUnlockModalSeen||!featureUnlocked("stars")) return;
   const m=document.getElementById("stars-unlock"); if(!m) return;
-  m.style.display="flex"; play("reward");
+  m.style.display="flex"; celebrateUnlockModalOpen("stars-unlock");
 }
 function queueStarsUnlockModal(){
   if(S.starsUnlockModalSeen||!featureUnlocked("stars")) return;
@@ -2654,7 +2727,7 @@ function showStudioUnlockModal(){
   _studioUnlockQueued=false;
   if(S.studioUnlockModalSeen||!featureUnlocked("studio")) return;
   const m=document.getElementById("studio-unlock"); if(!m) return;
-  m.style.display="flex"; play("reward");
+  m.style.display="flex"; celebrateUnlockModalOpen("studio-unlock");
 }
 function queueStudioUnlockModal(){
   if(S.studioUnlockModalSeen||!featureUnlocked("studio")) return;
@@ -2678,7 +2751,7 @@ function showChaosUnlockModal(){
   _chaosUnlockQueued=false;
   if(S.chaosUnlockModalSeen||!featureUnlocked("chaos")) return;
   const m=document.getElementById("chaos-unlock"); if(!m) return;
-  m.style.display="flex"; play("reward");
+  m.style.display="flex"; celebrateUnlockModalOpen("chaos-unlock");
 }
 function queueChaosUnlockModal(){
   if(S.chaosUnlockModalSeen||!featureUnlocked("chaos")) return;
@@ -2700,7 +2773,7 @@ function showMarketUnlockModal(){
   _marketUnlockQueued=false;
   if(S.marketUnlockModalSeen||!featureUnlocked("market")) return;
   const m=document.getElementById("market-unlock"); if(!m) return;
-  m.style.display="flex"; play("reward");
+  m.style.display="flex"; celebrateUnlockModalOpen("market-unlock");
 }
 function queueMarketUnlockModal(){
   if(S.marketUnlockModalSeen||!featureUnlocked("market")) return;
@@ -2721,7 +2794,7 @@ function showResearchUnlockModal(){
   _researchUnlockQueued=false;
   if(S.researchUnlockModalSeen||!featureUnlocked("research")) return;
   const m=document.getElementById("research-unlock"); if(!m) return;
-  m.style.display="flex"; play("reward");
+  m.style.display="flex"; celebrateUnlockModalOpen("research-unlock");
 }
 function queueResearchUnlockModal(){
   if(S.researchUnlockModalSeen||!featureUnlocked("research")) return;
@@ -3267,7 +3340,7 @@ function shareText(){
   return lines[Math.floor(Math.random()*lines.length)];
 }
 function rewardShare(){
-  if(!S.sharedOnce){ S.sharedOnce=true; S.gems+=25; toast("🔗 Shared! +25 gems — thanks for spreading the word!",true); play("reward"); render(); save(); }
+  if(!S.sharedOnce){ S.sharedOnce=true; S.gems+=25; toast("🔗 Shared! +25 gems — thanks for spreading the word!",true); play("milestone-collect"); render(); save(); }
   else toast("🔗 Thanks for sharing!");
 }
 function shareGame(){

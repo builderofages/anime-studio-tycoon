@@ -1021,11 +1021,24 @@ html.hud-v3-active #toasts {
   }
 }
 
+@keyframes aaa-slot-greenlit-pop {
+  0% { box-shadow: 0 0 0 0 rgba(255, 92, 168, 0.55); transform: scale(1); }
+  40% { box-shadow: 0 0 28px 8px rgba(255, 92, 168, 0.42); transform: scale(1.02); }
+  100% { box-shadow: none; transform: scale(1); }
+}
+
+html.hud-v3-active .aaa-slot-card.aaa-slot-greenlit .aaa-show-panel,
+html.hud-v3-active .aaa-slot-card.aaa-slot-greenlit .aaa-slot-empty-inner {
+  animation: aaa-slot-greenlit-pop 0.9s ease-out;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hud-combo.hud-combo-pulse,
   .tab-badge,
   #sakura-petals .petal,
-  html.hud-v3-active .tab.tab-locked.tab-unlock-ring-on .ic::before {
+  html.hud-v3-active .tab.tab-locked.tab-unlock-ring-on .ic::before,
+  html.hud-v3-active .aaa-slot-card.aaa-slot-greenlit .aaa-show-panel,
+  html.hud-v3-active .aaa-slot-card.aaa-slot-greenlit .aaa-slot-empty-inner {
     animation: none !important;
     transition: none !important;
   }
