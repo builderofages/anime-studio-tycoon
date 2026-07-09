@@ -161,9 +161,9 @@ assert(!html.includes('href="hf-design.css'), "hf-design.css disabled (ast-v5)")
 assert(!html.includes('href="aaa-ui.css'), "aaa-ui.css disabled (ast-v5)");
 assert(html.includes("legacy-fx.css"), "legacy-fx css linked");
 assert(html.includes("ast-v5.css"), "ast-v5 design css linked");
-assert(html.includes("build 114"), "build 114 tag");
+assert(html.includes("build 115"), "build 115 tag");
 assert(html.includes("Production Score"), "production score label");
-assert(html.includes("Soundtracks"), "build 114 soundtracks tag");
+assert(html.includes("Premiere"), "build 115 premiere tag");
 assert(html.includes("safeBegin"), "boot safeBegin guard");
 const vercelIgnore = readFileSync(join(root, ".vercelignore"), "utf8");
 assert(vercelIgnore.includes("!audio/*.mp3"), "vercelignore allows audio mp3");
@@ -339,16 +339,18 @@ assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("guided-tutor
 assert(html.includes('id="btn-start-play"'), "start play cta");
 assert(html.includes('id="btn-start-demo"'), "start demo cta");
 assert(html.includes("start-cta-group"), "start cta group");
-assert(html.includes("Build 114"), "what's new build 114");
-assert(html.includes("Build 114 — Soundtracks"), "what's new soundtracks headline");
+assert(html.includes("Build 115"), "what's new build 115");
+assert(html.includes("Build 115 — Premiere"), "what's new premiere headline");
+assert(html.includes("_premiereOpen")&&html.includes("BGM_TRACKS.premiere"), "premiere bgm crossfade hook");
+assert(html.includes("!started")&&html.match(/function play\([^)]*\)[^{]*\{[^}]*!started/s), "sfx gated until game started");
 assert(html.includes("toggleMute"), "toggleMute export");
 assert(html.includes('data-act="toggle-mute"'), "mute button data-act");
 assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("drawer-music-vol"), "drawer music volume slider");
 assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("drawerInteractionKeepsOpen"), "drawer stays open for audio");
 assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("syncDrawerAudio"), "drawer audio sync helper");
 assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("drawer-bgm-track"), "drawer bgm track picker");
-assert(html.includes("BGM track") || html.includes("bgm-produce") || html.includes("Scene BGM"), "what's new soundtrack tracks bullet");
-assert(html.includes("after you tap Play") || html.includes("startBgm") || html.includes("shouldPlayBgm"), "what's new bgm gated on play bullet");
+assert(html.includes("Premiere BGM") || html.includes("Red-carpet"), "what's new premiere bgm bullet");
+assert(html.includes("Zero SFX") || html.includes("startBgm") || html.includes("shouldPlayBgm"), "what's new start screen silent bullet");
 assert(existsSync(join(root, "launch/DEVICE_QA.md")), "device qa checklist doc");
 assert(html.includes("tabUnlockPct"), "tab unlock pct helper");
 assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("updateTabUnlockRings"), "tab unlock ring updater");
@@ -998,6 +1000,9 @@ assert(wwwIap.includes("https://anime-studio-tycoon.vercel.app/api/iap/validate"
 assert(!existsSync(join(root, "www/design-overhaul.css")), "www/ has no stale design-overhaul.css");
 assert(existsSync(join(root, "www/og-share.jpg")), "www/og-share.jpg copied for native");
 assert(existsSync(join(root, "www/audio/bgm.m4a")), "www/audio/bgm.m4a copied for native");
+for (const bgm of ["bgm-produce.m4a", "bgm-market.m4a", "bgm-premiere.m4a", "bgm-chill.m4a"]) {
+  assert(existsSync(join(root, "www/audio", bgm)), `www/audio/${bgm} copied for native`);
+}
 assert(existsSync(join(root, "www/audio/hire.wav")), "www/audio/hire.wav copied for native");
 assert(existsSync(join(root, "www/play.html")), "www/play.html copied for native");
 assert(existsSync(join(root, "www/robots.txt")), "www/robots.txt copied for native");

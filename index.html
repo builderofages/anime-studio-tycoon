@@ -116,7 +116,7 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available;width:1
     <button class="btn-ghost" id="btn-mute" type="button" data-act="toggle-mute">🔊 Sound: On</button>
     <button class="btn-ghost" id="btn-save" style="display:none">💾 Save</button>
     <button class="btn-ghost" id="btn-reset">↺ Reset</button>
-  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 16px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 114 · Soundtracks</span></div>
+  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 16px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 115 · Premiere</span></div>
   <div id="toasts"></div>
   <div id="pwa-install-banner" class="aaa-pwa-install-banner" hidden>
     <div class="aaa-pwa-install-inner">
@@ -361,13 +361,13 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available;width:1
 <div class="overlay" id="whatsnew" style="display:none" role="dialog" aria-modal="true" aria-labelledby="whatsnew-title">
   <div class="card-modal" style="max-width:400px;text-align:left">
     <img src="start-hero.png?v=112" alt="Anime Studio Tycoon logo" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
-    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 114 — Soundtracks</h1>
+    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 115 — Premiere</h1>
     <div class="offlist whatsnew-list" style="margin:12px 0">
-      <div><span>🎼 Scene BGM</span><b>5 tracks — Studio, Produce, Market, Premiere, Chill — auto-switch per tab</b></div>
-      <div><span>🔇 No spam</span><b>Music starts after you tap Play — no SFX burst on start screen</b></div>
-      <div><span>⚙️ Settings</span><b>Pick Auto or lock a BGM track + music/SFX sliders</b></div>
-      <div><span>🎵 Crossfade</span><b>Smooth transitions when changing tabs or tracks</b></div>
-      <div><span>🧪 960+ tests</span><b>Smoke + sim guards for soundtrack system</b></div>
+      <div><span>🎬 Premiere BGM</span><b>Red-carpet soundtrack auto-fades in on every premiere — restores after</b></div>
+      <div><span>🔇 Start screen</span><b>Zero SFX until Play — no clicks/chimes while browsing menus</b></div>
+      <div><span>🎼 5 tracks</span><b>Studio · Produce · Market · Premiere · Chill — tab auto + manual pick</b></div>
+      <div><span>📱 Native</span><b>All scene BGMs bundled for TestFlight / Capacitor builds</b></div>
+      <div><span>🧪 970+ tests</span><b>Smoke guards for premiere audio + native BGM bundle</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
   </div>
@@ -548,7 +548,7 @@ document.addEventListener("deviceready", initNativeChrome, false);
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 114 · Soundtracks";
+const BUILD_TAG = "build 115 · Premiere";
 const ASSET_V = "112";
 const SHARE_OG_URL = "https://anime-studio-tycoon.vercel.app/og-share.jpg";
 const OFFLINE_PREVIEW_CAP = 4*3600; // "while away" preview when return is under 4h
@@ -2268,6 +2268,7 @@ let _html5Primed=false;
 let _unlockInFlight=false;
 let _bgmCurSrc=null;
 let _bgmFadeTimer=null;
+let _premiereOpen=false;
 const BGM_TRACKS={
   studio:"audio/bgm.m4a",
   produce:"audio/bgm-produce.m4a",
@@ -2315,6 +2316,7 @@ function musicMasterVol(){ return (S.settings&&S.settings.musicVol!=null)?S.sett
 function shouldPlayBgm(){ return started&&S&&!S.muted&&_audioUnlocked; }
 function bgmSrcPath(el){ if(!el||!el.src) return ""; try{ const p=el.src.split("/"); return p.slice(-2).join("/"); }catch(_){ return ""; } }
 function bgmTrackForTab(tab){
+  if(_premiereOpen) return BGM_TRACKS.premiere;
   const pref=(S.settings&&S.settings.bgmTrack)||"auto";
   if(pref!=="auto"&&BGM_TRACKS[pref]) return BGM_TRACKS[pref];
   const key=BGM_BY_TAB[tab]||"studio";
@@ -2624,7 +2626,7 @@ function applyAudioSettings(){
   }
 }
 function play(n,opts){
-  if(S.muted) return;
+  if(S.muted||!started) return;
   if(!_audioUnlocked) unlockAudioFromGesture();
   if(playDedicatedSfx(n,opts)) return;
   playSfxFallback(n,opts);
@@ -3319,7 +3321,6 @@ function ageGate(then){
     confirm("This feature gives randomized rewards (a loot box) and is intended for players 17+ or with a guardian's permission. Odds are shown in the Store. Continue?");
   if(ok){ S.ageOk=true; save(); then(); }
 }
-let _premiereOpen=false;
 let _premiereWillShow=false;
 let _premiereQueue=[];
 function animateCount(el,to,prefix){
@@ -3373,7 +3374,9 @@ function showPremiere(pr,p,stars,yenGain,fansGain){
   const closeBtn=m?.querySelector("[data-act='premiere-close']");
   if(closeBtn) closeBtn.textContent=stars>=4&&!isFirst?"📺 Greenlight the sequel!":isFirst?"🎬 Greenlight the next one!":isSecond?"🎬 Scout stars & keep rolling!":"🎬 To the red carpet!";
   if(m){ m.classList.toggle("prem-first",isFirst); m.classList.toggle("prem-second",isSecond); m.classList.toggle("prem-franchise",stars>=4); m.style.display="flex"; }
-  _premiereOpen=true; play("premiere");
+  _premiereOpen=true;
+  startBgmForTab(S.tab);
+  play("premiere");
   window.__AST_FX__?.burst?.(isFirst?32:isSecond?14:stars>=5?36:stars>=4?24:16);
   if(isFirst||(stars>=4&&!isSecond)) window.__AST_FX__?.shake?.();
   setTimeout(()=>{ const y=document.getElementById("prem-yen"); const f=document.getElementById("prem-fans"); if(y) animateCount(y,yenGain,"¥"); if(f) animateCount(f,fansGain,"+"); },140);
@@ -3386,6 +3389,7 @@ function closePremiere(){
     showPremiere(next.pr,next.p,next.stars,next.yenGain,next.fansGain);
     return;
   }
+  startBgmForTab(S.tab);
   if(drainUnlockModalQueue()) return;
   if((S.releases||0)<2&&activeCount()===0){
     openGreenlightView(); save(); return;

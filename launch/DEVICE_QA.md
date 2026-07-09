@@ -24,7 +24,7 @@ Use one **fresh install** and one **returning save** per platform.
 - [ ] `npm test` — smoke + playtest audit pass
 - [ ] `npm run test:sim` — honest-flow VM sim pass
 - [ ] `npm run prepare-native` — `www/v5-idle-feel.js`, `www/og-share.jpg`, absolute `VALIDATOR_URL` in `www/iap.js`
-- [ ] Build tag shows **build 114 · Soundtracks** in footer / What's New
+- [ ] Build tag shows **build 115 · Premiere** in footer / What's New
 - [ ] ⚙️ Settings → Sound: mute toggle + music/SFX sliders work; drawer stays open while adjusting
 - [ ] ⚙️ Settings → **BGM track** dropdown (Auto / Studio / Produce / Market / Premiere / Chill): selection persists; music does not start until **Play** on cold load
 
@@ -32,7 +32,7 @@ Use one **fresh install** and one **returning save** per platform.
 
 ## iOS Safari regression (Build 108)
 
-Automated smoke asserts `bindAudioGestureUnlock`, `primeHtml5Audio`, `-webkit-fill-available`, and `100dvh` in `ast-v5.css`. Manual pass on a notch iPhone:
+Automated smoke asserts `bindAudioGestureUnlock`, `primeHtml5UnlockOnly`, `-webkit-fill-available`, and `100dvh` in `ast-v5.css`. Manual pass on a notch iPhone:
 
 | Case | Action | Expected |
 |------|--------|----------|
@@ -40,7 +40,8 @@ Automated smoke asserts `bindAudioGestureUnlock`, `primeHtml5Audio`, `-webkit-fi
 | Notch | Start screen + in-game HUD | Top chrome clears notch (`--safe-t` on `#app`); tab dock clears home indicator (`--safe-b` on `#command-dock`); achievement toast below notch |
 | Input zoom | Focus studio name, language, store redeem fields | No page zoom (all inputs/selects ≥ **16px**); keyboard does not hide focused field (overlay scroll + `focusin` scroll) |
 | Audio | Fresh tab, no prior tap | Silent until first gesture |
-| Audio unlock | First tap Play / tab / hire | `primeHtml5Audio()` runs; tab/hire chime audible; no sustained `AudioContext suspended` errors |
+| Audio unlock | First tap Play / tab / hire | `primeHtml5UnlockOnly()` runs; tab/hire chime audible after Play; no sustained `AudioContext suspended` errors |
+| Premiere BGM | Finish a show → premiere modal | Premiere soundtrack crossfades in; restores to tab BGM on close |
 | Modal scroll | Open start screen on iPhone SE | Long start card scrolls inside overlay; Collect / Play remain reachable above keyboard |
 
 **Pass if:** all six cases Pass on Safari iOS 16+.
