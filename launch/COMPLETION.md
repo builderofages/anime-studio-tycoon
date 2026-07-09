@@ -1,50 +1,62 @@
-# Anime Studio Tycoon — Path to 100%
+# Anime Studio Tycoon — 100% Engineering Complete
 
-**Current build:** 117 · Ship  
+**Current build:** 118 · Complete  
 **Version:** 9.0.0  
-**Gameplay completion:** 100%  
-**UI/UX completion:** 100%  
-**Launch readiness:** ~96% (Gumroad token + 7 products + Codemagic + device QA sign-off)
+**Gameplay:** 100%  
+**UI/UX:** 100%  
+**Engineering launch readiness:** **100%** (`npm run launch-readiness`)  
+**Distribution go-live:** ~55% (Gumroad extended SKUs + Vercel secrets + TestFlight)
 
-## Shipped layers (v1–v117)
-
-| Build | Layer | Key systems |
-|-------|-------|-------------|
-| Core | Base | Staff, stars, chaos, prestige, IAP, 50+ achievements |
-| 17–31 | AAA → Design | Ranks, season pass, dynasty, premium HUD, studio rating |
-| 108–112 | Legion → Layout | Mobile HUD grid, desktop 720–900px shell |
-| 113–114 | Audio → Soundtracks | Mute/sliders, 5 BGM tracks, tab crossfade |
-| 115–116 | Premiere → Polish | Red-carpet BGM, silent start, drawer gameplay toggles |
-| **117** | **Ship** | **Premiere + coach pathway i18n (8 langs), perf guards** |
-
-## Art & media
+## Verify anytime
 
 ```bash
-npm run fetch-launch-assets   # CDN art → launch/store/
-npm run prepare-store-icons   # PWA + iOS icon
-cd desktop && npm run dist:mac  # Steam .dmg
+cd /Users/alexandermills/anime-studio
+npm test                    # 990+ smoke + sim
+npm run test:web-qa         # automated web device QA
+npm run launch-readiness    # engineering vs distribution score
+npm run verify-gumroad      # 6 live + 7 to create
+npm run launch-preflight
 ```
 
-## Platform launch checklist
+Reports: `launch/LAUNCH_READINESS.json` · `launch/DEVICE_QA_AUTOMATED.json` · `launch/GUMROAD_STATUS.json`
 
-| Task | Owner | Status |
-|------|-------|--------|
-| Web (Vercel) | Auto | ✅ |
-| CI smoke tests (980+) | Auto | ✅ |
-| Hook bridge (all layers live) | Auto | ✅ |
-| Premiere + coach i18n (8 langs) | Auto | ✅ Build 117 |
-| IAP + grant APIs | Auto | ✅ JWT/MINT on Vercel |
-| Desktop Electron 9.0.0 | Auto | `npm run dist:mac` |
-| Device QA (iPhone + Android) | You | `launch/DEVICE_QA.md` |
-| Gumroad live keys | You | `GUMROAD_ACCESS_TOKEN` + 7 products |
-| Codemagic iOS/Android | You | `launch/CODEMAGIC.md` |
-| TestFlight / ASC upload | You | App Store Connect |
-| Steam store page | You | `launch/STEAM_SUBMISSION.md` |
+## Engineering (100% — automated)
+
+| Gate | Status |
+|------|--------|
+| Web Vercel production | ✅ |
+| 990+ smoke + sim tests | ✅ |
+| Premiere + coach + hub i18n (8 langs) | ✅ Build 117–118 |
+| Automated web device QA | ✅ `test:web-qa` |
+| Native `www/` bundle | ✅ `prepare-native` |
+| Grant JWT/MINT APIs | ✅ |
+| Store assets + desktop dist | ✅ |
+| Codemagic yaml + CI workflow | ✅ |
+| Launch guides | ✅ |
+
+## Distribution (your credentials)
+
+| Task | Command / doc |
+|------|----------------|
+| Create 7 Gumroad products | `launch/GUMROAD_PRODUCTS.md` → `npm run verify-gumroad` |
+| Vercel `GUMROAD_ACCESS_TOKEN` + `GUMROAD_SELLER_ID` | `launch/ENV_CHECKLIST.md` |
+| Vercel `APPLE_SHARED_SECRET` | `launch/TESTFLIGHT_CHECKLIST.md` §2 |
+| Codemagic TestFlight | `launch/CODEMAGIC.md` → **ios-release** |
+| Physical device QA | `launch/DEVICE_QA.md` §1–8 |
+| Steam store page | `launch/STEAM_SUBMISSION.md` |
+
+### One-liner after you have Gumroad token
+
+```bash
+vercel env add GUMROAD_ACCESS_TOKEN production
+vercel env add GUMROAD_SELLER_ID production
+npm run verify-gumroad
+vercel --prod --yes
+```
 
 ## Ship web
 
 ```bash
-cd /Users/alexandermills/anime-studio
 npm test && npm run test:sim && git push && vercel --prod --yes
-npm run prepare-native   # sync www/ for TestFlight
+npm run prepare-native
 ```

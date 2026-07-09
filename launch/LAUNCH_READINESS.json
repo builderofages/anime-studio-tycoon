@@ -1,0 +1,153 @@
+{
+  "generatedAt": "2026-07-09T09:22:43.603Z",
+  "build": 118,
+  "engineering": {
+    "earned": 100,
+    "total": 100,
+    "pct": 100,
+    "detail": [
+      {
+        "id": "smoke_tests",
+        "label": "982+ smoke + sim tests",
+        "weight": 12,
+        "pass": true,
+        "manual": null
+      },
+      {
+        "id": "sim_tests",
+        "label": "playtest-sim honest flow",
+        "weight": 8,
+        "pass": true,
+        "manual": null
+      },
+      {
+        "id": "native_bundle",
+        "label": "www/ native bundle",
+        "weight": 10,
+        "pass": true,
+        "manual": null
+      },
+      {
+        "id": "live_deploy",
+        "label": "Vercel production build",
+        "weight": 10,
+        "pass": true,
+        "manual": null
+      },
+      {
+        "id": "grant_api",
+        "label": "Grant JWT API",
+        "weight": 8,
+        "pass": true,
+        "manual": null
+      },
+      {
+        "id": "store_assets",
+        "label": "Store screenshots + icon",
+        "weight": 6,
+        "pass": true,
+        "manual": null
+      },
+      {
+        "id": "desktop_dist",
+        "label": "Steam desktop .dmg",
+        "weight": 6,
+        "pass": true,
+        "manual": null
+      },
+      {
+        "id": "codemagic_yaml",
+        "label": "Codemagic iOS/Android yaml",
+        "weight": 5,
+        "pass": true,
+        "manual": null
+      },
+      {
+        "id": "i18n_complete",
+        "label": "Premiere + hub i18n (UI5/UI6)",
+        "weight": 10,
+        "pass": true,
+        "manual": null
+      },
+      {
+        "id": "web_qa_auto",
+        "label": "Automated web device QA",
+        "weight": 10,
+        "pass": true,
+        "manual": null
+      },
+      {
+        "id": "ci_workflow",
+        "label": "GitHub Actions CI",
+        "weight": 5,
+        "pass": true,
+        "manual": null
+      },
+      {
+        "id": "guides",
+        "label": "Launch guides complete",
+        "weight": 10,
+        "pass": true,
+        "manual": null
+      }
+    ]
+  },
+  "distribution": {
+    "earned": 25,
+    "total": 90,
+    "pct": 28,
+    "detail": [
+      {
+        "id": "gumroad_core",
+        "label": "6 core Gumroad SKUs live",
+        "weight": 15,
+        "pass": true,
+        "manual": null
+      },
+      {
+        "id": "gumroad_extended",
+        "label": "7 extended Gumroad SKUs live",
+        "weight": 15,
+        "pass": false,
+        "manual": null
+      },
+      {
+        "id": "gumroad_token",
+        "label": "GUMROAD_ACCESS_TOKEN on Vercel",
+        "weight": 10,
+        "pass": true,
+        "manual": null
+      },
+      {
+        "id": "apple_iap",
+        "label": "APPLE_SHARED_SECRET on Vercel",
+        "weight": 10,
+        "manual": "Vercel env + ASC shared secret",
+        "pass": false
+      },
+      {
+        "id": "testflight",
+        "label": "TestFlight build uploaded",
+        "weight": 15,
+        "manual": "Codemagic ios-release",
+        "pass": false
+      },
+      {
+        "id": "device_qa_manual",
+        "label": "Physical device QA sign-off",
+        "weight": 15,
+        "manual": "launch/DEVICE_QA.md sections 1–8",
+        "pass": false
+      },
+      {
+        "id": "steam_page",
+        "label": "Steam store page live",
+        "weight": 10,
+        "manual": "launch/STEAM_SUBMISSION.md",
+        "pass": false
+      }
+    ]
+  },
+  "overallPct": 66,
+  "engineeringComplete": true
+}

@@ -1,0 +1,96 @@
+{
+  "generatedAt": "2026-07-09T09:22:43.209Z",
+  "url": "https://anime-studio-tycoon.vercel.app/play",
+  "build": 117,
+  "passed": 16,
+  "failed": 0,
+  "checks": [
+    {
+      "check": "cold launch /play HTTP 200",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "start screen Play CTA present",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "game script loads",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "build tag 117+ on live site",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "footer build tag visible",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "return hub i18n wired",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "premiere i18n wired",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "UI6 hub/market i18n batch",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "OG share image 200",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "OG share content-type image",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "manifest.json 200",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "manifest start_url /play",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "iOS viewport 100dvh in CSS",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "iOS safe-area CSS",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "grant API configured",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "core Gumroad products live (6)",
+      "pass": true,
+      "detail": ""
+    }
+  ],
+  "manualRemaining": [
+    "Physical iPhone Safari audio unlock + notch layout",
+    "Physical Android Chrome gesture nav",
+    "IAP sandbox purchase sheet (native/TestFlight)",
+    "PWA Add to Home Screen on device",
+    "Return hub after 30+ min background"
+  ]
+}

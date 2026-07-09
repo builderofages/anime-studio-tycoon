@@ -33,8 +33,8 @@ if (!existsSync(indexPath)) {
 } else {
   const indexHtml = readFileSync(indexPath, "utf8");
   const localBuild = buildNum(indexHtml);
-  if (localBuild >= 117) pass(`local build tag (build ${localBuild})`);
-  else failMsg("local build tag", `expected build 117+, got ${localBuild || "none"}`);
+  if (localBuild >= 118) pass(`local build tag (build ${localBuild})`);
+  else failMsg("local build tag", `expected build 118+, got ${localBuild || "none"}`);
 
   if (indexHtml.includes('from "./logic.js"')) pass("logic.js import in index.html");
   else failMsg("logic.js import", 'missing from "./logic.js"');
@@ -60,8 +60,8 @@ if (!existsSync(wwwIdx)) {
   if (wwwHtml.includes('id="return-hub"')) pass("www return-hub overlay");
   else failMsg("www return-hub", 'missing id="return-hub"');
   const wwwBuild = buildNum(wwwHtml);
-  if (wwwBuild >= 117) pass(`www build tag (build ${wwwBuild})`);
-  else failMsg("www build tag", `expected build 117+, got ${wwwBuild || "none"}`);
+  if (wwwBuild >= 118) pass(`www build tag (build ${wwwBuild})`);
+  else failMsg("www build tag", `expected build 118+, got ${wwwBuild || "none"}`);
   existsSync(join(root, "www/v5-idle-feel.js"))
     ? pass("www v5-idle-feel.js")
     : failMsg("www v5-idle-feel.js", "run npm run prepare-native");

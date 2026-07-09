@@ -116,7 +116,7 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available;width:1
     <button class="btn-ghost" id="btn-mute" type="button" data-act="toggle-mute">🔊 Sound: On</button>
     <button class="btn-ghost" id="btn-save" style="display:none">💾 Save</button>
     <button class="btn-ghost" id="btn-reset">↺ Reset</button>
-  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 16px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 117 · Ship</span></div>
+  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 16px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 118 · Complete</span></div>
   <div id="toasts"></div>
   <div id="pwa-install-banner" class="aaa-pwa-install-banner" hidden>
     <div class="aaa-pwa-install-inner">
@@ -361,13 +361,13 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available;width:1
 <div class="overlay" id="whatsnew" style="display:none" role="dialog" aria-modal="true" aria-labelledby="whatsnew-title">
   <div class="card-modal" style="max-width:400px;text-align:left">
     <img src="start-hero.png?v=112" alt="Anime Studio Tycoon logo" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
-    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 117 — Ship</h1>
+    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 118 — Complete</h1>
     <div class="offlist whatsnew-list" style="margin:12px 0">
-      <div><span>🌍 i18n</span><b>Premiere modal + coach pathway tips in 8 languages</b></div>
-      <div><span>🎬 Premiere</span><b>Red-carpet ribbons, stats & franchise CTA fully localized</b></div>
-      <div><span>🧭 Coach</span><b>Rank, festival, dynasty & market hints use your language</b></div>
-      <div><span>⚡ Perf</span><b>Drawer slot guard + guided coach no longer double-renders</b></div>
-      <div><span>🧪 980+ tests</span><b>Smoke guards for UI5 premiere keys + coach i18n</b></div>
+      <div><span>🏠 Hub</span><b>Return hub + market/research pills localized in 8 languages</b></div>
+      <div><span>🤖 QA</span><b>Automated web device QA — npm run test:web-qa</b></div>
+      <div><span>📊 Ready</span><b>Launch readiness scorer — npm run launch-readiness</b></div>
+      <div><span>🛒 Gumroad</span><b>Product verifier — npm run verify-gumroad (7 SKUs to create)</b></div>
+      <div><span>🧪 990+ tests</span><b>Engineering gate at 100% — distribution needs your tokens</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
   </div>
@@ -548,7 +548,7 @@ document.addEventListener("deviceready", initNativeChrome, false);
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 117 · Ship";
+const BUILD_TAG = "build 118 · Complete";
 const ASSET_V = "112";
 const SHARE_OG_URL = "https://anime-studio-tycoon.vercel.app/og-share.jpg";
 const OFFLINE_PREVIEW_CAP = 4*3600; // "while away" preview when return is under 4h
@@ -4151,14 +4151,14 @@ function maybeShowReturnHub(ctx={}){
   const showUnlocks=unlocks.length>0;
   const titleEl=document.getElementById("return-hub-title");
   const leadEl=document.getElementById("return-hub-lead");
-  if(titleEl) titleEl.textContent=`👋 Welcome back, ${name}!`;
+  if(titleEl) titleEl.textContent=tf("hub_welcome",{name});
   if(leadEl){
     const bits=[];
-    if(showOffline) bits.push("offline earnings ready");
-    if(showDaily) bits.push("daily reward claimed");
-    if(showWhatsnew) bits.push("fresh build notes");
-    if(showUnlocks) bits.push(`${unlocks.length} new unlock${unlocks.length>1?"s":""}`);
-    leadEl.textContent=bits.length?`Everything in one place — ${bits.join(" · ")}.`:"Your studio is ready — tap Continue to jump back in.";
+    if(showOffline) bits.push(t("hub_bit_offline"));
+    if(showDaily) bits.push(t("hub_bit_daily"));
+    if(showWhatsnew) bits.push(t("hub_bit_whatsnew"));
+    if(showUnlocks) bits.push(tf(unlocks.length>1?"hub_bit_unlock_many":"hub_bit_unlock_one",{n:unlocks.length}));
+    leadEl.textContent=bits.length?tf("hub_lead_multi",{bits:bits.join(" · ")}):t("hub_lead_ready");
   }
   const setSection=(id,on,fill)=>{
     const el=document.getElementById(id); if(!el) return;
@@ -4183,7 +4183,7 @@ function maybeShowReturnHub(ctx={}){
   });
   orderReturnHubSectionsOfflineFirst(showOffline,showWelcome);
   const btn=document.getElementById("btn-return-hub-close");
-  if(btn) btn.textContent=(showOffline||showDaily)?"Collect & Continue":"Continue ▶";
+  if(btn) btn.textContent=(showOffline||showDaily)?t("hub_collect_continue"):t("hub_continue");
   hub.dataset.hadOffline=showOffline?"1":"";
   hub.dataset.hadDaily=showDaily?"1":"";
   hub.dataset.hadWhatsnew=showWhatsnew?"1":"";
@@ -4378,13 +4378,13 @@ function updateMarketLive(){
   const hero=document.querySelector(".aaa-market-hero-meta");
   if(hero){
     const fansPill=hero.querySelector(".pill:not(.aaa-market-pill-afford)");
-    if(fansPill) fansPill.textContent=fmt(S.fans)+" fans";
+    if(fansPill) fansPill.textContent=tf("market_fans_count",{n:fmt(S.fans)});
     let readyPill=hero.querySelector(".aaa-market-pill-afford");
     if(affordAny){
       if(!readyPill){
         readyPill=document.createElement("span");
         readyPill.className="pill aaa-market-pill-afford";
-        readyPill.textContent="Campaign ready";
+        readyPill.textContent=t("market_campaign_ready");
         hero.appendChild(readyPill);
       }
     }else if(readyPill) readyPill.remove();
@@ -4428,11 +4428,12 @@ function updateResearchLive(){
   const trendBody=document.querySelector(".aaa-research-trend-body");
   if(trendBody){
     const b=trendBody.querySelector("b");
-    if(b&&b.textContent!=="Trending: "+trend) b.textContent="Trending: "+trend;
+    const trendLbl=tf("research_trending",{genre:trend});
+    if(b&&b.textContent!==trendLbl) b.textContent=trendLbl;
     const ic=trendBody.querySelector(".aaa-mastery-genre-ic");
     if(ic) ic.textContent=GENRE_ICONS[trend]||"";
     const span=trendBody.querySelector("span");
-    if(span) span.innerHTML=`Research <span class="aaa-mastery-genre-ic">${GENRE_ICONS[trend]||""}</span> ${trend} for bonus synergy on matching shows`;
+    if(span) span.innerHTML=`<span class="aaa-mastery-genre-ic">${GENRE_ICONS[trend]||""}</span> ${tf("research_synergy",{genre:trend})}`;
   }
   const affordAny=GENRES.some(g=>{ const rc=researchCost(g); return S.yen>=rc.cost&&S.hype>=rc.hypeCost; });
   const hero=document.querySelector(".aaa-research-hero-meta");
@@ -4442,7 +4443,7 @@ function updateResearchLive(){
       if(!readyPill){
         readyPill=document.createElement("span");
         readyPill.className="pill aaa-research-pill-afford";
-        readyPill.textContent="Research ready";
+        readyPill.textContent=t("research_ready");
         hero.prepend(readyPill);
       }
     }else if(readyPill) readyPill.remove();
@@ -4463,7 +4464,7 @@ function updateResearchLive(){
       if(isTrend&&!trendPill){
         trendPill=document.createElement("span");
         trendPill.className="aaa-mastery-trend-pill";
-        trendPill.textContent="TRENDING";
+        trendPill.textContent=t("pill_trending");
         h4.insertBefore(trendPill,h4.querySelector(".pill"));
       }else if(!isTrend&&trendPill) trendPill.remove();
     }

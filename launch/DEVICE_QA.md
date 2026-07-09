@@ -2,7 +2,7 @@
 
 Structured manual pass before TestFlight external beta or Play internal track. Run after `npm test`, `npm run prepare-native`, and `npm run launch-preflight` are green.
 
-**Build gate:** build **117+** · Ship
+**Build gate:** build **118+** · Complete
 **URLs:** [Play](https://anime-studio-tycoon.vercel.app/play) · [OG card](https://anime-studio-tycoon.vercel.app/og-share.jpg)
 
 ---
@@ -19,12 +19,21 @@ Use one **fresh install** and one **returning save** per platform.
 
 ---
 
+## Automated pre-flight (run first)
+
+```bash
+npm test && npm run test:web-qa && npm run launch-readiness
+```
+
+Signed-off when `launch/DEVICE_QA_AUTOMATED.json` shows `failed: 0` and engineering = 100%.
+
 ## Pre-flight (both platforms)
 
 - [ ] `npm test` — smoke + playtest audit pass
+- [ ] `npm run test:web-qa` — automated web checks green
 - [ ] `npm run test:sim` — honest-flow VM sim pass
 - [ ] `npm run prepare-native` — `www/v5-idle-feel.js`, `www/og-share.jpg`, absolute `VALIDATOR_URL` in `www/iap.js`
-- [ ] Build tag shows **build 117 · Ship** in footer / What's New
+- [ ] Build tag shows **build 118 · Complete** in footer / What's New
 - [ ] Switch language (⚙️) → premiere modal + coach tips show localized copy (not English)
 - [ ] ⚙️ Settings → Gameplay: auto-greenlight, particles, ticker toggles work
 - [ ] ⚙️ Settings → Sound: mute toggle + music/SFX sliders work; drawer stays open while adjusting
