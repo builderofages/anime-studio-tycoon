@@ -1,0 +1,119 @@
+{
+  "checkedAt": "2026-07-09T09:30:51.736Z",
+  "live": 6,
+  "missing": [
+    "astlegend",
+    "astmogul",
+    "astaurora",
+    "astphoenix",
+    "astshogun",
+    "astitems",
+    "astnoads"
+  ],
+  "products": [
+    {
+      "slug": "xmwvvi",
+      "name": "Producer Pass",
+      "price": 4.99,
+      "live": true,
+      "status": 200,
+      "ok": true
+    },
+    {
+      "slug": "xjpwv",
+      "name": "Starter Bundle",
+      "price": 9.99,
+      "live": true,
+      "status": 200,
+      "ok": true
+    },
+    {
+      "slug": "jbclqp",
+      "name": "Gems 120",
+      "price": 1.99,
+      "live": true,
+      "status": 200,
+      "ok": true
+    },
+    {
+      "slug": "legvhu",
+      "name": "Gems 350",
+      "price": 4.99,
+      "live": true,
+      "status": 200,
+      "ok": true
+    },
+    {
+      "slug": "gtdyn",
+      "name": "Gems 800",
+      "price": 9.99,
+      "live": true,
+      "status": 200,
+      "ok": true
+    },
+    {
+      "slug": "kttuab",
+      "name": "Gems 2000",
+      "price": 19.99,
+      "live": true,
+      "status": 200,
+      "ok": true
+    },
+    {
+      "slug": "astlegend",
+      "name": "Legend Bundle",
+      "price": 7.99,
+      "spec": "launch/GUMROAD_PRODUCTS.md §1",
+      "status": 404,
+      "ok": false
+    },
+    {
+      "slug": "astmogul",
+      "name": "Mogul Bundle",
+      "price": 19.99,
+      "spec": "§2",
+      "status": 404,
+      "ok": false
+    },
+    {
+      "slug": "astaurora",
+      "name": "Aurora Vesper",
+      "price": 3.99,
+      "spec": "§3",
+      "status": 404,
+      "ok": false
+    },
+    {
+      "slug": "astphoenix",
+      "name": "Phoenix Kogane",
+      "price": 3.99,
+      "spec": "§4",
+      "status": 404,
+      "ok": false
+    },
+    {
+      "slug": "astshogun",
+      "name": "Kaiser Shogun",
+      "price": 4.99,
+      "spec": "§5",
+      "status": 404,
+      "ok": false
+    },
+    {
+      "slug": "astitems",
+      "name": "Items Pack",
+      "price": 2.99,
+      "spec": "§6",
+      "status": 404,
+      "ok": false
+    },
+    {
+      "slug": "astnoads",
+      "name": "Remove Ads",
+      "price": 2.99,
+      "spec": "§7",
+      "status": 404,
+      "ok": false
+    }
+  ]
+}

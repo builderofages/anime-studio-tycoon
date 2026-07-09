@@ -83,15 +83,20 @@ const distribution = [
     return live.every(Boolean);
   }},
   { id: "gumroad_token", label: "GUMROAD_ACCESS_TOKEN on Vercel", weight: 10, check: async () => {
-    const r = await fetch(`${base}/api/grant/license`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ sku: "pass", license_key: "PING-TEST" }),
-    });
+    const r = await fetch(`${base}/api/grant/health`);
     const j = await r.json();
-    return r.status === 400 && j.error === "invalid license";
+    return r.ok && j.gumroad_token === true;
   }},
-  { id: "apple_iap", label: "APPLE_SHARED_SECRET on Vercel", weight: 10, check: () => false, manual: "Vercel env + ASC shared secret" },
+  { id: "gumroad_seller", label: "GUMROAD_SELLER_ID on Vercel", weight: 5, check: async () => {
+    const r = await fetch(`${base}/api/grant/health`);
+    const j = await r.json();
+    return r.ok && j.gumroad_seller === true;
+  }},
+  { id: "apple_iap", label: "APPLE_SHARED_SECRET on Vercel", weight: 10, check: async () => {
+    const r = await fetch(`${base}/api/grant/health`);
+    const j = await r.json();
+    return r.ok && j.apple_shared_secret === true;
+  }, manual: "Vercel env + ASC shared secret" },
   { id: "testflight", label: "TestFlight build uploaded", weight: 15, check: () => false, manual: "Codemagic ios-release" },
   { id: "device_qa_manual", label: "Physical device QA sign-off", weight: 15, check: () => false, manual: "launch/DEVICE_QA.md sections 1–8" },
   { id: "steam_page", label: "Steam store page live", weight: 10, check: () => false, manual: "launch/STEAM_SUBMISSION.md" },

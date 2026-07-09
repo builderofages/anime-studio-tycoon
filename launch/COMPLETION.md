@@ -15,6 +15,7 @@ npm test                    # 990+ smoke + sim
 npm run test:web-qa         # automated web device QA
 npm run launch-readiness    # engineering vs distribution score
 npm run verify-gumroad      # 6 live + 7 to create
+npm run setup-distribution  # env + Gumroad wizard
 npm run launch-preflight
 ```
 

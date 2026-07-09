@@ -351,6 +351,8 @@ assert(readFileSync(join(root, "hud-premium.js"), "utf8").includes("drawerSlotSi
 assert(existsSync(join(root, "scripts/device-qa-web.mjs")), "device-qa-web script");
 assert(existsSync(join(root, "scripts/launch-readiness.mjs")), "launch-readiness script");
 assert(existsSync(join(root, "scripts/verify-gumroad.mjs")), "verify-gumroad script");
+assert(existsSync(join(root, "scripts/setup-distribution.mjs")), "setup-distribution script");
+assert(existsSync(join(root, "api/grant/health.js")), "grant health endpoint");
 assert(/begin\([\s\S]*?initAudio\(\)[\s\S]*?unlockAudioFromGesture\(\)/.test(html), "begin captures play gesture for audio");
 assert(!/addEventListener\("touchend",unlock/.test(html), "audio unlock no touchend spam");
 assert(!/addEventListener\("click",unlock/.test(html), "audio unlock no document click spam");

@@ -117,6 +117,18 @@ if (existsSync(dmg)) {
 
 console.log("\nAPI:");
 try {
+  const h = await fetch(`${base}/api/grant/health`);
+  const hj = await h.json();
+  if (h.ok && hj.grant_jwt) pass("grant health endpoint");
+  else failMsg("grant health", "deploy latest for /api/grant/health");
+  if (hj.gumroad_token) pass("GUMROAD_ACCESS_TOKEN on Vercel");
+  else failMsg("GUMROAD_ACCESS_TOKEN", "not set — vercel env add GUMROAD_ACCESS_TOKEN production");
+  if (hj.apple_shared_secret) pass("APPLE_SHARED_SECRET on Vercel");
+  else failMsg("APPLE_SHARED_SECRET", "optional until TestFlight — vercel env add");
+} catch (e) {
+  failMsg("grant health", e.message);
+}
+try {
   const r = await fetch(`${base}/api/grant/redeem?pt=bad`);
   const j = await r.json();
   if (r.status === 400 && j.error) pass("API grant/redeem (env configured)");
