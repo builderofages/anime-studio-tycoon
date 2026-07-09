@@ -1399,7 +1399,7 @@ function runBootPrioritySimulation() {
   const whatsnew = els.whatsnew;
   if (whatsnew) {
     whatsnew.querySelector = (sel) => {
-      if (sel === "#whatsnew-title") return { textContent: "Build 109" };
+      if (sel === "#whatsnew-title") return { textContent: "Build 110" };
       if (sel === ".offlist") return { children: [] };
       return mockEl();
     };
@@ -2585,6 +2585,53 @@ try {
   assertPrestige(p);
 } catch (e) {
   fail("vm prestige sim", e.message || String(e));
+}
+
+const QUEST_CLAIM_RUNNER = `
+S = freshState();
+bootstrapHonestStudio();
+if (!S.quests?.length) rollQuests();
+const q0 = S.quests[0];
+const met = questMetric(q0.id);
+S.questProg[met] = q0.goal;
+const before = claimableRewardCount();
+claimQuest(0);
+const after = claimableRewardCount();
+S.releases = SEASON_TIERS[0].releases;
+S.seasonClaimed = [];
+const seasonReady = claimableRewardCount();
+claimSeasonTier(0);
+__QUEST_CLAIM__ = {
+  before,
+  gemsAfterQuest: S.gems,
+  after,
+  questClaimed: S.quests[0].claimed,
+  seasonReady,
+  seasonClaimed: S.seasonClaimed.includes(0),
+};
+`;
+
+function runQuestClaimSimulation() {
+  const sandbox = buildSandbox();
+  vm.runInNewContext(extractGameLogic() + STUBS_BASE + QUEST_CLAIM_RUNNER, sandbox, { timeout: 20000 });
+  return sandbox.__QUEST_CLAIM__;
+}
+
+function assertQuestClaim(r) {
+  assert(r.before >= 1, "claimableRewardCount sees ready daily quest");
+  assert(r.questClaimed, "claimQuest marks quest claimed");
+  assert(r.gemsAfterQuest > 0, "claimQuest grants gems");
+  assert(r.after < r.before, "claimableRewardCount drops after claim");
+  assert(r.seasonReady >= 1, "claimableRewardCount includes season tier");
+  assert(r.seasonClaimed, "claimSeasonTier records tier");
+}
+
+console.log("\nQuest claims (claimableRewardCount, daily, season pass):\n");
+try {
+  const qc = runQuestClaimSimulation();
+  assertQuestClaim(qc);
+} catch (e) {
+  fail("vm quest-claim sim", e.message || String(e));
 }
 
 console.log("\nStatic save schema + unlock order:\n");

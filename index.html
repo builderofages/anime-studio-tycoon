@@ -116,7 +116,7 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available;width:1
     <button class="btn-ghost" id="btn-mute">🔊 Sound: On</button>
     <button class="btn-ghost" id="btn-save" style="display:none">💾 Save</button>
     <button class="btn-ghost" id="btn-reset">↺ Reset</button>
-  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 16px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 109 · Phalanx</span></div>
+  <select id="lang-sel" class="btn-ghost" style="padding: 7px 10px; font-size: 16px; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; border-radius: 12px; font-weight: 700;"><option value="en">🌐 English</option><option value="es">🌐 Español</option><option value="pt">🌐 Português</option><option value="fr">🌐 Français</option><option value="de">🌐 Deutsch</option><option value="ja">🌐 日本語</option></select><span id="buildtag">build 110 · Vanguard</span></div>
   <div id="toasts"></div>
   <div id="pwa-install-banner" class="aaa-pwa-install-banner" hidden>
     <div class="aaa-pwa-install-inner">
@@ -360,14 +360,14 @@ html,body{height:100%;min-height:100vh;min-height:-webkit-fill-available;width:1
 
 <div class="overlay" id="whatsnew" style="display:none" role="dialog" aria-modal="true" aria-labelledby="whatsnew-title">
   <div class="card-modal" style="max-width:400px;text-align:left">
-    <img src="start-hero.png?v=109" alt="Anime Studio Tycoon logo" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
-    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 109 — Phalanx</h1>
+    <img src="start-hero.png?v=110" alt="Anime Studio Tycoon logo" style="width:100%;max-width:200px;display:block;margin:0 auto 12px;border-radius:20px;box-shadow:0 12px 40px rgba(255,92,168,.4)">
+    <h1 id="whatsnew-title" style="font-size:22px;text-align:center">✨ Build 110 — Vanguard</h1>
     <div class="offlist whatsnew-list" style="margin:12px 0">
+      <div><span>🎯 Quests</span><b>Today's Goals + Rival + Season Pass claims fixed — badges stay in sync</b></div>
       <div><span>🛡️ Logic</span><b>repairLoadedState extracted — NaN fans, bad slots, corrupt saves auto-heal</b></div>
       <div><span>🎬 Produce</span><b>Tap correct slot to greenlight, burst SFX synced, produce grid fixed</b></div>
-      <div><span>🌐 i18n</span><b>Korean + Chinese full UI — coach, tutorial, start screen</b></div>
       <div><span>💎 IAP</span><b>Grant security hardened, prestige promo farm blocked, native validator URL</b></div>
-      <div><span>🧪 1270 tests</span><b>938 smoke + 332 VM sim — modal storm, empire crisis, corrupt load</b></div>
+      <div><span>🧪 1284 tests</span><b>946 smoke + 338 VM sim — quest claims, modal storm, empire crisis</b></div>
     </div>
     <button class="btn-primary" data-act="whatsnew-close" style="width:100%;font-size:16px">Let's build! ▶</button>
   </div>
@@ -548,8 +548,8 @@ document.addEventListener("deviceready", initNativeChrome, false);
 
 /* ========================= CONFIG (balance data) ========================= */
 const SAVE_KEY = "anime_studio_tycoon_v1";
-const BUILD_TAG = "build 109 · Phalanx";
-const ASSET_V = "109";
+const BUILD_TAG = "build 110 · Vanguard";
+const ASSET_V = "110";
 const SHARE_OG_URL = "https://anime-studio-tycoon.vercel.app/og-share.jpg";
 const OFFLINE_PREVIEW_CAP = 4*3600; // "while away" preview when return is under 4h
 const SHARE_PLAY_URL = "https://anime-studio-tycoon.vercel.app/play";

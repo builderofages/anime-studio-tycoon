@@ -10,7 +10,7 @@ npm run prepare-native
 npm run launch-preflight
 ```
 
-Confirm: `www/logic.js`, `www/iap.js`, `iap.js` in `www/index.html`, `www/og-share.jpg`, `www/play.html`, `www/robots.txt`, `www/sitemap.xml`, `www/iap.js` has absolute `VALIDATOR_URL`, build **109+**, return-hub present.
+Confirm: `www/logic.js`, `www/iap.js`, `iap.js` in `www/index.html`, `www/og-share.jpg`, `www/play.html`, `www/robots.txt`, `www/sitemap.xml`, `www/iap.js` has absolute `VALIDATOR_URL`, build **110+**, return-hub present.
 
 ## 2. Vercel IAP secrets
 
@@ -66,7 +66,7 @@ On the build row:
 ## 9. Internal testing group
 
 1. TestFlight → **Internal Testing** → create group (e.g. “Studio team”)
-2. Add build **109+**
+2. Add build **110+**
 3. Add testers (ASC users with App Manager / Developer role)
 4. Testers install via **TestFlight** app
 
