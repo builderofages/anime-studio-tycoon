@@ -1,17 +1,22 @@
 #!/usr/bin/env node
 /**
- * Full Gumroad distribution ship — auth poll → create 7 SKUs → Vercel env → verify.
- * Usage: node scripts/gumroad-ship.mjs
- * Requires: gumroad CLI (brew install antiwork/cli/gumroad), vercel CLI logged in.
+ * Gumroad distribution ship — NO browser automation, NO auth polling.
+ * Usage:
+ *   GUMROAD_ACCESS_TOKEN=xxx node scripts/gumroad-ship.mjs
+ *   node scripts/gumroad-ship.mjs --verify   # also run verify + launch-readiness
+ *
+ * Auth: set token yourself (gumroad auth login once). This script never opens Chrome.
  */
-import { spawn, spawnSync } from "child_process";
+import { spawnSync } from "child_process";
 import { writeFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+import { probeRateLimit, exitOnRateLimit, requireToken } from "./_gumroad-guard.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const SELLER_ID = "2936157234519";
 const REDIRECT_BASE = "https://anime-studio-tycoon.vercel.app/api/grant/finish";
+const runVerify = process.argv.includes("--verify");
 
 const PRODUCTS = [
   { slug: "astlegend", name: "Anime Studio Tycoon — Legend Bundle", price: "7.99", desc: "Producer Pass (+50% Yen forever, auto-release, 2× offline) + 400 Gems + exclusive Legendary star Aurora Vesper." },
@@ -40,114 +45,86 @@ async function isLive(slug) {
   }
 }
 
-function getToken() {
-  if (process.env.GUMROAD_ACCESS_TOKEN) return process.env.GUMROAD_ACCESS_TOKEN.trim();
-  const p = run("gumroad", ["auth", "token"]);
-  if (p.status === 0 && p.stdout?.trim()) return p.stdout.trim();
-  return null;
-}
-
 function setVercel(name, value) {
   const p = run("vercel", ["env", "add", name, "production"], { input: value + "\n" });
   return p.status === 0;
 }
 
-async function waitForAuth(maxMs = 120000) {
-  const start = Date.now();
-  console.log("Log in to Gumroad in Chrome (passkey or Google), then this script continues.\n");
-  console.log("  One tab only — do not run gumroad auth login in a loop.\n");
-  spawn("open", ["-a", "Google Chrome", "https://gumroad.com/login?next=%2Fproducts"], { stdio: "ignore" }).unref();
+console.log("Anime Studio Tycoon — Gumroad ship (no Chrome / no auth polling)\n");
 
-  while (Date.now() - start < maxMs) {
-    const st = run("gumroad", ["auth", "status"]);
-    if (st.stdout?.includes("logged in") || st.stdout?.includes("Authenticated")) {
-      const token = getToken();
-      if (token) return token;
+try {
+  await probeRateLimit();
+} catch (e) {
+  exitOnRateLimit(e);
+}
+
+const token = requireToken();
+
+const allLive = (await Promise.all(PRODUCTS.map((p) => isLive(p.slug)))).every(Boolean);
+if (allLive) {
+  console.log("✓ All 7 extended SKUs already live — skipping create/publish.");
+  console.log("  Re-run with --verify to refresh status, or npm run configure-gumroad if license keys need updating.\n");
+  if (!runVerify) process.exit(0);
+}
+
+console.log("✓ Gumroad token present\n");
+
+if (!allLive) {
+  console.log("Setting Vercel env...");
+  setVercel("GUMROAD_ACCESS_TOKEN", token);
+  setVercel("GUMROAD_SELLER_ID", SELLER_ID);
+
+  const created = [];
+  for (const p of PRODUCTS) {
+    if (await isLive(p.slug)) {
+      console.log(`  ○ ${p.slug} already live`);
+      created.push({ ...p, status: "live" });
+      continue;
     }
-    const token = getToken();
-    if (token) return token;
-    await new Promise((r) => setTimeout(r, 5000));
-    process.stdout.write(".");
+    console.log(`  + Creating ${p.slug}...`);
+    const cr = gumroad([
+      "products", "create",
+      "--type", "digital",
+      "--name", p.name,
+      "--price", p.price,
+      "--custom-permalink", p.slug,
+      "--description", `<p>${p.desc} Play at anime-studio-tycoon.vercel.app</p>`,
+      "--custom-summary", p.desc,
+    ]);
+    if (cr.status !== 0) {
+      console.error(`    ✗ ${cr.stderr || cr.stdout}`);
+      created.push({ ...p, status: "error", error: cr.stderr || cr.stdout });
+      continue;
+    }
+    let id = null;
+    const j = gumroad(["products", "list", "--json", "--jq", `.products[] | select(.custom_permalink=="${p.slug}" or (.short_url|contains("${p.slug}"))) | .id`]);
+    if (j.stdout?.trim()) id = j.stdout.trim().split("\n")[0];
+
+    if (id) {
+      gumroad(["products", "publish", id]);
+      console.log(`    ✓ published ${p.slug}`);
+    } else {
+      console.log(`    ✓ created ${p.slug} (publish manually if draft)`);
+    }
+    created.push({
+      ...p,
+      status: "created",
+      redirect: `${REDIRECT_BASE}?permalink=${p.slug}&license_key={license_key}`,
+    });
   }
-  return null;
+
+  writeFileSync(join(root, "launch/GUMROAD_SHIP.json"), JSON.stringify({ at: new Date().toISOString(), created }, null, 2));
+  console.log("\nReport: launch/GUMROAD_SHIP.json");
+  console.log("Next: npm run configure-gumroad  # license keys + redirects (one batch)");
 }
 
-console.log("Anime Studio Tycoon — Gumroad ship\n");
-
-const probe = await fetch("https://trainagent.gumroad.com/l/xmwvvi", { redirect: "follow" });
-if (probe.status === 429) {
-  console.error("✗ Gumroad IP rate-limited (429). Do NOT retry auth loops.");
-  console.error("  Wait 2–6 hours, or switch to phone hotspot, then: npm run gumroad-ship");
-  process.exit(2);
-}
-
-let token = getToken();
-if (!token) token = await waitForAuth();
-if (!token) {
-  console.error("\n✗ No Gumroad token — log in via Chrome (passkey or Google), then re-run: npm run gumroad-ship");
-  process.exit(1);
-}
-console.log("\n✓ Gumroad authenticated\n");
-
-console.log("Setting Vercel env...");
-setVercel("GUMROAD_ACCESS_TOKEN", token);
-setVercel("GUMROAD_SELLER_ID", SELLER_ID);
-
-const created = [];
-for (const p of PRODUCTS) {
-  if (await isLive(p.slug)) {
-    console.log(`  ○ ${p.slug} already live`);
-    created.push({ ...p, status: "live" });
-    continue;
-  }
-  console.log(`  + Creating ${p.slug}...`);
-  const cr = gumroad([
-    "products", "create",
-    "--type", "digital",
-    "--name", p.name,
-    "--price", p.price,
-    "--custom-permalink", p.slug,
-    "--description", `<p>${p.desc} Play at anime-studio-tycoon.vercel.app</p>`,
-    "--custom-summary", p.desc,
-  ]);
-  if (cr.status !== 0) {
-    console.error(`    ✗ ${cr.stderr || cr.stdout}`);
-    created.push({ ...p, status: "error", error: cr.stderr || cr.stdout });
-    continue;
-  }
-  const idMatch = (cr.stdout + cr.json) && cr.stdout?.match(/id[:\s]+([A-Za-z0-9_-]+==)/i);
-  let id = null;
-  const j = gumroad(["products", "list", "--json", "--jq", `.products[] | select(.custom_permalink=="${p.slug}" or (.short_url|contains("${p.slug}"))) | .id`]);
-  if (j.stdout?.trim()) id = j.stdout.trim().split("\n")[0];
-
-  if (id) {
-    gumroad(["products", "publish", id]);
-    console.log(`    ✓ published ${p.slug}`);
-  } else {
-    console.log(`    ✓ created ${p.slug} (publish manually if draft)`);
-  }
-  created.push({
-    ...p,
-    status: "created",
-    redirect: `${REDIRECT_BASE}?permalink=${p.slug}&license_key={license_key}`,
-    manual: "Enable license key + set redirect URL in Gumroad product Settings",
+if (runVerify) {
+  console.log("\nVerifying (explicit --verify)...");
+  run("node", ["scripts/verify-gumroad.mjs"], {
+    stdio: "inherit",
+    env: { ...process.env, GUMROAD_ACCESS_TOKEN: token },
   });
+  run("node", ["scripts/launch-readiness.mjs"], { stdio: "inherit" });
 }
 
-const report = { at: new Date().toISOString(), created };
-writeFileSync(join(root, "launch/GUMROAD_SHIP.json"), JSON.stringify(report, null, 2));
-
-console.log("\nDeploying Vercel...");
-run("vercel", ["--prod", "--yes"], { stdio: "inherit" });
-
-console.log("\nVerifying...");
-run("node", ["scripts/verify-gumroad.mjs"], { stdio: "inherit" });
-run("node", ["scripts/launch-readiness.mjs"], { stdio: "inherit" });
-
-console.log("\nDone. Report: launch/GUMROAD_SHIP.json");
-if (created.some((c) => c.manual)) {
-  console.log("\nManual per product (API cannot set license keys):");
-  for (const c of created.filter((x) => x.manual)) {
-    console.log(`  ${c.slug}: license key ON → ${c.redirect}`);
-  }
-}
+console.log("\nDone.");

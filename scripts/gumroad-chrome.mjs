@@ -1,13 +1,23 @@
 #!/usr/bin/env node
 /**
- * Control the user's open Google Chrome (Default profile) via AppleScript.
- * Usage: node scripts/gumroad-chrome.mjs navigate https://gumroad.com/products
- *        node scripts/gumroad-chrome.mjs eval "document.title"
- *        node scripts/gumroad-chrome.mjs tabs
+ * Control the user's open Google Chrome — OPT-IN ONLY (prevents accidental tab spam).
+ * Usage:
+ *   GUMROAD_ALLOW_CHROME=1 node scripts/gumroad-chrome.mjs tabs
+ *   node scripts/gumroad-chrome.mjs navigate <url> --allow-chrome
  */
 import { spawnSync } from "child_process";
 
-const [cmd, ...args] = process.argv.slice(2);
+const allowed =
+  process.env.GUMROAD_ALLOW_CHROME === "1" || process.argv.includes("--allow-chrome");
+
+if (!allowed) {
+  console.error("Chrome automation disabled (prevents Gumroad/login tab spam).");
+  console.error("  Use your own browser manually, or pass --allow-chrome / GUMROAD_ALLOW_CHROME=1");
+  process.exit(1);
+}
+
+const argv = process.argv.slice(2).filter((a) => a !== "--allow-chrome");
+const [cmd, ...args] = argv;
 
 function osa(script) {
   const r = spawnSync("osascript", ["-e", script], { encoding: "utf8" });
@@ -63,5 +73,5 @@ end tell`);
   process.exit(0);
 }
 
-console.log(`Commands: tabs | navigate <url> | eval <js>`);
+console.log(`Commands: tabs | navigate <url> | eval <js>  (requires --allow-chrome)`);
 process.exit(1);

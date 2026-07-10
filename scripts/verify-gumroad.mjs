@@ -3,9 +3,10 @@
  * Verify Gumroad product URLs + optional license API when GUMROAD_ACCESS_TOKEN is set.
  * Usage: GUMROAD_ACCESS_TOKEN=xxx node scripts/verify-gumroad.mjs
  */
-import { readFileSync, writeFileSync } from "fs";
+import { writeFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+import { probeRateLimit, exitOnRateLimit } from "./_gumroad-guard.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const REDIRECT = "https://anime-studio-tycoon.vercel.app/api/grant/finish?permalink=SLUG&license_key={license_key}";
@@ -31,6 +32,12 @@ let fail = 0;
 const rows = [];
 
 console.log("Gumroad product verification (trainagent.gumroad.com)\n");
+
+try {
+  await probeRateLimit();
+} catch (e) {
+  exitOnRateLimit(e);
+}
 
 for (const p of PRODUCTS) {
   let status = 0;

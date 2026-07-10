@@ -17,6 +17,20 @@ function buildNum(html) {
   return m ? parseInt(m[1], 10) : 0;
 }
 
+function gumroadSlugsLiveFromCache(slugs, maxAgeMs = 24 * 60 * 60 * 1000) {
+  try {
+    const status = JSON.parse(readFileSync(join(root, "launch/GUMROAD_STATUS.json"), "utf8"));
+    const age = Date.now() - new Date(status.checkedAt).getTime();
+    if (age > maxAgeMs) return null;
+    const bySlug = Object.fromEntries((status.products || []).map((p) => [p.slug, p.ok]));
+    if (slugs.every((s) => bySlug[s] === true)) return true;
+    if (slugs.some((s) => bySlug[s] === false)) return false;
+    return null;
+  } catch {
+    return null;
+  }
+}
+
 async function gumroadLive(slug) {
   try {
     const r = await fetch(`https://trainagent.gumroad.com/l/${slug}`, { redirect: "follow" });
@@ -24,6 +38,13 @@ async function gumroadLive(slug) {
   } catch {
     return false;
   }
+}
+
+async function gumroadGroupLive(slugs) {
+  const cached = gumroadSlugsLiveFromCache(slugs);
+  if (cached !== null) return cached;
+  const live = await Promise.all(slugs.map(gumroadLive));
+  return live.every(Boolean);
 }
 
 const engineering = [
@@ -74,13 +95,11 @@ const engineering = [
 const distribution = [
   { id: "gumroad_core", label: "6 core Gumroad SKUs live", weight: 15, check: async () => {
     const slugs = ["xmwvvi", "xjpwv", "jbclqp", "legvhu", "gtdyn", "kttuab"];
-    const live = await Promise.all(slugs.map(gumroadLive));
-    return live.every(Boolean);
+    return gumroadGroupLive(slugs);
   }},
   { id: "gumroad_extended", label: "7 extended Gumroad SKUs live", weight: 15, check: async () => {
     const slugs = ["astlegend", "astmogul", "astaurora", "astphoenix", "astshogun", "astitems", "astnoads"];
-    const live = await Promise.all(slugs.map(gumroadLive));
-    return live.every(Boolean);
+    return gumroadGroupLive(slugs);
   }},
   { id: "gumroad_token", label: "GUMROAD_ACCESS_TOKEN on Vercel", weight: 10, check: async () => {
     const r = await fetch(`${base}/api/grant/health`);

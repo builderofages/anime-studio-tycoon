@@ -10,6 +10,7 @@ import { spawnSync } from "child_process";
 import { writeFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+import { probeRateLimit, exitOnRateLimit } from "./_gumroad-guard.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const base = "https://anime-studio-tycoon.vercel.app";
@@ -116,6 +117,12 @@ function setVercelEnv(name, value) {
 }
 
 console.log("Anime Studio Tycoon — create Gumroad products\n");
+
+try {
+  await probeRateLimit();
+} catch (e) {
+  exitOnRateLimit(e);
+}
 
 if (setVercel) {
   console.log("Setting Vercel env...");

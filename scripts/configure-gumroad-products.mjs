@@ -2,30 +2,24 @@
 /**
  * Enable license keys + post-purchase redirect on all Anime Studio Gumroad SKUs.
  * Usage:
- *   GUMROAD_ACCESS_TOKEN=$(gumroad auth token) node scripts/configure-gumroad-products.mjs
- *   node scripts/configure-gumroad-products.mjs --dry-run
+ *   GUMROAD_ACCESS_TOKEN=xxx node scripts/configure-gumroad-products.mjs
+ *   node scripts/configure-gumroad-products.mjs --force   # re-apply even if already done
  */
-import { readFileSync, writeFileSync } from "fs";
+import { existsSync, readFileSync, writeFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
-import { spawnSync } from "child_process";
+import { probeRateLimit, exitOnRateLimit, requireToken } from "./_gumroad-guard.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const base = "https://anime-studio-tycoon.vercel.app";
 const dryRun = process.argv.includes("--dry-run");
+const force = process.argv.includes("--force");
 const sleepMs = 600;
 
 const SLUGS = [
   "xmwvvi", "xjpwv", "jbclqp", "legvhu", "gtdyn", "kttuab",
   "astlegend", "astmogul", "astaurora", "astphoenix", "astshogun", "astitems", "astnoads",
 ];
-
-function getToken() {
-  if (process.env.GUMROAD_ACCESS_TOKEN) return process.env.GUMROAD_ACCESS_TOKEN.trim();
-  const p = spawnSync("gumroad", ["auth", "token"], { encoding: "utf8" });
-  if (p.status === 0 && p.stdout?.trim()) return p.stdout.trim();
-  return null;
-}
 
 function redirect(slug) {
   return `${base}/api/grant/finish?permalink=${slug}&license_key={license_key}`;
@@ -62,11 +56,25 @@ function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
 }
 
-const token = getToken();
-if (!token) {
-  console.error("Missing GUMROAD_ACCESS_TOKEN. Run: gumroad auth login");
-  process.exit(1);
+const configurePath = join(root, "launch/GUMROAD_CONFIGURE.json");
+if (!force && !dryRun && existsSync(configurePath)) {
+  try {
+    const prev = JSON.parse(readFileSync(configurePath, "utf8"));
+    if (prev.ok === SLUGS.length && prev.fail === 0) {
+      console.log("All 13 Gumroad SKUs already configured (launch/GUMROAD_CONFIGURE.json).");
+      console.log("  Pass --force to re-apply. No API calls made.");
+      process.exit(0);
+    }
+  } catch (_) {}
 }
+
+try {
+  await probeRateLimit();
+} catch (e) {
+  exitOnRateLimit(e);
+}
+
+const token = requireToken();
 
 console.log("Anime Studio Tycoon — configure Gumroad license keys + redirects\n");
 if (dryRun) console.log("(dry-run — no API writes)\n");

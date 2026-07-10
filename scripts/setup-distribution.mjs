@@ -114,9 +114,10 @@ if (missing.length) {
 }
 
 if (!health.gumroad_token) {
-  console.log("Gumroad token (Settings no longer has “Generate token” — use CLI):");
-  console.log("  1. gumroad auth login     # open URL, approve in browser");
-  console.log("  2. npm run setup-distribution -- --from-cli --set-vercel --create --publish");
+  console.log("Gumroad token (one-time, in your browser — scripts will not open Chrome):");
+  console.log("  1. You: gumroad auth login → approve once in your browser");
+  console.log("  2. export GUMROAD_ACCESS_TOKEN=$(gumroad auth token)");
+  console.log("  3. npm run setup-distribution -- --set-vercel");
   console.log("  Docs: launch/GUMROAD_SETUP.md §0");
 }
 
