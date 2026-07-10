@@ -1,0 +1,99 @@
+{
+  "at": "2026-07-10T05:54:08.787Z",
+  "created": 7,
+  "skipped": 0,
+  "publish": true,
+  "results": [
+    {
+      "slug": "astlegend",
+      "name": "Anime Studio Tycoon — Legend Bundle",
+      "price": 7.99,
+      "description": "Producer Pass (+50% Yen forever, auto-release, 2× offline) + 400 Gems + exclusive Legendary star Aurora Vesper. One-time purchase. Play at anime-studio-tycoon.vercel.app",
+      "status": "created_published",
+      "id": "_RKDPClNH8d8WkCVSaurnA==",
+      "redirect": "https://anime-studio-tycoon.vercel.app/api/grant/finish?permalink=astlegend&license_key={license_key}",
+      "manual": [
+        "Gumroad product → Settings → enable Generate license key",
+        "Redirect URL: https://anime-studio-tycoon.vercel.app/api/grant/finish?permalink=astlegend&license_key={license_key}"
+      ]
+    },
+    {
+      "slug": "astmogul",
+      "name": "Anime Studio Tycoon — Mogul Bundle",
+      "price": 19.99,
+      "description": "The ultimate bundle: Producer Pass + 1,500 Gems + exclusive Legendary stars Phoenix Kogane & Kaiser Shogun + Remove Ads. Best value for serious studio builders.",
+      "status": "created_published",
+      "id": "MnEYEk9anC_PkBwfdGH6xw==",
+      "redirect": "https://anime-studio-tycoon.vercel.app/api/grant/finish?permalink=astmogul&license_key={license_key}",
+      "manual": [
+        "Gumroad product → Settings → enable Generate license key",
+        "Redirect URL: https://anime-studio-tycoon.vercel.app/api/grant/finish?permalink=astmogul&license_key={license_key}"
+      ]
+    },
+    {
+      "slug": "astaurora",
+      "name": "Anime Studio Tycoon — Aurora Vesper (Exclusive Star)",
+      "price": 3.99,
+      "description": "Unlock Aurora Vesper, a permanent Legendary Director exclusive — never available in the free scout pool. Duplicate purchases level her up.",
+      "status": "created_published",
+      "id": "mW7Ohw3JPIObrPIsAfdFkw==",
+      "redirect": "https://anime-studio-tycoon.vercel.app/api/grant/finish?permalink=astaurora&license_key={license_key}",
+      "manual": [
+        "Gumroad product → Settings → enable Generate license key",
+        "Redirect URL: https://anime-studio-tycoon.vercel.app/api/grant/finish?permalink=astaurora&license_key={license_key}"
+      ]
+    },
+    {
+      "slug": "astphoenix",
+      "name": "Anime Studio Tycoon — Phoenix Kogane (Exclusive Star)",
+      "price": 3.99,
+      "description": "Unlock Phoenix Kogane, a permanent Legendary Animator exclusive. Not in gacha. Duplicates increase star level.",
+      "status": "created_published",
+      "id": "-2ffMk4aSTgX_9YhtSFmxw==",
+      "redirect": "https://anime-studio-tycoon.vercel.app/api/grant/finish?permalink=astphoenix&license_key={license_key}",
+      "manual": [
+        "Gumroad product → Settings → enable Generate license key",
+        "Redirect URL: https://anime-studio-tycoon.vercel.app/api/grant/finish?permalink=astphoenix&license_key={license_key}"
+      ]
+    },
+    {
+      "slug": "astshogun",
+      "name": "Anime Studio Tycoon — Kaiser Shogun (Exclusive Star)",
+      "price": 4.99,
+      "description": "Unlock Kaiser Shogun, a permanent Legendary Voice star exclusive to paid supporters.",
+      "status": "created_published",
+      "id": "SXsnZDPkRpOWqQeqNFmtYg==",
+      "redirect": "https://anime-studio-tycoon.vercel.app/api/grant/finish?permalink=astshogun&license_key={license_key}",
+      "manual": [
+        "Gumroad product → Settings → enable Generate license key",
+        "Redirect URL: https://anime-studio-tycoon.vercel.app/api/grant/finish?permalink=astshogun&license_key={license_key}"
+      ]
+    },
+    {
+      "slug": "astitems",
+      "name": "Anime Studio Tycoon — Power Items Pack",
+      "price": 2.99,
+      "description": "5 premium consumable items (Megaphone, Power Gauntlet, Time Pendant, Stardust, Espresso) + 50 bonus Gems. Instant delivery in-game.",
+      "status": "created_published",
+      "id": "H-31q3p7WxDKyc7vDGC25w==",
+      "redirect": "https://anime-studio-tycoon.vercel.app/api/grant/finish?permalink=astitems&license_key={license_key}",
+      "manual": [
+        "Gumroad product → Settings → enable Generate license key",
+        "Redirect URL: https://anime-studio-tycoon.vercel.app/api/grant/finish?permalink=astitems&license_key={license_key}"
+      ]
+    },
+    {
+      "slug": "astnoads",
+      "name": "Anime Studio Tycoon — Remove Ads",
+      "price": 2.99,
+      "description": "Removes optional ad prompts on web. All free rewards (daily gems, 2× boost) remain available without watching ads.",
+      "status": "created_published",
+      "id": "VT1gc5zJcXAAUqNep5L4Og==",
+      "redirect": "https://anime-studio-tycoon.vercel.app/api/grant/finish?permalink=astnoads&license_key={license_key}",
+      "manual": [
+        "Gumroad product → Settings → enable Generate license key",
+        "Redirect URL: https://anime-studio-tycoon.vercel.app/api/grant/finish?permalink=astnoads&license_key={license_key}"
+      ]
+    }
+  ]
+}

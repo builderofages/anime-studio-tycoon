@@ -1,0 +1,99 @@
+{
+  "at": "2026-07-10T05:56:11.660Z",
+  "ok": 13,
+  "fail": 0,
+  "dryRun": false,
+  "results": [
+    {
+      "slug": "xmwvvi",
+      "id": "CtMk2fsWWZkLekUfIoVqkQ==",
+      "name": "Anime Studio Tycoon — Producer Pass",
+      "status": "configured",
+      "redirect": "https://anime-studio-tycoon.vercel.app/api/grant/finish?permalink=xmwvvi&license_key={license_key}"
+    },
+    {
+      "slug": "xjpwv",
+      "id": "IhhwBfltuOlcnyUCdsL00g==",
+      "name": "Anime Studio Tycoon — Starter Bundle",
+      "status": "configured",
+      "redirect": "https://anime-studio-tycoon.vercel.app/api/grant/finish?permalink=xjpwv&license_key={license_key}"
+    },
+    {
+      "slug": "jbclqp",
+      "id": "dTQ7nilpUEOxNBDJj-hAXQ==",
+      "name": "Anime Studio Tycoon — 120 Gems",
+      "status": "configured",
+      "redirect": "https://anime-studio-tycoon.vercel.app/api/grant/finish?permalink=jbclqp&license_key={license_key}"
+    },
+    {
+      "slug": "legvhu",
+      "id": "Y6SIWHqh6AGoM30QvFxURQ==",
+      "name": "Anime Studio Tycoon — 350 Gems",
+      "status": "configured",
+      "redirect": "https://anime-studio-tycoon.vercel.app/api/grant/finish?permalink=legvhu&license_key={license_key}"
+    },
+    {
+      "slug": "gtdyn",
+      "id": "N0_315hFV4UKWkI6UAA9jQ==",
+      "name": "Anime Studio Tycoon — 800 Gems",
+      "status": "configured",
+      "redirect": "https://anime-studio-tycoon.vercel.app/api/grant/finish?permalink=gtdyn&license_key={license_key}"
+    },
+    {
+      "slug": "kttuab",
+      "id": "RZUAujpH-I3Zt_VaPlp8zw==",
+      "name": "Anime Studio Tycoon — 2000 Gems",
+      "status": "configured",
+      "redirect": "https://anime-studio-tycoon.vercel.app/api/grant/finish?permalink=kttuab&license_key={license_key}"
+    },
+    {
+      "slug": "astlegend",
+      "id": "_RKDPClNH8d8WkCVSaurnA==",
+      "name": "Anime Studio Tycoon — Legend Bundle",
+      "status": "configured",
+      "redirect": "https://anime-studio-tycoon.vercel.app/api/grant/finish?permalink=astlegend&license_key={license_key}"
+    },
+    {
+      "slug": "astmogul",
+      "id": "MnEYEk9anC_PkBwfdGH6xw==",
+      "name": "Anime Studio Tycoon — Mogul Bundle",
+      "status": "configured",
+      "redirect": "https://anime-studio-tycoon.vercel.app/api/grant/finish?permalink=astmogul&license_key={license_key}"
+    },
+    {
+      "slug": "astaurora",
+      "id": "mW7Ohw3JPIObrPIsAfdFkw==",
+      "name": "Anime Studio Tycoon — Aurora Vesper (Exclusive Star)",
+      "status": "configured",
+      "redirect": "https://anime-studio-tycoon.vercel.app/api/grant/finish?permalink=astaurora&license_key={license_key}"
+    },
+    {
+      "slug": "astphoenix",
+      "id": "-2ffMk4aSTgX_9YhtSFmxw==",
+      "name": "Anime Studio Tycoon — Phoenix Kogane (Exclusive Star)",
+      "status": "configured",
+      "redirect": "https://anime-studio-tycoon.vercel.app/api/grant/finish?permalink=astphoenix&license_key={license_key}"
+    },
+    {
+      "slug": "astshogun",
+      "id": "SXsnZDPkRpOWqQeqNFmtYg==",
+      "name": "Anime Studio Tycoon — Kaiser Shogun (Exclusive Star)",
+      "status": "configured",
+      "redirect": "https://anime-studio-tycoon.vercel.app/api/grant/finish?permalink=astshogun&license_key={license_key}"
+    },
+    {
+      "slug": "astitems",
+      "id": "H-31q3p7WxDKyc7vDGC25w==",
+      "name": "Anime Studio Tycoon — Power Items Pack",
+      "status": "configured",
+      "redirect": "https://anime-studio-tycoon.vercel.app/api/grant/finish?permalink=astitems&license_key={license_key}"
+    },
+    {
+      "slug": "astnoads",
+      "id": "VT1gc5zJcXAAUqNep5L4Og==",
+      "name": "Anime Studio Tycoon — Remove Ads",
+      "status": "configured",
+      "redirect": "https://anime-studio-tycoon.vercel.app/api/grant/finish?permalink=astnoads&license_key={license_key}"
+    }
+  ]
+}

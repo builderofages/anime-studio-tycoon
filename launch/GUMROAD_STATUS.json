@@ -1,15 +1,7 @@
 {
-  "checkedAt": "2026-07-09T09:30:51.736Z",
-  "live": 6,
-  "missing": [
-    "astlegend",
-    "astmogul",
-    "astaurora",
-    "astphoenix",
-    "astshogun",
-    "astitems",
-    "astnoads"
-  ],
+  "checkedAt": "2026-07-10T05:56:18.365Z",
+  "live": 14,
+  "missing": [],
   "products": [
     {
       "slug": "xmwvvi",
@@ -64,56 +56,56 @@
       "name": "Legend Bundle",
       "price": 7.99,
       "spec": "launch/GUMROAD_PRODUCTS.md §1",
-      "status": 404,
-      "ok": false
+      "status": 200,
+      "ok": true
     },
     {
       "slug": "astmogul",
       "name": "Mogul Bundle",
       "price": 19.99,
       "spec": "§2",
-      "status": 404,
-      "ok": false
+      "status": 200,
+      "ok": true
     },
     {
       "slug": "astaurora",
       "name": "Aurora Vesper",
       "price": 3.99,
       "spec": "§3",
-      "status": 404,
-      "ok": false
+      "status": 200,
+      "ok": true
     },
     {
       "slug": "astphoenix",
       "name": "Phoenix Kogane",
       "price": 3.99,
       "spec": "§4",
-      "status": 404,
-      "ok": false
+      "status": 200,
+      "ok": true
     },
     {
       "slug": "astshogun",
       "name": "Kaiser Shogun",
       "price": 4.99,
       "spec": "§5",
-      "status": 404,
-      "ok": false
+      "status": 200,
+      "ok": true
     },
     {
       "slug": "astitems",
       "name": "Items Pack",
       "price": 2.99,
       "spec": "§6",
-      "status": 404,
-      "ok": false
+      "status": 200,
+      "ok": true
     },
     {
       "slug": "astnoads",
       "name": "Remove Ads",
       "price": 2.99,
       "spec": "§7",
-      "status": 404,
-      "ok": false
+      "status": 200,
+      "ok": true
     }
   ]
 }

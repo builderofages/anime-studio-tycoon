@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-09T09:35:52.328Z",
+  "generatedAt": "2026-07-10T05:56:20.447Z",
   "build": 118,
   "engineering": {
     "earned": 100,
@@ -93,9 +93,9 @@
     ]
   },
   "distribution": {
-    "earned": 20,
+    "earned": 45,
     "total": 95,
-    "pct": 21,
+    "pct": 47,
     "detail": [
       {
         "id": "gumroad_core",
@@ -108,14 +108,14 @@
         "id": "gumroad_extended",
         "label": "7 extended Gumroad SKUs live",
         "weight": 15,
-        "pass": false,
+        "pass": true,
         "manual": null
       },
       {
         "id": "gumroad_token",
         "label": "GUMROAD_ACCESS_TOKEN on Vercel",
         "weight": 10,
-        "pass": false,
+        "pass": true,
         "manual": null
       },
       {
@@ -155,6 +155,6 @@
       }
     ]
   },
-  "overallPct": 62,
+  "overallPct": 74,
   "engineeringComplete": true
 }
