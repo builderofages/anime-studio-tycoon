@@ -326,6 +326,11 @@ export function mergeLoadedSave(d, fresh, genres, maxSlots = MAX_SLOTS) {
     d.settings && typeof d.settings === "object"
       ? Object.assign({}, DEFAULT_SETTINGS, d.settings)
       : { ...DEFAULT_SETTINGS };
+  if (d._guidedFresh != null) S._guidedFresh = !!d._guidedFresh;
+  else if (!S.tutorialSeen && (S.releases || 0) === 0) {
+    const staffN = Object.values(S.staff || {}).reduce((a, n) => a + (Number(n) || 0), 0);
+    S._guidedFresh = staffN > 0 || (S.taps || 0) > 0;
+  }
   S.marketShare = +d.marketShare || 5;
   S.bidsWon = +d.bidsWon || 0;
   S.bidWeek = d.bidWeek || "";

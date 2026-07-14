@@ -43,7 +43,7 @@
 <!-- aaa-ui.css disabled — ast-v5 authority -->
 <link rel="stylesheet" href="legacy-fx.css?v=100">
 <link rel="stylesheet" href="ast-v5.css?v=100">
-<link rel="stylesheet" href="cross-platform-play.css?v=1">
+<link rel="stylesheet" href="cross-platform-play.css?v=2">
 <script>document.documentElement.classList.add("premium-hud","hud-v3-active")</script>
 <meta name="theme-color" content="#08050f">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -591,7 +591,11 @@ function isGuidedTutorialEligible(){
   if(isDemoMode()) return false;
   if(S.tutorialSeen) return false;
   if((S.releases||0)>0) return false;
-  return !!S._guidedFresh;
+  if(S._guidedFresh) return true;
+  return staffTotal()>0||activeCount()>0||(S.taps||0)>0;
+}
+function onboardingActive(){
+  return !S.tutorialSeen&&(S.releases||0)<2&&!isDemoMode();
 }
 function completeTutorial(){
   S.tutorialSeen=true;
@@ -2651,6 +2655,31 @@ function syncModalLock(){
   if(main&&typeof main.setAttribute==="function") main.setAttribute("aria-hidden",open?"true":"false");
 }
 window.syncModalLock=syncModalLock;
+function closeTopOverlay(){
+  for(let i=MODAL_LOCK_IDS.length-1;i>=0;i--){
+    const id=MODAL_LOCK_IDS[i];
+    const el=document.getElementById(id);
+    if(!el) continue;
+    const open=el.style.display==="flex"||(typeof getComputedStyle==="function"&&getComputedStyle(el).display==="flex");
+    if(!open) continue;
+    if(id==="decision"&&typeof dismissCrisisModal==="function"){ dismissCrisisModal(); return true; }
+    if(id==="settings"){ const d=document.getElementById("hud-drawer"); if(d) d.hidden=true; }
+    el.style.display="none";
+    syncModalLock();
+    return true;
+  }
+  return false;
+}
+function initNativeBack(){
+  if(!NATIVE||window.__astBackWired) return;
+  const App=window.Capacitor?.Plugins?.App;
+  if(!App?.addListener) return;
+  window.__astBackWired=true;
+  App.addListener("backButton",()=>{ if(!closeTopOverlay()) App.exitApp?.(); });
+}
+if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",initNativeBack);
+else initNativeBack();
+document.addEventListener("deviceready",initNativeBack,false);
 function toggleMute(){
   S.muted=!S.muted;
   updateMute();
@@ -3217,6 +3246,7 @@ function checkUnlocks(){
   for(const k in UNLOCKS){
     if(featureUnlocked(k) && !(S.unlockedSeen||[]).includes(k)){
       (S.unlockedSeen=S.unlockedSeen||[]).push(k);
+      if(onboardingActive()) continue;
       if(k==="studio" && started && !OFFLINE) queueStudioUnlockModal();
       else if(k==="stars" && started && !OFFLINE) queueStarsUnlockModal();
       else if(k==="market" && started && !OFFLINE) queueMarketUnlockModal();
@@ -3402,6 +3432,10 @@ function closePremiere(){
   startBgmForTab(S.tab);
   if(drainUnlockModalQueue()) return;
   if((S.releases||0)<2&&activeCount()===0){
+    if(onboardingActive()){
+      if(staffTotal()===0){ S.tab="staff"; render(); save(); return; }
+      quickGreenlight(); save(); render(); return;
+    }
     openGreenlightView(); save(); return;
   }
   if((S.releases||0)>=2) maybeShowPwaInstallBanner();
@@ -5390,10 +5424,30 @@ function bindProduceCarousel(){
     },80);
   },{passive:true});
 }
+function renderFirstRunProduceHero(){
+  const quickSc=GREENLIGHT_SHOWCASE.find(s=>s.editor&&!projectLockInfo(PROJECTS[s.pid]).locked)||GREENLIGHT_SHOWCASE[0];
+  const qp=PROJECTS[quickSc.pid];
+  const canAfford=S.yen>=qp.cost;
+  const hired=staffTotal()>0;
+  let h=`<div class="aaa-tab-page aaa-first-run-produce"><div class="aaa-first-run-hero panel">`;
+  if(!hired){
+    h+=`<h2>👥 Hire your first teammate</h2><p class="muted">Start with ¥1,500 — hire an <b>Animator</b> (¥200) on Recruit, then greenlight your debut anime.</p>`;
+    h+=`<button type="button" class="btn-primary aaa-first-run-cta" data-tab="staff">Go to Recruit</button>`;
+  }else{
+    h+=`<h2>🎬 Greenlight your first anime</h2><p class="muted">One tap starts <b>${quickSc.titleEn}</b> — or browse the full catalog when you're ready.</p>`;
+    h+=`<button type="button" class="btn-gold aaa-first-run-cta" data-act="quick-greenlight"${canAfford?"":" disabled"}>Quick Greenlight · ¥${fmt(qp.cost)}</button>`;
+    h+=`<button type="button" class="btn-ghost aaa-first-run-secondary" data-act="greenlight-view">Browse full catalog</button>`;
+  }
+  return h+`</div></div>`;
+}
 function renderProduce(){
   const empties=S.slots-activeCount();
   const hasActive=activeCount()>0;
   if((!hasActive&&empties>0)||(_glMode&&empties>0)){
+    if((S.releases||0)<1&&!_glMode){
+      setMainHTML(renderFirstRunProduceHero());
+      return;
+    }
     setMainHTML(renderGreenlightPage(empties,hasActive&&_glMode));
     scrollSelectedGlCard();
     return;

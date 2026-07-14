@@ -476,6 +476,8 @@ assert(html.includes("showcaseGlUsed"), "greenlight slots showcase");
 assert(html.includes("showcaseRewards"), "greenlight showcase rewards");
 assert(html.includes("放課後コメディ"), "after school japanese title");
 assert(html.includes("fmtHudRes"), "hud resource formatter");
+assert(html.includes("renderFirstRunProduceHero"), "first-run produce hero");
+assert(html.includes("onboardingActive"), "onboarding gate for unlock modals");
 assert(html.includes("aaa-gl-open-hot"), "multi-slot greenlight cta");
 assert(html.includes("BUDGET ALLOCATION"), "greenlight budget header");
 assert(html.includes('data-g="6"'), "drama genre filter chip");
