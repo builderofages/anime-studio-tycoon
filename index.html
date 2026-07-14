@@ -43,6 +43,7 @@
 <!-- aaa-ui.css disabled — ast-v5 authority -->
 <link rel="stylesheet" href="legacy-fx.css?v=100">
 <link rel="stylesheet" href="ast-v5.css?v=100">
+<link rel="stylesheet" href="cross-platform-play.css?v=1">
 <script>document.documentElement.classList.add("premium-hud","hud-v3-active")</script>
 <meta name="theme-color" content="#08050f">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -73,7 +74,7 @@
 .aaa-cast-chip{cursor:pointer;border:1px solid transparent}
 .aaa-cast-chip.sel{background:rgba(255,92,168,.18);color:#fff}
 .aaa-cast-en{font-size:10px;margin-left:4px}
-.aaa-gl-smart-cast{font-size:10px!important;padding:6px 10px!important;min-height:0!important}
+.aaa-gl-smart-cast{font-size:12px!important;padding:10px 14px!important;min-height:44px!important}
 .progress{height:16px;background:rgba(70,80,107,.18);border-radius:10px;overflow:hidden;margin:8px 0 4px}
 .progress i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--sakura),var(--gold));transition:width .2s}
 @media (prefers-reduced-motion: reduce){ .progress i{transition:none} }
@@ -1875,6 +1876,8 @@ function dismissCrisisModal(){
   window.__AST_PENDING_WARROOM__=null;
   const m=document.getElementById("decision"); if(m) m.style.display="none";
   clearDecisionCrisisChrome();
+  syncCrisisHudPulse(false);
+  syncModalLock();
 }
 window.dismissCrisisModal=dismissCrisisModal;
 function crisesSnoozed(){ return S.crisisSnoozeUntil&&Date.now()<S.crisisSnoozeUntil; }
@@ -2628,13 +2631,26 @@ function bindIosFormFocusScroll(){
   if(window.__astIosFocusScroll) return;
   window.__astIosFocusScroll=true;
   const scrollFocused=(el)=>{
-    if(!el||!el.matches("input,select,textarea")) return;
-    const run=()=>{ try{ el.scrollIntoView({block:"center",behavior:"smooth"}); }catch(_){ try{ el.scrollIntoView(true); }catch(__){} } };
-    setTimeout(run,320);
+    if(!el||!el.matches("input,select,textarea,.overlay input,.overlay select,.overlay textarea")) return;
+    const run=()=>{ try{ el.scrollIntoView({block:"nearest",behavior:"auto"}); }catch(_){ try{ el.scrollIntoView(false); }catch(__){} } };
+    requestAnimationFrame(()=>requestAnimationFrame(run));
   };
   document.addEventListener("focusin",(e)=>scrollFocused(e.target),true);
 }
 bindIosFormFocusScroll();
+const MODAL_LOCK_IDS=["start","offline","daily","return-hub","reveal","premiere","decision","settings","festival-win","starter","howto","whatsnew"];
+function syncModalLock(){
+  const open=MODAL_LOCK_IDS.some(id=>{
+    const el=document.getElementById(id);
+    if(!el) return false;
+    if(el.style.display==="flex") return true;
+    try{ return typeof getComputedStyle==="function"&&getComputedStyle(el).display==="flex"; }catch(_){ return false; }
+  })||crisisModalOpen();
+  document.documentElement.classList.toggle("ast-modal-open",!!open);
+  const main=document.getElementById("main");
+  if(main&&typeof main.setAttribute==="function") main.setAttribute("aria-hidden",open?"true":"false");
+}
+window.syncModalLock=syncModalLock;
 function toggleMute(){
   S.muted=!S.muted;
   updateMute();
@@ -4531,6 +4547,7 @@ function render(){
       setMainHTML(`<div class="aaa-tab-page panel"><h2>🛠️ Display error</h2><p class="muted">Tap <b>Play</b> or <b>Reset</b> to recover.</p></div>`);
     }catch(_){}
   }
+  try{ syncModalLock(); }catch(_){}
 }
 function renderBody(){
   if(!S) S=freshState();

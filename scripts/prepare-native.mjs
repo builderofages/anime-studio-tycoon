@@ -55,6 +55,7 @@ const FILES = [
   "aaa-ui.css",
   "legacy-fx.css",
   "ast-v5.css",
+  "cross-platform-play.css",
   "bg-v4.png",
   "design-ref-v4.png",
   "start-hero.png",

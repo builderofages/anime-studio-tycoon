@@ -1,0 +1,329 @@
+/**
+ * Cross-platform playability — mobile, tablet, desktop.
+ * Loaded after ast-v5.css; layout/touch fixes only.
+ */
+
+/* ── Shell: use width on tablet + desktop ── */
+@media (min-width: 768px) and (max-width: 1024px) {
+  html.hud-v3-active #app {
+    max-width: min(92vw, 840px) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  html.hud-v3-active #app {
+    max-width: min(94vw, 960px) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
+
+@media (min-width: 1200px) {
+  html.hud-v3-active #app {
+    max-width: min(1100px, 92vw) !important;
+  }
+}
+
+/* ── Modals: scroll + safe height (all sizes) ── */
+html.hud-v3-active .overlay {
+  align-items: flex-start !important;
+  justify-content: center !important;
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  overscroll-behavior: contain !important;
+}
+
+html.hud-v3-active .overlay .card-modal,
+html.hud-v3-active .overlay .premiere-card,
+html.hud-v3-active .overlay .aaa-reveal-modal {
+  max-height: min(calc(100dvh - var(--safe-t, 0px) - var(--safe-b, 0px) - 24px), 680px) !important;
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  margin: auto 0 !important;
+  flex-shrink: 0 !important;
+}
+
+html.hud-v3-active .premiere-card {
+  overflow-y: auto !important;
+}
+
+/* ── Crisis / modal open: lock background scroll ── */
+html.ast-crisis-open,
+html.ast-crisis-open body,
+html.ast-modal-open,
+html.ast-modal-open body {
+  overflow: hidden !important;
+  overscroll-behavior: none !important;
+}
+
+html.ast-crisis-open #main,
+html.ast-crisis-open #command-dock,
+html.ast-modal-open #main,
+html.ast-modal-open #command-dock {
+  pointer-events: none !important;
+}
+
+html.ast-crisis-open .overlay,
+html.ast-modal-open .overlay {
+  pointer-events: auto !important;
+}
+
+html.ast-crisis-open #hud-shell,
+html.ast-crisis-open #command-dock {
+  filter: brightness(0.72);
+}
+
+html.ast-crisis-open .hud-chaos-crisis,
+html.ast-crisis-open .tab-badge {
+  animation: none !important;
+}
+
+/* ── Horizontal swipes inside #main ── */
+html.hud-v3-active #main .aaa-slot-carousel,
+html.hud-v3-active #main .aaa-slot-tabs,
+html.hud-v3-active #main .aaa-gl-carousel,
+html.hud-v3-active #main .aaa-gl-carousel-stage,
+html.hud-v3-active #main .pathway-steps {
+  touch-action: pan-x pan-y !important;
+  -webkit-overflow-scrolling: touch !important;
+  overscroll-behavior-x: contain;
+}
+
+/* ── Coach: compact on phone + landscape ── */
+@media (max-width: 599px) {
+  html.hud-v3-active #pathway-rail {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+  html.hud-v3-active #pathway-rail .pathway-steps {
+    max-height: 40px;
+    overflow-x: auto !important;
+    flex-wrap: nowrap !important;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 820px) {
+  html.hud-v3-active #pathway-rail {
+    max-height: 52px !important;
+  }
+  html.hud-v3-active #pathway-rail .pathway-steps:not([hidden]) {
+    display: none !important;
+  }
+  html.hud-v3-active .aaa-show-panel .aaa-show-card {
+    grid-template-columns: 1fr !important;
+  }
+  html.hud-v3-active .aaa-show-panel .aaa-poster {
+    max-height: 180px !important;
+    min-height: 0 !important;
+  }
+  html.hud-v3-active #premiere .prem-banner {
+    height: 140px !important;
+  }
+}
+
+/* ── Touch targets (44px minimum) ── */
+html.hud-v3-active .aaa-show-panel .aaa-team-add {
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+}
+
+html.hud-v3-active .aaa-gl-back,
+html.hud-v3-active .aaa-gl-smart-cast,
+html.hud-v3-active .aaa-cast-pick .aaa-cast-chip,
+html.hud-v3-active .warroom-opt,
+html.hud-v3-active .aaa-decision-actions .btn-ghost {
+  min-height: 44px !important;
+  padding: 10px 14px !important;
+  font-size: 12px !important;
+}
+
+html.hud-v3-active .aaa-pwa-install-dismiss {
+  min-width: 44px !important;
+  min-height: 44px !important;
+}
+
+/* ── HUD stats readable ── */
+html.hud-v3-active .hud-stat .v {
+  font-size: 12px !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+html.hud-v3-active .hud-stat.yen .v::before {
+  content: "¥";
+  margin-right: 1px;
+}
+
+@media (max-width: 430px) {
+  html.hud-v3-active .hud-stat .v {
+    font-size: 11px !important;
+  }
+  html.hud-v3-active .hud-stat .hud-stat-plus {
+    display: none !important;
+  }
+}
+
+@media (min-width: 768px) {
+  html.hud-v3-active .hud-stat .v {
+    font-size: 13px !important;
+  }
+}
+
+/* ── Tab dock: scroll hint on narrow phones ── */
+@media (max-width: 430px) {
+  html.hud-v3-active #tabs {
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    mask-image: linear-gradient(90deg, #000 92%, transparent);
+  }
+  html.hud-v3-active .tab {
+    scroll-snap-align: start;
+    flex: 0 0 auto;
+  }
+}
+
+/* ── Produce chips readable ── */
+@media (max-width: 430px) {
+  html.hud-v3-active .aaa-show-panel .aaa-chip {
+    font-size: 11px !important;
+    padding: 5px 10px !important;
+  }
+}
+
+/* ── Greenlight carousel clip on mobile ── */
+@media (max-width: 720px) {
+  html.hud-v3-active .aaa-gl-page .aaa-gl-carousel-stage {
+    overflow: hidden !important;
+  }
+  html.hud-v3-active .aaa-gl-page .aaa-gl-card.sel {
+    transform: scale(1.03) !important;
+  }
+  html.hud-v3-active .aaa-gl-page .aaa-gl-confirm-banner {
+    position: sticky !important;
+    bottom: calc(var(--safe-b, 0px) + 8px) !important;
+    z-index: 11 !important;
+  }
+}
+
+/* ── Tablet: staff single column, market auto-fit ── */
+@media (min-width: 768px) and (max-width: 1024px) {
+  html.hud-v3-active .aaa-staff-list {
+    grid-template-columns: 1fr !important;
+  }
+  html.hud-v3-active .aaa-market-grid {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)) !important;
+  }
+}
+
+/* ── Desktop: hover affordances ── */
+@media (hover: hover) and (min-width: 1024px) {
+  html.hud-v3-active .tab:not(.active):hover {
+    background: rgba(255, 255, 255, 0.06) !important;
+  }
+  html.hud-v3-active .hud-menu-btn:hover,
+  html.hud-v3-active .btn-ghost:hover,
+  html.hud-v3-active .chip:hover {
+    border-color: rgba(139, 92, 246, 0.45) !important;
+    background: rgba(139, 92, 246, 0.08) !important;
+  }
+  html.hud-v3-active .aaa-show-panel .aaa-team-add:hover {
+    background: rgba(255, 92, 168, 0.28) !important;
+    transform: scale(1.05);
+  }
+  html.hud-v3-active .tab .tab-lbl {
+    font-size: 11px !important;
+  }
+}
+
+/* ── Tutorial: block stray taps behind coach ── */
+html.gt-tutorial-active::before {
+  pointer-events: auto !important;
+}
+
+html.gt-tutorial-active #guided-tutorial,
+html.gt-tutorial-active #command-dock,
+html.gt-tutorial-active .gt-highlight {
+  pointer-events: auto !important;
+}
+
+/* ── Mobile perf: reduce global FX wash ── */
+@media (max-width: 720px) {
+  html.hud-v3-active body::after {
+    opacity: 0.12 !important;
+  }
+  html.hud-v3-active #fx-canvas {
+    opacity: 0.2 !important;
+  }
+}
+
+/* ── Pill semantic colors (override ast-v5 cyan nuke when data-rarity set) ── */
+html.hud-v3-active .pill[data-rarity="common"] {
+  background: rgba(148, 163, 184, 0.2) !important;
+  color: #cbd5e1 !important;
+}
+html.hud-v3-active .pill[data-rarity="rare"] {
+  background: rgba(56, 189, 248, 0.2) !important;
+  color: #7dd3fc !important;
+}
+html.hud-v3-active .pill[data-rarity="epic"] {
+  background: rgba(167, 139, 250, 0.2) !important;
+  color: #c4b5fd !important;
+}
+html.hud-v3-active .pill[data-rarity="legendary"] {
+  background: rgba(251, 191, 36, 0.2) !important;
+  color: #fde68a !important;
+}
+
+/* ── Modal close button (when injected) ── */
+html.hud-v3-active .modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  color: inherit;
+  font-size: 18px;
+  cursor: pointer;
+  z-index: 2;
+}
+
+html.hud-v3-active .overlay .card-modal {
+  position: relative;
+  padding-top: 44px;
+}
+
+/* ── Drawer: tablet width ── */
+@media (min-width: 768px) and (max-width: 1024px) {
+  html.hud-v3-active .hud-drawer-inner {
+    width: min(400px, 44vw) !important;
+    max-height: calc(100dvh - var(--safe-t, 0px) - var(--safe-b, 0px) - 24px) !important;
+  }
+}
+
+@media (max-width: 599px) {
+  html.hud-v3-active .hud-drawer-inner {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 16px 16px 0 0 !important;
+    align-self: flex-end;
+  }
+  html.hud-v3-active .hud-drawer {
+    align-items: flex-end !important;
+    padding-top: calc(var(--safe-t, 0px) + 8px) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.hud-v3-active * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -56,7 +56,7 @@
     const origRender = hook.render;
     hook.render = function () {
       origRender();
-      if (!document.documentElement.classList.contains("hud-v3-active")) injectSnoozeButton();
+      injectSnoozeButton();
     };
 
     const origRelease = hook.releaseProject;

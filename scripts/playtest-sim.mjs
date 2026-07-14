@@ -2254,8 +2254,14 @@ function testExtractedLogic() {
     "tabInDockFor early dock shows research when unlocked"
   );
   assert(
-    tabInDockFor("market", { releases: 0, fans: 10 }) === true,
-    "tabInDockFor early dock shows market teaser"
+    tabInDockFor("market", { releases: 0, fans: 10 }) === false,
+    "tabInDockFor minute-zero dock is produce/staff/quests only"
+  );
+  assert(tabInDockFor("produce", { releases: 0 }) === true, "tabInDockFor minute-zero shows produce");
+  assert(tabInDockFor("staff", { releases: 0 }) === true, "tabInDockFor minute-zero shows staff");
+  assert(
+    tabInDockFor("market", { releases: 1, fans: 10 }) === true,
+    "tabInDockFor post-premiere dock shows market teaser"
   );
   assert(tabInDockFor("chaos", { releases: 3 }) === false, "tabInDockFor early dock hides chaos");
   assert(tabInDockFor("chaos", { releases: 6 }) === true, "tabInDockFor late dock shows chaos tab");

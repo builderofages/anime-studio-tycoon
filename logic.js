@@ -203,6 +203,10 @@ export function chaosUnlockProgressFor(S) {
 
 /** Whether tab appears in dock before release-5 cull. */
 export function tabInDockFor(k, S) {
+  if (k === "stars" && !featureUnlockedFor("stars", S)) return false;
+  if ((S.releases || 0) < 1) {
+    return ["produce", "quests", "staff"].includes(k);
+  }
   if ((S.releases || 0) < 5) {
     if (k === "research") return featureUnlockedFor("research", S);
     return ["produce", "quests", "staff", "stars", "market", "studio", "store"].includes(k);
@@ -388,8 +392,9 @@ export function fmtLocale(n) {
 }
 
 export function fmtHudRes(k, n) {
-  if (k === "gems") return fmtLocale(n);
-  if (k === "yen" || k === "fans") return fmtCompact(n);
+  if (k === "gems") return n >= 1000 ? fmtCompact(n) : fmtLocale(n);
+  if (k === "yen") return "¥" + fmtCompact(n);
+  if (k === "fans") return fmtCompact(n);
   return fmt(n);
 }
 
