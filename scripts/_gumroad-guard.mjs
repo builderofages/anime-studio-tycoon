@@ -1,57 +1,50 @@
 /**
- * Shared Gumroad safety — one probe, no browser automation, no auth polling.
+ * Gumroad safety — NO browser, NO gumroad CLI, NO URL spam.
+ * Distribution is complete (launch/GUMROAD_FROZEN.json). Env token only when explicitly needed.
  */
-import { spawnSync } from "child_process";
+import { existsSync, readFileSync } from "fs";
+import { join, dirname } from "path";
+import { fileURLToPath } from "url";
 
-const PROBE_URL = "https://trainagent.gumroad.com/l/xmwvvi";
+const root = join(dirname(fileURLToPath(import.meta.url)), "..");
+const FROZEN_PATH = join(root, "launch/GUMROAD_FROZEN.json");
 
-/** Single HTTP probe; throws on 429. */
-export async function probeRateLimit(url = PROBE_URL) {
-  const r = await fetch(url, { redirect: "follow" });
-  if (r.status === 429) {
-    const err = new Error("Gumroad rate-limited (HTTP 429). Stop retrying — wait 2–6h.");
-    err.code = "RATE_LIMIT";
-    throw err;
-  }
-  return r;
+export function isGumroadFrozen() {
+  return existsSync(FROZEN_PATH);
 }
 
-export function exitOnRateLimit(err) {
-  if (err?.code === "RATE_LIMIT" || String(err?.message).includes("429")) {
-    console.error(`✗ ${err.message}`);
-    console.error("  Do NOT open Chrome or run gumroad auth login in a loop.");
-    process.exit(2);
+export function frozenMessage() {
+  try {
+    const j = JSON.parse(readFileSync(FROZEN_PATH, "utf8"));
+    return `Gumroad distribution frozen (${j.productsLive} products live). No browser/CLI/API loops.`;
+  } catch {
+    return "Gumroad distribution frozen. No browser/CLI/API loops.";
   }
 }
 
-/** Token from env only — never spawns `gumroad auth login` or polls auth status. */
-export function getTokenFromEnv() {
-  const t = process.env.GUMROAD_ACCESS_TOKEN?.trim();
-  return t || null;
+/** Exit 0 if frozen — scripts become no-ops unless --force */
+export function exitIfFrozenUnlessForce() {
+  if (isGumroadFrozen() && !process.argv.includes("--force")) {
+    console.log(frozenMessage());
+    console.log("  Game is live: https://anime-studio-tycoon.vercel.app/play");
+    console.log("  Pass --force only if you intentionally need to re-run API updates.");
+    process.exit(0);
+  }
 }
 
-/** One read of stored CLI token (no login, no status poll). */
-export function getTokenFromCliOnce() {
-  if (process.env.GUMROAD_NO_CLI === "1") return null;
-  const p = spawnSync("gumroad", ["auth", "token"], { encoding: "utf8", timeout: 5000 });
-  if (p.status === 0 && p.stdout?.trim()) return p.stdout.trim();
-  return null;
-}
-
-export function requireToken({ allowCli = true } = {}) {
-  const token = getTokenFromEnv() || (allowCli ? getTokenFromCliOnce() : null);
+/** Token from GUMROAD_ACCESS_TOKEN env ONLY — never spawns gumroad CLI (can trigger browser flows). */
+export function requireToken() {
+  const token = process.env.GUMROAD_ACCESS_TOKEN?.trim();
   if (!token) {
-    console.error("Missing GUMROAD_ACCESS_TOKEN.");
-    console.error("  One-time (you): gumroad auth login → export GUMROAD_ACCESS_TOKEN=$(gumroad auth token)");
-    console.error("  Scripts will NOT open Chrome or poll Gumroad auth for you.");
+    console.error("Missing GUMROAD_ACCESS_TOKEN env var.");
+    console.error("  Scripts do NOT run `gumroad auth login` or open Chrome.");
+    console.error("  Gumroad is already configured on Vercel — you usually don't need this script.");
     process.exit(1);
   }
   return token;
 }
 
-export function refuseUnlessFlag(flag, message) {
-  if (!process.argv.includes(flag)) {
-    console.error(message);
-    process.exit(1);
-  }
+/** Optional token — never calls gumroad CLI. */
+export function optionalToken() {
+  return process.env.GUMROAD_ACCESS_TOKEN?.trim() || null;
 }

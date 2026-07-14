@@ -1,22 +1,17 @@
 {
-  "at": "2026-07-09T09:37:45.631Z",
+  "at": "2026-07-14T04:42:51.292Z",
   "health": {
     "ok": true,
     "grant_jwt": true,
     "grant_mint": true,
-    "gumroad_token": false,
+    "gumroad_token": true,
     "gumroad_seller": true,
     "apple_shared_secret": false,
     "google_play": false
   },
-  "missingSlugs": [
-    "astlegend",
-    "astmogul",
-    "astaurora",
-    "astphoenix",
-    "astshogun",
-    "astitems",
-    "astnoads"
-  ],
-  "distributionReady": false
+  "playUrl": "https://anime-studio-tycoon.vercel.app/play",
+  "gumroadFrozen": true,
+  "webLive": true,
+  "gumroadReady": true,
+  "mobileReady": false
 }

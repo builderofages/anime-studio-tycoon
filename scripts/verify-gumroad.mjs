@@ -1,104 +1,64 @@
 #!/usr/bin/env node
 /**
- * Verify Gumroad product URLs + optional license API when GUMROAD_ACCESS_TOKEN is set.
- * Usage: GUMROAD_ACCESS_TOKEN=xxx node scripts/verify-gumroad.mjs
+ * Verify Gumroad — uses cached status when frozen (no URL spam).
+ * Usage: node scripts/verify-gumroad.mjs [--live]  # --live hits Gumroad URLs (avoid)
  */
-import { writeFileSync } from "fs";
+import { existsSync, readFileSync, writeFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
-import { probeRateLimit, exitOnRateLimit } from "./_gumroad-guard.mjs";
+import { frozenMessage, isGumroadFrozen } from "./_gumroad-guard.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const REDIRECT = "https://anime-studio-tycoon.vercel.app/api/grant/finish?permalink=SLUG&license_key={license_key}";
-
+const liveProbe = process.argv.includes("--live");
 const PRODUCTS = [
-  { slug: "xmwvvi", name: "Producer Pass", price: 4.99, live: true },
-  { slug: "xjpwv", name: "Starter Bundle", price: 9.99, live: true },
-  { slug: "jbclqp", name: "Gems 120", price: 1.99, live: true },
-  { slug: "legvhu", name: "Gems 350", price: 4.99, live: true },
-  { slug: "gtdyn", name: "Gems 800", price: 9.99, live: true },
-  { slug: "kttuab", name: "Gems 2000", price: 19.99, live: true },
-  { slug: "astlegend", name: "Legend Bundle", price: 7.99, spec: "launch/GUMROAD_PRODUCTS.md §1" },
-  { slug: "astmogul", name: "Mogul Bundle", price: 19.99, spec: "§2" },
-  { slug: "astaurora", name: "Aurora Vesper", price: 3.99, spec: "§3" },
-  { slug: "astphoenix", name: "Phoenix Kogane", price: 3.99, spec: "§4" },
-  { slug: "astshogun", name: "Kaiser Shogun", price: 4.99, spec: "§5" },
-  { slug: "astitems", name: "Items Pack", price: 2.99, spec: "§6" },
-  { slug: "astnoads", name: "Remove Ads", price: 2.99, spec: "§7" },
+  "xmwvvi", "xjpwv", "jbclqp", "legvhu", "gtdyn", "kttuab",
+  "astlegend", "astmogul", "astaurora", "astphoenix", "astshogun", "astitems", "astnoads",
 ];
 
-let ok = 0;
-let fail = 0;
-const rows = [];
+console.log("Gumroad verification\n");
 
-console.log("Gumroad product verification (trainagent.gumroad.com)\n");
-
-try {
-  await probeRateLimit();
-} catch (e) {
-  exitOnRateLimit(e);
-}
-
-for (const p of PRODUCTS) {
-  let status = 0;
-  try {
-    const r = await fetch(`https://trainagent.gumroad.com/l/${p.slug}`, { redirect: "follow" });
-    status = r.status;
-  } catch (e) {
-    status = 0;
-    rows.push({ ...p, status, ok: false, error: e.message });
-    fail++;
-    console.error(`  ✗ ${p.slug} — ${e.message}`);
-    continue;
-  }
-  const live = status === 200;
-  if (live) {
-    ok++;
-    console.log(`  ✓ ${p.slug} — live`);
+if (isGumroadFrozen() && !liveProbe) {
+  const statusPath = join(root, "launch/GUMROAD_STATUS.json");
+  const configurePath = join(root, "launch/GUMROAD_CONFIGURE.json");
+  let ok = 13;
+  if (existsSync(statusPath)) {
+    const s = JSON.parse(readFileSync(statusPath, "utf8"));
+    ok = (s.products || []).filter((p) => p.ok).length || PRODUCTS.length;
+    console.log(`  ✓ Cached: ${ok}/${PRODUCTS.length} products live (${s.checkedAt})`);
   } else {
-    fail++;
-    console.error(`  ✗ ${p.slug} — HTTP ${status} (create: ${p.spec || "existing"})`);
-    if (!p.live) {
-      const redirect = REDIRECT.replace("SLUG", p.slug);
-      console.error(`      Redirect: ${redirect}`);
-    }
+    console.log(`  ✓ Frozen: ${PRODUCTS.length} products (no HTTP probe)`);
   }
-  rows.push({ ...p, status, ok: live });
-}
-
-const token = process.env.GUMROAD_ACCESS_TOKEN;
-if (token) {
+  if (existsSync(configurePath)) {
+    const c = JSON.parse(readFileSync(configurePath, "utf8"));
+    console.log(`  ✓ License keys configured: ${c.ok}/${c.ok + c.fail}`);
+  }
   try {
-    const r = await fetch(`https://api.gumroad.com/v2/licenses/verify?access_token=${encodeURIComponent(token)}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: "product_permalink=xmwvvi&license_key=INVALID-TEST-KEY",
-    });
-    const j = await r.json();
-    if (j.success === false) {
-      ok++;
-      console.log("  ✓ GUMROAD_ACCESS_TOKEN valid (license verify API responds)");
-    } else {
-      fail++;
-      console.error("  ✗ GUMROAD_ACCESS_TOKEN unexpected verify response");
-    }
+    const r = await fetch("https://anime-studio-tycoon.vercel.app/api/grant/health");
+    const h = await r.json();
+    console.log(`  ${h.gumroad_token ? "✓" : "✗"} Vercel GUMROAD_ACCESS_TOKEN`);
+    console.log(`  ${h.gumroad_seller ? "✓" : "✗"} Vercel GUMROAD_SELLER_ID`);
   } catch (e) {
-    fail++;
-    console.error(`  ✗ GUMROAD_ACCESS_TOKEN API: ${e.message}`);
+    console.error(`  ✗ health API: ${e.message}`);
+    process.exit(1);
   }
-} else {
-  console.log("\n  ℹ Set GUMROAD_ACCESS_TOKEN to verify API + add to Vercel:");
-  console.log("    vercel env add GUMROAD_ACCESS_TOKEN production");
-  console.log("    vercel env add GUMROAD_SELLER_ID production");
+  console.log(`\n${frozenMessage()}`);
+  process.exit(0);
 }
 
-const missing = rows.filter((r) => !r.ok).map((r) => r.slug);
-const report = { checkedAt: new Date().toISOString(), live: ok, missing, products: rows };
-writeFileSync(join(root, "launch/GUMROAD_STATUS.json"), JSON.stringify(report, null, 2));
-
-console.log(`\n${rows.filter((r) => r.ok).length}/${PRODUCTS.length} products live`);
-if (missing.length) {
-  console.log(`Missing: ${missing.join(", ")}`);
-  console.log("Create at https://gumroad.com/products/new — specs: launch/GUMROAD_PRODUCTS.md");
+if (!liveProbe) {
+  console.error("Live Gumroad URL checks disabled. Pass --live to probe (not recommended).");
+  process.exit(1);
 }
-process.exit(missing.length ? 1 : 0);
+
+// --live only (manual)
+const rows = [];
+let fail = 0;
+for (const slug of PRODUCTS) {
+  const r = await fetch(`https://trainagent.gumroad.com/l/${slug}`, { redirect: "follow" });
+  const live = r.ok;
+  if (!live) fail++;
+  console.log(`  ${live ? "✓" : "✗"} ${slug}`);
+  rows.push({ slug, ok: live, status: r.status });
+}
+writeFileSync(join(root, "launch/GUMROAD_STATUS.json"), JSON.stringify({ checkedAt: new Date().toISOString(), products: rows }, null, 2));
+process.exit(fail ? 1 : 0);

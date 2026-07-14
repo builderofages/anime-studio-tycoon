@@ -8,7 +8,9 @@
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
-import { probeRateLimit, exitOnRateLimit, requireToken } from "./_gumroad-guard.mjs";
+import { exitIfFrozenUnlessForce, requireToken } from "./_gumroad-guard.mjs";
+
+exitIfFrozenUnlessForce();
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const base = "https://anime-studio-tycoon.vercel.app";
@@ -66,12 +68,6 @@ if (!force && !dryRun && existsSync(configurePath)) {
       process.exit(0);
     }
   } catch (_) {}
-}
-
-try {
-  await probeRateLimit();
-} catch (e) {
-  exitOnRateLimit(e);
 }
 
 const token = requireToken();

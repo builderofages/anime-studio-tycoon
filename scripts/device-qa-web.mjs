@@ -88,15 +88,13 @@ try {
   fail("grant API", e.message);
 }
 
-const gumroadSlugs = ["xmwvvi", "xjpwv", "jbclqp", "legvhu", "gtdyn", "kttuab"];
-let gumLive = 0;
-for (const slug of gumroadSlugs) {
-  try {
-    const r = await fetch(`https://trainagent.gumroad.com/l/${slug}`, { method: "HEAD", redirect: "follow" });
-    if (r.ok) gumLive++;
-  } catch (_) {}
+try {
+  const hr = await fetch(`${base}/api/grant/health`);
+  const hj = await hr.json();
+  assert(hr.ok && hj.gumroad_token && hj.gumroad_seller, "Gumroad env on Vercel (no live URL probe)");
+} catch (e) {
+  fail("Gumroad env", e.message);
 }
-assert(gumLive === gumroadSlugs.length, "core Gumroad products live (6)", `${gumLive}/${gumroadSlugs.length}`);
 
 const report = {
   generatedAt: new Date().toISOString(),

@@ -20,7 +20,6 @@
     "verify-gumroad": "node scripts/verify-gumroad.mjs",
     "create-gumroad": "node scripts/create-gumroad-products.mjs",
     "gumroad-ship": "node scripts/gumroad-ship.mjs",
-    "gumroad-chrome": "node scripts/gumroad-chrome.mjs",
     "gumroad-rate-check": "node scripts/gumroad-rate-check.mjs",
     "configure-gumroad": "node scripts/configure-gumroad-products.mjs",
     "launch-readiness": "node scripts/launch-readiness.mjs",

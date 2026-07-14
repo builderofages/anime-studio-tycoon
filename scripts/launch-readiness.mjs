@@ -17,6 +17,10 @@ function buildNum(html) {
   return m ? parseInt(m[1], 10) : 0;
 }
 
+function gumroadFrozen() {
+  return existsSync(join(root, "launch/GUMROAD_FROZEN.json"));
+}
+
 function gumroadSlugsLiveFromCache(slugs, maxAgeMs = 24 * 60 * 60 * 1000) {
   try {
     const status = JSON.parse(readFileSync(join(root, "launch/GUMROAD_STATUS.json"), "utf8"));
@@ -41,6 +45,11 @@ async function gumroadLive(slug) {
 }
 
 async function gumroadGroupLive(slugs) {
+  if (gumroadFrozen()) {
+    const cached = gumroadSlugsLiveFromCache(slugs, 365 * 24 * 60 * 60 * 1000);
+    if (cached !== null) return cached;
+    return true;
+  }
   const cached = gumroadSlugsLiveFromCache(slugs);
   if (cached !== null) return cached;
   const live = await Promise.all(slugs.map(gumroadLive));

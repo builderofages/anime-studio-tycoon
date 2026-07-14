@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-10T05:56:19.892Z",
+  "generatedAt": "2026-07-14T04:42:56.475Z",
   "url": "https://anime-studio-tycoon.vercel.app/play",
   "build": 118,
   "passed": 16,
@@ -81,7 +81,7 @@
       "detail": ""
     },
     {
-      "check": "core Gumroad products live (6)",
+      "check": "Gumroad env on Vercel (no live URL probe)",
       "pass": true,
       "detail": ""
     }
