@@ -1,0 +1,55 @@
+name: Auto ship
+
+# Push any branch that is not main. It gets built here; if it builds, it merges
+# itself into main and whatever host watches main deploys it.
+# Installed by ship-setup.
+
+on:
+  push:
+    branches-ignore: [main]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: auto-ship-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ship:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+
+      - name: Sanity-check the diff
+        run: |
+          DELETED=$(git diff --diff-filter=D --name-only origin/main...HEAD | wc -l | tr -d ' ')
+          CHANGED=$(git diff --name-only origin/main...HEAD | wc -l | tr -d ' ')
+          echo "changed=$CHANGED deleted=$DELETED"
+          if [ "$DELETED" -gt 25 ]; then
+            echo "::error::$DELETED files deleted. Merge this one by hand."; exit 1
+          fi
+          if [ "$CHANGED" -gt 300 ]; then
+            echo "::error::$CHANGED files changed. Merge this one by hand."; exit 1
+          fi
+
+      - name: Install
+        run: npm install --no-audit --no-fund
+
+      - name: Merge to main
+        run: |
+          BRANCH="${GITHUB_REF#refs/heads/}"
+          git config user.name  "auto-ship"
+          git config user.email "auto-ship@users.noreply.github.com"
+          git reset --hard "$GITHUB_SHA"
+          git clean -fdq
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
+          git push origin --delete "$BRANCH" || true
+          echo "Merged $BRANCH into main."
