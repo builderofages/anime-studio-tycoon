@@ -1,0 +1,50 @@
+name: Release readiness - explicit live checks
+
+# This validates prerequisites; it does not publish a build or deploy the game.
+on:
+  workflow_dispatch:
+    inputs:
+      target_url:
+        description: Deployed release candidate URL to validate
+        required: true
+        default: https://anime-studio-tycoon.vercel.app
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  release-readiness:
+    runs-on: macos-latest
+    env:
+      PREFLIGHT_URL: ${{ inputs.target_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            desktop/package-lock.json
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Test and assemble current native web bundle
+        run: npm test
+      - name: Install desktop build dependencies
+        working-directory: desktop
+        run: npm ci --no-audit --no-fund
+      - name: Build actual Mac artifacts
+        working-directory: desktop
+        run: npm run dist:mac -- --publish never
+      - name: Check deployed web candidate
+        run: npm run test:web-qa
+      - name: Check release prerequisites including deployed payment configuration
+        if: ${{ !cancelled() }}
+        run: npm run launch-preflight
+      - name: Preserve readiness report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-readiness-report
+          path: launch/DEVICE_QA_AUTOMATED.json
+          if-no-files-found: warn

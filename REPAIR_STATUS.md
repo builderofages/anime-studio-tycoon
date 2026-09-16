@@ -29,3 +29,11 @@ The old checkout in `~/Projects/anime-studio-tycoon` was not modified and is old
 ## Publishing behavior
 
 The repair replaces `.github/workflows/auto-ship.yml` with read-only branch/PR tests, local Redis integration tests and dependency checks. It contains no automatic merge, branch deletion or deployment. The previous main-branch version still auto-merges non-main pushes until this replacement is accepted; coordinate that transition before publishing a repair branch.
+
+## Review checks versus release readiness
+
+`ci.yml` runs locked, local game/purchase tests on main pushes and PRs. `auto-ship.yml` additionally tests the Redis ledger and dependencies on repair branches/PRs. Neither probes production readiness. GitHub PR checks passing therefore do not mean the game is ready for store submission.
+
+Run the explicit `Release readiness - explicit live checks` workflow on the candidate revision, supplying its deployed URL. It builds actual Mac artifacts, checks the deployed web candidate and runs the existing launch preflight. Missing deployed Apple/payment configuration remains a failure; no prerequisites are skipped or replaced with placeholder artifacts. The invalid-token probe now uses the repaired API's POST contract. This workflow publishes nothing (`--publish never`). A successful packaging run does not establish Apple signing/notarization or actual sandbox purchase success; those remain separate release requirements.
+
+The live readiness workflow was not executed during this pipeline repair; the previously observed missing Apple configuration is still unresolved.
