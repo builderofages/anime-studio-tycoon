@@ -3,6 +3,7 @@ import { signGrant } from "./_jwt.js";
 import { grantFromPermalink, grantFromSku, permalinkForSku } from "./_sku-map.js";
 import { verifyGumroadLicense } from "./_gumroad.js";
 import { ALLOWED_GRANT_KINDS } from "./_grant-security.js";
+import { registerPurchase } from "./_ledger.js";
 
 /** BUILD 108 — grant security: deterministic id for license replay prevention. */
 export function stableGrantId(licenseKey, grant) {
@@ -24,22 +25,22 @@ export async function mintFromPurchase({ permalink, sku, licenseKey }) {
   if (!grant) return { ok: false, error: "unknown product", status: 400 };
 
   const lk = licenseKey != null ? String(licenseKey).trim() : "";
-  const skipVerify = process.env.GUMROAD_SKIP_LICENSE_VERIFY === "true";
   if (!lk) return { ok: false, error: "license_key required", status: 400 };
 
-  if (!skipVerify) {
-    const slug = permalink || permalinkForSku(sku) || sku;
-    const ok = await verifyGumroadLicense(slug, lk);
-    if (!ok) return { ok: false, error: "invalid license", status: 400 };
-  }
+  const slug = permalink || permalinkForSku(sku) || sku;
+  let purchase;
+  try { purchase = await verifyGumroadLicense(slug, lk); }
+  catch { return { ok: false, error: "purchase verification unavailable", status: 503 }; }
+  if (!purchase) return { ok: false, error: "invalid license", status: 400 };
 
   const gid = stableGrantId(lk, grant);
   if (!gid) return { ok: false, error: "grant id error", status: 500 };
 
-  const pt = signGrant(
-    { kind: grant.kind, amount: grant.amount || 0, sku: grant.sku || null, id: grant.id || null, gid },
-    jwtSecret
-  );
+  const payload = { kind: grant.kind, amount: grant.amount || 0, sku: grant.sku || null, id: grant.id || null, gid };
+  let identity;
+  try { identity = await registerPurchase(purchase, payload); }
+  catch { return { ok: false, error: "purchase storage unavailable", status: 503 }; }
+  const pt = signGrant({ ...payload, ...identity, ledger: 1 }, jwtSecret);
   const base = process.env.GRANT_REDIRECT_BASE || "https://anime-studio-tycoon.vercel.app/";
   const sep = base.includes("?") ? "&" : "?";
   return { ok: true, pt, grant, redirect: base + sep + "pt=" + encodeURIComponent(pt) };

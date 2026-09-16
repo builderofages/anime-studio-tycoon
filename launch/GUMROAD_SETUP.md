@@ -43,7 +43,8 @@ Help: [Create an application for the API](https://gumroad.com/help/article/280-c
 | `GRANT_REDIRECT_BASE` | No | Default: `https://anime-studio-tycoon.vercel.app/` |
 | `GUMROAD_ACCESS_TOKEN` | Yes | See **§0 Get a token** below (Gumroad removed the old “Generate token” button) |
 | `GUMROAD_SELLER_ID` | Recommended | Your Gumroad seller ID (webhook validation) |
-| `GUMROAD_SKIP_LICENSE_VERIFY` | Dev only | `true` skips license check (never in prod) |
+
+License verification is required in every environment. Automated tests mock the Gumroad response; no environment variable bypasses verification.
 
 ## 2. Enable license keys (each paid product)
 

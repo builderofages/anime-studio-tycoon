@@ -687,17 +687,16 @@ function greenlightPotential(p,genre){
   if(avg>=70) return "B+";
   return "B";
 }
-function showcaseCost(sc,p){ return sc?.showcaseCost!=null?sc.showcaseCost:p.cost; }
+function showcaseCost(sc,p){ return p.cost; }
 function showcaseRewardsFor(sc,p,genre){
-  if(sc?.showcaseRewards) return sc.showcaseRewards;
-  const trendBonus=genre===trendGenre()?1.35:1;
-  const mult=1+p.tier*0.12;
-  const costMult=sc?.showcaseCost?sc.showcaseCost/Math.max(1,p.cost):1;
+  const cast=(_castSel||[]).filter(id=>castEligible((S.stars||[]).find(st=>st.sid===id))).slice(0,castCap());
+  const pr={pid:p.id,genre,cast,seq:sc?.sequelBase?(S.franchises[sc.sequelBase]||1)+1:0};
+  const estimate=estimatePremiere(pr,p);
   return{
-    revenue:Math.floor(p.base*2.8*mult*trendBonus*costMult),
-    profit:Math.floor(p.base*0.95*mult*trendBonus*costMult),
-    exp:Math.floor(400+p.tier*250),
-    fans:Math.floor(p.fans*2.2*trendBonus*Math.min(8,costMult)),
+    revenue:estimate.yen,
+    profit:estimate.yen-p.cost,
+    hype:estimate.hype,
+    fans:estimate.fans,
   };
 }
 function greenlightRewards(p,genre){ return showcaseRewardsFor(null,p,genre); }
@@ -3636,13 +3635,12 @@ async function redeemLicenseKey(sku, key){
   if(!key||!sku){ toast("Enter your license key and pick what you bought"); return; }
   const lk=licenseRedeemKey(sku, key);
   if(!S.redeemedLicenses) S.redeemedLicenses=[];
-  if(S.redeemedLicenses.includes(lk)){ toast("This license was already redeemed on this device"); return; }
   try{
     const r=await fetch("/api/grant/license",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({sku,license_key:key.trim()})});
     const j=await r.json();
     if(!j.ok||!j.pt){ toast(j.error==="invalid license"?"Invalid license — check key & product":"Redeem failed — try again or email support"); return; }
-    const changed=await redeemPurchaseToken(j.pt);
-    S.redeemedLicenses.push(lk);
+    const changed=await redeemPurchaseToken(j.pt,true);
+    if(!S.redeemedLicenses.includes(lk)) S.redeemedLicenses.push(lk);
     save();
     toast(changed?"✅ Purchase redeemed!":"✅ Already on this account — you're all set!",true);
   }catch(e){ toast("Network error — try again"); }
@@ -3719,7 +3717,7 @@ function grantEntitlement(kind, amount, extra){
   else if(kind==="bundle"){ S.producerPass=true; S.bundleBought=true; if(addEntitlement("bundle")){ S.gems+=200; delivered=true; toast("🌟 Starter Bundle: Pass + 200 💎!",true); } }
   else if(kind==="bundle_legend"){ S.producerPass=true; if(addEntitlement("bundle_legend")){ S.gems+=400; grantStar("x_aurora"); delivered=true; toast("🏆 Legend Bundle delivered — thank you!",true); } }
   else if(kind==="bundle_mogul"){ S.producerPass=true; if(addEntitlement("bundle_mogul")){ S.gems+=1500; grantStar("x_phoenix"); grantStar("x_shogun"); S.noAds=true; delivered=true; toast("👑 Mogul Bundle delivered — thank you!",true); } }
-  else if(kind==="items_pack"){ if(addEntitlement("items_pack")){ ["megaphone","power_glove","time_pendant","stardust","espresso"].forEach(i=>addItem(i,1)); S.gems+=50; delivered=true; toast("🧰 Power Items Pack delivered!",true); } }
+  else if(kind==="items_pack"){ if(extra.verifiedSale || addEntitlement("items_pack")){ ["megaphone","power_glove","time_pendant","stardust","espresso"].forEach(i=>addItem(i,1)); S.gems+=50; delivered=true; toast("🧰 Power Items Pack delivered!",true); } }
   else if(kind==="noads"){ if(addEntitlement("noads")){ S.noAds=true; delivered=true; toast("🚫 Ads removed — thank you!",true); } }
   else if(kind==="star"){ const id=extra.id||SKU2STAR[extra.sku]; if(id && addEntitlement("star:"+id)){ delivered=grantStar(id); } }
   else if(kind==="gems"){ const n=+amount||0; if(n>0){ S.gems+=n; delivered=true; toast("💎 +"+n+" Gems — thank you!",true);
@@ -4177,8 +4175,14 @@ function closeReturnHub(){
   if(hadWhatsnew){ S.whatsnewSeen=true; save(); }
   hub.style.display="none";
   hub.dataset.hadOffline=""; hub.dataset.hadDaily=""; hub.dataset.hadWhatsnew="";
-  if(drainUnlockModalQueue()) return;
-  maybeShowHowtoAfterReturnHub();
+  try{
+    if(drainUnlockModalQueue()) return;
+    maybeShowHowtoAfterReturnHub();
+  }finally{
+    // Closing the boot overlay must immediately restore catalog input and
+    // accessibility, including when an unlock modal takes over.
+    syncModalLock();
+  }
 }
 function maybeShowReturnHub(ctx={}){
   if(!returnHubHasContent(ctx)) return false;
@@ -5163,7 +5167,7 @@ function renderGreenlightPage(empties,showBack){
   const selP=isSequel?PROJECTS[selSc.pid!=null?selSc.pid:sequelGreenlightInfo().p.id]:PROJECTS[selSc.pid];
   const lock=isSequel?{locked:false,reason:""}:projectLockInfo(selP);
   const afford=isSequel?!!selSc.seqAfford:S.yen>=selP.cost;
-  const rewards=isSequel?{revenue:Math.floor(selP.base*1.4),profit:Math.floor(selP.base*0.5),exp:Math.floor(selP.tier*400),fans:Math.floor(selP.fans*1.3)}:showcaseRewardsFor(selSc,selP,selSc.genre);
+  const rewards=showcaseRewardsFor(selSc,selP,selSc.genre);
   const selCost=isSequel?(selSc.seqCost||selP.cost):showcaseCost(selSc,selP);
   const usedShow=(S.showcaseGlUsed!=null&&(S.releases||0)<3)?S.showcaseGlUsed:used;
   const risk=isSequel?{level:"LOW",note:"Franchise sequel — built-in audience lowers risk. +8% fans & yen per season."}:greenlightRisk(selP,selSc.genre);
@@ -5253,10 +5257,11 @@ function renderGreenlightPage(empties,showBack){
     </div>
     <div class="aaa-gl-detail-grid aaa-gl-analytics">
       <div class="aaa-gl-rewards"><h5>ESTIMATED REWARDS</h5>
-        <div class="aaa-gl-reward-row"><span>Revenue</span><b>${fmtYenCompact(rewards.revenue)}+</b></div>
-        <div class="aaa-gl-reward-row"><span>Profit</span><b>${fmtYenCompact(rewards.profit)}+</b></div>
-        <div class="aaa-gl-reward-row"><span>Studio EXP</span><b>+${fmt(rewards.exp)}</b></div>
+        <div class="aaa-gl-reward-row"><span>Revenue</span><b>${fmtYenCompact(rewards.revenue)}</b></div>
+        <div class="aaa-gl-reward-row"><span>Net before salaries</span><b>${fmtYenCompact(rewards.profit)}</b></div>
+        <div class="aaa-gl-reward-row"><span>Hype</span><b>+${fmt(rewards.hype)}</b></div>
         <div class="aaa-gl-reward-row"><span>Fan Growth</span><b>+${fmtCompact(rewards.fans)}</b></div>
+        <p class="muted">Based on your current team and bonuses. Results can change before premiere.</p>
       </div>
       <div class="aaa-gl-risk"><h5>RISK ASSESSMENT</h5><span class="aaa-gl-risk-level ${risk.level.toLowerCase()}">🛡 ${risk.level}</span><p>${risk.note}</p></div>
     </div>
@@ -6100,24 +6105,62 @@ function clearGrantParams(){
   try{ history.replaceState(null,"",location.pathname); }catch(_){}
   try{ if(window.top!==window && window.top.history){ window.top.history.replaceState(null,"",window.top.location.pathname); } }catch(_){}
 }
-async function redeemPurchaseToken(pt){
+function purchaseDeliveryId(){
+  const key="ast_purchase_delivery_v1";
+  let id=localStorage.getItem(key);
+  if(!/^[a-f0-9]{64}$/.test(id||"")){
+    const bytes=new Uint8Array(32); crypto.getRandomValues(bytes);
+    id=Array.from(bytes,b=>b.toString(16).padStart(2,"0")).join("");
+    localStorage.setItem(key,id);
+  }
+  return id;
+}
+function restorePurchasedEntitlement(g){
+  // Restore permanent benefits only: never reissue gems, items or welcome bonuses.
+  const before=JSON.stringify(S);
+  S.firstPurchaseDone=true;
+  const ensureStar=id=>{ if(!(S.stars||[]).some(st=>st.sid===id)) grantStar(id); addEntitlement("star:"+id); };
+  if(["pass","bundle","bundle_legend","bundle_mogul"].includes(g.kind)) S.producerPass=true;
+  if(g.kind==="bundle") S.bundleBought=true;
+  if(g.kind==="bundle_legend") ensureStar("x_aurora");
+  if(g.kind==="bundle_mogul"){ ensureStar("x_phoenix"); ensureStar("x_shogun"); S.noAds=true; }
+  if(g.kind==="noads") S.noAds=true;
+  if(g.kind==="star"){ const id=g.id||SKU2STAR[g.sku]; if(id) ensureStar(id); }
+  if(g.kind!=="gems") addEntitlement(g.kind);
+  return JSON.stringify(S)!==before;
+}
+async function redeemPurchaseToken(pt, requireSuccess=false){
   try{
-    const r=await fetch("/api/grant/redeem?pt="+encodeURIComponent(pt));
+    const delivery_id=purchaseDeliveryId();
+    const request=action=>fetch("/api/grant/redeem",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({pt,delivery_id,action})});
+    const r=await request("claim");
     const j=await r.json();
-    if(!j.ok||!j.grant) return false;
+    if(!j.ok||!j.grant){ if(requireSuccess) throw new Error(j.error||"Purchase could not be verified"); return false; }
     const g=j.grant;
-    if(g.gid){
-      if(grantWasRedeemed(g.gid)) return false;
-      rememberGrantId(g.gid);
-    }
+    const before=JSON.stringify(S);
     let changed=false;
-    if(g.kind==="gems") changed=grantEntitlement("gems", parseInt(g.amount||"0",10));
-    else if(g.kind==="star") changed=grantEntitlement("star",0,{id:g.id,sku:g.sku});
-    else changed=grantEntitlement(g.kind);
-    if(changed) track("purchase_grant",{grant:g.kind,signed:true});
-    if(changed || g.gid) clearGrantParams();
+    try{
+      if(j.mode==="restore") changed=restorePurchasedEntitlement(g);
+      else if(!grantWasRedeemed(g.gid)){
+        if(g.gid) rememberGrantId(g.gid);
+        if(g.kind==="gems") changed=grantEntitlement("gems",parseInt(g.amount||"0",10));
+        else if(g.kind==="star") changed=grantEntitlement("star",0,{id:g.id,sku:g.sku});
+        else changed=grantEntitlement(g.kind,0,{verifiedSale:true});
+      }
+      if(j.durable){
+        // Do not acknowledge delivery if the browser could not persist the result.
+        S.lastSave=Date.now();
+        localStorage.setItem(SAVE_KEY,JSON.stringify(S));
+      }
+    }catch(error){ S=JSON.parse(before); throw error; }
+    if(j.durable && j.mode!=="restore"){
+      const ack=await (await request("ack")).json();
+      if(!ack.ok) throw new Error("Purchase saved; please retry to confirm delivery");
+    }
+    if(changed){ track("purchase_grant",{grant:g.kind,signed:true}); render(); }
+    if(changed||g.gid) clearGrantParams();
     return changed;
-  }catch(e){ return false; }
+  }catch(e){ if(requireSuccess) throw e; return false; }
 }
 function readGrant(){
   try{
@@ -6125,10 +6168,10 @@ function readGrant(){
     try{ if(window.top!==window && window.top.location && window.top.location.search){ search += (search?"&":"?") + window.top.location.search.replace(/^\?/,""); } }catch(_){}
     const q=new URLSearchParams(search);
     const pt=q.get("pt");
-    if(pt){ redeemPurchaseToken(pt); return; }
+    if(pt){ redeemPurchaseToken(pt,true).catch(()=>toast("Purchase delivery could not finish. Keep your license and retry in the Store.")); return; }
     if(NATIVE) return;
     const host=location.hostname;
-    const dev=host==="localhost"||host==="127.0.0.1"||q.get("devgrants")==="1";
+    const dev=host==="localhost"||host==="127.0.0.1";
     if(!dev) return;
     let changed=false; const g=q.get("grant");
     if(g){

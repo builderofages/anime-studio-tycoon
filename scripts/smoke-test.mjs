@@ -516,7 +516,7 @@ assert(playSimSrc.includes("runReadGrantSimulation"), "playtest sim readGrant de
 assert(playSimSrc.includes("buildModalStormSandbox"), "playtest sim modal storm dom mock");
 assert(playSimSrc.includes("runEmpireCrisisSimulation"), "playtest sim empire crisis guards");
 assert(html.includes('addEntitlement("items_pack")'), "items_pack entitlement idempotent");
-assert(html.includes("devgrants"), "readGrant devgrants escape hatch");
+assert(playSimSrc.includes("prodUnsignedBlocked"), "readGrant production unsigned-grant regression coverage");
 assert(html.includes("first-greenlight"), "first greenlight synth sfx profile");
 assert(html.includes("celebrateGreenlightSlot"), "greenlight slot celebration burst");
 assert(html.includes("unlock-open"), "unlock modal open sfx profile");
@@ -782,14 +782,14 @@ assert(logic.includes("S.redeemedGrants = Array.isArray(d.redeemedGrants)"), "ag
 assert(logic.includes("S.redeemedLicenses = Array.isArray(d.redeemedLicenses)"), "agent fix: mergeLoadedSave redeemedLicenses");
 assert(html.includes("function grantWasRedeemed("), "agent fix: grantWasRedeemed helper");
 assert(html.includes("function rememberGrantId("), "agent fix: rememberGrantId helper");
-assert(html.includes("if(grantWasRedeemed(g.gid)) return false"), "agent fix: redeemPurchaseToken idempotency");
+assert(html.includes("if(!grantWasRedeemed(g.gid))"), "agent fix: redeemPurchaseToken idempotency");
 assert(
-  /if\(g\.gid\)\{[\s\S]*?rememberGrantId\(g\.gid\);[\s\S]*?\}[\s\S]*?grantEntitlement/.test(html),
+  /if\(g\.gid\) rememberGrantId\(g\.gid\);[\s\S]*?grantEntitlement/.test(html),
   "agent fix: rememberGrantId before grantEntitlement (gid in save)"
 );
 assert(html.includes("redeemedCodes:S.redeemedCodes"), "agent fix: prestige keeps redeemedCodes");
 assert(html.includes("S.redeemedCodes=keep.redeemedCodes"), "agent fix: prestige restores redeemedCodes");
-assert(html.includes("S.redeemedLicenses.push(lk);\n    save();"), "agent fix: license redeem persists redeemedLicenses");
+assert(html.includes("S.redeemedLicenses.push(lk);"), "agent fix: license redeem persists redeemedLicenses");
 assert(html.includes("function clearGrantParams("), "agent fix: clearGrantParams helper");
 assert(html.includes("S.redeemedGrants=keep.redeemedGrants"), "agent fix: prestige keeps redeemedGrants");
 assert(html.includes("S.redeemedLicenses=keep.redeemedLicenses"), "agent fix: prestige keeps redeemedLicenses");
@@ -1061,6 +1061,12 @@ assert(playtest.status === 0, "playtest-audit.mjs passes", playtest.stderr?.trim
 
 const playSim = spawnSync("node", ["scripts/playtest-sim.mjs"], { cwd: root, encoding: "utf8" });
 assert(playSim.status === 0, "playtest-sim.mjs passes", playSim.stderr?.trim() || playSim.stdout?.trim());
+
+const auditCheckTest = spawnSync("node", ["scripts/audit-check-test.mjs"], { cwd: root, encoding: "utf8" });
+assert(auditCheckTest.status === 0, "audit-check CLI regressions pass", auditCheckTest.stderr?.trim() || auditCheckTest.stdout?.trim());
+
+const grantMintTest = spawnSync("node", ["scripts/grant-mint-test.mjs"], { cwd: root, encoding: "utf8" });
+assert(grantMintTest.status === 0, "grant mint verification regressions pass", grantMintTest.stderr?.trim() || grantMintTest.stdout?.trim());
 
 console.log(`\n${passed} passed, ${failed} failed`);
 process.exit(failed > 0 ? 1 : 0);
