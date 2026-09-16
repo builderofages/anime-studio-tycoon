@@ -7,6 +7,7 @@
  */
 import { readFileSync } from "fs";
 import vm from "vm";
+import { webcrypto } from "node:crypto";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 import {
@@ -141,6 +142,7 @@ function buildSandbox() {
     querySelectorAll: () => [],
   };
   const sandbox = {
+    crypto: webcrypto,
     window: {},
     document: doc,
     localStorage: {
@@ -265,7 +267,7 @@ function createGrantFetchMock() {
   return async function grantFetch(url, opts = {}) {
     const u = String(url);
     if (u.includes("/api/grant/redeem")) {
-      const pt = new URL(u, "http://localhost").searchParams.get("pt");
+      const pt = JSON.parse(opts.body || "{}").pt;
       if (pt === "VALID") {
         return { json: async () => ({ ok: true, grant: { kind: "gems", amount: "100", gid: "test-gems-100" } }) };
       }
@@ -1067,14 +1069,27 @@ globalThis.__runReadGrantSim = function() {
   readGrant();
   const prodBlocked = S.gems === gemsBlocked0;
 
-  S = freshState();
-  location.hostname = "example.com";
-  location.search = "?devgrants=1&grant=gems&amt=15";
-  const gemsDevFlag0 = S.gems;
-  readGrant();
-  const devFlagGrant = S.gems - gemsDevFlag0;
+  const prodUnsignedBlocked = [
+    "?devgrants=1&grant=gems&amt=15",
+    "?devgrants=1&grant=pass",
+    "?devgrants=1&unlock=items_pack",
+    "?devgrants=1&unlock=gems350",
+  ].every(function(search) {
+    S = freshState();
+    location.hostname = "example.com";
+    location.search = search;
+    const before = JSON.stringify(S);
+    readGrant();
+    return JSON.stringify(S) === before;
+  });
 
-  return { devGrant, devUnlock, prodBlocked, devFlagGrant };
+  S = freshState();
+  location.hostname = "127.0.0.1";
+  location.search = "?grant=pass";
+  readGrant();
+  const loopbackGrant = S.producerPass === true;
+
+  return { devGrant, devUnlock, prodBlocked, prodUnsignedBlocked, loopbackGrant };
 };
 `;
 
@@ -1307,10 +1322,12 @@ S.studioUnlockModalSeen = false;
 S.whatsnewSeen = true;
 S.lastWhatsNewBuild = BUILD_TAG;
 hub.style.display = "flex";
-hub.dataset.hadDaily = "1";
+hub.dataset.hadDaily = "";
 _studioUnlockQueued = true;
+document.documentElement.classList.add("ast-modal-open");
 closeReturnHub();
 rh.drainStudio = studioUnlock.style.display === "flex" && hub.style.display === "none" && !_studioUnlockQueued;
+rh.unlockClearsLock = !document.documentElement.classList.has("ast-modal-open");
 
 S = freshState();
 S.whatsnewSeen = true;
@@ -1319,8 +1336,12 @@ hub.style.display = "flex";
 hub.dataset.hadDaily = "";
 studioUnlock.style.display = "none";
 _studioUnlockQueued = false;
+S.tutorialSeen = true;
+document.getElementById("howto").style.display = "none";
+document.documentElement.classList.add("ast-modal-open");
 closeReturnHub();
 rh.noDrain = hub.style.display === "none" && studioUnlock.style.display !== "flex";
+rh.closeClearsLock = !document.documentElement.classList.has("ast-modal-open");
 
 __RETURN_HUB__ = rh;
 `;
@@ -1922,8 +1943,9 @@ function assertReadGrant(rg) {
   assert(rg.devUnlock.entitled === true, "readGrant ?unlock=items_pack delivers");
   assert(rg.devUnlock.megaphone === 1, "readGrant items_pack grants items");
   assert(rg.devUnlock.paramsCleared === true, "readGrant clears unlock params");
-  assert(rg.prodBlocked === true, "readGrant blocked off localhost without devgrants");
-  assert(rg.devFlagGrant === 68, "readGrant ?devgrants=1 on non-localhost (+ flash deal)", `got +${rg.devFlagGrant}`);
+  assert(rg.prodBlocked === true, "readGrant blocks production unsigned grants");
+  assert(rg.prodUnsignedBlocked === true, "readGrant rejects production devgrants override for grants and unlocks");
+  assert(rg.loopbackGrant === true, "readGrant preserves 127.0.0.1 development grants");
 }
 
 function assertIap(iap) {
@@ -2019,6 +2041,8 @@ function assertReturnHub(rh) {
   assert(rh.hubFlex === true, "return-hub display flex after maybeShowReturnHub");
   assert(rh.drainStudio === true, "closeReturnHub drains studio unlock queue");
   assert(rh.noDrain === true, "closeReturnHub hides hub without queued unlocks");
+  assert(rh.unlockClearsLock === false, "return hub keeps background input locked while an unlock modal is open");
+  assert(rh.closeClearsLock === true, "closing return hub restores catalog input without another render");
 }
 
 function assertModalPending(mp) {
@@ -2649,6 +2673,89 @@ try {
 
 console.log("\nStatic save schema + unlock order:\n");
 staticSaveSchemaAudit();
+
+console.log("\nGreenlight catalog uses live production costs and premiere estimates:\n");
+try {
+  const sandbox = buildSandbox();
+  vm.runInNewContext(extractGameLogic() + STUBS + `
+    S=freshState();
+    _castSel=[];
+    const sc=GREENLIGHT_SHOWCASE[0], p=PROJECTS[sc.pid];
+    const before=JSON.stringify(S);
+    const preview=showcaseRewardsFor(sc,p,sc.genre);
+    const expected=estimatePremiere({pid:p.id,genre:sc.genre,cast:[],seq:0},p);
+    const unchanged=JSON.stringify(S)===before;
+    const page=renderGreenlightPage(S.slots,true);
+    const wallet=S.yen;
+    greenlight(p.id,sc.genre,[]);
+    const debit=wallet-S.yen;
+    S.fans=500;
+    S._endlessReleaseMult=2;
+    S.franchises["Test series"]=2;
+    const seqSc={...sc,sequelBase:"Test series"};
+    const sequel=showcaseRewardsFor(seqSc,p,sc.genre);
+    const sequelExpected=estimatePremiere({pid:p.id,genre:sc.genre,cast:[],seq:3},p);
+    __CATALOG__={unchanged,debit,cost:p.cost,preview,expected,sequel,sequelExpected,
+      costVisible:page.includes('aaa-gl-confirm-budget">'+fmtYenCompact(p.cost)),
+      revenueVisible:page.includes('<span>Revenue</span><b>'+fmtYenCompact(expected.yen)+'</b>'),
+      noFakeNumbers:!page.includes('¥240M')&&!page.includes('¥680M')&&!page.includes('Studio EXP')};
+  `, sandbox, {timeout:20000});
+  const c=sandbox.__CATALOG__;
+  assert(c.unchanged, "catalog preview leaves game state unchanged");
+  assert(c.debit===c.cost && c.costVisible, "catalog displayed cost equals actual greenlight debit");
+  assert(c.preview.revenue===c.expected.yen && c.revenueVisible, "catalog displays current premiere revenue estimate");
+  assert(c.preview.profit===c.expected.yen-c.cost, "catalog net subtracts actual project cost");
+  assert(c.preview.fans===c.expected.fans && c.preview.hype===c.expected.hype, "catalog fans and hype use premiere formula");
+  assert(c.sequel.revenue===c.sequelExpected.yen && c.sequel.fans===c.sequelExpected.fans, "sequel preview includes current bonuses and franchise season");
+  assert(c.noFakeNumbers, "catalog omits fabricated million-yen rewards and studio EXP");
+} catch(e) {
+  fail("catalog UI-data regression", e.message || String(e));
+}
+
+// Durable deliveries persist before ACK; restored purchases never repeat bonuses.
+try {
+  const box=buildSandbox();
+  box.__responses=[];
+  box.fetch=async(_url,opts)=>{ const req=JSON.parse(opts.body); box.__responses.push(req.action); return {json:async()=>req.action==="ack"?{ok:true}:{ok:true,durable:true,mode:box.__mode||"deliver",grant:box.__grant||{kind:"pass",gid:"d".repeat(32)}}}; };
+  await vm.runInNewContext(extractGameLogic()+STUBS_BASE+extractIapGrantFns()+`
+    (async()=>{
+      S=freshState();
+      const beforeGems=S.gems;
+      await redeemPurchaseToken("fixture",true);
+      const firstGems=S.gems;
+      const persisted=JSON.parse(localStorage.getItem(SAVE_KEY));
+      await redeemPurchaseToken("fixture",true);
+      globalThis.__delivery={bonus:firstGems>beforeGems,noRepeat:S.gems===firstGems,persisted:persisted.producerPass};
+      globalThis.__mode="restore";
+      S.producerPass=false; S.gems=0; S.entitlements=[];
+      await redeemPurchaseToken("fixture",true);
+      __delivery.restored=S.producerPass && S.gems===0;
+      const packGems=S.gems;
+      globalThis.__mode="deliver";
+      globalThis.__grant={kind:"items_pack",gid:"e".repeat(32)};
+      await redeemPurchaseToken("pack1",true);
+      globalThis.__grant={kind:"items_pack",gid:"f".repeat(32)};
+      await redeemPurchaseToken("pack2",true);
+      __delivery.repeatPack=S.gems===packGems+100;
+      const packBeforeRestore=JSON.stringify(S.items);
+      restorePurchasedEntitlement({kind:"items_pack"});
+      __delivery.packRestore=JSON.stringify(S.items)===packBeforeRestore && S.gems===packGems+100;
+      globalThis.__mode="deliver";
+      S.redeemedGrants=[];
+      const originalSet=localStorage.setItem;
+      localStorage.setItem=()=>{throw new Error("quota");};
+      const priorGems=S.gems;
+      try{await redeemPurchaseToken("fixture",true);}catch{}
+      __delivery.rolledBack=S.gems===priorGems;
+      localStorage.setItem=originalSet;
+    })();`,box,{timeout:20000});
+  assert(box.__delivery.bonus && box.__delivery.noRepeat,"durable delivery issues welcome bonus once");
+  assert(box.__delivery.persisted,"durable grant persisted before acknowledgement");
+  assert(box.__delivery.restored,"second-device restoration restores pass without currency bonus");
+  assert(box.__delivery.repeatPack && box.__delivery.packRestore,"distinct verified item pack sales deliver; restore never reissues items");
+  assert(box.__delivery.rolledBack,"failed persistence rolls back purchase state");
+  assert(box.__responses.join(",")==="claim,ack,claim,ack,claim,claim,ack,claim,ack,claim","failed persistence never acknowledges delivery");
+}catch(e){fail("durable client delivery",e.message);}
 
 console.log(`\n${passed} passed, ${failed} failed`);
 process.exit(failed > 0 ? 1 : 0);

@@ -129,7 +129,7 @@ try {
   failMsg("grant health", e.message);
 }
 try {
-  const r = await fetch(`${base}/api/grant/redeem?pt=bad`);
+  const r = await fetch(`${base}/api/grant/redeem`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ pt: "bad" }) });
   const j = await r.json();
   if (r.status === 400 && j.error) pass("API grant/redeem (env configured)");
   else if (r.status === 503) failMsg("API grant/redeem", "GRANT_JWT_SECRET not set on Vercel — run npm run gen-env-secrets");

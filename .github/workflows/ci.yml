@@ -1,10 +1,13 @@
-name: CI — smoke test
+name: CI - game regressions
 
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
+
+permissions:
+  contents: read
 
 jobs:
   test:
@@ -14,12 +17,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-      - run: npm install
-      - run: npm test
-      - run: npm run test:sim
-      - run: npm run test:web-qa
-        env:
-          PREFLIGHT_URL: https://anime-studio-tycoon.vercel.app
-      - run: npm run launch-preflight
-        env:
-          PREFLIGHT_URL: https://anime-studio-tycoon.vercel.app
+          cache: npm
+      - name: Install locked dependencies without lifecycle scripts
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Game and purchase regressions (includes gameplay simulation)
+        run: npm test

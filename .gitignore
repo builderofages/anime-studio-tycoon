@@ -1,8 +1,6 @@
 node_modules/
 dist/
 *.log
-package-lock.json
-desktop/package-lock.json
 .vercel
 launch/generated/*.png
 launch/generated/*.jpg

@@ -1,55 +1,35 @@
-name: Auto ship
+name: Branch and PR checks
 
-# Push any branch that is not main. It gets built here; if it builds, it merges
-# itself into main and whatever host watches main deploys it.
-# Installed by ship-setup.
-
+# Review-only checks. Never merge, delete a branch, or publish a deployment.
 on:
   push:
     branches-ignore: [main]
+  pull_request:
+    branches: [main]
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
-  group: auto-ship-${{ github.ref }}
+  group: branch-checks-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  ship:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 20.x
-
-      - name: Sanity-check the diff
-        run: |
-          DELETED=$(git diff --diff-filter=D --name-only origin/main...HEAD | wc -l | tr -d ' ')
-          CHANGED=$(git diff --name-only origin/main...HEAD | wc -l | tr -d ' ')
-          echo "changed=$CHANGED deleted=$DELETED"
-          if [ "$DELETED" -gt 25 ]; then
-            echo "::error::$DELETED files deleted. Merge this one by hand."; exit 1
-          fi
-          if [ "$CHANGED" -gt 300 ]; then
-            echo "::error::$CHANGED files changed. Merge this one by hand."; exit 1
-          fi
-
-      - name: Install
-        run: npm install --no-audit --no-fund
-
-      - name: Merge to main
-        run: |
-          BRANCH="${GITHUB_REF#refs/heads/}"
-          git config user.name  "auto-ship"
-          git config user.email "auto-ship@users.noreply.github.com"
-          git reset --hard "$GITHUB_SHA"
-          git clean -fdq
-          git fetch origin main
-          git rebase origin/main
-          git push origin HEAD:main
-          git push origin --delete "$BRANCH" || true
-          echo "Merged $BRANCH into main."
+          cache: npm
+      - name: Install dependencies without lifecycle scripts
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Game and purchase regressions
+        run: npm test
+      - name: Install local ledger test runtime
+        run: sudo apt-get update && sudo apt-get install -y redis-server redis-tools
+      - name: Durable purchase ledger integration tests
+        run: node scripts/purchase-ledger-test.mjs
+      - name: Dependency audit
+        run: npm run audit:check
